@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://djh48vhy5hbss"]
+[gd_scene load_steps=27 format=3 uid="uid://djh48vhy5hbss"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_7gvwg"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_e8h8p"]
@@ -9,7 +9,7 @@
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_ibols"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_lqq7a"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="9_8sfn2"]
-[ext_resource type="PackedScene" path="res://engine/objects/platform/platform_path_cloud.tscn" id="11_ikssd"]
+[ext_resource type="PackedScene" uid="uid://btd4qa0fl8542" path="res://engine/objects/platform/platform_path_cloud.tscn" id="11_ikssd"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="13_t1jst"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="14_4a0hv"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="15_jntr2"]
@@ -17,20 +17,28 @@
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="17_mwhn6"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="18_mjtkl"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="19_puqhl"]
+[ext_resource type="Script" path="res://stages/world_5/scripts/checkpoint_5-2.gd" id="20_42osu"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="20_sfqk5"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="21_06nft"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="22_gqx15"]
 
-[sub_resource type="Gradient" id="Gradient_1wvap"]
+[sub_resource type="Gradient" id="Gradient_qg745"]
 colors = PackedColorArray(0.105882, 0, 0.733333, 1, 0.835294, 0.862745, 0.952941, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ue1bl"]
-gradient = SubResource("Gradient_1wvap")
+gradient = SubResource("Gradient_qg745")
 
 [sub_resource type="Curve2D" id="Curve2D_rw6ys"]
 bake_interval = 32.0
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 992, 320, 0, 0, 0, 0, 10304, 320)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_403qj"]
+bake_interval = 32.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 7104, 320, 0, 0, 0, 0, 10304, 320)
 }
 point_count = 2
 
@@ -51,6 +59,7 @@ custom_vars = {}
 
 [node name="Level5-2" type="Node2D"]
 script = ExtResource("1_7gvwg")
+jump_to_scene = "res://stages/world_5/map_5.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_e8h8p")]
 music = Array[Resource]([ExtResource("4_kbaqx")])
@@ -82,9 +91,9 @@ layer_1/tile_data = PackedInt32Array(786434, 2, 196608, 786439, 2, 65536, 786448
 anchors_preset = -1
 anchor_left = 0.2
 anchor_right = 0.2
-offset_left = 240.0
+offset_left = 249.0
 offset_top = 16.0
-offset_right = 320.0
+offset_right = 329.0
 offset_bottom = 49.0
 grow_horizontal = 2
 size_flags_horizontal = 0
@@ -108,6 +117,16 @@ curve = SubResource("Curve2D_rw6ys")
 
 [node name="PlatformPathCloud" parent="Path2D" instance=ExtResource("11_ikssd")]
 position = Vector2(992, 320)
+touching_player_touched_movement = true
+speed = 100.0
+loop_backwards = false
+smooth_enabled = false
+
+[node name="Path2D2" type="Path2D" parent="."]
+curve = SubResource("Curve2D_403qj")
+
+[node name="PlatformPathCloud" parent="Path2D2" instance=ExtResource("11_ikssd")]
+position = Vector2(7104, 320)
 touching_player_touched_movement = true
 speed = 100.0
 loop_backwards = false
@@ -428,6 +447,7 @@ result = SubResource("Resource_0xfgq")
 
 [node name="Checkpoint" parent="." instance=ExtResource("21_06nft")]
 position = Vector2(6928, 224)
+script = ExtResource("20_42osu")
 
 [node name="SpinyRed" parent="." instance=ExtResource("22_gqx15")]
 position = Vector2(9088, 144)
