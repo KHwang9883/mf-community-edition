@@ -1,16 +1,13 @@
-[gd_scene load_steps=54 format=3 uid="uid://dwugm1bn3fvwm"]
+[gd_scene load_steps=53 format=3 uid="uid://dwugm1bn3fvwm"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_p3xyl"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3bfl6"]
-[ext_resource type="Script" path="res://engine/objects/core/music_loader/music_loader.gd" id="3_em6l8"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_pwd3b"]
 [ext_resource type="Resource" uid="uid://csytp2m2k1jl" path="res://music/ykyrococ.mod" id="4_sfaje"]
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="5_u6htb"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_4bpy6"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_4u7ii"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_ac0s6"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_oqivd"]
-[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="9_dxf34"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="10_rlw30"]
 [ext_resource type="PackedScene" uid="uid://cdl5f86x0haop" path="res://engine/objects/bumping_blocks/question_block/templates/Green Lui Question Block.tscn" id="12_es07l"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="13_asu13"]
@@ -63,6 +60,34 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_8mshm"]
+resource_local_to_scene = true
+script = ExtResource("15_767bu")
+creation_nodepack = ExtResource("17_h1hh2")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_ofdud"]
+resource_local_to_scene = true
+script = ExtResource("15_767bu")
+creation_nodepack = ExtResource("17_h1hh2")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_a0vy5"]
 resource_local_to_scene = true
 script = ExtResource("15_767bu")
 creation_nodepack = ExtResource("17_h1hh2")
@@ -166,21 +191,11 @@ custom_vars = {}
 [node name="Level6-3" type="Node2D"]
 script = ExtResource("1_p3xyl")
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("2_3bfl6")]
-script = ExtResource("3_em6l8")
+[node name="MusicLoader" parent="." instance=ExtResource("2_3bfl6")]
 music = Array[Resource]([ExtResource("4_sfaje")])
 
-[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("death_sprite") instance=ExtResource("4_pwd3b")]
+[node name="Mario" parent="." instance=ExtResource("4_pwd3b")]
 position = Vector2(80, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 8.0
-platform_on_leave = 2
-script = ExtResource("5_u6htb")
-death_sprite = NodePath("SpriteDeath")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -208,8 +223,7 @@ layer_0/tile_data = PackedInt32Array(983044, 65536, 2, 917508, 65536, 1, 851972,
 layer_1/z_index = -10
 layer_1/tile_data = PackedInt32Array(2818061, 2, 524288, 2818063, 2, 196608, 2949125, 2, 589824, 2949126, 2, 589824, 2949151, 2, 589824, 2818084, 2, 720896, 3014706, 2, 720896, 3080250, 2, 720896, 786446, 2, 196608, 786441, 2, 327680, 851983, 2, 524288, 786455, 2, 65536, 786462, 2, 196608, 786479, 2, 196608, 786496, 2, 196608, 917569, 2, 524288, 1048675, 2, 589824, 917621, 2, 524288, 786582, 2, 720896, 917652, 2, 589824, 786600, 2, 196608, 786601, 2, 327680, 852138, 2, 524288, 786619, 2, 196608, 786622, 2, 327680, 786634, 2, 65536, 786640, 2, 196608, 917710, 2, 524288, 1048797, 2, 589824, 1048820, 2, 589824, 983357, 2, 524288, 983331, 2, 524288, 852300, 2, 524288, 786765, 2, 65536, 786760, 2, 65536, 65874, 2, 131072, 196938, 2, 131072, 328005, 2, 131072, 459068, 2, 131072, 327992, 2, 131072, 393503, 2, 131072, 393490, 2, 131072, 459009, 2, 131072, 262394, 2, 131072, 196845, 2, 131072, 524485, 2, 131072, 131250, 2, 131072, 393385, 2, 131072, 262297, 2, 131072, 196751, 2, 131072, 327806, 2, 131072, 196727, 2, 131072, 655465, 2, 131072, 196706, 2, 131072, 262232, 2, 131072, 655440, 2, 131072, 131139, 2, 131072, 524344, 2, 131072, 131122, 2, 131072, 524333, 2, 131072, 196645, 2, 131072, 262172, 2, 131072, 589850, 2, 131072, 196631, 2, 131072, 327695, 2, 131072, 393226, 2, 131072, 196610, 2, 131072)
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("8_oqivd")]
-script = ExtResource("9_dxf34")
+[node name="HUD" parent="." instance=ExtResource("8_oqivd")]
 
 [node name="World" type="Label" parent="HUD"]
 anchors_preset = -1
@@ -246,11 +260,11 @@ result = SubResource("Resource_8mshm")
 
 [node name="QuestionBlock2" parent="." instance=ExtResource("16_tjljq")]
 position = Vector2(720, 336)
-result = SubResource("Resource_8mshm")
+result = SubResource("Resource_ofdud")
 
 [node name="QuestionBlock3" parent="." instance=ExtResource("16_tjljq")]
 position = Vector2(752, 336)
-result = SubResource("Resource_8mshm")
+result = SubResource("Resource_a0vy5")
 
 [node name="Brick" parent="." instance=ExtResource("18_bie65")]
 position = Vector2(560, 336)
