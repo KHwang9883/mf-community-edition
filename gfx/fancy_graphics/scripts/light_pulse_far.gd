@@ -1,13 +1,15 @@
 extends PointLight2D
 
-@onready var par = $'..'
+@export var parent_light: NodePath = "../.."
 var rand_pause: float
 
 func _ready() -> void:
-	assert(par is PointLight2D)
-	if par.random_pause:
-		rand_pause = par.rand_pause
-		await get_tree().create_timer(rand_pause, false, false, false).timeout
+	if Thunder.view.is_getting_closer(self, 32):
+		var par = get_node(parent_light)
+		assert(par is PointLight2D)
+		if par.random_pause:
+			rand_pause = par.rand_pause
+			await get_tree().create_timer(rand_pause, false, false, false).timeout
 	var tw3 = create_tween().set_loops().set_trans(Tween.TRANS_LINEAR)
 	tw3.tween_interval(0.07)
 	tw3.tween_property(self, "color:b", 0.3, 0.35)

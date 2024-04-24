@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dlti0l2n1ix8d"]
+[gd_scene load_steps=54 format=3 uid="uid://dlti0l2n1ix8d"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0omu6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sn434"]
@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_71gl4"]
 [ext_resource type="Texture2D" uid="uid://ci4r0g66ag3yg" path="res://gfx/texts/passages/devastator.png" id="12_eu80w"]
 [ext_resource type="Script" path="res://stages/world_1/scripts/text_secret_passage.gd" id="13_fqau7"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="14_32un2"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://gfx/backgrounds/underground.png" id="14_ihryt"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="15_72rwr"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="16_k3p35"]
@@ -254,10 +255,30 @@ text = "WORLD
 2-1"
 horizontal_alignment = 1
 
-[node name="Label" type="Sprite2D" parent="HUD"]
+[node name="Fake" type="Sprite2D" parent="HUD"]
+visible = false
 position = Vector2(320, -24)
 texture = ExtResource("12_eu80w")
 script = ExtResource("13_fqau7")
+action_after_sec = 3.0
+change_scene = "res://stages/world_1/level_1-1.tscn"
+
+[node name="Label" type="Label" parent="HUD"]
+offset_left = 217.0
+offset_top = -40.0
+offset_right = 423.0
+offset_bottom = -7.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("14_32un2")
+theme_override_font_sizes/font_size = 12
+text = "YOU HAVE FOUND
+BOWSER THE DEVASTATOR LEVEL"
+horizontal_alignment = 1
+script = ExtResource("13_fqau7")
+tween_to = 224
 action_after_sec = 3.0
 change_scene = "res://stages/world_1/level_1-1.tscn"
 

@@ -1,6 +1,6 @@
-extends Sprite2D
+extends CanvasItem
 
-@export var tween_to := Vector2(320, 240)
+@export var tween_to := 240
 @export var speed_sec := 0.8
 @export_group("Actions")
 @export var action_after_sec := 0.0
@@ -9,7 +9,7 @@ extends Sprite2D
 
 func activate() -> void:
 	var tw = create_tween()
-	tw.tween_property(self, "position", tween_to, speed_sec).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(self, "position:y", tween_to, speed_sec).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	
 	if !action_after_sec: return
 	
