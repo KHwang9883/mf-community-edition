@@ -5,7 +5,7 @@ extends PointLight2D
 var rand_pause: float = randf_range(0.05, 1.7)
 
 func _ready() -> void:
-	if !Thunder.view.is_getting_closer(self, 32):
+	if Thunder.view.is_getting_closer(self, 32):
 		random_pause = false
 	if random_pause:
 		await get_tree().create_timer(rand_pause, false, false, false).timeout
