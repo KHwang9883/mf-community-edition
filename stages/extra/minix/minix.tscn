@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdtlj55qt731w"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_m1mir"]
+[ext_resource type="Resource" uid="uid://b6ficv7f75qil" path="res://music/one_fine_day.xm" id="4_ovbqq"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_t3gk0"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_bvs5l"]
+[ext_resource type="Texture2D" uid="uid://da2cw2y41pju8" path="res://icon.svg" id="7_0edfa"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_sdali"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v0n81"]
+texture = ExtResource("7_0edfa")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_1r8wx"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Terrain 0"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+sources/2 = SubResource("TileSetAtlasSource_v0n81")
+
+[node name="Minix" type="Node2D"]
+script = ExtResource("1_51ox0")
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_m1mir")]
+music = Array[Resource]([ExtResource("4_ovbqq")])
+volume_db = Array[float]([-30.0])
+
+[node name="Mario" parent="." instance=ExtResource("4_t3gk0")]
+position = Vector2(80, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("6_bvs5l")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_1r8wx")
+format = 2
+layer_0/tile_data = PackedInt32Array(851970, 2, 0)
+
+[node name="HUD" parent="." instance=ExtResource("8_sdali")]
