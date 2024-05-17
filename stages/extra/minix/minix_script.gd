@@ -10,7 +10,7 @@ const enemy_array: Array = [
 	preload("res://engine/objects/enemies/goombas/goomba.tscn"),
 	preload("res://engine/objects/enemies/koopas/koopa_green.tscn"),
 	preload("res://engine/objects/enemies/spinies/spiny_red.tscn"),
-	preload("res://engine/objects/enemies/spinies/coin_walking.tscn")
+	preload("res://stages/extra/minix/coin_walking.tscn")
 ]
 
 func _ready() -> void:
@@ -29,4 +29,4 @@ func pick_random_marker() -> Vector2:
 
 
 func new_random_enemy() -> void:
-	
+	pass
