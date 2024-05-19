@@ -1,0 +1,125 @@
+[gd_scene load_steps=17 format=3 uid="uid://cqybbqeuvbbk5"]
+
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_le1ye"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_o1eic"]
+[ext_resource type="Resource" uid="uid://b6ficv7f75qil" path="res://music/one_fine_day.xm" id="3_me2h1"]
+[ext_resource type="Texture2D" uid="uid://pjk27xsstt0c" path="res://engine/scenes/map/textures/bg.png" id="4_tm04e"]
+[ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="5_moxho"]
+[ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="6_dp1sc"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_camera.gd" id="7_jl6ur"]
+[ext_resource type="Texture2D" uid="uid://botgtr24cptti" path="res://gfx/map/world_names/world_3.png" id="8_2u1el"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/world_text.gd" id="9_i6ie8"]
+[ext_resource type="Texture2D" uid="uid://efoencmt67ki" path="res://engine/scenes/map/textures/mario_icon.png" id="10_fck4k"]
+[ext_resource type="Texture2D" uid="uid://d0rll4m5cs0vc" path="res://engine/scenes/map/textures/press_start.png" id="11_vh27h"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/start_text.gd" id="12_hqx8k"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/marker_space.gd" id="13_otvyi"]
+[ext_resource type="Texture2D" uid="uid://518pbskqsql4" path="res://engine/scenes/map/textures/debug.png" id="14_3bnfp"]
+[ext_resource type="Texture2D" uid="uid://bheewtcwh076r" path="res://engine/scenes/map/textures/x.png" id="15_6bjjt"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_7algb"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_le1ye")
+player = NodePath("Player")
+metadata/_edit_lock_ = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_o1eic")]
+music = Array[Resource]([ExtResource("3_me2h1")])
+
+[node name="Bg" type="Sprite2D" parent="."]
+texture = ExtResource("4_tm04e")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 3333, 480)
+region_filter_clip_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="Bg2" type="Sprite2D" parent="."]
+position = Vector2(3333, 0)
+texture = ExtResource("4_tm04e")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 480, 3333, 480)
+region_filter_clip_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="Bg3" type="Sprite2D" parent="."]
+position = Vector2(6666, 0)
+texture = ExtResource("4_tm04e")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 960, 3333, 480)
+region_filter_clip_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("5_moxho")]
+z_index = 5
+z_as_relative = false
+position = Vector2(-16, 272)
+dots = ExtResource("6_dp1sc")
+
+[node name="PlayerCamera2D" type="Camera2D" parent="Player"]
+position = Vector2(16, -272)
+limit_left = 0
+limit_top = 0
+limit_right = 1790
+limit_bottom = 480
+position_smoothing_enabled = true
+editor_draw_limits = true
+script = ExtResource("7_jl6ur")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="GUI"]
+position = Vector2(320, -64)
+texture = ExtResource("8_2u1el")
+script = ExtResource("9_i6ie8")
+
+[node name="BounceMarker" type="Marker2D" parent="GUI/Sprite2D"]
+position = Vector2(0, 146)
+
+[node name="MarioIcon" type="Sprite2D" parent="GUI"]
+position = Vector2(581, 436)
+texture = ExtResource("10_fck4k")
+metadata/_edit_lock_ = true
+
+[node name="PressStart" type="Sprite2D" parent="GUI"]
+position = Vector2(320, 443)
+texture = ExtResource("11_vh27h")
+script = ExtResource("12_hqx8k")
+
+[node name="MarkerSpace" type="Node2D" parent="."]
+editor_description = "Use this as World"
+script = ExtResource("13_otvyi")
+space_name = 5
+dot_texture = ExtResource("14_3bnfp")
+x_texture = ExtResource("15_6bjjt")
+draw_dots = true
+metadata/_edit_lock_ = true
+
+[node name="MapPlayerMarker9" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(0, 272)
+script = ExtResource("16_7algb")
+
+[node name="MapPlayerMarker" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(112, 272)
+script = ExtResource("16_7algb")
+level = "res://stages/world_3/level_3-1.tscn"
+
+[node name="MapPlayerMarker4" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(336, 272)
+script = ExtResource("16_7algb")
+level = "res://stages/world_3/level_to_3-2.tscn"
+
+[node name="MapPlayerMarker8" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(640, 272)
+rotation = -1.57068
+script = ExtResource("16_7algb")
+level = "res://stages/world_3/level_3-3.tscn"
