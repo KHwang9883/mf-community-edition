@@ -5,8 +5,6 @@ extends AnimatedSprite2D
 
 @onready var init_pos = position.x
 
-var disappearing: bool
-
 func _physics_process(delta: float):
 	var cam: Camera2D = Thunder._current_camera as Camera2D
 	if !cam: return
@@ -18,11 +16,9 @@ func _physics_process(delta: float):
 	while position.x < cam_pos - 320 - 32:
 		position.x += teleport_by
 
-	if disappearing:
-		_disappear_process(delta)
-	
-func _disappear_process(delta: float) -> void:
-	if modulate.a <= 0.01:
-		queue_free()
-		return
-	modulate.a -= 0.5 * delta
+
+func disappear() -> void:
+	var tw = create_tween()
+	tw.tween_interval(randf_range(0.1, 3.0))
+	tw.tween_property(self, "modulate:a", 0.0, 2.0)
+	tw.tween_callback(queue_free)
