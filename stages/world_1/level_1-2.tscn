@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://bgdaesvf0ofqu"]
+[gd_scene load_steps=89 format=3 uid="uid://bgdaesvf0ofqu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_p6ptf"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_0wjpp"]
@@ -41,6 +41,7 @@
 [ext_resource type="Texture2D" uid="uid://s0uyg78cefed" path="res://gfx/misc/bubble_anim.png" id="39_y57fj"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="40_lmsl0"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="41_i4k0n"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="42_uth1y"]
 
 [sub_resource type="Gradient" id="Gradient_5x42y"]
 colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
@@ -546,6 +547,8 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 5840, 944, 0, 0, 0, 0, 5840, 1456)
 }
 point_count = 2
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_de5sm"]
 
 [node name="Level1-2" type="Node2D"]
 script = ExtResource("1_p6ptf")
@@ -1534,6 +1537,11 @@ speed = 50.0
 loop_backwards = false
 warp_objects_on_end = false
 smooth_enabled = false
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("42_uth1y")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+shape = SubResource("WorldBoundaryShape2D_de5sm")
 
 [connection signal="warp_started" from="PipeIn" to="HUD/World4Warp" method="activate"]
 [connection signal="warp_started" from="PipeIn4" to="HUD/HardcoreWarp" method="activate"]
