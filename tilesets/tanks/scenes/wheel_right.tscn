@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://de5li21b1adqi"]
+
+[ext_resource type="Texture2D" uid="uid://bpxkfmu33iqs4" path="res://tilesets/tanks/gfx/wheel_right.png" id="1_dj2oi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3vvl"]
+atlas = ExtResource("1_dj2oi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tr2i"]
+atlas = ExtResource("1_dj2oi")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dp6b"]
+atlas = ExtResource("1_dj2oi")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dvwn2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3vvl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tr2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dp6b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ei7fp"]
+size = Vector2(32, 32)
+
+[node name="WheelCenter" type="StaticBody2D"]
+collision_layer = 112
+collision_mask = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dvwn2")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ei7fp")
