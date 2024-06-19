@@ -24,7 +24,8 @@ player = NodePath("Player")
 metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_ku81c")]
-music = Array[Resource]([ExtResource("3_vgjec")])
+music = Array[Resource]([ExtResource("3_vgjec"), ExtResource("3_vgjec"), ExtResource("3_vgjec"), ExtResource("3_vgjec")])
+start_from_sec = Array[float]([0.0, 0.0, 43.8, 43.8])
 
 [node name="Bg" type="Sprite2D" parent="."]
 z_index = -1
@@ -57,7 +58,7 @@ metadata/_edit_lock_ = true
 
 [node name="Map8" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(720, 240)
+position = Vector2(731, 196)
 texture = ExtResource("5_x71yg")
 
 [node name="Player" parent="." instance=ExtResource("5_b8mn7")]
@@ -140,3 +141,5 @@ position = Vector2(608, 272)
 rotation = -1.57068
 script = ExtResource("16_y7nqp")
 level = "res://stages/world_8/level_8-4.tscn"
+
+[connection signal="next_level_ready" from="." to="MusicLoader" method="play_or_buffer"]
