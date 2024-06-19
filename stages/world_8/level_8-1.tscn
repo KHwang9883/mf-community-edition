@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://6lh12nsohmq4"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_hl5e1"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3phlc"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_2tcy5"]
+[ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="4_fhqg2"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_sghht"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_37cig"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_7qhka"]
+[ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="10_ks0l3"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="13_d6prg"]
+[ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="14_d3fmb"]
+[ext_resource type="PackedScene" uid="uid://c02e27qkcrmvw" path="res://engine/objects/centipede/centipede.tscn" id="15_8imaj"]
+
+[sub_resource type="Curve2D" id="Curve2D_pu7pt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 784, 288, 0, 0, 0, 0, 1120, 288, 0, 0, 0, 0, 1120, 192, 0, 0, 0, 0, 1216, 192, 0, 0, 0, 0, 1216, 416)
+}
+point_count = 5
+
+[node name="Level8-1" type="Node2D"]
+script = ExtResource("1_hl5e1")
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_3phlc")]
+music = Array[Resource]([ExtResource("4_fhqg2")])
+
+[node name="Mario" parent="." instance=ExtResource("4_2tcy5")]
+position = Vector2(80, 272)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("6_sghht")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("7_37cig")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("10_ks0l3")
+format = 2
+layer_0/tile_data = PackedInt32Array(983059, 131076, 2, 917523, 131076, 1, 851987, 131076, 1, 786451, 131076, 1, 720915, 131076, 1, 655379, 131076, 1, 589843, 131076, 0, 983058, 65540, 2, 917522, 65540, 1, 851986, 65540, 1, 786450, 65540, 1, 720914, 65540, 1, 655378, 65540, 1, 589842, 65540, 0, 983057, 65540, 2, 917521, 65540, 1, 851985, 65540, 1, 786449, 65540, 1, 720913, 65540, 1, 655377, 65540, 1, 589841, 65540, 0, 983056, 65540, 2, 917520, 65540, 1, 851984, 65540, 1, 786448, 65540, 1, 720912, 65540, 1, 655376, 65540, 1, 589840, 65540, 0, 983055, 65540, 2, 917519, 65540, 1, 851983, 65540, 1, 786447, 65540, 1, 720911, 65540, 1, 655375, 65540, 1, 589839, 65540, 0, 983054, 65540, 2, 917518, 65540, 1, 851982, 65540, 1, 786446, 65540, 1, 720910, 65540, 1, 655374, 65540, 1, 589838, 65540, 0, 983053, 65540, 2, 917517, 65540, 1, 851981, 65540, 1, 786445, 65540, 1, 720909, 65540, 1, 655373, 65540, 1, 589837, 65540, 0, 983052, 65540, 2, 917516, 65540, 1, 851980, 65540, 1, 786444, 65540, 1, 720908, 65540, 1, 655372, 65540, 1, 589836, 65540, 0, 983051, 65540, 2, 917515, 65540, 1, 851979, 65540, 1, 786443, 65540, 1, 720907, 65540, 1, 655371, 65540, 1, 589835, 65540, 0, 983050, 65540, 2, 917514, 65540, 1, 851978, 65540, 1, 786442, 65540, 1, 720906, 65540, 1, 655370, 65540, 1, 589834, 65540, 0, 983049, 65540, 2, 917513, 65540, 1, 851977, 65540, 1, 786441, 65540, 1, 720905, 65540, 1, 655369, 65540, 1, 589833, 65540, 0, 983048, 65540, 2, 917512, 65540, 1, 851976, 65540, 1, 786440, 65540, 1, 720904, 65540, 1, 655368, 65540, 1, 589832, 65540, 0, 983047, 65540, 2, 917511, 65540, 1, 851975, 65540, 1, 786439, 65540, 1, 720903, 65540, 1, 655367, 65540, 1, 589831, 65540, 0, 983046, 65540, 2, 917510, 65540, 1, 851974, 65540, 1, 786438, 65540, 1, 720902, 65540, 1, 655366, 65540, 1, 589830, 65540, 0, 983045, 65540, 2, 917509, 65540, 1, 851973, 65540, 1, 786437, 65540, 1, 720901, 65540, 1, 655365, 65540, 1, 589829, 65540, 0, 983044, 65540, 2, 917508, 65540, 1, 851972, 65540, 1, 786436, 65540, 1, 720900, 65540, 1, 655364, 65540, 1, 589828, 65540, 0, 983043, 65540, 2, 917507, 65540, 1, 851971, 65540, 1, 786435, 65540, 1, 720899, 65540, 1, 655363, 65540, 1, 589827, 65540, 0, 983042, 65540, 2, 917506, 65540, 1, 851970, 65540, 1, 786434, 65540, 1, 720898, 65540, 1, 655362, 65540, 1, 589826, 65540, 0, 983041, 65540, 2, 917505, 65540, 1, 851969, 65540, 1, 786433, 65540, 1, 720897, 65540, 1, 655361, 65540, 1, 589825, 65540, 0, 983040, 4, 2, 917504, 4, 1, 851968, 4, 1, 786432, 4, 1, 720896, 4, 1, 655360, 4, 1, 589824, 4, 0, -524289, 131072, 0, -458753, 131072, 0, -393217, 131072, 0, -327681, 131072, 0, -262145, 131072, 0, -196609, 131072, 0, -131073, 131072, 0, -65537, 131072, 0, -1, 131072, 0, 65535, 131072, 0, 131071, 131072, 0, 196607, 131072, 0, 262143, 131072, 0, 327679, 131072, 0, 393215, 131072, 0, 458751, 131072, 0, 524287, 131072, 0, 589823, 131072, 0)
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("10_7qhka")]
+
+[node name="World" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 329.0
+offset_bottom = 49.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("13_d6prg")
+text = "WORLD
+8-1"
+horizontal_alignment = 1
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1023, 0)
+
+[node name="BgCastle3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+z_index = -99
+position = Vector2(-313, 240)
+texture = ExtResource("14_d3fmb")
+
+[node name="BgCastle2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+z_index = -99
+position = Vector2(711, 240)
+texture = ExtResource("14_d3fmb")
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_pu7pt")
+
+[node name="Centipede" parent="Path2D" instance=ExtResource("15_8imaj")]
+position = Vector2(784, 288)
