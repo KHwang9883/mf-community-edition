@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://b6r0c5ki0fat4"]
+[gd_scene load_steps=20 format=3 uid="uid://b6r0c5ki0fat4"]
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_2u162"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ku81c"]
 [ext_resource type="Resource" uid="uid://dq411m31x4mq3" path="res://music/map8.mod" id="3_vgjec"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="4_1w7g1"]
+[ext_resource type="Shader" path="res://shaders/hsv_global.gdshader" id="4_h7feu"]
 [ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="5_b8mn7"]
 [ext_resource type="Texture2D" uid="uid://b75120vukokyu" path="res://gfx/map/maps/map8.png" id="5_x71yg"]
 [ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="6_2m4ja"]
@@ -18,6 +19,12 @@
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_b8pmt"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_y7nqp"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gppgm"]
+shader = ExtResource("4_h7feu")
+shader_parameter/hue = 0.0
+shader_parameter/saturation = -0.73
+shader_parameter/value = -0.18
+
 [node name="Map" type="Node2D"]
 script = ExtResource("1_2u162")
 player = NodePath("Player")
@@ -29,6 +36,7 @@ start_from_sec = Array[float]([0.0, 0.0, 43.8, 43.8])
 
 [node name="Bg" type="Sprite2D" parent="."]
 z_index = -1
+material = SubResource("ShaderMaterial_gppgm")
 texture = ExtResource("4_1w7g1")
 centered = false
 region_enabled = true
