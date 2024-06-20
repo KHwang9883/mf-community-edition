@@ -1,16 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://nldjy280mjea"]
+[gd_scene load_steps=10 format=3 uid="uid://nldjy280mjea"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_kmiy8"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_0mtfj"]
-[ext_resource type="Script" path="res://engine/objects/core/music_loader/music_loader.gd" id="3_hpckh"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_3mt7q"]
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="5_jp2h4"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_j1mpb"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_mymt3"]
-[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="8_q6t5h"]
-[ext_resource type="Texture2D" uid="uid://dkvidhitsdrpf" path="res://engine/tilesets/overworld/hard_block.png" id="9_okcsj"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_okcsj"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_w4f65"]
-[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="11_td82o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fj7wk"]
 texture = ExtResource("9_okcsj")
@@ -29,32 +25,19 @@ sources/0 = SubResource("TileSetAtlasSource_fj7wk")
 [node name="Level2-4" type="Node2D"]
 script = ExtResource("1_kmiy8")
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("2_0mtfj")]
-script = ExtResource("3_hpckh")
+[node name="MusicLoader" parent="." instance=ExtResource("2_0mtfj")]
 
-[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("death_sprite") instance=ExtResource("4_3mt7q")]
+[node name="Mario" parent="." instance=ExtResource("4_3mt7q")]
 position = Vector2(80, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 8.0
-platform_on_leave = 2
-script = ExtResource("5_jp2h4")
-death_sprite = NodePath("SpriteDeath")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("6_j1mpb")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("7_mymt3")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("7_mymt3")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("8_q6t5h")
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -63,8 +46,7 @@ format = 2
 layer_0/tile_data = PackedInt32Array(851970, 0, 0)
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("10_w4f65")]
-script = ExtResource("11_td82o")
+[node name="HUD" parent="." instance=ExtResource("10_w4f65")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
