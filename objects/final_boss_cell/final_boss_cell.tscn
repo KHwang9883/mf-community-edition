@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://d2bajdy6e54hb"]
+
+[ext_resource type="Texture2D" uid="uid://sbhhpl6jhgfe" path="res://objects/final_boss_cell/textures/cell.png" id="1_bd4kv"]
+[ext_resource type="Texture2D" uid="uid://dd4y00uu5s68g" path="res://objects/final_boss_cell/textures/cell_peach.png" id="1_yax2v"]
+[ext_resource type="Texture2D" uid="uid://csumi6j60ahal" path="res://objects/final_boss_cell/textures/cell_broken.png" id="2_6yq2u"]
+[ext_resource type="Texture2D" uid="uid://iqtci0dfv1d1" path="res://objects/final_boss_cell/textures/cell_chain.png" id="3_yncxo"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="5_qvvh4"]
+
+[sub_resource type="Animation" id="Animation_femjw"]
+resource_name = "peach_sin"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CellPeach:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -43), Vector2(0, -40), Vector2(0, -43)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("World:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sej2n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CellPeach:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -43)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("World:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fqav3"]
+_data = {
+"RESET": SubResource("Animation_sej2n"),
+"peach_sin": SubResource("Animation_femjw")
+}
+
+[node name="FinalBossCell" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fqav3")
+}
+autoplay = "peach_sin"
+
+[node name="CellPeach" type="Sprite2D" parent="."]
+position = Vector2(0, -43)
+texture = ExtResource("1_yax2v")
+
+[node name="Cell" type="Sprite2D" parent="."]
+position = Vector2(0, -48)
+texture = ExtResource("1_bd4kv")
+
+[node name="CellBroken" type="Sprite2D" parent="."]
+position = Vector2(0, -48)
+texture = ExtResource("2_6yq2u")
+
+[node name="CellChain" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(0, -353)
+texture = ExtResource("3_yncxo")
+region_enabled = true
+region_rect = Rect2(0, 0, 13, 512)
+
+[node name="World" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 64.0
+offset_top = -57.0
+offset_right = 144.0
+offset_bottom = -41.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("5_qvvh4")
+text = "HELP!"
