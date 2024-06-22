@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://6lh12nsohmq4"]
+[gd_scene load_steps=25 format=3 uid="uid://6lh12nsohmq4"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_hl5e1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3phlc"]
@@ -8,9 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_37cig"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_7qhka"]
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="10_ks0l3"]
+[ext_resource type="PackedScene" uid="uid://dvcxbvtn34x5w" path="res://engine/objects/centipede/centipede_pathpoints.tscn" id="12_cvcd2"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="12_rjah1"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="13_70wb7"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="13_d6prg"]
+[ext_resource type="PackedScene" uid="uid://dpli8hxnleju4" path="res://engine/objects/centipede/centipede_pathpoint.tscn" id="13_nliaw"]
 [ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="14_d3fmb"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="14_tctif"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="15_8bcxa"]
@@ -20,12 +22,6 @@
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="18_6ypdc"]
 [ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="19_akhk4"]
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="20_4fhil"]
-
-[sub_resource type="Curve2D" id="Curve2D_pu7pt"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 784, 288, 0, 0, 0, 0, 1200, 288, 0, 0, 0, 0, 1200, 352, 0, 0, 0, 0, 1328, 352, 0, 0, 0, 0, 1328, 288, 0, 0, 0, 0, 1968, 288, 0, 0, 0, 0, 1968, 320, 0, 0, 0, 0, 2608, 320, 0, 0, 0, 0, 2608, 448, 0, 0, 0, 0, 2928, 448, 0, 0, 0, 0, 2928, 320, 0, 0, 0, 0, 2768, 320, 0, 0, 0, 0, 2768, 160, 0, 0, 0, 0, 3088, 160, 0, 0, 0, 0, 3088, 288, 0, 0, 0, 0, 3408, 288, 0, 0, 0, 0, 3408, 320, 0, 0, 0, 0, 3728, 320, 0, 0, 0, 0, 3728, 192, 0, 0, 0, 0, 3504, 192, 0, 0, 0, 0, 3504, 320, 0, 0, 0, 0, 3568, 320, 0, 0, 0, 0, 3568, 288, 0, 0, 0, 0, 3888, 288, 0, 0, 0, 0, 3888, 352, 0, 0, 0, 0, 4848, 352, 0, 0, 0, 0, 4848, 384, 0, 0, 0, 0, 5072, 384)
-}
-point_count = 28
 
 [sub_resource type="Resource" id="Resource_8qofl"]
 resource_local_to_scene = true
@@ -114,11 +110,80 @@ texture = ExtResource("14_d3fmb")
 
 [node name="Objects" type="Node2D" parent="."]
 
-[node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_pu7pt")
+[node name="Centipedes" type="Node2D" parent="."]
 
-[node name="Centipede" parent="Path2D" instance=ExtResource("15_8imaj")]
+[node name="Centipede2" parent="Centipedes" instance=ExtResource("15_8imaj")]
 position = Vector2(784, 288)
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+
+[node name="Centipede3" parent="Centipedes" instance=ExtResource("15_8imaj")]
+position = Vector2(784, 288)
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+
+[node name="Centipede4" parent="Centipedes" instance=ExtResource("15_8imaj")]
+position = Vector2(784, 288)
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+
+[node name="Centipede5" parent="Centipedes" instance=ExtResource("15_8imaj")]
+position = Vector2(784, 288)
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+
+[node name="Centipede" parent="Centipedes" instance=ExtResource("15_8imaj")]
+position = Vector2(784, 288)
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+
+[node name="CentipedePathpoints" parent="." instance=ExtResource("12_cvcd2")]
+
+[node name="CentipedePathpoint" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(784, 288)
+
+[node name="CentipedePathpoint2" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(1200, 288)
+
+[node name="CentipedePathpoint3" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(1200, 352)
+
+[node name="CentipedePathpoint4" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(1328, 352)
+
+[node name="CentipedePathpoint5" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(1328, 288)
+
+[node name="CentipedePathpoint6" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(1968, 288)
+
+[node name="CentipedePathpoint7" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(1968, 320)
+
+[node name="CentipedePathpoint8" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(2608, 320)
+
+[node name="CentipedePathpoint9" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(2608, 416)
+
+[node name="CentipedePathpoint10" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(2928, 416)
+
+[node name="CentipedePathpoint11" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(2928, 256)
+
+[node name="CentipedePathpoint12" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(2768, 256)
+
+[node name="CentipedePathpoint13" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(2768, 128)
+
+[node name="CentipedePathpoint14" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(3088, 128)
+
+[node name="CentipedePathpoint15" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(3088, 224)
+
+[node name="CentipedePathpoint16" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(3376, 224)
+
+[node name="CentipedePathpoint17" parent="CentipedePathpoints" instance=ExtResource("13_nliaw")]
+position = Vector2(3376, 352)
 
 [node name="Coin" parent="." instance=ExtResource("12_rjah1")]
 position = Vector2(1584, 144)
@@ -246,6 +311,8 @@ frequency = -50.0
 
 [node name="RotoCenter3" parent="." instance=ExtResource("17_ss7gw")]
 position = Vector2(2544, 144)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="RotoRed" parent="RotoCenter3" instance=ExtResource("18_6ypdc")]
 position = Vector2(0, 150)
