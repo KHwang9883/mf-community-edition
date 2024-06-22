@@ -28,7 +28,11 @@ func _ready() -> void:
 	Thunder._current_camera.shock(2, Vector2(4, 4))
 	await get_tree().create_timer(2, false).timeout
 	_destroying = true
-	run_while(func(): Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush.wav")), 0.115)
+	run_while(
+		func():
+			Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush.wav"), true, {volume = -6}),
+		0.099
+	)
 	run_while(func(): castle.position.x = castle_pos + randi_range(-3, 3), 0.01)
 	run_while(_brick_particles, 0.15)
 	run_while(_smoke_particles, 0.02)
@@ -60,12 +64,14 @@ func run_while(callable: Callable, repeat_delay: float) -> void:
 
 func _brick_particles() -> void:
 	var brick = CASTLE_BRICK.instantiate()
-	brick.position = castle_end_marker.position + Vector2(randi_range(-145, 145), 0)
-	brick.speed = Vector2(randf_range(-4.0, 4.0), randi_range(-9, -5))
+	brick.position = castle_end_marker.position + Vector2(randi_range(-145, 145), 16)
+	brick.speed = Vector2(randf_range(-4.0, 4.0), randi_range(-11, -6))
 	Scenes.current_scene.add_child(brick)
 
 
 func _smoke_particles() -> void:
 	var smoke = CASTLE_SMOKE.instantiate()
-	smoke.position = castle_end_marker.position + Vector2(randi_range(-157, 157), 0)
+	smoke.position = castle_end_marker.position + Vector2(randi_range(-157, 157), 16)
+	smoke.y_modifier = randi_range(-10, 10)
+	smoke.rotation_speed = randi_range(-90, 90)
 	Scenes.current_scene.add_child(smoke)
