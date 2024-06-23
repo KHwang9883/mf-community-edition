@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://l6cie3cqgpd2"]
+[gd_scene load_steps=44 format=3 uid="uid://l6cie3cqgpd2"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ebj5x"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_uxq80"]
@@ -20,6 +20,11 @@
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="24_5le21"]
 [ext_resource type="Script" path="res://stages/world_7/scripts/water_height_logic.gd" id="24_jqekj"]
 [ext_resource type="Script" path="res://stages/world_7/scripts/water_height_changer.gd" id="25_ubk3o"]
+[ext_resource type="PackedScene" uid="uid://bxaj6iub5wrps" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn" id="26_c4w6a"]
+[ext_resource type="Script" path="res://objects/detectors/player_detection.gd" id="27_23toe"]
+[ext_resource type="Texture2D" uid="uid://dmv5rev5xia3u" path="res://gfx/backgrounds/clouds_looping.png" id="28_cg6vn"]
+[ext_resource type="Texture2D" uid="uid://mpdkiuduprqj" path="res://gfx/fancy_graphics/clouds_looping_alpha.png" id="29_wvm24"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="30_axigx"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="33_85ocg"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="34_cn8b3"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="35_g02ct"]
@@ -141,6 +146,9 @@ size = Vector2(32, 608)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1s4xw"]
 size = Vector2(32, 624)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5bgj5"]
+size = Vector2(9440, 480)
 
 [node name="Level7-3" type="Node2D"]
 script = ExtResource("1_ebj5x")
@@ -547,3 +555,37 @@ only_once = true
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D/Area2D6"]
 position = Vector2(9328, 224)
 shape = SubResource("RectangleShape2D_1s4xw")
+
+[node name="JumpingCheepsGenerator" parent="." instance=ExtResource("26_c4w6a")]
+enabled = false
+random_pool = 30
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+position = Vector2(328, -161)
+script = ExtResource("27_23toe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(5096, 401)
+shape = SubResource("RectangleShape2D_5bgj5")
+
+[node name="CloudsLooping" type="Sprite2D" parent="."]
+z_index = -10
+texture_repeat = 2
+texture = ExtResource("28_cg6vn")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 11100, 28)
+
+[node name="CloudsLoopingAlpha" type="Sprite2D" parent="."]
+z_index = -10
+texture_repeat = 2
+texture = ExtResource("29_wvm24")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 11100, 36)
+script = ExtResource("30_axigx")
+
+[connection signal="player_enter" from="Area2D" to="JumpingCheepsGenerator" method="enable"]
+[connection signal="player_exit" from="Area2D" to="." method="disable"]
