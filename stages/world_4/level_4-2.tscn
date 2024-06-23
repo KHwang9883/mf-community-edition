@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://denh5x0fbof2s"]
+[gd_scene load_steps=87 format=3 uid="uid://denh5x0fbof2s"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_fu4ch"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_1880h"]
@@ -50,6 +50,9 @@
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="46_ybf5r"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="47_v7gjt"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="50_r58qu"]
+[ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://tilesets/skyland/gfx/big_clouds.png" id="51_sqe45"]
+[ext_resource type="Texture2D" uid="uid://c83yeno04gxim" path="res://tilesets/skyland/gfx/cloud_face_anim.png" id="52_yeux7"]
+[ext_resource type="Script" path="res://stages/world_4/scripts/big_clouds_face_anim.gd" id="53_cp4ss"]
 
 [sub_resource type="Curve2D" id="Curve2D_bsqx3"]
 _data = {
@@ -872,6 +875,98 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_135r0"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(0, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qma3y"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(30, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7272j"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(60, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d3sg"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(90, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnl2o"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(120, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1fsa"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(150, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7mec"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(180, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltyjo"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(210, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fbob"]
+atlas = ExtResource("52_yeux7")
+region = Rect2(240, 0, 30, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_srhme"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1fsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fbob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 40.0
+}]
+
 [node name="Level4-2" type="Node2D"]
 script = ExtResource("1_fu4ch")
 time = 550
@@ -1326,3 +1421,83 @@ position = Vector2(6256, -576)
 
 [node name="FinishLine" parent="." instance=ExtResource("50_r58qu")]
 position = Vector2(9520, -544)
+
+[node name="BigClouds" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(640, 320)
+texture = ExtResource("51_sqe45")
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" parent="BigClouds"]
+position = Vector2(-112, -48)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigCloudsFace2" type="AnimatedSprite2D" parent="BigClouds"]
+position = Vector2(80, 128)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigClouds2" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(2688, -16)
+texture = ExtResource("51_sqe45")
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" parent="BigClouds2"]
+position = Vector2(-112, -96)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigCloudsFace2" type="AnimatedSprite2D" parent="BigClouds2"]
+position = Vector2(128, -80)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigClouds3" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(3568, -80)
+texture = ExtResource("51_sqe45")
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" parent="BigClouds3"]
+position = Vector2(-144, -32)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigCloudsFace2" type="AnimatedSprite2D" parent="BigClouds3"]
+position = Vector2(112, -64)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigClouds4" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(4480, -240)
+texture = ExtResource("51_sqe45")
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" parent="BigClouds4"]
+position = Vector2(-112, -64)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigCloudsFace2" type="AnimatedSprite2D" parent="BigClouds4"]
+position = Vector2(160, -64)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigClouds5" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(6256, -496)
+texture = ExtResource("51_sqe45")
+
+[node name="BigCloudsFace2" type="AnimatedSprite2D" parent="BigClouds5"]
+position = Vector2(128, -64)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
+
+[node name="BigClouds6" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(9904, -688)
+texture = ExtResource("51_sqe45")
+
+[node name="BigCloudsFace2" type="AnimatedSprite2D" parent="BigClouds6"]
+position = Vector2(-96, -48)
+sprite_frames = SubResource("SpriteFrames_srhme")
+script = ExtResource("53_cp4ss")
