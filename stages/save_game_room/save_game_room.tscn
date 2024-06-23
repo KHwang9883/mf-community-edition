@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=36 format=3 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_jjm06"]
@@ -13,7 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://bhdvcmxlf3ejv" path="res://engine/tilesets/overworld/default_grass.png" id="12_wbmhm"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="13_2ogi0"]
 [ext_resource type="PackedScene" uid="uid://dyg18uvaedfxp" path="res://engine/objects/warps/pipe_save.tscn" id="14_lrr3l"]
+[ext_resource type="PackedScene" uid="uid://e1hxnaxfnvbl" path="res://engine/scenes/save_game_room/scripts/reset.tscn" id="14_xt7b1"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="15_6bwv2"]
+[ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/saved_level_label.gd" id="15_pr6di"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="16_se7ro"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="17_viesn"]
 [ext_resource type="AudioStream" uid="uid://b1bxtmesp2bfq" path="res://engine/objects/players/prefabs/sounds/powerup.wav" id="18_3eyj0"]
@@ -22,12 +24,13 @@
 [ext_resource type="Resource" uid="uid://dkrwf64pscu5h" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres" id="20_n5llw"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="21_qg33c"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="22_7uvh2"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="24_ijk3p"]
 
-[sub_resource type="Gradient" id="Gradient_j42r0"]
-colors = PackedColorArray(0.246609, 0.468349, 1, 1, 1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_6g8qv"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_hqdlw"]
-gradient = SubResource("Gradient_j42r0")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_61wci"]
+gradient = SubResource("Gradient_6g8qv")
 width = 480
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3yayh"]
@@ -151,7 +154,7 @@ visible = false
 position = Vector2(0, 240)
 rotation = 1.57079
 scale = Vector2(1, 640)
-texture = SubResource("GradientTexture1D_hqdlw")
+texture = SubResource("GradientTexture1D_61wci")
 metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -233,24 +236,83 @@ trigger_immediately = true
 
 [node name="PipeSave" parent="." instance=ExtResource("14_lrr3l")]
 position = Vector2(288, 304)
-profile_name = "save_1"
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/world_1/map_1.tscn"
+use_circle_transition = true
+circle_closing_speed = 0.03
+circle_opening_speed = 0.06
+circle_center_after_middle = true
+blur_closing_speed = 0.0
+
+[node name="Label" type="Label" parent="PipeSave"]
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -57.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "WORLD
+%s"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("15_pr6di")
 
 [node name="PipeSave2" parent="." instance=ExtResource("14_lrr3l")]
 position = Vector2(416, 304)
-profile_name = "save_2"
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/world_1/map_1.tscn"
+use_circle_transition = true
+circle_closing_speed = 0.03
+circle_opening_speed = 0.06
+circle_center_after_middle = true
+blur_closing_speed = 0.0
+
+[node name="Label" type="Label" parent="PipeSave2"]
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -57.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "WORLD
+%s"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("15_pr6di")
 
 [node name="PipeSave3" parent="." instance=ExtResource("14_lrr3l")]
 position = Vector2(544, 304)
-profile_name = "save_3"
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/world_1/map_1.tscn"
+use_circle_transition = true
+circle_closing_speed = 0.03
+circle_opening_speed = 0.06
+circle_center_after_middle = true
+blur_closing_speed = 0.0
+
+[node name="Label" type="Label" parent="PipeSave3"]
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -57.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "WORLD
+%s"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("15_pr6di")
+
+[node name="Reset" parent="." instance=ExtResource("14_xt7b1")]
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -383,3 +445,24 @@ theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 21
 text = "COSTS 2 LIVES"
 horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 352.0
+offset_top = 144.0
+offset_right = 480.0
+offset_bottom = 167.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "SELECT SAVE"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("24_ijk3p")
+
+[connection signal="body_entered" from="PipeSave" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
+[connection signal="body_exited" from="PipeSave" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="body_entered" from="PipeSave2" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
+[connection signal="body_exited" from="PipeSave2" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="body_entered" from="PipeSave3" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
+[connection signal="body_exited" from="PipeSave3" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
