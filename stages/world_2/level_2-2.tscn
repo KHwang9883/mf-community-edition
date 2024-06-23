@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://ht5id10ochxu"]
+[gd_scene load_steps=49 format=3 uid="uid://ht5id10ochxu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gugln"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ssfd4"]
@@ -11,6 +11,7 @@
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_fok48"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_ta0g1"]
 [ext_resource type="Script" path="res://engine/objects/enemies/cheeps/cheep_generator.gd" id="11_5gdh8"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_jm226"]
 [ext_resource type="Texture2D" uid="uid://dsijqvsl47riy" path="res://engine/objects/fluid/textures/water_smooth_0.png" id="12_2qftu"]
 [ext_resource type="Shader" path="res://shaders/waver.gdshader" id="12_tjsir"]
 [ext_resource type="Texture2D" uid="uid://cat3i3pljsllh" path="res://gfx/backgrounds/UWrocks.png" id="13_mwyjq"]
@@ -115,6 +116,7 @@ custom_vars = {}
 
 [node name="Level2-2" type="Node2D"]
 script = ExtResource("1_gugln")
+jump_to_scene = "res://stages/world_2/map_2.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_ssfd4")]
 music = Array[Resource]([ExtResource("4_xum7a"), null, null, null, ExtResource("5_owjs8")])
@@ -155,6 +157,22 @@ layer_0/tile_data = PackedInt32Array(655595, 65539, 1073741824, 590059, 3, 10737
 layer_1/tile_data = PackedInt32Array(-1310499, 65539, 1, -1244963, 65539, 1, -1179427, 65539, 1, -1113891, 65539, 1, -1048355, 65539, 1, -1113899, 2, 524288)
 
 [node name="HUD" parent="." instance=ExtResource("10_ta0g1")]
+
+[node name="World" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 329.0
+offset_bottom = 49.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("11_jm226")
+text = "WORLD
+2-2"
+horizontal_alignment = 1
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("11_5gdh8")
