@@ -28,7 +28,7 @@ func _physics_process(delta: float) -> void:
 	global_position.x += speed * delta
 
 func _timer() -> void:
-	await get_tree().create_timer(randf_range(0.3, 0.5), false).timeout
+	await get_tree().create_timer(randf_range(0.2, 0.4), false).timeout
 	_timer()
 	
 	if counter < max_counter && starting.set_looking:

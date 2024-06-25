@@ -57,18 +57,18 @@ func _flow_intros() -> void:
 	
 	await get_tree().create_timer(5, false).timeout
 	var tw = create_tween()
-	tw.tween_property(main_camera_path, "speed", 230, 1.8)
+	tw.tween_property(main_camera_path, "speed", 300, 1.8)
 	
 	await get_tree().create_timer(32, false).timeout
 	
 	clouds_bg.fade_clouds = true
 	var tw2 = create_tween()
-	tw2.tween_property(main_camera_path, "speed", 830, 1.8)
+	tw2.tween_property(main_camera_path, "speed", 1200, 1.8)
 	
 	await get_tree().create_timer(1.4, false).timeout
 	main_camera_path.queue_free()
 	second_camera.enabled = true
-	second_camera_path.speed = 630
+	second_camera_path.speed = 1100
 	
 	await get_tree().create_timer(0.1, false).timeout
 	var tw3 = create_tween()
