@@ -9,10 +9,11 @@ extends Node2D
 var c = 1
 
 func _physics_process(delta: float) -> void:
+	
 	if marker_2d.global_position.x < camera_2d.global_position.x - 320: return
 	
 	if tanks.global_position.x < marker_2d.global_position.x + 320:
-		global_position = Vector2(randi_range(-2, 2), randf_range(0, 4))
+		global_position = Vector2(init_pos.x + randi_range(-2, 2), 2 * delta)
 	
 	if tanks.global_position.x < marker_2d.global_position.x + 128:
 		node_2d.global_position.y += 30 * delta

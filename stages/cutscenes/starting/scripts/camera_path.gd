@@ -4,3 +4,4 @@ extends PathFollow2D
 
 func _physics_process(delta: float) -> void:
 	progress += speed * delta
+	global_position = global_position.round()

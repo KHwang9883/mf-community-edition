@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://csrq2nmn5a3gc"]
+[gd_scene load_steps=68 format=3 uid="uid://csrq2nmn5a3gc"]
 
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/starting.gd" id="1_1cb5a"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_v8bnp"]
@@ -8,10 +8,9 @@
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/skip_label.gd" id="4_f2gt1"]
 [ext_resource type="Texture2D" uid="uid://bgag45bfxo6yd" path="res://stages/cutscenes/starting/gfx/buziol.png" id="4_xdxx3"]
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/layer.gd" id="6_ejagc"]
-[ext_resource type="PackedScene" uid="uid://53qlewhfad5" path="res://tilesets/overworld_green/scenes/cloud.tscn" id="9_j7crf"]
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/cloud_bg.gd" id="9_qfqn8"]
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/camera_path.gd" id="10_kxwd7"]
-[ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/cloud_wrapped.gd" id="10_s7piy"]
+[ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="10_mrmqq"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="13_g1ntn"]
 [ext_resource type="Texture2D" uid="uid://bgepj5p4g3b7c" path="res://stages/cutscenes/gfx/toad-on-tree.png" id="14_smt7h"]
 [ext_resource type="Texture2D" uid="uid://ckfb3opqbapyi" path="res://engine/tilesets/overworld/tree_tall.png" id="15_mcbq1"]
@@ -98,11 +97,40 @@ colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549,
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ekr4c"]
 gradient = SubResource("Gradient_fyt3m")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_se1xs"]
+atlas = ExtResource("10_mrmqq")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isrdg"]
+atlas = ExtResource("10_mrmqq")
+region = Rect2(65, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mh7a"]
+atlas = ExtResource("10_mrmqq")
+region = Rect2(130, 0, 65, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_44xil"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_se1xs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isrdg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mh7a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
 [sub_resource type="Curve2D" id="Curve2D_vldxg"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 320, 240, 322, 0, -322, 0, -1024, 240, -321, 1, 321, -1, -1024, 672, 322, -1, -322, 1, -1024, 240, -321, 1, 321, -1, -1024, 672, -246, 8, 246, -8, -672, 640, 91, -196, -91, 196, -400, 1072, 98, -342, -98, 342, -576, 1616, 46, -1, -46, 1, -896, 1968, 252, -3, -252, 3, -1616, 1968, 159.806, -24.0416, -159.806, 24.0416, -2160, 2352, 0, 0, 0, 0, -3280, 2432)
+"points": PackedVector2Array(0, 0, 0, 0, 320, 240, 576.006, -0.00568104, -576.006, 0.00568104, -1088, 240, -575.998, -0.0062415, 575.998, 0.0062415, -1088, 1008, 576.004, -0.012763, -576.004, 0.012763, -1088, 240, -575.999, -0.0109267, 575.999, 0.0109267, -1088, 1008, -191.582, -0.245319, 191.582, 0.245319, -480, 928, 1.92296, -80.4911, -1.92296, 80.4911, -192, 1248, 98.3357, -133.144, -98.3357, 133.144, -304, 1536, 56.5834, -53.1608, -56.5834, 53.1608, -576, 1840, 46, -1, -46, 1, -896, 1968, 252, -3, -252, 3, -1616, 1968, 159.806, -24.0416, -159.806, 24.0416, -2160, 2352, 0, 0, 0, 0, -3280, 2432)
 }
-point_count = 12
+point_count = 13
 
 [sub_resource type="Curve2D" id="Curve2D_ee5af"]
 _data = {
@@ -245,7 +273,7 @@ region = Rect2(0, 230, 32, 46)
 [sub_resource type="SpriteFrames" id="SpriteFrames_r6urf"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_n264e")
 }, {
 "duration": 1.0,
@@ -266,24 +294,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n264e")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n264e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n264e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n264e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n264e")
-}, {
-"duration": 1.0,
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_n264e")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 30.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ss3w"]
@@ -348,8 +364,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -512.0
-offset_right = 3968.0
-offset_bottom = 3008.0
+offset_right = 6528.0
+offset_bottom = 4928.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -403,188 +419,190 @@ metadata/_edit_lock_ = true
 
 [node name="BackClouds" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(704, 544)
 
-[node name="Cloud" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(240, 80)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud2" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud16" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(400, 160)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud3" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud27" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(560, 64)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud4" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud28" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(38.7501, 256.8)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud5" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud2" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(544, 256)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud6" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud17" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(304, 224)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud7" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud18" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(368, 336)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud8" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud19" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(240, 400)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud9" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud20" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(592, 384)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud10" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud21" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(96, 160)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud11" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud22" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(384, 1.84774e-06)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud12" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud23" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
-position = Vector2(128, 48)
+position = Vector2(128, 32)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud13" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud24" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(432, 464)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud14" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud25" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(64, 448)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud15" parent="ParallaxBackground/BackClouds" instance=ExtResource("9_j7crf")]
+[node name="Cloud26" type="AnimatedSprite2D" parent="ParallaxBackground/BackClouds"]
 modulate = Color(1, 1, 1, 0.741176)
-z_index = 0
 position = Vector2(176, 304)
 scale = Vector2(0.7, 0.7)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
 [node name="FrontClouds" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(704, 544)
 
-[node name="Cloud" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(128, 96)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud2" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud16" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(288, 176)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud3" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud17" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(448, 80)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud4" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud18" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(576, 176)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud5" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud19" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(432, 272)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud6" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud20" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(192, 240)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud7" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud21" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(256, 352)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud8" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud22" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(128, 416)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud9" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud23" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(480, 400)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud10" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud24" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(624, 16)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud11" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud25" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(272, 16)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud12" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud26" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(16, 64)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud13" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
-position = Vector2(320, 480)
-script = ExtResource("10_s7piy")
+[node name="Cloud27" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
+position = Vector2(368, 480)
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud14" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud28" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(640, 368)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
-[node name="Cloud15" parent="ParallaxBackground/FrontClouds" instance=ExtResource("9_j7crf")]
-z_index = 0
+[node name="Cloud29" type="AnimatedSprite2D" parent="ParallaxBackground/FrontClouds"]
 position = Vector2(64, 320)
-script = ExtResource("10_s7piy")
+sprite_frames = SubResource("SpriteFrames_44xil")
+autoplay = "default"
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_vldxg")
@@ -705,7 +723,7 @@ position = Vector2(1968, -246)
 
 [node name="AnimatedSprite2D9" parent="." instance=ExtResource("25_r3n3a")]
 z_index = -1
-position = Vector2(1718, -424)
+position = Vector2(1718, -425)
 speed = 20
 
 [node name="AnimatedSprite2D8" parent="." instance=ExtResource("25_r3n3a")]
@@ -758,7 +776,7 @@ texture = ExtResource("18_uakl2")
 
 [node name="AnimatedSprite2D10" parent="." instance=ExtResource("25_r3n3a")]
 z_index = -1
-position = Vector2(732, -423)
+position = Vector2(732, -424)
 speed = 20
 
 [node name="ToadTurner5" parent="." instance=ExtResource("26_ra1w6")]
@@ -812,18 +830,21 @@ z_index = -1
 position = Vector2(1280, -245)
 sprite_frames = SubResource("SpriteFrames_r6urf")
 autoplay = "default"
+frame = 6
 
 [node name="AnimatedSprite2D19" type="AnimatedSprite2D" parent="."]
 z_index = -1
 position = Vector2(944, -245)
 sprite_frames = SubResource("SpriteFrames_r6urf")
 autoplay = "default"
+frame = 7
 
 [node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="."]
 z_index = -1
 position = Vector2(272, -333)
 sprite_frames = SubResource("SpriteFrames_r6urf")
 autoplay = "default"
+frame = 7
 
 [node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="."]
 z_index = -2
