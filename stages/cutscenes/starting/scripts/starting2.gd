@@ -3,7 +3,6 @@ extends Node2D
 @export var goto_scene: String = "res://stages/world_1/map_1.tscn"
 
 @onready var music_loader = $MusicLoader
-@onready var animation_player = $AnimationPlayer
 @onready var camera_2d = $Camera2D
 @onready var destruction = $Destruction
 @onready var tanks = $Tanks
