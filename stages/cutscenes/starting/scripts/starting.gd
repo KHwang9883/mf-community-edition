@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var goto_scene: String = "res://stages/cutscenes/starting/starting2.tscn"
+
 @onready var canvas_layer = $CanvasLayer
 
 @onready var skip_layer = $CanvasLayer/ColorRect2
@@ -21,10 +23,12 @@ func _ready() -> void:
 	_flow_intros()
 
 func _enter_tree() -> void:
+	print('[Cutscene] altered time scale from %s' % Engine.time_scale)
 	_original_time_scale = Engine.time_scale
 	Engine.time_scale = 1
 
-func _exit_tree() -> void:
+func _restore() -> void:
+	print('[Cutscene] restored time scale %s' % _original_time_scale)
 	Engine.time_scale = _original_time_scale
 
 func _flow_intros() -> void:
@@ -69,3 +73,17 @@ func _flow_intros() -> void:
 	await get_tree().create_timer(0.1, false).timeout
 	var tw3 = create_tween()
 	tw3.tween_property(second_camera_path, "speed", 60, 1.5)
+	
+	await get_tree().create_timer(35, false).timeout
+	
+	TransitionManager.accept_transition(
+		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+			.instantiate()
+			.with_speeds(0.01, -0.1)
+	)
+	TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
+	
+	await TransitionManager.transition_middle
+	
+	_restore()
+	Scenes.goto_scene.call_deferred(goto_scene)
