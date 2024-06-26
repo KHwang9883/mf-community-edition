@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://teyt07r78cnj"]
+
+[ext_resource type="Script" path="res://stages/cutscenes/ending/part_1/scripts/tank_small_break.gd" id="1_3k87l"]
+[ext_resource type="Texture2D" uid="uid://di4jyfsfqvmev" path="res://stages/cutscenes/ending/part_1/gfx/damaged_tile.png" id="2_vhlwc"]
+[ext_resource type="Texture2D" uid="uid://bmxdbkmexlkdi" path="res://tilesets/tanks/gfx/original_tank_tileset.png" id="3_nrm0e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83eg6"]
+atlas = ExtResource("3_nrm0e")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5xs0i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vhlwc")
+}],
+"loop": false,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83eg6")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="TankSmallBreak" type="Node2D"]
+script = ExtResource("1_3k87l")
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5xs0i")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_entered"]
