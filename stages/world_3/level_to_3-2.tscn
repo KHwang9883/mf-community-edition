@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cag4dyqih2sey"]
+[gd_scene load_steps=19 format=3 uid="uid://cag4dyqih2sey"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_hjl81"]
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_yrnaq"]
@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_tky2u"]
 [ext_resource type="TileSet" uid="uid://u38rgbe7os0u" path="res://tilesets/starland/starland.tres" id="6_djqdq"]
 [ext_resource type="Texture2D" uid="uid://5p36u73djuoh" path="res://gfx/backgrounds/starland.png" id="7_2fy2w"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="7_d5r3c"]
 [ext_resource type="Texture2D" uid="uid://1n3cepbaofmv" path="res://tilesets/starland/gfx/purple_pipe_entering_another.png" id="8_5gjsk"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="8_6h14m"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="12_fvjq6"]
 [ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="13_7tp3m"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="13_y5a2r"]
@@ -70,6 +72,18 @@ position = Vector2(-96, -5)
 scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_he7o3")
 centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Node2D" type="Node2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(0, 384)
+script = ExtResource("7_d5r3c")
+
+[node name="GiantClouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+modulate = Color(1, 1, 1, 0.713726)
+position = Vector2(416, -144)
+texture = ExtResource("8_6h14m")
 metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
