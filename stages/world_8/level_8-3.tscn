@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dvs3d2ernm7m6"]
+[gd_scene load_steps=68 format=3 uid="uid://dvs3d2ernm7m6"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_18jpy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wcgs6"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://cera40cx2nakg" path="res://engine/objects/fluid/textures/lava_7.png" id="20_bgwhc"]
 [ext_resource type="PackedScene" uid="uid://c4enqp3bwybyh" path="res://stages/world_8/objects/8-3_platform/8-3_platform_path.tscn" id="20_n73q4"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="21_ql2w2"]
+[ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="21_x3jnp"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="22_lu4ex"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="23_sy8o8"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="24_coxyk"]
@@ -36,9 +37,10 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="28_vs3by"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="37_uc4ui"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="38_04bji"]
-[ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="39_6bwh7"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="40_0gmih"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="40_x4r7x"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="41_5uuwc"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="41_y0osg"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
 frames = 7
@@ -59,6 +61,20 @@ frame_6/duration = 0.15
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k2mc0"]
 size = Vector2(32, 448)
+
+[sub_resource type="Resource" id="Resource_tjcsc"]
+script = ExtResource("26_rnb6j")
+creation_fallback_node = ExtResource("40_0gmih")
+creation_nodepack = ExtResource("41_5uuwc")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Gradient" id="Gradient_pynlr"]
 colors = PackedColorArray(0.517647, 0, 0, 1, 1, 0, 0, 0)
@@ -202,20 +218,12 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_jm7fa"]
-resource_local_to_scene = true
-script = ExtResource("26_rnb6j")
-creation_fallback_node = ExtResource("40_0gmih")
-creation_nodepack = ExtResource("41_5uuwc")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
+[sub_resource type="Gradient" id="Gradient_kyugb"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_eq42k"]
+gradient = SubResource("Gradient_kyugb")
+width = 112
 
 [node name="Level8-3" type="Node2D"]
 script = ExtResource("1_18jpy")
@@ -242,6 +250,7 @@ metadata/_edit_lock_ = true
 offset_top = -7328.0
 offset_right = 700.0
 offset_bottom = 488.0
+metadata/_edit_lock_ = true
 
 [node name="CameraArea2" parent="." instance=ExtResource("8_l75l4")]
 offset_top = -8704.0
@@ -468,6 +477,10 @@ position = Vector2(80, -2768)
 
 [node name="Coin18" parent="Objects" instance=ExtResource("13_4vjhy")]
 position = Vector2(16, -2928)
+
+[node name="QuestionBlock26" parent="Objects" instance=ExtResource("21_x3jnp")]
+position = Vector2(112, 144)
+result = SubResource("Resource_tjcsc")
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("24_qti0o")
@@ -733,8 +746,21 @@ use_blur_transition = true
 [node name="PipeOut" parent="." instance=ExtResource("38_04bji")]
 position = Vector2(32, -8400)
 
-[node name="QuestionBlockFireFlower" parent="." instance=ExtResource("39_6bwh7")]
-position = Vector2(112, 144)
-result = SubResource("Resource_jm7fa")
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("40_x4r7x")
+
+[node name="TileMap2" type="TileMap" parent="Node2D2"]
+tile_set = ExtResource("41_y0osg")
+format = 2
+layer_0/tile_data = PackedInt32Array(-262141, 2, 327680, -1507311, 2, 327680, -2490353, 2, 196608, -3473404, 2, 196608, -4653052, 2, 196608, -5636085, 2, 196608, -6422511, 2, 327680, -7602170, 2, 196608, -9502705, 2, 196608, -10747903, 2, 327680, -11862012, 2, 196608, -13565937, 2, 196608, -14155774, 2, 327680, -15597552, 2, 65536, -16449531, 2, 131072, -17825782, 2, 65536)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D2"]
+z_index = -13
+position = Vector2(13592, -8704)
+rotation = 1.5708
+scale = Vector2(1, 13588.6)
+texture = SubResource("GradientTexture1D_eq42k")
+centered = false
+script = ExtResource("40_x4r7x")
 
 [connection signal="warp_started" from="PipeIn" to="Node2D" method="koniec_gry"]
