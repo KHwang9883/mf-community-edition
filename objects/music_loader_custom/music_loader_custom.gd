@@ -1,0 +1,57 @@
+extends "res://engine/objects/core/music_loader/music_loader.gd"
+
+@export_category("Tweaks")
+## ver 2.16 soundtrack
+@export var music_var_1: Array[Resource]
+## ver 5.05 soundtrack
+@export var music_var_2: Array[Resource]
+## ver 7.02-31 soundtrack
+@export var music_var_3: Array[Resource]
+
+var current_music: Array[Resource]
+
+func _ready():
+	match SettingsManager.get_tweak("bgm_as_in_version", 0):
+		1:
+			if music_var_1.size() > 0:
+				current_music = music_var_1.duplicate()
+		2:
+			if music_var_2.size() > 0:
+				current_music = music_var_2.duplicate()
+		3:
+			if music_var_3.size() > 0:
+				current_music = music_var_3.duplicate()
+	current_music = music.duplicate()
+	super()
+
+func _change_music(ind: int, ch_id: int) -> void:
+	if current_music.size() <= ind: return
+	var options = [
+		current_music[ind],
+		ch_id,
+		{
+			"ignore_pause": true, 
+			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
+			"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0
+		}
+	]
+	if play_immediately:
+		music_started.emit(ind)
+		var player = await Audio.play_music(options[0], options[1], options[2], play_globally)
+		(func():
+			if play_globally && player:
+				player.set_meta(&"play_when_scene_changed", true)
+		).call_deferred()
+		is_paused = false
+	else:
+		music_buffered.emit(ind)
+		buffer = options
+
+func play_or_buffer(ind: int = index, ch_id: int = channel_id) -> void:
+	if !Audio._music_channels.has(ch_id) || !is_instance_valid(Audio._music_channels[ch_id]):
+		return
+	if !buffer.is_empty():
+		buffer[0] = current_music[ind]
+		buffer[1] = ch_id
+	
+	index = ind

@@ -1,7 +1,8 @@
-[gd_scene load_steps=51 format=3 uid="uid://ht5id10ochxu"]
+[gd_scene load_steps=56 format=3 uid="uid://ht5id10ochxu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gugln"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ssfd4"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hi7ol"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_p0ll4"]
 [ext_resource type="AudioStream" uid="uid://c6dc6y4bvfej4" path="res://music/smas-underwater.mp3" id="4_xum7a"]
 [ext_resource type="Resource" uid="uid://5jcp4v83gdeg" path="res://music/smw-overworld.it" id="5_owjs8"]
@@ -30,12 +31,13 @@
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="22_3xo1v"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="23_46wvn"]
 [ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="24_58tso"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="27_olvbf"]
+[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="28_w28ox"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="29_84blv"]
 [ext_resource type="PackedScene" uid="uid://dnyk0ph5vd52a" path="res://engine/objects/enemies/cheeps/cheep_blue.tscn" id="31_mffwr"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="32_64ams"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="33_1ruqk"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="34_rlfh2"]
-[ext_resource type="PackedScene" uid="uid://c8mms5q7m2lk7" path="res://engine/objects/enemies/cheeps/cheep_red.tscn" id="35_whsa0"]
 [ext_resource type="PackedScene" uid="uid://chn8d8bjrm7eu" path="res://engine/objects/fluid/whirlpool.tscn" id="37_6x4d6"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="37_rlhmx"]
 
@@ -69,6 +71,7 @@ shader = ExtResource("12_tjsir")
 shader_parameter/wave_amplitude = 0.004
 shader_parameter/wave_frequency = 16.0
 shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = false
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
 frames = 8
@@ -88,6 +91,27 @@ frame_6/texture = ExtResource("18_7yvik")
 frame_6/duration = 0.15
 frame_7/texture = ExtResource("19_a57wy")
 frame_7/duration = 0.15
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eqomc"]
+shader = ExtResource("12_tjsir")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 2.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b4ukj"]
+shader = ExtResource("12_tjsir")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fr3w8"]
+shader = ExtResource("12_tjsir")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 5.0
+shader_parameter/y_axis = true
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_g4qe7"]
 blend_mode = 1
@@ -121,7 +145,12 @@ script = ExtResource("1_gugln")
 jump_to_scene = "res://stages/world_2/map_2.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_ssfd4")]
-music = Array[Resource]([ExtResource("4_xum7a"), null, null, null, ExtResource("5_owjs8")])
+script = ExtResource("3_hi7ol")
+music_var_1 = Array[Resource]([null])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+music = Array[Resource]([ExtResource("4_xum7a"), ExtResource("5_owjs8")])
+volume_db = Array[float]([0.0, -6.0])
 
 [node name="Mario" parent="." instance=ExtResource("4_p0ll4")]
 position = Vector2(80, 0)
@@ -142,7 +171,6 @@ offset_top = -992.0
 offset_right = 7936.0
 offset_bottom = -512.0
 change_music = true
-set_music_index = 4
 music_loader_ref = NodePath("../MusicLoader")
 metadata/_edit_lock_ = true
 
@@ -199,12 +227,24 @@ position = Vector2(0, 352)
 rotation = 1.5708
 scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_dy6jo")
+script = ExtResource("27_olvbf")
+medium = true
 metadata/_edit_lock_ = true
 
 [node name="niebo_swiatlo" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(320, 112)
-scale = Vector2(8, 112)
+position = Vector2(320, 122)
+scale = Vector2(8, 128)
 texture = SubResource("GradientTexture1D_4rqa5")
+script = ExtResource("27_olvbf")
+
+[node name="niebo_swiatlo2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+visible = false
+position = Vector2(320, 112)
+scale = Vector2(8, 128)
+texture = SubResource("GradientTexture1D_4rqa5")
+script = ExtResource("27_olvbf")
+maximum = false
+medium = true
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -258,8 +298,6 @@ script = ExtResource("15_v0hqh")
 medium = true
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
-
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 layer = 1
 
@@ -268,6 +306,7 @@ motion_mirroring = Vector2(640, 0)
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer"]
+visible = false
 z_index = 31
 offset_top = 96.0
 offset_right = 640.0
@@ -275,14 +314,52 @@ offset_bottom = 112.0
 size_flags_vertical = 0
 texture = SubResource("AnimatedTexture_cct87")
 stretch_mode = 1
+script = ExtResource("27_olvbf")
+maximum = false
+medium = true
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("ShaderMaterial_eqomc")
+position = Vector2(0, 70)
+texture = ExtResource("28_w28ox")
+centered = false
+script = ExtResource("27_olvbf")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("ShaderMaterial_b4ukj")
+position = Vector2(0, 80)
+texture = ExtResource("28_w28ox")
+centered = false
+script = ExtResource("27_olvbf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("ShaderMaterial_fr3w8")
+position = Vector2(0, 92)
+texture = ExtResource("28_w28ox")
+centered = false
+script = ExtResource("27_olvbf")
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("CanvasItemMaterial_g4qe7")
+position = Vector2(1.45519e-11, 322)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_8mgw8")
+script = ExtResource("27_olvbf")
+
+[node name="Sprite2D5" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+visible = false
 material = SubResource("CanvasItemMaterial_g4qe7")
 position = Vector2(1.45519e-11, 312)
 rotation = 1.5708
 scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_8mgw8")
+script = ExtResource("27_olvbf")
+maximum = false
+medium = true
 metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground2"]
 
 [node name="Water" parent="." instance=ExtResource("24_58tso")]
 offset_top = 96.0
@@ -292,9 +369,15 @@ metadata/_edit_lock_ = true
 
 [node name="TextureRect" parent="Water" index="0"]
 visible = false
+script = ExtResource("27_olvbf")
+maximum = false
+minimum = true
 
 [node name="ColorRect" parent="Water" index="2"]
 visible = false
+script = ExtResource("27_olvbf")
+maximum = false
+minimum = true
 
 [node name="Objects" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -457,9 +540,6 @@ offset_top = 112.0
 offset_right = 5408.0
 offset_bottom = 528.0
 metadata/_edit_lock_ = true
-
-[node name="CheepRed" parent="." instance=ExtResource("35_whsa0")]
-position = Vector2(464, 144)
 
 [node name="Checkpoint" parent="." instance=ExtResource("37_rlhmx")]
 position = Vector2(4096, 416)
