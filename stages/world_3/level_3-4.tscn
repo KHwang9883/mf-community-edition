@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bwyuvtyce0so0"]
+[gd_scene load_steps=40 format=3 uid="uid://bwyuvtyce0so0"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_morq1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_trccb"]
@@ -13,10 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="9_hbpw7"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_r6uip"]
 [ext_resource type="PackedScene" uid="uid://dvmhwh1khygq6" path="res://engine/objects/bumping_blocks/brick/brick_grey.tscn" id="10_x0cjd"]
-[ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="11_hdaju"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="12_bgjxm"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="13_fwyis"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="14_yn5by"]
+[ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="17_je73a"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="17_kwwk6"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="18_irvtw"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="19_8fn76"]
@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="25_bcpc0"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="26_5a6mr"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="28_448s3"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="29_nkc82"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="30_l7sp4"]
 
 [sub_resource type="Curve2D" id="Curve2D_aapar"]
 _data = {
@@ -42,38 +44,7 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.564706)
 gradient = SubResource("Gradient_ppdw2")
 width = 512
 
-[sub_resource type="Resource" id="Resource_iplwy"]
-resource_local_to_scene = true
-script = ExtResource("14_yn5by")
-creation_fallback_node = ExtResource("12_bgjxm")
-creation_nodepack = ExtResource("13_fwyis")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="Resource" id="Resource_wgdls"]
-resource_local_to_scene = true
-script = ExtResource("14_yn5by")
-creation_fallback_node = ExtResource("12_bgjxm")
-creation_nodepack = ExtResource("13_fwyis")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="Resource" id="Resource_m3d8w"]
-resource_local_to_scene = true
+[sub_resource type="Resource" id="Resource_b181e"]
 script = ExtResource("14_yn5by")
 creation_fallback_node = ExtResource("12_bgjxm")
 creation_nodepack = ExtResource("13_fwyis")
@@ -101,6 +72,13 @@ point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
 size = Vector2(480, 32)
+
+[sub_resource type="Gradient" id="Gradient_k5ryj"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6ayp0"]
+gradient = SubResource("Gradient_k5ryj")
+width = 112
 
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_morq1")
@@ -188,18 +166,6 @@ color = Color(0, 0, 0, 0.564706)
 
 [node name="Brick" parent="Objects" instance=ExtResource("10_x0cjd")]
 position = Vector2(-48, 16)
-
-[node name="QuestionBlockFireFlower" parent="Objects" instance=ExtResource("11_hdaju")]
-position = Vector2(368, 208)
-result = SubResource("Resource_iplwy")
-
-[node name="QuestionBlockFireFlower2" parent="Objects" instance=ExtResource("11_hdaju")]
-position = Vector2(11376, 176)
-result = SubResource("Resource_wgdls")
-
-[node name="QuestionBlockFireFlower3" parent="Objects" instance=ExtResource("11_hdaju")]
-position = Vector2(11088, 240)
-result = SubResource("Resource_m3d8w")
 
 [node name="PiranhaGreen" parent="Objects" instance=ExtResource("17_kwwk6")]
 position = Vector2(5408, 288)
@@ -306,6 +272,18 @@ position = Vector2(4160, 16)
 [node name="FallingStone2" parent="Objects" instance=ExtResource("19_omkyg")]
 position = Vector2(10208, 16)
 
+[node name="QuestionBlock10" parent="Objects" instance=ExtResource("17_je73a")]
+position = Vector2(368, 208)
+result = SubResource("Resource_b181e")
+
+[node name="QuestionBlock11" parent="Objects" instance=ExtResource("17_je73a")]
+position = Vector2(11088, 240)
+result = SubResource("Resource_b181e")
+
+[node name="QuestionBlock12" parent="Objects" instance=ExtResource("17_je73a")]
+position = Vector2(11376, 176)
+result = SubResource("Resource_b181e")
+
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_8dua0")
 
@@ -408,5 +386,22 @@ z_index = -1
 position = Vector2(11726, 343)
 texture = ExtResource("28_448s3")
 flip_h = true
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("29_nkc82")
+
+[node name="TileMap" type="TileMap" parent="Node2D"]
+tile_set = ExtResource("30_l7sp4")
+format = 2
+layer_0/tile_data = PackedInt32Array(10, 2, 65536, 720937, 2, 65536, 720968, 2, 196608, 110, 2, 196608, 184, 2, 196608, 205, 2, 196608, 196836, 2, 196608, 65779, 2, 196608, 721185, 2, 196608, 65847, 2, 196608, 351, 2, 65536, 458847, 2, 327680, 131198, 2, 327680, 721037, 2, 327680, 131232, 2, 327680, 131328, 2, 327680, 655684, 2, 327680)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+z_index = -20
+position = Vector2(12276, 0.0389367)
+rotation = 1.5708
+scale = Vector2(1, 12279)
+texture = SubResource("GradientTexture1D_6ayp0")
+centered = false
+script = ExtResource("29_nkc82")
 
 [editable path="BowserJump"]
