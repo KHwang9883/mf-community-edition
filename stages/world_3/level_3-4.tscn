@@ -1,8 +1,10 @@
-[gd_scene load_steps=41 format=3 uid="uid://bwyuvtyce0so0"]
+[gd_scene load_steps=47 format=3 uid="uid://bwyuvtyce0so0"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_morq1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_trccb"]
 [ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="3_k02uv"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_mt3gq"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_hpg8a"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_t6cwn"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="5_7rvvr"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="6_5cirm"]
@@ -24,12 +26,15 @@
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="20_dba8a"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="21_uydls"]
 [ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="22_jxobr"]
+[ext_resource type="PackedScene" uid="uid://v8yd4gsc1bdg" path="res://stages/world_3/scripts/fast_flame.tscn" id="23_ifoia"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="24_2flj7"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="24_c01xw"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="25_bcpc0"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="26_5a6mr"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="28_448s3"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="29_nkc82"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="30_l7sp4"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="31_tn037"]
 
 [sub_resource type="Curve2D" id="Curve2D_aapar"]
 _data = {
@@ -60,21 +65,28 @@ custom_vars = {}
 
 [sub_resource type="Curve2D" id="Curve2D_ob1la"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 256, -5184, 0, 0, 0, 0, 576, -5184)
+"points": PackedVector2Array(0, 0, 0, 0, 246, -5184, 0, 0, 0, 0, 588, -5184)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_k20qr"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 96, -4544, 0, 0, 0, 0, 320, -4544)
+"points": PackedVector2Array(0, 0, 0, 0, 86, -4544, 0, 0, 0, 0, 330, -4544)
 }
 point_count = 2
 
-[sub_resource type="Curve2D" id="Curve2D_ym120"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 5488, 288, 0, 0, 0, 0, 5808, 288)
-}
-point_count = 2
+[sub_resource type="Resource" id="Resource_717oo"]
+script = ExtResource("24_2flj7")
+creation_nodepack = ExtResource("23_ifoia")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
 size = Vector2(480, 32)
@@ -86,11 +98,18 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 gradient = SubResource("Gradient_k5ryj")
 width = 112
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2qu8t"]
+
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_morq1")
 jump_to_scene = "res://stages/world_3/map_3_complete.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_trccb")]
+script = ExtResource("3_mt3gq")
+tweaked_completion_music = ExtResource("4_hpg8a")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
 music = Array[Resource]([ExtResource("3_k02uv")])
 
 [node name="Mario" parent="." instance=ExtResource("4_t6cwn")]
@@ -287,17 +306,16 @@ position = Vector2(5232, 5472)
 curve = SubResource("Curve2D_ob1la")
 
 [node name="PlatformPath" parent="Path2D" instance=ExtResource("16_af55o")]
-position = Vector2(256, -5184)
+position = Vector2(246, -5184)
 
 [node name="Path2D3" type="Path2D" parent="."]
 position = Vector2(5008, 4832)
 curve = SubResource("Curve2D_k20qr")
 
 [node name="PlatformPath" parent="Path2D3" instance=ExtResource("16_af55o")]
-position = Vector2(96, -4544)
-
-[node name="Path2D2" type="Path2D" parent="."]
-curve = SubResource("Curve2D_ym120")
+position = Vector2(86, -4544)
+speed = 100.0
+smooth_enabled = false
 
 [node name="Lava" parent="." instance=ExtResource("19_8fn76")]
 offset_left = 11712.0
@@ -309,6 +327,7 @@ offset_bottom = 506.0
 position = Vector2(12096, 256)
 status_interval = Array[float]([3.0])
 status = Array[StringName]([&"flame"])
+flame = SubResource("Resource_717oo")
 speed = Vector2(150, 0)
 
 [node name="BowserEdge" parent="." instance=ExtResource("21_uydls")]
@@ -393,7 +412,7 @@ script = ExtResource("29_nkc82")
 [node name="TileMap" type="TileMap" parent="Node2D"]
 tile_set = ExtResource("30_l7sp4")
 format = 2
-layer_0/tile_data = PackedInt32Array(10, 2, 65536, 720937, 2, 65536, 720968, 2, 196608, 110, 2, 196608, 184, 2, 196608, 205, 2, 196608, 196836, 2, 196608, 65779, 2, 196608, 721185, 2, 196608, 65847, 2, 196608, 351, 2, 65536, 458847, 2, 327680, 131198, 2, 327680, 721037, 2, 327680, 131232, 2, 327680, 131328, 2, 327680, 655684, 2, 327680)
+layer_0/tile_data = PackedInt32Array(10, 2, 393216, 720937, 2, 393216, 720968, 2, 196608, 110, 2, 196608, 205, 2, 196608, 196836, 2, 196608, 65779, 2, 196608, 721185, 2, 196608, 65847, 2, 196608, 351, 2, 393216, 458847, 2, 327680, 131198, 2, 327680, 721037, 2, 327680, 131232, 2, 327680, 131328, 2, 327680, 655684, 2, 327680, 183, 2, 327680)
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 z_index = -20
@@ -403,5 +422,10 @@ scale = Vector2(1, 12279)
 texture = SubResource("GradientTexture1D_6ayp0")
 centered = false
 script = ExtResource("29_nkc82")
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("31_tn037")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+shape = SubResource("WorldBoundaryShape2D_2qu8t")
 
 [editable path="BowserJump"]

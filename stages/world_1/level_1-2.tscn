@@ -1,9 +1,10 @@
-[gd_scene load_steps=89 format=3 uid="uid://bgdaesvf0ofqu"]
+[gd_scene load_steps=90 format=3 uid="uid://bgdaesvf0ofqu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_p6ptf"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_0wjpp"]
-[ext_resource type="Resource" uid="uid://5jcp4v83gdeg" path="res://music/smw-overworld.it" id="4_gpvhw"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_gcmyw"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_jw6ru"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_u4cd8"]
 [ext_resource type="AudioStream" uid="uid://dwcak56md3who" path="res://music/smw-underground.ogg" id="5_myapj"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_c5oti"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_c3v34"]
@@ -555,7 +556,12 @@ script = ExtResource("1_p6ptf")
 jump_to_scene = "res://stages/world_1/map_1.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_0wjpp")]
-music = Array[Resource]([ExtResource("5_myapj"), ExtResource("4_gpvhw")])
+script = ExtResource("3_gcmyw")
+tweaked_completion_music = ExtResource("4_u4cd8")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+music = Array[Resource]([ExtResource("5_myapj")])
 
 [node name="Mario" parent="." instance=ExtResource("4_jw6ru")]
 position = Vector2(80, 960)
@@ -666,6 +672,7 @@ horizontal_alignment = 1
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("19_f4xq0")
+medium = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

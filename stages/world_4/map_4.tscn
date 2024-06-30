@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cx7vsc87xwwgn"]
+[gd_scene load_steps=31 format=3 uid="uid://cx7vsc87xwwgn"]
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_gb5tm"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ujxru"]
@@ -12,12 +12,24 @@
 [ext_resource type="Texture2D" uid="uid://ha4rhx5mll7g" path="res://gfx/map/world_names/world_4.png" id="8_mghfm"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/world_text.gd" id="9_1ryom"]
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="10_aqiut"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="10_nd01u"]
 [ext_resource type="Texture2D" uid="uid://h5k1m7htt20h" path="res://engine/scenes/map/textures/press_start.png" id="11_urrxp"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/start_text.gd" id="12_ebpqe"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/marker_space.gd" id="13_eslgo"]
 [ext_resource type="Texture2D" uid="uid://cyx06gn10n78x" path="res://engine/scenes/map/textures/debug.png" id="14_1uqio"]
+[ext_resource type="Texture2D" uid="uid://d0eypwpu7pi5i" path="res://gfx/fancy_graphics/world_texts/world_4.png" id="14_st1j7"]
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_x68wu"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_pfkv8"]
+[ext_resource type="Texture2D" uid="uid://cm3ivuidbyon1" path="res://gfx/fancy_graphics/map_jump_to_start.png" id="18_ylhbd"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_bjjwq"]
+[ext_resource type="PackedScene" uid="uid://dgyfu1v14ewiu" path="res://gfx/fancy_graphics/quality_dots.tscn" id="20_jru01"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="20_ve1ep"]
+[ext_resource type="Texture2D" uid="uid://o7g45tfg2ic8" path="res://gfx/fancy_graphics/Bowsert.png" id="21_1b8nf"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_bowser.gd" id="22_icmup"]
+[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="23_vbjsi"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="24_2xuep"]
+[ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="25_vljnp"]
+[ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="30_s70ew"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_gb5tm")
@@ -79,25 +91,68 @@ position_smoothing_speed = 10.0
 editor_draw_limits = true
 script = ExtResource("7_i2q3d")
 
-[node name="GUI" type="CanvasLayer" parent="."]
+[node name="CloudLightEffect" type="Sprite2D" parent="Player"]
+self_modulate = Color(1, 1, 1, 0.784314)
+z_index = -5
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("10_nd01u")
+script = ExtResource("19_bjjwq")
 
-[node name="Sprite2D" type="Sprite2D" parent="GUI"]
+[node name="GUI2" type="CanvasLayer" parent="."]
+
+[node name="WorldText" type="Sprite2D" parent="GUI2"]
+self_modulate = Color(1, 1, 1, 0)
 position = Vector2(320, -64)
 texture = ExtResource("8_mghfm")
 script = ExtResource("9_1ryom")
 
-[node name="BounceMarker" type="Marker2D" parent="GUI/Sprite2D"]
+[node name="BounceMarker" type="Marker2D" parent="GUI2/WorldText"]
 position = Vector2(0, 146)
 
-[node name="MarioIcon" type="Sprite2D" parent="GUI"]
+[node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
+visible = false
+texture = ExtResource("8_mghfm")
+script = ExtResource("19_bjjwq")
+maximum = false
+medium = true
+minimum = true
+
+[node name="World4" type="Sprite2D" parent="GUI2/WorldText"]
+texture = ExtResource("14_st1j7")
+offset = Vector2(0, 24)
+script = ExtResource("19_bjjwq")
+
+[node name="MarioIcon" type="Sprite2D" parent="GUI2"]
 position = Vector2(581, 436)
 texture = ExtResource("10_aqiut")
 metadata/_edit_lock_ = true
 
-[node name="PressStart" type="Sprite2D" parent="GUI"]
+[node name="PressStart" type="Node2D" parent="GUI2"]
 position = Vector2(320, 443)
-texture = ExtResource("11_urrxp")
 script = ExtResource("12_ebpqe")
+
+[node name="EnterToStart" type="Sprite2D" parent="GUI2/PressStart"]
+visible = false
+texture = ExtResource("11_urrxp")
+script = ExtResource("19_bjjwq")
+maximum = false
+medium = true
+minimum = true
+
+[node name="MapJumpToStart" type="Sprite2D" parent="GUI2/PressStart"]
+texture = ExtResource("18_ylhbd")
+script = ExtResource("19_bjjwq")
+
+[node name="BG2" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Node2D" type="Node2D" parent="BG2"]
+script = ExtResource("19_bjjwq")
+
+[node name="GwiazdkowyMapowy" type="Sprite2D" parent="BG2/Node2D"]
+position = Vector2(320, 64)
+texture = ExtResource("25_vljnp")
+script = ExtResource("20_ve1ep")
 
 [node name="MarkerSpace" type="Node2D" parent="."]
 editor_description = "Use this as World"
@@ -247,3 +302,48 @@ position = Vector2(1664, 309)
 rotation = -1.57068
 script = ExtResource("16_pfkv8")
 level = "res://stages/world_4/level_4-4.tscn"
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("19_bjjwq")
+
+[node name="QualityDots" parent="Node2D" instance=ExtResource("20_jru01")]
+dot_offset = Vector2(5, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(1732, 300)
+texture = ExtResource("21_1b8nf")
+script = ExtResource("22_icmup")
+
+[node name="Sun" type="Sprite2D" parent="Node2D"]
+position = Vector2(112, 112)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("23_vbjsi")
+script = ExtResource("24_2xuep")
+speed = 150.0
+
+[node name="MapCloud" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(464, 160)
+
+[node name="MapCloud8" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(176, 48)
+
+[node name="MapCloud2" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(624, 64)
+
+[node name="MapCloud9" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(688, 192)
+
+[node name="MapCloud3" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(880, 128)
+
+[node name="MapCloud4" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(1152, 64)
+
+[node name="MapCloud5" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(1328, 128)
+
+[node name="MapCloud6" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(1504, 64)
+
+[node name="MapCloud7" parent="Node2D" instance=ExtResource("30_s70ew")]
+position = Vector2(1648, 128)

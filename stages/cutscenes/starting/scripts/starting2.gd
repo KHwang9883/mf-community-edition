@@ -58,6 +58,8 @@ func _flow_intros() -> void:
 	_restore()
 	await get_tree().physics_frame
 	await get_tree().physics_frame
+	ProfileManager.current_profile.data.current_world = goto_scene
+	ProfileManager.save_current_profile()
 	Scenes.goto_scene.call_deferred(goto_scene)
 
 func _physics_process(_delta: float) -> void:

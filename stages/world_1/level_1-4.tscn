@@ -1,9 +1,11 @@
-[gd_scene load_steps=48 format=3 uid="uid://c0r6ld204t00b"]
+[gd_scene load_steps=52 format=3 uid="uid://c0r6ld204t00b"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_27fo5"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_xf0qf"]
-[ext_resource type="Resource" uid="uid://b4kjh4mf2kcs6" path="res://music/smw2-castle.it" id="3_rv0g5"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_orbv5"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_linka"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_vdnd0"]
+[ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="5_4ib86"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="5_lc0ev"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_2l2s3"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="6_mveqt"]
@@ -33,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://db85vh72kcsmg" path="res://engine/objects/effects/lavafall/lavafall.tscn" id="33_frhih"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="34_gjuy5"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="35_mekm6"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="35_wijmp"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="36_b28n6"]
 
 [sub_resource type="Curve2D" id="Curve2D_gjfjy"]
@@ -180,13 +183,20 @@ custom_vars = {}
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13vrs"]
 size = Vector2(480, 32)
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_aplfq"]
+
 [node name="Level1-4" type="Node2D"]
 script = ExtResource("1_27fo5")
 jump_to_scene = "res://stages/world_1/end_cutscene.tscn"
 metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_xf0qf")]
-music = Array[Resource]([ExtResource("3_rv0g5")])
+script = ExtResource("3_orbv5")
+tweaked_completion_music = ExtResource("4_linka")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+music = Array[Resource]([ExtResource("5_4ib86")])
 
 [node name="Mario" parent="." instance=ExtResource("4_vdnd0")]
 position = Vector2(128, 336)
@@ -671,6 +681,11 @@ z_index = -1
 position = Vector2(8381, 341)
 texture = ExtResource("35_mekm6")
 flip_h = true
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("35_wijmp")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+shape = SubResource("WorldBoundaryShape2D_aplfq")
 
 [connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
 

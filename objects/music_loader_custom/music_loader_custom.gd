@@ -1,6 +1,7 @@
 extends "res://engine/objects/core/music_loader/music_loader.gd"
 
 @export_category("Tweaks")
+@export var tweaked_completion_music: Resource = preload("res://music/complete_tweaked.ogg")
 ## ver 2.16 soundtrack
 @export var music_var_1: Array[Resource]
 ## ver 5.05 soundtrack
@@ -15,12 +16,17 @@ func _ready():
 		1:
 			if music_var_1.size() > 0:
 				current_music = music_var_1.duplicate()
+				super(); return
 		2:
+			Scenes.current_scene.completion_music = tweaked_completion_music
 			if music_var_2.size() > 0:
 				current_music = music_var_2.duplicate()
+				super(); return
 		3:
+			Scenes.current_scene.completion_music = tweaked_completion_music
 			if music_var_3.size() > 0:
 				current_music = music_var_3.duplicate()
+				super(); return
 	current_music = music.duplicate()
 	super()
 

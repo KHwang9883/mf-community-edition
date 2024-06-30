@@ -1,8 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://6lh12nsohmq4"]
+[gd_scene load_steps=49 format=3 uid="uid://6lh12nsohmq4"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_hl5e1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3phlc"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_abmn6"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_2tcy5"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_5fd38"]
 [ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="4_fhqg2"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_sghht"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_37cig"]
@@ -29,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://bcb0p63rnf2gm" path="res://tilesets/castle/gfx/bowser_portrait_anim.png" id="27_0mk14"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="28_cxqtk"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="29_uffad"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="30_6qlvu"]
 
 [sub_resource type="Resource" id="Resource_84omh"]
 script = ExtResource("16_1537t")
@@ -136,11 +139,18 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 gradient = SubResource("Gradient_675bo")
 width = 112
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c6tji"]
+
 [node name="Level8-1" type="Node2D"]
 script = ExtResource("1_hl5e1")
 jump_to_scene = "res://stages/world_8/map_8.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_3phlc")]
+script = ExtResource("3_abmn6")
+tweaked_completion_music = ExtResource("4_5fd38")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
 music = Array[Resource]([ExtResource("4_fhqg2")])
 
 [node name="Mario" parent="." instance=ExtResource("4_2tcy5")]
@@ -206,22 +216,18 @@ initially_visible_and_solid = false
 
 [node name="Centipede2" parent="Centipedes" instance=ExtResource("15_8imaj")]
 position = Vector2(784, 288)
-moving_sound = null
 centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
 
 [node name="Centipede3" parent="Centipedes" instance=ExtResource("15_8imaj")]
 position = Vector2(784, 288)
-moving_sound = null
 centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
 
 [node name="Centipede4" parent="Centipedes" instance=ExtResource("15_8imaj")]
 position = Vector2(784, 288)
-moving_sound = null
 centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
 
 [node name="Centipede5" parent="Centipedes" instance=ExtResource("15_8imaj")]
 position = Vector2(784, 288)
-moving_sound = null
 centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
 
 [node name="Centipede" parent="Centipedes" instance=ExtResource("15_8imaj")]
@@ -630,7 +636,7 @@ z_index = -20
 script = ExtResource("28_cxqtk")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-z_index = -13
+z_index = 40
 position = Vector2(13585.6, 0.0436772)
 rotation = 1.5708
 scale = Vector2(1, 13588.6)
@@ -641,4 +647,9 @@ script = ExtResource("28_cxqtk")
 [node name="TileMap" type="TileMap" parent="Node2D"]
 tile_set = ExtResource("29_uffad")
 format = 2
-layer_0/tile_data = PackedInt32Array(720935, 2, 65536, 15, 2, 65536, 720949, 2, 65536, 786502, 2, 65536, 393316, 2, 65536, 721021, 2, 131072, 721037, 2, 131072, 169, 2, 65536, 393412, 2, 65536, 852193, 2, 65536)
+layer_0/tile_data = PackedInt32Array(720935, 2, 393216, 15, 2, 196608, 720949, 2, 393216, 786502, 2, 393216, 393316, 2, 393216, 721021, 2, 458752, 721037, 2, 458752, 393412, 2, 393216, 852193, 2, 393216, 168, 2, 327680, 327880, 2, 196608)
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("30_6qlvu")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+shape = SubResource("WorldBoundaryShape2D_c6tji")

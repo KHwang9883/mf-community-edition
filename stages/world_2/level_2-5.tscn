@@ -1,8 +1,10 @@
-[gd_scene load_steps=50 format=3 uid="uid://brtc0tw8taj68"]
+[gd_scene load_steps=55 format=3 uid="uid://brtc0tw8taj68"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_6d70v"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ia01j"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_pw2a1"]
 [ext_resource type="AudioStream" uid="uid://bd7r5d5eb275q" path="res://music/smw-haunted-house.ogg" id="3_uco5t"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_ap3c0"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_c3l33"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="5_4pleq"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="6_c722j"]
@@ -38,6 +40,8 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="37_6ml5c"]
 [ext_resource type="Texture2D" uid="uid://bcb0p63rnf2gm" path="res://tilesets/castle/gfx/bowser_portrait_anim.png" id="37_pb2jt"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="38_akein"]
+[ext_resource type="PackedScene" uid="uid://uhf6frao7p1m" path="res://engine/objects/enemies/podoboo/podoboo.tscn" id="39_swa3y"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="40_0e3vc"]
 
 [sub_resource type="Curve2D" id="Curve2D_aapar"]
 _data = {
@@ -144,11 +148,18 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 gradient = SubResource("Gradient_epn8q")
 width = 112
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c1orb"]
+
 [node name="Level2-5" type="Node2D"]
 script = ExtResource("1_6d70v")
 jump_to_scene = "res://stages/world_2/map_2_complete.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_ia01j")]
+script = ExtResource("3_pw2a1")
+tweaked_completion_music = ExtResource("4_ap3c0")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
 music = Array[Resource]([ExtResource("3_uco5t")])
 
 [node name="Mario" parent="." instance=ExtResource("4_c3l33")]
@@ -199,6 +210,7 @@ horizontal_alignment = 1
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_offset = Vector2(200, 0)
 motion_mirroring = Vector2(1023, 0)
 
 [node name="BgCastle" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
@@ -606,7 +618,7 @@ position = Vector2(5968, 336)
 
 [node name="BowserPortrait" type="Sprite2D" parent="."]
 z_index = -21
-position = Vector2(7333, 48)
+position = Vector2(7280, 48)
 texture = ExtResource("36_xy8dk")
 centered = false
 
@@ -616,7 +628,7 @@ centered = false
 
 [node name="BowserPortrait2" type="Sprite2D" parent="."]
 z_index = -21
-position = Vector2(3752, 80)
+position = Vector2(3696, 48)
 texture = ExtResource("36_xy8dk")
 centered = false
 
@@ -629,6 +641,7 @@ z_index = -20
 script = ExtResource("37_6ml5c")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+z_index = 30
 position = Vector2(9060.71, 0.0272973)
 rotation = 1.5708
 scale = Vector2(1, 9063.72)
@@ -639,6 +652,15 @@ script = ExtResource("37_6ml5c")
 [node name="TileMap" type="TileMap" parent="Node2D"]
 tile_set = ExtResource("38_akein")
 format = 2
-layer_0/tile_data = PackedInt32Array(786466, 2, 65536, 852019, 2, 65536, 196653, 2, 65536, 196630, 2, 65536, 196669, 2, 65536, 786508, 2, 65536, 852055, 2, 65536, 196701, 2, 65536, 852078, 2, 65536, 262277, 2, 65536, 196765, 2, 65536, 852153, 2, 65536, 196784, 2, 65536, 458954, 2, 65536, 917719, 2, 65536, 917741, 2, 65536)
+layer_0/tile_data = PackedInt32Array(852019, 2, 196608, 196653, 2, 393216, 196669, 2, 393216, 786508, 2, 65536, 852153, 2, 196608, 196784, 2, 393216, 196630, 2, 393216, 786466, 2, 393216, 196700, 2, 458752, 393346, 2, 458752, 196763, 2, 458752, 852078, 2, 393216, 458974, 2, 458752, 917718, 2, 458752, 65738, 2, 327680, 196684, 2, 327680, 917741, 2, 196608)
+
+[node name="Podoboo" parent="." instance=ExtResource("39_swa3y")]
+position = Vector2(8592, 432)
+jumping_height = 320.0
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("40_0e3vc")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+shape = SubResource("WorldBoundaryShape2D_c1orb")
 
 [editable path="BowserJump"]

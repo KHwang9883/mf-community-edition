@@ -1,11 +1,15 @@
-[gd_scene load_steps=52 format=3 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=56 format=3 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_w4tlr"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ct0he"]
 [ext_resource type="AudioStream" uid="uid://c6dc6y4bvfej4" path="res://music/smas-underwater.mp3" id="3_nfpdo"]
-[ext_resource type="Resource" uid="uid://5jcp4v83gdeg" path="res://music/smw-overworld.it" id="4_7ifcn"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_otq72"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_u2ge6"]
+[ext_resource type="AudioStream" uid="uid://diuf7iidscu13" path="res://music/smw-underwater.ogg" id="5_w25ey"]
+[ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="6_2nuco"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_ahjuh"]
+[ext_resource type="AudioStream" uid="uid://co70gdke0u16k" path="res://music/smb3-underwater.ogg" id="7_kfhc0"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_n5kdq"]
 [ext_resource type="TileSet" uid="uid://7ahm7i5kbbn6" path="res://tilesets/underwater/underwater.tres" id="8_lwnfr"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_xomgh"]
@@ -122,8 +126,13 @@ script = ExtResource("1_f3t4r")
 jump_to_scene = "res://stages/world_7/map_7.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_w4tlr")]
-music = Array[Resource]([ExtResource("3_nfpdo"), null, null, null, ExtResource("4_7ifcn")])
-volume_db = Array[float]([0.0, 0.0, 0.0, 0.0, -6.0])
+script = ExtResource("3_ct0he")
+tweaked_completion_music = ExtResource("4_otq72")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([ExtResource("5_w25ey"), ExtResource("6_2nuco")])
+music_var_3 = Array[Resource]([ExtResource("7_kfhc0"), ExtResource("6_2nuco")])
+music = Array[Resource]([ExtResource("3_nfpdo"), ExtResource("6_2nuco")])
+volume_db = Array[float]([0.0, 0.0])
 
 [node name="Mario" parent="." instance=ExtResource("5_u2ge6")]
 position = Vector2(80, 0)
@@ -144,7 +153,6 @@ offset_top = -992.0
 offset_right = 7936.0
 offset_bottom = -512.0
 change_music = true
-set_music_index = 4
 music_loader_ref = NodePath("../MusicLoader")
 metadata/_edit_lock_ = true
 
