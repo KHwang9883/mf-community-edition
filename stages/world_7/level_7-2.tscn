@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=52 format=3 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_w4tlr"]
@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://7x7ldavwikao" path="res://engine/objects/enemies/cheeps/cheep_green.tscn" id="36_w37n4"]
 [ext_resource type="PackedScene" uid="uid://cvfwhq3j5n5k5" path="res://engine/objects/enemies/cheeps/cheep_yellow.tscn" id="37_pxdn8"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="38_iu21m"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="39_6jwl0"]
 
 [sub_resource type="Gradient" id="Gradient_1csnf"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -68,6 +69,7 @@ shader = ExtResource("13_7nqqo")
 shader_parameter/wave_amplitude = 0.004
 shader_parameter/wave_frequency = 16.0
 shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = false
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
 frames = 8
@@ -334,7 +336,6 @@ force_direction = -1
 position = Vector2(7504, 320)
 rotation = -1.57079
 warp_direction = 1
-warp_invisible_left_right = null
 warp_to = NodePath("../PipeOut")
 use_blur_transition = true
 
@@ -441,6 +442,9 @@ position = Vector2(3472, 176)
 
 [node name="Checkpoint" parent="." instance=ExtResource("38_iu21m")]
 position = Vector2(4592, 416)
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("39_6jwl0")
 
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 
