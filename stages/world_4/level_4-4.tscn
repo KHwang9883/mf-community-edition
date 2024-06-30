@@ -1,7 +1,9 @@
-[gd_scene load_steps=54 format=3 uid="uid://dr7s8f6ht3s4f"]
+[gd_scene load_steps=58 format=3 uid="uid://dr7s8f6ht3s4f"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_w25u2"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_n2l7r"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_wr4k5"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_7rgrm"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_kckq7"]
 [ext_resource type="AudioStream" uid="uid://bd7r5d5eb275q" path="res://music/smw-haunted-house.ogg" id="4_x0o78"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_a37vx"]
@@ -28,6 +30,7 @@
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="31_l1021"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="31_n44gu"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="32_0kgjy"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="32_4fq6x"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="33_ecokj"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="34_wpot0"]
 [ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="35_eemyd"]
@@ -298,11 +301,18 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 gradient = SubResource("Gradient_3cqhw")
 width = 112
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_upr6p"]
+
 [node name="Level4-4" type="Node2D"]
 script = ExtResource("1_w25u2")
 jump_to_scene = "res://stages/world_4/map_4_complete.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_n2l7r")]
+script = ExtResource("3_wr4k5")
+tweaked_completion_music = ExtResource("4_7rgrm")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
 music = Array[Resource]([ExtResource("4_x0o78")])
 
 [node name="Mario" parent="." instance=ExtResource("4_kckq7")]
@@ -644,6 +654,11 @@ script = ExtResource("30_xw2ue")
 [node name="TileMap" type="TileMap" parent="Node2D"]
 tile_set = ExtResource("31_l1021")
 format = 2
-layer_0/tile_data = PackedInt32Array(655374, 2, 65536, 38, 2, 65536, 655405, 2, 131072, 56, 2, 65536, 76, 2, 65536, 90, 2, 65536, 655458, 2, 65536, 393342, 2, 131072, 327832, 2, 65536, 262322, 2, 131072, 196812, 2, 131072, 262372, 2, 131072)
+layer_0/tile_data = PackedInt32Array(38, 2, 393216, 655405, 2, 458752, 56, 2, 393216, 76, 2, 393216, 90, 2, 393216, 655458, 2, 393216, 393342, 2, 458752, 327832, 2, 393216, 262322, 2, 458752, 196812, 2, 458752, 262372, 2, 458752, 655383, 2, 458752, 655428, 2, 458752)
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("32_4fq6x")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+shape = SubResource("WorldBoundaryShape2D_upr6p")
 
 [editable path="BowserJump"]

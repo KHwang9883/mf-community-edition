@@ -1,8 +1,10 @@
-[gd_scene load_steps=56 format=3 uid="uid://dlti0l2n1ix8d"]
+[gd_scene load_steps=62 format=3 uid="uid://dlti0l2n1ix8d"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0omu6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sn434"]
-[ext_resource type="Resource" uid="uid://5jcp4v83gdeg" path="res://music/smw-overworld.it" id="3_7qqdy"]
+[ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="3_784ol"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hmq3v"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_wav8n"]
 [ext_resource type="AudioStream" uid="uid://dwcak56md3who" path="res://music/smw-underground.ogg" id="4_y4qvn"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_qc2in"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_ejrb2"]
@@ -41,6 +43,9 @@
 [ext_resource type="AudioStream" uid="uid://dsv6yiepip4o8" path="res://engine/objects/enemies/thwomp/sounds/laughing.wav" id="38_shvur"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="40_5wdqy"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="41_t5g7i"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="42_50jm1"]
+[ext_resource type="PackedScene" uid="uid://d1fcgj6wiapj5" path="res://tilesets/underground/scenes/lamp_offset.tscn" id="42_jgaao"]
+[ext_resource type="PackedScene" uid="uid://bhf308l61p72i" path="res://tilesets/underground/scenes/lamp_broken.tscn" id="43_8a4o2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tqmrc"]
 texture = ExtResource("9_cionb")
@@ -185,13 +190,20 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[node name="Level1-1" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrent"]
+size = Vector2(5696, 800)
+
+[node name="Level2-1" type="Node2D"]
 script = ExtResource("1_0omu6")
-jump_to_scene = "res://stages/world_1/map_1.tscn"
+jump_to_scene = "res://stages/world_2/map_2.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_sn434")]
-music = Array[Resource]([ExtResource("3_7qqdy"), ExtResource("4_y4qvn")])
-volume_db = Array[float]([-6.0, 0.0])
+script = ExtResource("3_hmq3v")
+tweaked_completion_music = ExtResource("4_wav8n")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+music = Array[Resource]([ExtResource("3_784ol"), ExtResource("4_y4qvn")])
 
 [node name="Mario" parent="." instance=ExtResource("5_qc2in")]
 position = Vector2(80, 400)
@@ -737,6 +749,21 @@ metadata/_edit_lock_ = true
 [node name="GiantCloud4" type="Sprite2D" parent="Node2D"]
 position = Vector2(6624, 192)
 texture = ExtResource("41_t5g7i")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D7" parent="Node2D" instance=ExtResource("42_jgaao")]
+position = Vector2(128, 1079)
+
+[node name="LampBroken" parent="Node2D" instance=ExtResource("43_8a4o2")]
+position = Vector2(528, 1079)
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("42_50jm1")]
+position = Vector2(-80, 1136)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(2928, -32)
+shape = SubResource("RectangleShape2D_yrent")
+debug_color = Color(1, 0.294118, 0.701961, 0.145098)
 metadata/_edit_lock_ = true
 
 [connection signal="warp_started" from="PipeIn3" to="MusicLoader" method="pause_music"]

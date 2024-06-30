@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c2d18gcddumrj"]
+[gd_scene load_steps=30 format=3 uid="uid://c2d18gcddumrj"]
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_aiwi8"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_13vuw"]
@@ -10,13 +10,27 @@
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_camera.gd" id="7_oc7yn"]
 [ext_resource type="Texture2D" uid="uid://c3s25rr15fphk" path="res://gfx/map/world_names/world_7.png" id="8_ybbyg"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/world_text.gd" id="9_8tk4c"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="9_e4si7"]
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="10_v7g4r"]
 [ext_resource type="Texture2D" uid="uid://h5k1m7htt20h" path="res://engine/scenes/map/textures/press_start.png" id="11_hin43"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/start_text.gd" id="12_6qie5"]
+[ext_resource type="Texture2D" uid="uid://tgbow7hvmh8m" path="res://gfx/fancy_graphics/world_texts/world_7.png" id="13_m6862"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/marker_space.gd" id="13_symfw"]
 [ext_resource type="Texture2D" uid="uid://cyx06gn10n78x" path="res://engine/scenes/map/textures/debug.png" id="14_d73u4"]
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_d03yu"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_t45d3"]
+[ext_resource type="Texture2D" uid="uid://cm3ivuidbyon1" path="res://gfx/fancy_graphics/map_jump_to_start.png" id="17_tukt6"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="18_jrt3x"]
+[ext_resource type="PackedScene" uid="uid://dgyfu1v14ewiu" path="res://gfx/fancy_graphics/quality_dots.tscn" id="19_bc566"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="19_k64vu"]
+[ext_resource type="Texture2D" uid="uid://o7g45tfg2ic8" path="res://gfx/fancy_graphics/Bowsert.png" id="20_poy50"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_bowser.gd" id="21_po4oq"]
+[ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="22_6kg8l"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_swim_area.gd" id="23_jcnc0"]
+[ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="27_4atuc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sojdq"]
+size = Vector2(342.5, 68.5)
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_aiwi8")
@@ -32,24 +46,6 @@ texture = ExtResource("4_1v6cf")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 3333, 480)
-region_filter_clip_enabled = true
-metadata/_edit_lock_ = true
-
-[node name="Bg2" type="Sprite2D" parent="."]
-position = Vector2(3333, 0)
-texture = ExtResource("4_1v6cf")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 480, 3333, 480)
-region_filter_clip_enabled = true
-metadata/_edit_lock_ = true
-
-[node name="Bg3" type="Sprite2D" parent="."]
-position = Vector2(6666, 0)
-texture = ExtResource("4_1v6cf")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 960, 3333, 480)
 region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
@@ -73,25 +69,68 @@ position_smoothing_speed = 10.0
 editor_draw_limits = true
 script = ExtResource("7_oc7yn")
 
-[node name="GUI" type="CanvasLayer" parent="."]
+[node name="CloudLightEffect" type="Sprite2D" parent="Player"]
+self_modulate = Color(1, 1, 1, 0.784314)
+z_index = -5
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_e4si7")
+script = ExtResource("18_jrt3x")
 
-[node name="Sprite2D" type="Sprite2D" parent="GUI"]
+[node name="GUI2" type="CanvasLayer" parent="."]
+
+[node name="WorldText" type="Sprite2D" parent="GUI2"]
+self_modulate = Color(1, 1, 1, 0)
 position = Vector2(320, -64)
 texture = ExtResource("8_ybbyg")
 script = ExtResource("9_8tk4c")
 
-[node name="BounceMarker" type="Marker2D" parent="GUI/Sprite2D"]
+[node name="BounceMarker" type="Marker2D" parent="GUI2/WorldText"]
 position = Vector2(0, 146)
 
-[node name="MarioIcon" type="Sprite2D" parent="GUI"]
+[node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
+visible = false
+texture = ExtResource("8_ybbyg")
+script = ExtResource("18_jrt3x")
+maximum = false
+medium = true
+minimum = true
+
+[node name="World7" type="Sprite2D" parent="GUI2/WorldText"]
+texture = ExtResource("13_m6862")
+offset = Vector2(0, 24)
+script = ExtResource("18_jrt3x")
+
+[node name="MarioIcon" type="Sprite2D" parent="GUI2"]
 position = Vector2(581, 436)
 texture = ExtResource("10_v7g4r")
 metadata/_edit_lock_ = true
 
-[node name="PressStart" type="Sprite2D" parent="GUI"]
+[node name="PressStart" type="Node2D" parent="GUI2"]
 position = Vector2(320, 443)
-texture = ExtResource("11_hin43")
 script = ExtResource("12_6qie5")
+
+[node name="EnterToStart" type="Sprite2D" parent="GUI2/PressStart"]
+visible = false
+texture = ExtResource("11_hin43")
+script = ExtResource("18_jrt3x")
+maximum = false
+medium = true
+minimum = true
+
+[node name="MapJumpToStart" type="Sprite2D" parent="GUI2/PressStart"]
+texture = ExtResource("17_tukt6")
+script = ExtResource("18_jrt3x")
+
+[node name="BG2" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Node2D" type="Node2D" parent="BG2"]
+script = ExtResource("18_jrt3x")
+
+[node name="GwiazdkowyMapowy" type="Sprite2D" parent="BG2/Node2D"]
+position = Vector2(320, 48)
+texture = ExtResource("22_6kg8l")
+script = ExtResource("19_k64vu")
 
 [node name="MarkerSpace" type="Node2D" parent="."]
 editor_description = "Use this as World"
@@ -194,3 +233,45 @@ position = Vector2(1728, 283)
 rotation = -1.57068
 script = ExtResource("16_t45d3")
 level = "res://stages/world_7/level_7-4.tscn"
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("18_jrt3x")
+
+[node name="QualityDots" parent="Node2D" instance=ExtResource("19_bc566")]
+dot_offset = Vector2(5, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(1779, 267)
+texture = ExtResource("20_poy50")
+script = ExtResource("21_po4oq")
+
+[node name="MapCloud" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(96, 64)
+
+[node name="MapCloud2" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(528, 80)
+
+[node name="MapCloud3" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(752, 128)
+
+[node name="MapCloud4" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(912, 64)
+
+[node name="MapCloud5" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(1168, 112)
+
+[node name="MapCloud6" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(1376, 48)
+
+[node name="MapCloud7" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(1616, 80)
+
+[node name="MapCloud8" parent="Node2D" instance=ExtResource("27_4atuc")]
+position = Vector2(352, 112)
+
+[node name="SwimArea" type="Area2D" parent="."]
+script = ExtResource("23_jcnc0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwimArea"]
+position = Vector2(788.75, 307.75)
+shape = SubResource("RectangleShape2D_sojdq")

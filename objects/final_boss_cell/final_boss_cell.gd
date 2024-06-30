@@ -42,7 +42,13 @@ func _creation_mushroom() -> void:
 		if i.name.begins_with('RedMushroom'):
 			hasMushroom = true
 	
-	if !hasMushroom && Thunder._current_player_state.type == PlayerSuit.Type.SMALL && amount_counter < 4:
+	var hasFlower = false
+	
+	for i in Scenes.current_scene.get_children():
+		if i.name.begins_with('FireFlower'):
+			hasFlower = true
+	
+	if !hasMushroom && !hasFlower && Thunder._current_player_state.type == PlayerSuit.Type.SMALL && amount_counter < 4:
 		cell_peach.animation = 'throw'
 		
 		var mushroom = RED_MUSHROOM.instantiate()

@@ -1,9 +1,13 @@
-[gd_scene load_steps=67 format=3 uid="uid://ccda65mgll40l"]
+[gd_scene load_steps=73 format=3 uid="uid://ccda65mgll40l"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_80rbc"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_1xa62"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ay2iy"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_3oi2h"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_pw5q0"]
 [ext_resource type="Resource" uid="uid://csytp2m2k1jl" path="res://music/ykyrococ.mod" id="4_wrnee"]
+[ext_resource type="Resource" uid="uid://dnaqtnob4x3i2" path="res://music/yet_another_bonus.mod" id="5_ep6wb"]
+[ext_resource type="Resource" uid="uid://b01b1hnvhs216" path="res://music/interference.mod" id="6_l2sl6"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_rfkvk"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_62g2a"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_3eisp"]
@@ -43,6 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://v5ll6rgx7foy" path="res://stages/world_6/objects/grass_platform/grass_platform_path.tscn" id="36_xjlln"]
 [ext_resource type="PackedScene" uid="uid://b6isdtytr03lm" path="res://stages/world_6/objects/grass_platform/small_grass_platform_path.tscn" id="37_ypima"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="38_q26iw"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="44_r1hn1"]
 
 [sub_resource type="Gradient" id="Gradient_igxpo"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -261,12 +266,20 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gi2a6"]
+size = Vector2(3504, 1904)
+
 [node name="Level6-2" type="Node2D"]
 script = ExtResource("1_80rbc")
 time = 600
 jump_to_scene = "res://stages/world_6/map_6.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_1xa62")]
+script = ExtResource("3_ay2iy")
+tweaked_completion_music = ExtResource("4_3oi2h")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([ExtResource("5_ep6wb")])
+music_var_3 = Array[Resource]([ExtResource("6_l2sl6")])
 music = Array[Resource]([ExtResource("4_wrnee")])
 
 [node name="Mario" parent="." instance=ExtResource("4_pw5q0")]
@@ -1331,3 +1344,12 @@ position = Vector2(2304, -2944)
 
 [node name="PiranhaPink4" parent="." instance=ExtResource("34_virum")]
 position = Vector2(2592, -3104)
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("44_r1hn1")]
+position = Vector2(-112, -2096)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(1832, -648)
+shape = SubResource("RectangleShape2D_gi2a6")
+debug_color = Color(1, 0.294118, 0.701961, 0.145098)
+metadata/_edit_lock_ = true
