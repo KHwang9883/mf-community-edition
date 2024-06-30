@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://ht5id10ochxu"]
+[gd_scene load_steps=58 format=3 uid="uid://ht5id10ochxu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gugln"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ssfd4"]
@@ -40,6 +40,8 @@
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="34_rlfh2"]
 [ext_resource type="PackedScene" uid="uid://chn8d8bjrm7eu" path="res://engine/objects/fluid/whirlpool.tscn" id="37_6x4d6"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="37_rlhmx"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="41_lek3c"]
+[ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="42_7jfqu"]
 
 [sub_resource type="Gradient" id="Gradient_dils1"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -543,6 +545,18 @@ metadata/_edit_lock_ = true
 
 [node name="Checkpoint" parent="." instance=ExtResource("37_rlhmx")]
 position = Vector2(4096, 416)
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -20
+script = ExtResource("27_olvbf")
+
+[node name="GiantCloud" type="Sprite2D" parent="Node2D"]
+position = Vector2(7712, -736)
+texture = ExtResource("41_lek3c")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(6576, -656)
+texture = ExtResource("42_7jfqu")
 
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 
