@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=58 format=3 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_w4tlr"]
@@ -43,6 +43,8 @@
 [ext_resource type="PackedScene" uid="uid://cvfwhq3j5n5k5" path="res://engine/objects/enemies/cheeps/cheep_yellow.tscn" id="37_pxdn8"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="38_iu21m"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="39_6jwl0"]
+[ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="44_iw0as"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="45_tgotf"]
 
 [sub_resource type="Gradient" id="Gradient_1csnf"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -451,8 +453,29 @@ position = Vector2(3472, 176)
 [node name="Checkpoint" parent="." instance=ExtResource("38_iu21m")]
 position = Vector2(4592, 416)
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D2" type="Node2D" parent="."]
+z_index = -20
 script = ExtResource("39_6jwl0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D2"]
+position = Vector2(6624, -568)
+texture = ExtResource("44_iw0as")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Node2D2"]
+position = Vector2(5600, -648)
+texture = ExtResource("44_iw0as")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node2D2"]
+position = Vector2(7472, -704)
+texture = ExtResource("44_iw0as")
+
+[node name="GiantCloud" type="Sprite2D" parent="Node2D2"]
+position = Vector2(7712, -736)
+texture = ExtResource("45_tgotf")
+
+[node name="GiantCloud2" type="Sprite2D" parent="Node2D2"]
+position = Vector2(5976, -728)
+texture = ExtResource("45_tgotf")
 
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 

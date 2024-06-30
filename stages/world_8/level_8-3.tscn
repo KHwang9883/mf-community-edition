@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://dvs3d2ernm7m6"]
+[gd_scene load_steps=69 format=3 uid="uid://dvs3d2ernm7m6"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_18jpy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wcgs6"]
@@ -32,7 +32,6 @@
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="21_x3jnp"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="22_lu4ex"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="23_sy8o8"]
-[ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="24_coxyk"]
 [ext_resource type="Script" path="res://stages/world_8/objects/rising_lava/rising_lava.gd" id="24_qti0o"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="25_45fsu"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="26_rnb6j"]
@@ -68,6 +67,19 @@ size = Vector2(32, 448)
 script = ExtResource("26_rnb6j")
 creation_fallback_node = ExtResource("40_0gmih")
 creation_nodepack = ExtResource("41_5uuwc")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_nxfn0"]
+script = ExtResource("26_rnb6j")
+creation_nodepack = ExtResource("25_45fsu")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -169,20 +181,6 @@ animations = [{
 "name": &"default",
 "speed": 33.0
 }]
-
-[sub_resource type="Resource" id="Resource_kdnsv"]
-resource_local_to_scene = true
-script = ExtResource("26_rnb6j")
-creation_nodepack = ExtResource("25_45fsu")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Curve2D" id="Curve2D_hejyy"]
 _data = {
@@ -489,6 +487,12 @@ position = Vector2(16, -2928)
 position = Vector2(112, 144)
 result = SubResource("Resource_tjcsc")
 
+[node name="QuestionBlock23" parent="Objects" instance=ExtResource("21_x3jnp")]
+position = Vector2(48, -5776)
+result = SubResource("Resource_nxfn0")
+initially_visible_and_solid = false
+exists_once = true
+
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("24_qti0o")
 
@@ -696,12 +700,6 @@ position = Vector2(400, -2064)
 offset_top = -16.1599
 offset_bottom = 15.8401
 metadata/_edit_lock_ = true
-
-[node name="QuestionBlockLife" parent="." instance=ExtResource("24_coxyk")]
-position = Vector2(48, -5776)
-result = SubResource("Resource_kdnsv")
-initially_visible_and_solid = false
-exists_once = true
 
 [node name="Path2D2" type="Path2D" parent="."]
 curve = SubResource("Curve2D_hejyy")
