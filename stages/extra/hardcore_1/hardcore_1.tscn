@@ -1,0 +1,480 @@
+[gd_scene load_steps=30 format=3 uid="uid://bwprd2j7ovmb1"]
+
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_ltkg7"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_tpkql"]
+[ext_resource type="Resource" uid="uid://c7h3c4dqaval1" path="res://music/extra/rsectro.mod" id="3_v0cfv"]
+[ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="4_o0xcr"]
+[ext_resource type="Texture2D" uid="uid://dqc0xavg0oqdu" path="res://gfx/map/maps/maphardcore.png" id="5_ey0pl"]
+[ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="6_6onvl"]
+[ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="7_5rifs"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_camera.gd" id="8_gdt5v"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="9_7pgud"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_rsriu"]
+[ext_resource type="Texture2D" uid="uid://7qjleu1bkro7" path="res://gfx/map/world_names/Hardcore_1.png" id="11_48uil"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/world_text.gd" id="12_hk3pv"]
+[ext_resource type="Texture2D" uid="uid://cgo03ami2ke5d" path="res://gfx/fancy_graphics/world_texts/hardcore_1.png" id="13_5gt1b"]
+[ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="14_hn0tv"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/start_text.gd" id="15_y2ew8"]
+[ext_resource type="Texture2D" uid="uid://h5k1m7htt20h" path="res://engine/scenes/map/textures/press_start.png" id="16_d8g6h"]
+[ext_resource type="Texture2D" uid="uid://cm3ivuidbyon1" path="res://gfx/fancy_graphics/map_jump_to_start.png" id="17_h8hg0"]
+[ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="18_a2jrg"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="19_67sv5"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/marker_space.gd" id="20_vbttv"]
+[ext_resource type="Texture2D" uid="uid://cyx06gn10n78x" path="res://engine/scenes/map/textures/debug.png" id="21_x10v5"]
+[ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="22_egvkf"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="23_rjmd3"]
+[ext_resource type="PackedScene" uid="uid://dgyfu1v14ewiu" path="res://gfx/fancy_graphics/quality_dots.tscn" id="24_y7qw3"]
+[ext_resource type="Texture2D" uid="uid://o7g45tfg2ic8" path="res://gfx/fancy_graphics/Bowsert.png" id="25_peyme"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_bowser.gd" id="26_ltqua"]
+[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="27_tps1g"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="28_3mxte"]
+[ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="29_6k7rj"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_ltkg7")
+player = NodePath("Player")
+metadata/_edit_lock_ = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_tpkql")]
+music = Array[Resource]([ExtResource("3_v0cfv")])
+
+[node name="Bg" type="Sprite2D" parent="."]
+texture = ExtResource("4_o0xcr")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 3333, 480)
+region_filter_clip_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="Bg2" type="Sprite2D" parent="."]
+position = Vector2(0, 480)
+texture = ExtResource("4_o0xcr")
+centered = false
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 3333, 480)
+region_filter_clip_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="Map1" type="Sprite2D" parent="."]
+position = Vector2(1024, 357)
+texture = ExtResource("5_ey0pl")
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("6_6onvl")]
+z_index = 5
+z_as_relative = false
+position = Vector2(-32, 336)
+dots = ExtResource("7_5rifs")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_left = 0
+limit_top = 0
+limit_right = 2040
+limit_bottom = 672
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+editor_draw_limits = true
+script = ExtResource("8_gdt5v")
+metadata/_edit_lock_ = true
+
+[node name="CloudLightEffect" type="Sprite2D" parent="Player"]
+self_modulate = Color(1, 1, 1, 0.784314)
+z_index = -5
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_7pgud")
+script = ExtResource("10_rsriu")
+metadata/_edit_lock_ = true
+
+[node name="GUI2" type="CanvasLayer" parent="."]
+
+[node name="WorldText" type="Sprite2D" parent="GUI2"]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(320, -64)
+texture = ExtResource("11_48uil")
+script = ExtResource("12_hk3pv")
+
+[node name="BounceMarker" type="Marker2D" parent="GUI2/WorldText"]
+position = Vector2(0, 192)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
+visible = false
+texture = ExtResource("11_48uil")
+script = ExtResource("10_rsriu")
+maximum = false
+medium = true
+minimum = true
+
+[node name="World1" type="Sprite2D" parent="GUI2/WorldText"]
+position = Vector2(0, -48)
+texture = ExtResource("13_5gt1b")
+offset = Vector2(0, 56)
+script = ExtResource("10_rsriu")
+
+[node name="MarioIcon" type="Sprite2D" parent="GUI2"]
+position = Vector2(581, 436)
+texture = ExtResource("14_hn0tv")
+metadata/_edit_lock_ = true
+
+[node name="PressStart" type="Node2D" parent="GUI2"]
+position = Vector2(320, 443)
+script = ExtResource("15_y2ew8")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="EnterToStart" type="Sprite2D" parent="GUI2/PressStart"]
+visible = false
+texture = ExtResource("16_d8g6h")
+script = ExtResource("10_rsriu")
+maximum = false
+medium = true
+minimum = true
+
+[node name="MapJumpToStart" type="Sprite2D" parent="GUI2/PressStart"]
+texture = ExtResource("17_h8hg0")
+script = ExtResource("10_rsriu")
+
+[node name="BG2" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Node2D" type="Node2D" parent="BG2"]
+script = ExtResource("10_rsriu")
+metadata/_edit_lock_ = true
+
+[node name="GwiazdkowyMapowy" type="Sprite2D" parent="BG2/Node2D"]
+position = Vector2(320, 80)
+texture = ExtResource("18_a2jrg")
+script = ExtResource("19_67sv5")
+metadata/_edit_lock_ = true
+
+[node name="MarkerSpace" type="Node2D" parent="."]
+editor_description = "Use this as World"
+script = ExtResource("20_vbttv")
+space_name = 101
+dot_texture = ExtResource("21_x10v5")
+x_texture = ExtResource("22_egvkf")
+draw_dots = true
+allow_saving = false
+metadata/_edit_lock_ = true
+
+[node name="MapPlayerMarker8" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(-32, 336)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(48, 416)
+script = ExtResource("23_rjmd3")
+level = "res://stages/extra/hardcore_1/hardcore_1-1.tscn"
+
+[node name="MapPlayerMarker2" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(336, 416)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker7" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(384, 368)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker10" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(660, 368)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker3" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(660, 390)
+script = ExtResource("23_rjmd3")
+level = "res://stages/extra/hardcore_1/hardcore_1-2.tscn"
+
+[node name="MapPlayerMarker4" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(897, 390)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker5" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(897, 431)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker6" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1183, 431)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker11" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1183, 383)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker12" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1441, 383)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker13" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1441, 431)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker14" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1503, 431)
+script = ExtResource("23_rjmd3")
+level = "res://stages/extra/hardcore_1/hardcore_1-3.tscn"
+
+[node name="MapPlayerMarker15" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1553, 431)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker16" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1553, 398)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker17" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1569, 398)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker18" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1569, 350)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker19" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1549, 350)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker20" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1549, 302)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker21" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1642, 302)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker22" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1642, 270)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker23" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1658, 270)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker24" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1658, 223)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker25" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1642, 223)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker26" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1642, 174)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker27" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1904, 174)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker28" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1904, 293)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker29" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1952, 293)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker30" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1952, 357)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker31" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1872, 357)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker32" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1872, 412)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker33" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1751, 412)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker34" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1751, 347)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker35" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1721, 347)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker36" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1721, 379)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker37" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1588, 502)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker38" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1636, 502)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker39" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1636, 582)
+script = ExtResource("23_rjmd3")
+
+[node name="MapPlayerMarker40" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1908, 582)
+script = ExtResource("23_rjmd3")
+level = "res://stages/extra/hardcore_1/hardcore_1-4.tscn"
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("10_rsriu")
+metadata/_edit_lock_ = true
+
+[node name="QualityDots" parent="Node2D" instance=ExtResource("24_y7qw3")]
+position = Vector2(0, 48)
+dot_offset = Vector2(5, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(1984, 568)
+texture = ExtResource("25_peyme")
+script = ExtResource("26_ltqua")
+
+[node name="Sun" type="Sprite2D" parent="Node2D"]
+position = Vector2(272, 294)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("27_tps1g")
+script = ExtResource("28_3mxte")
+speed = 150.0
+
+[node name="MapCloud" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(112, 118)
+
+[node name="MapCloud3" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(560, 144)
+
+[node name="MapCloud14" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(64, 528)
+
+[node name="MapCloud15" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(256, 592)
+
+[node name="MapCloud17" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(800, 480)
+
+[node name="MapCloud18" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(720, 576)
+
+[node name="MapCloud19" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1040, 544)
+
+[node name="MapCloud20" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1264, 592)
+
+[node name="MapCloud21" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1760, 480)
+
+[node name="MapCloud16" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(416, 496)
+
+[node name="MapCloud4" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(800, 214)
+
+[node name="MapCloud5" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1072, 134)
+
+[node name="MapCloud6" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1168, 230)
+
+[node name="MapCloud7" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1360, 262)
+
+[node name="MapCloud13" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1476, 350)
+
+[node name="MapCloud8" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1440, 502)
+
+[node name="MapCloud9" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1792, 294)
+
+[node name="MapCloud10" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1424, 112)
+
+[node name="MapCloud11" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(1968, 64)
+
+[node name="MapCloud12" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(2016, 390)
+
+[node name="MapCloud2" parent="Node2D" instance=ExtResource("29_6k7rj")]
+position = Vector2(544, 310)

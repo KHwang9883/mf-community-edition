@@ -22,3 +22,4 @@ func _update_visibility() -> void:
 	for node in get_tree().get_nodes_in_group(&"map_dot"):
 		node.sprite_frames = sprite_frames
 		node.offset = offset
+		node.play()
