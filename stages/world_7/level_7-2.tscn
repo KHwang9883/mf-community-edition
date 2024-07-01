@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=65 format=3 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_w4tlr"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="18_wyvfd"]
 [ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="19_ldlip"]
 [ext_resource type="Texture2D" uid="uid://dp3ivcsnm7xb0" path="res://engine/objects/fluid/textures/water_smooth_3.png" id="20_kcx74"]
+[ext_resource type="Script" path="res://shaders/quality_shader_set.gd" id="20_t1jbt"]
 [ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="21_wpgki"]
 [ext_resource type="Texture2D" uid="uid://bhlgs2eebvaxr" path="res://engine/objects/fluid/textures/water_smooth_5.png" id="22_vyirl"]
 [ext_resource type="Texture2D" uid="uid://baa2ywxd73mvl" path="res://engine/objects/fluid/textures/water_smooth_6.png" id="23_oqoq5"]
@@ -32,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="26_2f7s0"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="27_cybmm"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="28_s6ll5"]
+[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="29_1xufo"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="29_jo7ww"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="30_yt20p"]
 [ext_resource type="PackedScene" uid="uid://dnyk0ph5vd52a" path="res://engine/objects/enemies/cheeps/cheep_blue.tscn" id="31_g3pig"]
@@ -68,6 +70,14 @@ colors = PackedColorArray(0.439216, 0.580392, 0.878431, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_4rqa5"]
 gradient = SubResource("Gradient_0gws5")
+width = 80
+
+[sub_resource type="Gradient" id="Gradient_2abnp"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.439216, 0.580392, 0.878431, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5b5ct"]
+gradient = SubResource("Gradient_2abnp")
 width = 80
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ybuq1"]
@@ -107,6 +117,27 @@ metadata/_snap_enabled = true
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_8mgw8"]
 gradient = SubResource("Gradient_l8daq")
 width = 400
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2fvhh"]
+shader = ExtResource("13_7nqqo")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 2.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00rqv"]
+shader = ExtResource("13_7nqqo")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cqbhi"]
+shader = ExtResource("13_7nqqo")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 5.0
+shader_parameter/y_axis = true
 
 [sub_resource type="Resource" id="Resource_pup4p"]
 resource_local_to_scene = true
@@ -210,12 +241,24 @@ position = Vector2(0, 352)
 rotation = 1.5708
 scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_dy6jo")
+script = ExtResource("39_6jwl0")
+medium = true
 metadata/_edit_lock_ = true
 
 [node name="niebo_swiatlo" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(320, 112)
 scale = Vector2(8, 112)
 texture = SubResource("GradientTexture1D_4rqa5")
+script = ExtResource("39_6jwl0")
+
+[node name="niebo_swiatlo2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+visible = false
+position = Vector2(320, 112)
+scale = Vector2(8, 128)
+texture = SubResource("GradientTexture1D_5b5ct")
+script = ExtResource("39_6jwl0")
+maximum = false
+medium = true
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -227,6 +270,8 @@ texture = ExtResource("14_w6oot")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 5000, 352)
+script = ExtResource("20_t1jbt")
+medium = true
 
 [node name="UWcoral2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.435294)
@@ -237,6 +282,8 @@ texture = ExtResource("15_s8evc")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 8096, 256)
+script = ExtResource("20_t1jbt")
+medium = true
 metadata/_edit_lock_ = true
 
 [node name="UWrocks2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
@@ -248,6 +295,8 @@ texture = ExtResource("16_b15gp")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 8000, 188)
+script = ExtResource("20_t1jbt")
+medium = true
 
 [node name="UWrocks" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 texture_repeat = 2
@@ -257,6 +306,8 @@ texture = ExtResource("16_b15gp")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 8000, 188)
+script = ExtResource("20_t1jbt")
+medium = true
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -268,6 +319,7 @@ motion_mirroring = Vector2(640, 0)
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer"]
+visible = false
 z_index = 31
 offset_top = 96.0
 offset_right = 640.0
@@ -275,6 +327,9 @@ offset_bottom = 112.0
 size_flags_vertical = 0
 texture = SubResource("AnimatedTexture_cct87")
 stretch_mode = 1
+script = ExtResource("39_6jwl0")
+maximum = false
+medium = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
 material = SubResource("CanvasItemMaterial_g4qe7")
@@ -282,7 +337,30 @@ position = Vector2(1.45519e-11, 312)
 rotation = 1.5708
 scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_8mgw8")
+script = ExtResource("39_6jwl0")
+medium = true
 metadata/_edit_lock_ = true
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("ShaderMaterial_2fvhh")
+position = Vector2(0, 70)
+texture = ExtResource("29_1xufo")
+centered = false
+script = ExtResource("39_6jwl0")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("ShaderMaterial_00rqv")
+position = Vector2(0, 80)
+texture = ExtResource("29_1xufo")
+centered = false
+script = ExtResource("39_6jwl0")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("ShaderMaterial_cqbhi")
+position = Vector2(0, 92)
+texture = ExtResource("29_1xufo")
+centered = false
+script = ExtResource("39_6jwl0")
 
 [node name="Water" parent="." instance=ExtResource("25_flqmw")]
 offset_top = 96.0
@@ -292,9 +370,15 @@ metadata/_edit_lock_ = true
 
 [node name="TextureRect" parent="Water" index="0"]
 visible = false
+script = ExtResource("39_6jwl0")
+maximum = false
+minimum = true
 
 [node name="ColorRect" parent="Water" index="2"]
 visible = false
+script = ExtResource("39_6jwl0")
+maximum = false
+minimum = true
 
 [node name="Objects" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
