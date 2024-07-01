@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://dvs3d2ernm7m6"]
+[gd_scene load_steps=71 format=3 uid="uid://dvs3d2ernm7m6"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_18jpy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wcgs6"]
@@ -42,6 +42,7 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="40_x4r7x"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="41_5uuwc"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="41_y0osg"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="43_mobt2"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
 frames = 7
@@ -224,6 +225,9 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_eq42k"]
 gradient = SubResource("Gradient_kyugb")
 width = 112
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm7f7"]
+size = Vector2(992, 9552)
 
 [node name="Level8-3" type="Node2D"]
 script = ExtResource("1_18jpy")
@@ -769,5 +773,12 @@ scale = Vector2(1, 13588.6)
 texture = SubResource("GradientTexture1D_eq42k")
 centered = false
 script = ExtResource("40_x4r7x")
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("43_mobt2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+visible = false
+position = Vector2(320, -4104)
+shape = SubResource("RectangleShape2D_fm7f7")
 
 [connection signal="warp_started" from="PipeIn" to="Node2D" method="koniec_gry"]
