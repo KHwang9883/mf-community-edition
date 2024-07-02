@@ -1,19 +1,93 @@
-[gd_scene load_steps=21 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=45 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_m1mir"]
-[ext_resource type="Resource" uid="uid://b6ficv7f75qil" path="res://music/one_fine_day.xm" id="4_ovbqq"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hc7ct"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_t3gk0"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_xmum8"]
+[ext_resource type="AudioStream" uid="uid://dkt7ifasahfmq" path="res://music/minix/minix-1.ogg" id="5_hkwck"]
 [ext_resource type="Script" path="res://stages/extra/minix/minix_mario.gd" id="5_sdtbj"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="6_6ptfb"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_bvs5l"]
+[ext_resource type="AudioStream" uid="uid://bkblbu7x3xk4t" path="res://music/minix/minix-2.ogg" id="6_iv16k"]
+[ext_resource type="AudioStream" uid="uid://dk36te40th0u2" path="res://music/minix/minix-3.ogg" id="7_tfgim"]
 [ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="8_d6xxu"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_sdali"]
+[ext_resource type="AudioStream" uid="uid://bv57wrjd3ck64" path="res://music/minix/minix-4.ogg" id="8_xyqod"]
+[ext_resource type="AudioStream" uid="uid://bj814wg3cujl3" path="res://music/minix/minix-5.ogg" id="9_a2ofv"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="9_fpvk4"]
+[ext_resource type="AudioStream" uid="uid://balnh78qrf5ta" path="res://music/minix/minix-6.ogg" id="10_5k3ul"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="10_haysy"]
+[ext_resource type="Script" path="res://stages/extra/minix/minix_music.gd" id="11_6cm3j"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="11_tdlrw"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_yekad"]
 [ext_resource type="Script" path="res://stages/extra/minix/minix_script.gd" id="13_o0kdt"]
+[ext_resource type="AudioStream" uid="uid://csqg16k26jclf" path="res://music/extra/smw-death_extra.ogg" id="14_405ip"]
+[ext_resource type="Texture2D" uid="uid://bdyg3ju76ed67" path="res://engine/components/hud/coins.png" id="17_r2kie"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="18_muktk"]
+[ext_resource type="Script" path="res://engine/components/hud/value.gd" id="19_50mii"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="20_h1nf4"]
+[ext_resource type="Texture2D" uid="uid://d1vkaab2ewmjq" path="res://engine/objects/players/prefabs/textures/mario/mario_small.png" id="21_5gc5l"]
+[ext_resource type="Script" path="res://stages/extra/minix/fade_out.gd" id="22_2dbbe"]
+[ext_resource type="PackedScene" uid="uid://dfyh40qn3b0lp" path="res://stages/extra/minix/coin_from_pipe.tscn" id="29_quhhf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7il7"]
+atlas = ExtResource("17_r2kie")
+region = Rect2(0, 0, 28, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsmmd"]
+atlas = ExtResource("17_r2kie")
+region = Rect2(28, 0, 28, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbj7g"]
+atlas = ExtResource("17_r2kie")
+region = Rect2(56, 0, 28, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sktjy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7il7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsmmd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbj7g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6irku"]
+atlas = ExtResource("21_5gc5l")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_te56b"]
+atlas = ExtResource("21_5gc5l")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5teqj"]
+atlas = ExtResource("21_5gc5l")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q23ld"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6irku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_te56b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5teqj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0wjt2"]
 atlas = ExtResource("8_d6xxu")
@@ -23,11 +97,11 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("8_d6xxu")
 region = Rect2(0, 32, 64, 32)
 
-[sub_resource type="Gradient" id="Gradient_jdopq"]
+[sub_resource type="Gradient" id="Gradient_pey5g"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_fj0ev"]
-gradient = SubResource("Gradient_jdopq")
+gradient = SubResource("Gradient_pey5g")
 width = 480
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rti8i"]
@@ -42,12 +116,20 @@ time = -1
 metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_m1mir")]
-music = Array[Resource]([ExtResource("4_ovbqq")])
-volume_db = Array[float]([-30.0])
+script = ExtResource("3_hc7ct")
+tweaked_completion_music = ExtResource("4_xmum8")
+music_var_1 = Array[Resource]([ExtResource("5_hkwck"), ExtResource("6_iv16k"), ExtResource("7_tfgim"), ExtResource("8_xyqod")])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+music = Array[Resource]([ExtResource("5_hkwck"), ExtResource("6_iv16k"), ExtResource("7_tfgim"), ExtResource("8_xyqod"), ExtResource("9_a2ofv"), ExtResource("10_5k3ul")])
+play_immediately = false
+custom_script = ExtResource("11_6cm3j")
 
 [node name="Mario" parent="." instance=ExtResource("4_t3gk0")]
 position = Vector2(336, 400)
 script = ExtResource("5_sdtbj")
+death_music_override = ExtResource("14_405ip")
+death_jump_to_scene = "res://stages/extra/minix/minix_over.tscn"
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -65,17 +147,85 @@ layer_0/tile_data = PackedInt32Array(851970, 65536, 0, 983059, 131072, 2, 917523
 layer_1/tile_data = PackedInt32Array(917512, 2, 589824, 786438, 2, 524288, 851981, 2, 524288)
 
 [node name="HUD" parent="." instance=ExtResource("8_sdali")]
+visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchor_left = 0.4
+anchor_right = 0.4
+offset_left = -28.0
+offset_top = 35.0
+offset_right = 368.0
+offset_bottom = 51.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
+position = Vector2(376, -26)
+sprite_frames = SubResource("SpriteFrames_sktjy")
+autoplay = "default"
+centered = false
+flip_h = true
+
+[node name="Coins" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.187
+anchor_bottom = -0.187
+offset_left = 341.0
+offset_top = -24.008
+offset_right = 371.0
+offset_bottom = -6.008
+grow_horizontal = 0
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("18_muktk")
+text = "%s"
+horizontal_alignment = 2
+script = ExtResource("19_50mii")
+value_name = "score"
+
+[node name="Node2D" type="Node2D" parent="CanvasLayer"]
+script = ExtResource("20_h1nf4")
+amplitude = Vector2(0, 10)
+frequency = 4.0
+sprite_path = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D"]
+position = Vector2(615, 48)
+sprite_frames = SubResource("SpriteFrames_q23ld")
+autoplay = "default"
+script = ExtResource("22_2dbbe")
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("13_o0kdt")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(336, 496)
+[node name="Timer" type="Timer" parent="Node"]
+process_callback = 0
+wait_time = 2.0
+autostart = true
+
+[node name="CoinTimer" type="Timer" parent="Node"]
+process_callback = 0
+autostart = true
+
+[node name="Timer2" type="Timer" parent="Node"]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="PipeTimer" type="Timer" parent="Node"]
+wait_time = 20.0
+autostart = true
+
+[node name="CoinPipe" type="Sprite2D" parent="."]
+position = Vector2(560, 528)
 texture = SubResource("AtlasTexture_0wjt2")
 offset = Vector2(0, 16)
 metadata/_edit_group_ = true
 
-[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+[node name="Sprite2D2" type="Sprite2D" parent="CoinPipe"]
 position = Vector2(0, 64)
 texture = SubResource("AtlasTexture_2l3io")
 
@@ -97,6 +247,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 784, 64)
 script = ExtResource("10_haysy")
 speed = -80.0
+metadata/_edit_lock_ = true
 
 [node name="TextureAlpha" type="Sprite2D" parent="ParallaxBackground/Sprite2D4"]
 position = Vector2(0, 32)
@@ -114,6 +265,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 784, 64)
 script = ExtResource("10_haysy")
 speed = -120.0
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground"]
 texture_repeat = 2
@@ -123,20 +275,21 @@ region_enabled = true
 region_rect = Rect2(0, 0, 784, 64)
 script = ExtResource("10_haysy")
 speed = -160.0
+metadata/_edit_lock_ = true
 
 [node name="EnemySpawners" type="Node2D" parent="."]
 
 [node name="Marker2D" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(96, -16)
+position = Vector2(96, -15)
 
 [node name="Marker2D2" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(224, -16)
+position = Vector2(224, -15)
 
 [node name="Marker2D3" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(384, -16)
+position = Vector2(384, -15)
 
 [node name="Marker2D4" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(512, -16)
+position = Vector2(512, -15)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 112
@@ -161,3 +314,8 @@ shape = SubResource("RectangleShape2D_dul3d")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D2"]
 position = Vector2(656, 408)
 shape = SubResource("RectangleShape2D_dul3d")
+
+[node name="CoinFromPipe" parent="." instance=ExtResource("29_quhhf")]
+position = Vector2(336, 320)
+
+[connection signal="damaged" from="Mario" to="CanvasLayer/Node2D/AnimatedSprite2D" method="fade_out"]

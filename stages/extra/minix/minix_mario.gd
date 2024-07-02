@@ -16,5 +16,6 @@ func hurt(tags: Dictionary = {}) -> void:
 		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch})
 	else:
 		die(tags)
+		minix.coin_timer.stop()
 	
 	damaged.emit()

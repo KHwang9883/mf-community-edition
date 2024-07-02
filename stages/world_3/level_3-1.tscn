@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://calnaumcqgd6k"]
+[gd_scene load_steps=77 format=3 uid="uid://calnaumcqgd6k"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_mgfoq"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_kfm22"]
@@ -43,6 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://dgcgfl28trox0" path="res://engine/objects/springboard/springboard.tscn" id="34_3spas"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="35_pevvb"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="36_kt4c3"]
+[ext_resource type="Texture2D" uid="uid://cacq4bhiloiho" path="res://gfx/starland_tree_minimum_light.png" id="44_c7ag7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4lmp"]
 texture = ExtResource("9_vb1io")
@@ -387,6 +388,87 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jgqj"]
+atlas = ExtResource("44_c7ag7")
+region = Rect2(0, 0, 124, 121)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3iis"]
+atlas = ExtResource("44_c7ag7")
+region = Rect2(0, 121, 124, 121)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nh4ip"]
+atlas = ExtResource("44_c7ag7")
+region = Rect2(0, 242, 124, 121)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_stce6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jgqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3iis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nh4ip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_t5o3t"]
+offsets = PackedFloat32Array(0.1, 0.5, 1)
+colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.74902, 0.984314, 0.545098, 0.984314, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bhb6l"]
+gradient = SubResource("Gradient_t5o3t")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_acoqy"]
+offsets = PackedFloat32Array(0, 0.4, 1)
+colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rfupf"]
+gradient = SubResource("Gradient_acoqy")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_2afm3"]
+offsets = PackedFloat32Array(0.05, 0.45, 1)
+colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sj360"]
+gradient = SubResource("Gradient_2afm3")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_00bhr"]
+frames = 3
+frame_0/texture = SubResource("GradientTexture2D_bhb6l")
+frame_0/duration = 0.05
+frame_1/texture = SubResource("GradientTexture2D_rfupf")
+frame_1/duration = 0.05
+frame_2/texture = SubResource("GradientTexture2D_sj360")
+frame_2/duration = 0.05
 
 [node name="Level3-1" type="Node2D"]
 script = ExtResource("1_mgfoq")
@@ -1015,5 +1097,71 @@ position = Vector2(3552, 1008)
 
 [node name="PipeOut2" parent="." instance=ExtResource("33_s6e6g")]
 position = Vector2(3840, 240)
+
+[node name="Node2D" type="Node2D" parent="."]
+visible = false
+script = ExtResource("18_xvogb")
+maximum = false
+minimum = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.529412)
+z_index = -8
+position = Vector2(560, 368)
+sprite_frames = SubResource("SpriteFrames_stce6")
+autoplay = "default"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.529412)
+z_index = -8
+position = Vector2(4112, 368)
+sprite_frames = SubResource("SpriteFrames_stce6")
+autoplay = "default"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.529412)
+z_index = -8
+position = Vector2(6128, 368)
+sprite_frames = SubResource("SpriteFrames_stce6")
+autoplay = "default"
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("18_xvogb")
+medium = true
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+position = Vector2(560, 368)
+texture = SubResource("AnimatedTexture_00bhr")
+
+[node name="AnimatedSprite2D2" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+position = Vector2(4112, 368)
+texture = SubResource("AnimatedTexture_00bhr")
+
+[node name="AnimatedSprite2D3" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+position = Vector2(6128, 368)
+texture = SubResource("AnimatedTexture_00bhr")
+
+[node name="AnimatedSprite2D4" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+position = Vector2(2125, 413)
+texture = SubResource("AnimatedTexture_00bhr")
+
+[node name="AnimatedSprite2D5" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+position = Vector2(5229, 413)
+texture = SubResource("AnimatedTexture_00bhr")
+
+[node name="AnimatedSprite2D6" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+position = Vector2(6766, 412)
+texture = SubResource("AnimatedTexture_00bhr")
+
+[node name="AnimatedSprite2D7" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+position = Vector2(8654, 411)
+texture = SubResource("AnimatedTexture_00bhr")
 
 [connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="activate"]
