@@ -6,7 +6,7 @@ var fake_pos := Vector2.ZERO
 @export var init_pos = 320
 
 func _physics_process(delta):
-	var cam: Camera2D = Thunder._current_camera as Camera2D
+	var cam: Camera2D = Thunder._current_camera
 	if !cam: return
 	position.x -= speed * delta
 	fake_pos.x = init_pos + cam.get_screen_center_position().x - 320
