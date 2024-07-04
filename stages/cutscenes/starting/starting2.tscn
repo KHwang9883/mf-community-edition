@@ -1,8 +1,10 @@
-[gd_scene load_steps=37 format=3 uid="uid://5vr2gweclg3h"]
+[gd_scene load_steps=39 format=3 uid="uid://5vr2gweclg3h"]
 
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/starting2.gd" id="1_ui2qe"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_b8gud"]
 [ext_resource type="AudioStream" uid="uid://c76c7vsep2l71" path="res://music/cutscene/starting_part_2.ogg" id="3_1bemg"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_5xf2w"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_1e7xr"]
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/camera_part2.gd" id="5_3553e"]
 [ext_resource type="AudioStream" uid="uid://oduel0qr6anh" path="res://sfx/ending_anim_2.ogg" id="6_lr2is"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="13_nqm37"]
@@ -126,11 +128,16 @@ animations = [{
 script = ExtResource("1_ui2qe")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_b8gud")]
+script = ExtResource("3_5xf2w")
+tweaked_completion_music = ExtResource("4_1e7xr")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("3_1bemg")])
 play_immediately = false
 stop_all_music_on_start = false
 volume_db = Array[float]([-4.0])
-start_from_sec = Array[float]([0.0, 26.28])
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
