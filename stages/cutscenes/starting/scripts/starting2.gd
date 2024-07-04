@@ -9,6 +9,7 @@ extends Node2D
 @onready var mario = $Mario
 
 var _original_time_scale: float
+var _skippable: bool
 
 var set_looking: bool = false
 
@@ -24,6 +25,8 @@ func _restore() -> void:
 func _ready() -> void:
 	_flow_intros()
 	mario.completed = true
+	await get_tree().create_timer(1.2, false).timeout
+	_skippable = true
 
 func _flow_intros() -> void:
 	music_loader.play_buffered()
@@ -46,13 +49,26 @@ func _flow_intros() -> void:
 	tw2.tween_property(camera_2d, "speed", -40, 1)
 	
 	await get_tree().create_timer(38, false).timeout
-	
+	_fade_out()
+
+func _physics_process(_delta: float) -> void:
+	if tanks.global_position.x < 100:
+		mario.direction = -1
+		mario.speed.x = -180
+		mario.sprite.speed_scale = 5
+
+func _unhandled_input(event: InputEvent):
+	if !_skippable: return
+	if event is InputEventKey:
+		_fade_out()
+
+func _fade_out() -> void:
+	_skippable = false
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
 			.with_speeds(0.01, -0.1)
 	)
-	TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
 	await TransitionManager.transition_middle
 	
 	_restore()
@@ -61,9 +77,4 @@ func _flow_intros() -> void:
 	ProfileManager.current_profile.data.current_world = goto_scene
 	ProfileManager.save_current_profile()
 	Scenes.goto_scene.call_deferred(goto_scene)
-
-func _physics_process(_delta: float) -> void:
-	if tanks.global_position.x < 100:
-		mario.direction = -1
-		mario.speed.x = -180
-		mario.sprite.speed_scale = 5
+	await Scenes.scene_ready

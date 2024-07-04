@@ -8,6 +8,7 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 @export var music_var_2: Array[Resource]
 ## ver 7.02-31 soundtrack
 @export var music_var_3: Array[Resource]
+@export var ignore_fade_in_tweak: bool = false
 
 var current_music: Array[Resource]
 
@@ -49,6 +50,7 @@ func _change_music(ind: int, ch_id: int) -> void:
 				player.set_meta(&"play_when_scene_changed", true)
 		).call_deferred()
 		is_paused = false
+		_fade_in_tweak.call_deferred(player, ind)
 	else:
 		music_buffered.emit(ind)
 		buffer = options
@@ -61,3 +63,25 @@ func play_or_buffer(ind: int = index, ch_id: int = channel_id) -> void:
 		buffer[1] = ch_id
 	
 	index = ind
+
+func play_buffered(buffered_to_play: Array = buffer) -> bool:
+	if buffered_to_play.is_empty(): return false
+	if buffered_to_play.size() < 3: return false
+	if is_paused:
+		Audio.stop_all_musics()
+	var player = await Audio.play_music(buffered_to_play[0], buffered_to_play[1], buffered_to_play[2], play_globally)
+	music_resumed_buffered.emit()
+	_fade_in_tweak.call_deferred(player, current_music.find(buffered_to_play[0]))
+	buffered_to_play = []
+	is_paused = false
+	return true
+
+
+func _fade_in_tweak(player, ind: int) -> void:
+	if !SettingsManager.get_tweak("bgm_fade_in_bug_emulation", false):
+		return
+	await get_tree().create_timer(0.033, true, false, true).timeout
+	if ind == 0 && !ignore_fade_in_tweak:
+		player.volume_db = -59
+		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
+		Audio.fade_music_1d_player(player, to_vol, 0.5, Tween.TRANS_CUBIC, false, Tween.EASE_OUT)

@@ -18,9 +18,12 @@ extends Node2D
 @onready var second_camera = $Path2D2/PathFollow2D/Camera2D
 
 var _original_time_scale: float
+var _skippable: bool
 
 func _ready() -> void:
 	_flow_intros()
+	await get_tree().create_timer(1.2, false).timeout
+	_skippable = true
 
 func _enter_tree() -> void:
 	print('[Cutscene] altered time scale from %s' % Engine.time_scale)
@@ -75,15 +78,26 @@ func _flow_intros() -> void:
 	tw3.tween_property(second_camera_path, "speed", 60, 1.5)
 	
 	await get_tree().create_timer(35, false).timeout
-	
+	_fade_out()
+
+func _unhandled_input(event: InputEvent):
+	if !_skippable: return
+	if event is InputEventKey:
+		_fade_out()
+
+func _fade_out() -> void:
+	_skippable = false
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
 			.with_speeds(0.01, -0.1)
 	)
-	TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
 	
 	await TransitionManager.transition_middle
+	#TransitionManager.current_transition.paused = true
 	
 	_restore()
-	Scenes.goto_scene.call_deferred(goto_scene)
+	Scenes.goto_scene(goto_scene)
+	await Scenes.scene_ready
+	TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
+	TransitionManager.current_transition.paused = false
