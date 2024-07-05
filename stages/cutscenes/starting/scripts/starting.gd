@@ -19,6 +19,7 @@ extends Node2D
 
 var _original_time_scale: float
 var _skippable: bool
+var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 func _ready() -> void:
 	_flow_intros()
@@ -87,6 +88,16 @@ func _unhandled_input(event: InputEvent):
 
 func _fade_out() -> void:
 	_skippable = false
+	if _crossfade:
+		_restore()
+		await get_tree().physics_frame
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+				.instantiate()
+				.with_scene(goto_scene)
+				.with_time(1.0)
+		)
+		return
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
