@@ -44,6 +44,9 @@ func _change_music(ind: int, ch_id: int) -> void:
 	]
 	if play_immediately:
 		music_started.emit(ind)
+		var _trans = TransitionManager.current_transition
+		if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
+			await _trans.end
 		var player = await Audio.play_music(options[0], options[1], options[2], play_globally)
 		(func():
 			if play_globally && player:
@@ -69,6 +72,9 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 	if buffered_to_play.size() < 3: return false
 	if is_paused:
 		Audio.stop_all_musics()
+	var _trans = TransitionManager.current_transition
+	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
+		await _trans.end
 	var player = await Audio.play_music(buffered_to_play[0], buffered_to_play[1], buffered_to_play[2], play_globally)
 	music_resumed_buffered.emit()
 	_fade_in_tweak.call_deferred(player, current_music.find(buffered_to_play[0]))
@@ -80,8 +86,8 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 func _fade_in_tweak(player, ind: int) -> void:
 	if !SettingsManager.get_tweak("bgm_fade_in_bug_emulation", false):
 		return
-	await get_tree().create_timer(0.033, true, false, true).timeout
+	await get_tree().create_timer(0.017, true, false, true).timeout
 	if ind == 0 && !ignore_fade_in_tweak:
 		player.volume_db = -59
 		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
-		Audio.fade_music_1d_player(player, to_vol, 0.5, Tween.TRANS_CUBIC, false, Tween.EASE_OUT)
+		Audio.fade_music_1d_player(player, to_vol, 0.5 / Engine.time_scale, Tween.TRANS_CUBIC, false, Tween.EASE_OUT)
