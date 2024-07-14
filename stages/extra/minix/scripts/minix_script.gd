@@ -7,6 +7,8 @@ extends Node
 
 @onready var enemy_spawners: Node2D = $"../EnemySpawners"
 @onready var coin_pipe = $"../CoinPipe"
+@onready var status: AnimatedSprite2D = $"../CanvasLayer/Status"
+@onready var starter: Node2D = $"../START/Node2D"
 
 var timer_left: int = 5
 var lives: int = 1
@@ -22,13 +24,24 @@ const COIN_FROM_PIPE = preload("res://stages/extra/minix/objects/coin_from_pipe.
 
 func _ready() -> void:
 	Data.reset_all_values()
+
+func _on_game_started() -> void:
+	process_mode = Node.PROCESS_MODE_INHERIT
+	Data.reset_all_values()
 	timer.timeout.connect(_on_timeout)
 	coin_timer.timeout.connect(Data.add_score.bind(1))
 	pipe_timer.timeout.connect(_on_pipe_timeout)
+	#timer.start()
+	#timer_2.start()
+	#coin_timer.start()
+	#pipe_timer.start()
 	
 
 func _physics_process(delta: float) -> void:
-	pass
+	if !OS.is_debug_build(): return
+	
+	if Input.is_action_just_pressed("ui_page_up"):
+		timer.wait_time = 0.4
 
 
 func _on_timeout() -> void:
@@ -47,12 +60,14 @@ func new_random_enemy(index: int = 0) -> void:
 	var enemy = picked.instantiate()
 	enemy.position = pick_random_marker()
 	enemy.force_direction = -1 + 2 * round(randf())
+	if starter.map_id == 2:
+		enemy.gravity_scale /= 2
 	Scenes.current_scene.add_child.call_deferred(enemy)
 
 
 func _on_pipe_timeout() -> void:
 	coin_pipe.position = Vector2(randi_range(80, 560), 528)
-	Audio.play_sound(preload("res://engine/objects/bumping_blocks/_sounds/appear.wav"), coin_pipe)
+	Audio.play_sound(preload("res://engine/objects/bumping_blocks/_sounds/appear.wav"), coin_pipe, false)
 	
 	var tw = create_tween()
 	tw.tween_property(coin_pipe, "position:y", 432, 1.5)

@@ -1,0 +1,127 @@
+[gd_scene load_steps=16 format=3 uid="uid://boeruql4s8rd1"]
+
+[ext_resource type="TileSet" uid="uid://7ahm7i5kbbn6" path="res://tilesets/underwater/underwater.tres" id="1_ol730"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_pvmpp"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_5klii"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="2_x0d46"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="3_edxrf"]
+[ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="4_mynjo"]
+[ext_resource type="AudioStream" uid="uid://lkb401j465fp" path="res://music/minix/custom/subsea.ogg" id="4_rlu0c"]
+[ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="5_d4302"]
+[ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="6_erdsl"]
+[ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="7_hmqxr"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_klg56"]
+[ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="9_5ekap"]
+[ext_resource type="Texture2D" uid="uid://cluydsbguagth" path="res://stages/extra/minix/textures/underwater_bg.png" id="10_4wm3j"]
+
+[sub_resource type="Gradient" id="Gradient_pey5g"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fj0ev"]
+gradient = SubResource("Gradient_pey5g")
+width = 480
+
+[node name="underwater" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("1_pvmpp")]
+script = ExtResource("2_5klii")
+tweaked_completion_music = ExtResource("3_edxrf")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+ignore_fade_in_tweak = true
+music = Array[Resource]([ExtResource("4_rlu0c")])
+play_immediately = false
+stop_all_music_on_start = false
+start_from_sec = Array[float]([68.0])
+
+[node name="MarioPos" type="Marker2D" parent="."]
+position = Vector2(304, 272)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_ol730")
+format = 2
+layer_0/tile_data = PackedInt32Array(917504, 0, 0, 983040, 0, 0, 917505, 0, 0, 983041, 0, 0, 917506, 0, 0, 983042, 0, 0, 917507, 0, 0, 983043, 0, 0, 917508, 0, 0, 983044, 0, 0, 917509, 0, 0, 983045, 0, 0, 917510, 0, 0, 983046, 0, 0, 917511, 0, 0, 983047, 0, 0, 917512, 0, 0, 983048, 0, 0, 917515, 0, 0, 983051, 0, 0, 917516, 0, 0, 983052, 0, 0, 917517, 0, 0, 983053, 0, 0, 917518, 0, 0, 983054, 0, 0, 917519, 0, 0, 983055, 0, 0, 917520, 0, 0, 983056, 0, 0, 917521, 0, 0, 983057, 0, 0, 917522, 0, 0, 983058, 0, 0, 917523, 0, 0, 983059, 0, 0, 720916, 0, 0, 786452, 0, 0, 851988, 0, 0, 917524, 0, 0, 983060, 0, 0, 655380, 0, 0, 589832, 0, 0, 589835, 0, 0, 458769, 0, 0)
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource("2_x0d46")
+format = 2
+layer_0/tile_data = PackedInt32Array(131075, 2, 131072, 131088, 2, 131072, 262144, 1, 0, 458755, 1, 0, 458756, 1, 0, 589833, 1, 0, 589834, 1, 0, 458766, 1, 0, 458767, 1, 0, 458768, 1, 0)
+
+[node name="Water" parent="." instance=ExtResource("4_mynjo")]
+offset_left = -32.0
+offset_top = 37.0
+offset_right = 672.0
+offset_bottom = 517.0
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" parent="Water" index="2"]
+visible = false
+
+[node name="ParallaxBackground" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -999
+position = Vector2(640, -128)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_fj0ev")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -99
+texture_repeat = 2
+position = Vector2(320, 15)
+texture = ExtResource("5_d4302")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("6_erdsl")
+speed = -80.0
+
+[node name="TextureAlpha" type="Sprite2D" parent="ParallaxBackground/Sprite2D4"]
+position = Vector2(0, 32)
+texture = ExtResource("7_hmqxr")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 32)
+script = ExtResource("8_klg56")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground"]
+texture_repeat = 2
+position = Vector2(320, 0)
+texture = ExtResource("5_d4302")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("6_erdsl")
+speed = -160.0
+metadata/_edit_lock_ = true
+
+[node name="Grass" parent="." instance=ExtResource("9_5ekap")]
+modulate = Color(1, 1, 1, 0.607843)
+position = Vector2(128, 433)
+
+[node name="Grass2" parent="." instance=ExtResource("9_5ekap")]
+modulate = Color(1, 1, 1, 0.607843)
+position = Vector2(416, 433)
+
+[node name="Grass3" parent="." instance=ExtResource("9_5ekap")]
+modulate = Color(1, 1, 1, 0.607843)
+position = Vector2(289, 273)
+
+[node name="Grass4" parent="." instance=ExtResource("9_5ekap")]
+modulate = Color(1, 1, 1, 0.607843)
+position = Vector2(481, 209)
+
+[node name="Grass5" parent="." instance=ExtResource("9_5ekap")]
+modulate = Color(1, 1, 1, 0.607843)
+position = Vector2(129, 209)
+
+[node name="UnderwaterBg" type="Sprite2D" parent="."]
+z_index = -999
+position = Vector2(320, 272)
+texture = ExtResource("10_4wm3j")
+metadata/_edit_lock_ = true
+
+[editable path="Water"]
