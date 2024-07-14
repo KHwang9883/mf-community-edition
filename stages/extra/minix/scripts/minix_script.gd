@@ -14,11 +14,11 @@ var lives: int = 1
 const enemy_array: Array = [
 	preload("res://engine/objects/enemies/goombas/goomba.tscn"),
 	preload("res://engine/objects/enemies/goombas/goomba.tscn"),
-	preload("res://engine/objects/enemies/koopas/koopa_green.tscn"),
+	preload("res://stages/extra/minix/objects/koopa_green_minix.tscn"),
 	preload("res://engine/objects/enemies/spinies/spiny_red.tscn"),
-	preload("res://stages/extra/minix/coin_walking.tscn")
+	preload("res://stages/extra/minix/objects/coin_walking.tscn")
 ]
-const COIN_FROM_PIPE = preload("res://stages/extra/minix/coin_from_pipe.tscn")
+const COIN_FROM_PIPE = preload("res://stages/extra/minix/objects/coin_from_pipe.tscn")
 
 func _ready() -> void:
 	Data.reset_all_values()
@@ -46,6 +46,7 @@ func new_random_enemy(index: int = 0) -> void:
 	var picked = enemy_array[index] if index else enemy_array.pick_random()
 	var enemy = picked.instantiate()
 	enemy.position = pick_random_marker()
+	enemy.force_direction = -1 + 2 * round(randf())
 	Scenes.current_scene.add_child.call_deferred(enemy)
 
 
