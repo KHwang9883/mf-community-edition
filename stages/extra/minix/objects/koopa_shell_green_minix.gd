@@ -54,6 +54,7 @@ func status_update() -> void:
 		animation.play()
 		disappear_timer.stop()
 		if tw && tw.is_valid():
+			tw.stop()
 			tw = null
 			sprite_node.modulate.a = 1.0
 		
@@ -106,12 +107,14 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 			Thunder._current_camera.shock(0.1, Vector2.ONE * 2)
 	# Combo
 	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
+		var status_node = Scenes.current_scene.get_node("CanvasLayer/Status")
 		if !combo.get_combo() <= 0:
 			target_enemy_attacked.sound_pitch = 1 + min(combo.get_combo(), 7) * 0.135
 		target_enemy_attacked.set_meta(&"attacker_speed", speed)
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
-		Thunder._current_camera.shock(0.05 + (0.05 * combo.get_combo()), Vector2.ONE * (1 + combo.get_combo() * 0.5))
+		Thunder._current_camera.shock(0.08, Vector2.ONE * 3)
 		combo.combo()
+		status_node.status(combo.get_combo())
 	# Gets blocked
 	else:
 		if &"speed" in target_enemy_attacked.owner:
