@@ -9,9 +9,14 @@ extends Node
 @onready var coin_pipe = $"../CoinPipe"
 @onready var status: AnimatedSprite2D = $"../CanvasLayer/Status"
 @onready var starter: Node2D = $"../START/Node2D"
+@onready var life_nodes: Array[Node2D] = [
+	$"../CanvasLayer/Node2D",
+	$"../CanvasLayer/Node2D2",
+	$"../CanvasLayer/Node2D3"
+]
+@onready var minix_score_loader: Node = $"../MinixScoreLoader"
 
 var timer_left: int = 5
-var lives: int = 1
 
 const enemy_array: Array = [
 	preload("res://engine/objects/enemies/goombas/goomba.tscn"),
@@ -23,7 +28,16 @@ const enemy_array: Array = [
 const COIN_FROM_PIPE = preload("res://stages/extra/minix/objects/coin_from_pipe.tscn")
 
 func _ready() -> void:
+	minix_score_loader.load_score()
+	if "map_id" in Data.values:
+		starter.map_id = Data.values.map_id
+		starter._on_map_changed_to(starter.map_id)
+		var minix_name: String = "minix_" + starter.current_map.map_name
+		minix_score_loader.save_score.call_deferred(Data.values.score, minix_name)
+	else:
+		starter._on_map_changed_to(starter.map_id)
 	Data.reset_all_values()
+
 
 func _on_game_started() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
@@ -31,11 +45,12 @@ func _on_game_started() -> void:
 	timer.timeout.connect(_on_timeout)
 	coin_timer.timeout.connect(Data.add_score.bind(1))
 	pipe_timer.timeout.connect(_on_pipe_timeout)
-	#timer.start()
-	#timer_2.start()
-	#coin_timer.start()
-	#pipe_timer.start()
 	
+	for i in len(life_nodes):
+		var life_count: int = starter.current_map.life_count
+		if life_count <= i:
+			life_nodes[i].visible = false
+
 
 func _physics_process(delta: float) -> void:
 	if !OS.is_debug_build(): return
@@ -90,3 +105,7 @@ func _pipe_burst() -> void:
 		
 		if i == 0:
 			create_tween().tween_property(coin_pipe, "position:y", 432+96, 1.5)
+
+
+func _on_mario_damaged_to(lives: int) -> void:
+	life_nodes[lives].get_node("AnimatedSprite2D").fade_out()

@@ -70,6 +70,8 @@ func _physics_process(delta: float) -> void:
 
 func _set_modulation() -> void:
 	self_modulate.a = 1
+	if tw && tw.is_valid():
+		tw.stop()
 	tw = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.tween_interval(2.0)
 	tw.tween_property(self, "self_modulate:a", 0.0, 2.4)

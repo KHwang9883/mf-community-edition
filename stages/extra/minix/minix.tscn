@@ -1,6 +1,7 @@
-[gd_scene load_steps=52 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=55 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_m1mir"]
 [ext_resource type="AudioStream" uid="uid://b3fi82o236yat" path="res://music/minix/minix-menu.ogg" id="3_gkuoc"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_t3gk0"]
@@ -16,6 +17,7 @@
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="18_muktk"]
 [ext_resource type="AudioStream" uid="uid://kj3hs5hf5nsf" path="res://stages/extra/minix/sfx/select_extra.wav" id="18_tkk1b"]
 [ext_resource type="Script" path="res://engine/components/hud/value.gd" id="19_50mii"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/high_score.gd" id="19_o5w5g"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="19_qaur8"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="20_h1nf4"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_start_sel.gd" id="20_p8cyh"]
@@ -38,6 +40,10 @@
 [ext_resource type="PackedScene" uid="uid://opdqhst2t4mj" path="res://stages/extra/minix/maps/classic.tscn" id="34_l4qgv"]
 [ext_resource type="PackedScene" uid="uid://cx368qovj48tp" path="res://stages/extra/minix/maps/playgrounds.tscn" id="35_7wouc"]
 [ext_resource type="PackedScene" uid="uid://boeruql4s8rd1" path="res://stages/extra/minix/maps/underwater.tscn" id="36_0cnpl"]
+
+[sub_resource type="FontVariation" id="FontVariation_prh3k"]
+base_font = ExtResource("19_qaur8")
+spacing_glyph = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7il7"]
 atlas = ExtResource("17_r2kie")
@@ -142,6 +148,9 @@ script = ExtResource("1_51ox0")
 time = -1
 metadata/_edit_lock_ = true
 
+[node name="MinixScoreLoader" type="Node" parent="."]
+script = ExtResource("2_0osd1")
+
 [node name="MusicLoaderIntro" parent="." instance=ExtResource("2_m1mir")]
 music = Array[Resource]([ExtResource("3_gkuoc")])
 channel_id = 0
@@ -150,7 +159,6 @@ channel_id = 0
 position = Vector2(336, 400)
 script = ExtResource("5_sdtbj")
 death_music_override = ExtResource("14_405ip")
-death_jump_to_scene = "res://stages/extra/minix/minix_over.tscn"
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -277,11 +285,75 @@ vertical_alignment = 1
 script = ExtResource("26_d7paj")
 left_side = false
 
+[node name="VBoxContainer" type="VBoxContainer" parent="START/Node2D"]
+offset_left = 16.0
+offset_top = 416.0
+offset_right = 192.0
+offset_bottom = 480.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="START/Node2D/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Start" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 11
+text = "LAST SCORE:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_prh3k")
+theme_override_font_sizes/font_size = 12
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("19_o5w5g")
+minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
+starter_path = NodePath("../../..")
+value = "last"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="START/Node2D/VBoxContainer"]
+layout_mode = 2
+
+[node name="Start" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 11
+text = "BEST SCORE:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_prh3k")
+theme_override_font_sizes/font_size = 12
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("19_o5w5g")
+minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
+starter_path = NodePath("../../..")
+value = "best"
+
 [node name="HUD" parent="." instance=ExtResource("8_sdali")]
 visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -295,7 +367,7 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
-position = Vector2(376, -26)
+position = Vector2(370, -26)
 sprite_frames = SubResource("SpriteFrames_sktjy")
 autoplay = "default"
 centered = false
@@ -306,9 +378,9 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.187
 anchor_bottom = -0.187
-offset_left = 341.0
+offset_left = 335.0
 offset_top = -24.008
-offset_right = 371.0
+offset_right = 365.0
 offset_bottom = -6.008
 grow_horizontal = 0
 size_flags_horizontal = 0
@@ -326,13 +398,12 @@ sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D"]
-position = Vector2(615, 48)
+position = Vector2(615, 40)
 sprite_frames = SubResource("SpriteFrames_q23ld")
 autoplay = "default"
 script = ExtResource("22_2dbbe")
 
 [node name="Node2D2" type="Node2D" parent="CanvasLayer"]
-visible = false
 script = ExtResource("20_h1nf4")
 amplitude = Vector2(0, 10)
 phase = 180.0
@@ -341,13 +412,12 @@ sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D2"]
-position = Vector2(591, 48)
+position = Vector2(583, 40)
 sprite_frames = SubResource("SpriteFrames_q23ld")
 autoplay = "default"
 script = ExtResource("22_2dbbe")
 
 [node name="Node2D3" type="Node2D" parent="CanvasLayer"]
-visible = false
 script = ExtResource("20_h1nf4")
 amplitude = Vector2(0, 10)
 frequency = 4.0
@@ -355,7 +425,7 @@ sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D3"]
-position = Vector2(591, 48)
+position = Vector2(551, 40)
 sprite_frames = SubResource("SpriteFrames_q23ld")
 autoplay = "default"
 script = ExtResource("22_2dbbe")
@@ -411,16 +481,16 @@ texture = SubResource("AtlasTexture_2l3io")
 metadata/_edit_lock_ = true
 
 [node name="Marker2D" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(96, -15)
+position = Vector2(96, -12)
 
 [node name="Marker2D2" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(224, -15)
+position = Vector2(224, -12)
 
 [node name="Marker2D3" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(384, -15)
+position = Vector2(384, -12)
 
 [node name="Marker2D4" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(512, -15)
+position = Vector2(512, -12)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 112
@@ -452,9 +522,15 @@ shape = SubResource("RectangleShape2D_dul3d")
 [node name="CoinFromPipe" parent="." instance=ExtResource("29_quhhf")]
 position = Vector2(336, 320)
 
-[connection signal="damaged" from="Mario" to="CanvasLayer/Node2D/AnimatedSprite2D" method="fade_out"]
+[connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_minix_score_loader_score_loaded"]
+[connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_minix_score_loader_score_loaded"]
+[connection signal="score_saved" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_minix_score_loader_score_loaded"]
+[connection signal="score_saved" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_minix_score_loader_score_loaded"]
+[connection signal="damaged_to" from="Mario" to="Node" method="_on_mario_damaged_to"]
+[connection signal="game_started" from="START/Node2D" to="CanvasLayer" method="show"]
+[connection signal="game_started" from="START/Node2D" to="Node" method="_on_game_started"]
 [connection signal="selected" from="START/Node2D/MainMenuControls" to="START/Node2D/Selector" method="handle_selection"]
 [connection signal="selected" from="START/Node2D/MainMenuControls" to="START/Node2D/Selector2" method="handle_selection"]
-[connection signal="game_started" from="START/Node2D/MainMenuControls/Start" to="CanvasLayer" method="show"]
-[connection signal="game_started" from="START/Node2D/MainMenuControls/Start" to="Node" method="_on_game_started"]
 [connection signal="map_changed_to" from="START/Node2D/MainMenuControls/Start2" to="START/Node2D" method="_on_map_changed_to"]
+[connection signal="map_changed_to" from="START/Node2D/MainMenuControls/Start2" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_map_changed_to"]
+[connection signal="map_changed_to" from="START/Node2D/MainMenuControls/Start2" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_map_changed_to"]
