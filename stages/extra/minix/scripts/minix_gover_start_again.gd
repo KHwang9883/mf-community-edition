@@ -1,9 +1,12 @@
 extends MenuSelection
 
+@onready var starter: Node2D = $"../../../Node2D"
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 func _handle_select() -> void:
 	super()
+	Data.reset_all_values()
+	Data.values.minix_continue = starter.map_id
 	Pause.get_child(0).open_blocked = false
 	_start_transition()
 
@@ -19,5 +22,6 @@ func _start_transition() -> void:
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 				.instantiate()
-				.with_scene(ProjectSettings.get("application/thunder_settings/main_menu_path"))
+				.with_scene("res://stages/extra/minix/minix.tscn")
 		)
+

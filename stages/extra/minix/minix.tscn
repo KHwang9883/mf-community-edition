@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=60 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -11,9 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_sdali"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_script.gd" id="13_o0kdt"]
 [ext_resource type="AudioStream" uid="uid://csqg16k26jclf" path="res://music/extra/smw-death_extra.ogg" id="14_405ip"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_igmusic_sel.gd" id="15_tekh0"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="17_n5uqm"]
 [ext_resource type="Texture2D" uid="uid://bdyg3ju76ed67" path="res://engine/components/hud/coins.png" id="17_r2kie"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_node_starter.gd" id="18_5csdc"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="18_a20ym"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="18_muktk"]
 [ext_resource type="AudioStream" uid="uid://kj3hs5hf5nsf" path="res://stages/extra/minix/sfx/select_extra.wav" id="18_tkk1b"]
 [ext_resource type="Script" path="res://engine/components/hud/value.gd" id="19_50mii"]
@@ -23,8 +25,11 @@
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_start_sel.gd" id="20_p8cyh"]
 [ext_resource type="Texture2D" uid="uid://d1vkaab2ewmjq" path="res://engine/objects/players/prefabs/textures/mario/mario_small.png" id="21_5gc5l"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/fade_out.gd" id="22_2dbbe"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_gameover.gd" id="22_6vcp0"]
 [ext_resource type="AudioStream" uid="uid://bi0m6xn5201en" path="res://engine/scenes/main_menu/sounds/lets.wav" id="22_f8jlb"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_map_sel.gd" id="23_611ee"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_gover_switch_map.gd" id="23_ptb2v"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_gover_start_again.gd" id="23_qc8bc"]
 [ext_resource type="Texture2D" uid="uid://briwe8baq7gso" path="res://stages/extra/minix/textures/minix_logo.png" id="23_tw8fd"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="24_5v6a1"]
 [ext_resource type="Texture2D" uid="uid://cfy38wut41n1q" path="res://stages/extra/minix/status/S2.png" id="24_b1cyv"]
@@ -45,29 +50,29 @@
 base_font = ExtResource("19_qaur8")
 spacing_glyph = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t7il7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7celo"]
 atlas = ExtResource("17_r2kie")
-region = Rect2(0, 0, 28, 16)
+region = Rect2(0, 0, 14, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jsmmd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ej1hx"]
 atlas = ExtResource("17_r2kie")
-region = Rect2(28, 0, 28, 16)
+region = Rect2(28, 0, 14, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hbj7g"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nogej"]
 atlas = ExtResource("17_r2kie")
-region = Rect2(56, 0, 28, 16)
+region = Rect2(56, 0, 14, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_sktjy"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_npe5u"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t7il7")
+"texture": SubResource("AtlasTexture_7celo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jsmmd")
+"texture": SubResource("AtlasTexture_ej1hx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hbj7g")
+"texture": SubResource("AtlasTexture_nogej")
 }],
 "loop": true,
 "name": &"default",
@@ -154,11 +159,14 @@ script = ExtResource("2_0osd1")
 [node name="MusicLoaderIntro" parent="." instance=ExtResource("2_m1mir")]
 music = Array[Resource]([ExtResource("3_gkuoc")])
 channel_id = 0
+play_immediately = false
+stop_all_music_on_start = false
 
 [node name="Mario" parent="." instance=ExtResource("4_t3gk0")]
 position = Vector2(336, 400)
 script = ExtResource("5_sdtbj")
 death_music_override = ExtResource("14_405ip")
+death_wait_time = 10.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -169,6 +177,7 @@ script = ExtResource("6_bvs5l")
 metadata/_edit_lock_ = true
 
 [node name="START" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="Node2D" type="Node2D" parent="START"]
 script = ExtResource("18_5csdc")
@@ -186,7 +195,11 @@ offset_bottom = 277.0
 color = Color(1, 1, 1, 0.376471)
 metadata/_edit_lock_ = true
 
-[node name="MainMenuControls" type="VBoxContainer" parent="START/Node2D"]
+[node name="MinixLogo" type="Sprite2D" parent="START/Node2D/ColorRect2"]
+position = Vector2(320, 126)
+texture = ExtResource("23_tw8fd")
+
+[node name="MinixControls" type="VBoxContainer" parent="START/Node2D"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -201,7 +214,7 @@ theme_override_constants/separation = 7
 script = ExtResource("17_n5uqm")
 control_sound = ExtResource("18_tkk1b")
 
-[node name="Start" type="Label" parent="START/Node2D/MainMenuControls"]
+[node name="Start" type="Label" parent="START/Node2D/MinixControls"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -212,12 +225,12 @@ text = "START THE FIGHT!"
 horizontal_alignment = 1
 script = ExtResource("20_p8cyh")
 
-[node name="Start2" type="CenterContainer" parent="START/Node2D/MainMenuControls"]
+[node name="Start2" type="CenterContainer" parent="START/Node2D/MinixControls"]
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("23_611ee")
 
-[node name="Label" type="Label" parent="START/Node2D/MainMenuControls/Start2"]
+[node name="Label" type="Label" parent="START/Node2D/MinixControls/Start2"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -228,7 +241,23 @@ text = "map: %s"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Start3" type="Label" parent="START/Node2D/MainMenuControls"]
+[node name="Start4" type="CenterContainer" parent="START/Node2D/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("15_tekh0")
+
+[node name="Label" type="Label" parent="START/Node2D/MinixControls/Start4"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "in-game music: %s"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Start3" type="Label" parent="START/Node2D/MinixControls"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -241,11 +270,22 @@ uppercase = true
 script = ExtResource("24_qi125")
 selected_sound = ExtResource("22_f8jlb")
 
-[node name="MinixLogo" type="Sprite2D" parent="START/Node2D"]
-position = Vector2(320, 150)
-texture = ExtResource("23_tw8fd")
+[node name="EnterToPreview" type="Label" parent="START/Node2D"]
+offset_top = 453.0
+offset_right = 640.0
+offset_bottom = 467.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "Press enter to preview"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("18_a20ym")
 
 [node name="Selector" type="AnimatedSprite2D" parent="START/Node2D"]
+position = Vector2(243, 292)
 script = ExtResource("24_5v6a1")
 smooth_speed = 0.4
 position_paddings_array = Array[float]([0.0, 0.0, 0.0])
@@ -265,6 +305,7 @@ vertical_alignment = 1
 script = ExtResource("26_d7paj")
 
 [node name="Selector2" type="AnimatedSprite2D" parent="START/Node2D"]
+position = Vector2(395, 292)
 script = ExtResource("24_5v6a1")
 smooth_speed = 0.4
 position_side = 1
@@ -350,6 +391,161 @@ minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
 starter_path = NodePath("../../..")
 value = "best"
 
+[node name="GAMEOVER" type="Node2D" parent="START"]
+process_mode = 3
+script = ExtResource("22_6vcp0")
+
+[node name="MusicLoaderIntro" parent="START/GAMEOVER" instance=ExtResource("2_m1mir")]
+play_immediately = false
+stop_all_music_on_start = false
+play_globally = 2
+
+[node name="ColorRect" type="ColorRect" parent="START/GAMEOVER"]
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(1, 1, 1, 0.313726)
+metadata/_edit_lock_ = true
+
+[node name="congratulations" type="Label" parent="START/GAMEOVER"]
+offset_left = 160.0
+offset_top = 112.0
+offset_right = 480.0
+offset_bottom = 125.0
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "congratulations! your score is:
+
+
+
+on map:
+
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="score" type="Label" parent="START/GAMEOVER"]
+offset_left = 160.0
+offset_top = 133.0
+offset_right = 480.0
+offset_bottom = 147.0
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_prh3k")
+theme_override_font_sizes/font_size = 12
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MapLabel" type="Label" parent="START/GAMEOVER"]
+offset_top = 201.0
+offset_right = 640.0
+offset_bottom = 215.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "%s"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="MinixControls" type="VBoxContainer" parent="START/GAMEOVER"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 284.0
+offset_right = 640.0
+offset_bottom = 364.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+script = ExtResource("17_n5uqm")
+focused = false
+control_sound = ExtResource("18_tkk1b")
+
+[node name="PlayAgain" type="Label" parent="START/GAMEOVER/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "PLAY AGAIN!"
+horizontal_alignment = 1
+script = ExtResource("23_qc8bc")
+
+[node name="SwitchMap" type="Label" parent="START/GAMEOVER/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "switch the map"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("23_ptb2v")
+
+[node name="QuitToMF" type="Label" parent="START/GAMEOVER/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "quit to mario forever"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("24_qi125")
+selected_sound = ExtResource("22_f8jlb")
+
+[node name="Selector" type="AnimatedSprite2D" parent="START/GAMEOVER"]
+script = ExtResource("24_5v6a1")
+smooth_speed = 0.4
+position_paddings_array = Array[float]([0.0, 0.0, 0.0])
+
+[node name="Start" type="Label" parent="START/GAMEOVER/Selector"]
+offset_left = -31.0
+offset_top = -7.0
+offset_right = -9.0
+offset_bottom = 7.0
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 11
+text = "-->"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("26_d7paj")
+
+[node name="Selector2" type="AnimatedSprite2D" parent="START/GAMEOVER"]
+script = ExtResource("24_5v6a1")
+smooth_speed = 0.4
+position_side = 1
+position_paddings_array = Array[float]([0.0, 0.0, 0.0])
+
+[node name="Start" type="Label" parent="START/GAMEOVER/Selector2"]
+offset_left = 9.0
+offset_top = -7.0
+offset_right = 31.0
+offset_bottom = 7.0
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 11
+text = "<--"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("26_d7paj")
+left_side = false
+
 [node name="HUD" parent="." instance=ExtResource("8_sdali")]
 visible = false
 
@@ -367,25 +563,24 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
-position = Vector2(370, -26)
-sprite_frames = SubResource("SpriteFrames_sktjy")
+position = Vector2(391, -26)
+sprite_frames = SubResource("SpriteFrames_npe5u")
 autoplay = "default"
 centered = false
-flip_h = true
 
 [node name="Coins" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.187
 anchor_bottom = -0.187
-offset_left = 335.0
+offset_left = 328.0
 offset_top = -24.008
-offset_right = 365.0
+offset_right = 380.0
 offset_bottom = -6.008
 grow_horizontal = 0
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("18_muktk")
-text = "%s"
+text = "%s ~"
 horizontal_alignment = 2
 script = ExtResource("19_50mii")
 value_name = "score"
@@ -396,6 +591,7 @@ amplitude = Vector2(0, 10)
 frequency = 4.0
 sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D"]
 position = Vector2(615, 40)
@@ -410,6 +606,7 @@ phase = 180.0
 frequency = 4.0
 sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D2"]
 position = Vector2(583, 40)
@@ -423,6 +620,7 @@ amplitude = Vector2(0, 10)
 frequency = 4.0
 sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D3"]
 position = Vector2(551, 40)
@@ -441,12 +639,10 @@ process_mode = 4
 script = ExtResource("13_o0kdt")
 
 [node name="Timer" type="Timer" parent="Node"]
-process_callback = 0
 wait_time = 2.0
 autostart = true
 
 [node name="CoinTimer" type="Timer" parent="Node"]
-process_callback = 0
 autostart = true
 
 [node name="Timer2" type="Timer" parent="Node"]
@@ -527,10 +723,16 @@ position = Vector2(336, 320)
 [connection signal="score_saved" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_minix_score_loader_score_loaded"]
 [connection signal="score_saved" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_minix_score_loader_score_loaded"]
 [connection signal="damaged_to" from="Mario" to="Node" method="_on_mario_damaged_to"]
+[connection signal="died" from="Mario" to="START/GAMEOVER" method="_on_mario_died"]
 [connection signal="game_started" from="START/Node2D" to="CanvasLayer" method="show"]
 [connection signal="game_started" from="START/Node2D" to="Node" method="_on_game_started"]
-[connection signal="selected" from="START/Node2D/MainMenuControls" to="START/Node2D/Selector" method="handle_selection"]
-[connection signal="selected" from="START/Node2D/MainMenuControls" to="START/Node2D/Selector2" method="handle_selection"]
-[connection signal="map_changed_to" from="START/Node2D/MainMenuControls/Start2" to="START/Node2D" method="_on_map_changed_to"]
-[connection signal="map_changed_to" from="START/Node2D/MainMenuControls/Start2" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_map_changed_to"]
-[connection signal="map_changed_to" from="START/Node2D/MainMenuControls/Start2" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_map_changed_to"]
+[connection signal="selected" from="START/Node2D/MinixControls" to="START/Node2D/Selector" method="handle_selection"]
+[connection signal="selected" from="START/Node2D/MinixControls" to="START/Node2D/Selector2" method="handle_selection"]
+[connection signal="map_changed_to" from="START/Node2D/MinixControls/Start2" to="START/Node2D" method="_on_map_changed_to"]
+[connection signal="map_changed_to" from="START/Node2D/MinixControls/Start2" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_map_changed_to"]
+[connection signal="map_changed_to" from="START/Node2D/MinixControls/Start2" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_map_changed_to"]
+[connection signal="map_changed_to" from="START/Node2D/MinixControls/Start4" to="START/Node2D" method="_on_map_changed_to"]
+[connection signal="map_changed_to" from="START/Node2D/MinixControls/Start4" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_map_changed_to"]
+[connection signal="map_changed_to" from="START/Node2D/MinixControls/Start4" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_map_changed_to"]
+[connection signal="selected" from="START/GAMEOVER/MinixControls" to="START/GAMEOVER/Selector" method="handle_selection"]
+[connection signal="selected" from="START/GAMEOVER/MinixControls" to="START/GAMEOVER/Selector2" method="handle_selection"]
