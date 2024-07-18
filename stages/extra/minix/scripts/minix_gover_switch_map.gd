@@ -4,7 +4,9 @@ extends MenuSelection
 
 func _handle_select() -> void:
 	super()
+	get_tree().paused = false
 	Pause.get_child(0).open_blocked = false
+	Audio.stop_all_musics()
 	_start_transition()
 
 
@@ -19,5 +21,6 @@ func _start_transition() -> void:
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 				.instantiate()
-				.with_scene(ProjectSettings.get("application/thunder_settings/main_menu_path"))
+				.with_scene("res://stages/extra/minix/minix.tscn")
 		)
+

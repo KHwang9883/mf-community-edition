@@ -14,7 +14,6 @@ extends Node
 	$"../CanvasLayer/Node2D2",
 	$"../CanvasLayer/Node2D3"
 ]
-@onready var minix_score_loader: Node = $"../MinixScoreLoader"
 
 var timer_left: int = 5
 
@@ -28,28 +27,29 @@ const enemy_array: Array = [
 const COIN_FROM_PIPE = preload("res://stages/extra/minix/objects/coin_from_pipe.tscn")
 
 func _ready() -> void:
-	minix_score_loader.load_score()
-	if "map_id" in Data.values:
-		starter.map_id = Data.values.map_id
-		starter._on_map_changed_to(starter.map_id)
-		var minix_name: String = "minix_" + starter.current_map.map_name
-		minix_score_loader.save_score.call_deferred(Data.values.score, minix_name)
-	else:
-		starter._on_map_changed_to(starter.map_id)
+	#if "map_id" in Data.values:
+	#	starter.map_id = Data.values.map_id
+	#	starter._on_map_changed_to(starter.map_id)
+	#else:
+	#	starter._on_map_changed_to(starter.map_id)
 	Data.reset_all_values()
 
 
 func _on_game_started() -> void:
-	process_mode = Node.PROCESS_MODE_INHERIT
-	Data.reset_all_values()
-	timer.timeout.connect(_on_timeout)
-	coin_timer.timeout.connect(Data.add_score.bind(1))
-	pipe_timer.timeout.connect(_on_pipe_timeout)
-	
-	for i in len(life_nodes):
-		var life_count: int = starter.current_map.life_count
-		if life_count <= i:
-			life_nodes[i].visible = false
+	(func():
+		process_mode = Node.PROCESS_MODE_INHERIT
+		Data.reset_all_values()
+		timer.timeout.connect(_on_timeout)
+		coin_timer.timeout.connect(Data.add_score.bind(1))
+		pipe_timer.timeout.connect(_on_pipe_timeout)
+		
+		for i in len(life_nodes):
+			var life_count: int = starter.current_map.life_count
+			if life_count <= i:
+				life_nodes[i].visible = false
+		if !starter.current_map.stop_music_on_death:
+			Thunder._current_player.death_stop_music = false
+	).call_deferred()
 
 
 func _physics_process(delta: float) -> void:
