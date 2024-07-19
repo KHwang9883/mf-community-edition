@@ -25,20 +25,12 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_right"):
 		var old_value = starter.current_music_from_map
-		var finder = starter.map_names.find(starter.current_music_from_map.map_name) + 1
-		var new_value = null
-		if finder >= 0 && finder < starter.map_names.size():
-			new_value = starter.map_paths[finder]
-		starter.current_music_from_map = new_value
+		starter.current_music_from_map = clamp(old_value + 1, -1, starter.map_names.size() - 1)
 		_toggled_option(old_value, starter.current_music_from_map)
 		
 	if Input.is_action_just_pressed("ui_left"):
 		var old_value = starter.current_music_from_map
-		var finder = starter.map_names.find(old_value) - 1
-		var new_value = null
-		if finder >= 0 && finder < starter.map_names.size():
-			new_value = starter.map_paths[finder]
-		starter.current_music_from_map = new_value
+		starter.current_music_from_map = clamp(old_value - 1, -1, starter.map_names.size() - 1)
 		_toggled_option(old_value, starter.current_music_from_map)
 
 
@@ -49,10 +41,11 @@ func _toggled_option(old_val, new_val) -> void:
 	selection_changed.emit()
 	starter.current_music_from_map = new_val
 	starter.minix_score_loader.score_values.settings.minix_music = new_val
+	starter.minix_score_loader.save_settings()
 
 
 func _update_string() -> void:
-	var mus_from_map: MinixMap = starter.current_music_from_map
-	var the_text: String = mus_from_map.map_name if mus_from_map else "default"
+	var mus_from_map: int = starter.current_music_from_map
+	var the_text: String = starter.map_names[mus_from_map] if mus_from_map != -1 else "default"
 	label.text = value_template % the_text
 	

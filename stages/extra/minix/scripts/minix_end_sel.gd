@@ -5,6 +5,15 @@ extends MenuSelection
 func _handle_select() -> void:
 	super()
 	Pause.get_child(0).open_blocked = false
+	Audio.stop_all_musics()
+	Data.reset_all_values()
+	TransitionManager.transition_middle.connect(func():
+		TransitionManager.current_transition.paused = true
+		Scenes.goto_scene("res://stages/extra/minix/minix.tscn")
+		Scenes.scene_ready.connect(func():
+			TransitionManager.current_transition.paused = false
+		, CONNECT_ONE_SHOT)
+	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	_start_transition()
 
 

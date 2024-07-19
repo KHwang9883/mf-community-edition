@@ -47,7 +47,8 @@ func _on_game_started() -> void:
 			var life_count: int = starter.current_map.life_count
 			if life_count <= i:
 				life_nodes[i].visible = false
-		if !starter.current_map.stop_music_on_death:
+		var cur_mus = starter.current_map if starter.current_music_from_map == -1 else starter.map_paths[starter.current_music_from_map]
+		if !cur_mus.stop_music_on_death:
 			Thunder._current_player.death_stop_music = false
 	).call_deferred()
 
@@ -75,8 +76,8 @@ func new_random_enemy(index: int = 0) -> void:
 	var enemy = picked.instantiate()
 	enemy.position = pick_random_marker()
 	enemy.force_direction = -1 + 2 * round(randf())
-	if starter.map_id == 2:
-		enemy.gravity_scale /= 2
+	enemy.gravity_scale = starter.current_map.enemy_gravity_scale
+	enemy.max_falling_speed = starter.current_map.enemy_max_falling_speed
 	Scenes.current_scene.add_child.call_deferred(enemy)
 
 
