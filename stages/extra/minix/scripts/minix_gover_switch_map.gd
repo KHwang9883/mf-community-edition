@@ -4,7 +4,14 @@ extends MenuSelection
 
 func _handle_select() -> void:
 	super()
-	get_tree().paused = false
+	TransitionManager.transition_middle.connect(func():
+		TransitionManager.current_transition.paused = true
+		Scenes.scene_changed.connect(func(_current_scene):
+			TransitionManager.current_transition.paused = false
+		, CONNECT_ONE_SHOT)
+		Scenes.goto_scene("res://stages/extra/minix/minix.tscn")
+		get_tree().set_deferred("paused", false)
+	, CONNECT_ONE_SHOT)
 	Pause.get_child(0).open_blocked = false
 	Audio.stop_all_musics()
 	_start_transition()
@@ -18,6 +25,7 @@ func _start_transition() -> void:
 				.with_speeds(0.02, -0.1)
 		)
 	else:
+		get_tree().paused = false
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 				.instantiate()

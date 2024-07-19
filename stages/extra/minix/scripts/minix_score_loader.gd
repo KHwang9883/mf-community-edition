@@ -65,3 +65,11 @@ func save_score(score: int, key: String) -> void:
 	file.store_string(data)
 	file.close()
 	score_saved.emit()
+
+
+func save_settings() -> void:
+	# Saving
+	var data = JSON.stringify(score_values)
+	var file: FileAccess = FileAccess.open(score_path, FileAccess.WRITE)
+	file.store_string(data)
+	file.close()

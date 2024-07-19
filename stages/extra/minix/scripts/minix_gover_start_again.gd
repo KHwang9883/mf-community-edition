@@ -5,8 +5,18 @@ extends MenuSelection
 
 func _handle_select() -> void:
 	super()
+	TransitionManager.transition_middle.connect(func():
+		TransitionManager.current_transition.paused = true
+		Scenes.goto_scene("res://stages/extra/minix/minix.tscn")
+		Scenes.scene_ready.connect(func():
+			TransitionManager.current_transition.on(Thunder._current_player)
+			TransitionManager.current_transition.paused = false
+		, CONNECT_ONE_SHOT)
+		get_tree().set_deferred("paused", false)
+	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	Data.reset_all_values()
 	Data.values.minix_continue = starter.map_id
+	Data.values.map_id = starter.map_id
 	Pause.get_child(0).open_blocked = false
 	_start_transition()
 

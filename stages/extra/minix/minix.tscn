@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=59 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -26,7 +26,6 @@
 [ext_resource type="Texture2D" uid="uid://d1vkaab2ewmjq" path="res://engine/objects/players/prefabs/textures/mario/mario_small.png" id="21_5gc5l"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/fade_out.gd" id="22_2dbbe"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_gameover.gd" id="22_6vcp0"]
-[ext_resource type="AudioStream" uid="uid://bi0m6xn5201en" path="res://engine/scenes/main_menu/sounds/lets.wav" id="22_f8jlb"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_map_sel.gd" id="23_611ee"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_gover_switch_map.gd" id="23_ptb2v"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_gover_start_again.gd" id="23_qc8bc"]
@@ -40,11 +39,11 @@
 [ext_resource type="Texture2D" uid="uid://cguyy2r5urcvv" path="res://stages/extra/minix/status/S4.png" id="27_6lqe1"]
 [ext_resource type="Texture2D" uid="uid://qmvs1hugffrp" path="res://stages/extra/minix/status/S5.png" id="28_t604f"]
 [ext_resource type="Texture2D" uid="uid://554vr2j671pj" path="res://stages/extra/minix/status/S6.png" id="29_ecoly"]
-[ext_resource type="PackedScene" uid="uid://dfyh40qn3b0lp" path="res://stages/extra/minix/objects/coin_from_pipe.tscn" id="29_quhhf"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/status.gd" id="30_jgobj"]
 [ext_resource type="PackedScene" uid="uid://opdqhst2t4mj" path="res://stages/extra/minix/maps/classic.tscn" id="34_l4qgv"]
 [ext_resource type="PackedScene" uid="uid://cx368qovj48tp" path="res://stages/extra/minix/maps/playgrounds.tscn" id="35_7wouc"]
 [ext_resource type="PackedScene" uid="uid://boeruql4s8rd1" path="res://stages/extra/minix/maps/underwater.tscn" id="36_0cnpl"]
+[ext_resource type="PackedScene" uid="uid://bb8ud6aldbpmu" path="res://stages/extra/minix/maps/playgrounds_2.tscn" id="44_n3pie"]
 
 [sub_resource type="FontVariation" id="FontVariation_prh3k"]
 base_font = ExtResource("19_qaur8")
@@ -161,6 +160,7 @@ music = Array[Resource]([ExtResource("3_gkuoc")])
 channel_id = 0
 play_immediately = false
 stop_all_music_on_start = false
+volume_db = Array[float]([-3.0])
 
 [node name="Mario" parent="." instance=ExtResource("4_t3gk0")]
 position = Vector2(336, 400)
@@ -268,7 +268,6 @@ text = "back to mario forever"
 horizontal_alignment = 1
 uppercase = true
 script = ExtResource("24_qi125")
-selected_sound = ExtResource("22_f8jlb")
 
 [node name="EnterToPreview" type="Label" parent="START/Node2D"]
 offset_top = 453.0
@@ -395,11 +394,6 @@ value = "best"
 process_mode = 3
 script = ExtResource("22_6vcp0")
 
-[node name="MusicLoaderIntro" parent="START/GAMEOVER" instance=ExtResource("2_m1mir")]
-play_immediately = false
-stop_all_music_on_start = false
-play_globally = 2
-
 [node name="ColorRect" type="ColorRect" parent="START/GAMEOVER"]
 offset_right = 640.0
 offset_bottom = 480.0
@@ -504,7 +498,6 @@ text = "quit to mario forever"
 horizontal_alignment = 1
 uppercase = true
 script = ExtResource("24_qi125")
-selected_sound = ExtResource("22_f8jlb")
 
 [node name="Selector" type="AnimatedSprite2D" parent="START/GAMEOVER"]
 script = ExtResource("24_5v6a1")
@@ -661,6 +654,8 @@ metadata/_edit_lock_ = true
 
 [node name="playgrounds" parent="Maps" instance=ExtResource("35_7wouc")]
 
+[node name="playgrounds_2" parent="Maps" instance=ExtResource("44_n3pie")]
+
 [node name="underwater" parent="Maps" instance=ExtResource("36_0cnpl")]
 
 [node name="CoinPipe" type="Sprite2D" parent="."]
@@ -714,9 +709,6 @@ shape = SubResource("RectangleShape2D_dul3d")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D2"]
 position = Vector2(656, 408)
 shape = SubResource("RectangleShape2D_dul3d")
-
-[node name="CoinFromPipe" parent="." instance=ExtResource("29_quhhf")]
-position = Vector2(336, 320)
 
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_minix_score_loader_score_loaded"]
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_minix_score_loader_score_loaded"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cx368qovj48tp"]
+[gd_scene load_steps=29 format=3 uid="uid://cx368qovj48tp"]
 
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_8i80j"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="1_na1va"]
@@ -6,11 +6,7 @@
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_kyi0h"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="2_nr5u6"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="3_85g7c"]
-[ext_resource type="PackedScene" uid="uid://c553718ou3hgm" path="res://tilesets/overworld_green/scenes/tree_long.tscn" id="3_f3dlj"]
-[ext_resource type="PackedScene" uid="uid://53qlewhfad5" path="res://tilesets/overworld_green/scenes/cloud.tscn" id="4_lvun5"]
 [ext_resource type="AudioStream" uid="uid://qejkmpd35gmd" path="res://music/minix/custom/muzyka-mario.ogg" id="4_t7yvi"]
-[ext_resource type="PackedScene" uid="uid://0kwfitomdt1h" path="res://tilesets/overworld_green/scenes/woods_alt.tscn" id="5_sg46l"]
-[ext_resource type="PackedScene" uid="uid://cisjloytnxq3y" path="res://tilesets/overworld_green/scenes/tree_short.tscn" id="6_412jb"]
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="7_pwi38"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_q5lsp"]
 [ext_resource type="Shader" path="res://shaders/waver.gdshader" id="9_4wk00"]
@@ -88,6 +84,7 @@ ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("4_t7yvi")])
 play_immediately = false
 stop_all_music_on_start = false
+volume_db = Array[float]([-4.0])
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_na1va")
@@ -96,24 +93,6 @@ layer_0/tile_data = PackedInt32Array(327682, 1, 0, 393219, 1, 0, 393230, 1, 0, 3
 layer_1/tile_data = PackedInt32Array(917512, 2, 589824, 196619, 2, 131072, 327686, 2, 131072)
 metadata/_edit_lock_ = true
 
-[node name="Grass" parent="TileMap" instance=ExtResource("2_nr5u6")]
-position = Vector2(112, 400)
-
-[node name="TreeLong" parent="TileMap" instance=ExtResource("3_f3dlj")]
-position = Vector2(496, 368)
-
-[node name="Cloud" parent="TileMap" instance=ExtResource("4_lvun5")]
-position = Vector2(560, 336)
-
-[node name="_AnimatedSprite2D_315863" parent="TileMap" instance=ExtResource("4_lvun5")]
-position = Vector2(208, 176)
-
-[node name="_AnimatedSprite2D_315864" parent="TileMap" instance=ExtResource("4_lvun5")]
-position = Vector2(368, 112)
-
-[node name="Woods" parent="TileMap" instance=ExtResource("5_sg46l")]
-position = Vector2(272, 418)
-
 [node name="TileMap2" type="TileMap" parent="."]
 position = Vector2(12, 0)
 tile_set = ExtResource("1_na1va")
@@ -121,18 +100,6 @@ format = 2
 layer_0/tile_data = PackedInt32Array(851968, 0, 0, 917504, 0, 1, 983040, 0, 2, 786433, 2, 327680, 851969, 65536, 0, 917505, 65536, 1, 983041, 65536, 2, 851970, 65536, 0, 917506, 65536, 1, 983042, 65536, 2, 851971, 65536, 0, 917507, 65536, 1, 983043, 65536, 2, 786436, 2, 196608, 851972, 65536, 0, 917508, 65536, 1, 983044, 65536, 2, 851973, 65536, 0, 917509, 65536, 1, 983045, 65536, 2, 851974, 65536, 0, 917510, 65536, 1, 983046, 65536, 2, 851975, 65536, 0, 917511, 65536, 1, 983047, 65536, 2, 851976, 65536, 0, 917512, 65536, 1, 983048, 65536, 2, 851977, 65536, 0, 917513, 65536, 1, 983049, 65536, 2, 851978, 65536, 0, 917514, 65536, 1, 983050, 65536, 2, 851979, 65536, 0, 917515, 65536, 1, 983051, 65536, 2, 786444, 2, 196608, 851980, 65536, 0, 917516, 65536, 1, 983052, 65536, 2, 851981, 65536, 0, 917517, 65536, 1, 983053, 65536, 2, 851982, 65536, 0, 917518, 65536, 1, 983054, 65536, 2, 851983, 65536, 0, 917519, 65536, 1, 983055, 65536, 2, 851984, 65536, 0, 917520, 65536, 1, 983056, 65536, 2, 851985, 65536, 0, 917521, 65536, 1, 983057, 65536, 2, 851986, 65536, 0, 917522, 65536, 1, 983058, 65536, 2, 851987, 131072, 0, 917523, 131072, 1, 983059, 131072, 2)
 layer_1/tile_data = PackedInt32Array(786449, 2, 65536)
 metadata/_edit_lock_ = true
-
-[node name="TreeLong" parent="TileMap2" instance=ExtResource("3_f3dlj")]
-position = Vector2(48, 368)
-
-[node name="TreeShort" parent="TileMap2" instance=ExtResource("6_412jb")]
-position = Vector2(144, 384)
-
-[node name="_Sprite2D_315865" parent="TileMap2" instance=ExtResource("6_412jb")]
-position = Vector2(400, 384)
-
-[node name="Grass" parent="TileMap2" instance=ExtResource("2_nr5u6")]
-position = Vector2(560, 400)
 
 [node name="Sceneria Drzowatne" type="Sprite2D" parent="."]
 z_index = -99
@@ -163,8 +130,8 @@ position = Vector2(609, 481)
 script = ExtResource("8_q5lsp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = -999
-position = Vector2(0, 80)
+position = Vector2(-8, 80)
+scale = Vector2(1.025, 1)
 texture = SubResource("GradientTexture2D_pdcuo")
 centered = false
 script = ExtResource("8_q5lsp")
@@ -175,6 +142,7 @@ material = SubResource("ShaderMaterial_ebek4")
 position = Vector2(-32, 452)
 texture = ExtResource("10_i5qdt")
 centered = false
+region_rect = Rect2(0, 0, 640, 30)
 script = ExtResource("8_q5lsp")
 
 [node name="Sprite2D4" type="Sprite2D" parent="."]
@@ -183,6 +151,8 @@ material = SubResource("ShaderMaterial_ebek4")
 position = Vector2(608, 452)
 texture = ExtResource("10_i5qdt")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 30)
 script = ExtResource("8_q5lsp")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -197,6 +167,7 @@ texture = SubResource("AnimatedTexture_m7ts3")
 stretch_mode = 1
 script = ExtResource("8_q5lsp")
 maximum = false
+medium = true
 minimum = true
 
 [node name="ColorRect" type="ColorRect" parent="TextureRect"]

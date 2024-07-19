@@ -5,7 +5,6 @@ extends Node2D
 @onready var map_label: Label = $MapLabel
 @onready var minix_controls: MenuItemsController = $MinixControls
 @onready var starter: Node2D = $"../Node2D"
-@onready var music_loader: Node = $MusicLoaderIntro
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
 
 
@@ -29,7 +28,7 @@ func _on_mario_died() -> void:
 	score.text = str(Data.values.score)
 	map_label.text = starter.map_names[starter.map_id]
 	minix_controls.focused = true
-	var map_music = starter.current_music_from_map if starter.current_music_from_map else starter.current_map
+	var cur_mus: int = starter.current_music_from_map
+	var map_music: MinixMap = starter.current_map if cur_mus == -1 else starter.map_paths[cur_mus]
 	if map_music.game_over_music:
-		Audio.play_music(map_music.game_over_music, 1, {ignore_pause = true}, true)
-		music_loader.play_buffered()
+		Audio.play_music(map_music.game_over_music, 2, {ignore_pause = true, volume = -4.0}, !map_music.start_again_on_replay)

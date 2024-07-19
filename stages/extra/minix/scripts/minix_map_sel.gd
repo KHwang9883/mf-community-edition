@@ -4,6 +4,7 @@ const toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 var value_template: String
 var is_preview: bool = false
+var tw: Tween
 
 @onready var starter: Node2D = $"../.."
 @onready var label: Label = $Label
@@ -66,7 +67,8 @@ func _toggle_preview(interrupt: bool = false) -> void:
 	selector.smooth_transition = !is_preview
 	selector_2.smooth_transition = !is_preview
 	enter_to_preview.text = "arrow keys to switch maps" if is_preview else old_enter_to_preview
-	var tw = create_tween().set_parallel().set_speed_scale(2.0 if interrupt else 1.0)
+	if tw && tw.is_valid(): tw.stop()
+	tw = create_tween().set_parallel().set_speed_scale(2.0 if interrupt else 1.0)
 	tw.tween_property(minix_controls, "position:y",
 		284 + 200 if is_preview else 284, 0.5).set_trans(Tween.TRANS_SINE)
 	tw.tween_property(minix_controls, "modulate:a", 0.0 if is_preview else 1.0, 0.5).set_trans(Tween.TRANS_LINEAR)
