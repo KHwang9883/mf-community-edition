@@ -34,11 +34,10 @@ func _ready() -> void:
 
 
 func _on_game_started() -> void:
-	var starter = Scenes.custom_scenes.minix_node
-	if starter.current_map != self:
-		return
-		
 	(func():
+		var starter = Scenes.custom_scenes.minix_node
+		if starter.current_map != self:
+			return
 		process_mode = Node.PROCESS_MODE_INHERIT
 		Data.reset_all_values()
 		timer.timeout.connect(_on_timeout)

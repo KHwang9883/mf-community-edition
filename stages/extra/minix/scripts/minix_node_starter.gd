@@ -65,7 +65,9 @@ func start_game() -> void:
 	
 	mario.completed = false
 	Data.values.map_id = map_id
-	game_started.emit()
+	(func():
+		game_started.emit()
+	).call_deferred()
 
 
 func _music() -> void:
