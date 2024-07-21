@@ -2,8 +2,8 @@ extends Node2D
 
 var map_id: int = 0
 var map_names: Array[String]
-var map_paths: Array[Node2D]
-var current_map: MinixMap
+var map_paths: Array[ClimbingMap]
+var current_map: ClimbingMap
 var current_music_from_map: int = -1
 
 var _continued: bool
@@ -19,7 +19,7 @@ signal game_started
 func _ready() -> void:
 	Scenes.custom_scenes.minix_node = self
 	for i in maps.get_children():
-		if !i is MinixMap:
+		if !i is ClimbingMap:
 			continue
 		map_names.append(i.map_name)
 		map_paths.append(i)
@@ -36,7 +36,7 @@ func _ready() -> void:
 		start_game()
 	else:
 		mario.completed = true
-		$"../../CanvasLayer".hide()
+		Thunder._current_hud.hide()
 		music_loader_intro.play_buffered()
 		_on_map_changed_to(map_id)
 
@@ -51,7 +51,7 @@ func _on_map_changed_to(_id: int) -> void:
 			if mario:
 				mario.global_position = current_map.get_node("MarioPos").global_position
 				mario.underwater.max_falling_speed_override = 500
-				mario.lives = current_map.life_count
+				Data.values.lives = current_map.life_count
 			continue
 		i.position.y = -999999
 		#Thunder._connect(game_started, i.queue_free, Node.CONNECT_ONE_SHOT)
@@ -65,11 +65,12 @@ func start_game() -> void:
 	
 	mario.completed = false
 	Data.values.map_id = map_id
+	Thunder._current_hud.show()
 	game_started.emit()
 
 
 func _music() -> void:
-	var map: MinixMap = current_map if current_music_from_map == -1 else map_paths[current_music_from_map]
+	var map: ClimbingMap = current_map if current_music_from_map == -1 else map_paths[current_music_from_map]
 	var music_loader = map.get_node("MusicLoader")
 	if map.start_again_on_replay || !_continued:
 		music_loader.index = randi_range(0, len(music_loader.current_music) - 1)

@@ -1,6 +1,5 @@
 extends Player
 
-@onready var minix: Node = $"../Node"
 var lives: int = 1
 
 signal damaged_to(lives: int)
@@ -20,6 +19,6 @@ func hurt(tags: Dictionary = {}) -> void:
 		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch})
 	else:
 		die(tags)
-		minix.coin_timer.stop()
+		Scenes.custom_scenes.minix_node.coin_timer.stop()
 	
 	damaged.emit()
