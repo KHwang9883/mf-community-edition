@@ -14,6 +14,7 @@ func _handle_select() -> void:
 	, CONNECT_ONE_SHOT)
 	Pause.get_child(0).open_blocked = false
 	Audio.stop_all_musics()
+	Audio.stop_music_channel(2, true)
 	_start_transition()
 
 

@@ -115,6 +115,8 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 		Thunder._current_camera.shock(0.08, Vector2.ONE * 3)
 		combo.combo()
 		status_node.status(combo.get_combo())
+		if combo.get_combo() >= 10:
+			combo.reset_combo()
 	# Gets blocked
 	else:
 		if &"speed" in target_enemy_attacked.owner:

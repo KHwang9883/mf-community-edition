@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=67 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -7,13 +7,22 @@
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_t3gk0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_mario.gd" id="5_sdtbj"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_bvs5l"]
-[ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="8_d6xxu"]
+[ext_resource type="Script" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="7_fman6"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="8_oi7x3"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_sdali"]
+[ext_resource type="Script" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="9_4mqsq"]
+[ext_resource type="Script" path="res://engine/objects/players/player_config.gd" id="10_5y4lf"]
+[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="11_6j6nd"]
+[ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="12_nwmmf"]
+[ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="13_1j748"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_script.gd" id="13_o0kdt"]
-[ext_resource type="AudioStream" uid="uid://csqg16k26jclf" path="res://music/extra/smw-death_extra.ogg" id="14_405ip"]
+[ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="14_wvkve"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="15_4w6l4"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_igmusic_sel.gd" id="15_tekh0"]
+[ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="16_yqoxp"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="17_n5uqm"]
 [ext_resource type="Texture2D" uid="uid://bdyg3ju76ed67" path="res://engine/components/hud/coins.png" id="17_r2kie"]
+[ext_resource type="AudioStream" uid="uid://bcvwl651xutci" path="res://music/climbing_minigame/mario_uwaah.ogg" id="17_wo7we"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_node_starter.gd" id="18_5csdc"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="18_a20ym"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="18_muktk"]
@@ -43,7 +52,53 @@
 [ext_resource type="PackedScene" uid="uid://opdqhst2t4mj" path="res://stages/extra/minix/maps/classic.tscn" id="34_l4qgv"]
 [ext_resource type="PackedScene" uid="uid://cx368qovj48tp" path="res://stages/extra/minix/maps/playgrounds.tscn" id="35_7wouc"]
 [ext_resource type="PackedScene" uid="uid://boeruql4s8rd1" path="res://stages/extra/minix/maps/underwater.tscn" id="36_0cnpl"]
+[ext_resource type="PackedScene" uid="uid://bn27wl07v41xw" path="res://stages/extra/minix/maps/mario_play.tscn" id="42_p1jxm"]
 [ext_resource type="PackedScene" uid="uid://bb8ud6aldbpmu" path="res://stages/extra/minix/maps/playgrounds_2.tscn" id="44_n3pie"]
+
+[sub_resource type="Resource" id="Resource_78c3g"]
+script = ExtResource("10_5y4lf")
+walk_initial_speed = 50.0
+walk_acceleration = 312.5
+walk_deceleration = 312.5
+walk_crouch_deceleration = 625.0
+walk_turning_acce = 1250.0
+walk_max_walking_speed = 175.0
+walk_max_running_speed = 350.0
+underwater_walk_max_walking_speed = 175.0
+jump_speed = 700.0
+jump_buff_static = 1000.0
+jump_buff_dynamic = 1250.0
+jump_stomp_multiplicator = 1.0
+swim_speed = 300.0
+swim_out_speed = 450.0
+swim_max_speed = 300.0
+climb_speed = 150.0
+slide_max_speed = 450.0
+slide_acceleration = 468.75
+slide_deceleration = 468.75
+stuck_recovery_speed = 60.0
+animation_walking_speed = 1.5
+animation_max_walking_speed = 5.0
+animation_min_walking_speed = 1.0
+sound_jump = ExtResource("11_6j6nd")
+sound_swim = ExtResource("12_nwmmf")
+
+[sub_resource type="Resource" id="Resource_d010u"]
+script = ExtResource("14_wvkve")
+name = &"small"
+type = 0
+physics_config = SubResource("Resource_78c3g")
+physics_behavior = ExtResource("9_4mqsq")
+physics_crouchable = false
+physics_shaper = ExtResource("13_1j748")
+physics_shaper_crouch = ExtResource("13_1j748")
+animation_sprites = ExtResource("8_oi7x3")
+animation_behavior = ExtResource("7_fman6")
+behavior_crouch_reflect_fireballs = false
+extra_vars = {}
+sound_hurt = ExtResource("16_yqoxp")
+sound_death = ExtResource("15_4w6l4")
+sound_pitch = 1.0
 
 [sub_resource type="FontVariation" id="FontVariation_prh3k"]
 base_font = ExtResource("19_qaur8")
@@ -133,20 +188,6 @@ animations = [{
 "speed": 0.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0wjt2"]
-atlas = ExtResource("8_d6xxu")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2l3io"]
-atlas = ExtResource("8_d6xxu")
-region = Rect2(0, 32, 64, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rti8i"]
-size = Vector2(32, 648)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dul3d"]
-size = Vector2(32, 80)
-
 [node name="Minix" type="Node2D"]
 script = ExtResource("1_51ox0")
 time = -1
@@ -165,8 +206,10 @@ volume_db = Array[float]([-3.0])
 [node name="Mario" parent="." instance=ExtResource("4_t3gk0")]
 position = Vector2(336, 400)
 script = ExtResource("5_sdtbj")
-death_music_override = ExtResource("14_405ip")
+suit = SubResource("Resource_d010u")
+death_music_override = ExtResource("17_wo7we")
 death_wait_time = 10.0
+death_stop_music = false
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -631,22 +674,6 @@ script = ExtResource("30_jgobj")
 process_mode = 4
 script = ExtResource("13_o0kdt")
 
-[node name="Timer" type="Timer" parent="Node"]
-wait_time = 2.0
-autostart = true
-
-[node name="CoinTimer" type="Timer" parent="Node"]
-autostart = true
-
-[node name="Timer2" type="Timer" parent="Node"]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
-[node name="PipeTimer" type="Timer" parent="Node"]
-wait_time = 20.0
-autostart = true
-
 [node name="Maps" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
@@ -654,61 +681,11 @@ metadata/_edit_lock_ = true
 
 [node name="playgrounds" parent="Maps" instance=ExtResource("35_7wouc")]
 
+[node name="mario play" parent="Maps" instance=ExtResource("42_p1jxm")]
+
 [node name="playgrounds_2" parent="Maps" instance=ExtResource("44_n3pie")]
 
 [node name="underwater" parent="Maps" instance=ExtResource("36_0cnpl")]
-
-[node name="CoinPipe" type="Sprite2D" parent="."]
-position = Vector2(560, 528)
-texture = SubResource("AtlasTexture_0wjt2")
-offset = Vector2(0, 16)
-metadata/_edit_group_ = true
-
-[node name="Sprite2D2" type="Sprite2D" parent="CoinPipe"]
-position = Vector2(0, 64)
-texture = SubResource("AtlasTexture_2l3io")
-
-[node name="EnemySpawners" type="Node2D" parent="."]
-metadata/_edit_lock_ = true
-
-[node name="Marker2D" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(96, -12)
-
-[node name="Marker2D2" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(224, -12)
-
-[node name="Marker2D3" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(384, -12)
-
-[node name="Marker2D4" type="Marker2D" parent="EnemySpawners"]
-position = Vector2(512, -12)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 112
-collision_mask = 0
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-16, 44)
-shape = SubResource("RectangleShape2D_rti8i")
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(656, 44)
-shape = SubResource("RectangleShape2D_rti8i")
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-collision_layer = 16
-collision_mask = 0
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2(-16, 408)
-shape = SubResource("RectangleShape2D_dul3d")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2(656, 408)
-shape = SubResource("RectangleShape2D_dul3d")
 
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_minix_score_loader_score_loaded"]
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_minix_score_loader_score_loaded"]

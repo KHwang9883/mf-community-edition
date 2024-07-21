@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bb8ud6aldbpmu"]
+[gd_scene load_steps=37 format=3 uid="uid://bb8ud6aldbpmu"]
 
 [ext_resource type="Script" path="res://stages/extra/minix/maps/minix_map.gd" id="1_cpldr"]
 [ext_resource type="AudioStream" uid="uid://ioatu52fm0g3" path="res://music/minix/custom/smp2_gameover.mp3" id="2_s3yqu"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_muwvx"]
 [ext_resource type="AudioStream" uid="uid://dcqp5fl5wyp2j" path="res://music/minix/custom/smp2.mp3" id="6_84riv"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="6_uoiy2"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_coin_pipe.gd" id="7_5s8a4"]
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="7_87xob"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="8_lq42b"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="9_6bah6"]
@@ -71,6 +72,12 @@ height = 80
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mcrta"]
+size = Vector2(32, 648)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8lyb"]
+size = Vector2(32, 80)
+
 [node name="playgrounds_2" type="Node2D"]
 script = ExtResource("1_cpldr")
 map_name = "\"super mario playgrounds 2\""
@@ -89,6 +96,49 @@ music = Array[Resource]([ExtResource("6_84riv")])
 play_immediately = false
 stop_all_music_on_start = false
 volume_db = Array[float]([-4.0])
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="Timers"]
+wait_time = 2.0
+autostart = true
+
+[node name="CoinTimer" type="Timer" parent="Timers"]
+autostart = true
+
+[node name="Timer2" type="Timer" parent="Timers"]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="EnemySpawners" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(96, -12)
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(224, -12)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(384, -12)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(512, -12)
+
+[node name="CoinPipe" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(560, 528)
+script = ExtResource("7_5s8a4")
+metadata/_edit_group_ = true
+
+[node name="FancyPipeUltra4k3" type="Sprite2D" parent="CoinPipe"]
+position = Vector2(0, 36)
+texture = ExtResource("27_10qrc")
+
+[node name="PipeTimer" type="Timer" parent="CoinPipe"]
+wait_time = 20.0
+autostart = true
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("6_uoiy2")
@@ -270,3 +320,30 @@ texture = ExtResource("27_10qrc")
 [node name="FancyPipeUltra4k4" type="Sprite2D" parent="Node2D2"]
 position = Vector2(64, 480)
 texture = ExtResource("27_10qrc")
+
+[node name="Enemy&MarioBlocker" type="StaticBody2D" parent="."]
+collision_layer = 112
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy&MarioBlocker"]
+position = Vector2(-16, 16)
+shape = SubResource("RectangleShape2D_mcrta")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Enemy&MarioBlocker"]
+position = Vector2(656, 44)
+shape = SubResource("RectangleShape2D_mcrta")
+metadata/_edit_lock_ = true
+
+[node name="MarioBlocker" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MarioBlocker"]
+position = Vector2(-16, 384)
+shape = SubResource("RectangleShape2D_s8lyb")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MarioBlocker"]
+position = Vector2(656, 408)
+shape = SubResource("RectangleShape2D_s8lyb")

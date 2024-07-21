@@ -14,6 +14,7 @@ func _handle_select() -> void:
 			TransitionManager.current_transition.paused = false
 		, CONNECT_ONE_SHOT)
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	Audio.stop_music_channel(2, true)
 	_start_transition()
 
 
