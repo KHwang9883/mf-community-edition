@@ -43,6 +43,9 @@ func _on_game_started() -> void:
 		Data.reset_all_values()
 		timer.timeout.connect(_on_timeout)
 		coin_timer.timeout.connect(Data.add_score.bind(1))
+		timer.start()
+		coin_timer.start()
+		timer_2.start()
 		
 		var cur_mus = self if starter.current_music_from_map == -1 else starter.map_paths[starter.current_music_from_map]
 		if !cur_mus.stop_music_on_death:
@@ -51,9 +54,17 @@ func _on_game_started() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !OS.is_debug_build(): return
+	var starter = Scenes.custom_scenes.minix_node
+	if is_instance_valid(starter) && starter.current_map != self:
+		return
 	
 	if Input.is_action_just_pressed("ui_page_up"):
 		timer.wait_time = 0.4
+	if Input.is_action_just_pressed("ui_page_down"):
+		var enemy = load("res://stages/extra/minix/objects/koopa_shell_green_minix.tscn").instantiate()
+		enemy.position = Vector2(608, 384)
+		Scenes.current_scene.add_child.call_deferred(enemy)
+		enemy.status_swap.call_deferred(false)
 
 
 func _on_timeout() -> void:

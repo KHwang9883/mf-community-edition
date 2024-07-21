@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bb8ud6aldbpmu"]
+[gd_scene load_steps=40 format=3 uid="uid://bb8ud6aldbpmu"]
 
 [ext_resource type="Script" path="res://stages/extra/minix/maps/minix_map.gd" id="1_cpldr"]
 [ext_resource type="AudioStream" uid="uid://ioatu52fm0g3" path="res://music/minix/custom/smp2_gameover.mp3" id="2_s3yqu"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_coin_pipe.gd" id="7_5s8a4"]
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="7_87xob"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="8_lq42b"]
+[ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="8_r3d1c"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="9_6bah6"]
 [ext_resource type="Shader" path="res://shaders/waver.gdshader" id="10_8xt7c"]
 [ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="11_rk7wi"]
@@ -28,6 +29,14 @@
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="22_eogv3"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="25_gocpj"]
 [ext_resource type="Texture2D" uid="uid://cflp8o7nv1erj" path="res://stages/extra/minix/textures/fancy_pipe_ultra_4k.png" id="27_10qrc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q76vh"]
+atlas = ExtResource("8_r3d1c")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa888"]
+atlas = ExtResource("8_r3d1c")
+region = Rect2(0, 32, 64, 32)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebek4"]
 shader = ExtResource("10_8xt7c")
@@ -95,21 +104,18 @@ ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("6_84riv")])
 play_immediately = false
 stop_all_music_on_start = false
-volume_db = Array[float]([-4.0])
+volume_db = Array[float]([0.0])
 
 [node name="Timers" type="Node" parent="."]
 
 [node name="Timer" type="Timer" parent="Timers"]
 wait_time = 2.0
-autostart = true
 
 [node name="CoinTimer" type="Timer" parent="Timers"]
-autostart = true
 
 [node name="Timer2" type="Timer" parent="Timers"]
 wait_time = 5.0
 one_shot = true
-autostart = true
 
 [node name="EnemySpawners" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -135,10 +141,22 @@ metadata/_edit_group_ = true
 [node name="FancyPipeUltra4k3" type="Sprite2D" parent="CoinPipe"]
 position = Vector2(0, 36)
 texture = ExtResource("27_10qrc")
+script = ExtResource("9_6bah6")
 
 [node name="PipeTimer" type="Timer" parent="CoinPipe"]
 wait_time = 20.0
-autostart = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="CoinPipe"]
+position = Vector2(0, 16)
+texture = SubResource("AtlasTexture_q76vh")
+script = ExtResource("9_6bah6")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="CoinPipe/Sprite2D2"]
+position = Vector2(0, 48)
+texture = SubResource("AtlasTexture_oa888")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("6_uoiy2")

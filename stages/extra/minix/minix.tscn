@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=68 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -16,13 +16,13 @@
 [ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="12_nwmmf"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="13_1j748"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_script.gd" id="13_o0kdt"]
+[ext_resource type="AudioStream" uid="uid://csqg16k26jclf" path="res://music/extra/smw-death_extra.ogg" id="14_405ip"]
 [ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="14_wvkve"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="15_4w6l4"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_igmusic_sel.gd" id="15_tekh0"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="16_yqoxp"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="17_n5uqm"]
 [ext_resource type="Texture2D" uid="uid://bdyg3ju76ed67" path="res://engine/components/hud/coins.png" id="17_r2kie"]
-[ext_resource type="AudioStream" uid="uid://bcvwl651xutci" path="res://music/climbing_minigame/mario_uwaah.ogg" id="17_wo7we"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_node_starter.gd" id="18_5csdc"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="18_a20ym"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="18_muktk"]
@@ -48,14 +48,15 @@
 [ext_resource type="Texture2D" uid="uid://cguyy2r5urcvv" path="res://stages/extra/minix/status/S4.png" id="27_6lqe1"]
 [ext_resource type="Texture2D" uid="uid://qmvs1hugffrp" path="res://stages/extra/minix/status/S5.png" id="28_t604f"]
 [ext_resource type="Texture2D" uid="uid://554vr2j671pj" path="res://stages/extra/minix/status/S6.png" id="29_ecoly"]
-[ext_resource type="Script" path="res://stages/extra/minix/scripts/status.gd" id="30_jgobj"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_status.gd" id="30_jgobj"]
 [ext_resource type="PackedScene" uid="uid://opdqhst2t4mj" path="res://stages/extra/minix/maps/classic.tscn" id="34_l4qgv"]
 [ext_resource type="PackedScene" uid="uid://cx368qovj48tp" path="res://stages/extra/minix/maps/playgrounds.tscn" id="35_7wouc"]
 [ext_resource type="PackedScene" uid="uid://boeruql4s8rd1" path="res://stages/extra/minix/maps/underwater.tscn" id="36_0cnpl"]
 [ext_resource type="PackedScene" uid="uid://bn27wl07v41xw" path="res://stages/extra/minix/maps/mario_play.tscn" id="42_p1jxm"]
 [ext_resource type="PackedScene" uid="uid://bb8ud6aldbpmu" path="res://stages/extra/minix/maps/playgrounds_2.tscn" id="44_n3pie"]
+[ext_resource type="PackedScene" uid="uid://bpjfkgn3xyib1" path="res://stages/extra/minix/maps/three_islands.tscn" id="55_p8ldm"]
 
-[sub_resource type="Resource" id="Resource_78c3g"]
+[sub_resource type="Resource" id="Resource_hhd4i"]
 script = ExtResource("10_5y4lf")
 walk_initial_speed = 50.0
 walk_acceleration = 312.5
@@ -87,7 +88,7 @@ sound_swim = ExtResource("12_nwmmf")
 script = ExtResource("14_wvkve")
 name = &"small"
 type = 0
-physics_config = SubResource("Resource_78c3g")
+physics_config = SubResource("Resource_hhd4i")
 physics_behavior = ExtResource("9_4mqsq")
 physics_crouchable = false
 physics_shaper = ExtResource("13_1j748")
@@ -207,9 +208,8 @@ volume_db = Array[float]([-3.0])
 position = Vector2(336, 400)
 script = ExtResource("5_sdtbj")
 suit = SubResource("Resource_d010u")
-death_music_override = ExtResource("17_wo7we")
+death_music_override = ExtResource("14_405ip")
 death_wait_time = 10.0
-death_stop_music = false
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -678,6 +678,8 @@ script = ExtResource("13_o0kdt")
 metadata/_edit_lock_ = true
 
 [node name="classic" parent="Maps" instance=ExtResource("34_l4qgv")]
+
+[node name="classic2" parent="Maps" instance=ExtResource("55_p8ldm")]
 
 [node name="playgrounds" parent="Maps" instance=ExtResource("35_7wouc")]
 
