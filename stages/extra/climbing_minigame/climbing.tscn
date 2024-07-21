@@ -1,9 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://d2j3y8d13afms"]
+[gd_scene load_steps=25 format=3 uid="uid://d2j3y8d13afms"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_pr82n"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ih7ut"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_obfqo"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_mc5fk"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_mario.gd" id="5_vskbl"]
+[ext_resource type="AudioStream" uid="uid://bcvwl651xutci" path="res://music/climbing_minigame/mario_uwaah.ogg" id="6_n2hjk"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_lq7s8"]
 [ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_node_starter.gd" id="10_w6lmy"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="11_1l7k7"]
@@ -35,7 +37,11 @@ script = ExtResource("2_obfqo")
 [node name="MusicLoaderIntro" parent="." instance=ExtResource("2_ih7ut")]
 
 [node name="Mario" parent="." instance=ExtResource("4_mc5fk")]
-position = Vector2(80, 400)
+position = Vector2(336, 400)
+script = ExtResource("5_vskbl")
+death_music_override = ExtResource("6_n2hjk")
+death_wait_time = 10.0
+death_stop_music = false
 
 [node name="HUD" parent="." instance=ExtResource("10_lq7s8")]
 

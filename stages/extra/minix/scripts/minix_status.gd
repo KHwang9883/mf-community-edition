@@ -15,6 +15,7 @@ var _offset: float = 0.0
 
 var last_status: int = 0
 var godlike_count: int = 0
+var godlike_bool: bool
 
 func status(combo: int) -> void:
 	if combo <= 1: return
@@ -24,6 +25,7 @@ func status(combo: int) -> void:
 			if last_status <= combo:
 				frame = combo - 2
 				_offset = 6 + (2 * combo)
+				last_status = combo
 				_set_modulation()
 	match combo:
 		2:
@@ -49,8 +51,10 @@ func status(combo: int) -> void:
 		10:
 			frame = 5
 			_offset = 20
-			godlike_count += 40000
 			last_status = 10
+			godlike_count += 40000
+			if godlike_bool == false:
+				_time_countdown_sound_loop()
 			_init_godlike()
 			_set_modulation()
 			
@@ -81,12 +85,16 @@ func _set_modulation() -> void:
 
 
 func _init_godlike() -> void:
-	if godlike_count == 40000:
-		_time_countdown_sound_loop()
+	print(godlike_count)
+	if godlike_bool: return
+	godlike_bool = true
+	
 	while godlike_count > 0:
 		await get_tree().create_timer(0.02, false).timeout
 		Data.values.score += 100
 		godlike_count -= 100
+		if godlike_count <= 100:
+			godlike_bool = false
 
 
 func _time_countdown_sound_loop() -> void:

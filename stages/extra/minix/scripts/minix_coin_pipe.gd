@@ -13,6 +13,9 @@ func _ready() -> void:
 
 
 func _on_game_started() -> void:
+	if Scenes.custom_scenes.minix_node.current_map != get_parent():
+		return
+	pipe_timer.timeout.connect(_on_pipe_timeout)
 	pipe_timer.start()
 
 
