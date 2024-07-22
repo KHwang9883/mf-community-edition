@@ -2,10 +2,14 @@ extends Node2D
 
 @onready var hud: CanvasLayer = $"../../HUD"
 @onready var score: Label = $score
+@onready var godlikes: Label = $godlikes
+@onready var lasted: Label = $lasted
 @onready var map_label: Label = $MapLabel
+
 @onready var minix_controls: MenuItemsController = $MinixControls
 @onready var starter: Node2D = $"../Node2D"
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
+@onready var lasted_template: String = lasted.text
 
 
 func _ready() -> void:
@@ -21,11 +25,24 @@ func _on_mario_died() -> void:
 	minix_score_loader.save_score.call_deferred(Data.values.score, minix_name)
 	
 	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	await get_tree().physics_frame
 	var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "modulate:a", 1.0, 0.5)
 	
 	score.text = str(Data.values.score)
+	if !"godlikes" in Data.values:
+		Data.values.godlikes = 0
+	godlikes.text = str(Data.values.godlikes)
+	
+	var secs: int = int(Data.values.lasted)
+	var mins: int
+	print("Game ended with time: ", secs)
+	while secs >= 60:
+		secs -= 60
+		mins += 1
+	
+	lasted.text = lasted_template % [mins, secs]
 	map_label.text = starter.map_names[starter.map_id]
 	minix_controls.focused = true
 	var cur_mus: int = starter.current_music_from_map

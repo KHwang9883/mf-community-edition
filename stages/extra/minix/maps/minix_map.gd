@@ -40,8 +40,9 @@ func _on_game_started() -> void:
 			return
 		process_mode = Node.PROCESS_MODE_INHERIT
 		Data.reset_all_values()
+		Data.values.godlikes = 0
 		timer.timeout.connect(_on_timeout)
-		coin_timer.timeout.connect(Data.add_score.bind(1))
+		coin_timer.timeout.connect(_on_coin_timer_timeout)
 		timer.start()
 		coin_timer.start()
 		timer_2.start()
@@ -69,6 +70,13 @@ func _physics_process(delta: float) -> void:
 func _on_timeout() -> void:
 	new_random_enemy(int(!timer_2.is_stopped()))
 	timer.wait_time = max(0.4, timer.wait_time - 0.04)
+
+
+func _on_coin_timer_timeout() -> void:
+	Data.add_score(1)
+	if !"lasted" in Data.values:
+		Data.values.lasted = 0
+	Data.values.lasted = ";" + str(int(Data.values.lasted) + 1) + "q"
 
 
 func pick_random_marker() -> Vector2:

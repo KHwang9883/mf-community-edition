@@ -86,6 +86,9 @@ func _set_modulation() -> void:
 
 func _init_godlike() -> void:
 	print(godlike_count)
+	if !"godlikes" in Data.values:
+		Data.values.godlikes = 0
+	Data.values.godlikes += 1
 	if godlike_bool: return
 	godlike_bool = true
 	

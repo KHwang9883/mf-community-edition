@@ -9,6 +9,7 @@ extends Node
 ]
 
 func _ready() -> void:
+	print("Script ready")
 	Data.reset_all_values()
 
 

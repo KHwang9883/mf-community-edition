@@ -18,6 +18,7 @@ func _handle_select() -> void:
 	Data.values.minix_continue = starter.map_id
 	Data.values.map_id = starter.map_id
 	Pause.get_child(0).open_blocked = false
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	_start_transition()
 
 
