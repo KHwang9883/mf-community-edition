@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=75 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -46,16 +46,18 @@
 [ext_resource type="Texture2D" uid="uid://c0mxgb8tu2u4r" path="res://stages/extra/minix/status/S3.png" id="26_0xr28"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="26_d7paj"]
 [ext_resource type="Texture2D" uid="uid://cguyy2r5urcvv" path="res://stages/extra/minix/status/S4.png" id="27_6lqe1"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_view_lb.gd" id="27_eovx5"]
 [ext_resource type="Texture2D" uid="uid://qmvs1hugffrp" path="res://stages/extra/minix/status/S5.png" id="28_t604f"]
 [ext_resource type="Texture2D" uid="uid://554vr2j671pj" path="res://stages/extra/minix/status/S6.png" id="29_ecoly"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_status.gd" id="30_jgobj"]
 [ext_resource type="PackedScene" uid="uid://opdqhst2t4mj" path="res://stages/extra/minix/maps/classic.tscn" id="34_l4qgv"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selection.gd" id="34_paugc"]
 [ext_resource type="PackedScene" uid="uid://cx368qovj48tp" path="res://stages/extra/minix/maps/playgrounds.tscn" id="35_7wouc"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_submit.gd" id="35_c4vlj"]
 [ext_resource type="PackedScene" uid="uid://boeruql4s8rd1" path="res://stages/extra/minix/maps/underwater.tscn" id="36_0cnpl"]
 [ext_resource type="Texture2D" uid="uid://d14berfdbyp8w" path="res://stages/extra/minix/textures/hiscore_button_bg.png" id="36_7xloy"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="37_eqh8x"]
+[ext_resource type="PackedScene" uid="uid://b7eavmhombhly" path="res://stages/extra/minix/objects/control_leaderboard.tscn" id="39_abr23"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb.gd" id="39_vib0e"]
 [ext_resource type="PackedScene" uid="uid://bn27wl07v41xw" path="res://stages/extra/minix/maps/mario_play.tscn" id="42_p1jxm"]
 [ext_resource type="PackedScene" uid="uid://bb8ud6aldbpmu" path="res://stages/extra/minix/maps/playgrounds_2.tscn" id="44_n3pie"]
 [ext_resource type="PackedScene" uid="uid://bpjfkgn3xyib1" path="res://stages/extra/minix/maps/three_islands.tscn" id="55_p8ldm"]
@@ -253,9 +255,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = 284.0
+offset_top = 282.0
 offset_right = 640.0
-offset_bottom = 364.0
+offset_bottom = 380.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 7
@@ -306,6 +308,18 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="Start3" type="Label" parent="START/Node2D/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "view the leaderboard"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("27_eovx5")
+
+[node name="Start5" type="Label" parent="START/Node2D/MinixControls"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -570,7 +584,7 @@ theme_override_font_sizes/font_size = 12
 text = "view the leaderboard"
 horizontal_alignment = 1
 uppercase = true
-script = ExtResource("34_paugc")
+script = ExtResource("27_eovx5")
 
 [node name="Submit" type="Label" parent="START/GAMEOVER/MinixControls"]
 layout_mode = 2
@@ -712,6 +726,28 @@ uppercase = true
 script = ExtResource("18_a20ym")
 
 [node name="Leaderboard" type="Node2D" parent="START"]
+visible = false
+script = ExtResource("39_vib0e")
+
+[node name="ColorRect" type="ColorRect" parent="START/Leaderboard"]
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(1, 1, 1, 0.313726)
+metadata/_edit_lock_ = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="START/Leaderboard"]
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="SubViewport" type="SubViewport" parent="START/Leaderboard/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 480)
+render_target_update_mode = 0
+
+[node name="Control" parent="START/Leaderboard/SubViewportContainer/SubViewport" instance=ExtResource("39_abr23")]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="START/Leaderboard"]
 
 [node name="HUD" parent="." instance=ExtResource("8_sdali")]
 visible = false
