@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 	if !focused: return
 	
 	if please_type.visible:
-		if Input.is_action_just_pressed("ui_cancel"):
+		if Input.is_action_just_pressed("ui_cancel") || (enter_to_preview.submitting && Input.is_action_just_pressed("ui_accept")):
 			_on_line_edit_focus_exited()
 			Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
 			
@@ -33,10 +33,11 @@ func _physics_process(delta: float) -> void:
 		
 		if can_submit && Input.is_action_just_pressed("ui_accept"):
 			Audio.play_1d_sound(selected_sound)
-			
-			return
 			Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
 			line_edit.release_focus()
+			
+			
+			return
 
 
 func _on_line_edit_focus_exited() -> void:

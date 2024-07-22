@@ -10,6 +10,11 @@ extends MenuSelection
 @onready var time_temp: String = time.text
 @onready var date: Label = $Date
 @onready var date_temp: String = date.text
+@onready var map = $Map
+@onready var map_temp: String = map.text
+
+func _ready() -> void:
+	place.text = "%s." % (get_index() + 1)
 
 
 func _handle_select() -> void:
@@ -28,9 +33,9 @@ func _process(delta: float) -> void:
 	
 	#resize to target size
 	if parent.expanded == self:
-		size.y = lerp(size.y, 128.0, 10 * delta)
+		size.y = lerp(size.y, 144.0, 10 * delta)
 	else:
-		size.y = lerp(size.y, custom_minimum_size.y, 10 * delta)
+		size.y = lerp(size.y, 56.0, 10 * delta)
 	
 	#update layout
 	if last_rect_size != size:
@@ -57,6 +62,8 @@ func set_record(record: Dictionary) -> void:
 			), true
 		)
 	]
+	
+	map.text = map_temp % record.map
 
 func set_empty() -> void:
 	username.text = "empty"

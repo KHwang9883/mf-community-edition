@@ -1,10 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://b7eavmhombhly"]
+[gd_scene load_steps=23 format=3 uid="uid://b7eavmhombhly"]
 
-[ext_resource type="PackedScene" uid="uid://buexdb6e7c33f" path="res://stages/extra/minix/objects/leaderboard_record.tscn" id="3_0muj5"]
+[ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="1_85d7i"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_leaderboard_loading_text.gd" id="2_pfn1e"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_menu_controller.gd" id="3_8igr3"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="3_vajtn"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="4_4o22c"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_back.gd" id="5_o0rjb"]
+[ext_resource type="Texture2D" uid="uid://f8uqwsggii0k" path="res://stages/extra/minix/textures/hiscore_button_bg_ninepatch.png" id="6_hytpw"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="7_3hbi8"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_leaderboard_map_selector.gd" id="7_odyxk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
 atlas = ExtResource("3_vajtn")
@@ -102,6 +106,7 @@ animations = [{
 }]
 
 [node name="Control" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -109,74 +114,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Loading" type="Label" parent="."]
+offset_top = 91.0
+offset_right = 640.0
+offset_bottom = 114.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.341176, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_85d7i")
+theme_override_font_sizes/font_size = 12
+text = "loading..."
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("2_pfn1e")
+
 [node name="MenuItemsController" type="Control" parent="."]
 anchors_preset = 0
 offset_left = 64.0
-offset_top = 64.0
+offset_top = 80.0
 offset_right = 576.0
-offset_bottom = 120.0
+offset_bottom = 136.0
 script = ExtResource("3_8igr3")
 focused = false
+trigger_selection_immediately = false
 prev_screen_node_path = NodePath("../Control")
-
-[node name="LeaderboardRecord" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_right = 512.0
-offset_bottom = 56.0
-
-[node name="LeaderboardRecord2" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 56.0
-offset_right = 512.0
-offset_bottom = 112.0
-
-[node name="LeaderboardRecord3" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 112.0
-offset_right = 512.0
-offset_bottom = 168.0
-
-[node name="LeaderboardRecord4" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 168.0
-offset_right = 512.0
-offset_bottom = 224.0
-
-[node name="LeaderboardRecord5" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 224.0
-offset_right = 512.0
-offset_bottom = 280.0
-
-[node name="LeaderboardRecord6" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 280.0
-offset_right = 512.0
-offset_bottom = 336.0
-
-[node name="LeaderboardRecord7" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 336.0
-offset_right = 512.0
-offset_bottom = 392.0
-
-[node name="LeaderboardRecord8" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 392.0
-offset_right = 512.0
-offset_bottom = 448.0
-
-[node name="LeaderboardRecord9" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 448.0
-offset_right = 512.0
-offset_bottom = 504.0
-
-[node name="LeaderboardRecord10" parent="MenuItemsController" instance=ExtResource("3_0muj5")]
-layout_mode = 2
-offset_top = 504.0
-offset_right = 512.0
-offset_bottom = 560.0
 
 [node name="Selector" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_v65u6")
@@ -197,5 +158,71 @@ offset_top = 64.0
 offset_right = 104.0
 offset_bottom = 104.0
 script = ExtResource("5_o0rjb")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Title" type="NinePatchRect" parent="CanvasLayer"]
+clip_contents = true
+offset_left = 200.0
+offset_top = 8.0
+offset_right = 440.0
+offset_bottom = 72.0
+size_flags_vertical = 3
+texture = ExtResource("6_hytpw")
+region_rect = Rect2(0, 0, 65, 56)
+patch_margin_left = 32
+patch_margin_top = 28
+patch_margin_right = 32
+patch_margin_bottom = 28
+script = ExtResource("7_odyxk")
+
+[node name="Node2D" type="Control" parent="CanvasLayer/Title"]
+anchors_preset = 0
+offset_right = 240.0
+offset_bottom = 64.0
+
+[node name="Map" type="Label" parent="CanvasLayer/Title/Node2D"]
+offset_right = 240.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.341176, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_85d7i")
+theme_override_font_sizes/font_size = 12
+text = "CLASSIC CLASSIC CLASSIC  CLASSIC"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+uppercase = true
+
+[node name="Start" type="Label" parent="CanvasLayer"]
+offset_left = 456.0
+offset_top = 32.0
+offset_right = 478.0
+offset_bottom = 46.0
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_85d7i")
+theme_override_font_sizes/font_size = 11
+text = "-->"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_3hbi8")
+
+[node name="Start2" type="Label" parent="CanvasLayer"]
+offset_left = 163.0
+offset_top = 32.0
+offset_right = 185.0
+offset_bottom = 46.0
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_85d7i")
+theme_override_font_sizes/font_size = 11
+text = "<--"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_3hbi8")
+left_side = false
 
 [connection signal="selected" from="MenuItemsController" to="Selector" method="handle_selection"]
