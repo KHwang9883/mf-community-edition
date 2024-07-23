@@ -31,17 +31,18 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var starter = Scenes.current_scene.get_node("START/Node2D")
+	var lb = Scenes.current_scene.get_node("START/Leaderboard")
 	
 	if !menu_items_controller.focused: return
 	
-	if Input.is_action_just_pressed("ui_right"):
+	if Input.is_action_just_pressed("ui_right") && !lb.is_loading:
 		map_id += 1
 		if map_id >= len(map_names):
 			map_id = 0
 		Audio.play_1d_sound(SELECT_ENTER)
 		_update_map()
 	
-	if Input.is_action_just_pressed("ui_left"):
+	if Input.is_action_just_pressed("ui_left") && !lb.is_loading:
 		map_id -= 1
 		if map_id < 0:
 			map_id = len(map_names) - 1
