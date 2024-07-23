@@ -46,5 +46,10 @@ func _physics_process(delta: float) -> void:
 
 func _on_http_submit(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	print(body.get_string_from_utf8())
+	
+	if response_code != 201:
+		loading.text = "error"
+		return
+	
 	Audio.play_1d_sound(SUBMITTED)
 	loading.text = "your score has been submitted!!!"

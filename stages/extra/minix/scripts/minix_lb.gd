@@ -1,6 +1,6 @@
 extends Node2D
 
-var url: String = "http://localhost:3000/api/records"
+var url: String = "https://mfce.rnx.su/api/records"
 var map_load_name = "all maps"
 
 @onready var http_request: HTTPRequest = $HTTPRequest
