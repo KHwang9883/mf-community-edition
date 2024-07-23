@@ -10,6 +10,7 @@ var map_load_name = "all maps"
 var is_loading = true
 var has_results = false
 var page = 1
+var old = false
 
 func _load_records() -> void:
 	if page == 1:
@@ -19,7 +20,7 @@ func _load_records() -> void:
 	await get_tree().physics_frame
 	http_request.request_completed.connect(_on_http_get_leaderboard, CONNECT_ONE_SHOT)
 	
-	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s" % [page, 1000, "score", "MINIX", "desc"]
+	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s&version=%d" % [page, 1000, "score", "MINIX", "desc", 1]
 	print(map_load_name)
 	if map_load_name != "all maps":
 		params += "&map=" + map_load_name.uri_encode()
@@ -39,6 +40,9 @@ func _on_http_get_leaderboard(result: int, response_code: int, headers: PackedSt
 		print(response_code)
 	print(result)
 	is_loading = false
+	
+	if response_code == 401:
+		old = true
 
 
 func setup_records(body: String) -> void:
