@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 
 func set_record(record: Dictionary) -> void:
 	username.text = record.user.username
-	score.text = str(record.score)
+	score.text = str(record.score) + " | " + record.map
 	godlikes.text = godlikes_temp % [record.godlikes]
 	
 	var secs: int = record.time
