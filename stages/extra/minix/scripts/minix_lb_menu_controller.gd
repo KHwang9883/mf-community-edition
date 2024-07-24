@@ -10,11 +10,12 @@ var gameover = false
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	if !focused: return
 	
 	if has_node(prev_screen_node_path) && Input.is_action_just_pressed(prev_screen_control_cancel):
 		var lb = Scenes.current_scene.get_node("START/Leaderboard")
 		lb.visible = false
-		lb.menu_controller.focused = false
+		focused = false
 		if !gameover:
 			var mx = Scenes.current_scene.get_node("START/Node2D/MinixControls")
 			mx.focused = true
