@@ -29,25 +29,25 @@ func status(combo: int) -> void:
 				_set_modulation()
 	match combo:
 		2:
-			Audio.play_music(status_sounds[0], 50)
+			Audio.play_music(status_sounds[0], 50, {volume = -5})
 		3:
 			Audio.stop_music_channel(50, false)
-			Audio.play_music(status_sounds[1], 51)
+			Audio.play_music(status_sounds[1], 51, {volume = -5})
 		4:
 			Audio.stop_music_channel(50, false)
 			Audio.stop_music_channel(51, false)
-			Audio.play_music(status_sounds[2], 52)
+			Audio.play_music(status_sounds[2], 52, {volume = -5})
 		5:
 			Audio.stop_music_channel(50, false)
 			Audio.stop_music_channel(51, false)
 			Audio.stop_music_channel(52, false)
-			Audio.play_music(status_sounds[3], 53)
+			Audio.play_music(status_sounds[3], 53, {volume = -5})
 		6:
 			Audio.stop_music_channel(50, false)
 			Audio.stop_music_channel(51, false)
 			Audio.stop_music_channel(52, false)
 			Audio.stop_music_channel(53, false)
-			Audio.play_music(status_sounds[4], 54)
+			Audio.play_music(status_sounds[4], 54, {volume = -5})
 		10:
 			frame = 5
 			_offset = 20
@@ -63,7 +63,7 @@ func status(combo: int) -> void:
 			Audio.stop_music_channel(52, false)
 			Audio.stop_music_channel(53, false)
 			Audio.stop_music_channel(54, false)
-			Audio.play_music(status_sounds[5], 55)
+			Audio.play_music(status_sounds[5], 55, {volume = -5})
 
 
 func _physics_process(delta: float) -> void:

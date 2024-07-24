@@ -26,8 +26,6 @@ func _ready() -> void:
 	var _minix_music = minix_score_loader.score_values.settings.minix_music
 	if !is_nan(int(_minix_music)) && len(map_names) - 1 >= int(_minix_music):
 		current_music_from_map = max(-1, int(_minix_music))
-	if "map_id" in Data.values:
-		map_id = Data.values.map_id
 	if "minix_continue" in Data.values:
 		modulate.a = 0.0
 		_continued = true
@@ -38,6 +36,8 @@ func _ready() -> void:
 		mario.completed = true
 		$"../../CanvasLayer".hide()
 		music_loader_intro.play_buffered()
+		if "map_id" in Data.values:
+			map_id = Data.values.map_id
 		_on_map_changed_to(map_id)
 
 
