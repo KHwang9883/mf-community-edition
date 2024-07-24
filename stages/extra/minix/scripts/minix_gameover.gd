@@ -5,6 +5,7 @@ extends Node2D
 @onready var godlikes: Label = $godlikes
 @onready var lasted: Label = $lasted
 @onready var map_label: Label = $MapLabel
+@onready var please_type: Node2D = $PleaseType
 
 @onready var minix_controls: MenuItemsController = $MinixControls
 @onready var starter: Node2D = $"../Node2D"
@@ -13,6 +14,7 @@ extends Node2D
 
 
 func _ready() -> void:
+	please_type.visible = false
 	modulate.a = 0.0
 	hud.visible = false
 
@@ -36,11 +38,9 @@ func _on_mario_died() -> void:
 	godlikes.text = str(Data.values.godlikes)
 	
 	var secs: int = int(Data.values.lasted)
-	var mins: int
 	print("Game ended with time: ", secs)
-	while secs >= 60:
-		secs -= 60
-		mins += 1
+	var mins: int = floor(secs / 60)
+	secs -= mins * 60
 	
 	lasted.text = lasted_template % [mins, secs]
 	map_label.text = starter.map_names[starter.map_id]

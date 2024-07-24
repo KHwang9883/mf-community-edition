@@ -3,13 +3,8 @@ extends MenuSelection
 @onready var parent: Control = get_parent()
 @onready var place: Label = $Place
 @onready var username: Label = $Username
-@onready var score: Label = $Score
-@onready var godlikes: Label = $Godlikes
-@onready var godlikes_temp: String = godlikes.text
-@onready var time: Label = $Time
-@onready var time_temp: String = time.text
-@onready var date: Label = $Date
-@onready var date_temp: String = date.text
+@onready var score: RichTextLabel = $Score
+@onready var score_temp: String = score.text
 
 func _ready() -> void:
 	place.text = "%s." % (get_index() + 1)
@@ -31,7 +26,7 @@ func _process(delta: float) -> void:
 	
 	#resize to target size
 	if parent.expanded == self:
-		size.y = lerp(size.y, 126.0, 10 * delta)
+		size.y = lerp(size.y, 120.0, 10 * delta)
 	else:
 		size.y = lerp(size.y, 56.0, 10 * delta)
 	
@@ -43,27 +38,26 @@ func _process(delta: float) -> void:
 
 func set_record(record: Dictionary) -> void:
 	username.text = record.user.username
-	score.text = str(record.score) + " | " + record.map
-	godlikes.text = godlikes_temp % [record.godlikes]
 	
 	var secs: int = record.time
-	var mins: int = 0
-	while secs >= 60:
-		secs -= 60
-		mins += 1
-	time.text = time_temp % [mins, secs]
+	var mins: int = floor(secs / 60.0)
+	secs -= mins * 60
 	
-	date.text = date_temp % [
-		Time.get_datetime_string_from_datetime_dict(
-			Time.get_datetime_dict_from_unix_time(
-				Time.get_unix_time_from_datetime_string(record.createdAt)
-			), true
-		)
+	var time_zone_mins: int = Time.get_time_zone_from_system().bias
+	var datetime_dict: Dictionary = Time.get_datetime_dict_from_unix_time(
+		Time.get_unix_time_from_datetime_string(record.createdAt) + (time_zone_mins * 60)
+	)
+	var dt_array: PackedStringArray = Time.get_datetime_string_from_datetime_dict(datetime_dict, true).to_upper().split(" ")
+	dt_array[0] = "[color=khaki]" + dt_array[0] + "[/color]"
+	
+	score.text = score_temp % [
+		record.score, record.map.to_upper(),
+		record.godlikes,
+		mins, secs,
+		" ".join(dt_array),
+		Time.get_offset_string_from_offset_minutes(time_zone_mins).to_upper() if time_zone_mins != 0 else ""
 	]
 
 func set_empty() -> void:
 	username.text = "empty"
-	score.text = ""
-	godlikes.text = ""
-	time.text = ""
-	date.text = "this record is empty!"
+	score.text = "this record is empty!"

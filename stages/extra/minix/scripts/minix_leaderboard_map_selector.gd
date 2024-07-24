@@ -30,7 +30,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var starter = Scenes.current_scene.get_node("START/Node2D")
 	var lb = Scenes.current_scene.get_node("START/Leaderboard")
 	
 	if !menu_items_controller.focused: return
@@ -54,7 +53,6 @@ func _physics_process(delta: float) -> void:
 
 func _update_map() -> void:
 	var lb = Scenes.current_scene.get_node("START/Leaderboard")
-	var starter = Scenes.current_scene.get_node("START/Node2D")
 	
 	lb.map_load_name = map_names[map_id]
 	

@@ -467,6 +467,20 @@ minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
 starter_path = NodePath("../../..")
 value = "best"
 
+[node name="Label" type="Label" parent="START/Node2D"]
+offset_left = 560.0
+offset_top = 464.0
+offset_right = 637.0
+offset_bottom = 478.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "v0.2"
+horizontal_alignment = 2
+uppercase = true
+
 [node name="GAMEOVER" type="Node2D" parent="START"]
 process_mode = 3
 script = ExtResource("22_6vcp0")
@@ -680,30 +694,32 @@ script = ExtResource("26_d7paj")
 left_side = false
 
 [node name="PleaseType" type="Node2D" parent="START/GAMEOVER"]
-visible = false
 position = Vector2(320, 417)
 
-[node name="ColorRect2" type="ColorRect" parent="START/GAMEOVER/PleaseType"]
+[node name="InputBox" type="Node2D" parent="START/GAMEOVER/PleaseType"]
+
+[node name="ColorRect2" type="ColorRect" parent="START/GAMEOVER/PleaseType/InputBox"]
 offset_left = -320.0
 offset_top = -33.0
 offset_right = 320.0
 offset_bottom = 33.0
 color = Color(1, 1, 1, 0.376471)
 
-[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType"]
+[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/InputBox"]
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("36_7xloy")
 
-[node name="LineEdit" type="LineEdit" parent="START/GAMEOVER/PleaseType"]
-offset_left = -160.0
+[node name="LineEdit" type="LineEdit" parent="START/GAMEOVER/PleaseType/InputBox"]
+offset_left = -148.0
 offset_top = -4.0
-offset_right = 160.0
+offset_right = 148.0
 offset_bottom = 22.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.596078, 1)
-theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_colors/caret_color = Color(0, 0, 0.513726, 1)
 theme_override_constants/outline_size = 8
+theme_override_constants/caret_width = 2
 theme_override_fonts/font = ExtResource("37_eqh8x")
 theme_override_font_sizes/font_size = 26
 alignment = 1
@@ -712,7 +728,7 @@ flat = true
 caret_blink = true
 caret_force_displayed = true
 
-[node name="SwitchMap" type="Label" parent="START/GAMEOVER/PleaseType"]
+[node name="SwitchMap" type="Label" parent="START/GAMEOVER/PleaseType/InputBox"]
 offset_left = -192.0
 offset_top = -20.0
 offset_right = 192.0
@@ -724,6 +740,66 @@ theme_override_fonts/font = ExtResource("19_qaur8")
 theme_override_font_sizes/font_size = 11
 text = "please type your name:"
 horizontal_alignment = 1
+uppercase = true
+
+[node name="Submitting" type="Node2D" parent="START/GAMEOVER/PleaseType"]
+position = Vector2(-320, -417)
+
+[node name="ColorRect" type="ColorRect" parent="START/GAMEOVER/PleaseType/Submitting"]
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(1, 1, 1, 0.313726)
+metadata/_edit_lock_ = true
+
+[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/Submitting"]
+position = Vector2(320, 240)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("36_7xloy")
+
+[node name="Loading" type="Label" parent="START/GAMEOVER/PleaseType/Submitting"]
+offset_left = 128.0
+offset_top = 223.0
+offset_right = 512.0
+offset_bottom = 255.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 13
+text = "submitting your score..."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="congrats" type="Label" parent="START/GAMEOVER/PleaseType/Submitting"]
+offset_left = 128.0
+offset_top = 214.0
+offset_right = 512.0
+offset_bottom = 246.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.937255, 0.937255, 0.380392, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 17
+text = "congratulations!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="congrats2" type="Label" parent="START/GAMEOVER/PleaseType/Submitting/congrats"]
+offset_left = -1.0
+offset_top = 22.0
+offset_right = 383.0
+offset_bottom = 54.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "your score has been submitted!"
+horizontal_alignment = 1
+vertical_alignment = 1
 uppercase = true
 
 [node name="EnterToPreview" type="Label" parent="START/GAMEOVER/PleaseType"]
@@ -742,21 +818,6 @@ uppercase = true
 script = ExtResource("39_atn56")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="START/GAMEOVER/PleaseType"]
-
-[node name="Loading" type="Label" parent="START/GAMEOVER/PleaseType"]
-visible = false
-offset_left = -192.0
-offset_top = 38.0
-offset_right = 192.0
-offset_bottom = 65.0
-size_flags_horizontal = 4
-theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("19_qaur8")
-theme_override_font_sizes/font_size = 12
-text = "submitting your score..."
-horizontal_alignment = 1
-uppercase = true
 
 [node name="Leaderboard" type="Node2D" parent="START"]
 process_mode = 3

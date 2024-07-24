@@ -30,6 +30,8 @@ func _ready() -> void:
 		modulate.a = 0.0
 		_continued = true
 		minix_controls.focused = false
+		map_id = Data.values.minix_continue
+		Data.values.map_id = map_id
 		_on_map_changed_to(Data.values.minix_continue)
 		start_game()
 	else:
@@ -64,7 +66,6 @@ func start_game() -> void:
 	tw.tween_property(self, "modulate:a", 0.0, 0.5)
 	
 	mario.completed = false
-	Data.values.map_id = map_id
 	(func():
 		game_started.emit()
 	).call_deferred()

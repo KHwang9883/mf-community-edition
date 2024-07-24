@@ -40,6 +40,7 @@ func _on_game_started() -> void:
 			return
 		process_mode = Node.PROCESS_MODE_INHERIT
 		Data.reset_all_values()
+		Data.values.map_id = starter.map_id
 		Data.values.godlikes = 0
 		timer.timeout.connect(_on_timeout)
 		coin_timer.timeout.connect(_on_coin_timer_timeout)
