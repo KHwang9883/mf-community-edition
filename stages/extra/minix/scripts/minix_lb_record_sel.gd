@@ -10,8 +10,6 @@ extends MenuSelection
 @onready var time_temp: String = time.text
 @onready var date: Label = $Date
 @onready var date_temp: String = date.text
-@onready var map = $Map
-@onready var map_temp: String = map.text
 
 func _ready() -> void:
 	place.text = "%s." % (get_index() + 1)
@@ -33,7 +31,7 @@ func _process(delta: float) -> void:
 	
 	#resize to target size
 	if parent.expanded == self:
-		size.y = lerp(size.y, 144.0, 10 * delta)
+		size.y = lerp(size.y, 126.0, 10 * delta)
 	else:
 		size.y = lerp(size.y, 56.0, 10 * delta)
 	
@@ -49,7 +47,7 @@ func set_record(record: Dictionary) -> void:
 	godlikes.text = godlikes_temp % [record.godlikes]
 	
 	var secs: int = record.time
-	var mins: int
+	var mins: int = 0
 	while secs >= 60:
 		secs -= 60
 		mins += 1
@@ -62,8 +60,6 @@ func set_record(record: Dictionary) -> void:
 			), true
 		)
 	]
-	
-	map.text = map_temp % record.map
 
 func set_empty() -> void:
 	username.text = "empty"

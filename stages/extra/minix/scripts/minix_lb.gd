@@ -20,7 +20,7 @@ func _load_records() -> void:
 	await get_tree().physics_frame
 	http_request.request_completed.connect(_on_http_get_leaderboard, CONNECT_ONE_SHOT)
 	
-	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s&version=%d" % [page, 1000, "score", "MINIX", "desc", 1]
+	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s&version=%d" % [page, 1000, "score", "MINIX", "desc", 2] # GAME VERSION
 	print(map_load_name)
 	if map_load_name != "all maps":
 		params += "&map=" + map_load_name.uri_encode()
@@ -34,8 +34,8 @@ func _load_records() -> void:
 
 func _on_http_get_leaderboard(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	if result == HTTPRequest.RESULT_SUCCESS:
-		print(body.get_string_from_utf8())
-		setup_records(body.get_string_from_utf8())
+		var body_res = body.get_string_from_utf8()
+		setup_records(body_res)
 	else:
 		print(response_code)
 	print(result)
@@ -67,7 +67,6 @@ func setup_records(body: String) -> void:
 		if !i is NinePatchRect:
 			continue
 		if len(dict.records) > i.get_index():
-			print(len(dict.records))
 			i.set_record(dict.records[i.get_index()])
 		else:
 			i.set_empty()
