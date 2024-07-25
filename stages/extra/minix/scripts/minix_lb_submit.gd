@@ -1,7 +1,5 @@
 extends MenuSelection
 
-var is_enabled: bool = true
-
 @onready var please_type: Node2D = $"../../PleaseType"
 @onready var input_box: Node2D = $"../../PleaseType/InputBox"
 @onready var line_edit: LineEdit = $"../../PleaseType/InputBox/LineEdit"
@@ -19,12 +17,15 @@ var is_enabled: bool = true
 
 const SUBMITTED = preload("res://stages/extra/minix/sfx/submitted.wav")
 
+var is_enabled: bool = true
 var submitting = false
+var has_errored: bool = false
+var dufhdiufsfdoi: bool
 
 func _handle_select() -> void:
 	if !is_enabled:
 		if congrats.visible && please_type.visible:
-			Audio.play_1d_sound(selected_sound)
+			super()
 			please_type.visible = false
 			return
 		Audio.play_1d_sound(preload("res://stages/extra/minix/status/minix_coin_time.wav"))
@@ -33,6 +34,7 @@ func _handle_select() -> void:
 	minix_controls.focused = false
 	please_type.visible = true
 	submitting_box.visible = false
+	line_edit.text = ""
 	line_edit.grab_focus()
 	line_edit.focus_exited.connect(_on_line_edit_focus_exited, CONNECT_ONE_SHOT)
 
@@ -43,23 +45,33 @@ func _physics_process(delta: float) -> void:
 	if submitting:
 		submitting_box.visible = true
 		input_box.visible = false
+		loading.text = "submitting your score..."
+		loading.remove_theme_color_override("font_color")
 		return
 	
 	if !please_type.visible: return
 	
-	if Input.is_action_just_pressed("ui_cancel") || (submitting && Input.is_action_just_pressed("ui_accept")):
+	if Input.is_action_just_pressed("ui_cancel") || (enter_to_preview.text == "press enter to continue" && Input.is_action_just_pressed("ui_accept")):
 		_on_line_edit_focus_exited()
 		Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
-		
+		Audio.play_1d_sound(selected_sound, true, { ignore_pause = true })
+		dufhdiufsfdoi = false
+	
+	if has_errored: return
+	if dufhdiufsfdoi: return
+	
 	var can_submit: bool = false
 	var regex = RegEx.new()
-	regex.compile("[^A-Za-z0-9\\ _\\-.]")
+	regex.compile("[^A-Za-z0-9\\ _\\-.\\(\\)\\&']")
 	if len(line_edit.text) > 2 && !regex.search(line_edit.text):
 		can_submit = true
 	
 	enter_to_preview.visible = can_submit
+	enter_to_preview.text = "Press enter to submit score!"
 	
-	if !is_enabled: return
+	if !is_enabled:
+		add_theme_color_override("font_color", Color("c7aaa1"))
+		return
 	
 	if can_submit && !submitting && Input.is_action_just_pressed("ui_accept"):
 		Audio.play_1d_sound(selected_sound)
@@ -81,13 +93,23 @@ func _physics_process(delta: float) -> void:
 		http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 		submitting = true
 		is_enabled = false
+		enter_to_preview.visible = false
+
 
 func _on_http_submit(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	print(body.get_string_from_utf8())
 	submitting = false
 	
+	dufhdiufsfdoi = true
+	enter_to_preview.text = "press enter to continue"
+	enter_to_preview.visible = true
+	
 	if response_code != 201:
-		loading.text = "error"
+		loading.text = "error submitting your score!"
+		loading.add_theme_color_override("font_color", Color(1, 0.565, 0.565))
+		has_errored = true
+		
+		is_enabled = true
 		return
 	
 	Audio.play_1d_sound(SUBMITTED)
@@ -99,3 +121,4 @@ func _on_http_submit(result: int, response_code: int, headers: PackedStringArray
 func _on_line_edit_focus_exited() -> void:
 	minix_controls.focused = true
 	please_type.visible = false
+	has_errored = false

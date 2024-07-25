@@ -13,6 +13,7 @@ var _continued: bool
 @onready var maps: Node2D = $"../../Maps"
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
 @onready var minix_controls: MenuItemsController = $MinixControls
+@onready var control: Control = $"../Leaderboard/SubViewportContainer/SubViewport/Control/CanvasLayer/Title"
 
 signal game_started
 
@@ -66,6 +67,9 @@ func start_game() -> void:
 	tw.tween_property(self, "modulate:a", 0.0, 0.5)
 	
 	mario.completed = false
+	
+	control.map_id = map_id + 1
+	control._update_map.call_deferred()
 	(func():
 		game_started.emit()
 	).call_deferred()

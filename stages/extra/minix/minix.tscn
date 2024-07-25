@@ -53,12 +53,11 @@
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_status.gd" id="30_jgobj"]
 [ext_resource type="PackedScene" uid="uid://opdqhst2t4mj" path="res://stages/extra/minix/maps/classic.tscn" id="34_l4qgv"]
 [ext_resource type="PackedScene" uid="uid://cx368qovj48tp" path="res://stages/extra/minix/maps/playgrounds.tscn" id="35_7wouc"]
-[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_submit.gd" id="35_c4vlj"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_submit.gd" id="35_c4vlj"]
 [ext_resource type="PackedScene" uid="uid://boeruql4s8rd1" path="res://stages/extra/minix/maps/underwater.tscn" id="36_0cnpl"]
 [ext_resource type="Texture2D" uid="uid://d14berfdbyp8w" path="res://stages/extra/minix/textures/hiscore_button_bg.png" id="36_7xloy"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="37_eqh8x"]
 [ext_resource type="PackedScene" uid="uid://b7eavmhombhly" path="res://stages/extra/minix/objects/control_leaderboard.tscn" id="39_abr23"]
-[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_submit_text.gd" id="39_atn56"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb.gd" id="39_vib0e"]
 [ext_resource type="PackedScene" uid="uid://bn27wl07v41xw" path="res://stages/extra/minix/maps/mario_play.tscn" id="42_p1jxm"]
 [ext_resource type="PackedScene" uid="uid://bb8ud6aldbpmu" path="res://stages/extra/minix/maps/playgrounds_2.tscn" id="44_n3pie"]
@@ -114,6 +113,12 @@ sound_pitch = 1.0
 [sub_resource type="FontVariation" id="FontVariation_prh3k"]
 base_font = ExtResource("19_qaur8")
 spacing_glyph = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_skyn2"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7celo"]
 atlas = ExtResource("17_r2kie")
@@ -619,7 +624,7 @@ gameover = true
 [node name="Submit" type="Label" parent="START/GAMEOVER/MinixControls"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0.956863, 0.819608, 0.776471, 1)
+theme_override_colors/font_color = Color(0.94, 0.803073, 0.7614, 1)
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("19_qaur8")
@@ -694,6 +699,7 @@ script = ExtResource("26_d7paj")
 left_side = false
 
 [node name="PleaseType" type="Node2D" parent="START/GAMEOVER"]
+visible = false
 position = Vector2(320, 417)
 
 [node name="InputBox" type="Node2D" parent="START/GAMEOVER/PleaseType"]
@@ -722,6 +728,7 @@ theme_override_constants/outline_size = 8
 theme_override_constants/caret_width = 2
 theme_override_fonts/font = ExtResource("37_eqh8x")
 theme_override_font_sizes/font_size = 26
+theme_override_styles/focus = SubResource("StyleBoxEmpty_skyn2")
 alignment = 1
 max_length = 25
 flat = true
@@ -762,6 +769,7 @@ offset_top = 223.0
 offset_right = 512.0
 offset_bottom = 255.0
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("19_qaur8")
@@ -772,6 +780,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="congrats" type="Label" parent="START/GAMEOVER/PleaseType/Submitting"]
+visible = false
 offset_left = 128.0
 offset_top = 214.0
 offset_right = 512.0
@@ -788,6 +797,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="congrats2" type="Label" parent="START/GAMEOVER/PleaseType/Submitting/congrats"]
+layout_mode = 0
 offset_left = -1.0
 offset_top = 22.0
 offset_right = 383.0
@@ -815,9 +825,10 @@ theme_override_font_sizes/font_size = 12
 text = "Press enter to submit score!"
 horizontal_alignment = 1
 uppercase = true
-script = ExtResource("39_atn56")
+script = ExtResource("18_a20ym")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="START/GAMEOVER/PleaseType"]
+timeout = 5.0
 
 [node name="Leaderboard" type="Node2D" parent="START"]
 process_mode = 3
@@ -843,6 +854,7 @@ render_target_update_mode = 0
 [node name="Control" parent="START/Leaderboard/SubViewportContainer/SubViewport" instance=ExtResource("39_abr23")]
 
 [node name="HTTPRequest" type="HTTPRequest" parent="START/Leaderboard"]
+timeout = 5.0
 
 [node name="HUD" parent="." instance=ExtResource("8_sdali")]
 visible = false

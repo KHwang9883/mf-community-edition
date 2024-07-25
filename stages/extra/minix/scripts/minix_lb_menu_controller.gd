@@ -19,11 +19,11 @@ func _physics_process(delta: float) -> void:
 		if !gameover:
 			var mx = Scenes.current_scene.get_node("START/Node2D/MinixControls")
 			mx.focused = true
+			await get_tree().physics_frame
+			Pause.get_child(0).open_blocked = false
 		else:
 			var mx = Scenes.current_scene.get_node("START/GAMEOVER/MinixControls")
 			mx.focused = true
-		await get_tree().physics_frame
-		Pause.get_child(0).open_blocked = false
 
 
 func select(node: Control) -> void:
