@@ -34,6 +34,7 @@ func _handle_select() -> void:
 	minix_controls.focused = false
 	please_type.visible = true
 	submitting_box.visible = false
+	input_box.visible = true
 	line_edit.text = ""
 	line_edit.grab_focus()
 	line_edit.focus_exited.connect(_on_line_edit_focus_exited, CONNECT_ONE_SHOT)
@@ -57,7 +58,6 @@ func _physics_process(delta: float) -> void:
 		Audio.play_1d_sound(selected_sound, true, { ignore_pause = true })
 		dufhdiufsfdoi = false
 	
-	if has_errored: return
 	if dufhdiufsfdoi: return
 	
 	var can_submit: bool = false
@@ -93,6 +93,7 @@ func _physics_process(delta: float) -> void:
 		http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 		submitting = true
 		is_enabled = false
+		line_edit.text = ""
 		enter_to_preview.visible = false
 
 
