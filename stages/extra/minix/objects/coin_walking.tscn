@@ -1,18 +1,9 @@
-[gd_scene load_steps=31 format=3 uid="uid://bgoltym0mckv5"]
+[gd_scene load_steps=20 format=3 uid="uid://bgoltym0mckv5"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_p08dt"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_76vgf"]
 [ext_resource type="Script" path="res://stages/extra/minix/objects/minix_coin.gd" id="2_dqype"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_2ggqs"]
-[ext_resource type="PackedScene" uid="uid://dj2b5g2smonyu" path="res://engine/objects/enemies/_dead/enemy_stomped.tscn" id="4_nsfyi"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_stomped.gd" id="5_0r32n"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_ahltv"]
-[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="7_okc7a"]
-[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_2ripa"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_1dssc"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_2g5uj"]
 [ext_resource type="Texture2D" uid="uid://c4ka53gh2wyai" path="res://stages/extra/minix/objects/coin_walking.png" id="11_bh7dd"]
-[ext_resource type="Texture2D" uid="uid://dt4l713dj8ype" path="res://engine/objects/enemies/goombas/textures/goomba_stamped.png" id="12_xxcqu"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_8wrbc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rua3g"]
@@ -24,41 +15,6 @@ height = 28.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m8jgg"]
 size = Vector2(20, 28)
-
-[sub_resource type="Resource" id="Resource_n7w23"]
-resource_local_to_scene = true
-script = ExtResource("6_ahltv")
-creation_nodepack = ExtResource("4_nsfyi")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {
-"death": NodePath("../../Sprite/Dead")
-}
-custom_script = ExtResource("5_0r32n")
-
-[sub_resource type="Resource" id="Resource_rnnrp"]
-resource_local_to_scene = true
-script = ExtResource("6_ahltv")
-creation_nodepack = ExtResource("8_2ripa")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {
-"death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, -250)
-}
-custom_script = ExtResource("9_1dssc")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cb8mf"]
 atlas = ExtResource("11_bh7dd")
@@ -175,26 +131,10 @@ position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_m8jgg")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
-script = ExtResource("3_2ggqs")
-stomping_enabled = false
-stomping_creation = SubResource("Resource_n7w23")
-stomping_scores = 100
-stomping_sound = ExtResource("7_okc7a")
-killing_enabled = false
-killing_creation = SubResource("Resource_rnnrp")
-killing_scores = 100
-killing_sound_succeeded = ExtResource("10_2g5uj")
-metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
-
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, 2)
 sprite_frames = SubResource("SpriteFrames_gip70")
 autoplay = "default"
-
-[node name="Dead" type="Sprite2D" parent="Sprite"]
-visible = false
-texture = ExtResource("12_xxcqu")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
@@ -204,5 +144,3 @@ metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

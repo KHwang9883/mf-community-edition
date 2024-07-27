@@ -10,7 +10,7 @@ var default_score_values: Dictionary = {
 		best = 0
 	},
 	settings = {
-		minix_music = "default"
+		minix_music = -1
 	}
 }
 var score_values: Dictionary = default_score_values.duplicate(true)
@@ -51,7 +51,7 @@ func load_score() -> void:
 func save_score(score: int, key: String) -> void:
 	# Load with default values if "key" did not exist before
 	if !key in score_values:
-		score_values[key] = score_values._default.duplicate(true)
+		score_values[key] = default_score_values._default.duplicate(true)
 	
 	# Calculating best highscore
 	if score > score_values[key].best:

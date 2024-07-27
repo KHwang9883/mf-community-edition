@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=79 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -46,15 +46,25 @@
 [ext_resource type="Texture2D" uid="uid://c0mxgb8tu2u4r" path="res://stages/extra/minix/status/S3.png" id="26_0xr28"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="26_d7paj"]
 [ext_resource type="Texture2D" uid="uid://cguyy2r5urcvv" path="res://stages/extra/minix/status/S4.png" id="27_6lqe1"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_view_lb.gd" id="27_eovx5"]
+[ext_resource type="Script" path="res://engine/components/pause/opt_credits_selection.gd" id="28_jqp67"]
 [ext_resource type="Texture2D" uid="uid://qmvs1hugffrp" path="res://stages/extra/minix/status/S5.png" id="28_t604f"]
 [ext_resource type="Texture2D" uid="uid://554vr2j671pj" path="res://stages/extra/minix/status/S6.png" id="29_ecoly"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_status.gd" id="30_jgobj"]
 [ext_resource type="PackedScene" uid="uid://opdqhst2t4mj" path="res://stages/extra/minix/maps/classic.tscn" id="34_l4qgv"]
 [ext_resource type="PackedScene" uid="uid://cx368qovj48tp" path="res://stages/extra/minix/maps/playgrounds.tscn" id="35_7wouc"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_submit.gd" id="35_c4vlj"]
 [ext_resource type="PackedScene" uid="uid://boeruql4s8rd1" path="res://stages/extra/minix/maps/underwater.tscn" id="36_0cnpl"]
+[ext_resource type="Texture2D" uid="uid://d14berfdbyp8w" path="res://stages/extra/minix/textures/hiscore_button_bg.png" id="36_7xloy"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="37_eqh8x"]
+[ext_resource type="PackedScene" uid="uid://b7eavmhombhly" path="res://stages/extra/minix/objects/control_leaderboard.tscn" id="39_abr23"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb.gd" id="39_vib0e"]
 [ext_resource type="PackedScene" uid="uid://bn27wl07v41xw" path="res://stages/extra/minix/maps/mario_play.tscn" id="42_p1jxm"]
 [ext_resource type="PackedScene" uid="uid://bb8ud6aldbpmu" path="res://stages/extra/minix/maps/playgrounds_2.tscn" id="44_n3pie"]
 [ext_resource type="PackedScene" uid="uid://bpjfkgn3xyib1" path="res://stages/extra/minix/maps/three_islands.tscn" id="55_p8ldm"]
+[ext_resource type="PackedScene" uid="uid://b3uli3g8bpvwu" path="res://stages/extra/minix/maps/bowser's_castle.tscn" id="56_gypre"]
+[ext_resource type="PackedScene" uid="uid://d3e67rsfuc3ob" path="res://stages/extra/minix/maps/evil_castle.tscn" id="60_awk3x"]
+[ext_resource type="PackedScene" uid="uid://cyhtxh1cfkfk7" path="res://stages/extra/minix/maps/underground.tscn" id="65_lukfv"]
 
 [sub_resource type="Resource" id="Resource_hhd4i"]
 script = ExtResource("10_5y4lf")
@@ -104,6 +114,12 @@ sound_pitch = 1.0
 [sub_resource type="FontVariation" id="FontVariation_prh3k"]
 base_font = ExtResource("19_qaur8")
 spacing_glyph = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_skyn2"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7celo"]
 atlas = ExtResource("17_r2kie")
@@ -248,9 +264,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = 284.0
+offset_top = 282.0
 offset_right = 640.0
-offset_bottom = 364.0
+offset_bottom = 401.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 7
@@ -301,6 +317,30 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="Start3" type="Label" parent="START/Node2D/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "view the leaderboard"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("27_eovx5")
+
+[node name="Start6" type="Label" parent="START/Node2D/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "credits"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("28_jqp67")
+
+[node name="Start5" type="Label" parent="START/Node2D/MinixControls"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -433,6 +473,20 @@ minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
 starter_path = NodePath("../../..")
 value = "best"
 
+[node name="Label" type="Label" parent="START/Node2D"]
+offset_left = 560.0
+offset_top = 464.0
+offset_right = 637.0
+offset_bottom = 478.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "v0.2"
+horizontal_alignment = 2
+uppercase = true
+
 [node name="GAMEOVER" type="Node2D" parent="START"]
 process_mode = 3
 script = ExtResource("22_6vcp0")
@@ -445,15 +499,20 @@ metadata/_edit_lock_ = true
 
 [node name="congratulations" type="Label" parent="START/GAMEOVER"]
 offset_left = 160.0
-offset_top = 112.0
+offset_top = 48.0
 offset_right = 480.0
-offset_bottom = 125.0
+offset_bottom = 249.0
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("19_qaur8")
 theme_override_font_sizes/font_size = 12
 text = "congratulations! your score is:
 
+
+godlikes made:
+
+
+you've lasted for (1x speed):
 
 
 on map:
@@ -466,23 +525,54 @@ uppercase = true
 
 [node name="score" type="Label" parent="START/GAMEOVER"]
 offset_left = 160.0
-offset_top = 133.0
+offset_top = 69.0
 offset_right = 480.0
-offset_bottom = 147.0
+offset_bottom = 83.0
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.968627, 0.968627, 0.498039, 1)
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = SubResource("FontVariation_prh3k")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 13
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MapLabel" type="Label" parent="START/GAMEOVER"]
-offset_top = 201.0
+[node name="godlikes" type="Label" parent="START/GAMEOVER"]
+offset_left = 160.0
+offset_top = 120.0
+offset_right = 480.0
+offset_bottom = 134.0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.968627, 0.968627, 0.498039, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_prh3k")
+theme_override_font_sizes/font_size = 13
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lasted" type="Label" parent="START/GAMEOVER"]
+offset_top = 171.0
 offset_right = 640.0
-offset_bottom = 215.0
+offset_bottom = 185.0
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.968627, 0.968627, 0.498039, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 13
+text = "%d min, %d sec"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="MapLabel" type="Label" parent="START/GAMEOVER"]
+offset_top = 222.0
+offset_right = 640.0
+offset_bottom = 236.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.968627, 0.968627, 0.498039, 1)
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("19_qaur8")
@@ -497,9 +587,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = 284.0
+offset_top = 282.0
 offset_right = 640.0
-offset_bottom = 364.0
+offset_bottom = 380.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 7
@@ -517,6 +607,33 @@ theme_override_font_sizes/font_size = 12
 text = "PLAY AGAIN!"
 horizontal_alignment = 1
 script = ExtResource("23_qc8bc")
+
+[node name="ViewLeaderboard" type="Label" parent="START/GAMEOVER/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.752941, 0.972549, 0.752941, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "view the leaderboard"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("27_eovx5")
+gameover = true
+
+[node name="Submit" type="Label" parent="START/GAMEOVER/MinixControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.94, 0.803073, 0.7614, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "submit YOUR SCORE!!!"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("35_c4vlj")
 
 [node name="SwitchMap" type="Label" parent="START/GAMEOVER/MinixControls"]
 layout_mode = 2
@@ -581,6 +698,164 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("26_d7paj")
 left_side = false
+
+[node name="PleaseType" type="Node2D" parent="START/GAMEOVER"]
+visible = false
+position = Vector2(320, 417)
+
+[node name="InputBox" type="Node2D" parent="START/GAMEOVER/PleaseType"]
+
+[node name="ColorRect2" type="ColorRect" parent="START/GAMEOVER/PleaseType/InputBox"]
+offset_left = -320.0
+offset_top = -33.0
+offset_right = 320.0
+offset_bottom = 33.0
+color = Color(1, 1, 1, 0.376471)
+
+[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/InputBox"]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("36_7xloy")
+
+[node name="LineEdit" type="LineEdit" parent="START/GAMEOVER/PleaseType/InputBox"]
+offset_left = -148.0
+offset_top = -4.0
+offset_right = 148.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.596078, 1)
+theme_override_colors/caret_color = Color(0, 0, 0.513726, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/caret_width = 2
+theme_override_fonts/font = ExtResource("37_eqh8x")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/focus = SubResource("StyleBoxEmpty_skyn2")
+alignment = 1
+max_length = 25
+flat = true
+caret_blink = true
+caret_force_displayed = true
+
+[node name="SwitchMap" type="Label" parent="START/GAMEOVER/PleaseType/InputBox"]
+offset_left = -192.0
+offset_top = -20.0
+offset_right = 192.0
+offset_bottom = 7.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 11
+text = "please type your name:"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Submitting" type="Node2D" parent="START/GAMEOVER/PleaseType"]
+position = Vector2(-320, -417)
+
+[node name="ColorRect" type="ColorRect" parent="START/GAMEOVER/PleaseType/Submitting"]
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(1, 1, 1, 0.313726)
+metadata/_edit_lock_ = true
+
+[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/Submitting"]
+position = Vector2(320, 240)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("36_7xloy")
+
+[node name="Loading" type="Label" parent="START/GAMEOVER/PleaseType/Submitting"]
+offset_left = 128.0
+offset_top = 223.0
+offset_right = 512.0
+offset_bottom = 255.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 13
+text = "submitting your score..."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="congrats" type="Label" parent="START/GAMEOVER/PleaseType/Submitting"]
+visible = false
+offset_left = 128.0
+offset_top = 214.0
+offset_right = 512.0
+offset_bottom = 246.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.937255, 0.937255, 0.380392, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 17
+text = "congratulations!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="congrats2" type="Label" parent="START/GAMEOVER/PleaseType/Submitting/congrats"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 22.0
+offset_right = 383.0
+offset_bottom = 54.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "your score has been submitted!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="EnterToPreview" type="Label" parent="START/GAMEOVER/PleaseType"]
+offset_left = -320.0
+offset_top = 38.0
+offset_right = 320.0
+offset_bottom = 52.0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 12
+text = "Press enter to submit score!"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("18_a20ym")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="START/GAMEOVER/PleaseType"]
+timeout = 5.0
+
+[node name="Leaderboard" type="Node2D" parent="START"]
+process_mode = 3
+visible = false
+script = ExtResource("39_vib0e")
+
+[node name="ColorRect" type="ColorRect" parent="START/Leaderboard"]
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(1, 1, 1, 0.313726)
+metadata/_edit_lock_ = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="START/Leaderboard"]
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="SubViewport" type="SubViewport" parent="START/Leaderboard/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 480)
+render_target_update_mode = 0
+
+[node name="Control" parent="START/Leaderboard/SubViewportContainer/SubViewport" instance=ExtResource("39_abr23")]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="START/Leaderboard"]
+timeout = 5.0
 
 [node name="HUD" parent="." instance=ExtResource("8_sdali")]
 visible = false
@@ -679,7 +954,11 @@ metadata/_edit_lock_ = true
 
 [node name="classic" parent="Maps" instance=ExtResource("34_l4qgv")]
 
-[node name="classic2" parent="Maps" instance=ExtResource("55_p8ldm")]
+[node name="three_islands" parent="Maps" instance=ExtResource("55_p8ldm")]
+
+[node name="bowser\'s_castle" parent="Maps" instance=ExtResource("56_gypre")]
+
+[node name="evil_castle" parent="Maps" instance=ExtResource("60_awk3x")]
 
 [node name="playgrounds" parent="Maps" instance=ExtResource("35_7wouc")]
 
@@ -688,6 +967,8 @@ metadata/_edit_lock_ = true
 [node name="playgrounds_2" parent="Maps" instance=ExtResource("44_n3pie")]
 
 [node name="underwater" parent="Maps" instance=ExtResource("36_0cnpl")]
+
+[node name="underground" parent="Maps" instance=ExtResource("65_lukfv")]
 
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_minix_score_loader_score_loaded"]
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_minix_score_loader_score_loaded"]

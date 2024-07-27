@@ -13,6 +13,7 @@ var _continued: bool
 @onready var maps: Node2D = $"../../Maps"
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
 @onready var minix_controls: MenuItemsController = $MinixControls
+@onready var control: Control = $"../Leaderboard/SubViewportContainer/SubViewport/Control/CanvasLayer/Title"
 
 signal game_started
 
@@ -26,18 +27,20 @@ func _ready() -> void:
 	var _minix_music = minix_score_loader.score_values.settings.minix_music
 	if !is_nan(int(_minix_music)) && len(map_names) - 1 >= int(_minix_music):
 		current_music_from_map = max(-1, int(_minix_music))
-	if "map_id" in Data.values:
-		map_id = Data.values.map_id
 	if "minix_continue" in Data.values:
 		modulate.a = 0.0
 		_continued = true
 		minix_controls.focused = false
+		map_id = Data.values.minix_continue
+		Data.values.map_id = map_id
 		_on_map_changed_to(Data.values.minix_continue)
 		start_game()
 	else:
 		mario.completed = true
 		$"../../CanvasLayer".hide()
 		music_loader_intro.play_buffered()
+		if "map_id" in Data.values:
+			map_id = Data.values.map_id
 		_on_map_changed_to(map_id)
 
 
@@ -64,8 +67,12 @@ func start_game() -> void:
 	tw.tween_property(self, "modulate:a", 0.0, 0.5)
 	
 	mario.completed = false
-	Data.values.map_id = map_id
-	game_started.emit()
+	
+	control.map_id = map_id + 1
+	control._update_map.call_deferred()
+	(func():
+		game_started.emit()
+	).call_deferred()
 
 
 func _music() -> void:
