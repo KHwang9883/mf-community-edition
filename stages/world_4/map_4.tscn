@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cx7vsc87xwwgn"]
+[gd_scene load_steps=34 format=3 uid="uid://cx7vsc87xwwgn"]
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_gb5tm"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ujxru"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="23_vbjsi"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="24_2xuep"]
 [ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="25_vljnp"]
+[ext_resource type="Script" path="res://stages/world_4/scripts/emalpka_marker_map.gd" id="27_xs4iu"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="30_s70ew"]
 
 [node name="Map" type="Node2D"]
@@ -47,6 +48,11 @@ music_var_3 = Array[Resource]([])
 ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("3_anxmq")])
 volume_db = Array[float]([6.0])
+
+[node name="Node" type="Node" parent="."]
+process_priority = -1
+script = ExtResource("27_xs4iu")
+node_path = NodePath("../MarkerSpace/MapPlayerMarker2")
 
 [node name="Bg" type="Sprite2D" parent="."]
 texture = ExtResource("4_on85w")
@@ -184,6 +190,13 @@ z_as_relative = false
 position = Vector2(80, 276)
 script = ExtResource("16_pfkv8")
 level = "res://stages/world_4/level_4-1.tscn"
+
+[node name="MapPlayerMarker2" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(288, 276)
+script = ExtResource("16_pfkv8")
+level = "res://stages/world_4/EmalpkaMomento.tscn"
 
 [node name="MapPlayerMarker4" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
