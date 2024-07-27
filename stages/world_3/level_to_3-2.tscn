@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cag4dyqih2sey"]
+[gd_scene load_steps=24 format=3 uid="uid://cag4dyqih2sey"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_hjl81"]
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_yrnaq"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="7_d5r3c"]
 [ext_resource type="Texture2D" uid="uid://1n3cepbaofmv" path="res://tilesets/starland/gfx/purple_pipe_entering_another.png" id="8_5gjsk"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="8_6h14m"]
+[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="10_hhw67"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_jopky"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="12_fvjq6"]
 [ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="13_7tp3m"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="13_y5a2r"]
@@ -28,6 +30,30 @@ colors = PackedColorArray(0, 0, 0.74902, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_he7o3"]
 gradient = SubResource("Gradient_lyuwg")
 width = 9000
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8347j"]
+noise_type = 3
+seed = 4
+frequency = 0.004
+offset = Vector3(0, -347.84, 0)
+fractal_octaves = 3
+fractal_weighted_strength = 1.0
+domain_warp_frequency = 35.04
+domain_warp_fractal_gain = -2.38
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rxmj8"]
+width = 800
+height = 510
+seamless = true
+seamless_blend_skirt = 0.25
+noise = SubResource("FastNoiseLite_8347j")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0kqv"]
+shader = ExtResource("10_hhw67")
+shader_parameter/density = 1.0
+shader_parameter/speed = Vector2(0.02, 0)
+shader_parameter/freq = 0.96
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_rxmj8")
 
 [node name="CaveCutscene" type="Node2D"]
 script = ExtResource("1_hjl81")
@@ -97,6 +123,24 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 200)
 metadata/_edit_lock_ = true
 
+[node name="CanvasModulate" type="CanvasModulate" parent="ParallaxBackground"]
+color = Color(0.587751, 0.587751, 0.58775, 1)
+script = ExtResource("7_d5r3c")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(800, 600)
+script = ExtResource("7_d5r3c")
+medium = true
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
+modulate = Color(1, 1, 1, 0.8)
+material = SubResource("ShaderMaterial_h0kqv")
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("11_jopky")
+metadata/_edit_lock_ = true
+
 [node name="GreenPipeEnteringAnother" type="Sprite2D" parent="."]
 position = Vector2(544, 384)
 texture = ExtResource("8_5gjsk")
@@ -116,3 +160,7 @@ visible = false
 [node name="TileMap2" type="TileMap" parent="."]
 tile_set = ExtResource("13_y5a2r")
 format = 2
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.587751, 0.587751, 0.58775, 1)
+script = ExtResource("7_d5r3c")

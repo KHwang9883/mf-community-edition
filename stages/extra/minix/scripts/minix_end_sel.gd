@@ -10,7 +10,7 @@ func _handle_select() -> void:
 	if !_is_simple_fade:
 		TransitionManager.transition_middle.connect(func():
 			TransitionManager.current_transition.paused = true
-			Scenes.goto_scene("res://stages/extra/minix/minix.tscn")
+			Scenes.goto_scene("res://stages/save_game_room/save_game_room.tscn")
 			Scenes.scene_ready.connect(func():
 				TransitionManager.current_transition.paused = false
 			, CONNECT_ONE_SHOT)
