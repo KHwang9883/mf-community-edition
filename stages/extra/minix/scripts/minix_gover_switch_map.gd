@@ -15,6 +15,7 @@ func _handle_select() -> void:
 	Pause.get_child(0).open_blocked = false
 	Audio.stop_all_musics()
 	Audio.stop_music_channel(2, true)
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	_start_transition()
 
 

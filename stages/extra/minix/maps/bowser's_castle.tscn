@@ -1,0 +1,198 @@
+[gd_scene load_steps=24 format=3 uid="uid://b3uli3g8bpvwu"]
+
+[ext_resource type="Script" path="res://stages/extra/minix/maps/minix_map.gd" id="1_b0t5b"]
+[ext_resource type="AudioStream" uid="uid://gmeqlde246lg" path="res://music/minix/custom/BodyHarvestCalmTheme_.ogg" id="2_ntllj"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_yk4v5"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_fmorl"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_cjifd"]
+[ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_coin_pipe.gd" id="6_dx7ed"]
+[ext_resource type="AudioStream" uid="uid://crt10dovd1eon" path="res://music/minix/custom/DarkCastle4.ogg" id="6_iksqx"]
+[ext_resource type="AudioStream" uid="uid://bm5bcd4xfydvq" path="res://music/minix/custom/Kirby64_-_NeoStar.ogg" id="7_5v1wg"]
+[ext_resource type="AudioStream" uid="uid://dgxqtdsmyv42h" path="res://music/minix/custom/Kirby64_-_RippleStar.ogg" id="8_v65gf"]
+[ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="8_ybp5j"]
+[ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="10_8lfdw"]
+[ext_resource type="Texture2D" uid="uid://ve1c0qmx836m" path="res://tilesets/castle/gfx/gray_pipe.png" id="10_pow3e"]
+[ext_resource type="Texture2D" uid="uid://c7madb3fe540" path="res://tilesets/castle/gfx/bowser_portrait.png" id="11_2uftn"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="11_bffr4"]
+
+[sub_resource type="Gradient" id="Gradient_php6k"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.780392)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8hfqj"]
+gradient = SubResource("Gradient_php6k")
+width = 640
+height = 88
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lnqbn"]
+
+[sub_resource type="Gradient" id="Gradient_4hub0"]
+colors = PackedColorArray(0.635294, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fh2g8"]
+gradient = SubResource("Gradient_4hub0")
+width = 672
+height = 492
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yjx54"]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ja5w"]
+size = Vector2(32, 648)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4w86b"]
+size = Vector2(32, 216)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvthr"]
+size = Vector2(32, 80)
+
+[node name="bowser\'s_castle" type="Node2D"]
+script = ExtResource("1_b0t5b")
+map_name = "bowser's castle"
+life_count = 3
+game_over_music = ExtResource("2_ntllj")
+metadata/_edit_lock_ = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("3_yk4v5")]
+script = ExtResource("4_fmorl")
+tweaked_completion_music = ExtResource("5_cjifd")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+ignore_fade_in_tweak = false
+music = Array[Resource]([ExtResource("6_iksqx"), ExtResource("7_5v1wg"), ExtResource("8_v65gf")])
+play_immediately = false
+stop_all_music_on_start = false
+volume_db = Array[float]([-4.0, -4.0, -4.0])
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="Timers"]
+wait_time = 2.0
+
+[node name="CoinTimer" type="Timer" parent="Timers"]
+
+[node name="Timer2" type="Timer" parent="Timers"]
+wait_time = 5.0
+one_shot = true
+
+[node name="EnemySpawners" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(112, -12)
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(256, -12)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(384, -12)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(512, -12)
+
+[node name="CoinPipe" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(560, 528)
+script = ExtResource("6_dx7ed")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="CoinPipe"]
+position = Vector2(0, 16)
+texture = ExtResource("10_pow3e")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="Sprite2D3" type="Sprite2D" parent="CoinPipe/Sprite2D2"]
+position = Vector2(0, 48)
+texture = ExtResource("10_pow3e")
+region_enabled = true
+region_rect = Rect2(0, 32, 64, 32)
+
+[node name="PipeTimer" type="Timer" parent="CoinPipe"]
+wait_time = 20.0
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("8_ybp5j")
+format = 2
+layer_0/tile_data = PackedInt32Array(720896, 0, 0, 720897, 65536, 0, 786433, 65536, 4, 786434, 131072, 4, 720898, 0, 0, 720899, 65536, 0, 720900, 0, 0, 720901, 65536, 0, 720902, 0, 0, 720903, 65536, 0, 786437, 65536, 4, 786438, 131072, 4, 131079, 0, 0, 131080, 65536, 0, 196616, 65536, 4, 196617, 131072, 4, 131081, 0, 0, 131082, 65536, 0, 196618, 0, 0, 196619, 65536, 0, 131083, 65536, 4, 131084, 131072, 4, 262159, 0, 4, 262160, 0, 4, 262161, 131072, 0, 262158, 131072, 0, 131078, 131072, 0)
+layer_1/tile_data = PackedInt32Array(917512, 2, 589824, 393226, 2, 131072, 786444, 2, 196608)
+metadata/_edit_lock_ = true
+
+[node name="TileMap2" type="TileMap" parent="."]
+position = Vector2(10, 0)
+tile_set = ExtResource("8_ybp5j")
+format = 2
+layer_0/tile_data = PackedInt32Array(851968, 4, 0, 917504, 4, 1, 983040, 4, 2, 851969, 65540, 0, 917505, 65540, 1, 983041, 65540, 2, 851970, 65540, 0, 917506, 65540, 1, 983042, 65540, 2, 851971, 65540, 0, 917507, 65540, 1, 983043, 65540, 2, 851972, 65540, 0, 917508, 65540, 1, 983044, 65540, 2, 851973, 65540, 0, 917509, 65540, 1, 983045, 65540, 2, 851974, 65540, 0, 917510, 65540, 1, 983046, 65540, 2, 851975, 65540, 0, 917511, 65540, 1, 983047, 65540, 2, 851976, 65540, 0, 917512, 65540, 1, 983048, 65540, 2, 851977, 65540, 0, 917513, 65540, 1, 983049, 65540, 2, 851978, 65540, 0, 917514, 65540, 1, 983050, 65540, 2, 851979, 65540, 0, 917515, 65540, 1, 983051, 65540, 2, 851980, 65540, 0, 917516, 65540, 1, 983052, 65540, 2, 851981, 65540, 0, 917517, 65540, 1, 983053, 65540, 2, 851982, 65540, 0, 917518, 65540, 1, 983054, 65540, 2, 851983, 65540, 0, 917519, 65540, 1, 983055, 65540, 2, 851984, 65540, 0, 917520, 65540, 1, 983056, 65540, 2, 851985, 65540, 0, 917521, 65540, 1, 983057, 65540, 2, 851986, 65540, 0, 917522, 65540, 1, 983058, 65540, 2, 851987, 131076, 0, 917523, 131076, 1, 983059, 131076, 2, 327681, 0, 0, 327682, 65536, 0, 393218, 0, 0, 393219, 65536, 0, 327683, 0, 0, 327684, 65536, 0)
+layer_1/tile_data = PackedInt32Array(786449, 2, 65536, 393218, 2, 131072)
+metadata/_edit_lock_ = true
+
+[node name="MarioPos" type="Marker2D" parent="."]
+position = Vector2(336, 400)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 50
+position = Vector2(-7, -6)
+scale = Vector2(1.025, 1)
+texture = SubResource("GradientTexture2D_8hfqj")
+centered = false
+script = ExtResource("11_bffr4")
+
+[node name="ParallaxBackground" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="BgCastle" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -999
+position = Vector2(480, 240)
+texture = ExtResource("10_8lfdw")
+metadata/_edit_lock_ = true
+
+[node name="BowserPortrait" type="Sprite2D" parent="ParallaxBackground/BgCastle"]
+position = Vector2(0, -112)
+texture = ExtResource("11_2uftn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/BgCastle"]
+sprite_frames = SubResource("SpriteFrames_lnqbn")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgCastle"]
+modulate = Color(1, 1, 1, 0.427451)
+position = Vector2(-155, 0)
+texture = SubResource("GradientTexture2D_fh2g8")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+modulate = Color(1, 1, 1, 0.2)
+z_index = 99
+material = SubResource("CanvasItemMaterial_yjx54")
+position = Vector2(326, 240)
+texture = SubResource("GradientTexture2D_fh2g8")
+metadata/_edit_lock_ = true
+
+[node name="Enemy&MarioBlocker" type="StaticBody2D" parent="."]
+collision_layer = 112
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy&MarioBlocker"]
+position = Vector2(-16, -32)
+shape = SubResource("RectangleShape2D_2ja5w")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Enemy&MarioBlocker"]
+position = Vector2(656, 32)
+shape = SubResource("RectangleShape2D_2ja5w")
+
+[node name="MarioBlocker" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MarioBlocker"]
+position = Vector2(-16, 400)
+shape = SubResource("RectangleShape2D_4w86b")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MarioBlocker"]
+position = Vector2(656, 400)
+shape = SubResource("RectangleShape2D_pvthr")
