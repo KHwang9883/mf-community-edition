@@ -1,14 +1,16 @@
-[gd_scene load_steps=23 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=25 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_xf83d"]
 [ext_resource type="Resource" uid="uid://ckvsfjusfv75o" path="res://engine/scenes/main_menu/music/main_menu.xm" id="2_2u7nk"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_c40jm"]
-[ext_resource type="PackedScene" uid="uid://dkquk2byjeol8" path="res://engine/scenes/main_menu/main_menu_controls.tscn" id="3_7prny"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="3_yfcxo"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="4_ybrhl"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="5_i43cl"]
+[ext_resource type="PackedScene" uid="uid://ujpnlfhdsb7j" path="res://stages/main_menu/objects/main_menu_controls.tscn" id="5_xxfig"]
+[ext_resource type="Texture2D" uid="uid://dif28i3dedumq" path="res://stages/main_menu/textures/mfcommunityedition.png" id="6_c8xg0"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="6_qa4mj"]
 [ext_resource type="PackedScene" uid="uid://cpme7ixwwuc2p" path="res://engine/scenes/main_menu/controls.tscn" id="7_lt4b5"]
+[ext_resource type="PackedScene" uid="uid://c2mch7wqmlcgp" path="res://stages/main_menu/objects/tweaks.tscn" id="10_2n5tx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
 atlas = ExtResource("4_ybrhl")
@@ -97,12 +99,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m1wal")
 }, {
-"duration": 1.0,
+"duration": 60.0,
 "texture": SubResource("AtlasTexture_lsnuv")
 }],
-"loop": false,
+"loop": true,
 "name": &"default",
-"speed": 20.0
+"speed": 30.0
 }]
 
 [node name="MainMenu" type="Control"]
@@ -135,25 +137,24 @@ ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("2_2u7nk")])
 channel_id = 0
 
-[node name="MainMenuControls" parent="Menu" instance=ExtResource("3_7prny")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -144.0
-offset_right = 64.0
-offset_bottom = -68.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="MainMenuControls" parent="Menu" instance=ExtResource("5_xxfig")]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 312.0
+offset_right = 402.0
+offset_bottom = 488.0
+theme_override_constants/separation = 1
+
+[node name="Mfcommunityedition" type="Sprite2D" parent="Menu"]
+position = Vector2(336, 157)
+texture = ExtResource("6_c8xg0")
 
 [node name="Selector" type="AnimatedSprite2D" parent="Menu"]
 sprite_frames = SubResource("SpriteFrames_t63jw")
+autoplay = "default"
 script = ExtResource("5_i43cl")
 smooth_speed = 0.4
-position_paddings_array = Array[float]([-5.0, 11.0, -16.0])
+position_padding = 20
 
 [node name="Settings" parent="." instance=ExtResource("6_qa4mj")]
 layout_mode = 1
@@ -162,10 +163,11 @@ main_menu_controls = "Menu/MainMenuControls"
 [node name="Controls" parent="." instance=ExtResource("7_lt4b5")]
 layout_mode = 1
 
-[node name="Tweaks" type="Control" parent="."]
-anchors_preset = 0
+[node name="Tweaks" parent="." instance=ExtResource("10_2n5tx")]
+layout_mode = 1
 offset_left = -640.0
 offset_top = 480.0
-offset_bottom = 960.0
+offset_right = -640.0
+offset_bottom = 480.0
 
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]
