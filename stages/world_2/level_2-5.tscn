@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://brtc0tw8taj68"]
+[gd_scene load_steps=59 format=3 uid="uid://brtc0tw8taj68"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_6d70v"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ia01j"]
@@ -22,7 +22,6 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="18_1b7d0"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="18_x54fd"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="19_e3nug"]
-[ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="21_f2ypw"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="22_khpnh"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="23_1qvyx"]
 [ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="24_vit64"]
@@ -42,6 +41,8 @@
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="38_akein"]
 [ext_resource type="PackedScene" uid="uid://uhf6frao7p1m" path="res://engine/objects/enemies/podoboo/podoboo.tscn" id="39_swa3y"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="40_0e3vc"]
+[ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="42_kmrk6"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="43_sm1jw"]
 
 [sub_resource type="Curve2D" id="Curve2D_aapar"]
 _data = {
@@ -137,6 +138,10 @@ custom_vars = {}
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
 size = Vector2(480, 32)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_oy6f2"]
+blend_mode = 1
+light_mode = 1
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_j2ofw"]
 atlas = ExtResource("37_pb2jt")
 region = Rect2(0, 0, 80, 80)
@@ -151,9 +156,21 @@ width = 112
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ds5cq"]
 size = Vector2(9066, 912)
 
+[sub_resource type="Gradient" id="Gradient_g0ejw"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tr048"]
+gradient = SubResource("Gradient_g0ejw")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
 [node name="Level2-5" type="Node2D"]
 script = ExtResource("1_6d70v")
-jump_to_scene = "res://stages/world_2/map_2_complete.tscn"
+jump_to_scene = "res://stages/world_2/end_cutscene_2.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_ia01j")]
 script = ExtResource("3_pw2a1")
@@ -161,6 +178,7 @@ tweaked_completion_music = ExtResource("4_ap3c0")
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
+ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("3_uco5t")])
 
 [node name="Mario" parent="." instance=ExtResource("4_c3l33")]
@@ -355,12 +373,6 @@ position = Vector2(496, 176)
 result = SubResource("Resource_n81dy")
 initially_visible_and_solid = false
 
-[node name="Lava" parent="." instance=ExtResource("21_f2ypw")]
-offset_left = 8416.0
-offset_top = 410.0
-offset_right = 8896.0
-offset_bottom = 506.0
-
 [node name="Bowser" parent="." instance=ExtResource("22_khpnh")]
 position = Vector2(8800, 256)
 status_interval = Array[float]([3.0])
@@ -431,6 +443,7 @@ position = Vector2(1040, 176)
 position = Vector2(1040, 208)
 
 [node name="RotoRed" parent="RotoCenter" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, -150)
 phase = -90.0
 frequency = -50.0
@@ -440,6 +453,7 @@ metadata/_edit_lock_ = true
 position = Vector2(3024, 208)
 
 [node name="RotoRed" parent="RotoCenter5" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, -150)
 phase = -90.0
 frequency = -50.0
@@ -449,6 +463,7 @@ metadata/_edit_lock_ = true
 position = Vector2(5904, 208)
 
 [node name="RotoRed" parent="RotoCenter7" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, -150)
 phase = -90.0
 frequency = -50.0
@@ -458,6 +473,7 @@ metadata/_edit_lock_ = true
 position = Vector2(6592, 432)
 
 [node name="RotoRed" parent="RotoCenter10" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, -150)
 phase = -90.0
 frequency = -50.0
@@ -467,6 +483,7 @@ metadata/_edit_lock_ = true
 position = Vector2(1456, 240)
 
 [node name="RotoRed" parent="RotoCenter2" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -475,6 +492,7 @@ frequency = -50.0
 position = Vector2(2288, 176)
 
 [node name="RotoRed" parent="RotoCenter4" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -483,6 +501,7 @@ frequency = -50.0
 position = Vector2(3440, 144)
 
 [node name="RotoRed" parent="RotoCenter6" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -491,6 +510,7 @@ frequency = -50.0
 position = Vector2(5776, 208)
 
 [node name="RotoRed" parent="RotoCenter8" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -499,6 +519,7 @@ frequency = -50.0
 position = Vector2(6336, 432)
 
 [node name="RotoRed" parent="RotoCenter9" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -507,6 +528,7 @@ frequency = -50.0
 position = Vector2(6496, 16)
 
 [node name="RotoRed" parent="RotoCenter12" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -515,6 +537,7 @@ frequency = -50.0
 position = Vector2(6848, 16)
 
 [node name="RotoRed" parent="RotoCenter13" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -523,6 +546,7 @@ frequency = -50.0
 position = Vector2(7200, 208)
 
 [node name="RotoRed" parent="RotoCenter15" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -50.0
@@ -531,6 +555,7 @@ frequency = -50.0
 position = Vector2(2032, 240)
 
 [node name="RotoRed" parent="RotoCenter3" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(-150, 0)
 phase = 180.0
 frequency = -50.0
@@ -539,6 +564,7 @@ frequency = -50.0
 position = Vector2(6432, 208)
 
 [node name="RotoRed" parent="RotoCenter11" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(-150, 0)
 phase = 180.0
 frequency = -50.0
@@ -547,6 +573,7 @@ frequency = -50.0
 position = Vector2(7008, 208)
 
 [node name="RotoRed" parent="RotoCenter14" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(-150, 0)
 phase = 180.0
 frequency = -50.0
@@ -555,6 +582,7 @@ frequency = -50.0
 position = Vector2(7136, 432)
 
 [node name="RotoRed" parent="RotoCenter16" instance=ExtResource("29_rdswa")]
+material = SubResource("CanvasItemMaterial_oy6f2")
 position = Vector2(150, 0)
 frequency = -50.0
 
@@ -653,7 +681,7 @@ script = ExtResource("37_6ml5c")
 [node name="TileMap" type="TileMap" parent="Node2D"]
 tile_set = ExtResource("38_akein")
 format = 2
-layer_0/tile_data = PackedInt32Array(852019, 2, 196608, 196653, 2, 393216, 196669, 2, 393216, 786508, 2, 65536, 852153, 2, 196608, 196784, 2, 393216, 196630, 2, 393216, 786466, 2, 393216, 196700, 2, 458752, 393346, 2, 458752, 196763, 2, 458752, 852078, 2, 393216, 458974, 2, 458752, 917718, 2, 458752, 65738, 2, 327680, 196684, 2, 327680, 917741, 2, 196608)
+layer_0/tile_data = PackedInt32Array(852019, 2, 196608, 196653, 2, 393216, 196669, 2, 393216, 786508, 2, 393216, 852153, 2, 196608, 196784, 2, 393216, 196630, 2, 393216, 786466, 2, 393216, 196700, 2, 458752, 393346, 2, 458752, 196763, 2, 458752, 852078, 2, 393216, 458974, 2, 458752, 917718, 2, 458752, 65738, 2, 327680, 196684, 2, 327680, 917741, 2, 196608)
 
 [node name="Podoboo" parent="." instance=ExtResource("39_swa3y")]
 position = Vector2(8592, 432)
@@ -665,5 +693,38 @@ jumping_height = 320.0
 visible = false
 position = Vector2(4523, 88)
 shape = SubResource("RectangleShape2D_ds5cq")
+
+[node name="LavaBowser" parent="." instance=ExtResource("42_kmrk6")]
+position = Vector2(8432, 426)
+
+[node name="Node2D" type="Node2D" parent="LavaBowser"]
+
+[node name="ochko" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(400, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_tr048")
+offset = Vector2(0, 8)
+script = ExtResource("43_sm1jw")
+
+[node name="ochko2" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(288, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_tr048")
+offset = Vector2(0, 8)
+script = ExtResource("43_sm1jw")
+
+[node name="ochko3" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(160, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_tr048")
+offset = Vector2(0, 8)
+script = ExtResource("43_sm1jw")
+
+[node name="ochko4" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(48, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_tr048")
+offset = Vector2(0, 8)
+script = ExtResource("43_sm1jw")
 
 [editable path="BowserJump"]

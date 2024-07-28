@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://dspfdhsnbjj0w"]
+[gd_scene load_steps=63 format=3 uid="uid://dspfdhsnbjj0w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ibs2y"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_2th1u"]
@@ -41,12 +41,18 @@
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="39_a6yq4"]
 [ext_resource type="Script" path="res://stages/world_6/scripts/maze_script.gd" id="39_my7x8"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="39_yf68k"]
+[ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="42_8gobm"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="43_6i7no"]
 
 [sub_resource type="Curve2D" id="Curve2D_k5i2x"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -64, 0, 0, 0, 0, 0, 544, 0)
 }
 point_count = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_crvpb"]
+blend_mode = 1
+light_mode = 1
 
 [sub_resource type="Resource" id="Resource_4qj43"]
 script = ExtResource("17_0xvs2")
@@ -195,6 +201,18 @@ width = 112
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rjx2m"]
 size = Vector2(13594, 880)
 
+[sub_resource type="Gradient" id="Gradient_42xtm"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jjlqr"]
+gradient = SubResource("Gradient_42xtm")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_ibs2y")
 jump_to_scene = "res://stages/world_6/map_6_complete.tscn"
@@ -205,6 +223,7 @@ tweaked_completion_music = ExtResource("4_k5pye")
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
+ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("3_yhsec")])
 
 [node name="Mario" parent="." instance=ExtResource("4_bpv6u")]
@@ -291,6 +310,7 @@ position = Vector2(-48, 16)
 position = Vector2(6576, 336)
 
 [node name="RotoRed" parent="Objects/RotoCenter" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, -150)
 phase = -90.0
 frequency = -50.0
@@ -299,6 +319,7 @@ frequency = -50.0
 position = Vector2(9776, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter3" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(150, 0)
 frequency = -50.0
 
@@ -306,6 +327,7 @@ frequency = -50.0
 position = Vector2(10896, 112)
 
 [node name="RotoRed" parent="Objects/RotoCenter11" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, -150)
 phase = -90.0
 frequency = -50.0
@@ -314,6 +336,7 @@ frequency = -50.0
 position = Vector2(10928, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter12" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 150)
 amplitude_enable = true
 amplitude_changing_speed = 350.0
@@ -324,6 +347,7 @@ frequency = -50.0
 position = Vector2(11696, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter13" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(150, 0)
 frequency = -50.0
 
@@ -331,6 +355,7 @@ frequency = -50.0
 position = Vector2(6864, 336)
 
 [node name="RotoRed" parent="Objects/RotoCenter2" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -340,6 +365,7 @@ frequency = -50.0
 position = Vector2(10128, 144)
 
 [node name="RotoRed" parent="Objects/RotoCenter4" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -349,6 +375,7 @@ frequency = -50.0
 position = Vector2(10160, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter5" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -358,6 +385,7 @@ frequency = -50.0
 position = Vector2(10448, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter6" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -367,6 +395,7 @@ frequency = -50.0
 position = Vector2(10928, 112)
 
 [node name="RotoRed" parent="Objects/RotoCenter7" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -376,6 +405,7 @@ frequency = -50.0
 position = Vector2(11120, 304)
 
 [node name="RotoRed" parent="Objects/RotoCenter8" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -385,6 +415,7 @@ frequency = -50.0
 position = Vector2(11408, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter9" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -394,6 +425,7 @@ frequency = -50.0
 position = Vector2(11696, 112)
 
 [node name="RotoRed" parent="Objects/RotoCenter10" instance=ExtResource("39_yf68k")]
+material = SubResource("CanvasItemMaterial_crvpb")
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 phase = 90.0
@@ -434,12 +466,6 @@ result = SubResource("Resource_ucery")
 [node name="QuestionBlock26" parent="Objects" instance=ExtResource("17_634yv")]
 position = Vector2(12368, 128)
 result = SubResource("Resource_iy34p")
-
-[node name="Lava" parent="." instance=ExtResource("21_vcm2g")]
-offset_left = 12992.0
-offset_top = 410.0
-offset_right = 13472.0
-offset_bottom = 506.0
 
 [node name="Bowser" parent="." instance=ExtResource("22_4ecqb")]
 position = Vector2(13376, 256)
@@ -596,6 +622,100 @@ layer_0/tile_data = PackedInt32Array(655377, 2, 458752, 917537, 2, 393216, 85209
 visible = false
 position = Vector2(6787, 152)
 shape = SubResource("RectangleShape2D_rjx2m")
+
+[node name="LavaBowser" parent="." instance=ExtResource("42_8gobm")]
+position = Vector2(13008, 426)
+metadata/_edit_group_ = true
+
+[node name="Node2D" type="Node2D" parent="LavaBowser"]
+script = ExtResource("37_wr58c")
+
+[node name="ochko" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(400, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko2" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(288, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko3" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(160, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko4" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(48, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("37_wr58c")
+
+[node name="ochko" type="PointLight2D" parent="Node2D2"]
+position = Vector2(1754, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko2" type="PointLight2D" parent="Node2D2"]
+position = Vector2(1642, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko3" type="PointLight2D" parent="Node2D2"]
+position = Vector2(1514, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko4" type="PointLight2D" parent="Node2D2"]
+position = Vector2(1402, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko5" type="PointLight2D" parent="Node2D2"]
+position = Vector2(2234, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko6" type="PointLight2D" parent="Node2D2"]
+position = Vector2(2122, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko7" type="PointLight2D" parent="Node2D2"]
+position = Vector2(1994, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
+
+[node name="ochko8" type="PointLight2D" parent="Node2D2"]
+position = Vector2(1882, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("43_6i7no")
 
 [connection signal="player_enter" from="Area2D" to="Node" method="entered"]
 [connection signal="player_enter" from="Area2D3" to="Node2" method="entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bwyuvtyce0so0"]
+[gd_scene load_steps=50 format=3 uid="uid://bwyuvtyce0so0"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_morq1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_trccb"]
@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://c4enqp3bwybyh" path="res://stages/world_8/objects/8-3_platform/8-3_platform_path.tscn" id="16_af55o"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="17_je73a"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="17_kwwk6"]
-[ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="19_8fn76"]
 [ext_resource type="PackedScene" uid="uid://c4h7mvbgsj5si" path="res://engine/objects/enemies/falling_blocks/templates/Falling Stone Brick.tscn" id="19_omkyg"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="20_dba8a"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="21_uydls"]
@@ -35,6 +34,8 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="29_nkc82"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="30_l7sp4"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="31_tn037"]
+[ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="35_f7jet"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="36_rgy0h"]
 
 [sub_resource type="Curve2D" id="Curve2D_aapar"]
 _data = {
@@ -100,6 +101,18 @@ width = 112
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ey3w8"]
 size = Vector2(12298, 1088)
+
+[sub_resource type="Gradient" id="Gradient_g0ejw"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a8tnf"]
+gradient = SubResource("Gradient_g0ejw")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
 
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_morq1")
@@ -320,12 +333,6 @@ position = Vector2(86, -4544)
 speed = 100.0
 smooth_enabled = false
 
-[node name="Lava" parent="." instance=ExtResource("19_8fn76")]
-offset_left = 11712.0
-offset_top = 410.0
-offset_right = 12192.0
-offset_bottom = 506.0
-
 [node name="Bowser" parent="." instance=ExtResource("20_dba8a")]
 position = Vector2(12096, 256)
 status_interval = Array[float]([3.0])
@@ -432,5 +439,40 @@ script = ExtResource("29_nkc82")
 visible = false
 position = Vector2(6139, 32)
 shape = SubResource("RectangleShape2D_ey3w8")
+
+[node name="LavaBowser" parent="." instance=ExtResource("35_f7jet")]
+position = Vector2(11728, 426)
+metadata/_edit_group_ = true
+
+[node name="Node2D" type="Node2D" parent="LavaBowser"]
+script = ExtResource("29_nkc82")
+
+[node name="ochko" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(400, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_a8tnf")
+offset = Vector2(0, 8)
+script = ExtResource("36_rgy0h")
+
+[node name="ochko2" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(288, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_a8tnf")
+offset = Vector2(0, 8)
+script = ExtResource("36_rgy0h")
+
+[node name="ochko3" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(160, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_a8tnf")
+offset = Vector2(0, 8)
+script = ExtResource("36_rgy0h")
+
+[node name="ochko4" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(48, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_a8tnf")
+offset = Vector2(0, 8)
+script = ExtResource("36_rgy0h")
 
 [editable path="BowserJump"]
