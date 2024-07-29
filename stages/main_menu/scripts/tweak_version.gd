@@ -2,8 +2,7 @@ extends MenuSelection
 
 var STRING: Array = [
 	"default",
-	"as in version 2.16",
-	"as in version 4.4",
+	"as in version 2.16 / 4.4",
 	"as in version 5.0",
 	"as in version 7.02",
 ]
@@ -31,15 +30,15 @@ func _physics_process(delta: float) -> void:
 	
 	if tweak == 0:
 		arrow_l.visible = false
-	elif tweak == 4:
+	elif tweak == 3:
 		arrow_r.visible = false
 	
 	if Input.is_action_just_pressed("ui_right"):
-		SettingsManager.set_tweak(tweak_name, clamp(tweak + 1, 0, 4))
+		SettingsManager.set_tweak(tweak_name, clamp(tweak + 1, 0, 3))
 		_toggled_option(tweak)
 		
 	if Input.is_action_just_pressed("ui_left"):
-		SettingsManager.set_tweak(tweak_name, clamp(tweak - 1, 0, 4))
+		SettingsManager.set_tweak(tweak_name, clamp(tweak - 1, 0, 3))
 		_toggled_option(tweak)
 
 

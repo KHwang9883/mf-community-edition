@@ -6,6 +6,7 @@ var map_load_name = "all maps"
 @onready var http_request: HTTPRequest = $HTTPRequest
 @onready var control: Control = $SubViewportContainer/SubViewport/Control
 @onready var menu_controller: MenuItemsController = $SubViewportContainer/SubViewport/Control/MenuItemsController
+@onready var version = ProjectSettings.get_setting("application/thunder_settings/version", 0)
 
 var is_loading = true
 var has_results = false
@@ -28,7 +29,7 @@ func _load_records() -> void:
 	has_error = false
 	http_request.request_completed.connect(_on_http_get_leaderboard, CONNECT_ONE_SHOT)
 	
-	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s&version=%d" % [page, 1000, "score", "MINIX", "desc", 2] # GAME VERSION
+	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s&version=%d" % [page, 1000, "score", "MINIX", "desc", version]
 	print(map_load_name)
 	if map_load_name != "all maps":
 		params += "&map=" + map_load_name.uri_encode()
