@@ -16,7 +16,7 @@ func _ready():
 
 func deploy():
 	var kufon = KUFON.instantiate()
-	Scenes.current_scene.add_child(kufon)
+	Scenes.current_scene.add_child.call_deferred(kufon)
 	kufon.position = global_position
 	kufon.vel_set(-Vector2(25, 50) * randf_range(5, 10))
 	

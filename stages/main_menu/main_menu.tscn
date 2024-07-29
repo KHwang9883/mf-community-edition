@@ -1,19 +1,36 @@
-[gd_scene load_steps=28 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=40 format=3 uid="uid://dsamwh05hnabr"]
 
+[ext_resource type="Script" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_xf83d"]
 [ext_resource type="Resource" uid="uid://ckvsfjusfv75o" path="res://engine/scenes/main_menu/music/main_menu.xm" id="2_2u7nk"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_c40jm"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="3_yfcxo"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="4_ybrhl"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="5_7ehwd"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="5_i43cl"]
 [ext_resource type="Texture2D" uid="uid://bipkecel2wgvv" path="res://stages/main_menu/textures/main_menu_bg.png" id="5_im5uv"]
 [ext_resource type="PackedScene" uid="uid://ujpnlfhdsb7j" path="res://stages/main_menu/objects/main_menu_controls.tscn" id="5_xxfig"]
+[ext_resource type="Texture2D" uid="uid://b0mhrubhf5n38" path="res://gfx/fancy_graphics/LOSTMAPAMIRITE.png" id="6_a35cn"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="6_bcnpq"]
 [ext_resource type="Texture2D" uid="uid://dif28i3dedumq" path="res://stages/main_menu/textures/mfcommunityedition.png" id="6_c8xg0"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="6_qa4mj"]
 [ext_resource type="Texture2D" uid="uid://d2gtbgikc6v77" path="res://stages/main_menu/textures/menuitemsbg.png" id="6_umesd"]
+[ext_resource type="Texture2D" uid="uid://jhpdb3iiytu8" path="res://gfx/fancy_graphics/pinwheel.png" id="7_3rsq0"]
 [ext_resource type="Texture2D" uid="uid://drfwcu30e6oxc" path="res://stages/main_menu/textures/previews/preview-1.png" id="7_jdlja"]
 [ext_resource type="PackedScene" uid="uid://cpme7ixwwuc2p" path="res://engine/scenes/main_menu/controls.tscn" id="7_lt4b5"]
+[ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="8_p8t78"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="9_523b3"]
 [ext_resource type="PackedScene" uid="uid://c2mch7wqmlcgp" path="res://stages/main_menu/objects/tweaks.tscn" id="10_2n5tx"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/update_checker.gd" id="14_c2yvg"]
+[ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="15_4dur6"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="16_2no1i"]
+
+[sub_resource type="Gradient" id="Gradient_slprf"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bxy1n"]
+gradient = SubResource("Gradient_slprf")
+width = 480
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
 atlas = ExtResource("4_ybrhl")
@@ -119,8 +136,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Camera" type="Camera2D" parent="."]
-anchor_mode = 0
+offset = Vector2(320, 240)
 position_smoothing_speed = 20.0
+script = ExtResource("1_tc10h")
 
 [node name="Menu" type="Control" parent="."]
 layout_mode = 1
@@ -136,9 +154,51 @@ tweaked_completion_music = ExtResource("3_yfcxo")
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
 ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("2_2u7nk")])
 channel_id = 0
+play_immediately = false
+
+[node name="Node2D" type="Node2D" parent="Menu"]
+script = ExtResource("5_7ehwd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Menu/Node2D"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_bxy1n")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="GiantCloud" type="Sprite2D" parent="Menu/Node2D"]
+position = Vector2(272, 245)
+texture = ExtResource("6_bcnpq")
+
+[node name="Lostmapamirite" type="Sprite2D" parent="Menu/Node2D"]
+position = Vector2(320, 159)
+texture = ExtResource("6_a35cn")
+
+[node name="Pinwheel" type="Sprite2D" parent="Menu/Node2D"]
+position = Vector2(320, 176)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("7_3rsq0")
+script = ExtResource("9_523b3")
+
+[node name="Node2D2" type="Node2D" parent="Menu"]
+visible = false
+script = ExtResource("5_7ehwd")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Bg" type="Sprite2D" parent="Menu/Node2D2"]
+position = Vector2(320, 240)
+texture = ExtResource("8_p8t78")
+region_enabled = true
+region_rect = Rect2(240, 0, 640, 480)
 
 [node name="Sprite2D" type="Sprite2D" parent="Menu"]
 position = Vector2(320, 240)
@@ -151,8 +211,8 @@ scale = Vector2(0.862205, 1)
 texture = ExtResource("6_umesd")
 
 [node name="Preview-1" type="Sprite2D" parent="Menu"]
-position = Vector2(100, 325)
-scale = Vector2(0.75, 0.75)
+position = Vector2(105, 315)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("7_jdlja")
 
 [node name="MainMenuControls" parent="Menu" instance=ExtResource("5_xxfig")]
@@ -164,7 +224,7 @@ offset_bottom = 480.0
 theme_override_constants/separation = 1
 
 [node name="Mfcommunityedition" type="Sprite2D" parent="Menu"]
-position = Vector2(334, 152)
+position = Vector2(334, 147)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("6_c8xg0")
 
@@ -174,6 +234,35 @@ autoplay = "default"
 script = ExtResource("5_i43cl")
 smooth_speed = 0.4
 position_padding = 20
+
+[node name="UpdateFound" type="Label" parent="Menu"]
+visible = false
+layout_mode = 0
+offset_top = 381.0
+offset_right = 219.0
+offset_bottom = 469.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("15_4dur6")
+theme_override_font_sizes/font_size = 13
+text = "new update found!
+press space to
+open in browser
+"
+horizontal_alignment = 1
+vertical_alignment = 2
+uppercase = true
+script = ExtResource("16_2no1i")
+
+[node name="UpdateChecker" type="Node" parent="Menu"]
+script = ExtResource("14_c2yvg")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Menu"]
+timeout = 5.0
 
 [node name="Settings" parent="." instance=ExtResource("6_qa4mj")]
 layout_mode = 1
@@ -188,5 +277,24 @@ offset_left = -640.0
 offset_top = 480.0
 offset_right = -640.0
 offset_bottom = 480.0
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 384.0
+offset_right = 632.0
+offset_bottom = 472.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("15_4dur6")
+theme_override_font_sizes/font_size = 12
+text = "version 0.1"
+horizontal_alignment = 2
+vertical_alignment = 2
+uppercase = true
 
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]

@@ -2,12 +2,18 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 
 @export_category("Tweaks")
 @export var tweaked_completion_music: Resource = preload("res://music/complete_tweaked.ogg")
-## ver 2.16 soundtrack
+## ver 2.16 / 4.4 soundtrack
 @export var music_var_1: Array[Resource]
 ## ver 5.05 soundtrack
 @export var music_var_2: Array[Resource]
 ## ver 7.02-31 soundtrack
 @export var music_var_3: Array[Resource]
+## ver 2.16 / 4.4 soundtrack
+@export var boss_music_var_1: Resource
+## ver 5.05 soundtrack
+@export var boss_music_var_2: Resource
+## ver 7.02-31 soundtrack
+@export var boss_music_var_3: Resource
 @export var ignore_fade_in_tweak: bool = false
 
 var current_music: Array[Resource]
