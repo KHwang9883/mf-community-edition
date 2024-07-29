@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=47 format=3 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -10,9 +10,11 @@
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_6taja"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="9_6jkwo"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="10_cgryk"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="10_g7r8l"]
 [ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="11_ud3u0"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_smei1"]
 [ext_resource type="Texture2D" uid="uid://bhdvcmxlf3ejv" path="res://engine/tilesets/overworld/default_grass.png" id="12_wbmhm"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="12_wlp6i"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="13_2ogi0"]
 [ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="13_w2ncv"]
 [ext_resource type="Texture2D" uid="uid://d0atmplnh2ssq" path="res://gfx/fancy_graphics/sceneria_drzowatne_outline.png" id="14_4tihk"]
@@ -30,6 +32,8 @@
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="21_qg33c"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="22_7uvh2"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="24_ijk3p"]
+[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="33_sjfld"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="34_gx86i"]
 
 [sub_resource type="Gradient" id="Gradient_6g8qv"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 1, 1)
@@ -181,6 +185,28 @@ scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_61wci")
 metadata/_edit_lock_ = true
 
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="GiantClouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(80, 272)
+texture = ExtResource("10_g7r8l")
+
+[node name="GiantClouds2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(-672, 192)
+texture = ExtResource("10_g7r8l")
+
+[node name="GiantClouds3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(704, 256)
+texture = ExtResource("10_g7r8l")
+
+[node name="GiantClouds4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(1680, 256)
+texture = ExtResource("10_g7r8l")
+
+[node name="GiantClouds5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(2512, 352)
+texture = ExtResource("10_g7r8l")
+
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 metadata/_edit_lock_ = true
 
@@ -202,6 +228,13 @@ position = Vector2(480, 96)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D/AnimatedSprite2D"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
+
 [node name="Node2D3" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
 script = ExtResource("10_cgryk")
 amplitude = Vector2(20, 5)
@@ -213,15 +246,36 @@ position = Vector2(192, 144)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D3/AnimatedSprite2D"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
+
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D3"]
 position = Vector2(-80, 112)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D3/AnimatedSprite2D2"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
+
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D3"]
 position = Vector2(-512, 176)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
+
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D3/AnimatedSprite2D3"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
 
 [node name="Node2D2" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
 script = ExtResource("10_cgryk")
@@ -234,25 +288,60 @@ position = Vector2(880, 64)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2/AnimatedSprite2D"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
+
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2"]
 position = Vector2(1200, 112)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
+
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2/AnimatedSprite2D2"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2"]
 position = Vector2(1376, 160)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2/AnimatedSprite2D3"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
+
 [node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2"]
 position = Vector2(1600, 48)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2/AnimatedSprite2D4"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
+
 [node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2"]
 position = Vector2(1728, 128)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
+
+[node name="CloudLightEffect" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2/AnimatedSprite2D5"]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("12_wlp6i")
+script = ExtResource("12_smei1")
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(352, 400)
@@ -546,6 +635,11 @@ script = ExtResource("24_ijk3p")
 [node name="PipeIn" parent="Node2D3" instance=ExtResource("21_qg33c")]
 position = Vector2(-320, 304)
 warp_to_scene = "res://stages/extra/minix/minix.tscn"
+
+[node name="PlushySun" type="Sprite2D" parent="."]
+position = Vector2(2384, 112)
+texture = ExtResource("33_sjfld")
+script = ExtResource("34_gx86i")
 
 [connection signal="body_entered" from="PipeSave" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
 [connection signal="body_exited" from="PipeSave" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
