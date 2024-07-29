@@ -13,18 +13,19 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 var current_music: Array[Resource]
 
 func _ready():
+	if SettingsManager.get_tweak("alt_completion_music", false) && Scenes.current_scene is Level:
+		Scenes.current_scene.completion_music = tweaked_completion_music
+		
 	match SettingsManager.get_tweak("bgm_as_in_version", 0):
 		1:
 			if music_var_1.size() > 0:
 				current_music = music_var_1.duplicate()
 				super(); return
 		2:
-			Scenes.current_scene.completion_music = tweaked_completion_music
 			if music_var_2.size() > 0:
 				current_music = music_var_2.duplicate()
 				super(); return
 		3:
-			Scenes.current_scene.completion_music = tweaked_completion_music
 			if music_var_3.size() > 0:
 				current_music = music_var_3.duplicate()
 				super(); return
