@@ -9,4 +9,5 @@ func _handle_select() -> void:
 	Scenes.current_scene.get_node("Menu/MainMenuControls").focused = true
 	Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks").focused = false
 	
+	SettingsManager.save_tweaks()
 	SettingsManager.save_settings()
