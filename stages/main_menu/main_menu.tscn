@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=49 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_xf83d"]
@@ -23,8 +23,14 @@
 [ext_resource type="PackedScene" uid="uid://c2mch7wqmlcgp" path="res://stages/main_menu/objects/tweaks.tscn" id="10_2n5tx"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/update_checker.gd" id="14_c2yvg"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="15_4dur6"]
+[ext_resource type="Texture2D" uid="uid://up8hsngb2lcl" path="res://stages/main_menu/textures/previews/preview-2.png" id="15_luwsp"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="16_2no1i"]
+[ext_resource type="Texture2D" uid="uid://bab6yxovhw05p" path="res://stages/main_menu/textures/previews/preview-3.png" id="16_p4aae"]
 [ext_resource type="Texture2D" uid="uid://dvhgmrlr7mwt" path="res://stages/main_menu/textures/mfcommunityedition_new.png" id="17_42nv8"]
+[ext_resource type="Texture2D" uid="uid://c2n2cffea0e1t" path="res://stages/main_menu/textures/previews/preview-4.png" id="17_qfrke"]
+[ext_resource type="Texture2D" uid="uid://bg7ig1d27vebf" path="res://stages/main_menu/textures/previews/preview-5.png" id="18_ifdp3"]
+[ext_resource type="Texture2D" uid="uid://bmxjt4y3pjtmy" path="res://stages/main_menu/textures/previews/preview-6.png" id="19_03bli"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/previews.gd" id="20_cmmgj"]
 [ext_resource type="Texture2D" uid="uid://c8se8kv5eegh6" path="res://stages/main_menu/textures/menu_mushrooms.png" id="26_w72sm"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
@@ -33,6 +39,32 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_bxy1n"]
 gradient = SubResource("Gradient_slprf")
 width = 480
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h67v5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_jdlja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_luwsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_p4aae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_qfrke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ifdp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_03bli")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
 atlas = ExtResource("4_ybrhl")
@@ -212,10 +244,11 @@ position = Vector2(320.5, 384)
 scale = Vector2(0.862205, 1)
 texture = ExtResource("6_umesd")
 
-[node name="Preview-1" type="Sprite2D" parent="Menu"]
+[node name="Previews" type="AnimatedSprite2D" parent="Menu"]
 position = Vector2(105, 315)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("7_jdlja")
+sprite_frames = SubResource("SpriteFrames_h67v5")
+script = ExtResource("20_cmmgj")
 
 [node name="MenuMushrooms" type="Sprite2D" parent="Menu"]
 position = Vector2(570, 257)
