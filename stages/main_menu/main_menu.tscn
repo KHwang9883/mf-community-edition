@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=42 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_xf83d"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="5_i43cl"]
 [ext_resource type="Texture2D" uid="uid://bipkecel2wgvv" path="res://stages/main_menu/textures/main_menu_bg.png" id="5_im5uv"]
 [ext_resource type="PackedScene" uid="uid://ujpnlfhdsb7j" path="res://stages/main_menu/objects/main_menu_controls.tscn" id="5_xxfig"]
-[ext_resource type="Texture2D" uid="uid://b0mhrubhf5n38" path="res://gfx/fancy_graphics/LOSTMAPAMIRITE.png" id="6_a35cn"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="6_bcnpq"]
 [ext_resource type="Texture2D" uid="uid://dif28i3dedumq" path="res://stages/main_menu/textures/mfcommunityedition.png" id="6_c8xg0"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="6_qa4mj"]
@@ -18,12 +17,15 @@
 [ext_resource type="Texture2D" uid="uid://jhpdb3iiytu8" path="res://gfx/fancy_graphics/pinwheel.png" id="7_3rsq0"]
 [ext_resource type="Texture2D" uid="uid://drfwcu30e6oxc" path="res://stages/main_menu/textures/previews/preview-1.png" id="7_jdlja"]
 [ext_resource type="PackedScene" uid="uid://cpme7ixwwuc2p" path="res://engine/scenes/main_menu/controls.tscn" id="7_lt4b5"]
+[ext_resource type="Texture2D" uid="uid://bf146adiqluws" path="res://gfx/fancy_graphics/LOSTMAPAMIRITE_GLOW.png" id="8_lf3os"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="8_p8t78"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="9_523b3"]
 [ext_resource type="PackedScene" uid="uid://c2mch7wqmlcgp" path="res://stages/main_menu/objects/tweaks.tscn" id="10_2n5tx"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/update_checker.gd" id="14_c2yvg"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="15_4dur6"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="16_2no1i"]
+[ext_resource type="Texture2D" uid="uid://dvhgmrlr7mwt" path="res://stages/main_menu/textures/mfcommunityedition_new.png" id="17_42nv8"]
+[ext_resource type="Texture2D" uid="uid://c8se8kv5eegh6" path="res://stages/main_menu/textures/menu_mushrooms.png" id="26_w72sm"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -179,7 +181,7 @@ texture = ExtResource("6_bcnpq")
 
 [node name="Lostmapamirite" type="Sprite2D" parent="Menu/Node2D"]
 position = Vector2(320, 159)
-texture = ExtResource("6_a35cn")
+texture = ExtResource("8_lf3os")
 
 [node name="Pinwheel" type="Sprite2D" parent="Menu/Node2D"]
 position = Vector2(320, 176)
@@ -215,6 +217,11 @@ position = Vector2(105, 315)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("7_jdlja")
 
+[node name="MenuMushrooms" type="Sprite2D" parent="Menu"]
+position = Vector2(570, 257)
+texture = ExtResource("26_w72sm")
+script = ExtResource("5_7ehwd")
+
 [node name="MainMenuControls" parent="Menu" instance=ExtResource("5_xxfig")]
 layout_mode = 0
 offset_left = 237.0
@@ -224,9 +231,20 @@ offset_bottom = 480.0
 theme_override_constants/separation = 1
 
 [node name="Mfcommunityedition" type="Sprite2D" parent="Menu"]
+visible = false
 position = Vector2(334, 147)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("6_c8xg0")
+script = ExtResource("5_7ehwd")
+maximum = false
+medium = true
+minimum = true
+
+[node name="MfcommunityeditionNew" type="Sprite2D" parent="Menu"]
+position = Vector2(319.538, 155.25)
+scale = Vector2(0.77649, 0.77649)
+texture = ExtResource("17_42nv8")
+script = ExtResource("5_7ehwd")
 
 [node name="Selector" type="AnimatedSprite2D" parent="Menu"]
 sprite_frames = SubResource("SpriteFrames_t63jw")
