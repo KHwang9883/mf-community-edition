@@ -4,6 +4,10 @@ var lives: int = 1
 
 signal damaged_to(lives: int)
 
+func _ready() -> void:
+	Thunder._current_player_state = null
+	super()
+
 func hurt(tags: Dictionary = {}) -> void:
 	if !suit:
 		return

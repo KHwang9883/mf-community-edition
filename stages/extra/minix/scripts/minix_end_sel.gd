@@ -12,6 +12,7 @@ func _handle_select() -> void:
 			TransitionManager.current_transition.paused = true
 			Scenes.goto_scene(ProjectSettings.get("application/thunder_settings/save_game_room_path"))
 			Scenes.scene_ready.connect(func():
+				TransitionManager.current_transition.on(Thunder._current_player)
 				TransitionManager.current_transition.paused = false
 			, CONNECT_ONE_SHOT)
 		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
@@ -27,9 +28,8 @@ func _start_transition() -> void:
 				.with_speeds(0.02, -0.1)
 		)
 	else:
-		Scenes.goto_scene(ProjectSettings.get("application/thunder_settings/save_game_room_path"))
-		#TransitionManager.accept_transition(
-		#	load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-		#		.instantiate()
-		#		.with_scene(ProjectSettings.get("application/thunder_settings/main_menu_path"))
-		#)
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+				.instantiate()
+				.with_scene(ProjectSettings.get("application/thunder_settings/save_game_room_path"))
+		)

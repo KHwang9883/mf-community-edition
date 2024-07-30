@@ -17,6 +17,7 @@ func activate() -> void:
 		tw.tween_interval(action_after_sec)
 		tw.tween_property(self, "modulate:a", 0.0, 2.0)
 	if change_scene:
+		#ProfileManager.set_current_profile("debug")
 		await get_tree().create_timer(action_after_sec, false).timeout
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
