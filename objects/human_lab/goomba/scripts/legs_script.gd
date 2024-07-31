@@ -12,9 +12,10 @@ extends AnimatedSprite2D
 func _physics_process(delta: float) -> void:
 	flip_h = parent.flip_h
 	if _center == null:
+		animation = "idle"
 		return
 	
-	offset = (idle_offset if is_zero_approx(_center.speed.x) else walk_offset) * _center.dir
+	offset = (idle_offset if is_zero_approx(_center.speed.x) else walk_offset) * sign(_center.speed.x)
 	if can_idle:
 		animation = "idle" if is_zero_approx(_center.speed.x) else "default"
 	if can_move_both_ways:
