@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://gegbph7wghry"]
+[gd_scene load_steps=68 format=3 uid="uid://gegbph7wghry"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_5ia3k"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4tg3p"]
@@ -27,8 +27,10 @@
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="21_ltp2c"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="21_ywqpg"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="22_3j4tm"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="22_gc60s"]
 [ext_resource type="Texture2D" uid="uid://biavxbcpswuib" path="res://gfx/fancy_graphics/rocklandhill.png" id="23_47a28"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="23_rxbwh"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/text_secret_passage.gd" id="23_vgc6v"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="24_fjhl2"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="25_ngphm"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="26_rn804"]
@@ -47,6 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="39_yino6"]
 [ext_resource type="PackedScene" uid="uid://dbpihjuw0gc01" path="res://engine/objects/bumping_blocks/question_block/templates/Beetroot Question Block.tscn" id="40_8qk0b"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="41_8fkbq"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="50_7u6gk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xa2aa"]
 texture = ExtResource("9_1asys")
@@ -493,6 +496,24 @@ text = "WORLD
 1-3"
 horizontal_alignment = 1
 
+[node name="Label" type="Label" parent="HUD"]
+offset_left = 217.0
+offset_top = -22.0
+offset_right = 423.0
+offset_bottom = -7.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("22_gc60s")
+theme_override_font_sizes/font_size = 12
+text = "WELCOME TO GOOMBA PARTY!"
+horizontal_alignment = 1
+script = ExtResource("23_vgc6v")
+tween_to = 224
+action_after_sec = 3.0
+change_scene = "res://stages/extra/secrets/goomba_party.tscn"
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
@@ -877,3 +898,8 @@ position = Vector2(9264, 240)
 result = SubResource("Resource_n2blw")
 initially_visible_and_solid = false
 exists_once = true
+
+[node name="PipeIn" parent="." instance=ExtResource("50_7u6gk")]
+position = Vector2(1568, 48)
+
+[connection signal="warp_started" from="PipeIn" to="HUD/Label" method="activate"]
