@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	var eased_counter: float
 	eased_counter = Thunder.Math.ease_in_out(counter)
 	
-	modulate.a = max(-eased_counter + 1, 0.15) if is_black else max(eased_counter, 0.1)
+	modulate.a = -eased_counter + 1 if is_black else eased_counter
 	if counter == 1:
 		easer = false
 

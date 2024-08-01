@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://nx53nncxplxv"]
+[gd_scene load_steps=54 format=3 uid="uid://nx53nncxplxv"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_lxs70"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_spe6f"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="11_7lnm0"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="12_ev8ny"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="13_uk6rb"]
+[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="13_y7ogg"]
+[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="14_j72ns"]
 [ext_resource type="Script" path="res://objects/detectors/player_detection.gd" id="15_ukm7i"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="16_id5np"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="17_te565"]
@@ -41,6 +43,27 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_oj2pl"]
 gradient = SubResource("Gradient_1f5ng")
 width = 480
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wet61"]
+shader = ExtResource("13_y7ogg")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 2.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l24sp"]
+shader = ExtResource("13_y7ogg")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xker8"]
+shader = ExtResource("13_y7ogg")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 5.0
+shader_parameter/y_axis = true
 
 [sub_resource type="Resource" id="Resource_dn6ed"]
 resource_local_to_scene = true
@@ -211,6 +234,9 @@ tweaked_completion_music = ExtResource("4_nlhgl")
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([ExtResource("5_s11ru")])
 music_var_3 = Array[Resource]([])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
 ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("6_32yki")])
 
@@ -265,6 +291,35 @@ texture = SubResource("GradientTexture1D_oj2pl")
 centered = false
 metadata/_edit_lock_ = true
 
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+layer = 0
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+self_modulate = Color(1, 1, 1, 0.427451)
+z_index = 13
+material = SubResource("ShaderMaterial_wet61")
+position = Vector2(0, 436)
+texture = ExtResource("14_j72ns")
+centered = false
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+self_modulate = Color(1, 1, 1, 0.701961)
+z_index = 13
+material = SubResource("ShaderMaterial_l24sp")
+position = Vector2(0, 444)
+texture = ExtResource("14_j72ns")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+z_index = 13
+material = SubResource("ShaderMaterial_xker8")
+position = Vector2(0, 450)
+texture = ExtResource("14_j72ns")
+centered = false
+
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="JumpingCheepsGenerator" parent="." instance=ExtResource("8_0b27u")]
@@ -280,194 +335,195 @@ position = Vector2(328, -161)
 script = ExtResource("15_ukm7i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 position = Vector2(3383.5, 401)
 shape = SubResource("RectangleShape2D_l5f5u")
 
-[node name="Coin" parent="." instance=ExtResource("16_id5np")]
+[node name="nasrali" type="Node2D" parent="."]
+
+[node name="Coin" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(624, 240)
 
-[node name="Coin2" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin2" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(656, 240)
 
-[node name="Coin3" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin3" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(688, 240)
 
-[node name="Coin4" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin4" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(720, 240)
 
-[node name="Coin5" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin5" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(1392, 240)
 
-[node name="Coin6" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin6" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(1424, 240)
 
-[node name="Coin7" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin7" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(1456, 240)
 
-[node name="Coin8" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin8" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(1488, 240)
 
-[node name="Coin9" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin9" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(2736, 304)
 
-[node name="Coin10" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin10" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(2800, 240)
 
-[node name="Coin11" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin11" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(3024, 144)
 
-[node name="Coin16" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin16" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(3760, 144)
 
-[node name="Coin17" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin17" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(4048, 144)
 
-[node name="Coin18" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin18" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(4528, 144)
 
-[node name="Coin20" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin20" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(4880, 240)
 
-[node name="Coin21" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin21" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(4944, 304)
 
-[node name="Coin22" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin22" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(5008, 368)
 
-[node name="Coin19" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin19" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(4496, 144)
 
-[node name="Coin12" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin12" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(3344, 144)
 
-[node name="Coin13" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin13" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(3376, 144)
 
-[node name="Coin14" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin14" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(3408, 144)
 
-[node name="Coin23" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin23" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(6224, 144)
 
-[node name="Coin24" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin24" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(6256, 144)
 
-[node name="Coin25" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin25" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(6288, 144)
 
-[node name="Coin15" parent="." instance=ExtResource("16_id5np")]
+[node name="Coin15" parent="nasrali" instance=ExtResource("16_id5np")]
 position = Vector2(3440, 144)
 
-[node name="KoopaRed" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(2128, 400)
 
-[node name="KoopaRed2" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed2" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(2064, 400)
 
-[node name="KoopaRed3" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed3" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(2544, 400)
 
-[node name="KoopaRed5" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed5" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(3504, 240)
 
-[node name="KoopaRed6" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed6" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(4080, 240)
 
-[node name="KoopaRed7" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed7" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(5136, 400)
 
-[node name="KoopaRed8" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed8" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(5392, 400)
 
-[node name="KoopaRed4" parent="." instance=ExtResource("17_te565")]
+[node name="KoopaRed4" parent="nasrali" instance=ExtResource("17_te565")]
 position = Vector2(2480, 400)
 
-[node name="QuestionBlock" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(2416, 240)
 result = SubResource("Resource_gbw0e")
 
-[node name="QuestionBlock2" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock2" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(2448, 240)
 result = SubResource("Resource_4tfur")
 
-[node name="QuestionBlock3" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock3" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(2480, 240)
 result = SubResource("Resource_2sedq")
 
-[node name="QuestionBlock4" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock4" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(2512, 240)
 result = SubResource("Resource_xermk")
 
-[node name="Checkpoint" parent="." instance=ExtResource("19_qrdah")]
+[node name="Checkpoint" parent="nasrali" instance=ExtResource("19_qrdah")]
 position = Vector2(3856, 256)
 
-[node name="Brick" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5136, 240)
 
-[node name="Brick2" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick2" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5168, 240)
 
-[node name="Brick3" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick3" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5232, 240)
 
-[node name="Brick4" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick4" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5328, 240)
 
-[node name="Brick5" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick5" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5392, 240)
 
-[node name="Brick7" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick7" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5424, 112)
 
-[node name="Brick8" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick8" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5456, 112)
 
-[node name="Brick9" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick9" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5360, 112)
 
-[node name="Brick10" parent="." instance=ExtResource("20_cqhfo")]
+[node name="Brick10" parent="nasrali" instance=ExtResource("20_cqhfo")]
 position = Vector2(5328, 112)
 
-[node name="Brick6" parent="." instance=ExtResource("21_1awuw")]
+[node name="Brick6" parent="nasrali" instance=ExtResource("21_1awuw")]
 position = Vector2(5392, 112)
 
-[node name="KoopaGreen" parent="." instance=ExtResource("22_5q3u7")]
+[node name="KoopaGreen" parent="nasrali" instance=ExtResource("22_5q3u7")]
 position = Vector2(5456, 80)
 
-[node name="KoopaGreen2" parent="." instance=ExtResource("22_5q3u7")]
+[node name="KoopaGreen2" parent="nasrali" instance=ExtResource("22_5q3u7")]
 position = Vector2(5424, 208)
 
-[node name="QuestionBlock5" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock5" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(5200, 240)
 result = SubResource("Resource_da2sw")
 
-[node name="QuestionBlock6" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock6" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(5264, 240)
 result = SubResource("Resource_rnqh5")
 
-[node name="QuestionBlock7" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock7" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(5360, 240)
 result = SubResource("Resource_723xn")
 
-[node name="QuestionBlock8" parent="." instance=ExtResource("18_naxd5")]
+[node name="QuestionBlock8" parent="nasrali" instance=ExtResource("18_naxd5")]
 position = Vector2(5424, 240)
 result = SubResource("Resource_e8stg")
 
-[node name="QuestionBlockFireFlower2" parent="." instance=ExtResource("10_cjqc4")]
+[node name="QuestionBlockFireFlower2" parent="nasrali" instance=ExtResource("10_cjqc4")]
 position = Vector2(5296, 240)
 result = SubResource("Resource_2p87m")
 
-[node name="PiranhaGreen" parent="." instance=ExtResource("23_5goft")]
+[node name="PiranhaGreen" parent="nasrali" instance=ExtResource("23_5goft")]
 position = Vector2(5760, 256)
 
-[node name="PiranhaGreen2" parent="." instance=ExtResource("23_5goft")]
+[node name="PiranhaGreen2" parent="nasrali" instance=ExtResource("23_5goft")]
 position = Vector2(6912, 320)
 
-[node name="FinishLine" parent="." instance=ExtResource("24_aq53l")]
+[node name="FinishLine" parent="nasrali" instance=ExtResource("24_aq53l")]
 position = Vector2(7552, 416)
 
-[node name="QuestionBlockStar" parent="." instance=ExtResource("25_6cpxf")]
+[node name="QuestionBlockStar" parent="nasrali" instance=ExtResource("25_6cpxf")]
 position = Vector2(4688, 112)
 result = SubResource("Resource_uw0v6")
 initially_visible_and_solid = false
@@ -477,6 +533,12 @@ exists_once = true
 offset_top = 464.0
 offset_right = 8000.0
 offset_bottom = 480.0
+
+[node name="TextureRect" parent="Water" index="0"]
+script = ExtResource("28_xo5cx")
+maximum = false
+medium = true
+minimum = true
 
 [node name="CollisionShape2D" parent="Water/Area2D" index="0"]
 disabled = true
