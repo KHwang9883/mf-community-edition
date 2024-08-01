@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dgsga6gbkix68"]
+[gd_scene load_steps=43 format=3 uid="uid://dgsga6gbkix68"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_bggl0"]
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/cutscenes/water_cutscene.gd" id="2_hlr4c"]
@@ -11,16 +11,112 @@
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="12_n6ag4"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="13_emjus"]
 [ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="13_udjby"]
+[ext_resource type="Texture2D" uid="uid://dsijqvsl47riy" path="res://engine/objects/fluid/textures/water_smooth_0.png" id="14_1rrxj"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="14_2cn7k"]
+[ext_resource type="Texture2D" uid="uid://mpdkiuduprqj" path="res://gfx/fancy_graphics/clouds_looping_alpha.png" id="14_jsng0"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="14_k8g24"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="15_7ldu1"]
 [ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="15_vii6v"]
+[ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="15_xheo3"]
+[ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="16_arw4s"]
+[ext_resource type="Texture2D" uid="uid://dp3ivcsnm7xb0" path="res://engine/objects/fluid/textures/water_smooth_3.png" id="17_1bru1"]
+[ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="18_e7i0k"]
+[ext_resource type="Texture2D" uid="uid://bhlgs2eebvaxr" path="res://engine/objects/fluid/textures/water_smooth_5.png" id="19_p0nr5"]
+[ext_resource type="Texture2D" uid="uid://baa2ywxd73mvl" path="res://engine/objects/fluid/textures/water_smooth_6.png" id="20_j3gjb"]
+[ext_resource type="Texture2D" uid="uid://ctwrhebqj6fd6" path="res://engine/objects/fluid/textures/water_smooth_7.png" id="21_8sejo"]
+[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="24_8iql6"]
+[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="25_7mshb"]
 
 [sub_resource type="Gradient" id="Gradient_ux7y3"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_08ryv"]
 gradient = SubResource("Gradient_ux7y3")
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_acrcb"]
+frames = 8
+frame_0/texture = ExtResource("14_1rrxj")
+frame_0/duration = 0.15
+frame_1/texture = ExtResource("15_xheo3")
+frame_1/duration = 0.15
+frame_2/texture = ExtResource("16_arw4s")
+frame_2/duration = 0.15
+frame_3/texture = ExtResource("17_1bru1")
+frame_3/duration = 0.15
+frame_4/texture = ExtResource("18_e7i0k")
+frame_4/duration = 0.15
+frame_5/texture = ExtResource("19_p0nr5")
+frame_5/duration = 0.15
+frame_6/texture = ExtResource("20_j3gjb")
+frame_6/duration = 0.15
+frame_7/texture = ExtResource("21_8sejo")
+frame_7/duration = 0.15
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_x6xfc"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_32upp"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(0.188235, 0.313726, 0.517647, 1, 0, 0.0627451, 0.439216, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d3fab"]
+gradient = SubResource("Gradient_32upp")
+width = 400
+
+[sub_resource type="Gradient" id="Gradient_gr2nd"]
+offsets = PackedFloat32Array(0, 0.4375)
+colors = PackedColorArray(0.313726, 0.501961, 0.878431, 1, 0, 0.0627451, 0.12549, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 16
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7hp24"]
+gradient = SubResource("Gradient_gr2nd")
+width = 480
+
+[sub_resource type="Gradient" id="Gradient_jmgvy"]
+colors = PackedColorArray(0.439216, 0.580392, 0.878431, 1, 0.439216, 0.580392, 0.878431, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jxy5b"]
+gradient = SubResource("Gradient_jmgvy")
+width = 240
+height = 240
+fill = 2
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg7jx"]
+shader = ExtResource("24_8iql6")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 2.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p47ej"]
+shader = ExtResource("24_8iql6")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l27rm"]
+shader = ExtResource("24_8iql6")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 5.0
+shader_parameter/y_axis = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kkr7x"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_l8daq"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(0.188235, 0.313726, 0.517647, 1, 0, 0.0627451, 0.439216, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ei2jl"]
+gradient = SubResource("Gradient_l8daq")
+width = 400
 
 [node name="WaterCutscene" type="Node2D"]
 script = ExtResource("1_bggl0")
@@ -86,6 +182,18 @@ offset_top = 419.0
 offset_right = 832.0
 offset_bottom = 691.0
 
+[node name="TextureRect" parent="Water" index="0"]
+visible = false
+script = ExtResource("13_emjus")
+maximum = false
+minimum = true
+
+[node name="ColorRect" parent="Water" index="2"]
+visible = false
+script = ExtResource("13_emjus")
+maximum = false
+minimum = true
+
 [node name="CloudsLooping" type="Sprite2D" parent="."]
 texture_repeat = 2
 texture = ExtResource("12_8dedt")
@@ -93,14 +201,130 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 28)
 
+[node name="CloudsLoopingAlpha" type="Sprite2D" parent="."]
+z_index = -10
+texture_repeat = 2
+texture = ExtResource("14_jsng0")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 11000, 36)
+script = ExtResource("13_emjus")
+
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -20
 script = ExtResource("13_emjus")
 
-[node name="GiantHill" type="Sprite2D" parent="Node2D"]
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("13_emjus")
+medium = true
+
+[node name="TextureRect" type="TextureRect" parent="Node2D2"]
+visible = false
+z_index = 31
+offset_top = 416.0
+offset_right = 640.0
+offset_bottom = 432.0
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_acrcb")
+stretch_mode = 1
+script = ExtResource("13_emjus")
+maximum = false
+medium = true
+
+[node name="Sprite2D5" type="Sprite2D" parent="Node2D2"]
+visible = false
+z_index = 99
+material = SubResource("CanvasItemMaterial_x6xfc")
+position = Vector2(0, 632)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_d3fab")
+script = ExtResource("13_emjus")
+maximum = false
+medium = true
+
+[node name="background" type="Sprite2D" parent="Node2D2"]
+visible = false
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+z_index = -1
+position = Vector2(640, 432)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_7hp24")
+centered = false
+script = ExtResource("13_emjus")
+maximum = false
+medium = true
+
+[node name="background2" type="Sprite2D" parent="Node2D2"]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+z_index = -1
+position = Vector2(640, 444)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_7hp24")
+centered = false
+script = ExtResource("13_emjus")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D2"]
+z_index = -50
+position = Vector2(224, 280)
+texture = SubResource("GradientTexture2D_jxy5b")
+region_enabled = true
+region_rect = Rect2(0, 0, 812, 304)
+
+[node name="Node2D3" type="Node2D" parent="."]
+z_index = -20
+script = ExtResource("13_emjus")
+
+[node name="GiantHill" type="Sprite2D" parent="Node2D3"]
 position = Vector2(176, 288)
 texture = ExtResource("14_k8g24")
 
-[node name="GiantClouds3" type="Sprite2D" parent="Node2D"]
+[node name="GiantClouds4" type="Sprite2D" parent="Node2D3"]
 position = Vector2(608, 256)
 texture = ExtResource("15_7ldu1")
+
+[node name="Node2D" type="Node2D" parent="Node2D3"]
+z_index = 99
+
+[node name="ColorRect" type="ColorRect" parent="Node2D3/Node2D"]
+modulate = Color(1, 1, 1, 0.545098)
+z_index = 31
+offset_top = 444.0
+offset_right = 416.0
+offset_bottom = 492.0
+size_flags_vertical = 3
+color = Color(0.345098, 0.533333, 0.878431, 1)
+script = ExtResource("13_emjus")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Node2D3/Node2D"]
+modulate = Color(1, 1, 1, 0.258824)
+material = SubResource("ShaderMaterial_lg7jx")
+position = Vector2(0, 404)
+texture = ExtResource("25_7mshb")
+centered = false
+
+[node name="Sprite2D3" type="Sprite2D" parent="Node2D3/Node2D"]
+modulate = Color(1, 1, 1, 0.34902)
+material = SubResource("ShaderMaterial_p47ej")
+position = Vector2(0, 410)
+texture = ExtResource("25_7mshb")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node2D3/Node2D"]
+modulate = Color(1, 1, 1, 0.545098)
+material = SubResource("ShaderMaterial_l27rm")
+position = Vector2(0, 414)
+texture = ExtResource("25_7mshb")
+centered = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D3/Node2D"]
+z_index = 99
+material = SubResource("CanvasItemMaterial_kkr7x")
+position = Vector2(416, 644)
+rotation = 1.5708
+scale = Vector2(1, 240)
+texture = SubResource("GradientTexture1D_ei2jl")
+
+[editable path="Water"]
