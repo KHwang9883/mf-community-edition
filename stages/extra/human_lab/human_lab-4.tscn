@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://54uirkrgrfbg"]
+[gd_scene load_steps=56 format=3 uid="uid://54uirkrgrfbg"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_qs25b"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_gouhh"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="23_n847a"]
 [ext_resource type="PackedScene" uid="uid://clnvxc3co85ls" path="res://objects/human_lab/koopa_troopa/coder_clone.tscn" id="24_kfkfl"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="24_rapeo"]
+[ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="24_rxmgi"]
 [ext_resource type="PackedScene" uid="uid://bi2hg5giakfce" path="res://objects/human_lab/goomba/goomba_clone.tscn" id="25_0t1og"]
 [ext_resource type="PackedScene" uid="uid://g6ed3enqcx1d" path="res://objects/human_lab/bullet_bill/bullet_bill_clone.tscn" id="25_bpc0w"]
 [ext_resource type="PackedScene" uid="uid://bpdl22ol10045" path="res://objects/human_lab/koopa_bro/big_human_clone_b.tscn" id="26_8cwt8"]
@@ -33,6 +34,11 @@
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="27_mdp7c"]
 [ext_resource type="PackedScene" uid="uid://5i7dre6a0q0u" path="res://objects/human_lab/piranha_head/jaws_head_clone.tscn" id="28_m2gy4"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="33_8eul1"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="34_dmmf5"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="35_cdfha"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="36_76w6s"]
+[ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="37_s6hjm"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="39_yrhfe"]
 
 [sub_resource type="Gradient" id="Gradient_es0t3"]
 colors = PackedColorArray(0, 0, 0.592157, 1, 0.941176, 0.941176, 0.972549, 1)
@@ -185,7 +191,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_5ixpb"]
+[sub_resource type="Resource" id="Resource_kkjfg"]
 resource_local_to_scene = true
 script = ExtResource("18_7yasp")
 creation_nodepack = ExtResource("17_j2bvf")
@@ -199,8 +205,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_voav2"]
-resource_local_to_scene = true
+[sub_resource type="Resource" id="Resource_rx7kf"]
 script = ExtResource("18_7yasp")
 creation_fallback_node = ExtResource("20_q6wpg")
 creation_nodepack = ExtResource("23_n847a")
@@ -226,6 +231,9 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7f14"]
+size = Vector2(854.5, 8536)
 
 [node name="HumanLab-4" type="Node2D"]
 script = ExtResource("1_qs25b")
@@ -384,14 +392,14 @@ result = SubResource("Resource_2bbme")
 position = Vector2(336, 272)
 result = SubResource("Resource_iix5c")
 
-[node name="QuestionBlock9" parent="Objects/Bonus" instance=ExtResource("16_c3qsi")]
+[node name="QuestionBlock10" parent="Objects/Bonus" instance=ExtResource("24_rxmgi")]
 position = Vector2(784, 3184)
-result = SubResource("Resource_5ixpb")
+result = SubResource("Resource_kkjfg")
 initially_visible_and_solid = false
 
-[node name="QuestionBlockBeetroot2" parent="Objects/Bonus" instance=ExtResource("22_k74ne")]
+[node name="QuestionBlock16" parent="Objects/Bonus" instance=ExtResource("24_rxmgi")]
 position = Vector2(752, 3184)
-result = SubResource("Resource_voav2")
+result = SubResource("Resource_rx7kf")
 initially_visible_and_solid = false
 
 [node name="Coin" parent="Objects/Bonus" instance=ExtResource("17_j2bvf")]
@@ -781,3 +789,26 @@ offset_bottom = 15.84
 [node name="FinishLine" parent="Objects" instance=ExtResource("33_8eul1")]
 position = Vector2(352, 10912)
 use_strict_detection_area = true
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -20
+script = ExtResource("34_dmmf5")
+
+[node name="TileMap3" type="TileMap" parent="Node2D"]
+tile_set = ExtResource("35_cdfha")
+format = 2
+layer_0/tile_data = PackedInt32Array(5898251, 2, 458752, 6684691, 2, 458752, 7143428, 2, 458752, 8060943, 2, 458752, 8847365, 2, 458752, 9240590, 2, 458752, 10354696, 2, 458752, 11272203, 2, 458752, 11927563, 2, 458752, 12648459, 2, 458752, 13500427, 2, 458752, 14614539, 2, 458752, 15663111, 2, 458752, 16252942, 2, 458752, 17301511, 2, 458752, 18219023, 2, 458752, 19267596, 2, 458752, 20185100, 2, 458752, 20774923, 2, 393216, 21626894, 2, 458752)
+
+[node name="GiantClouds3" type="Sprite2D" parent="Node2D"]
+position = Vector2(32, 224)
+texture = ExtResource("36_76w6s")
+
+[node name="GiantHill" type="Sprite2D" parent="Node2D"]
+position = Vector2(768, 480)
+texture = ExtResource("37_s6hjm")
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("39_yrhfe")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(404.75, 6804)
+shape = SubResource("RectangleShape2D_h7f14")
