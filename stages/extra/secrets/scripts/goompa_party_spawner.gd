@@ -1,7 +1,5 @@
 extends Node
 
-@export var path_to_level_1_4: String = "res://stages/world_2/level_2-1.tscn"
-
 @onready var timer = $Timer
 
 const GOOMBA = preload("res://engine/objects/enemies/goombas/goomba.tscn")
@@ -15,10 +13,15 @@ func _spawn_goomba() -> void:
 	if !is_instance_valid(Thunder._current_player) || Thunder._current_player.completed:
 		return
 	
+	var new_position: float = Thunder.view.border.position.x
+	await get_tree().create_timer(0.3, false).timeout
+	if !is_instance_valid(Thunder._current_player) || Thunder._current_player.completed:
+		return
 	var instance = GOOMBA.instantiate()
 	Thunder.view.cam_border()
-	instance.global_position = Vector2(Thunder.view.border.position.x, Thunder.view.border.position.y)
-	instance.global_position.x += 320 + 200 + randi_range(0, 200)
+	instance.position = Vector2(new_position, Thunder.view.border.position.y)
+	instance.position.x += 320 + 200 + randi_range(0, 200)
 	instance.speed.y = 1000
+	instance.max_falling_speed = 625
 	
 	Scenes.current_scene.add_child(instance)

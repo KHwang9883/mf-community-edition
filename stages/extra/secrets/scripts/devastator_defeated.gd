@@ -1,6 +1,5 @@
 extends Node
 
-@export var path_to_level_2_1: String = "res://stages/world_2/level_2-1.tscn"
 @onready var timer: Timer = $Timer #Timer
 @onready var bowser = $"../Bowser"
 
@@ -26,14 +25,12 @@ func _physics_process(delta: float) -> void:
 			-1
 		)
 
+
 func has_hit(hp: int) -> void:
 	if hp != 0: return
 	timer.start()
 	timer.timeout.connect(add_life)
-	var profile = ProfileManager.current_profile
-	if !profile.has_completed(path_to_level_2_1):
-		profile.complete_level(path_to_level_2_1)
-		ProfileManager.save_current_profile()
+
 
 func add_life() -> void:
 	Thunder.add_lives(1)

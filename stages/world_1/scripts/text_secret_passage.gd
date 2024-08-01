@@ -6,6 +6,7 @@ extends CanvasItem
 @export var action_after_sec := 0.0
 @export var fade_on_end := false
 @export_file("*.tscn", "*.scn") var change_scene: String
+@export var circle_transition_center_on_player: bool = false
 
 func activate() -> void:
 	var tw = create_tween()
@@ -19,16 +20,28 @@ func activate() -> void:
 	if change_scene:
 		#ProfileManager.set_current_profile("debug")
 		await get_tree().create_timer(action_after_sec, false).timeout
+		
+		var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+		Data.values.checkpoint = -1
+		Data.values.checked_cps = []
+		
+		if _crossfade:
+			TransitionManager.accept_transition(
+				load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+					.instantiate()
+					.with_scene(change_scene)
+			)
+			return
+		
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 				.instantiate()
 				.with_speeds(0.04, -0.1)
+				.with_pause()
 		)
 		
-		TransitionManager.transition_middle.connect(func():
-			TransitionManager.current_transition.paused = true
-			Scenes.goto_scene(change_scene)
-			Scenes.scene_changed.connect(func(_current_scene):
-				TransitionManager.current_transition.paused = false
-			, CONNECT_ONE_SHOT)
-		, CONNECT_ONE_SHOT)
+		await TransitionManager.transition_middle
+		Scenes.goto_scene(change_scene)
+		if circle_transition_center_on_player:
+			TransitionManager.current_transition.on.call_deferred(Thunder._current_player)
+		
