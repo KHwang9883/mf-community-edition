@@ -9,6 +9,7 @@ func _ready() -> void:
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if !_crossfade:
 		music_loader.play_buffered.call_deferred()
+		main_menu_controls.focused = true
 		return
 	
 	Audio.play_1d_sound(FADEOUT)
