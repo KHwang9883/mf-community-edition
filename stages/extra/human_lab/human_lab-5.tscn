@@ -1,18 +1,16 @@
-[gd_scene load_steps=148 format=3 uid="uid://nyfj5ovg0sh8"]
+[gd_scene load_steps=146 format=3 uid="uid://nyfj5ovg0sh8"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_coxvy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_enlbk"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_pifh8"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_b6ewi"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="4_tb11i"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_vjd1l"]
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="6_ri2g3"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_y6jyy"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_x3w07"]
-[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="9_qr7dn"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_w6djt"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_a4g7r"]
 [ext_resource type="Texture2D" uid="uid://cduq56lwglhyf" path="res://gfx/humanlab_house/house_tileset.png" id="11_xk664"]
-[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="12_khy4w"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="14_0kkj8"]
 [ext_resource type="Texture2D" uid="uid://d34nm6syhum2" path="res://gfx/humanlab_house/shine.png" id="15_volns"]
 [ext_resource type="Texture2D" uid="uid://bw15s57yevam1" path="res://gfx/humanlab_house/mario_sux.png" id="16_lf8ee"]
@@ -949,33 +947,29 @@ time = -1
 jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
 completion_center_on_player_after_transition = true
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("2_enlbk")]
+[node name="MusicLoader" parent="." instance=ExtResource("2_enlbk")]
 script = ExtResource("3_pifh8")
+tweaked_completion_music = ExtResource("4_b6ewi")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("4_tb11i")])
 
-[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("death_sprite") instance=ExtResource("5_vjd1l")]
+[node name="Mario" parent="." instance=ExtResource("5_vjd1l")]
 position = Vector2(80, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 8.0
-platform_on_leave = 2
-script = ExtResource("6_ri2g3")
-death_sprite = NodePath("SpriteDeath")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("7_y6jyy")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_x3w07")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("8_x3w07")]
 offset_right = 3600.0
 offset_bottom = 480.0
-script = ExtResource("9_qr7dn")
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -992,8 +986,7 @@ layer_0/tile_data = PackedInt32Array(917525, 0, 0, 917526, 65536, 0, 917527, 655
 layer_1/z_index = -1
 layer_1/tile_data = PackedInt32Array(65562, 327680, 3, 131098, 327680, 3, 196634, 327680, 3, 196633, 327680, 3, 196632, 327680, 3, 131097, 327680, 3, 655416, 327680, 4, 589880, 327680, 4, 524344, 327680, 4, 65583, 327680, 3, 131119, 327680, 3, 196655, 327680, 3, 196656, 327680, 3, 131120, 327680, 3, 196657, 327680, 3, 589875, 327680, 3, 655411, 327680, 3, 589876, 327680, 3, 655412, 327680, 3, 589877, 327680, 3, 655413, 327680, 3, 589878, 327680, 3, 655414, 327680, 3, 589879, 327680, 3, 655415, 327680, 3, 589881, 327680, 3, 655417, 327680, 3, 589882, 327680, 3, 655418, 327680, 3, 589883, 327680, 3, 655419, 327680, 3, 589884, 327680, 3, 655420, 327680, 3, 589885, 327680, 3, 655421, 327680, 3, 524348, 327680, 3, 852019, 327680, 3, 852020, 327680, 3, 852021, 327680, 3, 852022, 327680, 3, 852023, 327680, 3, 852024, 327680, 3, 852025, 327680, 3, 852026, 327680, 3, 852027, 327680, 3, 852028, 327680, 3, 852029, 327680, 3)
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_a4g7r")]
-script = ExtResource("12_khy4w")
+[node name="HUD" parent="." instance=ExtResource("11_a4g7r")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
