@@ -1,17 +1,19 @@
 extends Area2D
 
-@onready var bonus_star = $BonusStar
-@onready var star_finder_cursor = $"../Heads-Up Display/StarFinderCursor"
 const STAR_FLYING = preload("res://stages/extra/click_bonus_game/objects/star_flying/star_flying.tscn")
+
 @export var sounds: Array[AudioStream] = []
 @export var bouncing_ball: bool = false
+
 var _can_activate: bool = false
 var counter: float = 0
-signal collected
 
 var velocity = Vector2(100, 0)
 var moving = 0
 var timer = Timer.new()
+
+@onready var bonus_star: Sprite2D = $BonusStar
+@onready var star_finder_cursor: Sprite2D = Scenes.current_scene.get_node("Heads-Up Display/StarFinderCursor")
 
 func _ready() -> void:
 	velocity = velocity.rotated(deg_to_rad(randi_range(0, 360)))
@@ -24,17 +26,16 @@ func activate() -> void:
 	flying.angle = randf_range(0, 360)
 	Scenes.current_scene.add_child(flying)
 	
-	collected.emit()
+	Scenes.current_scene.h_box_container._star_collected()
 	queue_free()
 	
-	await get_tree().physics_frame
-	star_finder_cursor.remove_hover()
+	star_finder_cursor.remove_hover.call_deferred()
 
 
 func _process(delta: float) -> void:
 	if bouncing_ball:
 		counter += delta * 25
-		bonus_star.position.y = sin(counter) * 3
+		bonus_star.offset = Vector2(0, sin(counter) * 3).rotated(-rotation)
 
 func _physics_process(delta: float) -> void:
 	if moving:
@@ -63,5 +64,7 @@ func _on_mouse_exited():
 	star_finder_cursor.remove_hover()
 
 func _input(event):
+	if !Scenes.current_scene.can_interact:
+		return
 	if event is InputEventMouseButton && event.is_pressed() && event.button_index == 1 && _can_activate:
 		activate()

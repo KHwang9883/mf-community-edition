@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://ccda65mgll40l"]
+[gd_scene load_steps=78 format=3 uid="uid://ccda65mgll40l"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_80rbc"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_1xa62"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cnw7t13m2bojq" path="res://tilesets/underground/gfx/underground_lamp.png" id="13_np00q"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/light_pulse.gd" id="14_63ijx"]
 [ext_resource type="PackedScene" uid="uid://53qlewhfad5" path="res://tilesets/overworld_green/scenes/cloud.tscn" id="14_cp62e"]
+[ext_resource type="PackedScene" uid="uid://ct8p366bkgxl6" path="res://objects/coin_bonus_level/bonus_level_unlocked.tscn" id="14_fo6qr"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="14_qyrpo"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="16_k5knv"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="16_nh437"]
@@ -49,6 +50,7 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="38_q26iw"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="44_r1hn1"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="49_f1aw7"]
+[ext_resource type="PackedScene" uid="uid://cdqd6h1rowlgk" path="res://objects/coin_bonus_level/coin_bonus_level.tscn" id="50_6sd0w"]
 
 [sub_resource type="Gradient" id="Gradient_igxpo"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -293,6 +295,9 @@ tweaked_completion_music = ExtResource("4_3oi2h")
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([ExtResource("5_ep6wb")])
 music_var_3 = Array[Resource]([ExtResource("6_l2sl6")])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
 ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("4_wrnee")])
 
@@ -358,6 +363,8 @@ theme_override_fonts/font = ExtResource("10_ks5gi")
 text = "WORLD
 6-2"
 horizontal_alignment = 1
+
+[node name="BonusLevelUnlocked" parent="HUD" instance=ExtResource("14_fo6qr")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -1420,3 +1427,6 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_xa47b")
 offset = Vector2(0, 8)
 script = ExtResource("49_f1aw7")
+
+[node name="CoinBonusLevel" parent="." instance=ExtResource("50_6sd0w")]
+position = Vector2(144, -3136)

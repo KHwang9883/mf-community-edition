@@ -1,0 +1,184 @@
+[gd_scene load_steps=28 format=3 uid="uid://b2qn7ndbgkdnm"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_t1txt"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_0uawf"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_lghic"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_unhlw"]
+[ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="5_rvno6"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="6_l8yls"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_62v1w"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_qqduy"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_cvob4"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_t7ola"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="12_j0nor"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="14_7k1tp"]
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="15_oln8l"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="16_t54ry"]
+[ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="17_7f7ru"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="18_6b3g1"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_eg0u1"]
+[ext_resource type="PackedScene" uid="uid://cdl5f86x0haop" path="res://engine/objects/bumping_blocks/question_block/templates/Green Lui Question Block.tscn" id="20_ss0lj"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="20_x8104"]
+[ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="21_sf66g"]
+[ext_resource type="Script" path="res://stages/world_4/scripts/emalpka_checker.gd" id="21_wjc2v"]
+[ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="22_53nn3"]
+[ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="23_6m0pi"]
+
+[sub_resource type="Gradient" id="Gradient_2b6w0"]
+colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bphmc"]
+gradient = SubResource("Gradient_2b6w0")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x50b1"]
+size = Vector2(32, 224)
+
+[sub_resource type="Resource" id="Resource_6r31c"]
+resource_local_to_scene = true
+script = ExtResource("14_7k1tp")
+creation_fallback_node = ExtResource("12_j0nor")
+creation_nodepack = ExtResource("22_53nn3")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[node name="EmalpkaMomento" type="Node2D"]
+script = ExtResource("1_t1txt")
+time = 150
+jump_to_scene = "res://stages/world_6/map_6.tscn"
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_0uawf")]
+script = ExtResource("3_lghic")
+tweaked_completion_music = ExtResource("4_unhlw")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+ignore_fade_in_tweak = false
+music = Array[Resource]([ExtResource("5_rvno6")])
+
+[node name="Mario" parent="." instance=ExtResource("6_l8yls")]
+position = Vector2(80, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_62v1w")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("8_qqduy")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("9_cvob4")
+format = 2
+layer_0/tile_data = PackedInt32Array(851970, 65536, 0, 983059, 65536, 2, 917523, 65536, 1, 851987, 65536, 0, 983058, 65536, 2, 917522, 65536, 1, 851986, 65536, 0, 983057, 65536, 2, 917521, 65536, 1, 851985, 65536, 0, 983056, 65536, 2, 917520, 65536, 1, 851984, 65536, 0, 983055, 65536, 2, 917519, 65536, 1, 851983, 65536, 0, 983054, 65536, 2, 917518, 65536, 1, 851982, 65536, 0, 983053, 65536, 2, 917517, 65536, 1, 851981, 65536, 0, 983052, 65536, 2, 917516, 65536, 1, 851980, 65536, 0, 983051, 65536, 2, 917515, 65536, 1, 851979, 65536, 0, 983050, 65536, 2, 917514, 65536, 1, 851978, 65536, 0, 983049, 65536, 2, 917513, 65536, 1, 851977, 65536, 0, 983048, 65536, 2, 917512, 65536, 1, 851976, 65536, 0, 983047, 65536, 2, 917511, 65536, 1, 851975, 65536, 0, 983046, 65536, 2, 917510, 65536, 1, 851974, 65536, 0, 983045, 65536, 2, 917509, 65536, 1, 851973, 65536, 0, 983044, 65536, 2, 917508, 65536, 1, 851972, 65536, 0, 983043, 65536, 2, 917507, 65536, 1, 851971, 65536, 0, 983042, 65536, 2, 917506, 65536, 1, 983041, 65536, 2, 917505, 65536, 1, 851969, 65536, 0, 983040, 0, 2, 917504, 0, 1, 851968, 0, 0, 1048575, 1, 0, 983039, 1, 0, 917503, 1, 0, 851967, 1, 0, 786431, 1, 0, 720895, 1, 0, 655359, 1, 0, 589823, 1, 0, 524287, 1, 0, 458751, 1, 0, 393215, 1, 0, 327679, 1, 0, 262143, 1, 0, 196607, 1, 0, 131071, 1, 0, 65535, 1, 0, -1, 1, 0, -65537, 1, 0, -131073, 1, 0, -196609, 1, 0, -262145, 1, 0, -327681, 1, 0, 983060, 131072, 2, 917524, 131072, 1, 851988, 131072, 0, 327700, 1, 0, 262164, 1, 0, 196628, 1, 0, 131092, 1, 0, 65556, 1, 0, 20, 1, 0, -65516, 1, 0, -131052, 1, 0, -196588, 1, 0, -262124, 1, 0, -327660, 1, 0, -393196, 1, 0, -458732, 1, 0, -393217, 1, 0, -458753, 1, 0, -524289, 1, 0, -589825, 1, 0, -655360, 1, 0, -655359, 1, 0, -655358, 1, 0, -655357, 1, 0, -655356, 1, 0, -655355, 1, 0, -655354, 1, 0, -655353, 1, 0, -655352, 1, 0, -655351, 1, 0, -655350, 1, 0, -655349, 1, 0, -655348, 1, 0, -655347, 1, 0, -655346, 1, 0, -655345, 1, 0, -655344, 1, 0, -655343, 1, 0, -655342, 1, 0, -655341, 1, 0, -655340, 1, 0, -589804, 1, 0, -524268, 1, 0, 393217, 2, 131072, 262149, 2, 131072, 786444, 2, 196608, 131083, 2, 131072, 196626, 2, 131072, 327701, 1, 0, 327702, 1, 0, 393238, 1, 0, 458774, 1, 0, 524310, 1, 0, 589846, 1, 0, 655382, 1, 0, 720918, 1, 0, 786454, 1, 0, 851990, 1, 0, 851989, 1, 0, -589811, 3, 1, -524275, 3, 1, -458739, 3, 1, -393203, 3, 1, -327667, 3, 1, -262131, 3, 1, -196595, 3, 1, -131059, 3, 1, -65523, 3, 1, 13, 3, 1, 65549, 3, 1, 131085, 3, 2, -589810, 65539, 1, -524274, 65539, 1, -458738, 65539, 1, -393202, 65539, 1, -327666, 65539, 1, -262130, 65539, 1, -196594, 65539, 1, -131058, 65539, 1, -65522, 65539, 1, 14, 65539, 1, 65550, 65539, 1, 131086, 65539, 2)
+layer_1/tile_data = PackedInt32Array(851978, 2, 524288, 917519, 2, 720896, 917506, 2, 589824)
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("10_t7ola")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Gradient" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(0.000249893, 240.501)
+rotation = 1.57079
+scale = Vector2(1.87891, 640.999)
+texture = SubResource("GradientTexture1D_bphmc")
+metadata/_edit_lock_ = true
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="Brick" parent="." instance=ExtResource("15_oln8l")]
+position = Vector2(432, 288)
+
+[node name="Brick8" parent="." instance=ExtResource("15_oln8l")]
+position = Vector2(400, 288)
+
+[node name="Brick9" parent="." instance=ExtResource("15_oln8l")]
+position = Vector2(368, 288)
+
+[node name="Brick2" parent="." instance=ExtResource("15_oln8l")]
+position = Vector2(464, 288)
+
+[node name="Brick3" parent="." instance=ExtResource("15_oln8l")]
+position = Vector2(496, 288)
+
+[node name="Brick4" parent="." instance=ExtResource("15_oln8l")]
+position = Vector2(528, 288)
+
+[node name="Brick5" parent="." instance=ExtResource("15_oln8l")]
+position = Vector2(560, 288)
+
+[node name="HammerBro" parent="." instance=ExtResource("16_t54ry")]
+position = Vector2(496, 256)
+
+[node name="HammerBro2" parent="." instance=ExtResource("16_t54ry")]
+position = Vector2(448, 400)
+
+[node name="HammerBroJumpMarker" parent="." instance=ExtResource("17_7f7ru")]
+position = Vector2(352, 240)
+
+[node name="HammerBroJumpMarker2" parent="." instance=ExtResource("17_7f7ru")]
+position = Vector2(352, 384)
+
+[node name="Coin" parent="." instance=ExtResource("18_6b3g1")]
+position = Vector2(176, 304)
+
+[node name="Coin2" parent="." instance=ExtResource("18_6b3g1")]
+position = Vector2(176, 176)
+
+[node name="Coin4" parent="." instance=ExtResource("18_6b3g1")]
+position = Vector2(176, 208)
+
+[node name="Coin5" parent="." instance=ExtResource("18_6b3g1")]
+position = Vector2(176, 272)
+
+[node name="Coin3" parent="." instance=ExtResource("18_6b3g1")]
+position = Vector2(176, 240)
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -60
+script = ExtResource("19_eg0u1")
+
+[node name="GiantClouds3" type="Sprite2D" parent="Node2D"]
+position = Vector2(384, 184)
+texture = ExtResource("20_x8104")
+metadata/_edit_lock_ = true
+
+[node name="GiantHill" type="Sprite2D" parent="Node2D"]
+position = Vector2(224, 304)
+texture = ExtResource("21_sf66g")
+metadata/_edit_lock_ = true
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("21_wjc2v")
+enemies = Array[NodePath]([NodePath("../HammerBro"), NodePath("../HammerBro2")])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(656, 304)
+shape = SubResource("RectangleShape2D_x50b1")
+
+[node name="PiranhaPink" parent="." instance=ExtResource("23_6m0pi")]
+position = Vector2(448, 96)
+rotation = 3.14159
+
+[node name="QuestionBlockGreenLui" parent="." instance=ExtResource("20_ss0lj")]
+position = Vector2(48, 272)
+result = SubResource("Resource_6r31c")
+initially_visible_and_solid = false

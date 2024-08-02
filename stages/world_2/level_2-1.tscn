@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://dlti0l2n1ix8d"]
+[gd_scene load_steps=65 format=3 uid="uid://dlti0l2n1ix8d"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0omu6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sn434"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="15_72rwr"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="16_k3p35"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="17_1v4cs"]
+[ext_resource type="Texture2D" uid="uid://cvlwccjkgju1w" path="res://gfx/texts/bonus_level_unlocked.png" id="17_56oxr"]
+[ext_resource type="Script" path="res://objects/coin_bonus_level/bonus_level_unlocked.gd" id="18_03gqm"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="18_mgcge"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="19_y8fy1"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="20_bx1ru"]
@@ -46,6 +48,7 @@
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="42_50jm1"]
 [ext_resource type="PackedScene" uid="uid://d1fcgj6wiapj5" path="res://tilesets/underground/scenes/lamp_offset.tscn" id="42_jgaao"]
 [ext_resource type="PackedScene" uid="uid://bhf308l61p72i" path="res://tilesets/underground/scenes/lamp_broken.tscn" id="43_8a4o2"]
+[ext_resource type="PackedScene" uid="uid://cdqd6h1rowlgk" path="res://objects/coin_bonus_level/coin_bonus_level.tscn" id="49_6ph53"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tqmrc"]
 texture = ExtResource("9_cionb")
@@ -291,6 +294,12 @@ script = ExtResource("13_fqau7")
 tween_to = 224
 action_after_sec = 3.0
 change_scene = "res://stages/extra/secrets/devastator.tscn"
+
+[node name="BonusLevelUnlocked" type="Sprite2D" parent="HUD"]
+visible = false
+position = Vector2(320, 192)
+texture = ExtResource("17_56oxr")
+script = ExtResource("18_03gqm")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -770,6 +779,9 @@ position = Vector2(2928, -32)
 shape = SubResource("RectangleShape2D_yrent")
 debug_color = Color(1, 0.294118, 0.701961, 0.145098)
 metadata/_edit_lock_ = true
+
+[node name="CoinBonusLevel" parent="." instance=ExtResource("49_6ph53")]
+position = Vector2(5312, 108)
 
 [connection signal="warp_started" from="PipeIn3" to="MusicLoader" method="pause_music"]
 [connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]

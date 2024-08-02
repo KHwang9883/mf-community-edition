@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://calnaumcqgd6k"]
+[gd_scene load_steps=96 format=3 uid="uid://calnaumcqgd6k"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_mgfoq"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_kfm22"]
@@ -28,7 +28,9 @@
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="19_by1ux"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="20_6hfdw"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="21_2e3bl"]
+[ext_resource type="Texture2D" uid="uid://cvlwccjkgju1w" path="res://gfx/texts/bonus_level_unlocked.png" id="21_splec"]
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="22_jug14"]
+[ext_resource type="Script" path="res://objects/coin_bonus_level/bonus_level_unlocked.gd" id="22_ugdmg"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="23_aorqh"]
 [ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="23_b43ch"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="24_145va"]
@@ -46,6 +48,7 @@
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="35_pevvb"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="36_kt4c3"]
 [ext_resource type="Texture2D" uid="uid://cacq4bhiloiho" path="res://gfx/starland_tree_minimum_light.png" id="44_c7ag7"]
+[ext_resource type="PackedScene" uid="uid://cdqd6h1rowlgk" path="res://objects/coin_bonus_level/coin_bonus_level.tscn" id="49_gb6l7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4lmp"]
 texture = ExtResource("9_vb1io")
@@ -965,6 +968,12 @@ theme_override_font_sizes/font_size = 20
 text = "YOU HAVE FOUND A SECRET WAY TO WORLD 8!!!"
 horizontal_alignment = 1
 
+[node name="BonusLevelUnlocked" type="Sprite2D" parent="HUD"]
+visible = false
+position = Vector2(320, 192)
+texture = ExtResource("21_splec")
+script = ExtResource("22_ugdmg")
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("18_xvogb")
@@ -1653,5 +1662,8 @@ material = SubResource("CanvasItemMaterial_rglw3")
 position = Vector2(8654, 411)
 texture = SubResource("AnimatedTexture_00bhr")
 metadata/_edit_lock_ = true
+
+[node name="CoinBonusLevel" parent="." instance=ExtResource("49_gb6l7")]
+position = Vector2(3616, 784)
 
 [connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="activate"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=3 uid="uid://dtfhvfw317yu"]
+[gd_scene load_steps=130 format=3 uid="uid://dtfhvfw317yu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gyuum"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_uwybg"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="15_0g1wb"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="15_1o5s2"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="15_4q4nr"]
+[ext_resource type="PackedScene" uid="uid://ct8p366bkgxl6" path="res://objects/coin_bonus_level/bonus_level_unlocked.tscn" id="15_tmmxx"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="16_3dkjq"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="16_847yk"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="16_uwo7q"]
@@ -71,6 +72,7 @@
 [ext_resource type="Texture2D" uid="uid://468lmypqkgsm" path="res://gfx/texts/signs/1-1_jump.png" id="69_n7q2s"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="70_p5ci4"]
 [ext_resource type="Script" path="res://gfx/texts/signs/sign_help_key_formatter.gd" id="71_rbdpq"]
+[ext_resource type="PackedScene" uid="uid://cdqd6h1rowlgk" path="res://objects/coin_bonus_level/coin_bonus_level.tscn" id="72_5a447"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0c31a"]
 shader = ExtResource("38_qa412")
@@ -776,11 +778,11 @@ sources/5 = SubResource("TileSetAtlasSource_22ab5")
 sources/6 = SubResource("TileSetAtlasSource_g7i2l")
 pattern_0 = SubResource("TileMapPattern_16k21")
 
-[sub_resource type="Gradient" id="Gradient_q18w8"]
+[sub_resource type="Gradient" id="Gradient_ende5"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_6iyff"]
-gradient = SubResource("Gradient_q18w8")
+gradient = SubResource("Gradient_ende5")
 width = 480
 
 [sub_resource type="Gradient" id="Gradient_3oash"]
@@ -1427,6 +1429,8 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(320, 240)
 texture = ExtResource("11_naiek")
 metadata/_edit_lock_ = true
+
+[node name="BonusLevelUnlocked" parent="HUD" instance=ExtResource("15_tmmxx")]
 
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -13
@@ -2381,5 +2385,8 @@ position = Vector2(2928, -32)
 shape = SubResource("RectangleShape2D_q3ivm")
 debug_color = Color(1, 0.294118, 0.701961, 0.145098)
 metadata/_edit_lock_ = true
+
+[node name="CoinBonusLevel" parent="." instance=ExtResource("72_5a447")]
+position = Vector2(320, 1088)
 
 [connection signal="warp_ended" from="PipeOut4" to="PipeInSecret" method="queue_free"]
