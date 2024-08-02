@@ -38,10 +38,9 @@ func activate() -> void:
 				.instantiate()
 				.with_speeds(0.04, -0.1)
 				.with_pause()
+				.on_player_after_middle(circle_transition_center_on_player)
 		)
 		
 		await TransitionManager.transition_middle
 		Scenes.goto_scene(change_scene)
-		if circle_transition_center_on_player:
-			TransitionManager.current_transition.on.call_deferred(Thunder._current_player)
 		

@@ -29,25 +29,25 @@ func status(combo: int) -> void:
 				_set_modulation()
 	match combo:
 		2:
-			Audio.play_music(status_sounds[0], 50, {volume = -5})
+			Audio.play_music(status_sounds[0], 50, { volume = -5, bus = "1D Sound" })
 		3:
 			Audio.stop_music_channel(50, false)
-			Audio.play_music(status_sounds[1], 51, {volume = -5})
+			Audio.play_music(status_sounds[1], 51, { volume = -5, bus = "1D Sound" })
 		4:
 			Audio.stop_music_channel(50, false)
 			Audio.stop_music_channel(51, false)
-			Audio.play_music(status_sounds[2], 52, {volume = -5})
+			Audio.play_music(status_sounds[2], 52, { volume = -5, bus = "1D Sound" })
 		5:
 			Audio.stop_music_channel(50, false)
 			Audio.stop_music_channel(51, false)
 			Audio.stop_music_channel(52, false)
-			Audio.play_music(status_sounds[3], 53, {volume = -5})
+			Audio.play_music(status_sounds[3], 53, { volume = -5, bus = "1D Sound" })
 		6:
 			Audio.stop_music_channel(50, false)
 			Audio.stop_music_channel(51, false)
 			Audio.stop_music_channel(52, false)
 			Audio.stop_music_channel(53, false)
-			Audio.play_music(status_sounds[4], 54, {volume = -5})
+			Audio.play_music(status_sounds[4], 54, { volume = -5, bus = "1D Sound" })
 		10:
 			frame = 5
 			_offset = 20
@@ -63,7 +63,7 @@ func status(combo: int) -> void:
 			Audio.stop_music_channel(52, false)
 			Audio.stop_music_channel(53, false)
 			Audio.stop_music_channel(54, false)
-			Audio.play_music(status_sounds[5], 55, {volume = -5})
+			Audio.play_music(status_sounds[5], 55, { volume = -5, bus = "1D Sound" })
 
 
 func _physics_process(delta: float) -> void:
@@ -102,6 +102,6 @@ func _init_godlike() -> void:
 
 func _time_countdown_sound_loop() -> void:
 	if godlike_count > 0:
-		Audio.play_1d_sound(scoring_sound)
+		Audio.play_1d_sound(scoring_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		await get_tree().create_timer(0.09, false, false, true).timeout
 		_time_countdown_sound_loop()
