@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://54uirkrgrfbg"]
+[gd_scene load_steps=59 format=3 uid="uid://54uirkrgrfbg"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_qs25b"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_gouhh"]
@@ -35,7 +35,9 @@
 [ext_resource type="PackedScene" uid="uid://5i7dre6a0q0u" path="res://objects/human_lab/piranha_head/jaws_head_clone.tscn" id="28_m2gy4"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="33_8eul1"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="34_dmmf5"]
+[ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="35_1vtk1"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="35_cdfha"]
+[ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="36_0usi7"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="36_76w6s"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="37_s6hjm"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="39_yrhfe"]
@@ -231,6 +233,10 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibp6o"]
+atlas = ExtResource("35_1vtk1")
+region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h7f14"]
 size = Vector2(854.5, 8536)
@@ -790,6 +796,19 @@ offset_bottom = 15.84
 position = Vector2(352, 10912)
 use_strict_detection_area = true
 
+[node name="Sprite2D" type="Sprite2D" parent="Objects"]
+self_modulate = Color(1, 1, 1, 0.313726)
+position = Vector2(192, 2544)
+texture = SubResource("AtlasTexture_ibp6o")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Objects"]
+self_modulate = Color(1, 1, 1, 0.313726)
+position = Vector2(576, 2544)
+texture = SubResource("AtlasTexture_ibp6o")
+
+[node name="Checkpoint" parent="Objects" instance=ExtResource("36_0usi7")]
+position = Vector2(368, 4832)
+
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -20
 script = ExtResource("34_dmmf5")
@@ -810,5 +829,7 @@ texture = ExtResource("37_s6hjm")
 [node name="AudioAreaCave" parent="." instance=ExtResource("39_yrhfe")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+visible = false
 position = Vector2(404.75, 6804)
 shape = SubResource("RectangleShape2D_h7f14")
+metadata/_edit_lock_ = true

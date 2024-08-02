@@ -22,8 +22,10 @@ func _ready():
 	if SettingsManager.get_tweak("alt_completion_music", false) && Scenes.current_scene is Level:
 		Scenes.current_scene.completion_music = tweaked_completion_music
 	var bowser_trigger: Path2D = Scenes.current_scene.get_node_or_null(^"BowserTrigger")
-		
-	match SettingsManager.get_tweak("bgm_as_in_version", 0):
+	
+	var bgm_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
+	print(bgm_tweak)
+	match bgm_tweak:
 		1:
 			
 			if music_var_1.size() > 0:
