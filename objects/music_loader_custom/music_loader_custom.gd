@@ -24,7 +24,6 @@ func _ready():
 	var bowser_trigger: Path2D = Scenes.current_scene.get_node_or_null(^"BowserTrigger")
 	
 	var bgm_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
-	print(bgm_tweak)
 	match bgm_tweak:
 		1:
 			

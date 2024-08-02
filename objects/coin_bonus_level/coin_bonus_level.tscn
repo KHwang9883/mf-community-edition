@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdqd6h1rowlgk"]
+
+[ext_resource type="Texture2D" uid="uid://ctkryc7pe85up" path="res://objects/coin_bonus_level/textures/coin.png" id="1_5vemi"]
+[ext_resource type="Script" path="res://objects/coin_bonus_level/coin_bonus_level.gd" id="1_dmjip"]
+[ext_resource type="Texture2D" uid="uid://ckbm4vy7xm6wh" path="res://objects/coin_bonus_level/textures/effect.png" id="2_ufxto"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="3_hp3pb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8qcou"]
+radius = 32.0
+
+[node name="CoinBonusLevel" type="Area2D"]
+script = ExtResource("1_dmjip")
+multiplicator = 10.0
+speed = 150.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8qcou")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5vemi")
+
+[node name="Effect" type="Sprite2D" parent="."]
+texture = ExtResource("2_ufxto")
+script = ExtResource("3_hp3pb")
+speed = 50.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://bp0ypvgchea7b"]
+[gd_scene load_steps=73 format=3 uid="uid://bp0ypvgchea7b"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_xqxru"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_qs76t"]
@@ -17,7 +17,9 @@
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="12_bn6nr"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="12_mo2sc"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="13_g1x0f"]
+[ext_resource type="Texture2D" uid="uid://cvlwccjkgju1w" path="res://gfx/texts/bonus_level_unlocked.png" id="14_5ud4e"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="14_t7o3y"]
+[ext_resource type="Script" path="res://objects/coin_bonus_level/bonus_level_unlocked.gd" id="15_2u6hy"]
 [ext_resource type="PackedScene" uid="uid://dgcgfl28trox0" path="res://engine/objects/springboard/springboard.tscn" id="15_upjhg"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="16_ffdoq"]
 [ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://tilesets/skyland/gfx/big_clouds.png" id="17_12vic"]
@@ -42,6 +44,7 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="37_xr7xp"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="38_2rjgd"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="39_k6as5"]
+[ext_resource type="PackedScene" uid="uid://cdqd6h1rowlgk" path="res://objects/coin_bonus_level/coin_bonus_level.tscn" id="45_xqxfk"]
 
 [sub_resource type="Gradient" id="Gradient_qyhhw"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -339,6 +342,9 @@ tweaked_completion_music = ExtResource("4_brdjc")
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([ExtResource("4_06r4f"), ExtResource("4_bxry6")])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
 ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("4_si613"), ExtResource("4_bxry6")])
 
@@ -391,6 +397,12 @@ theme_override_fonts/font = ExtResource("12_mo2sc")
 text = "WORLD
 4-3"
 horizontal_alignment = 1
+
+[node name="BonusLevelUnlocked" type="Sprite2D" parent="HUD"]
+visible = false
+position = Vector2(320, 192)
+texture = ExtResource("14_5ud4e")
+script = ExtResource("15_2u6hy")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -963,13 +975,11 @@ position = Vector2(3360, 288)
 [node name="PipeIn" parent="Objects" instance=ExtResource("26_g271h")]
 position = Vector2(3360, 272)
 warp_to = NodePath("../PipeOut")
-warp_disable_smooth_entry = null
 use_blur_transition = true
 
 [node name="PipeIn2" parent="Objects" instance=ExtResource("26_g271h")]
 position = Vector2(3360, 1264)
 warp_to = NodePath("../PipeOut2")
-warp_disable_smooth_entry = null
 use_blur_transition = true
 
 [node name="PipeOut" parent="Objects" instance=ExtResource("27_imwk1")]
@@ -1233,3 +1243,6 @@ metadata/_edit_lock_ = true
 position = Vector2(9856, 256)
 texture = ExtResource("39_k6as5")
 metadata/_edit_lock_ = true
+
+[node name="CoinBonusLevel" parent="." instance=ExtResource("45_xqxfk")]
+position = Vector2(3360, 1008)
