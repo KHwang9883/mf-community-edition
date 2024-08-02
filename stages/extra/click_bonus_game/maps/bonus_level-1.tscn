@@ -1,12 +1,23 @@
-[gd_scene load_steps=10 format=3 uid="uid://bkifngv828m4r"]
+[gd_scene load_steps=31 format=3 uid="uid://bkifngv828m4r"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_xvhno"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_lagxp"]
 [ext_resource type="Resource" uid="uid://biwuot8qud6ob" path="res://music/extra/u_feel_it.mod" id="3_d2uxo"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_gn718"]
 [ext_resource type="AudioStream" uid="uid://bn1cfpnnh836i" path="res://stages/extra/click_bonus_game/sfx/game_started-.wav" id="4_ucm1d"]
 [ext_resource type="Texture2D" uid="uid://bl1o3blt8l22y" path="res://stages/extra/click_bonus_game/textures/find_yellow_stars.png" id="4_x3qo3"]
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/text_find_yellow_stars.gd" id="5_go38v"]
 [ext_resource type="Texture2D" uid="uid://bp2rfaqv2mwvr" path="res://stages/extra/click_bonus_game/textures/counter.png" id="7_qkvpk"]
+[ext_resource type="PackedScene" uid="uid://dscgi7k51j58n" path="res://stages/extra/click_bonus_game/objects/star/star.tscn" id="8_gjit4"]
+[ext_resource type="Texture2D" uid="uid://cnkotj5u0xogf" path="res://stages/extra/click_bonus_game/textures/congratulations.png" id="8_t5v8s"]
+[ext_resource type="Texture2D" uid="uid://c58hm5sffo0ke" path="res://stages/extra/click_bonus_game/textures/use_mouse.png" id="9_yjbbb"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/gui_star.gd" id="10_mjcqg"]
+[ext_resource type="Texture2D" uid="uid://b2nuemn24gx7e" path="res://stages/extra/click_bonus_game/textures/find_me.png" id="10_uwx4j"]
+[ext_resource type="Texture2D" uid="uid://vdnmtnh6a3mn" path="res://stages/extra/click_bonus_game/textures/bonus_star.png" id="10_wydse"]
+[ext_resource type="Texture2D" uid="uid://b6i0laheaghh6" path="res://gfx/fancy_graphics/sparkle_giant.png" id="13_pqfg3"]
+[ext_resource type="Texture2D" uid="uid://caixe24mix6j3" path="res://stages/extra/click_bonus_game/textures/star_finder_cursor.png" id="14_bft32"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/cursor.gd" id="15_htwr8"]
+[ext_resource type="Texture2D" uid="uid://bo5i266chqrwh" path="res://stages/extra/click_bonus_game/textures/star_effect.png" id="16_fm3lq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lqfj7"]
 atlas = ExtResource("7_qkvpk")
@@ -16,6 +27,60 @@ region = Rect2(24, 0, 24, 32)
 atlas = ExtResource("7_qkvpk")
 region = Rect2(0, 0, 24, 32)
 
+[sub_resource type="Curve2D" id="Curve2D_82m0q"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -128, 160, -158, 1, 158, -1, 320, 160, 158, 0, -158, 0, 320, 368, -158, 0, 158, 0, 320, 160, 159, 2, -159, -2, 336, 352, -158, 0, 158, 0, 320, 160, 0, 0, 0, 0, 800, 160)
+}
+point_count = 7
+
+[sub_resource type="Gradient" id="Gradient_yr2b2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xnb34"]
+gradient = SubResource("Gradient_yr2b2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hybjb"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(32, 32, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.08
+scale_max = 0.08
+color_ramp = SubResource("GradientTexture1D_xnb34")
+
+[sub_resource type="Gradient" id="Gradient_65cgq"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_06yjw"]
+gradient = SubResource("Gradient_65cgq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gtk1h"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 600.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, 1500, 0)
+color_ramp = SubResource("GradientTexture1D_06yjw")
+
+[sub_resource type="Gradient" id="Gradient_vmkxg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tkrsw"]
+gradient = SubResource("Gradient_vmkxg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8xrgc"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 400.0
+initial_velocity_max = 800.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, 1000, 0)
+color_ramp = SubResource("GradientTexture1D_tkrsw")
+
 [node name="BonusLevel-1" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -23,39 +88,52 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource("1_xvhno")
+metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_lagxp")]
 music = Array[Resource]([ExtResource("3_d2uxo")])
 play_immediately = false
-start_from_sec = Array[float]([103.8])
+start_from_sec = Array[float]([0.0, 103.8])
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.4
 one_shot = true
 autostart = true
 
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Node2D"]
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 480
+script = ExtResource("4_gn718")
+
 [node name="Heads-Up Display" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Heads-Up Display"]
 stream = ExtResource("4_ucm1d")
-autoplay = true
 bus = &"1D Sound"
 
 [node name="ColorRect" type="ColorRect" parent="Heads-Up Display"]
 offset_right = 640.0
 offset_bottom = 480.0
+mouse_filter = 2
 color = Color(0, 0, 0.705882, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Heads-Up Display"]
 offset_right = 640.0
 offset_bottom = 32.0
+mouse_filter = 2
+alignment = 1
 script = ExtResource("5_go38v")
 
 [node name="TextureRect" type="TextureRect" parent="Heads-Up Display/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 8
 texture = ExtResource("4_x3qo3")
 stretch_mode = 3
 
@@ -71,6 +149,79 @@ texture = SubResource("AtlasTexture_lqfj7")
 layout_mode = 2
 texture = SubResource("AtlasTexture_irxm2")
 
+[node name="Congratulations" type="Sprite2D" parent="Heads-Up Display"]
+position = Vector2(320, 240)
+texture = ExtResource("8_t5v8s")
+
+[node name="UseMouse" type="Sprite2D" parent="Heads-Up Display"]
+position = Vector2(352, 240)
+texture = ExtResource("9_yjbbb")
+
+[node name="FindMe" type="Sprite2D" parent="Heads-Up Display"]
+position = Vector2(320, 272)
+texture = ExtResource("10_uwx4j")
+
+[node name="Path2D" type="Path2D" parent="Heads-Up Display"]
+curve = SubResource("Curve2D_82m0q")
+script = ExtResource("10_mjcqg")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Heads-Up Display/Path2D"]
+position = Vector2(-128, 160)
+rotates = false
+loop = false
+
+[node name="BonusStar" type="Sprite2D" parent="Heads-Up Display/Path2D/PathFollow2D"]
+position = Vector2(-1.90382, -0.255249)
+texture = ExtResource("10_wydse")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Heads-Up Display/Path2D/PathFollow2D/BonusStar"]
+process_material = SubResource("ParticleProcessMaterial_hybjb")
+texture = ExtResource("13_pqfg3")
+
+[node name="StarFinderCursor" type="Sprite2D" parent="Heads-Up Display"]
+position = Vector2(-16, -16)
+texture = ExtResource("14_bft32")
+script = ExtResource("15_htwr8")
+
+[node name="Timer" type="Timer" parent="Heads-Up Display/StarFinderCursor"]
+wait_time = 0.05
+autostart = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Heads-Up Display/StarFinderCursor"]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_gtk1h")
+texture = ExtResource("16_fm3lq")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Heads-Up Display/StarFinderCursor"]
+emitting = false
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_8xrgc")
+texture = ExtResource("16_fm3lq")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
+[node name="Star" parent="." instance=ExtResource("8_gjit4")]
+position = Vector2(166, 274)
+
+[node name="Star2" parent="." instance=ExtResource("8_gjit4")]
+position = Vector2(411, 190)
+scale = Vector2(0.25, 0.25)
+
+[node name="Star3" parent="." instance=ExtResource("8_gjit4")]
+position = Vector2(320, 368)
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="complete" from="Heads-Up Display/HBoxContainer" to="." method="_complete"]
+[connection signal="collected" from="Star" to="Heads-Up Display/HBoxContainer" method="_star_collected"]
+[connection signal="collected" from="Star2" to="Heads-Up Display/HBoxContainer" method="_star_collected"]
+[connection signal="collected" from="Star3" to="Heads-Up Display/HBoxContainer" method="_star_collected"]
