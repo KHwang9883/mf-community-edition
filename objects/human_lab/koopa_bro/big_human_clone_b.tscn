@@ -200,7 +200,7 @@ animation = &"attack"
 position = Vector2(0, 29)
 sprite_frames = SubResource("SpriteFrames_bhxi4")
 animation = &"idle"
-autoplay = "default"
+autoplay = "idle"
 script = ExtResource("7_71q0c")
 enemy_center_node = NodePath("../..")
 can_idle = true
@@ -213,3 +213,6 @@ scale = Vector2(-1, 1)
 
 [node name="PosAttack" parent="." index="4"]
 position = Vector2(-14, -1)
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/ActiveNOGI" method="set_animation" binds= ["idle"]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/ActiveNOGI" method="set_animation" binds= ["idle"]]
