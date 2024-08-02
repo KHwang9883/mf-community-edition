@@ -5,10 +5,9 @@ const BUBBLES = preload("res://objects/human_lab/container/sfx/bubbles.ogg")
 var delay: float = 2
 
 func _physics_process(delta: float) -> void:
-	if area.player != null:
-		delay += delta
+	delay += delta / max(0.01, Engine.time_scale)
 	
-	if delay > 2.0:
+	if area.player != null && delay > 2.0:
 		Audio.play_1d_sound(BUBBLES)
 		delay = 0
 	
