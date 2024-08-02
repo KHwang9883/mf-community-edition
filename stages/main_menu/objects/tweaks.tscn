@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c2mch7wqmlcgp"]
+[gd_scene load_steps=24 format=3 uid="uid://c2mch7wqmlcgp"]
 
 [ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="1_fcdr4"]
 [ext_resource type="Texture2D" uid="uid://bpkndt6n365gx" path="res://stages/main_menu/textures/tweak_bg.png" id="2_4c2j4"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="6_ygf5l"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="7_jdt55"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="8_i5nl3"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="8_jrjpr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_smql5"]
 shader = ExtResource("1_fcdr4")
@@ -170,12 +171,14 @@ limit_left = 0
 limit_top = 0
 limit_right = 640
 limit_bottom = 480
+script = ExtResource("8_jrjpr")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 16.0
-offset_top = 336.0
-offset_right = 160.0
-offset_bottom = 456.0
+layout_mode = 0
+offset_left = 11.0
+offset_top = 319.0
+offset_right = 152.0
+offset_bottom = 464.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
 theme_override_constants/shadow_offset_x = 3
@@ -184,14 +187,15 @@ theme_override_constants/outline_size = 4
 theme_override_constants/line_spacing = 1
 theme_override_fonts/font = ExtResource("8_i5nl3")
 theme_override_font_sizes/font_size = 11
-text = "if you have any
-suggestions on
+text = "if you have
+any ideas on
 how to expand
 this list,
 feel free to
-contact us at
+contact us on
 our discord
 server!"
+vertical_alignment = 2
 uppercase = true
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Tweaks" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
