@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://c0r6ld204t00b"]
+[gd_scene load_steps=64 format=3 uid="uid://c0r6ld204t00b"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_27fo5"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_xf0qf"]
@@ -43,6 +43,7 @@
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="38_q7ory"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="39_0gixq"]
 [ext_resource type="Texture2D" uid="uid://842fv7cdaynf" path="res://gfx/texts/signs/1-4_bowser.png" id="39_ln2lb"]
+[ext_resource type="Script" path="res://gfx/texts/signs/sign_visible_tweak.gd" id="44_do2lu"]
 
 [sub_resource type="Curve2D" id="Curve2D_gjfjy"]
 _data = {
@@ -749,55 +750,6 @@ position = Vector2(6944, 448)
 z_index = 1
 position = Vector2(1024, 432)
 
-[node name="1-4Run" type="Sprite2D" parent="Node2D"]
-z_index = -1
-position = Vector2(2976, 282)
-texture = ExtResource("36_5ihu6")
-
-[node name="LabelMisterEarl" parent="Node2D/1-4Run" instance=ExtResource("37_bb4m8")]
-offset_left = -88.0
-offset_top = -28.0
-offset_right = 88.0
-offset_bottom = 11.0
-text = "hold %s
-to run, and jump further!"
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-script = ExtResource("38_6jd6a")
-action = "m_run"
-
-[node name="1-4Run2" type="Sprite2D" parent="Node2D"]
-z_index = -1
-position = Vector2(7360, 377)
-texture = ExtResource("36_5ihu6")
-region_enabled = true
-region_rect = Rect2(0, 62, 199, 100)
-
-[node name="1-4Bowser" type="Sprite2D" parent="Node2D/1-4Run2"]
-position = Vector2(0, -92)
-texture = ExtResource("39_ln2lb")
-
-[node name="LabelMisterEarl" parent="Node2D/1-4Run2" instance=ExtResource("37_bb4m8")]
-offset_left = -89.0
-offset_top = -65.0
-offset_right = 87.0
-offset_bottom = -26.0
-text = "jump on bowser's head"
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="LabelMisterEarl2" parent="Node2D/1-4Run2" instance=ExtResource("37_bb4m8")]
-offset_left = -91.0
-offset_top = -49.0
-offset_right = 89.0
-offset_bottom = -10.0
-theme_override_font_sizes/font_size = 18
-text = "don't jump when he's flashing"
-vertical_alignment = 1
-clip_text = true
-
 [node name="GrayPlatformBg" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(8802, 340)
@@ -961,6 +913,58 @@ script = ExtResource("38_q7ory")
 
 [node name="LavaBowser" parent="." instance=ExtResource("39_0gixq")]
 position = Vector2(8368, 426)
+
+[node name="Hints" type="Node2D" parent="."]
+script = ExtResource("44_do2lu")
+
+[node name="1-4Run" type="Sprite2D" parent="Hints"]
+z_index = -1
+position = Vector2(2976, 282)
+texture = ExtResource("36_5ihu6")
+
+[node name="LabelMisterEarl" parent="Hints/1-4Run" instance=ExtResource("37_bb4m8")]
+offset_left = -88.0
+offset_top = -28.0
+offset_right = 88.0
+offset_bottom = 11.0
+text = "hold %s
+to run, and jump further!"
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+script = ExtResource("38_6jd6a")
+action = "m_run"
+
+[node name="1-4Run2" type="Sprite2D" parent="Hints"]
+z_index = -1
+position = Vector2(7360, 377)
+texture = ExtResource("36_5ihu6")
+region_enabled = true
+region_rect = Rect2(0, 62, 199, 100)
+
+[node name="1-4Bowser" type="Sprite2D" parent="Hints/1-4Run2"]
+position = Vector2(0, -92)
+texture = ExtResource("39_ln2lb")
+
+[node name="LabelMisterEarl" parent="Hints/1-4Run2" instance=ExtResource("37_bb4m8")]
+offset_left = -89.0
+offset_top = -65.0
+offset_right = 87.0
+offset_bottom = -26.0
+text = "jump on bowser's head"
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="LabelMisterEarl2" parent="Hints/1-4Run2" instance=ExtResource("37_bb4m8")]
+offset_left = -91.0
+offset_top = -49.0
+offset_right = 89.0
+offset_bottom = -10.0
+theme_override_font_sizes/font_size = 18
+text = "don't jump when he's flashing"
+vertical_alignment = 1
+clip_text = true
 
 [connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
 

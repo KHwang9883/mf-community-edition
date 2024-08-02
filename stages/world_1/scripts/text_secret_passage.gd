@@ -6,6 +6,7 @@ extends CanvasItem
 @export var action_after_sec := 0.0
 @export var fade_on_end := false
 @export_file("*.tscn", "*.scn") var change_scene: String
+@export_file("*.tscn", "*.scn") var remade_level_tweak_scene: String
 @export var circle_transition_center_on_player: bool = false
 
 func activate() -> void:
@@ -22,14 +23,16 @@ func activate() -> void:
 		await get_tree().create_timer(action_after_sec, false).timeout
 		
 		var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+		var _remade: bool = SettingsManager.get_tweak("remade_levels", true)
 		Data.values.checkpoint = -1
 		Data.values.checked_cps = []
+		var goto_scene: String = remade_level_tweak_scene if remade_level_tweak_scene && _remade else change_scene
 		
 		if _crossfade:
 			TransitionManager.accept_transition(
 				load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 					.instantiate()
-					.with_scene(change_scene)
+					.with_scene(goto_scene)
 			)
 			return
 		
@@ -42,5 +45,5 @@ func activate() -> void:
 		)
 		
 		await TransitionManager.transition_middle
-		Scenes.goto_scene(change_scene)
+		Scenes.goto_scene(goto_scene)
 		
