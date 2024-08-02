@@ -11,5 +11,6 @@ func _ready() -> void:
 	if !death_node: return
 	
 	death_node.visible = true
-	death_node.play()
+	death_node.play_anim.call_deferred()
 	node.add_child(death_node)
+	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bi2hg5giakfce"]
+[gd_scene load_steps=43 format=3 uid="uid://bi2hg5giakfce"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_8sp0q"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_48cqc"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://cnwriv40miqqd" path="res://objects/human_lab/goomba/sfx/kick.wav" id="10_t02xd"]
 [ext_resource type="Texture2D" uid="uid://b48k05nb44v2p" path="res://objects/human_lab/goomba/textures/clone_body.png" id="11_leppp"]
 [ext_resource type="Texture2D" uid="uid://bh5og0b1yxmf2" path="res://objects/human_lab/goomba/textures/clone_squished.png" id="12_njkuq"]
+[ext_resource type="Script" path="res://objects/human_lab/goomba/scripts/stomped_animation.gd" id="13_7xyhp"]
 [ext_resource type="Script" path="res://objects/human_lab/goomba/scripts/killed_rotation_quality.gd" id="13_g3nuv"]
 [ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://objects/human_lab/goomba/textures/clone_legs.png" id="13_host3"]
 [ext_resource type="Script" path="res://objects/human_lab/goomba/scripts/legs_script.gd" id="14_jgi5h"]
@@ -91,39 +92,11 @@ animations = [{
 atlas = ExtResource("12_njkuq")
 region = Rect2(0, 0, 44, 52)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ov1cm"]
-atlas = ExtResource("12_njkuq")
-region = Rect2(44, 0, 44, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7co1l"]
-atlas = ExtResource("12_njkuq")
-region = Rect2(88, 0, 44, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p3gvr"]
-atlas = ExtResource("12_njkuq")
-region = Rect2(132, 0, 44, 52)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uyllu"]
-atlas = ExtResource("12_njkuq")
-region = Rect2(176, 0, 44, 52)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_sa645"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a0iak")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ov1cm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7co1l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p3gvr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uyllu")
 }],
 "loop": false,
 "name": &"default",
@@ -285,7 +258,10 @@ autoplay = "default"
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
+position = Vector2(0, 26)
 sprite_frames = SubResource("SpriteFrames_sa645")
+offset = Vector2(0, -25)
+script = ExtResource("13_7xyhp")
 
 [node name="DeadRotating" type="Sprite2D" parent="Sprite"]
 visible = false
