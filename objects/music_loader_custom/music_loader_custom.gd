@@ -101,3 +101,7 @@ func _fade_in_tweak(player, ind: int) -> void:
 		player.volume_db = -59
 		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
 		Audio.fade_music_1d_player(player, to_vol, 0.5 / Engine.time_scale, Tween.TRANS_CUBIC, false, Tween.EASE_OUT)
+
+
+func set_index(ind: int) -> void:
+	index = ind
