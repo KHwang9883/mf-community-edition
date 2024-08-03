@@ -4,9 +4,11 @@ const APPLEUSE = preload("res://stages/extra/click_bonus_game/sfx/appleuse.ogg")
 const DISCOVEREDGUNPOWDER_ = preload("res://stages/extra/click_bonus_game/sfx/discoveredgunpowder-.wav")
 const MARIO_OHNO = preload("res://music/climbing_minigame/mario_ohno.wav")
 
-var _original_time_scale: float
+@export var try_count: int = 10
 
 var can_interact = false
+
+var _original_time_scale: float
 
 @onready var audio_stream_player = $"Heads-Up Display/AudioStreamPlayer"
 @onready var music_loader: Node = $MusicLoader
@@ -26,6 +28,7 @@ func _ready() -> void:
 	Data.values.bonus_game = false
 	var mario: Player = Thunder._current_player
 	if is_instance_valid(mario): mario.completed = true
+	tries.try_count = try_count
 	
 	congratulations.modulate.a = 0
 	use_mouse.modulate.a = 0

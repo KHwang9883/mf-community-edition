@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://s4fip2enup6u"]
+[gd_scene load_steps=33 format=3 uid="uid://s4fip2enup6u"]
 
 [ext_resource type="AudioStream" uid="uid://bn1cfpnnh836i" path="res://stages/extra/click_bonus_game/sfx/game_started-.wav" id="1_2w8xq"]
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/text_find_yellow_stars.gd" id="2_80l6o"]
@@ -29,8 +29,11 @@ region = Rect2(0, 0, 24, 32)
 atlas = ExtResource("4_jppu3")
 region = Rect2(24, 0, 24, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1v2tu"]
-atlas = ExtResource("4_jppu3")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l87es"]
+load_path = "res://.godot/imported/counter.png-26febca2c4460e5e670a386b2ca6a7fe.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w05e7"]
+atlas = SubResource("CompressedTexture2D_l87es")
 region = Rect2(0, 0, 24, 32)
 
 [sub_resource type="Curve2D" id="Curve2D_82m0q"]
@@ -86,6 +89,9 @@ angular_velocity_min = -360.0
 angular_velocity_max = 360.0
 gravity = Vector3(0, 1000, 0)
 color_ramp = SubResource("GradientTexture1D_tkrsw")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nfyne"]
+radius = 4.0
 
 [node name="Heads-Up Display" type="CanvasLayer"]
 
@@ -148,7 +154,7 @@ texture = SubResource("AtlasTexture_vqjpn")
 
 [node name="Value2" type="TextureRect" parent="Tries/HBoxContainer"]
 layout_mode = 2
-texture = SubResource("AtlasTexture_1v2tu")
+texture = SubResource("AtlasTexture_w05e7")
 
 [node name="Congratulations" type="Sprite2D" parent="."]
 position = Vector2(320, 240)
@@ -211,7 +217,12 @@ emitting = false
 amount = 15
 process_material = SubResource("ParticleProcessMaterial_8xrgc")
 texture = ExtResource("16_uftx6")
-lifetime = 0.4
+lifetime = 0.8
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
+
+[node name="Area2D" type="Area2D" parent="StarFinderCursor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StarFinderCursor/Area2D"]
+shape = SubResource("CircleShape2D_nfyne")
