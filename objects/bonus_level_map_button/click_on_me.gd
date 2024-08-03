@@ -16,6 +16,7 @@ func _ready() -> void:
 		queue_free()
 		return
 	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Data.values.bonus_game = false
 	modulate.a = 0.0
 	create_tween().tween_property(self, "modulate:a", 1.0, 1.0)

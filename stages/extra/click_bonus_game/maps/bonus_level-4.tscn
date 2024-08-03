@@ -1,0 +1,802 @@
+[gd_scene load_steps=58 format=3 uid="uid://uweth0r3m5tb"]
+
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_cv33x"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_f4ujg"]
+[ext_resource type="Resource" uid="uid://biwuot8qud6ob" path="res://music/extra/u_feel_it.mod" id="3_4mf62"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_jw68c"]
+[ext_resource type="PackedScene" uid="uid://s4fip2enup6u" path="res://stages/extra/click_bonus_game/objects/heads_up_display.tscn" id="5_lf1qt"]
+[ext_resource type="PackedScene" uid="uid://dscgi7k51j58n" path="res://stages/extra/click_bonus_game/objects/star/star.tscn" id="6_fsfb0"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/star_path_follow.gd" id="7_m28jb"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/star_sine_movement.gd" id="8_fooay"]
+[ext_resource type="Texture2D" uid="uid://mxicaln3cacf" path="res://stages/extra/click_bonus_game/textures/fancy_bg.png" id="9_dhitl"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_4s6np"]
+[ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="11_44mib"]
+[ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="12_uny78"]
+[ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="13_cuvds"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="14_whi6r"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="15_3cdag"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="16_bhyub"]
+[ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="17_lc134"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="18_vxb1w"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="19_4xthq"]
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="20_dmae8"]
+[ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="21_cu5fn"]
+[ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="22_uahu2"]
+[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="23_7hvnw"]
+[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="24_3vrwd"]
+[ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="25_totyg"]
+[ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="27_cc6pb"]
+[ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="28_tud1w"]
+[ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="29_jrq8v"]
+[ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="29_vqhym"]
+[ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="30_rh2j3"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="31_335n5"]
+[ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="32_o4mg8"]
+
+[sub_resource type="Curve2D" id="Curve2D_xkfmd"]
+_data = {
+"points": PackedVector2Array(-12, -25, 12, 25, 336, 192, 165, 124, -165, -124, 208, 320, -29, -94, 29, 94, 64, 400, 154.5, 84, -154.5, -84, 233, 143)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_ekyih"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 525, 235, 45, 2, -45, -2, 429, 267, 38, -1.5, -38, 1.5, 255, 147, 0, 0, 0, 0, 193, 183)
+}
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_q18w8"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qrgok"]
+gradient = SubResource("Gradient_q18w8")
+width = 480
+
+[sub_resource type="Resource" id="Resource_0uqxv"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_s883g"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_fb51p"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_8sisa"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_nyblr"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_y0vf1"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_xbhsm"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_s1slr"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_nofyf"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_thces"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_cxp88"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_bewki"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_3dwxu"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_lkunf"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_1oh80"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_t3uhx"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_esfr7"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_xt2po"]
+resource_local_to_scene = true
+script = ExtResource("19_4xthq")
+creation_nodepack = ExtResource("18_vxb1w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k1p7w"]
+shader = ExtResource("23_7hvnw")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 2.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ro8f"]
+shader = ExtResource("23_7hvnw")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wib4b"]
+shader = ExtResource("23_7hvnw")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 5.0
+shader_parameter/y_axis = true
+
+[node name="BonusLevel-1" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_cv33x")
+metadata/_edit_lock_ = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_f4ujg")]
+music = Array[Resource]([ExtResource("3_4mf62")])
+play_immediately = false
+start_from_sec = Array[float]([327.0])
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.4
+one_shot = true
+autostart = true
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Node2D"]
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 480
+script = ExtResource("4_jw68c")
+
+[node name="Heads-Up Display" parent="." instance=ExtResource("5_lf1qt")]
+visible = false
+
+[node name="Stars" type="Node2D" parent="."]
+z_index = 99
+
+[node name="Star2" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(32, 288)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star6" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(336, 304)
+rotation = 0.436332
+scale = Vector2(0.3, 0.3)
+bouncing_ball = true
+
+[node name="Star7" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(304, 240)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+
+[node name="Star8" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(266, 161)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star11" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(373, 112)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star12" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(390, 209)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star14" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(389, 408)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star15" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(519, 371)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star5" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(599, 119)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Path2D" type="Path2D" parent="Stars"]
+curve = SubResource("Curve2D_xkfmd")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Stars/Path2D"]
+position = Vector2(336, 192)
+rotation = 1.12328
+rotates = false
+loop = false
+script = ExtResource("7_m28jb")
+speed = 120.0
+reverse = true
+
+[node name="Star9" parent="Stars/Path2D/PathFollow2D" instance=ExtResource("6_fsfb0")]
+position = Vector2(-0.937592, -2.6685)
+rotation = -1.12328
+scale = Vector2(0.3, 0.3)
+
+[node name="PathFollow2D2" type="PathFollow2D" parent="Stars/Path2D"]
+position = Vector2(173.505, 234.442)
+rotation = 1.12328
+progress = 396.875
+h_offset = 64.0
+v_offset = -32.0
+rotates = false
+loop = false
+script = ExtResource("7_m28jb")
+speed = 85.0
+reverse = true
+
+[node name="Star9" parent="Stars/Path2D/PathFollow2D2" instance=ExtResource("6_fsfb0")]
+position = Vector2(-0.937592, -2.6685)
+rotation = -1.12328
+scale = Vector2(0.25, 0.25)
+
+[node name="Star16" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(111, 463)
+scale = Vector2(0.3, 0.3)
+
+[node name="Star13" parent="Stars" instance=ExtResource("6_fsfb0")]
+position = Vector2(464, 400)
+scale = Vector2(0.2, 0.2)
+bouncing_ball = true
+
+[node name="Path2D4" type="Path2D" parent="Stars"]
+position = Vector2(688, 0)
+scale = Vector2(-1, 1)
+curve = SubResource("Curve2D_ekyih")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Stars/Path2D4"]
+position = Vector2(525, 235)
+rotation = 3.49066
+scale = Vector2(-1, 1)
+rotates = false
+loop = false
+script = ExtResource("7_m28jb")
+speed = 75.0
+reverse = true
+
+[node name="Star3" parent="Stars/Path2D4/PathFollow2D" instance=ExtResource("6_fsfb0")]
+position = Vector2(0.94873, 0.316223)
+rotation = -2.81984
+scale = Vector2(0.25, 0.25)
+
+[node name="Node2D" type="Node2D" parent="Stars"]
+position = Vector2(301, 86)
+script = ExtResource("8_fooay")
+mov_offset = Vector2(70, 70)
+mov_moving = Vector2(-1, 1)
+offset_speed = 0.4
+
+[node name="Star10" parent="Stars/Node2D" instance=ExtResource("6_fsfb0")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="Node2D2" type="Node2D" parent="Stars"]
+position = Vector2(86, 358)
+script = ExtResource("8_fooay")
+mov_offset = Vector2(70, 5)
+mov_moving = Vector2(0, -1)
+offset_speed = 1.0
+metadata/_edit_group_ = true
+
+[node name="Star18" parent="Stars/Node2D2" instance=ExtResource("6_fsfb0")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="Node2D3" type="Node2D" parent="Stars"]
+position = Vector2(53, 449)
+script = ExtResource("8_fooay")
+mov_offset = Vector2(70, 5)
+mov_moving = Vector2(0, -1)
+offset_speed = 0.3
+
+[node name="Star17" parent="Stars/Node2D3" instance=ExtResource("6_fsfb0")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="Node2D4" type="Node2D" parent="Stars"]
+position = Vector2(155, 192)
+script = ExtResource("8_fooay")
+mov_offset = Vector2(-80, 140)
+mov_moving = Vector2(1, 1)
+offset_speed = -0.8
+
+[node name="Star7" parent="Stars/Node2D4" instance=ExtResource("6_fsfb0")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="Node2D5" type="Node2D" parent="Stars"]
+position = Vector2(512, 272)
+script = ExtResource("8_fooay")
+mov_offset = Vector2(-90, -40)
+mov_moving = Vector2(1, 1)
+offset_speed = -0.8
+metadata/_edit_group_ = true
+
+[node name="Star7" parent="Stars/Node2D5" instance=ExtResource("6_fsfb0")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_qrgok")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="FancyBg" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(320, 240)
+texture = ExtResource("9_dhitl")
+script = ExtResource("10_4s6np")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = -10
+texture_repeat = 2
+position = Vector2(320, 57)
+texture = ExtResource("11_44mib")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("12_uny78")
+
+[node name="TextureAlpha" type="Sprite2D" parent="Sprite2D2"]
+position = Vector2(0, 32)
+texture = ExtResource("13_cuvds")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 32)
+script = ExtResource("10_4s6np")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+z_index = 25
+texture_repeat = 2
+position = Vector2(320, 32)
+texture = ExtResource("11_44mib")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("12_uny78")
+speed = 100.0
+
+[node name="Mario" parent="." instance=ExtResource("14_whi6r")]
+position = Vector2(96, 336)
+collision_layer = 0
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("15_3cdag")
+format = 2
+layer_0/tile_data = PackedInt32Array(786434, 3, 1, 786435, 65539, 1, 720912, 3, 0, 786448, 3, 1, 720913, 65539, 0, 786449, 65539, 1, 720898, 3, 0, 720899, 65539, 0, 131089, 3, 1, 196625, 3, 2, 131090, 65539, 1, 196626, 65539, 2, 65553, 3, 1, 65554, 65539, 1, 983057, 131072, 2, 917521, 131072, 1, 851985, 131072, 0, 983056, 65536, 2, 917520, 65536, 1, 851984, 65536, 0, 983055, 65536, 2, 917519, 65536, 1, 851983, 65536, 0, 983054, 65536, 2, 917518, 65536, 1, 851982, 65536, 0, 983053, 65536, 2, 917517, 65536, 1, 851981, 65536, 0, 983052, 65536, 2, 917516, 65536, 1, 851980, 65536, 0, 983051, 65536, 2, 917515, 65536, 1, 851979, 65536, 0, 983050, 65536, 2, 917514, 65536, 1, 851978, 65536, 0, 983049, 65536, 2, 917513, 65536, 1, 851977, 65536, 0, 983048, 65536, 2, 917512, 65536, 1, 851976, 65536, 0, 983047, 65536, 2, 917511, 65536, 1, 851975, 65536, 0, 983046, 65536, 2, 917510, 65536, 1, 851974, 65536, 0, 983045, 65536, 2, 917509, 65536, 1, 851973, 65536, 0, 983044, 65536, 2, 917508, 65536, 1, 851972, 65536, 0, 983043, 65536, 2, 917507, 65536, 1, 851971, 65536, 0, 983042, 0, 2, 917506, 0, 1, 851970, 0, 0, 196624, 2, 131072, 393233, 2, 131072, 524307, 2, 131072, 786439, 2, 196608, 589832, 2, 131072, 262148, 2, 131072, 327681, 2, 131072)
+layer_1/tile_data = PackedInt32Array(131085, 2, 458752, 131084, 2, 458752, 917518, 2, 786432)
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource("16_bhyub")
+format = 2
+layer_1/tile_data = PackedInt32Array(786446, 0, 0)
+
+[node name="Objects" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="QuestionBlock" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(464, 112)
+result = SubResource("Resource_0uqxv")
+
+[node name="QuestionBlock2" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(432, 112)
+result = SubResource("Resource_s883g")
+
+[node name="QuestionBlock3" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(400, 112)
+result = SubResource("Resource_fb51p")
+
+[node name="QuestionBlock4" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(368, 112)
+result = SubResource("Resource_8sisa")
+
+[node name="QuestionBlock5" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(336, 112)
+result = SubResource("Resource_nyblr")
+
+[node name="QuestionBlock6" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(304, 112)
+result = SubResource("Resource_y0vf1")
+
+[node name="QuestionBlock7" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(272, 112)
+result = SubResource("Resource_xbhsm")
+
+[node name="QuestionBlock8" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(240, 112)
+result = SubResource("Resource_s1slr")
+
+[node name="QuestionBlock9" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(240, 240)
+result = SubResource("Resource_nofyf")
+
+[node name="QuestionBlock17" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(208, 112)
+result = SubResource("Resource_thces")
+
+[node name="QuestionBlock18" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(208, 240)
+result = SubResource("Resource_cxp88")
+
+[node name="QuestionBlock10" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(272, 240)
+result = SubResource("Resource_bewki")
+
+[node name="QuestionBlock11" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(304, 240)
+result = SubResource("Resource_3dwxu")
+
+[node name="QuestionBlock12" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(336, 240)
+result = SubResource("Resource_lkunf")
+
+[node name="QuestionBlock13" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(368, 240)
+result = SubResource("Resource_1oh80")
+
+[node name="QuestionBlock14" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(400, 240)
+result = SubResource("Resource_t3uhx")
+
+[node name="QuestionBlock15" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(432, 240)
+result = SubResource("Resource_esfr7")
+
+[node name="QuestionBlock16" parent="Objects" instance=ExtResource("17_lc134")]
+position = Vector2(464, 240)
+result = SubResource("Resource_xt2po")
+
+[node name="Brick" parent="Objects" instance=ExtResource("20_dmae8")]
+position = Vector2(432, 336)
+metadata/_edit_lock_ = true
+
+[node name="Brick3" parent="Objects" instance=ExtResource("20_dmae8")]
+position = Vector2(464, 336)
+metadata/_edit_lock_ = true
+
+[node name="Goomba" parent="Objects" instance=ExtResource("21_cu5fn")]
+position = Vector2(432, 304)
+speed = Vector2(0, 0)
+
+[node name="Goomba3" parent="Objects" instance=ExtResource("21_cu5fn")]
+position = Vector2(528, 336)
+speed = Vector2(0, 0)
+
+[node name="Goomba4" parent="Objects" instance=ExtResource("21_cu5fn")]
+position = Vector2(560, 336)
+speed = Vector2(0, 0)
+
+[node name="Node2D2" type="Node2D" parent="Objects"]
+script = ExtResource("10_4s6np")
+
+[node name="FancyBush16" type="Sprite2D" parent="Objects/Node2D2"]
+z_index = 1
+position = Vector2(32, 288)
+texture = ExtResource("22_uahu2")
+
+[node name="FancyBush17" type="Sprite2D" parent="Objects/Node2D2"]
+position = Vector2(64, 464)
+texture = ExtResource("22_uahu2")
+
+[node name="FancyBush18" type="Sprite2D" parent="Objects/Node2D2"]
+position = Vector2(400, 480)
+texture = ExtResource("22_uahu2")
+
+[node name="FancyBush19" type="Sprite2D" parent="Objects/Node2D2"]
+position = Vector2(592, 456)
+texture = ExtResource("22_uahu2")
+
+[node name="Node2D" type="Node2D" parent="Objects/Node2D2"]
+z_index = 99
+
+[node name="Sprite2D4" type="Sprite2D" parent="Objects/Node2D2/Node2D"]
+modulate = Color(1, 1, 1, 0.364706)
+material = SubResource("ShaderMaterial_k1p7w")
+position = Vector2(0, 404)
+texture = ExtResource("24_3vrwd")
+centered = false
+
+[node name="Sprite2D3" type="Sprite2D" parent="Objects/Node2D2/Node2D"]
+modulate = Color(1, 1, 1, 0.498039)
+material = SubResource("ShaderMaterial_7ro8f")
+position = Vector2(0, 412)
+texture = ExtResource("24_3vrwd")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Objects/Node2D2/Node2D"]
+modulate = Color(1, 1, 1, 0.662745)
+material = SubResource("ShaderMaterial_wib4b")
+position = Vector2(0, 418)
+texture = ExtResource("24_3vrwd")
+centered = false
+
+[node name="ColorRect" type="ColorRect" parent="Objects/Node2D2/Node2D"]
+modulate = Color(1, 1, 1, 0.666667)
+z_index = 31
+offset_top = 448.0
+offset_right = 640.0
+offset_bottom = 480.0
+size_flags_vertical = 3
+color = Color(0.345098, 0.533333, 0.878431, 1)
+metadata/_edit_lock_ = true
+
+[node name="Node2D3" type="Node2D" parent="Objects"]
+visible = false
+script = ExtResource("10_4s6np")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Water" parent="Objects/Node2D3" instance=ExtResource("25_totyg")]
+offset_top = 432.0
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="SpinyRed" parent="Objects" instance=ExtResource("27_cc6pb")]
+position = Vector2(304, 400)
+speed = Vector2(0, 0)
+
+[node name="Grass" parent="Objects" instance=ExtResource("28_tud1w")]
+z_index = 1
+position = Vector2(160, 400)
+
+[node name="Grass2" parent="Objects" instance=ExtResource("28_tud1w")]
+z_index = 1
+position = Vector2(384, 400)
+
+[node name="Grass3" parent="Objects" instance=ExtResource("28_tud1w")]
+z_index = -1
+position = Vector2(225, 81)
+
+[node name="Grass4" parent="Objects" instance=ExtResource("28_tud1w")]
+z_index = -1
+position = Vector2(416, 209)
+
+[node name="KoopaRed" parent="Objects" instance=ExtResource("29_vqhym")]
+position = Vector2(224, 208)
+speed = Vector2(0, 0)
+
+[node name="KoopaGreen" parent="Objects" instance=ExtResource("29_jrq8v")]
+position = Vector2(208, 400)
+speed = Vector2(0, 0)
+
+[node name="LifeMushroom" parent="Objects" instance=ExtResource("30_rh2j3")]
+position = Vector2(368, 208)
+appear_distance = 0.0
+speed = Vector2(0, 0)
+metadata/_edit_lock_ = true
+
+[node name="RedMushroom" parent="Objects" instance=ExtResource("31_335n5")]
+position = Vector2(304, 208)
+appear_distance = 0.0
+speed = Vector2(0, 0)
+metadata/_edit_lock_ = true
+
+[node name="FireFlower" parent="Objects" instance=ExtResource("32_o4mg8")]
+position = Vector2(464, 208)
+appear_distance = 0.0
+metadata/_edit_lock_ = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

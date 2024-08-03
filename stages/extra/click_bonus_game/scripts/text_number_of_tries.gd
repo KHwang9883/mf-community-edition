@@ -15,7 +15,7 @@ signal gameover
 
 func _ready() -> void:
 	modulate.a = 0.0
-	create_tween().tween_property(self, "modulate:a", 1.0, 0.5)
+	create_tween().tween_property(self, "modulate:a", 1.0, 1.5)
 
 
 func _render_star_count() -> void:
