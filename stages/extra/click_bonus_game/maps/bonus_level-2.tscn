@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://tyy6hygtwt4d"]
+[gd_scene load_steps=38 format=3 uid="uid://cppbs8he406s7"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_78w7w"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_vi6hj"]
@@ -6,13 +6,16 @@
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_ks2u8"]
 [ext_resource type="PackedScene" uid="uid://s4fip2enup6u" path="res://stages/extra/click_bonus_game/objects/heads_up_display.tscn" id="5_fnvw6"]
 [ext_resource type="PackedScene" uid="uid://dscgi7k51j58n" path="res://stages/extra/click_bonus_game/objects/star/star.tscn" id="6_jxxb4"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/star_path_follow.gd" id="7_52oh7"]
 [ext_resource type="Texture2D" uid="uid://mxicaln3cacf" path="res://stages/extra/click_bonus_game/textures/fancy_bg.png" id="7_uqnbo"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_gyxmm"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/star_sine_movement.gd" id="8_plbij"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="9_73try"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="10_ks7k0"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="11_yujmb"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="12_61tlu"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="13_6jugl"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="14_kf6p6"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="14_meqd4"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="15_02wfc"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="16_035md"]
@@ -22,6 +25,32 @@
 [ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="20_sr7nd"]
 [ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="21_ll6aj"]
 [ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="22_4h1p6"]
+[ext_resource type="PackedScene" uid="uid://bmkaknlavrwxp" path="res://tilesets/overworld_green/scenes/fence.tscn" id="24_r6fst"]
+[ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="26_0htpl"]
+
+[sub_resource type="Curve2D" id="Curve2D_obbvm"]
+_data = {
+"points": PackedVector2Array(-12, -25, 12, 25, 233, 143, 1, 0, -1, 0, 235, 234, 12.5, 25, -12.5, -25, 233, 143)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_loo8a"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 111, 463, -77.5, 18.5, 77.5, -18.5, 143, 321, 0, 0, 0, 0, 248, 224)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_h3v11"]
+_data = {
+"points": PackedVector2Array(57.5, -169.5, -57.5, 169.5, 426, 142, 0, 0, 0, 0, 193, 157)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_ekyih"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 525, 235, 45, 2, -45, -2, 429, 267, 38, -1.5, -38, 1.5, 255, 147, 0, 0, 0, 0, 193, 183)
+}
+point_count = 4
 
 [sub_resource type="Gradient" id="Gradient_q18w8"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 0.988235, 1)
@@ -79,7 +108,7 @@ metadata/_edit_lock_ = true
 [node name="MusicLoader" parent="." instance=ExtResource("2_vi6hj")]
 music = Array[Resource]([ExtResource("3_c8yju")])
 play_immediately = false
-start_from_sec = Array[float]([0.0, 103.8])
+start_from_sec = Array[float]([103.8])
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.4
@@ -99,31 +128,166 @@ script = ExtResource("4_ks2u8")
 visible = false
 
 [node name="Stars" type="Node2D" parent="."]
+visible = false
 z_index = 99
 
-[node name="Star" parent="Stars" instance=ExtResource("6_jxxb4")]
-position = Vector2(93, 258)
-rotation = 0.436332
-scale = Vector2(0.15, 0.15)
-
-[node name="Star4" parent="Stars" instance=ExtResource("6_jxxb4")]
-position = Vector2(198, 106)
-rotation = 0.436332
-scale = Vector2(0.15, 0.15)
-
 [node name="Star2" parent="Stars" instance=ExtResource("6_jxxb4")]
-position = Vector2(249, 186)
+position = Vector2(77, 206)
 rotation = 0.436332
 scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star6" parent="Stars" instance=ExtResource("6_jxxb4")]
+position = Vector2(64, 96)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star7" parent="Stars" instance=ExtResource("6_jxxb4")]
+position = Vector2(144, 485)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star8" parent="Stars" instance=ExtResource("6_jxxb4")]
+position = Vector2(266, 161)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star11" parent="Stars" instance=ExtResource("6_jxxb4")]
+position = Vector2(373, 112)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star12" parent="Stars" instance=ExtResource("6_jxxb4")]
+position = Vector2(390, 209)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star14" parent="Stars" instance=ExtResource("6_jxxb4")]
+position = Vector2(485, 328)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
+
+[node name="Star15" parent="Stars" instance=ExtResource("6_jxxb4")]
+position = Vector2(519, 371)
+rotation = 0.436332
+scale = Vector2(0.25, 0.25)
+bouncing_ball = true
 
 [node name="Star5" parent="Stars" instance=ExtResource("6_jxxb4")]
 position = Vector2(583, 135)
 rotation = 0.436332
 scale = Vector2(0.25, 0.25)
+bouncing_ball = true
 
-[node name="Star3" parent="Stars" instance=ExtResource("6_jxxb4")]
-position = Vector2(524, 235)
+[node name="Path2D" type="Path2D" parent="Stars"]
+curve = SubResource("Curve2D_obbvm")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Stars/Path2D"]
+position = Vector2(233, 143)
+rotation = 1.12328
+rotates = false
+script = ExtResource("7_52oh7")
+
+[node name="Star9" parent="Stars/Path2D/PathFollow2D" instance=ExtResource("6_jxxb4")]
+position = Vector2(-0.937592, -2.6685)
+rotation = -1.12328
 scale = Vector2(0.3, 0.3)
+
+[node name="Path2D2" type="Path2D" parent="Stars"]
+curve = SubResource("Curve2D_loo8a")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Stars/Path2D2"]
+position = Vector2(111, 463)
+rotates = false
+loop = false
+script = ExtResource("7_52oh7")
+reverse = true
+
+[node name="Star16" parent="Stars/Path2D2/PathFollow2D" instance=ExtResource("6_jxxb4")]
+position = Vector2(3.8147e-05, 0)
+scale = Vector2(0.3, 0.3)
+
+[node name="Path2D3" type="Path2D" parent="Stars"]
+curve = SubResource("Curve2D_h3v11")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Stars/Path2D3"]
+position = Vector2(426, 142)
+rotation = 1.89785
+rotates = false
+loop = false
+script = ExtResource("7_52oh7")
+reverse = true
+
+[node name="Star13" parent="Stars/Path2D3/PathFollow2D" instance=ExtResource("6_jxxb4")]
+position = Vector2(-0.946991, 0.321259)
+rotation = -1.89785
+scale = Vector2(0.3, 0.3)
+
+[node name="Path2D4" type="Path2D" parent="Stars"]
+curve = SubResource("Curve2D_ekyih")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Stars/Path2D4"]
+position = Vector2(525, 235)
+rotation = 2.81984
+rotates = false
+loop = false
+script = ExtResource("7_52oh7")
+reverse = true
+
+[node name="Star3" parent="Stars/Path2D4/PathFollow2D" instance=ExtResource("6_jxxb4")]
+position = Vector2(0.94873, 0.316223)
+rotation = -2.81984
+scale = Vector2(0.3, 0.3)
+
+[node name="Node2D" type="Node2D" parent="Stars"]
+position = Vector2(301, 86)
+script = ExtResource("8_plbij")
+mov_offset = Vector2(70, 70)
+mov_moving = Vector2(-1, 1)
+offset_speed = 0.3
+
+[node name="Star10" parent="Stars/Node2D" instance=ExtResource("6_jxxb4")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="Node2D2" type="Node2D" parent="Stars"]
+position = Vector2(230, 454)
+script = ExtResource("8_plbij")
+mov_offset = Vector2(70, 5)
+mov_moving = Vector2(0, -1)
+offset_speed = 0.3
+
+[node name="Star18" parent="Stars/Node2D2" instance=ExtResource("6_jxxb4")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="Node2D3" type="Node2D" parent="Stars"]
+position = Vector2(197, 454)
+script = ExtResource("8_plbij")
+mov_offset = Vector2(70, 5)
+mov_moving = Vector2(0, -1)
+offset_speed = 0.3
+
+[node name="Star17" parent="Stars/Node2D3" instance=ExtResource("6_jxxb4")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
+
+[node name="Node2D4" type="Node2D" parent="Stars"]
+position = Vector2(139, 144)
+script = ExtResource("8_plbij")
+mov_offset = Vector2(-70, 70)
+mov_moving = Vector2(1, 1)
+offset_speed = -0.3
+
+[node name="Star7" parent="Stars/Node2D4" instance=ExtResource("6_jxxb4")]
+rotation = 0.436332
+scale = Vector2(0.15, 0.15)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -155,6 +319,7 @@ texture = ExtResource("11_yujmb")
 region_enabled = true
 region_rect = Rect2(0, 0, 784, 32)
 script = ExtResource("8_gyxmm")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 z_index = 25
@@ -167,35 +332,56 @@ script = ExtResource("10_ks7k0")
 speed = 100.0
 
 [node name="Mario" parent="." instance=ExtResource("12_61tlu")]
-position = Vector2(128, 336)
+position = Vector2(576, 400)
 collision_layer = 0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("13_6jugl")
 format = 2
-layer_0/tile_data = PackedInt32Array(983044, 131072, 2, 917508, 131072, 1, 851972, 131072, 0, 983043, 65536, 2, 917507, 65536, 1, 851971, 65536, 0, 983042, 0, 2, 917506, 0, 1, 851970, 0, 0, 983056, 65536, 2, 917520, 65536, 1, 851984, 65536, 0, 983055, 65536, 2, 917519, 65536, 1, 851983, 65536, 0, 983054, 65536, 2, 917518, 65536, 1, 851982, 65536, 0, 983053, 65536, 2, 917517, 65536, 1, 851981, 65536, 0, 983052, 65536, 2, 917516, 65536, 1, 851980, 65536, 0, 983051, 65536, 2, 917515, 65536, 1, 851979, 65536, 0, 983050, 65536, 2, 917514, 65536, 1, 851978, 65536, 0, 983049, 65536, 2, 917513, 65536, 1, 851977, 65536, 0, 983048, 0, 2, 917512, 0, 1, 851976, 0, 0, 983057, 131072, 2, 917521, 131072, 1, 851985, 131072, 0, 720899, 3, 0, 786435, 3, 1, 720900, 65539, 0, 786436, 65539, 1, 655374, 3, 1, 655375, 65539, 1, 720910, 3, 1, 720911, 65539, 1, 786446, 3, 1, 786447, 65539, 1, 131082, 3, 1, 131083, 65539, 1, 65546, 3, 1, 65547, 65539, 1, 196618, 3, 2, 196619, 65539, 2, 786448, 2, 458752, 786434, 2, 327680, 393234, 2, 131072, 327683, 2, 131072, 262152, 2, 131072, 786442, 2, 65536, 524302, 3, 1, 524303, 65539, 1, 458766, 3, 0, 458767, 65539, 0, 589838, 3, 1, 589839, 65539, 1)
-layer_1/tile_data = PackedInt32Array(917514, 2, 786432)
+layer_0/tile_data = PackedInt32Array(458766, 3, 0, 524302, 3, 1, 589838, 3, 1, 655374, 3, 1, 720910, 3, 1, 786446, 3, 1, 851982, 0, 0, 917518, 0, 1, 983054, 0, 2, 458767, 65539, 0, 524303, 65539, 1, 589839, 65539, 1, 655375, 65539, 1, 720911, 65539, 1, 786447, 65539, 1, 851983, 131072, 0, 917519, 131072, 1, 983055, 131072, 2, 851985, 3, 0, 917521, 3, 1, 851986, 65539, 0, 917522, 65539, 1, 983044, 131072, 2, 917508, 131072, 1, 851972, 131072, 0, 983043, 65536, 2, 917507, 65536, 1, 851971, 65536, 0, 983042, 0, 2, 917506, 0, 1, 851970, 0, 0, 720899, 3, 0, 786435, 3, 1, 720900, 65539, 0, 786436, 65539, 1)
+layer_1/tile_data = PackedInt32Array(917520, 2, 786432)
+
+[node name="TileMap3" type="TileMap" parent="."]
+position = Vector2(0, -17)
+tile_set = ExtResource("13_6jugl")
+format = 2
+layer_0/tile_data = PackedInt32Array(131082, 3, 1, 196618, 3, 2, 131083, 65539, 1, 196619, 65539, 2, 65546, 3, 1, 65547, 65539, 1)
+layer_1/tile_data = PackedInt32Array()
+
+[node name="TileMap4" type="TileMap" parent="."]
+position = Vector2(16, 0)
+tile_set = ExtResource("13_6jugl")
+format = 2
+layer_1/tile_data = PackedInt32Array()
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource("14_kf6p6")
+format = 2
+layer_1/tile_data = PackedInt32Array()
 
 [node name="QuestionBlock" parent="." instance=ExtResource("14_meqd4")]
-position = Vector2(432, 240)
+position = Vector2(560, 112)
 result = SubResource("Resource_0uqxv")
 
 [node name="Brick" parent="." instance=ExtResource("17_jgdr8")]
-position = Vector2(400, 240)
+position = Vector2(528, 112)
 
 [node name="Brick2" parent="." instance=ExtResource("17_jgdr8")]
-position = Vector2(368, 240)
+position = Vector2(496, 112)
+
+[node name="Brick3" parent="." instance=ExtResource("17_jgdr8")]
+position = Vector2(464, 112)
+
+[node name="Brick4" parent="." instance=ExtResource("17_jgdr8")]
+position = Vector2(176, 368)
+metadata/_edit_lock_ = true
+
+[node name="Brick5" parent="." instance=ExtResource("17_jgdr8")]
+position = Vector2(208, 368)
+metadata/_edit_lock_ = true
 
 [node name="Goomba" parent="." instance=ExtResource("18_h5fr2")]
-position = Vector2(432, 400)
-speed = Vector2(0, 0)
-
-[node name="Goomba2" parent="." instance=ExtResource("18_h5fr2")]
-position = Vector2(368, 400)
-speed = Vector2(0, 0)
-
-[node name="Goomba3" parent="." instance=ExtResource("18_h5fr2")]
-position = Vector2(304, 400)
+position = Vector2(192, 336)
 speed = Vector2(0, 0)
 
 [node name="Node2D2" type="Node2D" parent="."]
@@ -203,12 +389,12 @@ script = ExtResource("8_gyxmm")
 
 [node name="FancyBush16" type="Sprite2D" parent="Node2D2"]
 z_index = 1
-position = Vector2(32, 208)
+position = Vector2(320, 158)
 texture = ExtResource("19_yf80c")
 
 [node name="FancyBush17" type="Sprite2D" parent="Node2D2"]
 z_index = -1
-position = Vector2(192, 446)
+position = Vector2(419, 416)
 texture = ExtResource("19_yf80c")
 
 [node name="Node2D" type="Node2D" parent="Node2D2"]
@@ -243,6 +429,7 @@ offset_right = 640.0
 offset_bottom = 480.0
 size_flags_vertical = 3
 color = Color(0.345098, 0.533333, 0.878431, 1)
+metadata/_edit_lock_ = true
 
 [node name="Node2D3" type="Node2D" parent="."]
 visible = false
@@ -255,5 +442,16 @@ minimum = true
 offset_top = 432.0
 offset_right = 640.0
 offset_bottom = 480.0
+
+[node name="Fence" parent="." instance=ExtResource("24_r6fst")]
+position = Vector2(144, 336)
+
+[node name="Grass" parent="." instance=ExtResource("26_0htpl")]
+z_index = 1
+position = Vector2(320, 416)
+
+[node name="Grass2" parent="." instance=ExtResource("26_0htpl")]
+z_index = 1
+position = Vector2(480, 400)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
