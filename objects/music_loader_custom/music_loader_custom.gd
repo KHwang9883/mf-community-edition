@@ -2,19 +2,22 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 
 @export_category("Tweaks")
 @export var tweaked_completion_music: Resource = preload("res://music/complete_tweaked.ogg")
+@export var ignore_fade_in_tweak: bool = false
 ## ver 2.16 / 4.4 soundtrack
 @export var music_var_1: Array[Resource]
 ## ver 5.05 soundtrack
 @export var music_var_2: Array[Resource]
 ## ver 7.02-31 soundtrack
 @export var music_var_3: Array[Resource]
+@export_group("Boss Battle Music", "boss_music_")
 ## ver 2.16 / 4.4 soundtrack
 @export var boss_music_var_1: Resource
 ## ver 5.05 soundtrack
 @export var boss_music_var_2: Resource
 ## ver 7.02-31 soundtrack
 @export var boss_music_var_3: Resource
-@export var ignore_fade_in_tweak: bool = false
+@export var boss_music_volume_db: Array[float]
+@export var boss_music_start_from_sec: Array[float]
 
 var current_music: Array[Resource]
 
@@ -26,15 +29,32 @@ func _ready():
 	var bgm_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
 	match bgm_tweak:
 		1:
-			
+			if bowser_trigger && boss_music_var_1:
+				bowser_trigger.boss_music = boss_music_var_1
+				if len(boss_music_volume_db) > 0:
+					bowser_trigger.boss_music_volume = boss_music_volume_db[0]
+				if len(boss_music_start_from_sec) > 0:
+					bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[0]
 			if music_var_1.size() > 0:
 				current_music = music_var_1.duplicate()
 				super(); return
 		2:
+			if bowser_trigger && boss_music_var_2:
+				bowser_trigger.boss_music = boss_music_var_2
+				if len(boss_music_volume_db) > 1:
+					bowser_trigger.boss_music_volume = boss_music_volume_db[1]
+				if len(boss_music_start_from_sec) > 1:
+					bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[1]
 			if music_var_2.size() > 0:
 				current_music = music_var_2.duplicate()
 				super(); return
 		3:
+			if bowser_trigger && boss_music_var_3:
+				bowser_trigger.boss_music = boss_music_var_3
+				if len(boss_music_volume_db) > 2:
+					bowser_trigger.boss_music_volume = boss_music_volume_db[2]
+				if len(boss_music_start_from_sec) > 2:
+					bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[2]
 			if music_var_3.size() > 0:
 				current_music = music_var_3.duplicate()
 				super(); return

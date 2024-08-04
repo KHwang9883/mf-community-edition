@@ -1,8 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://dm1va3cxjc03j"]
+[gd_scene load_steps=31 format=3 uid="uid://dm1va3cxjc03j"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_lg7qv"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_6rs61"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_2sqaq"]
 [ext_resource type="Resource" uid="uid://ch54qry3rsdck" path="res://music/sirens.mod" id="3_d3hec"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_xln5m"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_ypccd"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_nloet"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_wjw7s"]
@@ -53,6 +55,15 @@ script = ExtResource("1_lg7qv")
 jump_to_scene = "res://stages/extra/hardcore_2/hardcore_2.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_6rs61")]
+script = ExtResource("3_2sqaq")
+tweaked_completion_music = ExtResource("4_xln5m")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("3_d3hec")])
 
 [node name="Mario" parent="." instance=ExtResource("4_ypccd")]
@@ -307,6 +318,6 @@ position = Vector2(24944, 224)
 texture = ExtResource("24_0f4ut")
 
 [connection signal="player_enter" from="Objects/Area2D" to="Objects/Node2D" method="set_process_mode" binds= [0]]
-[connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_max_time" binds= [0.45]]
-[connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_min_time" binds= [0.67]]
 [connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_duration" binds= [0.0]]
+[connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_min_time" binds= [0.67]]
+[connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_max_time" binds= [0.45]]

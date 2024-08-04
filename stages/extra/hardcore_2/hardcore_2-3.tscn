@@ -1,9 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://dln23n27atbru"]
+[gd_scene load_steps=28 format=3 uid="uid://dln23n27atbru"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_uppn6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_fff3i"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_6q2uc"]
 [ext_resource type="Resource" uid="uid://ch54qry3rsdck" path="res://music/sirens.mod" id="3_ugyn3"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_1ohme"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_hgo16"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="6_6equq"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_rjpqm"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_ttr7m"]
@@ -51,6 +53,15 @@ script = ExtResource("1_uppn6")
 jump_to_scene = "res://stages/extra/hardcore_2/hardcore_2.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_fff3i")]
+script = ExtResource("3_6q2uc")
+tweaked_completion_music = ExtResource("4_hgo16")
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("3_ugyn3")])
 
 [node name="Mario" parent="." instance=ExtResource("4_1ohme")]
@@ -282,21 +293,3 @@ texture = ExtResource("19_su41j")
 position = Vector2(6800, 368)
 
 [node name="RotoRed" parent="Objects/RotoCenter" instance=ExtResource("16_ee0e5")]
-
-[connection signal="collided_wall" from="TileMap/Goomba" to="TileMap/Goomba" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725315" to="TileMap/@CharacterBody2D@725315" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725316" to="TileMap/@CharacterBody2D@725316" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725317" to="TileMap/@CharacterBody2D@725317" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725318" to="TileMap/@CharacterBody2D@725318" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725319" to="TileMap/@CharacterBody2D@725319" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725320" to="TileMap/@CharacterBody2D@725320" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725321" to="TileMap/@CharacterBody2D@725321" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725322" to="TileMap/@CharacterBody2D@725322" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/KoopaRed" to="TileMap/KoopaRed" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725354" to="TileMap/@CharacterBody2D@725354" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725355" to="TileMap/@CharacterBody2D@725355" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725368" to="TileMap/@CharacterBody2D@725368" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725369" to="TileMap/@CharacterBody2D@725369" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725449" to="TileMap/@CharacterBody2D@725449" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725458" to="TileMap/@CharacterBody2D@725458" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@725459" to="TileMap/@CharacterBody2D@725459" method="turn_x"]
