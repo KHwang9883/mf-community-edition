@@ -1,12 +1,4 @@
-extends Camera2D
-
-@export var speed = 0
-
-func _ready() -> void:
-	Thunder._current_camera = self
-
-func _physics_process(delta: float) -> void:
-	global_position.x += speed * delta
+extends Sprite2D
 
 func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
 	var ofs: Vector2 = offset

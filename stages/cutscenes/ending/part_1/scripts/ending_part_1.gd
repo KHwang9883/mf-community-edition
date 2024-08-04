@@ -12,7 +12,7 @@ const DAMAGED_TILE = preload("res://stages/cutscenes/ending/part_1/scripts/damag
 @onready var destruction: AudioStreamPlayer = $Destruction
 
 @onready var mario_path: PathFollow2D = $Path2D2/PathFollow2D
-@onready var mario: Sprite2D = $Path2D2/PathFollow2D/Mario
+@onready var mario: CharacterBody2D = $Path2D2/PathFollow2D/Mario2
 @onready var peach_path: PathFollow2D = $Path2D2/PathFollow2D2
 @onready var peach: Sprite2D = $Path2D2/PathFollow2D2/Peach
 
@@ -27,8 +27,17 @@ var has_skipped: bool = false
 var counter: float = -1.0
 var pipe_broken: bool = false
 
+var trans: bool = false
+
+var _skippable: bool
+var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+
 func _ready() -> void:
 	_flow_intros()
+	mario.completed = true
+	
+	await get_tree().create_timer(1.2, false).timeout
+	_skippable = true
 
 func _enter_tree() -> void:
 	print('[Cutscene] altered time scale from %s' % Engine.time_scale)
@@ -41,6 +50,10 @@ func _restore() -> void:
 
 
 func _physics_process(delta):
+	if path_follow_2d.progress_ratio >= 1 && !trans:
+		trans = true
+		_start_transition()
+	
 	if counter == -1.0: return
 	counter += delta
 	if counter > 0.04:
@@ -73,7 +86,6 @@ func _physics_process(delta):
 		if camera_2d.get_screen_center_position().x < -7000:
 			counter = -1.0
 			create_tween().tween_property(destruction, "volume_db", -40, 1.5)
-			
 		
 
 func _flow_intros():
@@ -86,7 +98,7 @@ func _flow_intros():
 	
 	await get_tree().create_timer(1.0, false).timeout
 	Audio.play_sound(JUMP, mario)
-	create_tween().tween_property(mario, "self_modulate:a", 1.0, 0.15)
+	create_tween().tween_property(mario, "modulate:a", 1.0, 0.15)
 	mario_path.speed = 175
 	
 	await get_tree().create_timer(2.0, false).timeout
@@ -120,21 +132,32 @@ func _flow_intros():
 	tw.tween_interval(0.13)
 
 
+func _unhandled_input(event: InputEvent):
+	if !_skippable: return
+	if event is InputEventKey:
+		_start_transition()
+
 func _start_transition() -> void:
-	if has_skipped: return
-	has_skipped = true
+	_skippable = false
+	if _crossfade:
+		_restore()
+		await get_tree().physics_frame
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+				.instantiate()
+				.with_scene(goto_path)
+				.with_time(0.8)
+		)
+		return
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
-			.with_speeds(0.02, -0.1)
+			.with_speeds(0.1, -0.1)
 	)
+	await TransitionManager.transition_middle
 	
-	var scene_path = goto_path
-	TransitionManager.transition_middle.connect(func():
-		_restore()
-		TransitionManager.current_transition.paused = true
-		Scenes.goto_scene(scene_path)
-		Scenes.scene_changed.connect(func(_current_scene):
-			TransitionManager.current_transition.paused = false
-		, CONNECT_ONE_SHOT)
-	, CONNECT_ONE_SHOT)
+	_restore()
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	Scenes.goto_scene.call_deferred(goto_path)
+	await Scenes.scene_ready

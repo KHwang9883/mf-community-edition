@@ -1,0 +1,340 @@
+[gd_scene load_steps=36 format=3 uid="uid://cgsc783wuxspv"]
+
+[ext_resource type="Texture2D" uid="uid://cpc057l26xydx" path="res://engine/objects/platform/tank_ground.png" id="1_57tac"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="1_d85am"]
+[ext_resource type="Script" path="res://stages/cutscenes/ending/part_4/scripts/ending_part_4.gd" id="1_iohfk"]
+[ext_resource type="Texture2D" uid="uid://djuoyh4schdj1" path="res://stages/cutscenes/ending/part_4/gfx/broken_tank_bg.png" id="1_iv5sh"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="3_6muub"]
+[ext_resource type="PackedScene" uid="uid://cfdgwxnth6m3d" path="res://tilesets/tanks/scenes/dark_cloud.tscn" id="3_dhveu"]
+[ext_resource type="Texture2D" uid="uid://87ovuili333b" path="res://stages/cutscenes/ending/part_4/gfx/broken_tank1.png" id="6_im2sr"]
+[ext_resource type="Texture2D" uid="uid://bwmn6afydgupe" path="res://stages/cutscenes/ending/part_4/gfx/bowser_broken.png" id="7_g31a6"]
+[ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/camera_part2.gd" id="8_jlky5"]
+[ext_resource type="Script" path="res://stages/cutscenes/ending/part_4/scripts/bowser_broken.gd" id="9_82rsq"]
+[ext_resource type="Script" path="res://stages/cutscenes/ending/part_4/scripts/toad_follow.gd" id="10_fxe7x"]
+[ext_resource type="Texture2D" uid="uid://dsagppu16vuce" path="res://stages/cutscenes/ending/part_4/gfx/toad_walker.png" id="10_oicc1"]
+[ext_resource type="Texture2D" uid="uid://b4ov5vnrdwlwa" path="res://stages/cutscenes/ending/part_4/gfx/toad_pinaet.png" id="12_0g4mn"]
+[ext_resource type="Texture2D" uid="uid://8cdf5umatba2" path="res://stages/cutscenes/gfx/explode_big.png" id="12_i87e8"]
+[ext_resource type="Texture2D" uid="uid://chcm5p8u4ypy3" path="res://stages/cutscenes/ending/part_4/gfx/toad_thinking.png" id="13_klb5o"]
+[ext_resource type="Script" path="res://stages/cutscenes/ending/part_4/scripts/credits_moving.gd" id="16_2onth"]
+[ext_resource type="Texture2D" uid="uid://doqjpis7cehb2" path="res://stages/cutscenes/ending/part_4/gfx/the_end.png" id="16_247pt"]
+[ext_resource type="Texture2D" uid="uid://dl0qndcy7exxj" path="res://stages/cutscenes/ending/part_4/gfx/buziol_credits.png" id="17_7ytfa"]
+[ext_resource type="Texture2D" uid="uid://dgpef47y8lf50" path="res://stages/cutscenes/ending/part_4/gfx/press_key.png" id="19_c5ryu"]
+
+[sub_resource type="Gradient" id="Gradient_xw2og"]
+colors = PackedColorArray(0.0313726, 0, 0, 1, 0.156863, 0.156863, 0.156863, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_830gy"]
+gradient = SubResource("Gradient_xw2og")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Curve2D" id="Curve2D_epa2n"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 688, 384, 0, 0, 0, 0, -304, 384)
+}
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2tx4"]
+atlas = ExtResource("10_oicc1")
+region = Rect2(0, 0, 32, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agb5r"]
+atlas = ExtResource("10_oicc1")
+region = Rect2(0, 54, 32, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyhws"]
+atlas = ExtResource("10_oicc1")
+region = Rect2(0, 108, 32, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrr54"]
+atlas = ExtResource("10_oicc1")
+region = Rect2(0, 162, 32, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ieqjl"]
+atlas = ExtResource("13_klb5o")
+region = Rect2(0, 0, 32, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8eyq"]
+atlas = ExtResource("13_klb5o")
+region = Rect2(0, 54, 32, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mac3f"]
+atlas = ExtResource("13_klb5o")
+region = Rect2(0, 108, 32, 54)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d40dx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2tx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agb5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyhws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrr54")
+}],
+"loop": true,
+"name": &"default",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_0g4mn")
+}],
+"loop": true,
+"name": &"pinaet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ieqjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8eyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mac3f")
+}],
+"loop": true,
+"name": &"thinking",
+"speed": 5.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v5ecv"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 25
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_fyy28"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_scyht"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_aalo4"]
+curve_x = SubResource("Curve_fyy28")
+curve_y = SubResource("Curve_scyht")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ler8m"]
+particle_flag_disable_z = true
+directional_velocity_min = 40.0
+directional_velocity_max = 40.0
+directional_velocity_curve = SubResource("CurveXYZTexture_aalo4")
+orbit_velocity_max = 0.04
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="EndingPart4" type="Node2D"]
+script = ExtResource("1_iohfk")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Gradient" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(320, 240)
+scale = Vector2(10, 7.5)
+texture = SubResource("GradientTexture2D_830gy")
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 0.8)
+script = ExtResource("1_d85am")
+medium = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="BrokenTankBg" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+modulate = Color(1, 1, 1, 0.454902)
+position = Vector2(351, 352)
+texture = ExtResource("1_iv5sh")
+
+[node name="BrokenTankBg2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+modulate = Color(1, 1, 1, 0.454902)
+position = Vector2(-193, 384)
+texture = ExtResource("1_iv5sh")
+
+[node name="Cloud" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(490, 71)
+
+[node name="Cloud2" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(232, 58)
+
+[node name="Cloud3" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(63, 136)
+
+[node name="Cloud4" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(-159, 47)
+
+[node name="Cloud5" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(-379, 103)
+
+[node name="Cloud6" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(-557, 62)
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+visible = false
+script = ExtResource("1_d85am")
+maximum = false
+minimum = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="BrokenTankBg" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+modulate = Color(1, 1, 1, 0.454902)
+position = Vector2(351, 352)
+texture = ExtResource("1_iv5sh")
+
+[node name="BrokenTankBg2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+modulate = Color(1, 1, 1, 0.454902)
+position = Vector2(-193, 384)
+texture = ExtResource("1_iv5sh")
+
+[node name="Cloud" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(490, 71)
+
+[node name="Cloud2" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(232, 58)
+
+[node name="Cloud3" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(63, 136)
+
+[node name="Cloud4" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(-159, 47)
+
+[node name="Cloud5" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(-379, 103)
+
+[node name="Cloud6" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
+z_index = 2
+position = Vector2(-557, 62)
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+layer = 10
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+texture_repeat = 2
+position = Vector2(-8344, 421)
+texture = ExtResource("1_57tac")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 9000, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+texture_repeat = 2
+position = Vector2(-8344, 416)
+texture = ExtResource("1_57tac")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 9000, 64)
+
+[node name="CamArea" parent="." instance=ExtResource("3_6muub")]
+offset_left = -640.0
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="BrokenTank1" type="Sprite2D" parent="."]
+position = Vector2(-130, 331)
+texture = ExtResource("6_im2sr")
+
+[node name="BowserBroken" type="Sprite2D" parent="."]
+position = Vector2(-418, 404)
+texture = ExtResource("7_g31a6")
+script = ExtResource("9_82rsq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320.655, 240)
+rotation = -3.14159
+script = ExtResource("8_jlky5")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_epa2n")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(688, 384)
+rotation = 3.14159
+rotates = false
+loop = false
+script = ExtResource("10_fxe7x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/PathFollow2D"]
+position = Vector2(0, -5)
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_d40dx")
+autoplay = "default"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_v5ecv")
+position = Vector2(0, 256)
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_ler8m")
+texture = ExtResource("12_i87e8")
+lifetime = 1.8
+fixed_fps = 60
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_v5ecv")
+position = Vector2(-288, 352)
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_ler8m")
+texture = ExtResource("12_i87e8")
+lifetime = 1.8
+fixed_fps = 60
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_v5ecv")
+position = Vector2(-613, 384)
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_ler8m")
+texture = ExtResource("12_i87e8")
+lifetime = 1.8
+fixed_fps = 60
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.701961)
+offset_left = 400.0
+offset_right = 641.0
+offset_bottom = 480.0
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D" parent="CanvasLayer"]
+script = ExtResource("16_2onth")
+
+[node name="TheEnd" type="Sprite2D" parent="CanvasLayer/Node2D"]
+position = Vector2(520, 240)
+texture = ExtResource("16_247pt")
+
+[node name="BuziolCredits" type="Sprite2D" parent="CanvasLayer/Node2D"]
+position = Vector2(402, 512)
+texture = ExtResource("17_7ytfa")
+centered = false
+
+[node name="PressKey" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(521, 246)
+texture = ExtResource("19_c5ryu")
