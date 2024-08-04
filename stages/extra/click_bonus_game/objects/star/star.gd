@@ -22,14 +22,12 @@ func activate() -> void:
 	Audio.play_1d_sound(sounds.pick_random())
 	
 	var flying = STAR_FLYING.instantiate()
-	flying.transform = transform
 	flying.angle = randf_range(0, 360)
 	Scenes.current_scene.add_child(flying)
+	flying.global_transform = global_transform
 	
 	Scenes.current_scene.h_box_container._star_collected()
 	queue_free()
-	
-	star_finder_cursor.remove_hover.call_deferred()
 
 
 func _process(delta: float) -> void:
@@ -49,22 +47,9 @@ func _physics_process(delta: float) -> void:
 func ball_stop() -> void:
 	moving -= 1
 
-func ball_entered() -> void:
+func ball_entered(area: Area2D) -> void:
+	if !area.is_in_group(&"mouse_cursor"): return
 	if !bouncing_ball: return
 	moving += 1
 	await get_tree().create_timer(4, false).timeout
 	ball_stop()
-
-func _on_mouse_entered():
-	_can_activate = true
-	star_finder_cursor.add_hover()
-
-func _on_mouse_exited():
-	_can_activate = false
-	star_finder_cursor.remove_hover()
-
-func _input(event):
-	if !Scenes.current_scene.can_interact:
-		return
-	if event is InputEventMouseButton && event.is_pressed() && event.button_index == 1 && _can_activate:
-		activate()
