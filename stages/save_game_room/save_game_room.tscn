@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=88 format=3 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -58,8 +58,11 @@
 [ext_resource type="Texture2D" uid="uid://b05pg40drmew" path="res://engine/objects/signs/sign.png" id="56_snq4n"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="57_likrm"]
 [ext_resource type="PackedScene" uid="uid://bwy11odywkm4d" path="res://engine/objects/enemies/human_lab/container/container.tscn" id="58_2kfqn"]
+[ext_resource type="Texture2D" uid="uid://bpem6gltwvpl5" path="res://stages/save_game_room/gfx/spider_web.png" id="58_cbbso"]
+[ext_resource type="Texture2D" uid="uid://dhh2bn14fghk3" path="res://stages/save_game_room/gfx/spider.png" id="59_52xgh"]
 [ext_resource type="Texture2D" uid="uid://bkmh7bhmjp7cc" path="res://engine/objects/enemies/human_lab/container/textures/container.png" id="59_kl30i"]
 [ext_resource type="Texture2D" uid="uid://dbxt1cl71fxix" path="res://gfx/sign_small_upside_down_broken.png" id="60_bnpkh"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/spider.gd" id="60_hpsoc"]
 
 [sub_resource type="Gradient" id="Gradient_6g8qv"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 1, 1)
@@ -786,6 +789,56 @@ sources/5 = SubResource("TileSetAtlasSource_22ab5")
 sources/6 = SubResource("TileSetAtlasSource_g7i2l")
 pattern_0 = SubResource("TileMapPattern_16k21")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_um1io"]
+atlas = ExtResource("59_52xgh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cryj2"]
+atlas = ExtResource("59_52xgh")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3h0c"]
+atlas = ExtResource("59_52xgh")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgnou"]
+atlas = ExtResource("59_52xgh")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_337kv"]
+atlas = ExtResource("59_52xgh")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qon3y"]
+atlas = ExtResource("59_52xgh")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cc21o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um1io")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cryj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u3h0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rgnou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_337kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qon3y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 25.0
+}]
+
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_yuddw")
 time = -1
@@ -1311,7 +1364,7 @@ position = Vector2(1168, 464)
 texture = ExtResource("13_w2ncv")
 
 [node name="Sign" type="Sprite2D" parent="."]
-position = Vector2(2148, 202)
+position = Vector2(2117, 202)
 texture = ExtResource("56_snq4n")
 
 [node name="Label" type="Label" parent="Sign"]
@@ -1330,6 +1383,17 @@ world"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="SpiderWeb" type="Sprite2D" parent="Sign"]
+z_index = -1
+position = Vector2(14, 33)
+texture = ExtResource("58_cbbso")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sign/SpiderWeb"]
+position = Vector2(19, -30)
+sprite_frames = SubResource("SpriteFrames_cc21o")
+autoplay = "default"
+script = ExtResource("60_hpsoc")
 
 [node name="Sign2" type="Sprite2D" parent="."]
 position = Vector2(2848, 361)
