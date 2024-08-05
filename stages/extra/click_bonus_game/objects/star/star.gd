@@ -5,7 +5,6 @@ const STAR_FLYING = preload("res://stages/extra/click_bonus_game/objects/star_fl
 @export var sounds: Array[AudioStream] = []
 @export var bouncing_ball: bool = false
 
-var _can_activate: bool = false
 var counter: float = 0
 
 var velocity = Vector2(100, 0)

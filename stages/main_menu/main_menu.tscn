@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=52 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_xf83d"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://bg7ig1d27vebf" path="res://stages/main_menu/textures/previews/preview-5.png" id="18_ifdp3"]
 [ext_resource type="Texture2D" uid="uid://bmxjt4y3pjtmy" path="res://stages/main_menu/textures/previews/preview-6.png" id="19_03bli"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/previews.gd" id="20_cmmgj"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/selector_blinking.gd" id="25_vf7gm"]
 [ext_resource type="Texture2D" uid="uid://c8se8kv5eegh6" path="res://stages/main_menu/textures/menu_mushrooms.png" id="26_w72sm"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
@@ -187,13 +188,15 @@ grow_vertical = 2
 [node name="MusicLoader" parent="Menu" instance=ExtResource("1_xf83d")]
 script = ExtResource("2_c40jm")
 tweaked_completion_music = ExtResource("3_yfcxo")
+ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
 boss_music_var_1 = null
 boss_music_var_2 = null
 boss_music_var_3 = null
-ignore_fade_in_tweak = false
+boss_music_volume_db = Array[Resource]([])
+boss_music_start_from_sec = Array[Resource]([])
 music = Array[Resource]([ExtResource("2_2u7nk")])
 channel_id = 0
 play_immediately = false
@@ -304,6 +307,10 @@ offset_bottom = 480.0
 theme_override_constants/separation = 1
 focused = false
 
+[node name="Node" type="Node" parent="Menu"]
+script = ExtResource("25_vf7gm")
+menu_items_controller_path = NodePath("../MainMenuControls")
+
 [node name="Mfcommunityedition" type="Sprite2D" parent="Menu"]
 visible = false
 position = Vector2(334, 147)
@@ -391,3 +398,4 @@ vertical_alignment = 2
 uppercase = true
 
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]
+[connection signal="selected" from="Menu/MainMenuControls" to="Menu/Node" method="handle_selection"]

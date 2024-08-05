@@ -9,7 +9,7 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 @export var music_var_2: Array[Resource]
 ## ver 7.02-31 soundtrack
 @export var music_var_3: Array[Resource]
-@export_group("Boss Battle Music", "boss_music_")
+@export_group("Boss Battle Music", "boss_music")
 ## ver 2.16 / 4.4 soundtrack
 @export var boss_music_var_1: Resource
 ## ver 5.05 soundtrack

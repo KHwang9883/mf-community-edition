@@ -1,7 +1,7 @@
 extends MenuSelection
 
 var STRING: Array = [
-	"default",
+	"mixed",
 	"as in version 2.16 / 4.4",
 	"as in version 5.0",
 	"as in version 7.02",
