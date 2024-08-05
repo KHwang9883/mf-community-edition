@@ -1,10 +1,8 @@
-[gd_scene load_steps=83 format=3 uid="uid://bj4v7y1ejl7wc"]
+[gd_scene load_steps=81 format=3 uid="uid://bj4v7y1ejl7wc"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_00qvl"]
-[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_p15bc"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_r3aea"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_45dvo"]
-[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_wwude"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="5_kwu5x"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_71fge"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_egiyb"]
@@ -36,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://doakxepear2fk" path="res://engine/objects/enemies/human_lab/container/textures/clones/spiny.png" id="27_kbvkp"]
 [ext_resource type="Texture2D" uid="uid://hd10qceb1lo0" path="res://engine/objects/enemies/human_lab/container/textures/clones/big_clone_human_b.png" id="28_y54hd"]
 [ext_resource type="Texture2D" uid="uid://dbysvvbn2nr4l" path="res://engine/objects/enemies/human_lab/container/textures/clones/cascadeur.png" id="29_nqq2v"]
+[ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="34_uduht"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="35_1ubmy"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="36_bbs2h"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="37_ire83"]
@@ -127,11 +126,6 @@ animations = [{
 "name": &"default",
 "speed": 8.0
 }]
-
-[sub_resource type="FontVariation" id="FontVariation_reet2"]
-base_font = ExtResource("27_ayka0")
-variation_transform = Transform2D(0.85, 0, 0, 1, 0, 0)
-spacing_glyph = -1
 
 [sub_resource type="Resource" id="Resource_60qi7"]
 resource_local_to_scene = true
@@ -352,16 +346,8 @@ time = -1
 jump_to_scene = "res://stages/extra/human_lab/human_lab-2.tscn"
 completion_center_on_player_after_transition = true
 
-[node name="MusicLoader" parent="." instance=ExtResource("2_p15bc")]
+[node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_r3aea")
-tweaked_completion_music = ExtResource("4_wwude")
-music_var_1 = Array[Resource]([])
-music_var_2 = Array[Resource]([])
-music_var_3 = Array[Resource]([])
-boss_music_var_1 = null
-boss_music_var_2 = null
-boss_music_var_3 = null
-ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("5_kwu5x")])
 volume_db = Array[float]([4.0])
 
@@ -950,7 +936,7 @@ offset_bottom = 36.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/outline_size = 5
 theme_override_constants/line_spacing = 0
-theme_override_fonts/font = SubResource("FontVariation_reet2")
+theme_override_fonts/font = ExtResource("34_uduht")
 theme_override_font_sizes/font_size = 11
 text = "star-closed
 "
