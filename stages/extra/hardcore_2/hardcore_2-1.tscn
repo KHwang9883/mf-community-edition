@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dm1va3cxjc03j"]
+[gd_scene load_steps=32 format=3 uid="uid://dm1va3cxjc03j"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_lg7qv"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_6rs61"]
@@ -21,10 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://c4rlvdl70jlg7" path="res://engine/objects/enemies/lakitus/lakitu_hardcore.tscn" id="19_d1y6j"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="19_u3e7d"]
 [ext_resource type="Script" path="res://engine/objects/detectors/player_detection.gd" id="19_uy6ux"]
-[ext_resource type="Script" path="res://stages/extra/hardcore_2/scripts/lakitu_setter.gd" id="20_lpcqm"]
 [ext_resource type="Texture2D" uid="uid://b05pg40drmew" path="res://engine/objects/signs/sign.png" id="21_fr307"]
 [ext_resource type="Texture2D" uid="uid://bmxn7jx2qclt2" path="res://gfx/texts/signs/signlaki.png" id="22_jdjfj"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="23_awgyy"]
+[ext_resource type="Script" path="res://stages/extra/hardcore_2/scripts/lakitu_checker.gd" id="23_w50wl"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="24_0f4ut"]
 
 [sub_resource type="Gradient" id="Gradient_63lxn"]
@@ -47,8 +47,11 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p0ujf"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nquqx"]
 size = Vector2(160, 517)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e5xk3"]
+size = Vector2(2560, 176)
 
 [node name="Hardcore2-1" type="Node2D"]
 script = ExtResource("1_lg7qv")
@@ -57,13 +60,21 @@ jump_to_scene = "res://stages/extra/hardcore_2/hardcore_2.tscn"
 [node name="MusicLoader" parent="." instance=ExtResource("2_6rs61")]
 script = ExtResource("3_2sqaq")
 tweaked_completion_music = ExtResource("4_xln5m")
+ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
 boss_music_var_1 = null
 boss_music_var_2 = null
 boss_music_var_3 = null
-ignore_fade_in_tweak = false
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("3_d3hec")])
 
 [node name="Mario" parent="." instance=ExtResource("4_ypccd")]
@@ -168,19 +179,19 @@ only_once = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Area2D"]
 position = Vector2(2480, 157.5)
-shape = SubResource("RectangleShape2D_p0ujf")
+shape = SubResource("RectangleShape2D_nquqx")
 
 [node name="Area2D2" type="Area2D" parent="Objects"]
-script = ExtResource("19_uy6ux")
-only_once = true
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("23_w50wl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Area2D2"]
-position = Vector2(21808, 176)
-shape = SubResource("RectangleShape2D_p0ujf")
+position = Vector2(23008, 104)
+shape = SubResource("RectangleShape2D_e5xk3")
 
 [node name="Node2D" type="Node2D" parent="Objects"]
 process_mode = 4
-script = ExtResource("20_lpcqm")
 
 [node name="LakituHardcore" parent="Objects/Node2D" instance=ExtResource("19_d1y6j")]
 position = Vector2(3120, 25)
@@ -318,6 +329,3 @@ position = Vector2(24944, 224)
 texture = ExtResource("24_0f4ut")
 
 [connection signal="player_enter" from="Objects/Area2D" to="Objects/Node2D" method="set_process_mode" binds= [0]]
-[connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_duration" binds= [0.0]]
-[connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_min_time" binds= [0.67]]
-[connection signal="player_enter" from="Objects/Area2D2" to="Objects/Node2D" method="set_max_time" binds= [0.45]]

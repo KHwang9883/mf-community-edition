@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dcy6ojfbrpajk"]
+[gd_scene load_steps=29 format=3 uid="uid://dcy6ojfbrpajk"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_fd8my"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_15jgs"]
@@ -18,14 +18,13 @@
 [ext_resource type="PackedScene" uid="uid://dpv4ov40yd1bb" path="res://engine/objects/enemies/spinies/spiny_red_hardcore.tscn" id="15_50687"]
 [ext_resource type="Texture2D" uid="uid://mpdkiuduprqj" path="res://gfx/fancy_graphics/clouds_looping_alpha.png" id="15_m223r"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="16_3416u"]
-[ext_resource type="Script" path="res://stages/extra/hardcore_2/scripts/lakitu_setter.gd" id="16_ayele"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="19_0v7ll"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="20_mtmou"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="21_hp4wk"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="22_lclaq"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="23_wswdq"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="24_byfe4"]
-[ext_resource type="Script" path="res://engine/objects/detectors/player_detection.gd" id="24_w6itj"]
+[ext_resource type="Script" path="res://stages/extra/hardcore_2/scripts/lakitu_checker.gd" id="26_5hl30"]
 
 [sub_resource type="Gradient" id="Gradient_63lxn"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -33,8 +32,8 @@ colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549,
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_xl8ex"]
 gradient = SubResource("Gradient_63lxn")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bjwc5"]
-size = Vector2(160, 517)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fn7n"]
+size = Vector2(6912, 192)
 
 [node name="Hardcore2-2" type="Node2D"]
 script = ExtResource("1_fd8my")
@@ -43,13 +42,21 @@ jump_to_scene = "res://stages/extra/hardcore_2/hardcore_2.tscn"
 [node name="MusicLoader" parent="." instance=ExtResource("2_15jgs")]
 script = ExtResource("3_75een")
 tweaked_completion_music = ExtResource("4_0nu2y")
+ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
 boss_music_var_1 = null
 boss_music_var_2 = null
 boss_music_var_3 = null
-ignore_fade_in_tweak = false
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_kcdad")])
 
 [node name="Mario" parent="." instance=ExtResource("4_5i4tl")]
@@ -153,10 +160,9 @@ position = Vector2(2224, 400)
 position = Vector2(2160, 400)
 
 [node name="Node2D" type="Node2D" parent="Objects"]
-script = ExtResource("16_ayele")
 
 [node name="LakituHardcore" parent="Objects/Node2D" instance=ExtResource("14_4k55t")]
-position = Vector2(14500, 80)
+position = Vector2(6496, 80)
 movement_area = Rect2(1000, 0, 13000, 480)
 pitching_interval_min = 4.0
 pitching_interval_max = 6.0
@@ -215,15 +221,14 @@ offset_right = 4152.0
 offset_bottom = 343.0
 text = "лупер попросил сдвинуть вот и сдвинул"
 
-[node name="Area2D2" type="Area2D" parent="."]
-script = ExtResource("24_w6itj")
-only_once = true
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("26_5hl30")
+duration = 0.1
+min_time = 0.8
+max_time = 1.2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(7184, 176)
-shape = SubResource("RectangleShape2D_bjwc5")
-
-[connection signal="player_enter" from="Area2D2" to="Objects/Node2D" method="set_duration" binds= [0.1]]
-[connection signal="player_enter" from="Area2D2" to="Objects/Node2D" method="set_skip_animation" binds= [true]]
-[connection signal="player_enter" from="Area2D2" to="Objects/Node2D" method="set_min_time" binds= [0.8]]
-[connection signal="player_enter" from="Area2D2" to="Objects/Node2D" method="set_max_time" binds= [1.2]]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(10624, 96)
+shape = SubResource("RectangleShape2D_7fn7n")

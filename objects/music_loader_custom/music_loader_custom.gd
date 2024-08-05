@@ -9,6 +9,13 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 @export var music_var_2: Array[Resource]
 ## ver 7.02-31 soundtrack
 @export var music_var_3: Array[Resource]
+@export_group("Tweaked Music Settings")
+@export var var_1_volume_db: Array[float] = [0.0]
+@export var var_1_start_from_sec: Array[float] = [0.0]
+@export var var_2_volume_db: Array[float] = [0.0]
+@export var var_2_start_from_sec: Array[float] = [0.0]
+@export var var_3_volume_db: Array[float] = [0.0]
+@export var var_3_start_from_sec: Array[float] = [0.0]
 @export_group("Boss Battle Music", "boss_music")
 ## ver 2.16 / 4.4 soundtrack
 @export var boss_music_var_1: Resource
@@ -16,50 +23,39 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 @export var boss_music_var_2: Resource
 ## ver 7.02-31 soundtrack
 @export var boss_music_var_3: Resource
-@export var boss_music_volume_db: Array[float]
-@export var boss_music_start_from_sec: Array[float]
+@export var boss_music_volume_db: Array[float] = [0.0]
+@export var boss_music_start_from_sec: Array[float] = [0.0]
 
 var current_music: Array[Resource]
 
 func _ready():
 	if SettingsManager.get_tweak("alt_completion_music", false) && Scenes.current_scene is Level:
 		Scenes.current_scene.completion_music = tweaked_completion_music
-	var bowser_trigger: Path2D = Scenes.current_scene.get_node_or_null(^"BowserTrigger")
 	
 	var bgm_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
-	match bgm_tweak:
-		1:
-			if bowser_trigger && boss_music_var_1:
-				bowser_trigger.boss_music = boss_music_var_1
-				if len(boss_music_volume_db) > 0:
-					bowser_trigger.boss_music_volume = boss_music_volume_db[0]
-				if len(boss_music_start_from_sec) > 0:
-					bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[0]
-			if music_var_1.size() > 0:
-				current_music = music_var_1.duplicate()
-				super(); return
-		2:
-			if bowser_trigger && boss_music_var_2:
-				bowser_trigger.boss_music = boss_music_var_2
-				if len(boss_music_volume_db) > 1:
-					bowser_trigger.boss_music_volume = boss_music_volume_db[1]
-				if len(boss_music_start_from_sec) > 1:
-					bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[1]
-			if music_var_2.size() > 0:
-				current_music = music_var_2.duplicate()
-				super(); return
-		3:
-			if bowser_trigger && boss_music_var_3:
-				bowser_trigger.boss_music = boss_music_var_3
-				if len(boss_music_volume_db) > 2:
-					bowser_trigger.boss_music_volume = boss_music_volume_db[2]
-				if len(boss_music_start_from_sec) > 2:
-					bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[2]
-			if music_var_3.size() > 0:
-				current_music = music_var_3.duplicate()
-				super(); return
+	if bgm_tweak >= 1 && bgm_tweak <= 3:
+		var _set: bool = _bgm_tweak(bgm_tweak)
+		if _set:
+			super(); return
 	current_music = music.duplicate()
 	super()
+
+
+func _bgm_tweak(which: int) -> bool:
+	var bowser_trigger: Path2D = Scenes.current_scene.get_node_or_null(^"BowserTrigger")
+	if bowser_trigger && get("boss_music_var_" + str(which)):
+		bowser_trigger.boss_music = get("boss_music_var_" + str(which))
+		if len(boss_music_volume_db) > which - 1:
+			bowser_trigger.boss_music_volume = boss_music_volume_db[which - 1]
+		if len(boss_music_start_from_sec) > which - 1:
+			bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[which - 1]
+	if get("music_var_" + str(which)).size() > 0:
+		current_music = get("music_var_" + str(which)).duplicate()
+		volume_db = get("var_%s_volume_db" % str(which)).duplicate()
+		start_from_sec = get("var_%s_start_from_sec" % str(which)).duplicate()
+		return true
+	return false
+
 
 func _change_music(ind: int, ch_id: int) -> void:
 	if current_music.size() <= ind: return
