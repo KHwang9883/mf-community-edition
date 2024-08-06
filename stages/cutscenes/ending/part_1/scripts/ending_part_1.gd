@@ -139,25 +139,24 @@ func _unhandled_input(event: InputEvent):
 
 func _start_transition() -> void:
 	_skippable = false
-	if _crossfade:
-		_restore()
-		await get_tree().physics_frame
+	
+	_restore()
+	await get_tree().physics_frame
+	
+	if !_crossfade:
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+				.instantiate()
+				.with_speeds(0.04, -0.1)
+				.with_pause()
+				.on_player_after_middle(true)
+		)
+		
+		await TransitionManager.transition_middle
+		Scenes.goto_scene(goto_path)
+	else:
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 				.instantiate()
 				.with_scene(goto_path)
-				.with_time(0.8)
 		)
-		return
-	TransitionManager.accept_transition(
-		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-			.instantiate()
-			.with_speeds(0.1, -0.1)
-	)
-	await TransitionManager.transition_middle
-	
-	_restore()
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	Scenes.goto_scene.call_deferred(goto_path)
-	await Scenes.scene_ready

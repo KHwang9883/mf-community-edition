@@ -112,7 +112,7 @@ func cutscene() -> void:
 	tw.tween_property(self, "global_position:y", 364, 4)
 	await tw.finished
 	
-	await get_tree().create_timer(0.5, false).timeout
+	#await get_tree().create_timer(0.5, false).timeout
 	
 	_moving = true
 
@@ -146,9 +146,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		_player_speed = 0
 		_moving = false
-		await get_tree().create_timer(0.4, false).timeout
+		await get_tree().create_timer(0.2, false).timeout
 		mario.direction = 1
-		await get_tree().create_timer(1.6, false).timeout
+		await get_tree().create_timer(0.5, false).timeout
 		Audio.play_sound(JUMP, mario)
 		Audio.play_sound(BREAK, mario)
 		
@@ -156,9 +156,9 @@ func _physics_process(delta: float) -> void:
 		cell.visible = false
 		mario.jump(-800)
 		
-		await get_tree().create_timer(0.5, false).timeout
+		await get_tree().create_timer(0.4, false).timeout
 		cell_peach.z_index = 5
-		await get_tree().create_timer(0.5, false).timeout
+		await get_tree().create_timer(0.4, false).timeout
 		
 		_run_away = true
 		cell_peach.play('walk')
