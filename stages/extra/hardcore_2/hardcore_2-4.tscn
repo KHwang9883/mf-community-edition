@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://cbskrpypej1ka"]
+[gd_scene load_steps=58 format=3 uid="uid://cbskrpypej1ka"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_o68eq"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_mb6gu"]
@@ -41,6 +41,7 @@
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="36_kq15a"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="37_7e74k"]
 [ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="37_7kpr7"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="42_p7e4a"]
 
 [sub_resource type="Curve2D" id="Curve2D_0x2h0"]
 _data = {
@@ -182,6 +183,13 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_rft62"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1ta1n"]
+gradient = SubResource("Gradient_rft62")
+width = 112
 
 [node name="Hardcore2-4" type="Node2D"]
 script = ExtResource("1_o68eq")
@@ -1065,6 +1073,21 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_4xm8n")
 offset = Vector2(0, 8)
 script = ExtResource("35_qhryj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D3"]
+z_index = -20
+position = Vector2(13584, 0)
+rotation = 1.5708
+scale = Vector2(1, 13588.6)
+texture = SubResource("GradientTexture1D_1ta1n")
+centered = false
+script = ExtResource("34_cfsqg")
+metadata/_edit_lock_ = true
+
+[node name="TileMap" type="TileMap" parent="Node2D3"]
+tile_set = ExtResource("42_p7e4a")
+format = 2
+layer_0/tile_data = PackedInt32Array(262163, 2, 393216, 262144, 2, 393216, 65565, 2, 393216, 458806, 2, 458752, 524352, 2, 458752, 589906, 2, 458752, 721006, 2, 458752, 524412, 2, 458752, 393362, 2, 458752, 196773, 2, 393216, 327874, 2, 393216, 262365, 2, 393216)
 
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 
