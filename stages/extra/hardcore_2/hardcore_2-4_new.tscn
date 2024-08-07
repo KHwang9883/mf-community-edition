@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://dcx4rjvxyngi3"]
+[gd_scene load_steps=91 format=3 uid="uid://dcx4rjvxyngi3"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_11iu2"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_6005j"]
@@ -40,6 +40,7 @@
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="39_prvbq"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="40_k4m8l"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="41_ethsi"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="41_ob7aa"]
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="42_0qbry"]
 [ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://stages/world_6/objects/long_platform/single_platform.tscn" id="42_sli2b"]
 [ext_resource type="Texture2D" uid="uid://bphtd571lu7hf" path="res://gfx/sign/hardcore_sign.png" id="43_oroq3"]
@@ -599,6 +600,13 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_rft62"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7wgov"]
+gradient = SubResource("Gradient_rft62")
+width = 112
 
 [node name="Hardcore2-4 New" type="Node2D"]
 script = ExtResource("1_11iu2")
@@ -1586,6 +1594,21 @@ texture = SubResource("GradientTexture2D_4xm8n")
 offset = Vector2(0, 8)
 script = ExtResource("41_ethsi")
 metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D3"]
+z_index = -20
+position = Vector2(13584, 0)
+rotation = 1.5708
+scale = Vector2(1, 13588.6)
+texture = SubResource("GradientTexture1D_7wgov")
+centered = false
+script = ExtResource("40_k4m8l")
+metadata/_edit_lock_ = true
+
+[node name="TileMap" type="TileMap" parent="Node2D3"]
+tile_set = ExtResource("41_ob7aa")
+format = 2
+layer_0/tile_data = PackedInt32Array(262149, 2, 458752, 131091, 2, 393216, 131099, 2, 393216, 524328, 2, 458752, 65589, 2, 393216, 393277, 2, 458752, 131146, 2, 393216, 65624, 2, 393216, 262223, 2, 458752, 524384, 2, 458752, 524390, 2, 458752, 65655, 2, 393216, 655488, 2, 393216, 327816, 2, 393216, 65692, 2, 393216, 786578, 2, 196608, 786595, 2, 196608, 590005, 2, 393216, 786621, 2, 327680, 327873, 2, 458752, 524494, 2, 458752, 524504, 2, 458752, 524514, 2, 458752, 458993, 2, 458752)
 
 [node name="PlatformPath" parent="." instance=ExtResource("42_sli2b")]
 position = Vector2(1248, 384)
