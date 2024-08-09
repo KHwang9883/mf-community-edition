@@ -52,22 +52,6 @@ const DEATH_SOUNDS = [
 	preload("res://objects/chorniy_mario/death_sounds/very_new/1094683338704429187.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/AAAAAAAAAAAA (1).mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/akg1.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/bobas.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/CYKA BLYAT.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/flameball.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/joj.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/large-applause.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/naxyi.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/NEPRAVILNO.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/Nice cock.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/piano_riff.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/POGNALI NAHOI2.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/ptiichki let9t.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/ryba.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/sfx_logo.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/SKYPE.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/splat.wav"), preload("res://objects/chorniy_mario/death_sounds/very_new/stupidy.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/ULETAYU.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/_.ogg"), preload("res://objects/chorniy_mario/death_sounds/very_new/КОСПЛЕЙ ИГОРЯ.mp3"), preload("res://objects/chorniy_mario/death_sounds/very_new/Не ори блять.mp3")
 ]
 
-const MILLIO_TEXT_DIE = [
-	"skill issue",
-	"bro you should train better",
-	"haha loser",
-	"cry more"
-]
-
-const MILLIO_TEXT_RIGHT = [
-	"smart fella",
-	"fart smella",
-	"big brain i see",
-	"fuck you",
-	"please die already",
-	"my name is kevin"
-]
-
 const EXPLOSION = preload("res://engine/objects/effects/explosion/explosion.tscn")
 const APPEAR = preload("res://objects/chorniy_mario/appear.ogg")
 
@@ -82,16 +66,16 @@ var wait_time: float
 
 var pause: bool = false
 
-func show_die_text() -> void:
-	kevin_text_2.text = MILLIO_TEXT_DIE.pick_random()
-	kevin_text_2.visible = true
-
-func show_right_text() -> void:
-	kevin_text_2.text = MILLIO_TEXT_RIGHT.pick_random()
-	kevin_text_2.visible = true
-
 func hide_text() -> void:
 	kevin_text_2.visible = false
+
+func _ready() -> void:
+	if !is_instance_valid(mario): return
+	mario_pos = mario.global_position
+	mario.death_music_override = DEATH_SOUNDS.pick_random()
+	wait_time = mario.death_music_override.get_length()
+	mario.death_music_ignore_pause = true
+	mario.died.connect(loludied)
 
 func _physics_process(_delta: float) -> void:
 	if !is_instance_valid(mario):
@@ -112,7 +96,7 @@ func _physics_process(_delta: float) -> void:
 		kevin_podokh()
 		return
 	
-	var pos = mario.global_position + Vector2.ZERO
+	var pos: Vector2 = mario.global_position
 	var animation = mario.sprite.animation
 	var frame = mario.sprite.frame
 	var flip_h = mario.sprite.flip_h
@@ -139,7 +123,7 @@ func _physics_process(_delta: float) -> void:
 func _map_process(_delta: float) -> void:
 	scale = Vector2(0.5, 0.5)
 	
-	var pos = player.global_position + Vector2.ZERO
+	var pos: Vector2 = player.global_position
 	if !"player" in player: return
 	var animation = player.player.animation
 	var frame = player.player.frame
@@ -160,3 +144,8 @@ func kevin_podokh() -> void:
 	var ex = EXPLOSION.instantiate()
 	ex.global_position = global_position
 	Scenes.current_scene.add_child(ex)
+
+func loludied() -> void:
+	Data.values.lives -= 1
+	Scenes.custom_scenes.pause.open_blocked = true
+	Loludied.get_child(0).activate(wait_time)
