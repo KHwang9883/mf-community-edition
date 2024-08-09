@@ -4,7 +4,7 @@ var activated: bool = false
 var _current_kevin: Area2D
 
 func _ready() -> void:
-	Scenes.scene_changed.connect(add_kevin.unbind(1))
+	Scenes.scene_ready.connect(add_kevin)
 	Scenes.scene_ready.connect(patch_mario)
 
 func add_kevin() -> void:

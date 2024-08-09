@@ -1,10 +1,11 @@
-[gd_scene load_steps=103 format=3 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=112 format=3 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_jjm06"]
 [ext_resource type="Resource" uid="uid://c1va567cln81n" path="res://engine/scenes/save_game_room/music/save_game_room.it" id="3_5sf1o"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_gl3qo"]
+[ext_resource type="Resource" uid="uid://ct402dot3riby" path="res://music/extra/kav-humn.xm" id="4_gpuj8"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="5_1d41w"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_vufed"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_6taja"]
@@ -75,6 +76,8 @@
 [ext_resource type="TileSet" uid="uid://c40wyx3trs5d2" path="res://tilesets/tanks/tank_tileset.tres" id="69_oslvf"]
 [ext_resource type="Texture2D" uid="uid://dltqgwojd0ywp" path="res://engine/tilesets/signs/sign2.png" id="70_klkt0"]
 [ext_resource type="Texture2D" uid="uid://brdnc28pgfnl3" path="res://stages/save_game_room/gfx/lostmap.png" id="75_2rxnu"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="76_g6rab"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/kevin_activate.gd" id="77_s7vb4"]
 
 [sub_resource type="Gradient" id="Gradient_6g8qv"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 1, 1)
@@ -860,6 +863,41 @@ animations = [{
 "speed": 25.0
 }]
 
+[sub_resource type="Curve" id="Curve_btxey"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_tqubx"]
+curve = SubResource("Curve_btxey")
+
+[sub_resource type="Curve" id="Curve_7lna3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ok6qt"]
+curve = SubResource("Curve_7lna3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6suum"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 4, 0)
+emission_shape = 3
+emission_box_extents = Vector3(120, 1, 1)
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, -1, 0)
+spread = 75.0
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_ok6qt")
+alpha_curve = SubResource("CurveTexture_tqubx")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cjko6"]
+load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
+
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_yuddw")
 time = -1
@@ -869,7 +907,7 @@ falling_below_warp_to = NodePath("PipeOut")
 metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_jjm06")]
-music = Array[Resource]([ExtResource("3_5sf1o")])
+music = Array[Resource]([ExtResource("3_5sf1o"), ExtResource("4_gpuj8")])
 volume_db = Array[float]([0.0])
 
 [node name="SaveRoomLogic" type="Node" parent="."]
@@ -998,6 +1036,7 @@ scale = Vector2(1.879, 640)
 texture = SubResource("GradientTexture1D_j0p18")
 script = ExtResource("11_obqea")
 is_black = true
+metadata/_edit_lock_ = true
 
 [node name="GradientSecrets" type="Sprite2D" parent="ParallaxBackground"]
 modulate = Color(1, 1, 1, 0)
@@ -1008,6 +1047,7 @@ scale = Vector2(1.879, 640)
 texture = SubResource("GradientTexture1D_t41r7")
 script = ExtResource("11_obqea")
 is_black = true
+metadata/_edit_lock_ = true
 
 [node name="Node2D" type="Node2D" parent="ParallaxBackground"]
 script = ExtResource("12_smei1")
@@ -1976,6 +2016,62 @@ region_rect = Rect2(0, 32, 64, 32)
 [node name="PipeIn" parent="." instance=ExtResource("21_qg33c")]
 position = Vector2(7360, 304)
 trigger_finish = true
+
+[node name="KevinLayer" type="CanvasLayer" parent="."]
+
+[node name="Node2D2" type="Node2D" parent="KevinLayer"]
+metadata/_edit_lock_ = true
+
+[node name="Stars" type="GPUParticles2D" parent="KevinLayer/Node2D2"]
+modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+position = Vector2(320, 480)
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_6suum")
+texture = SubResource("CompressedTexture2D_cjko6")
+lifetime = 0.5
+
+[node name="Node2D" type="Node2D" parent="KevinLayer"]
+script = ExtResource("24_ijk3p")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="KevinLayer/Node2D"]
+offset_left = 64.0
+offset_top = 416.0
+offset_right = 576.0
+offset_bottom = 464.0
+theme_override_colors/font_color = Color(1, 0.435294, 0.34902, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("57_likrm")
+theme_override_font_sizes/font_size = 16
+text = "KEVIN MODE ACTIVATED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="KevinLayer/Node2D"]
+offset_left = 64.0
+offset_top = 444.0
+offset_right = 576.0
+offset_bottom = 476.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("57_likrm")
+theme_override_font_sizes/font_size = 12
+text = "proceed with caution. press 'backspace' to cancel"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="KevinLayer"]
+offset_left = 256.0
+offset_top = 32.0
+offset_right = 384.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("76_g6rab")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("77_s7vb4")
 
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
