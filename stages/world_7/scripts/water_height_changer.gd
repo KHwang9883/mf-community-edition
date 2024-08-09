@@ -1,4 +1,4 @@
-extends "res://objects/detectors/player_detection.gd"
+extends "res://engine/objects/detectors/player_detection.gd"
 
 @export var change_by: float = 0
 
