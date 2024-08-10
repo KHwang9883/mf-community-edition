@@ -1,114 +1,115 @@
 @echo off
+setlocal EnableDelayedExpansion
 
 :ask
 
 echo [95mChoose the action you want to run:[0m
-echo[
+echo(
 echo [94m1.[0m Update project and engine with reset
 echo [94m2.[0m Update project and engine
-echo[
+echo(
 echo [94m3.[0m Update project with reset
 echo [94m4.[0m Update project
-echo[
+echo(
 echo [94m5.[0m Update engine with reset
 echo [94m6.[0m Update engine
-echo[
+echo(
 echo [94m7.[0m Project diff
 echo [94m8.[0m Engine diff
-echo[
+echo(
 echo [94m9.[0m Project commit
 echo [94m10.[0m Engine commit (if you have permission to do so)
-echo[
+echo(
 set /p userInput=Enter your choice: 
 
 if /i "%userInput%"=="1" (
-  echo[
+  echo(
   echo [91mThis action will destroy all uncommited data. Press enter to proceed.[0m
-  echo[
+  echo(
   set /p a=
 
   echo [95mPerforming resets...[0m
-  echo[
+  echo(
   git reset --hard
   cd engine
   git reset --hard
   cd ..
 
-  echo[
+  echo(
   echo [95mPulling the project updates...[0m
-  echo[
+  echo(
 
   git pull
 
-  echo[
+  echo(
   echo [95mUpdating the engine submodule...[0m
-  echo[
+  echo(
 
   git submodule update --remote
 
   goto end
 ) else if /i "%userInput%"=="2" (
-  echo[
+  echo(
   echo [95mPulling the project updates...[0m
-  echo[
+  echo(
 
   git pull
 
-  echo[
+  echo(
   echo [95mUpdating the engine submodule...[0m
-  echo[
+  echo(
 
   git submodule update --remote
 
   goto end
 ) else if /i "%userInput%"=="3" (
-  echo[
+  echo(
   echo [91mThis action will destroy all uncommited data in the project. Press enter to proceed.[0m
-  echo[
+  echo(
   set /p a=
 
   echo [95mPerforming resets...[0m
-  echo[
+  echo(
   git reset --hard
 
-  echo[
+  echo(
   echo [95mPulling the project updates...[0m
-  echo[
+  echo(
 
   git pull
 
   goto end
 ) else if /i "%userInput%"=="4" (
-  echo[
+  echo(
   echo [95mPulling the project updates...[0m
-  echo[
+  echo(
 
   git pull
 
   goto end
 ) else if /i "%userInput%"=="5" (
-  echo[
+  echo(
   echo [91mThis action will destroy all uncommited data in the engine. Press enter to proceed.[0m
-  echo[
+  echo(
   set /p a=
 
   echo [95mPerforming engine reset...[0m
-  echo[
+  echo(
   cd engine
   git reset --hard
   cd ..
 
-  echo[
+  echo(
   echo [95mUpdating the engine submodule...[0m
-  echo[
+  echo(
 
   git submodule update --remote
 
   goto end
 ) else if /i "%userInput%"=="6" (
-  echo[
+  echo(
   echo [95mUpdating the engine submodule...[0m
-  echo[
+  echo(
 
   git submodule update --remote
 
@@ -129,7 +130,7 @@ if /i "%userInput%"=="1" (
   set /p commitName=Enter the project commit name: 
 
   git add .
-  git commit -m '%commitName%'
+  git commit -m "!commitName!"
   git push
 
   goto ask
@@ -138,7 +139,7 @@ if /i "%userInput%"=="1" (
 
   cd engine
   git add .
-  git commit -m '%commitName%'
+  git commit -m "!commitName!"
   git push origin HEAD:main
   cd ..
 
@@ -149,8 +150,8 @@ if /i "%userInput%"=="1" (
 )
 
 :end
-echo[
+echo(
 echo [95mReview the changes and press enter to exit.[0m
-echo[
+echo(
 
 set /p a=
