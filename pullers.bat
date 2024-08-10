@@ -1,8 +1,12 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+goto init
+
 :ask
 
+echo(
+:init
 echo [95mChoose the action you want to run:[0m
 echo(
 echo [94m1.[0m Update project and engine with reset
@@ -21,17 +25,19 @@ echo [94m9.[0m Project commit
 echo [94m10.[0m Engine commit (if you have permission to do so)
 echo(
 set /p userInput=Enter your choice: 
+echo(
 
 if /i "%userInput%"=="1" (
-  echo(
   echo [91mThis action will destroy all uncommited data. Press enter to proceed.[0m
   echo(
   set /p a=
 
   echo [95mPerforming resets...[0m
   echo(
+  echo [95mProject:[0m
   git reset --hard
   cd engine
+  echo [95mEngine:[0m
   git reset --hard
   cd ..
 
@@ -49,7 +55,6 @@ if /i "%userInput%"=="1" (
 
   goto end
 ) else if /i "%userInput%"=="2" (
-  echo(
   echo [95mPulling the project updates...[0m
   echo(
 
@@ -63,7 +68,6 @@ if /i "%userInput%"=="1" (
 
   goto end
 ) else if /i "%userInput%"=="3" (
-  echo(
   echo [91mThis action will destroy all uncommited data in the project. Press enter to proceed.[0m
   echo(
   set /p a=
@@ -80,7 +84,6 @@ if /i "%userInput%"=="1" (
 
   goto end
 ) else if /i "%userInput%"=="4" (
-  echo(
   echo [95mPulling the project updates...[0m
   echo(
 
@@ -88,7 +91,6 @@ if /i "%userInput%"=="1" (
 
   goto end
 ) else if /i "%userInput%"=="5" (
-  echo(
   echo [91mThis action will destroy all uncommited data in the engine. Press enter to proceed.[0m
   echo(
   set /p a=
@@ -107,7 +109,6 @@ if /i "%userInput%"=="1" (
 
   goto end
 ) else if /i "%userInput%"=="6" (
-  echo(
   echo [95mUpdating the engine submodule...[0m
   echo(
 
