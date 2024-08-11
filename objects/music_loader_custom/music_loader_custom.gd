@@ -29,6 +29,19 @@ extends "res://engine/objects/core/music_loader/music_loader.gd"
 var current_music: Array[Resource]
 
 func _ready():
+	# Achievements!
+	var _level = Scenes.current_scene
+	if _level is Level && ("res://stages/world_" in _level.jump_to_scene || "res://stages/cutscenes/ending" in _level.jump_to_scene):
+		var pl = Thunder._current_player
+		pl.damaged.connect(func():
+			ProfileManager.current_profile.data.damaged = true
+		)
+		pl.died.connect(func():
+			ProfileManager.current_profile.data.died = true
+		)
+	
+	
+	# Soundtrack Stuff
 	if SettingsManager.get_tweak("alt_completion_music", false) && Scenes.current_scene is Level:
 		Scenes.current_scene.completion_music = tweaked_completion_music
 	
