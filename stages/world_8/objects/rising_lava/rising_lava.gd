@@ -50,7 +50,7 @@ func _physics_process(delta):
 		
 		var cam := get_viewport().get_camera_2d()
 		if is_instance_valid(cam):
-			if player.is_on_floor() && !is_equal_approx(cam.offset.y, 8) && player.global_position.y < 0:
+			if player.is_on_floor() && !is_equal_approx(cam.offset.y, 8) && player.global_position.y < 0 && player.global_position.y > -7360:
 				cam.offset.y = move_toward(cam.offset.y, 8, 5 * delta)
 			elif !is_zero_approx(cam.offset.y):
 				cam.offset.y = move_toward(cam.offset.y, 0, 50 * delta)
