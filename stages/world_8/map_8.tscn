@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b6r0c5ki0fat4"]
+[gd_scene load_steps=36 format=3 uid="uid://b6r0c5ki0fat4"]
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_2u162"]
 [ext_resource type="Resource" uid="uid://dq411m31x4mq3" path="res://music/map8.mod" id="3_5is33"]
@@ -23,17 +23,34 @@
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_b8pmt"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_y7nqp"]
 [ext_resource type="Texture2D" uid="uid://cm3ivuidbyon1" path="res://gfx/fancy_graphics/map_jump_to_start.png" id="17_rw1pu"]
+[ext_resource type="Shader" path="res://objects/chorniy_mario/grayscale.gdshader" id="19_1mhkg"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_b5kmq"]
 [ext_resource type="PackedScene" uid="uid://dgyfu1v14ewiu" path="res://gfx/fancy_graphics/quality_dots.tscn" id="20_8myw2"]
 [ext_resource type="Texture2D" uid="uid://o7g45tfg2ic8" path="res://gfx/fancy_graphics/Bowsert.png" id="21_8g361"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_bowser.gd" id="22_d5vrl"]
 [ext_resource type="Texture2D" uid="uid://2i26237mu3av" path="res://gfx/fancy_graphics/skulsl_map8.png" id="28_33m86"]
+[ext_resource type="Texture2D" uid="uid://cyonp6akvmsvq" path="res://gfx/map/extra_decos/fishbone.png" id="30_1qldw"]
+[ext_resource type="Texture2D" uid="uid://c2y1yh8nhxnin" path="res://gfx/map/extra_decos/sharkbone.png" id="31_3s0c1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gppgm"]
 shader = ExtResource("4_h7feu")
 shader_parameter/hue = 0.0
 shader_parameter/saturation = -0.73
 shader_parameter/value = -0.18
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cbysh"]
+shader = ExtResource("4_h7feu")
+shader_parameter/hue = 0.0
+shader_parameter/saturation = -0.75
+shader_parameter/value = -0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lou22"]
+shader = ExtResource("19_1mhkg")
+shader_parameter/offset = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xdpb6"]
+shader = ExtResource("19_1mhkg")
+shader_parameter/offset = -0.4
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_2u162")
@@ -116,6 +133,7 @@ position = Vector2(0, 146)
 
 [node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
 visible = false
+material = SubResource("ShaderMaterial_cbysh")
 texture = ExtResource("8_dwdps")
 script = ExtResource("19_b5kmq")
 maximum = false
@@ -123,6 +141,7 @@ medium = true
 minimum = true
 
 [node name="World8" type="Sprite2D" parent="GUI2/WorldText"]
+material = SubResource("ShaderMaterial_lou22")
 position = Vector2(0, -48)
 texture = ExtResource("13_cvmbo")
 offset = Vector2(0, 24)
@@ -156,6 +175,7 @@ layer = 0
 script = ExtResource("19_b5kmq")
 
 [node name="GwiazdkowyMapowy" type="Sprite2D" parent="BG/Node2D"]
+material = SubResource("ShaderMaterial_xdpb6")
 position = Vector2(320, 32)
 texture = ExtResource("11_2xn6r")
 script = ExtResource("12_4dsjp")
@@ -237,7 +257,7 @@ position = Vector2(567, 328)
 texture = ExtResource("28_33m86")
 
 [node name="SkulslMap12" type="Sprite2D" parent="Node2D"]
-position = Vector2(872, 313)
+position = Vector2(920, 314)
 texture = ExtResource("28_33m86")
 
 [node name="SkulslMap13" type="Sprite2D" parent="Node2D"]
@@ -251,3 +271,211 @@ texture = ExtResource("28_33m86")
 [node name="SkulslMap15" type="Sprite2D" parent="Node2D"]
 position = Vector2(1253, 311)
 texture = ExtResource("28_33m86")
+
+[node name="FishAndSharkBones" type="Node2D" parent="Node2D"]
+position = Vector2(304, 324)
+rotation = 0.523598
+scale = Vector2(0.3, 0.3)
+metadata/_edit_group_ = true
+
+[node name="Fishbones" type="Node2D" parent="Node2D/FishAndSharkBones"]
+position = Vector2(-214.752, 54.705)
+rotation = -0.144093
+scale = Vector2(1.33333, 1.33333)
+metadata/_edit_group_ = true
+
+[node name="Fishbone" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones"]
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone3" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones"]
+position = Vector2(76.1602, -24.9926)
+rotation = -1.1649
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone4" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones"]
+position = Vector2(105.851, -4.53641)
+rotation = 0.340167
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone5" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones"]
+position = Vector2(14.8185, 37.154)
+rotation = -0.117705
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone2" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones"]
+position = Vector2(40.8585, -5.52997)
+rotation = -0.903103
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbones2" type="Node2D" parent="Node2D/FishAndSharkBones"]
+position = Vector2(-26.6669, -46.188)
+rotation = -0.144093
+scale = Vector2(1.33333, 1.33333)
+metadata/_edit_group_ = true
+
+[node name="Fishbone" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones2"]
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone3" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones2"]
+position = Vector2(76.1602, -24.9926)
+rotation = -1.1649
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone4" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones2"]
+position = Vector2(105.851, -4.53641)
+rotation = 0.340167
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone5" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones2"]
+position = Vector2(14.8185, 37.154)
+rotation = -0.117705
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone2" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones2"]
+position = Vector2(40.8585, -5.52997)
+rotation = -0.903103
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbones3" type="Node2D" parent="Node2D/FishAndSharkBones"]
+position = Vector2(247.128, -211.961)
+rotation = -0.144093
+scale = Vector2(1.33333, 1.33333)
+metadata/_edit_group_ = true
+
+[node name="Fishbone" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones3"]
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone3" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones3"]
+position = Vector2(76.1602, -24.9926)
+rotation = -1.1649
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone4" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones3"]
+position = Vector2(105.851, -4.53641)
+rotation = 0.340167
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone5" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones3"]
+position = Vector2(14.8185, 37.154)
+rotation = -0.117705
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone2" type="Sprite2D" parent="Node2D/FishAndSharkBones/Fishbones3"]
+position = Vector2(40.8585, -5.52997)
+rotation = -0.903103
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+
+[node name="Sharkbone" type="Sprite2D" parent="Node2D/FishAndSharkBones"]
+texture = ExtResource("31_3s0c1")
+
+[node name="Sharkbone3" type="Sprite2D" parent="Node2D/FishAndSharkBones"]
+position = Vector2(181.419, -112.44)
+rotation = -1.0472
+texture = ExtResource("31_3s0c1")
+flip_h = true
+
+[node name="Sharkbone2" type="Sprite2D" parent="Node2D/FishAndSharkBones"]
+visible = false
+position = Vector2(90.9486, -2.47217)
+rotation = 1.309
+scale = Vector2(1.33333, 1.33333)
+texture = ExtResource("31_3s0c1")
+flip_v = true
+
+[node name="FishAndSharkBones2" type="Node2D" parent="Node2D"]
+position = Vector2(744, 320)
+rotation = 0.523598
+scale = Vector2(0.3, 0.3)
+metadata/_edit_group_ = true
+
+[node name="Fishbones" type="Node2D" parent="Node2D/FishAndSharkBones2"]
+position = Vector2(-214.752, 54.705)
+rotation = -0.144093
+scale = Vector2(1.33333, 1.33333)
+metadata/_edit_group_ = true
+
+[node name="Fishbone" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones"]
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone3" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones"]
+position = Vector2(76.1602, -24.9926)
+rotation = -1.1649
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone4" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones"]
+position = Vector2(105.851, -4.53641)
+rotation = 0.340167
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone5" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones"]
+position = Vector2(14.8185, 37.154)
+rotation = -0.117705
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone2" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones"]
+position = Vector2(40.8585, -5.52997)
+rotation = -0.903103
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbones2" type="Node2D" parent="Node2D/FishAndSharkBones2"]
+position = Vector2(-26.6669, -46.188)
+rotation = -0.144093
+scale = Vector2(1.33333, 1.33333)
+metadata/_edit_group_ = true
+
+[node name="Fishbone" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones2"]
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone3" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones2"]
+position = Vector2(76.1602, -24.9926)
+rotation = -1.1649
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone4" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones2"]
+position = Vector2(105.851, -4.53641)
+rotation = 0.340167
+texture = ExtResource("30_1qldw")
+
+[node name="Fishbone5" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones2"]
+position = Vector2(14.8185, 37.154)
+rotation = -0.117705
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+flip_h = true
+
+[node name="Fishbone2" type="Sprite2D" parent="Node2D/FishAndSharkBones2/Fishbones2"]
+position = Vector2(40.8585, -5.52997)
+rotation = -0.903103
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("30_1qldw")
+
+[node name="Sharkbone" type="Sprite2D" parent="Node2D/FishAndSharkBones2"]
+texture = ExtResource("31_3s0c1")
+
+[node name="Sharkbone3" type="Sprite2D" parent="Node2D/FishAndSharkBones2"]
+position = Vector2(181.419, -112.44)
+rotation = -1.0472
+texture = ExtResource("31_3s0c1")
+flip_h = true

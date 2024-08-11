@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://dvs3d2ernm7m6"]
+[gd_scene load_steps=78 format=3 uid="uid://dvs3d2ernm7m6"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_18jpy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wcgs6"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_l75l4"]
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="10_y26sj"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_og1l4"]
+[ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="12_jpbln"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="13_4vjhy"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="13_k4b81"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="14_hji7w"]
@@ -36,6 +37,8 @@
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="25_45fsu"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="26_rnb6j"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="28_vs3by"]
+[ext_resource type="AudioStream" uid="uid://c26br0stvjxr2" path="res://sfx/lava_up.wav" id="30_ga5ds"]
+[ext_resource type="AudioStream" uid="uid://dsv6yiepip4o8" path="res://engine/objects/enemies/thwomp/sounds/laughing.wav" id="31_5dkk3"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="37_uc4ui"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="38_04bji"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="40_0gmih"]
@@ -43,6 +46,12 @@
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="41_5uuwc"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="41_y0osg"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="43_mobt2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jds70"]
+shader = ExtResource("12_jpbln")
+shader_parameter/hue = 0.0
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
 frames = 7
@@ -60,6 +69,43 @@ frame_5/texture = ExtResource("19_utf2x")
 frame_5/duration = 0.15
 frame_6/texture = ExtResource("20_bgwhc")
 frame_6/duration = 0.15
+
+[sub_resource type="Animation" id="Animation_wsspa"]
+resource_name = "warning_accelerated"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/hue")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.15, 0.0, 0.15, 0.0, 0.15, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_jg0pr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/hue")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sksmq"]
+_data = {
+"RESET": SubResource("Animation_jg0pr"),
+"warning_accelerated": SubResource("Animation_wsspa")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k2mc0"]
 size = Vector2(32, 448)
@@ -92,7 +138,8 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="Gradient" id="Gradient_pynlr"]
-colors = PackedColorArray(0.517647, 0, 0, 1, 1, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.551948, 1)
+colors = PackedColorArray(0.517647, 0, 0, 1, 0.567762, 0, 0, 0.896104, 1, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kcwew"]
 gradient = SubResource("Gradient_pynlr")
@@ -233,6 +280,9 @@ size = Vector2(992, 9552)
 script = ExtResource("1_18jpy")
 jump_to_scene = "res://stages/world_8/map_8.tscn"
 
+[node name="Darkness" type="CanvasModulate" parent="."]
+color = Color(0.537011, 0.537011, 0.537011, 1)
+
 [node name="MusicLoader" parent="." instance=ExtResource("2_wcgs6")]
 script = ExtResource("3_2xe1p")
 tweaked_completion_music = ExtResource("4_sre8n")
@@ -257,7 +307,6 @@ music = Array[Resource]([ExtResource("4_ry3yr")])
 position = Vector2(304, 240)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
-drag_vertical_enabled = true
 drag_left_margin = 0.0
 drag_top_margin = 0.1
 drag_right_margin = 0.0
@@ -293,9 +342,15 @@ texture = ExtResource("13_k4b81")
 offset = Vector2(0, -16)
 
 [node name="LavaHUD" type="Sprite2D" parent="HUD"]
+material = SubResource("ShaderMaterial_jds70")
 position = Vector2(28, 188)
 texture = SubResource("AnimatedTexture_cct87")
 offset = Vector2(0, 16)
+
+[node name="Animation" type="AnimationPlayer" parent="HUD/LavaHUD"]
+libraries = {
+"": SubResource("AnimationLibrary_sksmq")
+}
 
 [node name="World" type="Label" parent="HUD"]
 anchors_preset = -1
@@ -315,6 +370,9 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Darkness2" type="CanvasModulate" parent="ParallaxBackground"]
+color = Color(0.537011, 0.537011, 0.537011, 1)
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -518,11 +576,32 @@ position = Vector2(352, 368)
 scale = Vector2(11, 3.5)
 texture = SubResource("GradientTexture2D_kcwew")
 
+[node name="PointLight2D" type="PointLight2D" parent="Node2D/Sprite2D"]
+position = Vector2(0, 82.2857)
+scale = Vector2(1, 3.85714)
+energy = 1.5
+texture = SubResource("GradientTexture2D_kcwew")
+
 [node name="Lava" parent="Node2D" instance=ExtResource("14_hji7w")]
 z_index = 10
-offset_top = 464.0
-offset_right = 704.0
-offset_bottom = 1360.0
+offset_left = 1.0
+offset_top = 416.0
+offset_right = 705.0
+offset_bottom = 1312.0
+metadata/_edit_lock_ = true
+
+[node name="SoundRising" type="AudioStreamPlayer2D" parent="Node2D/Lava"]
+position = Vector2(352, 80)
+stream = ExtResource("30_ga5ds")
+attenuation = 0.466517
+bus = &"Sound"
+
+[node name="SoundAccel" type="AudioStreamPlayer2D" parent="Node2D/Lava"]
+position = Vector2(352, 80)
+stream = ExtResource("31_5dkk3")
+max_distance = 6400.0
+attenuation = 0.615572
+bus = &"Sound"
 
 [node name="Timer" type="Timer" parent="Node2D"]
 wait_time = 18.0
@@ -793,4 +872,6 @@ visible = false
 position = Vector2(320, -4104)
 shape = SubResource("RectangleShape2D_fm7f7")
 
+[connection signal="died" from="Mario" to="Node2D" method="koniec_gry"]
+[connection signal="animation_finished" from="HUD/LavaHUD/Animation" to="Node2D" method="_on_animation_animation_finished"]
 [connection signal="warp_started" from="PipeIn" to="Node2D" method="koniec_gry"]
