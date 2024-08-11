@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dln23n27atbru"]
+[gd_scene load_steps=42 format=3 uid="uid://dln23n27atbru"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_uppn6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_fff3i"]
@@ -16,14 +16,19 @@
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="10_n2bt7"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="11_3ta3c"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="12_lkx7v"]
+[ext_resource type="Script" path="res://stages/extra/hardcore_2/scripts/2-3_spike_ceiling_chooser.gd" id="13_hcjf5"]
 [ext_resource type="PackedScene" uid="uid://dpv4ov40yd1bb" path="res://engine/objects/enemies/spinies/spiny_red_hardcore.tscn" id="14_yigpv"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="15_ajwvm"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="15_wrjho"]
+[ext_resource type="Script" path="res://stages/extra/hardcore_2/scripts/2-3_spike_ceiling.gd" id="15_yi3kc"]
+[ext_resource type="Texture2D" uid="uid://pujov6sbhglg" path="res://engine/objects/enemies/spikes/textures/spike_hard_block.png" id="16_cmr8b"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="16_ee0e5"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="16_ll70h"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="17_5yn8p"]
+[ext_resource type="Script" path="res://engine/objects/enemies/spikes/spike.gd" id="17_hfch6"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="18_sbjfm"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://gfx/misc/castle_big.png" id="19_su41j"]
+[ext_resource type="PackedScene" uid="uid://bys56lcpx61p1" path="res://stages/extra/hardcore_2/objects/spike_hard_block.tscn" id="29_uupuq"]
 
 [sub_resource type="Gradient" id="Gradient_370kj"]
 offsets = PackedFloat32Array(0.0666667, 1)
@@ -33,6 +38,33 @@ metadata/_snap_count = 15
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_pbora"]
 gradient = SubResource("Gradient_370kj")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ee2oh"]
+size = Vector2(1264, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgegc"]
+size = Vector2(1024, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hseag"]
+size = Vector2(2016, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btfe5"]
+size = Vector2(1504, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy33e"]
+size = Vector2(672, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y06dj"]
+size = Vector2(672, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_27nr3"]
+size = Vector2(4752, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aie1t"]
+size = Vector2(96, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t3yp2"]
+size = Vector2(128, 32)
 
 [sub_resource type="Resource" id="Resource_bvvjb"]
 resource_local_to_scene = true
@@ -55,13 +87,21 @@ jump_to_scene = "res://stages/extra/hardcore_2/hardcore_2.tscn"
 [node name="MusicLoader" parent="." instance=ExtResource("2_fff3i")]
 script = ExtResource("3_6q2uc")
 tweaked_completion_music = ExtResource("4_hgo16")
+ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
 boss_music_var_1 = null
 boss_music_var_2 = null
 boss_music_var_3 = null
-ignore_fade_in_tweak = false
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("3_ugyn3")])
 
 [node name="Mario" parent="." instance=ExtResource("4_1ohme")]
@@ -123,11 +163,484 @@ metadata/_edit_lock_ = true
 
 [node name="Objects" type="Node2D" parent="."]
 
-[node name="SpikeCeiling" parent="Objects" instance=ExtResource("8_itvuv")]
+[node name="Node2D" type="Node2D" parent="Objects"]
+script = ExtResource("13_hcjf5")
+
+[node name="SpikeCeiling" parent="Objects/Node2D" instance=ExtResource("8_itvuv")]
+modulate = Color(1, 1, 1, 0.337255)
 offset_top = -352.0
 offset_right = 15000.0
 activated_area = Rect2(1000, 0, 13200, 480)
 draw_area_rect = true
+
+[node name="VBoxContainer" type="Control" parent="Objects/Node2D"]
+z_index = 11
+layout_mode = 3
+anchors_preset = 0
+offset_top = 32.0
+offset_right = 15008.0
+offset_bottom = 64.0
+script = ExtResource("15_yi3kc")
+activated_area = Rect2(1000, 0, 13200, 480)
+
+[node name="Activation" type="Timer" parent="Objects/Node2D/VBoxContainer"]
+wait_time = 4.0
+
+[node name="TileMap" type="TileMap" parent="Objects/Node2D/VBoxContainer"]
+tile_set = ExtResource("6_6equq")
+format = 2
+layer_0/tile_data = PackedInt32Array(-327641, 1, 0, -262105, 1, 0, -196569, 1, 0, -131033, 1, 0, -65497, 1, 0, -327640, 1, 0, -327639, 1, 0, -196567, 1, 0, -131031, 1, 0, -327638, 1, 0, -327637, 1, 0, -262101, 1, 0, -196565, 1, 0, -131029, 1, 0, -65493, 1, 0, -262069, 1, 0, -196533, 1, 0, -130997, 1, 0, -262068, 1, 0, -262067, 1, 0, -130995, 1, 0, -262066, 1, 0, -262065, 1, 0, -196529, 1, 0, -130993, 1, 0, -130930, 1, 0, -196465, 1, 0, -196464, 1, 0, -196463, 1, 0, -196462, 1, 0, -130925, 1, 0, -130878, 1, 0, -261949, 1, 0, -196413, 1, 0, -261948, 1, 0, -196412, 1, 0, -261947, 1, 0, -196411, 1, 0, -130874, 1, 0, -196363, 1, 0, -130827, 1, 0, -196360, 1, 0, -130824, 1, 0, -196339, 1, 0, -130803, 1, 0, -196336, 1, 0, -130800, 1, 0, -65264, 1, 0, -65267, 1, 0, -65288, 1, 0, -65291, 1, 0, -65338, 1, 0, -65340, 1, 0, -65342, 1, 0, -65389, 1, 0, -65391, 1, 0, -65392, 1, 0, -65394, 1, 0, -65457, 1, 0, -65461, 1, 0, -196315, 1, 0, -130779, 1, 0, -65243, 1, 0, -65240, 1, 0, -130776, 1, 0, -196312, 1, 0, -196291, 1, 0, -130755, 1, 0, -65219, 1, 0, -261826, 1, 0, -261825, 1, 0, -65216, 1, 0, -130752, 1, 0, -196288, 1, 0, -130928, 1, 0, -130927, 1, 0, -196466, 1, 0, -262002, 1, 0, -262001, 1, 0, -262000, 1, 0, -261999, 1, 0, -261998, 1, 0, -261997, 1, 0, -196461, 1, 0)
+
+[node name="Sprite2D" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_top = -384.0
+offset_right = 15008.0
+offset_bottom = -128.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D2" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_top = -128.0
+offset_right = 1248.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D3" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 1408.0
+offset_top = -128.0
+offset_right = 2400.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D4" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 2560.0
+offset_top = -128.0
+offset_right = 4544.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D5" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 4736.0
+offset_top = -128.0
+offset_right = 6240.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D6" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 6336.0
+offset_top = -128.0
+offset_right = 7872.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D7" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 7936.0
+offset_top = -128.0
+offset_right = 8640.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D8" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 8704.0
+offset_top = -128.0
+offset_right = 9408.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D9" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 9472.0
+offset_top = -128.0
+offset_right = 10176.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Sprite2D10" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 0
+offset_left = 10240.0
+offset_top = -128.0
+offset_right = 15008.0
+size_flags_vertical = 3
+texture = ExtResource("8_n7v7m")
+stretch_mode = 1
+
+[node name="Spike" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_right = 1280.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/Spike"]
+position = Vector2(640, 16)
+scale = Vector2(64, 1.6)
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike/Area2D"]
+position = Vector2(632, 16)
+shape = SubResource("RectangleShape2D_ee2oh")
+
+[node name="Spike2" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 1376.0
+offset_right = 2432.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D2" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike2"]
+position = Vector2(-1376, 0)
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike2/Area2D2"]
+position = Vector2(1904, 16)
+shape = SubResource("RectangleShape2D_hgegc")
+
+[node name="CollisionShape2D6" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike2/Area2D2"]
+position = Vector2(2400, 16)
+polygon = PackedVector2Array(16, -16, 16, 16, 32, -16)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/Spike2"]
+position = Vector2(528, 16)
+scale = Vector2(52.8, 1.6)
+
+[node name="Spike3" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 2528.0
+offset_right = 4576.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike3"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike3/Area2D"]
+position = Vector2(1024, 16)
+shape = SubResource("RectangleShape2D_hseag")
+
+[node name="CollisionShape2D7" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike3/Area2D"]
+position = Vector2(32, 16)
+polygon = PackedVector2Array(-32, -16, -16, 16, -16, -16)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/Spike3"]
+position = Vector2(1024, 16)
+scale = Vector2(102.4, 1.6)
+
+[node name="Spike4" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 4704.0
+offset_right = 6240.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike4"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike4/Area2D"]
+position = Vector2(768, 16)
+shape = SubResource("RectangleShape2D_btfe5")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/Spike4"]
+position = Vector2(768, 16)
+scale = Vector2(76.8, 1.6)
+
+[node name="Spike5" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 4608.0
+offset_right = 4672.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike5"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D5" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike5/Area2D"]
+position = Vector2(32, 16)
+polygon = PackedVector2Array(-32, -16, -16, 16, 0, -16, 16, 16, 32, -16)
+
+[node name="CollisionShape2D6" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike5/Area2D"]
+position = Vector2(-64, 16)
+polygon = PackedVector2Array(16, -16, 16, 16, 32, -16)
+
+[node name="CollisionShape2D7" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike5/Area2D"]
+position = Vector2(128, 16)
+polygon = PackedVector2Array(-32, -16, -16, 16, -16, -16)
+
+[node name="Spike10" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 7872.0
+offset_top = -128.0
+offset_right = 7936.0
+offset_bottom = -96.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike10"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D5" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike10/Area2D"]
+position = Vector2(32, 16)
+polygon = PackedVector2Array(-32, -16, -32, 16, -16, 16, 0, -16, 16, 16, 32, 16, 32, -16)
+
+[node name="Spike12" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 8640.0
+offset_top = -128.0
+offset_right = 8704.0
+offset_bottom = -96.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike12"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D5" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike12/Area2D"]
+position = Vector2(32, 16)
+polygon = PackedVector2Array(-32, -16, -32, 16, -16, 16, 0, -16, 16, 16, 32, 16, 32, -16)
+
+[node name="Spike13" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 9408.0
+offset_top = -128.0
+offset_right = 9472.0
+offset_bottom = -96.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike13"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D5" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike13/Area2D"]
+position = Vector2(32, 16)
+polygon = PackedVector2Array(-32, -16, -32, 16, -16, 16, 0, -16, 16, 16, 32, 16, 32, -16)
+
+[node name="Spike14" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 10176.0
+offset_top = -96.0
+offset_right = 10240.0
+offset_bottom = -64.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike14"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D5" type="CollisionPolygon2D" parent="Objects/Node2D/VBoxContainer/Spike14/Area2D"]
+position = Vector2(32, 16)
+polygon = PackedVector2Array(-32, -16, -32, 16, -16, 16, 0, -16, 16, 16, 32, 16, 32, -16)
+
+[node name="Spike6" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 6336.0
+offset_right = 7872.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike6"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike6/Area2D"]
+position = Vector2(768, 16)
+shape = SubResource("RectangleShape2D_btfe5")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/Spike6"]
+position = Vector2(768, 16)
+scale = Vector2(76.8, 1.6)
+enable_node_path = NodePath("../../Spike5")
+
+[node name="Spike7" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 7936.0
+offset_right = 8640.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike7"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike7/Area2D"]
+position = Vector2(352, 16)
+shape = SubResource("RectangleShape2D_vy33e")
+
+[node name="Spike8" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 8704.0
+offset_right = 9408.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike8"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike8/Area2D"]
+position = Vector2(352, 16)
+shape = SubResource("RectangleShape2D_vy33e")
+
+[node name="Spike9" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 9472.0
+offset_right = 10176.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike9"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike9/Area2D"]
+position = Vector2(352, 16)
+shape = SubResource("RectangleShape2D_y06dj")
+
+[node name="Spike11" type="TextureRect" parent="Objects/Node2D/VBoxContainer"]
+texture_repeat = 2
+layout_mode = 2
+offset_left = 10240.0
+offset_right = 15008.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+texture = ExtResource("16_cmr8b")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D/VBoxContainer/Spike11"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="Objects/Node2D/VBoxContainer/Spike11/Area2D"]
+position = Vector2(2392, 16)
+shape = SubResource("RectangleShape2D_27nr3")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/Spike11"]
+position = Vector2(2384, 16)
+scale = Vector2(238.4, 1.6)
+
+[node name="SpikeHardBlock" parent="Objects/Node2D/VBoxContainer" instance=ExtResource("29_uupuq")]
+position = Vector2(1328, 0)
+type = 2
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/SpikeHardBlock"]
+position = Vector2(-5.81741e-05, -16)
+scale = Vector2(1.59999, 1.6)
+
+[node name="SpikeHardBlock2" parent="Objects/Node2D/VBoxContainer" instance=ExtResource("29_uupuq")]
+position = Vector2(2480, 0)
+type = 2
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/SpikeHardBlock2"]
+position = Vector2(-5.81741e-05, -16)
+scale = Vector2(1.59999, 1.6)
+
+[node name="SpikeHardBlock3" parent="Objects/Node2D/VBoxContainer" instance=ExtResource("29_uupuq")]
+position = Vector2(6288, 32)
+type = 2
+metadata/_edit_group_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Objects/Node2D/VBoxContainer/SpikeHardBlock3"]
+position = Vector2(-5.81741e-05, -16)
+scale = Vector2(1.59999, 1.6)
+
+[node name="Area2D" type="Area2D" parent="Objects"]
+script = ExtResource("17_hfch6")
+type = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Area2D"]
+position = Vector2(1328, -16)
+shape = SubResource("RectangleShape2D_aie1t")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Objects/Area2D"]
+position = Vector2(2480, -16)
+shape = SubResource("RectangleShape2D_aie1t")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Objects/Area2D"]
+position = Vector2(6288, -16)
+shape = SubResource("RectangleShape2D_t3yp2")
 
 [node name="KoopaParatroopaGreen" parent="Objects" instance=ExtResource("10_n2bt7")]
 position = Vector2(752, 320)
@@ -293,3 +806,22 @@ texture = ExtResource("19_su41j")
 position = Vector2(6800, 368)
 
 [node name="RotoRed" parent="Objects/RotoCenter" instance=ExtResource("16_ee0e5")]
+
+[connection signal="collided_wall" from="TileMap/Goomba" to="TileMap/Goomba" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391105" to="TileMap/@CharacterBody2D@391105" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391106" to="TileMap/@CharacterBody2D@391106" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391107" to="TileMap/@CharacterBody2D@391107" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391108" to="TileMap/@CharacterBody2D@391108" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391109" to="TileMap/@CharacterBody2D@391109" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391110" to="TileMap/@CharacterBody2D@391110" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391111" to="TileMap/@CharacterBody2D@391111" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391112" to="TileMap/@CharacterBody2D@391112" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/KoopaRed" to="TileMap/KoopaRed" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391144" to="TileMap/@CharacterBody2D@391144" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391145" to="TileMap/@CharacterBody2D@391145" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391158" to="TileMap/@CharacterBody2D@391158" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391159" to="TileMap/@CharacterBody2D@391159" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391239" to="TileMap/@CharacterBody2D@391239" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391248" to="TileMap/@CharacterBody2D@391248" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@391249" to="TileMap/@CharacterBody2D@391249" method="turn_x"]
+[connection signal="timeout" from="Objects/Node2D/VBoxContainer/Activation" to="Objects/Node2D/VBoxContainer" method="_on_activation_timeout"]
