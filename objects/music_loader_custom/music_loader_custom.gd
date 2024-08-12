@@ -32,13 +32,17 @@ func _ready():
 	# Achievements!
 	var _level = Scenes.current_scene
 	if _level is Level && ("res://stages/world_" in _level.jump_to_scene || "res://stages/cutscenes/ending" in _level.jump_to_scene):
-		var pl = Thunder._current_player
-		pl.damaged.connect(func():
-			ProfileManager.current_profile.data.damaged = true
-		)
-		pl.died.connect(func():
-			ProfileManager.current_profile.data.died = true
-		)
+		(func():
+			var pl = Thunder._current_player
+			while !is_instance_valid(pl):
+				await get_tree().physics_frame
+			pl.damaged.connect(func():
+				ProfileManager.current_profile.data.damaged = true
+			)
+			pl.died.connect(func():
+				ProfileManager.current_profile.data.died = true
+			)
+		).call_deferred()
 	
 	
 	# Soundtrack Stuff
