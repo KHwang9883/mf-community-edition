@@ -2,16 +2,26 @@ extends MenuSelection
 
 @export var tweak_name: String
 @export var default_value: bool
+@export var lock_behind_story_mode: bool = false
 
 var toggle_off = preload("res://sfx/tweak_off.mp3")
 @onready var toggle: TextureRect = $Toggle
 
+var is_blocked: bool
+
 func _ready() -> void:
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	toggle.texture.region.position.y = 0 if tweak else 16
+	if lock_behind_story_mode && !SecretsManager.is_endgame():
+		var lab: Label = $Label as Label
+		lab.text = "??????? (beat story mode to unlock!)"
+		lab.add_theme_color_override("font_color", Color.LIGHT_CORAL)
+		is_blocked = true
 
 
 func _handle_select() -> void:
+	if is_blocked: return
+	
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	_handle_toggle(!tweak)
 	if !tweak:
@@ -35,6 +45,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _handle_toggle(to_set: bool) -> bool:
+	if is_blocked:
+		return false
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	if (to_set && !tweak) || (!to_set && tweak):
 		SettingsManager.set_tweak(tweak_name, to_set)
