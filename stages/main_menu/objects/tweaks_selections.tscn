@@ -1,11 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=27 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="2_5xeuf"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_version.gd" id="2_eijug"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_skin_editor_enter.gd" id="2_pysyt"]
 [ext_resource type="AudioStream" uid="uid://d3pdff2cvdkxc" path="res://sfx/tweak_off.mp3" id="3_bcwg7"]
 [ext_resource type="AudioStream" uid="uid://b1xmpmuvfvqef" path="res://sfx/tweak_on.mp3" id="3_ltw82"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_boolean.gd" id="3_pxu1a"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="4_knu6m"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_exit.gd" id="5_cvfb0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="5_dhfy0"]
 [ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="5_fjyvq"]
@@ -95,11 +97,43 @@ prev_screen_node_path = NodePath("Exit")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+script = ExtResource("2_pysyt")
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 14
+text = "character editor"
+uppercase = true
+
+[node name="Value" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 14
+text = "please press enter"
+uppercase = true
+script = ExtResource("4_knu6m")
+
+[node name="HBoxContainer15" type="HBoxContainer" parent="."]
+layout_mode = 2
 script = ExtResource("2_eijug")
 tweak_name = "bgm_as_in_version"
 selected_sound = ExtResource("3_bcwg7")
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer15"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
@@ -112,12 +146,12 @@ theme_override_font_sizes/font_size = 14
 text = "soundtrack:"
 uppercase = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer15"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_constants/separation = 8
 
-[node name="Value" type="Label" parent="HBoxContainer/HBoxContainer"]
+[node name="Value" type="Label" parent="HBoxContainer15/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
@@ -131,7 +165,7 @@ theme_override_font_sizes/font_size = 14
 text = "mixed"
 uppercase = true
 
-[node name="arrow" type="Label" parent="HBoxContainer/HBoxContainer/Value"]
+[node name="arrow" type="Label" parent="HBoxContainer15/HBoxContainer/Value"]
 layout_mode = 0
 offset_left = -32.0
 offset_right = -7.0
@@ -148,10 +182,10 @@ text = "<--"
 uppercase = true
 script = ExtResource("5_dhfy0")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer15/HBoxContainer"]
 layout_mode = 2
 
-[node name="arrow" type="Label" parent="HBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="arrow" type="Label" parent="HBoxContainer15/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
@@ -637,6 +671,7 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "secret_mode_new_death_sounds"
 default_value = true
+selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer14"]
 layout_mode = 2

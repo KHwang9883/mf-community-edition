@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=53 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_xf83d"]
@@ -35,6 +35,7 @@
 [ext_resource type="Script" path="res://stages/main_menu/scripts/previews.gd" id="20_cmmgj"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/selector_blinking.gd" id="25_vf7gm"]
 [ext_resource type="Texture2D" uid="uid://c8se8kv5eegh6" path="res://stages/main_menu/textures/menu_mushrooms.png" id="26_w72sm"]
+[ext_resource type="PackedScene" uid="uid://bmgrwlwl4woll" path="res://stages/main_menu/objects/character_editor/character_editor.tscn" id="36_jplg2"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -171,6 +172,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+
+[node name="Window" type="Window" parent="."]
+disable_3d = true
+title = "Character Editor"
+initial_position = 2
+size = Vector2i(400, 300)
+visible = false
+min_size = Vector2i(250, 175)
+
+[node name="CharacterEditor" parent="Window" instance=ExtResource("36_jplg2")]
 
 [node name="Camera" type="Camera2D" parent="."]
 offset = Vector2(320, 240)
@@ -184,6 +196,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="MusicLoader" parent="Menu" instance=ExtResource("1_xf83d")]
 script = ExtResource("2_c40jm")
@@ -372,10 +385,12 @@ timeout = 5.0
 
 [node name="Settings" parent="." instance=ExtResource("6_qa4mj")]
 layout_mode = 1
+mouse_filter = 2
 main_menu_controls = "Menu/MainMenuControls"
 
 [node name="Controls" parent="." instance=ExtResource("7_lt4b5")]
 layout_mode = 1
+mouse_filter = 2
 
 [node name="Tweaks" parent="." instance=ExtResource("10_2n5tx")]
 layout_mode = 1
@@ -403,5 +418,8 @@ horizontal_alignment = 2
 vertical_alignment = 2
 uppercase = true
 
+[connection signal="close_requested" from="Window" to="Window" method="hide"]
+[connection signal="mouse_entered" from="Window" to="Window/CharacterEditor" method="_on_window_mouse_entered"]
+[connection signal="visibility_changed" from="Window" to="Window/CharacterEditor" method="_on_window_visibility_changed"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Node" method="handle_selection"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]
