@@ -3,7 +3,7 @@ extends MenuSelection
 @export var tweak_name: String
 @export var default_value: bool
 
-#var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
+var toggle_off = preload("res://sfx/tweak_off.mp3")
 @onready var toggle: TextureRect = $Toggle
 
 func _ready() -> void:
@@ -12,9 +12,12 @@ func _ready() -> void:
 
 
 func _handle_select() -> void:
-	super()
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	_handle_toggle(!tweak)
+	if !tweak:
+		super()
+	else:
+		Audio.play_1d_sound(toggle_off, true, { "ignore_pause": true, "bus": "1D Sound" })
 
 
 func _physics_process(delta: float) -> void:
@@ -22,14 +25,19 @@ func _physics_process(delta: float) -> void:
 	if !focused: return
 	
 	if Input.is_action_just_pressed("ui_left"):
-		_handle_toggle(false)
+		var _set: bool = _handle_toggle(false)
+		if _set:
+			Audio.play_1d_sound(toggle_off, true, { "ignore_pause": true, "bus": "1D Sound" })
 	elif Input.is_action_just_pressed("ui_right"):
-		_handle_toggle(true)
+		var _set: bool = _handle_toggle(true)
+		if _set:
+			Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 
 
-func _handle_toggle(to_set: bool) -> void:
+func _handle_toggle(to_set: bool) -> bool:
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	if (to_set && !tweak) || (!to_set && tweak):
 		SettingsManager.set_tweak(tweak_name, to_set)
-		#Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
 		toggle.texture.region.position.y = 0 if to_set else 16
+		return true
+	return false
