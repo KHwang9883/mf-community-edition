@@ -1,8 +1,65 @@
-extends Node
+extends CanvasLayer
+
+const secrets_path = "user://achievements.thss"
+
+var secrets: Dictionary = {}
+
+@onready var label: Label = $Map
+@onready var ninepatch: NinePatchRect = $Map/Title
+@onready var marker_2d: Marker2D = $Marker2D
+
+func _ready() -> void:
+	load_secrets()
+	reparent.call_deferred(GlobalViewport.vp, false)
+	#await get_tree().create_timer(3.0).timeout
+	#set_secret("bowser the devastator defeated333333333333333", true)
+	#await get_tree().create_timer(2.0).timeout
+	#set_secret("mushroom plague", true)
 
 
+func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true) -> void:
+	if !secret in secrets && show_toast && SettingsManager.get_tweak("secrets_notification", true):
+		show_achievement(secret)
+	secrets[secret] = value
+	if save: save_secrets()
 
+func has_secret(secret: String) -> bool:
+	return secret in secrets && secrets[secret]
+
+func get_secret(secret: String) -> Variant:
+	if secret in secrets:
+		return secrets[secret]
+	return null
 
 
 func is_endgame() -> bool:
-	return false
+	return has_secret("story mode completed")
+
+
+func show_achievement(text: String) -> void:
+	Audio.play_1d_sound(preload("res://components/secrets_manager/desktop_toast_default.wav"))
+	label.text = ""
+	label.size.x = 192
+	label.position.y = marker_2d.position.y + label.size.y + 8
+	label.modulate.a = 1.0
+	label.text = "achievement unlocked!
+%s" % text
+	var tw = create_tween().set_parallel()
+	tw.tween_property(label, "position:y", marker_2d.position.y, 0.8)
+	tw.tween_property(label, "modulate:a", marker_2d.modulate.a, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	await get_tree().create_timer(5.0, true, false, true).timeout
+	tw = create_tween()
+	tw.tween_property(label, "modulate:a", 0.0, 2.0)
+
+
+func load_secrets() -> void:
+	var data: Dictionary = SettingsManager.load_data(secrets_path, "Achievements")
+	if data.is_empty():
+		print("A delaye, a dela. A delayed gamne, a delayepb. Bad Game Design.")
+		return
+	
+	secrets = data
+	print("[SecretsManager] Achievements loaded.")
+
+func save_secrets() -> void:
+	SettingsManager.save_data(secrets, secrets_path, "Achievements")
