@@ -1,9 +1,8 @@
-[gd_scene load_steps=150 format=3 uid="uid://nyfj5ovg0sh8"]
+[gd_scene load_steps=149 format=3 uid="uid://nyfj5ovg0sh8"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_coxvy"]
-[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_enlbk"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_pifh8"]
-[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_kyk35"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_b0xam"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="4_tb11i"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_vjd1l"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_y6jyy"]
@@ -951,17 +950,12 @@ time = -1
 jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
 completion_center_on_player_after_transition = true
 
-[node name="MusicLoader" parent="." instance=ExtResource("2_enlbk")]
+[node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_pifh8")
-tweaked_completion_music = ExtResource("4_kyk35")
-music_var_1 = Array[Resource]([])
-music_var_2 = Array[Resource]([])
-music_var_3 = Array[Resource]([])
-boss_music_var_1 = null
-boss_music_var_2 = null
-boss_music_var_3 = null
-ignore_fade_in_tweak = false
 music = Array[Resource]([ExtResource("4_tb11i")])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("4_b0xam")]
+secrets = Array[String](["human laboratory completed"])
 
 [node name="Mario" parent="." instance=ExtResource("5_vjd1l")]
 position = Vector2(80, 400)
@@ -1373,3 +1367,5 @@ texture = ExtResource("41_ok0iu")
 z_index = 8
 position = Vector2(3200, 400)
 texture = ExtResource("41_ok0iu")
+
+[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]

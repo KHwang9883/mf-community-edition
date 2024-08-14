@@ -1,10 +1,9 @@
-[gd_scene load_steps=90 format=3 uid="uid://bgdaesvf0ofqu"]
+[gd_scene load_steps=89 format=3 uid="uid://bgdaesvf0ofqu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_p6ptf"]
-[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_0wjpp"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_gcmyw"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_ex788"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_jw6ru"]
-[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_u4cd8"]
 [ext_resource type="AudioStream" uid="uid://dwcak56md3who" path="res://music/smw-underground.ogg" id="5_myapj"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_c5oti"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_c3v34"]
@@ -555,25 +554,12 @@ point_count = 2
 script = ExtResource("1_p6ptf")
 jump_to_scene = "res://stages/world_1/map_1.tscn"
 
-[node name="MusicLoader" parent="." instance=ExtResource("2_0wjpp")]
+[node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_gcmyw")
-tweaked_completion_music = ExtResource("4_u4cd8")
-ignore_fade_in_tweak = false
-music_var_1 = Array[Resource]([])
-music_var_2 = Array[Resource]([])
-music_var_3 = Array[Resource]([])
-var_1_volume_db = Array[float]([0.0])
-var_1_start_from_sec = Array[float]([0.0])
-var_2_volume_db = Array[float]([0.0])
-var_2_start_from_sec = Array[float]([0.0])
-var_3_volume_db = Array[float]([0.0])
-var_3_start_from_sec = Array[float]([0.0])
-boss_music_var_1 = null
-boss_music_var_2 = null
-boss_music_var_3 = null
-boss_music_volume_db = Array[float]([0.0])
-boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_myapj")])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("4_ex788")]
+secrets = Array[String](["passage to world 4", "passage to hardcore 1"])
 
 [node name="Mario" parent="." instance=ExtResource("4_jw6ru")]
 position = Vector2(80, 960)
@@ -648,6 +634,7 @@ script = ExtResource("13_0yhy5")
 speed_sec = 1.0
 action_after_sec = 3.0
 change_scene = "res://stages/world_4/map_4.tscn"
+save_to_profile_as_current_world = true
 
 [node name="Label" type="Label" parent="HUD/World4Warp"]
 offset_left = -132.0
@@ -1576,5 +1563,7 @@ smooth_enabled = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
 shape = SubResource("WorldBoundaryShape2D_de5sm")
 
+[connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="unlock_secret"]
 [connection signal="warp_started" from="PipeIn" to="HUD/World4Warp" method="activate"]
 [connection signal="warp_started" from="PipeIn4" to="HUD/HardcoreWarp" method="activate"]
+[connection signal="warp_started" from="PipeIn4" to="SecretUnlocker" method="unlock_secret" binds= [1]]

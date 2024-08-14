@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://breoxb1d8e0hh"]
+[gd_scene load_steps=78 format=3 uid="uid://breoxb1d8e0hh"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ynwyp"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_5u3wi"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="4_7yek2"]
 [ext_resource type="AudioStream" uid="uid://bvwok20bs75yd" path="res://music/extra/hardcore-1-4.ogg" id="5_jf145"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="6_txbbn"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="6_uh4e0"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_l2608"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="8_w5dxm"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="9_rb8so"]
@@ -288,6 +289,10 @@ music_var_2 = Array[Resource]([ExtResource("3_3dxb1")])
 music_var_3 = Array[Resource]([ExtResource("3_3dxb1")])
 boss_music_var_1 = ExtResource("4_7yek2")
 music = Array[Resource]([ExtResource("5_jf145")])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("6_uh4e0")]
+secrets = Array[String](["passage to hardcore 2"])
+show_toast = false
 
 [node name="Mario" parent="." instance=ExtResource("6_txbbn")]
 position = Vector2(240, 272)
@@ -1826,6 +1831,8 @@ position = Vector2(11408, 976)
 result = SubResource("Resource_bc1vt")
 initially_visible_and_solid = false
 exists_once = true
+
+[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
 
 [editable path="BowserJump"]
 [editable path="QuestionBlockLife"]

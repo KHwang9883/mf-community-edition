@@ -3,6 +3,9 @@ extends CanvasLayer
 const secrets_path = "user://achievements.thss"
 
 var secrets: Dictionary = {}
+var toast_queue: Array[String] = []
+
+var _save_queued: bool
 
 @onready var label: Label = $Map
 @onready var ninepatch: NinePatchRect = $Map/Title
@@ -17,9 +20,17 @@ func _ready() -> void:
 	#set_secret("mushroom plague", true)
 
 
+func _physics_process(delta: float) -> void:
+	if _save_queued:
+		_save_queued = false
+		SettingsManager.save_data(secrets, secrets_path, "Achievements")
+
+
 func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true) -> void:
+	if secret in secrets && secrets[secret] == value:
+		return
 	if !secret in secrets && show_toast && SettingsManager.get_tweak("secrets_notification", true):
-		show_achievement(secret)
+		queue_achievement(secret)
 	secrets[secret] = value
 	if save: save_secrets()
 
@@ -36,6 +47,13 @@ func is_endgame() -> bool:
 	return has_secret("story mode completed")
 
 
+func queue_achievement(text: String) -> void:
+	toast_queue.append(text)
+	if len(toast_queue) == 1:
+		toast_queue.clear()
+		show_achievement(text)
+
+
 func show_achievement(text: String) -> void:
 	Audio.play_1d_sound(preload("res://components/secrets_manager/desktop_toast_default.wav"))
 	label.text = ""
@@ -48,8 +66,11 @@ func show_achievement(text: String) -> void:
 	tw.tween_property(label, "position:y", marker_2d.position.y, 0.8)
 	tw.tween_property(label, "modulate:a", marker_2d.modulate.a, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	await get_tree().create_timer(5.0, true, false, true).timeout
-	tw = create_tween()
-	tw.tween_property(label, "modulate:a", 0.0, 2.0)
+	if len(toast_queue) == 0:
+		tw = create_tween()
+		tw.tween_property(label, "modulate:a", 0.0, 2.0)
+	else:
+		show_achievement(toast_queue.pop_back())
 
 
 func load_secrets() -> void:
@@ -62,4 +83,5 @@ func load_secrets() -> void:
 	print("[SecretsManager] Achievements loaded.")
 
 func save_secrets() -> void:
-	SettingsManager.save_data(secrets, secrets_path, "Achievements")
+	_save_queued = true
+	
