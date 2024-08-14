@@ -7,6 +7,7 @@ extends CanvasItem
 @export var fade_on_end := false
 @export_file("*.tscn", "*.scn") var change_scene: String
 @export_file("*.tscn", "*.scn") var remade_level_tweak_scene: String
+@export var save_to_profile_as_current_world: bool = false
 @export var circle_transition_center_on_player: bool = false
 
 func activate() -> void:
@@ -27,6 +28,9 @@ func activate() -> void:
 		Data.values.checkpoint = -1
 		Data.values.checked_cps = []
 		var goto_scene: String = remade_level_tweak_scene if remade_level_tweak_scene && _remade else change_scene
+		if save_to_profile_as_current_world:
+			ProfileManager.current_profile.data.current_world = goto_scene
+			ProfileManager.save_current_profile()
 		
 		if _crossfade:
 			TransitionManager.accept_transition(

@@ -1,12 +1,11 @@
-[gd_scene load_steps=65 format=3 uid="uid://dlti0l2n1ix8d"]
+[gd_scene load_steps=64 format=3 uid="uid://dlti0l2n1ix8d"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0omu6"]
-[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sn434"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="3_784ol"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hmq3v"]
-[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_wav8n"]
 [ext_resource type="AudioStream" uid="uid://dwcak56md3who" path="res://music/smw-underground.ogg" id="4_y4qvn"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_qc2in"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_uy1ol"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_ejrb2"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_25a1y"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="8_2ilb6"]
@@ -200,26 +199,13 @@ size = Vector2(5696, 800)
 script = ExtResource("1_0omu6")
 jump_to_scene = "res://stages/world_2/map_2.tscn"
 
-[node name="MusicLoader" parent="." instance=ExtResource("2_sn434")]
+[node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_hmq3v")
-tweaked_completion_music = ExtResource("4_wav8n")
-ignore_fade_in_tweak = false
-music_var_1 = Array[Resource]([])
-music_var_2 = Array[Resource]([])
-music_var_3 = Array[Resource]([])
-var_1_volume_db = Array[float]([0.0])
-var_1_start_from_sec = Array[float]([0.0])
-var_2_volume_db = Array[float]([0.0])
-var_2_start_from_sec = Array[float]([0.0])
-var_3_volume_db = Array[float]([0.0])
-var_3_start_from_sec = Array[float]([0.0])
-boss_music_var_1 = null
-boss_music_var_2 = null
-boss_music_var_3 = null
-boss_music_volume_db = Array[float]([0.0])
-boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("3_784ol"), ExtResource("4_y4qvn")])
 volume_db = Array[float]([4.0, 0.0])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("5_uy1ol")]
+secrets = Array[String](["bowser the devastator"])
 
 [node name="Mario" parent="." instance=ExtResource("5_qc2in")]
 position = Vector2(80, 400)
@@ -793,3 +779,4 @@ position = Vector2(5312, 108)
 
 [connection signal="warp_started" from="PipeIn3" to="MusicLoader" method="pause_music"]
 [connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
+[connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="unlock_secret"]

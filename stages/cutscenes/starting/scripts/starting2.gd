@@ -68,6 +68,8 @@ func _fade_out() -> void:
 	
 	_restore()
 	await get_tree().physics_frame
+	ProfileManager.current_profile.data.current_world = goto_scene
+	ProfileManager.save_current_profile()
 	
 	if !_crossfade:
 		TransitionManager.accept_transition(

@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://dcx4rjvxyngi3"]
+[gd_scene load_steps=91 format=3 uid="uid://dcx4rjvxyngi3"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_11iu2"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_6005j"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_gvyjh"]
 [ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_rbdrq"]
 [ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="6_cqv32"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_4bo5l"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="7_xlye3"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="8_via3q"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="9_s847m"]
@@ -629,6 +630,10 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[Resource]([])
 boss_music_start_from_sec = Array[Resource]([])
 music = Array[Resource]([ExtResource("6_cqv32")])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("7_4bo5l")]
+secrets = Array[String](["hardcore worlds finished"])
+show_toast = false
 
 [node name="Mario" parent="." instance=ExtResource("7_xlye3")]
 position = Vector2(112, 400)
@@ -1710,5 +1715,6 @@ position = Vector2(4368, 362)
 texture = ExtResource("43_oroq3")
 
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
+[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
 
 [editable path="Objects/Normal Objects/BowserJump"]

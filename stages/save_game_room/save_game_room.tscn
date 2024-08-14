@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=121 format=3 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -56,6 +56,7 @@
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="34_gx86i"]
 [ext_resource type="Texture2D" uid="uid://dxfdf1vhn16ie" path="res://tilesets/overworld_green/gfx/pink_platform.png" id="35_06je7"]
 [ext_resource type="Texture2D" uid="uid://tki7rbs8vxw6" path="res://tilesets/overworld_green/gfx/rock_platform.png" id="36_csfwx"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/hardcore_pipe.gd" id="41_03xon"]
 [ext_resource type="Texture2D" uid="uid://b05pg40drmew" path="res://engine/objects/signs/sign.png" id="56_snq4n"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="57_likrm"]
 [ext_resource type="PackedScene" uid="uid://bwy11odywkm4d" path="res://engine/objects/enemies/human_lab/container/container.tscn" id="58_2kfqn"]
@@ -80,8 +81,10 @@
 [ext_resource type="Texture2D" uid="uid://brdnc28pgfnl3" path="res://stages/save_game_room/gfx/lostmap.png" id="75_2rxnu"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="76_g6rab"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/kevin_activate.gd" id="77_s7vb4"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/secrets_table.gd" id="78_bvu8r"]
 [ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="78_vkeyl"]
 [ext_resource type="AudioStream" uid="uid://cbw3tcy4guuc3" path="res://objects/chorniy_mario/death_sounds/sb.ogg" id="79_tlm30"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/secrets_table_achievement.gd" id="80_dw3tv"]
 
 [sub_resource type="Gradient" id="Gradient_6g8qv"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 1, 1)
@@ -1301,7 +1304,15 @@ texture = ExtResource("16_wg23m")
 position = Vector2(1536, 368)
 collision_layer = 112
 collision_mask = 0
+script = ExtResource("41_03xon")
 metadata/_edit_group_ = true
+
+[node name="PipeIn" parent="ScriptedEvents/Hardcore1" instance=ExtResource("21_qg33c")]
+position = Vector2(32, -64)
+warp_to_scene = "res://stages/extra/hardcore_1/hardcore_1.tscn"
+use_circle_transition = true
+circle_focus_on_player = false
+circle_wait_till_scene_changed = false
 
 [node name="Sign4" type="Sprite2D" parent="ScriptedEvents/Hardcore1"]
 position = Vector2(-1520, -191)
@@ -1362,24 +1373,48 @@ position = Vector2(89, 80)
 texture = ExtResource("65_vaskj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScriptedEvents/Hardcore1"]
+position = Vector2(32, 0)
 shape = SubResource("RectangleShape2D_e5uii")
 
 [node name="Sprite2D" type="Sprite2D" parent="ScriptedEvents/Hardcore1"]
-position = Vector2(0, -16)
+position = Vector2(32, -16)
 texture = ExtResource("33_tsede")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 
 [node name="Sprite2D2" type="Sprite2D" parent="ScriptedEvents/Hardcore1"]
-position = Vector2(0, 32)
+position = Vector2(32, 32)
 texture = ExtResource("33_tsede")
 region_enabled = true
 region_rect = Rect2(0, 32, 64, 32)
+
+[node name="Label4" type="Label" parent="ScriptedEvents/Hardcore1"]
+offset_left = -32.0
+offset_top = -118.0
+offset_right = 96.0
+offset_bottom = -89.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "hardcore
+world 1"
+horizontal_alignment = 1
+uppercase = true
 
 [node name="Hardcore2" type="StaticBody2D" parent="ScriptedEvents"]
 position = Vector2(1664, 368)
 collision_layer = 112
 collision_mask = 0
+script = ExtResource("41_03xon")
+secret = "passage to hardcore 2"
+
+[node name="PipeIn4" parent="ScriptedEvents/Hardcore2" instance=ExtResource("21_qg33c")]
+position = Vector2(0, -64)
+warp_to_scene = "res://stages/extra/hardcore_2/hardcore_2.tscn"
+use_circle_transition = true
+circle_focus_on_player = false
+circle_wait_till_scene_changed = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScriptedEvents/Hardcore2"]
 shape = SubResource("RectangleShape2D_e5uii")
@@ -1395,6 +1430,20 @@ position = Vector2(0, 32)
 texture = ExtResource("33_tsede")
 region_enabled = true
 region_rect = Rect2(0, 32, 64, 32)
+
+[node name="Label4" type="Label" parent="ScriptedEvents/Hardcore2"]
+offset_left = -64.0
+offset_top = -118.0
+offset_right = 64.0
+offset_bottom = -89.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "hardcore
+world 2"
+horizontal_alignment = 1
+uppercase = true
 
 [node name="StarmanScore" type="Label" parent="ScriptedEvents"]
 offset_left = 6026.0
@@ -1544,20 +1593,6 @@ metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 [node name="ResetPowerBlock" parent="Objects" instance=ExtResource("19_xtt8k")]
 position = Vector2(720, 208)
 change_to_suit = ExtResource("20_n5llw")
-
-[node name="PipeIn" parent="Objects" instance=ExtResource("21_qg33c")]
-position = Vector2(1536, 304)
-warp_to_scene = "res://stages/extra/hardcore_1/hardcore_1.tscn"
-use_circle_transition = true
-circle_focus_on_player = false
-circle_wait_till_scene_changed = false
-
-[node name="PipeIn4" parent="Objects" instance=ExtResource("21_qg33c")]
-position = Vector2(1664, 304)
-warp_to_scene = "res://stages/extra/hardcore_2/hardcore_2.tscn"
-use_circle_transition = true
-circle_focus_on_player = false
-circle_wait_till_scene_changed = false
 
 [node name="PipeIn2" parent="Objects" instance=ExtResource("21_qg33c")]
 position = Vector2(3520, 304)
@@ -1794,6 +1829,17 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 76, 354)
 
+[node name="Sprite2D4" type="Sprite2D" parent="Objects"]
+modulate = Color(1, 1, 1, 0.321569)
+z_index = -50
+texture_repeat = 2
+position = Vector2(4640, 240)
+rotation = 0.523599
+texture = ExtResource("59_kl30i")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 76, 354)
+
 [node name="SignSmallUpsideDownBroken" type="Sprite2D" parent="Objects"]
 position = Vector2(2752, 153)
 texture = ExtResource("60_bnpkh")
@@ -1826,10 +1872,8 @@ texture = ExtResource("63_nbacx")
 centered = false
 
 [node name="Label" type="Label" parent="Objects/Sign3"]
-offset_left = -6.0
-offset_top = 1.0
-offset_right = 103.0
-offset_bottom = 52.0
+offset_right = 109.0
+offset_bottom = 51.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)
 theme_override_constants/outline_size = 5
 theme_override_constants/line_spacing = 0
@@ -2044,10 +2088,13 @@ offset_top = 48.0
 offset_right = 4320.0
 offset_bottom = 400.0
 theme_override_constants/separation = 2
+script = ExtResource("78_bvu8r")
 
 [node name="Achievement1" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "mushroom plague"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement1"]
 layout_mode = 2
@@ -2076,6 +2123,8 @@ uppercase = true
 [node name="Achievement2" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "passage to world 4"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement2"]
 layout_mode = 2
@@ -2104,6 +2153,8 @@ uppercase = true
 [node name="Achievement5" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "secret goomba party"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement5"]
 layout_mode = 2
@@ -2132,6 +2183,8 @@ uppercase = true
 [node name="Achievement3" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "passage to world 3"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement3"]
 layout_mode = 2
@@ -2160,6 +2213,8 @@ uppercase = true
 [node name="Achievement6" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "bowser the devastator"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement6"]
 layout_mode = 2
@@ -2188,6 +2243,8 @@ uppercase = true
 [node name="Achievement4" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "passage to world 8"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement4"]
 layout_mode = 2
@@ -2216,6 +2273,8 @@ uppercase = true
 [node name="Achievement7" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement7"]
 layout_mode = 2
@@ -2244,6 +2303,8 @@ uppercase = true
 [node name="Achievement8" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "passage to hardcore 1"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement8"]
 layout_mode = 2
@@ -2272,6 +2333,8 @@ uppercase = true
 [node name="Achievement9" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "passage to hardcore 2"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement9"]
 layout_mode = 2
@@ -2300,6 +2363,8 @@ uppercase = true
 [node name="Achievement10" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "hardcore worlds finished"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement10"]
 layout_mode = 2
@@ -2328,6 +2393,8 @@ uppercase = true
 [node name="Achievement11" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "goomba party completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement11"]
 layout_mode = 2
@@ -2356,6 +2423,8 @@ uppercase = true
 [node name="Achievement12" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "human laboratory completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement12"]
 layout_mode = 2
@@ -2385,6 +2454,8 @@ uppercase = true
 [node name="Achievement13" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "lost map completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement13"]
 layout_mode = 2
@@ -2413,6 +2484,8 @@ uppercase = true
 [node name="Achievement14" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "bowser the devastator defeated"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement14"]
 layout_mode = 2
@@ -2442,6 +2515,8 @@ uppercase = true
 [node name="Achievement15" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "funny tanks completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement15"]
 layout_mode = 2
@@ -2470,6 +2545,8 @@ uppercase = true
 [node name="Achievement16" type="HBoxContainer" parent="Objects/text blah blah"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "koopa troopa liberation passed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah/Achievement16"]
 layout_mode = 2
@@ -2502,10 +2579,13 @@ offset_top = 32.0
 offset_right = 8048.0
 offset_bottom = 384.0
 theme_override_constants/separation = 2
+script = ExtResource("78_bvu8r")
 
 [node name="Achievement17" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "points in minix maps"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement17"]
 layout_mode = 2
@@ -2536,6 +2616,8 @@ uppercase = true
 [node name="Achievement18" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "points in climbing maps"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement18"]
 layout_mode = 2
@@ -2566,6 +2648,8 @@ uppercase = true
 [node name="Achievement20" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "points in starman running"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement20"]
 layout_mode = 2
@@ -2596,6 +2680,8 @@ uppercase = true
 [node name="Achievement19" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "world of stupidity completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement19"]
 layout_mode = 2
@@ -2626,6 +2712,8 @@ uppercase = true
 [node name="Achievement21" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "flash completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement21"]
 layout_mode = 2
@@ -2656,6 +2744,8 @@ uppercase = true
 [node name="Achievement22" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "human laboratory 2 completed"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement22"]
 layout_mode = 2
@@ -2686,6 +2776,8 @@ uppercase = true
 [node name="Achievement28" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "got 100 extra lives at once"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement28"]
 custom_minimum_size = Vector2(0, 27)
@@ -2716,6 +2808,8 @@ uppercase = true
 [node name="Achievement29" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "all secret rooms"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement29"]
 custom_minimum_size = Vector2(0, 27)
@@ -2744,16 +2838,51 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
+[node name="Achievement30" type="HBoxContainer" parent="Objects/text blah blah2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "all bonus levels"
+
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement30"]
+custom_minimum_size = Vector2(0, 27)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = -3
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 20
+text = "all 5 bonus levels beaten"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement30"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_6tkxo")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
 [node name="text blah blah3" type="VBoxContainer" parent="Objects"]
 offset_left = 8080.0
 offset_top = 32.0
 offset_right = 8336.0
 offset_bottom = 384.0
 theme_override_constants/separation = 2
+script = ExtResource("78_bvu8r")
 
 [node name="Achievement23" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode no warps"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement23"]
 custom_minimum_size = Vector2(0, 27)
@@ -2784,6 +2913,8 @@ uppercase = true
 [node name="Achievement29" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode as luigi"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement29"]
 custom_minimum_size = Vector2(0, 27)
@@ -2814,6 +2945,8 @@ uppercase = true
 [node name="Achievement24" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode in what mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement24"]
 custom_minimum_size = Vector2(0, 27)
@@ -2844,6 +2977,8 @@ uppercase = true
 [node name="Achievement30" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode in what mode no warps as luigi"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement30"]
 layout_mode = 2
@@ -2874,6 +3009,8 @@ uppercase = true
 [node name="Achievement25" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "human lab in what mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement25"]
 custom_minimum_size = Vector2(0, 27)
@@ -2904,6 +3041,8 @@ uppercase = true
 [node name="Achievement26" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "lost map in what mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement26"]
 custom_minimum_size = Vector2(0, 27)
@@ -2934,6 +3073,8 @@ uppercase = true
 [node name="Achievement27" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "world of stupidity in what mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement27"]
 layout_mode = 2
@@ -2964,6 +3105,8 @@ uppercase = true
 [node name="Achievement31" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode no hit"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement31"]
 custom_minimum_size = Vector2(0, 27)
@@ -2994,6 +3137,8 @@ uppercase = true
 [node name="Achievement32" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode no death"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement32"]
 layout_mode = 2
@@ -3024,6 +3169,8 @@ uppercase = true
 [node name="Achievement28" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode beetroot"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement28"]
 layout_mode = 2

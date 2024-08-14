@@ -1,9 +1,10 @@
-[gd_scene load_steps=63 format=3 uid="uid://c0r6ld204t00b"]
+[gd_scene load_steps=64 format=3 uid="uid://c0r6ld204t00b"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_27fo5"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_orbv5"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_vdnd0"]
 [ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="5_4ib86"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_cj6ri"]
 [ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_gagp6"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="5_lc0ev"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_2l2s3"]
@@ -231,6 +232,9 @@ script = ExtResource("3_orbv5")
 boss_music_var_1 = ExtResource("5_gagp6")
 music = Array[Resource]([ExtResource("5_4ib86")])
 
+[node name="SecretUnlocker" parent="." instance=ExtResource("5_cj6ri")]
+secrets = Array[String](["passage to world 3"])
+
 [node name="Mario" parent="." instance=ExtResource("4_vdnd0")]
 position = Vector2(128, 336)
 
@@ -290,6 +294,7 @@ script = ExtResource("10_rtevj")
 tween_to = 224
 action_after_sec = 3.0
 change_scene = "res://stages/world_3/map_3.tscn"
+save_to_profile_as_current_world = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -958,6 +963,7 @@ text = "don't jump when he's flashing"
 vertical_alignment = 1
 clip_text = true
 
+[connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="unlock_secret"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
 
 [editable path="BowserJump"]
