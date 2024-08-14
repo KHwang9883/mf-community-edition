@@ -1,15 +1,32 @@
-[gd_scene load_steps=15 format=3 uid="uid://7y7mgdlcfwlj"]
+[gd_scene load_steps=32 format=3 uid="uid://7y7mgdlcfwlj"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_6uxxv"]
 [ext_resource type="Script" path="res://stages/world_3/scripts/end_cutscene.gd" id="2_2xkkk"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://gfx/misc/castle_big.png" id="6_7nccd"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="7_l1tq1"]
+[ext_resource type="TileSet" uid="uid://u38rgbe7os0u" path="res://tilesets/starland/starland.tres" id="7_pqdo8"]
 [ext_resource type="Texture2D" uid="uid://dcc24xfje7sld" path="res://tilesets/starland/gfx/starland_hill.png" id="8_6hqsd"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="8_ldrsc"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_fgu8i"]
-[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_ra13x"]
+[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="10_futlc"]
+[ext_resource type="Texture2D" uid="uid://5p36u73djuoh" path="res://gfx/backgrounds/starland.png" id="10_wuivo"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_dvlkd"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_rqjvk"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_8jwgi"]
+
+[sub_resource type="Gradient" id="Gradient_hwlet"]
+offsets = PackedFloat32Array(0.536585, 1)
+colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdu4q"]
+gradient = SubResource("Gradient_hwlet")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.857143, 0.142857)
+metadata/_snap_enabled = true
+metadata/_snap_count = 7
 
 [sub_resource type="Gradient" id="Gradient_pw38v"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -24,6 +41,88 @@ colors = PackedColorArray(0.116, 0, 0.24, 1, 0, 0.184314, 0.458824, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_kqyyq"]
 gradient = SubResource("Gradient_ig6vp")
 width = 640
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_brn6b"]
+noise_type = 3
+seed = 4
+frequency = 0.004
+offset = Vector3(0, -347.84, 0)
+fractal_octaves = 3
+fractal_weighted_strength = 1.0
+domain_warp_frequency = 35.04
+domain_warp_fractal_gain = -2.38
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nia6d"]
+width = 800
+height = 510
+seamless = true
+seamless_blend_skirt = 0.25
+noise = SubResource("FastNoiseLite_brn6b")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q25xn"]
+shader = ExtResource("10_futlc")
+shader_parameter/density = 1.0
+shader_parameter/speed = Vector2(0.02, 0)
+shader_parameter/freq = 0.96
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_nia6d")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xe3cr"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_kgk31"]
+offsets = PackedFloat32Array(0.1, 0.5, 1)
+colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.74902, 0.984314, 0.545098, 0.984314, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_005fx"]
+gradient = SubResource("Gradient_kgk31")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_03h6g"]
+offsets = PackedFloat32Array(0, 0.4, 1)
+colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mbq22"]
+gradient = SubResource("Gradient_03h6g")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_elf8u"]
+offsets = PackedFloat32Array(0.05, 0.45, 1)
+colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tnbvb"]
+gradient = SubResource("Gradient_elf8u")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_qbywt"]
+frames = 3
+frame_0/texture = SubResource("GradientTexture2D_005fx")
+frame_0/duration = 0.05
+frame_1/texture = SubResource("GradientTexture2D_mbq22")
+frame_1/duration = 0.05
+frame_2/texture = SubResource("GradientTexture2D_tnbvb")
+frame_2/duration = 0.05
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3krl6"]
+blend_mode = 1
 
 [node name="CaveCutscene" type="Node2D"]
 script = ExtResource("1_6uxxv")
@@ -60,10 +159,35 @@ metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = 4
-tile_set = ExtResource("10_ra13x")
+tile_set = ExtResource("7_pqdo8")
 format = 2
-layer_0/tile_data = PackedInt32Array(983059, 65536, 1, 917523, 65536, 1, 851987, 65536, 0, 983058, 65536, 1, 917522, 65536, 1, 851986, 65536, 0, 983057, 65536, 1, 917521, 65536, 1, 851985, 65536, 0, 983056, 65536, 1, 917520, 65536, 1, 851984, 65536, 0, 983055, 65536, 1, 917519, 65536, 1, 851983, 65536, 0, 983054, 65536, 1, 917518, 65536, 1, 851982, 65536, 0, 983053, 65536, 1, 917517, 65536, 1, 851981, 65536, 0, 983052, 65536, 1, 917516, 65536, 1, 851980, 65536, 0, 983051, 65536, 1, 917515, 65536, 1, 851979, 65536, 0, 983050, 65536, 1, 917514, 65536, 1, 851978, 65536, 0, 983049, 65536, 1, 917513, 65536, 1, 851977, 65536, 0, 983048, 65536, 1, 917512, 65536, 1, 851976, 65536, 0, 983047, 65536, 1, 917511, 65536, 1, 851975, 65536, 0, 983046, 65536, 1, 917510, 65536, 1, 851974, 65536, 0, 983045, 65536, 1, 917509, 65536, 1, 983044, 65536, 1, 917508, 65536, 1, 851972, 65536, 0, 983043, 65536, 1, 917507, 65536, 1, 851971, 65536, 0, 983042, 65536, 1, 917506, 65536, 1, 851970, 65536, 0, 983041, 65536, 1, 917505, 65536, 1, 851969, 65536, 0, 983040, 65536, 1, 917504, 65536, 1, 851968, 65536, 0, 1048575, 0, 1, 983039, 0, 1, 917503, 0, 0, 851988, 65536, 0, 917524, 65536, 1, 983060, 65536, 1, 1114111, 0, 2, 1048576, 65536, 2, 1048577, 65536, 2, 1048578, 65536, 2, 1048579, 65536, 2, 1048580, 65536, 2, 1048581, 65536, 2, 1048582, 65536, 2, 1048583, 65536, 2, 1048584, 65536, 2, 1048585, 65536, 2, 1048586, 65536, 2, 1048587, 65536, 2, 1048588, 65536, 2, 1048589, 65536, 2, 1048590, 65536, 2, 1048591, 65536, 2, 1048592, 65536, 2, 1048593, 65536, 2, 1048594, 65536, 2, 1048595, 65536, 2, 1048596, 65536, 2, 851973, 65536, 0, 786452, 2, 458752, 786451, 2, 458752, 786450, 2, 458752, 786449, 2, 458752, 786445, 2, 65536, 327684, 2, 131072, 1048597, 131072, 2, 983061, 131072, 1, 917525, 131072, 1, 851989, 131072, 0, 786454, 196608, 2, 720918, 196608, 1, 655382, 196608, 1, 589846, 196608, 1, 524310, 196608, 0, 65538, 2, 131072, 262155, 2, 131072, 65550, 2, 131072, 131090, 2, 131072, 786432, 2, 327680, 786443, 2, 196608)
-layer_1/tile_data = PackedInt32Array()
+layer_0/tile_data = PackedInt32Array(983059, 65536, 1, 917523, 65536, 2, 851987, 65536, 0, 983058, 65536, 1, 917522, 65536, 2, 851986, 65536, 0, 983057, 65536, 1, 917521, 65536, 2, 851985, 65536, 0, 983056, 65536, 1, 917520, 65536, 2, 851984, 65536, 0, 983055, 65536, 1, 917519, 65536, 2, 851983, 65536, 0, 983054, 65536, 1, 917518, 65536, 2, 851982, 65536, 0, 983053, 65536, 1, 917517, 65536, 2, 851981, 65536, 0, 983052, 65536, 1, 917516, 65536, 2, 851980, 65536, 0, 983051, 65536, 1, 917515, 65536, 2, 851979, 65536, 0, 983050, 65536, 1, 917514, 65536, 2, 851978, 65536, 0, 983049, 65536, 1, 917513, 65536, 2, 851977, 65536, 0, 983048, 65536, 1, 917512, 65536, 2, 851976, 65536, 0, 983047, 65536, 1, 917511, 65536, 2, 851975, 65536, 0, 983046, 65536, 1, 917510, 65536, 2, 851974, 65536, 0, 983045, 65536, 1, 917509, 65536, 2, 983044, 65536, 1, 917508, 65536, 2, 851972, 65536, 0, 983043, 65536, 1, 917507, 65536, 2, 851971, 65536, 0, 983042, 65536, 1, 917506, 65536, 2, 851970, 65536, 0, 983041, 65536, 1, 917505, 65536, 2, 851969, 65536, 0, 983040, 65536, 1, 917504, 65536, 2, 851968, 65536, 0, 1048575, 0, 1, 983039, 0, 2, 917503, 0, 0, 851988, 65536, 0, 917524, 65536, 2, 983060, 65536, 1, 851973, 65536, 0, 983061, 131072, 1, 917525, 131072, 2, 851989, 131072, 0, 786454, 1, 0, 720918, 1, 0, 655382, 1, 0, 589846, 1, 0, 524310, 1, 0, 393238, 1, 0, 458774, 1, 0, 720915, 196611, 1)
+layer_1/tile_data = PackedInt32Array(917505, 3, 0, 917513, 65539, 0, 917520, 131075, 0, 851979, 196611, 0, 786443, 3, 1, 720906, 196611, 1, 720896, 262147, 0)
+
+[node name="Node2D" type="Node2D" parent="TileMap"]
+script = ExtResource("12_8jwgi")
+medium = true
+
+[node name="PointLight2D2" type="PointLight2D" parent="TileMap/Node2D"]
+position = Vector2(49, 466)
+scale = Vector2(0.175781, 0.175781)
+color = Color(1, 1, 0.443137, 1)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_pdu4q")
+
+[node name="PointLight2D3" type="PointLight2D" parent="TileMap/Node2D"]
+position = Vector2(301, 459)
+scale = Vector2(0.34375, 0.34375)
+color = Color(1, 1, 0.443137, 1)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_pdu4q")
+
+[node name="PointLight2D4" type="PointLight2D" parent="TileMap/Node2D"]
+position = Vector2(529, 460)
+scale = Vector2(0.34375, 0.34375)
+color = Color(1, 1, 0.443137, 1)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_pdu4q")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -78,7 +202,7 @@ metadata/_edit_lock_ = true
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="StarlandHill6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(320, 304)
+position = Vector2(336, 224)
 texture = ExtResource("8_6hqsd")
 centered = false
 
@@ -87,6 +211,33 @@ modulate = Color(1, 1, 1, 0.682353)
 scale = Vector2(1, 480)
 texture = SubResource("GradientTexture1D_kqyyq")
 centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Starland" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture_repeat = 2
+position = Vector2(0, 298)
+texture = ExtResource("10_wuivo")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 200)
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(800, 600)
+script = ExtResource("12_8jwgi")
+medium = true
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
+modulate = Color(1, 1, 1, 0.666667)
+material = SubResource("ShaderMaterial_q25xn")
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("11_dvlkd")
+metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("11_rqjvk")]
 visible = false
@@ -101,3 +252,19 @@ script = ExtResource("12_8jwgi")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("12_8jwgi")
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("12_8jwgi")
+medium = true
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+material = SubResource("CanvasItemMaterial_xe3cr")
+position = Vector2(624, 368)
+texture = SubResource("AnimatedTexture_qbywt")
+
+[node name="AnimatedSprite2D2" type="Sprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.541176)
+material = SubResource("CanvasItemMaterial_3krl6")
+position = Vector2(368, 416)
+texture = SubResource("AnimatedTexture_qbywt")
