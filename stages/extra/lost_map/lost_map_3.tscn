@@ -1,10 +1,13 @@
-[gd_scene load_steps=34 format=3 uid="uid://dy1ch5nd2ingr"]
+[gd_scene load_steps=37 format=3 uid="uid://dy1ch5nd2ingr"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_n2lpp"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_l8cv8"]
+[ext_resource type="AudioStream" uid="uid://ylpjis71vd26" path="res://music/extra/smw-bonus-clear.ogg" id="2_p03vf"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_tdkmn"]
 [ext_resource type="AudioStream" uid="uid://kfntxsfff48q" path="res://music/lostmap/lostmap_3.ogg" id="4_ydac0"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_kc2f1"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_b062s"]
+[ext_resource type="AudioStream" uid="uid://csqg16k26jclf" path="res://music/extra/smw-death_extra.ogg" id="7_lgss8"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ve1us"]
 [ext_resource type="PackedScene" uid="uid://53qlewhfad5" path="res://tilesets/overworld_green/scenes/cloud.tscn" id="9_5a0nw"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="9_e2jmk"]
@@ -145,12 +148,32 @@ custom_vars = {}
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_n2lpp")
+completion_music = ExtResource("2_p03vf")
+jump_to_scene = "res://stages/extra/lost_map/lost_map_map.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_l8cv8")]
+script = ExtResource("4_tdkmn")
+tweaked_completion_music = ExtResource("2_p03vf")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_ydac0")])
 
 [node name="Mario" parent="." instance=ExtResource("5_kc2f1")]
 position = Vector2(224, 399)
+death_music_override = ExtResource("7_lgss8")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
