@@ -3,6 +3,8 @@ extends "res://engine/components/hud/hud.gd"
 var warning_played: bool
 
 func _ready() -> void:
+	time_counter.floor_value = true
+	
 	Thunder._current_hud = self
 	while !Thunder._current_player:
 		await get_tree().physics_frame
