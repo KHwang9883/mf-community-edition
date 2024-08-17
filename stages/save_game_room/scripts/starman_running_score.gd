@@ -1,6 +1,8 @@
 extends Label
 
 func _ready() -> void:
-	text = str(SecretsManager.get_secret("starman_score"))
-	if !text:
+	var t = SecretsManager.get_secret("starman_score")
+	if !t:
 		text = str(0)
+	else:
+		text = str(t)
