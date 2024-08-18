@@ -1,0 +1,92 @@
+[gd_scene load_steps=17 format=3 uid="uid://t4nw1yg2x6pn"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_ixgry"]
+[ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_ccfts"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="3_u4m0m"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_hmopd"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_2rpsb"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="6_4b54r"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_fqasq"]
+[ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://tilesets/overworld_green/gfx/green_pipe_entering_another.png" id="11_g4bem"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="12_f5dnv"]
+[ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="13_myhs2"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="14_jaemd"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="15_okfr1"]
+[ext_resource type="PackedScene" uid="uid://c553718ou3hgm" path="res://tilesets/overworld_green/scenes/tree_long.tscn" id="16_4t2w2"]
+[ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://tilesets/skyland/gfx/big_clouds.png" id="17_xkcmn"]
+
+[sub_resource type="Gradient" id="Gradient_slprf"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e3oq"]
+gradient = SubResource("Gradient_slprf")
+width = 480
+
+[node name="CaveCutscene" type="Node2D"]
+script = ExtResource("1_ixgry")
+
+[node name="CutsceneLogic" type="Node" parent="."]
+script = ExtResource("2_ccfts")
+
+[node name="Mario" parent="." instance=ExtResource("3_u4m0m")]
+position = Vector2(0, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("4_hmopd")
+
+[node name="CamArea" parent="." instance=ExtResource("5_2rpsb")]
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("6_4b54r")
+format = 2
+layer_0/tile_data = PackedInt32Array(983059, 131072, 2, 917523, 131072, 1, 851987, 131072, 0, 983058, 65536, 2, 917522, 65536, 1, 851986, 65536, 0, 983057, 65536, 2, 917521, 65536, 1, 851985, 65536, 0, 983056, 65536, 2, 917520, 65536, 1, 851984, 65536, 0, 983055, 65536, 2, 917519, 65536, 1, 851983, 65536, 0, 983054, 65536, 2, 917518, 65536, 1, 851982, 65536, 0, 983053, 65536, 2, 917517, 65536, 1, 851981, 65536, 0, 983052, 65536, 2, 917516, 65536, 1, 851980, 65536, 0, 983051, 65536, 2, 917515, 65536, 1, 851979, 65536, 0, 983050, 65536, 2, 917514, 65536, 1, 851978, 65536, 0, 983049, 65536, 2, 917513, 65536, 1, 851977, 65536, 0, 983048, 65536, 2, 917512, 65536, 1, 851976, 65536, 0, 983047, 65536, 2, 917511, 65536, 1, 851975, 65536, 0, 983046, 65536, 2, 917510, 65536, 1, 851974, 65536, 0, 983045, 65536, 2, 917509, 65536, 1, 851973, 65536, 0, 983044, 65536, 2, 917508, 65536, 1, 851972, 65536, 0, 983043, 65536, 2, 917507, 65536, 1, 851971, 65536, 0, 983042, 65536, 2, 917506, 65536, 1, 851970, 65536, 0, 983041, 65536, 2, 917505, 65536, 1, 851969, 65536, 0, 983040, 65536, 2, 917504, 65536, 1, 851968, 65536, 0, 1048575, 0, 2, 983039, 0, 1, 917503, 0, 0, 720911, 131075, 0, 786447, 131075, 1, 720912, 196611, 0, 786448, 196611, 1, 720915, 1, 0, 786451, 1, 0, 589841, 3, 0, 655377, 3, 1, 589842, 65539, 0, 655378, 65539, 1, 720914, 65539, 1, 786450, 65539, 1, 720913, 3, 1, 786449, 3, 1, 786442, 2, 196608, 65536, 2, 131072, 10, 2, 131072, 196611, 2, 131072, 131080, 2, 131072, 131088, 2, 131072, 458768, 2, 131072)
+layer_1/tile_data = PackedInt32Array(917515, 2, 720896, 786439, 2, 65536, 786437, 2, 458752, 786436, 2, 458752, 786435, 2, 458752, 786434, 2, 458752)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_0e3oq")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="GreenPipeEnteringAnother" type="Sprite2D" parent="."]
+position = Vector2(544, 384)
+texture = ExtResource("11_g4bem")
+
+[node name="PipeIn" parent="." instance=ExtResource("12_f5dnv")]
+position = Vector2(470, 383)
+rotation = -1.57079
+warp_direction = 1
+warp_to_scene = "res://stages/extra/lost_map/lost_map_2.tscn"
+warping_speed = 50.0
+warping_sound = ExtResource("13_myhs2")
+warp_disable_smooth_entry = true
+use_circle_transition = true
+
+[node name="HUD" parent="." instance=ExtResource("14_jaemd")]
+visible = false
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -20
+script = ExtResource("10_fqasq")
+
+[node name="GiantClouds4" type="Sprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.713726)
+position = Vector2(704, 208)
+texture = ExtResource("15_okfr1")
+
+[node name="BigClouds2" type="Sprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.384314)
+position = Vector2(144, 336)
+texture = ExtResource("17_xkcmn")
+
+[node name="TreeLong" parent="." instance=ExtResource("16_4t2w2")]
+position = Vector2(94, 368)
