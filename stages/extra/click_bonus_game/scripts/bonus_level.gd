@@ -112,6 +112,7 @@ func gameover() -> void:
 
 func switch_scene() -> void:
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+	_restore()
 	
 	if !_crossfade:
 		TransitionManager.accept_transition(
