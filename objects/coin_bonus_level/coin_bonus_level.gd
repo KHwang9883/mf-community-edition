@@ -14,7 +14,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if passed: return
 	if body != Thunder._current_player: return
 	
-	Audio.play_1d_sound(preload("res://stages/extra/click_bonus_game/sfx/bonus_super_coin_collect-.wav"))
+	Audio.play_1d_sound(preload("res://stages/extra/click_bonus_game/sfx/bonus_super_coin_collect-.wav"), false, { "bus": "1D Sound" })
 	Data.values.bonus_game = true
 	passed = true
 	

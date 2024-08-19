@@ -14,6 +14,7 @@ func _handle_select() -> void:
 			Scenes.scene_ready.connect(func():
 				TransitionManager.current_transition.on(Thunder._current_player)
 				TransitionManager.current_transition.paused = false
+				get_tree().paused = false
 			, CONNECT_ONE_SHOT)
 		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	Audio.stop_music_channel(2, true)

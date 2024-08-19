@@ -9,7 +9,7 @@ func _ready() -> void:
 	while !Thunder._current_player:
 		await get_tree().physics_frame
 	
-	var tw = get_tree().create_tween().set_loops()
+	var tw = time_text.create_tween().set_loops()
 	tw.tween_property(time_text, "scale", Vector2.ONE / 2.0, 0.16)
 	tw.tween_property(time_text, "scale", Vector2.ONE, 0.16)
 	var player = Thunder._current_player
@@ -47,3 +47,5 @@ func time_countdown(_first_time: bool = true) -> void:
 		Data.values.time -= 1000
 		Data.values.score += 10000
 	super(_first_time)
+	if Data.values.time < 0.0:
+		Data.values.time = 0

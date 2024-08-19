@@ -11,4 +11,4 @@ func _ready() -> void:
 
 func _update_visibility() -> void:
 	quality = SettingsManager.settings.quality
-	modulate.v = 1.0 if bool(quality) else 0.7
+	modulate.v = 1.0 #if bool(quality) else 0.7
