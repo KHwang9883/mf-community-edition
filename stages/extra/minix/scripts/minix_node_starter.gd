@@ -22,6 +22,7 @@ func _ready() -> void:
 	for i in maps.get_children():
 		if !i is MinixMap:
 			continue
+		i.hide()
 		map_names.append(i.map_name)
 		map_paths.append(i)
 	var _minix_music = minix_score_loader.score_values.settings.minix_music
@@ -50,6 +51,7 @@ func _on_map_changed_to(_id: int) -> void:
 	for i in map_paths:
 		if i.get_instance_id() == current_map.get_instance_id():
 			i.position.y = 0
+			i.show()
 			#Thunder._disconnect(game_started, i.queue_free)
 			if mario:
 				mario.global_position = current_map.get_node("MarioPos").global_position
@@ -57,6 +59,7 @@ func _on_map_changed_to(_id: int) -> void:
 				mario.lives = current_map.life_count
 			continue
 		i.position.y = -999999
+		i.hide()
 		#Thunder._connect(game_started, i.queue_free, Node.CONNECT_ONE_SHOT)
 
 

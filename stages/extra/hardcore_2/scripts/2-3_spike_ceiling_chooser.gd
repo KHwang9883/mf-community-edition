@@ -4,7 +4,7 @@ extends Node2D
 @onready var v_box_container: Control = $VBoxContainer
 
 func _ready() -> void:
-	if OS.is_debug_build() && Input.is_action_pressed("a_delete"):
+	if !OS.has_feature("template") && Input.is_action_pressed("a_delete"):
 		KevinGlobal.activated = true
 	
 	if KevinGlobal.activated:

@@ -7,6 +7,8 @@ signal damaged_to(lives: int)
 func _ready() -> void:
 	Thunder._current_player_state = null
 	super()
+	_suit_pause_tweak = false
+
 
 func hurt(tags: Dictionary = {}) -> void:
 	if !suit:

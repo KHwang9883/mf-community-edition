@@ -48,12 +48,12 @@ func _physics_process(delta):
 	if is_instance_valid(player):
 		lava_hud.position.y = lava_top_hud.position.y + (global_position.y - player.global_position.y) / 20
 		
-		var cam := get_viewport().get_camera_2d()
-		if is_instance_valid(cam):
-			if player.is_on_floor() && !is_equal_approx(cam.offset.y, 8) && player.global_position.y < 0 && player.global_position.y > -7360:
-				cam.offset.y = move_toward(cam.offset.y, 8, 5 * delta)
-			elif !is_zero_approx(cam.offset.y):
-				cam.offset.y = move_toward(cam.offset.y, 0, 50 * delta)
+		#var cam := get_viewport().get_camera_2d()
+		#if is_instance_valid(cam):
+			#if player.is_on_floor() && !is_equal_approx(cam.offset.y, 8) && player.global_position.y < 0 && player.global_position.y > -7360:
+				#cam.offset.y = move_toward(cam.offset.y, 8, 5 * delta)
+			#elif !is_zero_approx(cam.offset.y):
+				#cam.offset.y = move_toward(cam.offset.y, 0, 50 * delta)
 
 
 
@@ -77,7 +77,7 @@ func _start_rising() -> void:
 
 func _accelerate() -> void:
 	create_tween().tween_property(self, "lava_speed", lava_speed - 37.5, 1)
-	sound_accel.play()
+	#sound_accel.play()
 	lava_hud_animation.play("warning_accelerated")
 
 
