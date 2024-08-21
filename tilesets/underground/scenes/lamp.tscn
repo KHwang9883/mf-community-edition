@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bgublkatjfthl"]
+[gd_scene load_steps=17 format=3 uid="uid://bgublkatjfthl"]
 
 [ext_resource type="Texture2D" uid="uid://cnw7t13m2bojq" path="res://tilesets/underground/gfx/underground_lamp.png" id="1_ddhh6"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="2_hs0hn"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/light_pulse.gd" id="3_h12ci"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/light_pulse_far.gd" id="4_vefn1"]
+[ext_resource type="Texture2D" uid="uid://cftoireec5ht4" path="res://gfx/lamp_minimum_light.png" id="5_xsplk"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/light_pulse_minimum.gd" id="6_8mmxm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ngcfx"]
 atlas = ExtResource("1_ddhh6")
@@ -36,6 +38,48 @@ fill_to = Vector2(0.857143, 0.142857)
 metadata/_snap_enabled = true
 metadata/_snap_count = 7
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_sckg0"]
+atlas = ExtResource("5_xsplk")
+region = Rect2(0, 0, 53, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uy16t"]
+atlas = ExtResource("5_xsplk")
+region = Rect2(0, 53, 53, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqxts"]
+atlas = ExtResource("5_xsplk")
+region = Rect2(0, 106, 53, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdnw3"]
+atlas = ExtResource("5_xsplk")
+region = Rect2(0, 159, 53, 53)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vgxbw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sckg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy16t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqxts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wdnw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqxts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy16t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 25.0
+}]
+
 [node name="Sprite2D7" type="Sprite2D"]
 position = Vector2(0, 7)
 texture = SubResource("AtlasTexture_ngcfx")
@@ -59,3 +103,17 @@ position = Vector2(1, 2)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_gd7tu")
 script = ExtResource("4_vefn1")
+
+[node name="Node2D2" type="Node2D" parent="."]
+visible = false
+script = ExtResource("2_hs0hn")
+maximum = false
+minimum = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0.780392)
+position = Vector2(1, 4)
+sprite_frames = SubResource("SpriteFrames_vgxbw")
+autoplay = "default"
+frame_progress = 0.120173
+script = ExtResource("6_8mmxm")

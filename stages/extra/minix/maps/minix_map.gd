@@ -54,7 +54,7 @@ func _on_game_started() -> void:
 	).call_deferred()
 
 func _physics_process(delta: float) -> void:
-	if !OS.is_debug_build(): return
+	if OS.has_feature("template"): return
 	var starter = Scenes.custom_scenes.minix_node
 	if is_instance_valid(starter) && starter.current_map != self:
 		return

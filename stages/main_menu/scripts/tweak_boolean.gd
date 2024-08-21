@@ -12,11 +12,13 @@ var is_blocked: bool
 func _ready() -> void:
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	toggle.texture.region.position.y = 0 if tweak else 16
-	if lock_behind_story_mode && !SecretsManager.is_endgame():
+	
+	if lock_behind_story_mode:
 		var lab: Label = $Label as Label
-		lab.text = "??????? (beat story mode to unlock!)"
 		lab.add_theme_color_override("font_color", Color.LIGHT_CORAL)
-		is_blocked = true
+		if !SecretsManager.is_endgame():
+			lab.text = "??????? (beat story mode to unlock!)"
+			is_blocked = true
 
 
 func _handle_select() -> void:

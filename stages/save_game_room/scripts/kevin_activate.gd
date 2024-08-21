@@ -53,14 +53,19 @@ func _physics_process(_delta: float) -> void:
 		modulate.a -= 2 * _delta
 		# Reset Kevin mode
 		if Input.is_key_pressed(KEY_BACKSPACE):
-			music_loader.index = 0
-			node_2d.visible = false
-			node_2d_2.visible = false
-			#music_overlay.music_text.visible_ratio = 1
-			#music_overlay.music_text.modulate.a = 1
-			#music_overlay.displaying_mode = music_overlay.DisplayingMode.ROLL_IN_OUT
-			#music_overlay.play(0)
-			KevinGlobal.activated = false
-			modulate.a = 1
-			text = ""
-			progress = 0
+			kevin_reset()
+
+
+func kevin_reset(no_music: bool = false) -> void:
+	if !no_music:
+		music_loader.index = 0
+	node_2d.visible = false
+	node_2d_2.visible = false
+	#music_overlay.music_text.visible_ratio = 1
+	#music_overlay.music_text.modulate.a = 1
+	#music_overlay.displaying_mode = music_overlay.DisplayingMode.ROLL_IN_OUT
+	#music_overlay.play(0)
+	KevinGlobal.activated = false
+	modulate.a = 1
+	text = ""
+	progress = 0
