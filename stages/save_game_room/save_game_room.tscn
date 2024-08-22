@@ -1,4 +1,4 @@
-[gd_scene load_steps=130 format=3 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=131 format=3 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -58,6 +58,7 @@
 [ext_resource type="Texture2D" uid="uid://tki7rbs8vxw6" path="res://tilesets/overworld_green/gfx/rock_platform.png" id="36_csfwx"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/hardcore_pipe.gd" id="41_03xon"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/starman_running_score.gd" id="49_3ho5y"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/reset_and_select.gd" id="54_5dq5r"]
 [ext_resource type="Texture2D" uid="uid://b05pg40drmew" path="res://engine/objects/signs/sign.png" id="56_snq4n"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="57_likrm"]
 [ext_resource type="PackedScene" uid="uid://bwy11odywkm4d" path="res://engine/objects/enemies/human_lab/container/container.tscn" id="58_2kfqn"]
@@ -1604,6 +1605,21 @@ uppercase = true
 script = ExtResource("15_pr6di")
 
 [node name="Reset" parent="." instance=ExtResource("14_xt7b1")]
+position = Vector2(0, 6)
+script = ExtResource("54_5dq5r")
+
+[node name="Label2" type="Label" parent="Reset"]
+offset_left = 245.0
+offset_top = -40.0
+offset_right = 587.0
+offset_bottom = -27.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "to choose world, press tab button."
+horizontal_alignment = 1
+uppercase = true
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -3851,3 +3867,5 @@ uppercase = true
 [connection signal="body_exited" from="PipeSave3" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
 [connection signal="warp_ended" from="Objects/Node2D3/PipeIn" to="KevinLayer/Label" method="kevin_reset" binds= [true]]
 [connection signal="warp_started" from="Objects/Node2D3/PipeIn" to="KevinLayer/Label" method="kevin_reset"]
+
+[editable path="Reset"]
