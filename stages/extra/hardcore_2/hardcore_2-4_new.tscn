@@ -1,9 +1,7 @@
-[gd_scene load_steps=93 format=3 uid="uid://dcx4rjvxyngi3"]
+[gd_scene load_steps=91 format=3 uid="uid://dcx4rjvxyngi3"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_11iu2"]
-[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_6005j"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_2nus4"]
-[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_gvyjh"]
 [ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_rbdrq"]
 [ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="6_cqv32"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_4bo5l"]
@@ -614,30 +612,16 @@ size = Vector2(17482, 1824)
 
 [node name="Hardcore2-4 New" type="Node2D"]
 script = ExtResource("1_11iu2")
+completion_write_save = false
+jump_to_scene = "res://stages/extra/hardcore_2/end_cutscene.tscn"
 
-[node name="MusicLoader" parent="." instance=ExtResource("2_6005j")]
+[node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_2nus4")
-tweaked_completion_music = ExtResource("4_gvyjh")
-ignore_fade_in_tweak = false
-music_var_1 = Array[Resource]([])
-music_var_2 = Array[Resource]([])
-music_var_3 = Array[Resource]([])
-var_1_volume_db = Array[float]([0.0])
-var_1_start_from_sec = Array[float]([0.0])
-var_2_volume_db = Array[float]([0.0])
-var_2_start_from_sec = Array[float]([0.0])
-var_3_volume_db = Array[float]([0.0])
-var_3_start_from_sec = Array[float]([0.0])
 boss_music_var_1 = ExtResource("5_rbdrq")
-boss_music_var_2 = null
-boss_music_var_3 = null
-boss_music_volume_db = Array[Resource]([])
-boss_music_start_from_sec = Array[Resource]([])
 music = Array[Resource]([ExtResource("6_cqv32")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("7_4bo5l")]
 secrets = Array[String](["hardcore worlds finished"])
-show_toast = false
 
 [node name="Mario" parent="." instance=ExtResource("7_xlye3")]
 position = Vector2(112, 400)

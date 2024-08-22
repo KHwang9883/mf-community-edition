@@ -95,8 +95,8 @@ func run_while(callable: Callable, repeat_delay: float) -> void:
 
 func _brick_particles() -> void:
 	var brick = CASTLE_BRICK.instantiate()
-	brick.global_position = marker_2d.global_position
-	brick.speed = Vector2(randf_range(-6.0, 6.0), randi_range(-14, -6))
+	brick.position = marker_2d.global_position
+	brick.speed = Vector2(randf_range(-6.0, 6.0), randi_range(-11, -6))
 	Scenes.current_scene.add_child(brick)
 
 

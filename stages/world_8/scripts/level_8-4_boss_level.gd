@@ -7,6 +7,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 
 func throw_to_scene() -> void:
 	SecretsManager.set_secret("story mode completed", true)
+	ProfileManager.current_profile.data.star_world = true
+	ProfileManager.save_current_profile()
 	await get_tree().create_timer(0.8, false, false).timeout
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 

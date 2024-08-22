@@ -18,11 +18,11 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	position.y -= delta * 150
-	sprite.global_rotation = 0
+	#sprite.global_rotation = 0
 	
 	speed += 312.5 * delta
 	speed = minf(speed, 625.0)
-	rotation = target_pos.angle_to_point(position)
+	#rotation = target_pos.angle_to_point(position)
 	position = position.move_toward(target_pos, speed * delta)
 	if (
 		position.x > abs(target_pos.x) - 2 &&
