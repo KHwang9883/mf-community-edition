@@ -122,4 +122,3 @@ func _fade_out() -> void:
 				.instantiate()
 				.with_scene(goto_scene)
 		)
-
