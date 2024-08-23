@@ -113,6 +113,7 @@ func run_while(callable: Callable, repeat_delay: float) -> void:
 func _smoke_particles() -> void:
 	var smoke = CASTLE_SMOKE.instantiate()
 	smoke.position = Vector2(marker_2d.global_position + Vector2(randi_range(-160, 160), 0)).rotated(castle.global_rotation)
+	smoke.reset_physics_interpolation()
 	smoke.y_modifier = randi_range(-40, -60)
 	smoke.y_modify_over_time = 1
 	smoke.apply_force_below_y = 400

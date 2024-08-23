@@ -12,5 +12,7 @@ func _physics_process(delta):
 	fake_pos.x = init_pos + cam.get_screen_center_position().x - 320
 	while position.x >= fake_pos.x + 64:
 		position.x -= 64
+		reset_physics_interpolation()
 	while position.x < fake_pos.x - 64:
 		position.x += 64
+		reset_physics_interpolation()

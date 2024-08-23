@@ -90,6 +90,7 @@ func new_random_enemy(index: int = 0) -> void:
 	var picked = enemy_array[index] if index else enemy_array.pick_random()
 	var enemy = picked.instantiate()
 	enemy.position = pick_random_marker()
+	enemy.reset_physics_interpolation()
 	enemy.force_direction = -1 + 2 * round(randf())
 	enemy.gravity_scale = enemy_gravity_scale
 	enemy.max_falling_speed = enemy_max_falling_speed

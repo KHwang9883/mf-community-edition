@@ -20,6 +20,7 @@ func deploy():
 	
 	var expl = EXPLOSION_TANK.instantiate()
 	expl.position = global_position
+	expl.reset_physics_interpolation()
 	Scenes.current_scene.add_child(expl)
 	
 	kak_ogur_4_ik.visible = false
