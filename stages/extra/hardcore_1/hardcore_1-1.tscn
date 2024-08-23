@@ -1,9 +1,11 @@
-[gd_scene load_steps=48 format=3 uid="uid://bdy3mpwqur0ys"]
+[gd_scene load_steps=51 format=3 uid="uid://bdy3mpwqur0ys"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_apfvb"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_t43nd"]
 [ext_resource type="Resource" uid="uid://csytp2m2k1jl" path="res://music/ykyrococ.mod" id="4_fm4xd"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_rvrib"]
+[ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="5_7dvll"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="6_knub2"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_sl2cp"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_7dosk"]
 [ext_resource type="Texture2D" uid="uid://c2xfexiy1rnqh" path="res://engine/tilesets/overworld/overworld_classic.png" id="8_qs3m3"]
@@ -31,6 +33,13 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="30_f5mka"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="32_psrrj"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="33_qgph7"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
+stream_count = 2
+stream_0/stream = ExtResource("5_7dvll")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("6_knub2")
+stream_1/volume = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0d6ml"]
 texture = ExtResource("8_qs3m3")
@@ -358,6 +367,7 @@ music = Array[Resource]([ExtResource("4_fm4xd")])
 
 [node name="Mario" parent="." instance=ExtResource("4_rvrib")]
 position = Vector2(224, 400)
+death_music_override = SubResource("AudioStreamSynchronized_d6pl4")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0

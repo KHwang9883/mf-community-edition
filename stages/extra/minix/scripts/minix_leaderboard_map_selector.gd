@@ -51,9 +51,10 @@ func _physics_process(delta: float) -> void:
 	node_2d.position.x = lerp(node_2d.position.x, -(map_id * off_size_x), 20 * delta)
 
 
-func _update_map() -> void:
+func _update_map(load_records: bool = false) -> void:
 	var lb = Scenes.current_scene.get_node("START/Leaderboard")
 	
 	lb.map_load_name = map_names[map_id]
 	
-	lb._load_records()
+	if !load_records:
+		lb._load_records()

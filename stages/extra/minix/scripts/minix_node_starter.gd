@@ -51,14 +51,17 @@ func _on_map_changed_to(_id: int) -> void:
 	for i in map_paths:
 		if i.get_instance_id() == current_map.get_instance_id():
 			i.position.y = 0
+			i.reset_physics_interpolation()
 			i.show()
 			#Thunder._disconnect(game_started, i.queue_free)
 			if mario:
 				mario.global_position = current_map.get_node("MarioPos").global_position
+				mario.reset_physics_interpolation()
 				mario.underwater.max_falling_speed_override = 500
 				mario.lives = current_map.life_count
 			continue
 		i.position.y = -999999
+		i.reset_physics_interpolation()
 		i.hide()
 		#Thunder._connect(game_started, i.queue_free, Node.CONNECT_ONE_SHOT)
 
@@ -72,7 +75,7 @@ func start_game() -> void:
 	mario.completed = false
 	
 	control.map_id = map_id + 1
-	control._update_map.call_deferred()
+	control._update_map.call_deferred(true)
 	(func():
 		game_started.emit()
 	).call_deferred()

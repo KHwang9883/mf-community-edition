@@ -65,6 +65,7 @@ func run_while(callable: Callable, repeat_delay: float) -> void:
 func _brick_particles() -> void:
 	var brick = CASTLE_BRICK.instantiate()
 	brick.position = castle_end_marker.position + Vector2(randi_range(-145, 145), 16)
+	brick.reset_physics_interpolation()
 	brick.speed = Vector2(randf_range(-4.0, 4.0), randi_range(-11, -6))
 	Scenes.current_scene.add_child(brick)
 
@@ -72,6 +73,7 @@ func _brick_particles() -> void:
 func _smoke_particles() -> void:
 	var smoke = CASTLE_SMOKE.instantiate()
 	smoke.position = castle_end_marker.position + Vector2(randi_range(-157, 157), 16)
+	smoke.reset_physics_interpolation()
 	smoke.y_modifier = randi_range(-10, 10)
 	smoke.rotation_speed = randi_range(-90, 90)
 	Scenes.current_scene.add_child(smoke)

@@ -14,6 +14,7 @@ func add_kevin() -> void:
 	kevin.global_position = Vector2(-100, -100)
 	_current_kevin = kevin
 	Scenes.current_scene.add_child(kevin)
+	kevin.reset_physics_interpolation()
 
 func patch_mario() -> void:
 	if Scenes.current_scene.name == "SaveGameRoom": return

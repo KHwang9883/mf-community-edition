@@ -17,4 +17,3 @@ func _handle_select() -> void:
 	
 	lb._load_records()
 	Pause.get_child(0).open_blocked = true
-

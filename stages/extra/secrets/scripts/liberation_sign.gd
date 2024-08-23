@@ -7,5 +7,6 @@ func create(upwards: bool = false) -> void:
 	var keyboard = LIBERATION_SIGN.instantiate()
 	Scenes.current_scene.add_child(keyboard)
 	keyboard.position = marker.global_position
+	keyboard.reset_physics_interpolation()
 	if upwards:
 		keyboard.speed.y = -300

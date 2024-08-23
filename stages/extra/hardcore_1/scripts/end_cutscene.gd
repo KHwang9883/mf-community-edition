@@ -119,6 +119,7 @@ func _brick_particles(number: int, _d: bool = false) -> void:
 	for i in number:
 		var brick = CASTLE_BRICK.instantiate()
 		brick.position = castle.global_position + Vector2(randi_range(-80, 80) + 157, 128 + (randi_range(0, 64) if _d else 0)) 
+		brick.reset_physics_interpolation()
 		brick.speed = Vector2(randf_range(-6.0, 6.0), randi_range(-9, -6))
 		brick.z_index = 5 if _d else 7
 		brick._z_toggle = false

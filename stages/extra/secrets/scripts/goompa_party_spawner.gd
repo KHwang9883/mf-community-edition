@@ -21,6 +21,7 @@ func _spawn_goomba() -> void:
 	Thunder.view.cam_border()
 	instance.position = Vector2(new_position, Thunder.view.border.position.y)
 	instance.position.x += 320 + 200 + randi_range(0, 200)
+	instance.reset_physics_interpolation()
 	instance.speed.y = 1000
 	instance.max_falling_speed = 625
 	

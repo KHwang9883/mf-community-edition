@@ -68,6 +68,7 @@ func _physics_process(delta):
 					randi_range(-128, 128),
 					randi_range(-128, 128)
 				)
+				expl.reset_physics_interpolation()
 		for i in brick_generators.get_children():
 			if !Thunder.view.is_getting_closer(i, 32):
 				continue
@@ -75,6 +76,7 @@ func _physics_process(delta):
 				var tile = DAMAGED_TILE.instantiate()
 				Scenes.current_scene.add_child(tile)
 				tile.position = i.global_position
+				tile.reset_physics_interpolation()
 				tile.speed = Vector2(randf_range(-3, 3), -randf_range(5, 8))
 		
 		if !pipe_broken && path_follow_2d.progress > 1940:
@@ -82,6 +84,8 @@ func _physics_process(delta):
 			Audio.play_sound(preload("res://engine/objects/projectiles/sounds/stun.wav"), svo)
 			svo.gravity_scale = 0.5
 			svo.get_node("Sprite2D/cover").visible = false
+			await get_tree().physics_frame
+			svo.collided_floor.connect(svo.get_node("AudioStreamPlayer2D").play, CONNECT_ONE_SHOT)
 		
 		if camera_2d.get_screen_center_position().x < -7000:
 			counter = -1.0
@@ -121,12 +125,14 @@ func _flow_intros():
 		var beam = BEAM.instantiate()
 		Scenes.current_scene.add_child(beam)
 		beam.position = camera_2d.get_screen_center_position() + Vector2(400, randf_range(-128, 128))
+		beam.reset_physics_interpolation()
 		beam.speed = -Vector2.ONE * randf_range(5, 10)
 	var tw = create_tween().set_loops(10)
 	tw.tween_callback(func():
 		var kufon = KUFON.instantiate()
 		Scenes.current_scene.add_child(kufon)
 		kufon.position = camera_2d.get_screen_center_position() + Vector2(400, randf_range(-128, 128))
+		kufon.reset_physics_interpolation()
 		kufon.vel_set(-Vector2(50, 50) * randf_range(5, 10))
 	)
 	tw.tween_interval(0.13)

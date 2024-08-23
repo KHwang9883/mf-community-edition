@@ -36,6 +36,7 @@ func _pipe_burst() -> void:
 		
 		var coin_inst = COIN_FROM_PIPE.instantiate()
 		coin_inst.position = position
+		coin_inst.reset_physics_interpolation()
 		coin_inst.speed = Vector2(randf_range(-250, 250), randf_range(-500, -350))
 		Scenes.current_scene.add_child(coin_inst)
 		var tw = coin_inst.create_tween()
