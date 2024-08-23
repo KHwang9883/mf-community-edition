@@ -130,7 +130,7 @@ func _fade_in_tweak(player, ind: int) -> void:
 	if !SettingsManager.get_tweak("bgm_fade_in_bug_emulation", false):
 		return
 	await get_tree().create_timer(0.017, true, false, true).timeout
-	if ind == 0 && !ignore_fade_in_tweak:
+	if ind == 0 && !ignore_fade_in_tweak && is_instance_valid(player):
 		player.volume_db = -59
 		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
 		Audio.fade_music_1d_player(player, to_vol, 0.5 / Engine.time_scale, Tween.TRANS_CUBIC, false, Tween.EASE_OUT)

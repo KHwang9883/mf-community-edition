@@ -1,17 +1,15 @@
-[gd_scene load_steps=25 format=3 uid="uid://ktsy78p1xrca"]
+[gd_scene load_steps=24 format=3 uid="uid://ktsy78p1xrca"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_o8dn7"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_w8au1"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_whvb6"]
 [ext_resource type="AudioStream" uid="uid://crkruc3dfofrp" path="res://music/lostmap/lostmap_5.ogg" id="4_c5ff8"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_pjaei"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_tddc3"]
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="6_kjeco"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_f37nf"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_kms7h"]
-[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="9_oktv0"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_0pu78"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_kgl31"]
-[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="12_oc16j"]
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="13_o3u7c"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="14_ks4r8"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="15_d6chm"]
@@ -24,8 +22,6 @@
 texture = ExtResource("10_0pu78")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSet" id="TileSet_3j3lw"]
@@ -56,36 +52,55 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_m4xc1"]
+resource_local_to_scene = true
+script = ExtResource("16_0cqb7")
+creation_fallback_node = ExtResource("14_ks4r8")
+creation_nodepack = ExtResource("15_d6chm")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_o8dn7")
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("2_w8au1")]
+[node name="MusicLoader" parent="." instance=ExtResource("2_w8au1")]
 script = ExtResource("3_whvb6")
+tweaked_completion_music = ExtResource("4_pjaei")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_c5ff8")])
 
-[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("death_sprite") instance=ExtResource("5_tddc3")]
+[node name="Mario" parent="." instance=ExtResource("5_tddc3")]
 position = Vector2(224, 399)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 8.0
-platform_on_leave = 2
-script = ExtResource("6_kjeco")
-death_sprite = NodePath("SpriteDeath")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("7_f37nf")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_kms7h")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("8_kms7h")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("9_oktv0")
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -94,8 +109,7 @@ format = 2
 layer_0/tile_data = PackedInt32Array(851974, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 851976, 0, 0, 851975, 0, 0, 851978, 0, 0, 851977, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 851979, 0, 0, 851980, 0, 0, 917516, 0, 0, 917517, 0, 0, 851981, 0, 0, 720910, 0, 0, 786446, 0, 0, 851982, 0, 0, 917518, 0, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 851985, 0, 0, 786449, 0, 0, 720913, 0, 0, 720912, 0, 0, 720911, 0, 0, 786447, 0, 0, 851983, 0, 0, 851984, 0, 0, 786448, 0, 0, 851986, 0, 0, 851987, 0, 0, 851988, 0, 0, 851989, 0, 0, 917525, 0, 0, 917524, 0, 0, 917523, 0, 0, 917522, 0, 0, 720918, 0, 0, 786454, 0, 0, 851990, 0, 0, 917526, 0, 0, 720919, 0, 0, 786455, 0, 0, 851991, 0, 0, 917527, 0, 0, 720920, 0, 0, 786456, 0, 0, 851992, 0, 0, 917528, 0, 0, 720921, 0, 0, 786457, 0, 0, 851993, 0, 0, 917529, 0, 0, 851994, 0, 0, 917530, 0, 0, 851995, 0, 0, 917531, 0, 0, 851996, 0, 0, 917532, 0, 0, 851997, 0, 0, 917533, 0, 0, 851998, 0, 0, 917534, 0, 0, 851999, 0, 0, 917535, 0, 0, 852000, 0, 0, 917536, 0, 0, 852001, 0, 0, 917537, 0, 0, 852002, 0, 0, 917538, 0, 0, 852003, 0, 0, 917539, 0, 0, 852004, 0, 0, 917540, 0, 0, 852005, 0, 0, 917541, 0, 0, 852006, 0, 0, 917542, 0, 0, 720935, 0, 0, 786471, 0, 0, 852007, 0, 0, 917543, 0, 0, 917544, 0, 0, 852008, 0, 0, 786472, 0, 0, 720936, 0, 0, 720937, 0, 0, 786473, 0, 0, 852009, 0, 0, 917545, 0, 0, 917546, 0, 0, 852010, 0, 0, 786474, 0, 0, 720938, 0, 0, 852011, 0, 0, 852012, 0, 0, 852013, 0, 0, 852014, 0, 0, 917550, 0, 0, 917549, 0, 0, 917548, 0, 0, 917547, 0, 0)
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_kgl31")]
-script = ExtResource("12_oc16j")
+[node name="HUD" parent="." instance=ExtResource("11_kgl31")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -115,7 +129,7 @@ result = SubResource("Resource_0jeia")
 
 [node name="QuestionBlock2" parent="Objects" instance=ExtResource("13_o3u7c")]
 position = Vector2(496, 112)
-result = SubResource("Resource_0jeia")
+result = SubResource("Resource_m4xc1")
 
 [node name="Brick" parent="Objects" instance=ExtResource("17_xa5n5")]
 position = Vector2(496, 144)
