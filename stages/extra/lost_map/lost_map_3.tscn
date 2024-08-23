@@ -37,9 +37,9 @@
 [sub_resource type="Gradient" id="Gradient_v2mq5"]
 colors = PackedColorArray(0, 0.294118, 0.843137, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_khawt"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3hnk3"]
 gradient = SubResource("Gradient_v2mq5")
-width = 259
+fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_m2xb4"]
 colors = PackedColorArray(0, 0, 1, 1, 1, 1, 1, 1)
@@ -353,15 +353,14 @@ metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("11_ncoxm")]
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="CanvasLayer" parent="."]
+layer = -100
 
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
-offset_left = 640.0
-offset_right = 1120.0
-offset_bottom = 640.0
-rotation = 1.57079
-texture = SubResource("GradientTexture1D_khawt")
-metadata/_edit_lock_ = true
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -100
+position = Vector2(320, 240)
+scale = Vector2(10, 7.5)
+texture = SubResource("GradientTexture2D_3hnk3")
 
 [node name="746" type="Sprite2D" parent="."]
 position = Vector2(248, 456)
@@ -432,6 +431,7 @@ script = ExtResource("10_7gel6")
 layer = -1
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground2"]
+z_index = -100
 offset_left = 640.0
 offset_right = 1120.0
 offset_bottom = 640.0

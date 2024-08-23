@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_vufed"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_6taja"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="9_6jkwo"]
+[ext_resource type="Script" path="res://engine/components/cam_area/detection_area.gd" id="9_f6sho"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="10_cgryk"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="10_g7r8l"]
 [ext_resource type="Texture2D" uid="uid://dgvxy6qwwrxi7" path="res://gfx/fancy_graphics/saveroom_giant_sunray.png" id="10_j0xnu"]
@@ -28,7 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://0u75c85478qe" path="res://gfx/fancy_graphics/rurex_outline.png" id="16_wg23m"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="17_20lrt"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="17_viesn"]
-[ext_resource type="AudioStream" uid="uid://b1bxtmesp2bfq" path="res://engine/objects/players/prefabs/sounds/powerup.wav" id="18_3eyj0"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="18_mgfoc"]
 [ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="18_xiw5g"]
 [ext_resource type="PackedScene" uid="uid://vjj2puu35x3v" path="res://tilesets/overworld_green/scenes/woods_alt_behind.tscn" id="19_8q883"]
@@ -799,7 +799,18 @@ metadata/_edit_lock_ = true
 offset_right = 640.0
 offset_bottom = 480.0
 smooth_transition = true
-metadata/_edit_lock_ = true
+
+[node name="CamArea3" parent="." instance=ExtResource("6_vufed")]
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="Control" type="Control" parent="CamArea3"]
+anchors_preset = 0
+offset_left = 76.0
+offset_top = 88.0
+offset_right = 115.0
+offset_bottom = 121.0
+script = ExtResource("9_f6sho")
 
 [node name="CamArea4Minix" parent="." instance=ExtResource("6_vufed")]
 offset_left = -640.0
@@ -1460,7 +1471,7 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -1
-pickup_neutral_sound = ExtResource("18_3eyj0")
+pickup_neutral_sound = null
 speed = Vector2(0, 0)
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
@@ -1470,7 +1481,7 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -2
-pickup_neutral_sound = ExtResource("18_3eyj0")
+pickup_neutral_sound = null
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="Beetroot" parent="Objects" instance=ExtResource("17_viesn")]
@@ -1479,7 +1490,7 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -2
-pickup_neutral_sound = ExtResource("18_3eyj0")
+pickup_neutral_sound = null
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="GreenLui" parent="Objects" instance=ExtResource("18_xiw5g")]
@@ -1488,7 +1499,7 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -2
-pickup_neutral_sound = ExtResource("18_3eyj0")
+pickup_neutral_sound = null
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="ResetPowerBlock" parent="Objects" instance=ExtResource("19_xtt8k")]
@@ -3679,6 +3690,9 @@ uppercase = true
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Node2D/SaveroomGiantSunray" method="ease_hide"]
+[connection signal="view_section_changed" from="CamArea3" to="ParallaxBackground/Gradient" method="ease_hide"]
+[connection signal="view_section_changed" from="CamArea3" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
+[connection signal="view_section_changed" from="CamArea3" to="ParallaxBackground/Node2D/SaveroomGiantSunray" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea4Minix" to="ParallaxBackground/Node2D/SaveroomGiantSunray" method="ease_show"]
 [connection signal="view_section_changed" from="CamArea3HC" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea5HLSign" to="ParallaxBackground/Gradient" method="ease_show"]
