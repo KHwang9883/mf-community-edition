@@ -1,4 +1,4 @@
-[gd_scene load_steps=132 format=3 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=133 format=3 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -93,6 +93,7 @@
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/secrets_block.gd" id="84_vgarn"]
 [ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/hard_block_only.png" id="85_esg68"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="90_jteik"]
+[ext_resource type="Texture2D" uid="uid://cy8l4ojo25jxx" path="res://gfx/sign/sign_minix_score.png" id="94_cylmh"]
 
 [sub_resource type="Gradient" id="Gradient_6g8qv"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 1, 1)
@@ -1564,7 +1565,7 @@ use_circle_transition = true
 circle_wait_till_scene_changed = false
 
 [node name="PipeIn4" parent="Objects" instance=ExtResource("21_qg33c")]
-position = Vector2(1888, 80)
+position = Vector2(1888, -48)
 warp_to_scene = "res://stages/extra/world_9/map_9.tscn"
 warping_sound = ExtResource("59_mqp80")
 use_circle_transition = true
@@ -1852,6 +1853,14 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-384, 31)
 texture = ExtResource("65_vaskj")
 
+[node name="SignLeg11" type="Sprite2D" parent="Objects"]
+position = Vector2(272, -961)
+texture = ExtResource("65_vaskj")
+
+[node name="SignLeg12" type="Sprite2D" parent="Objects"]
+position = Vector2(368, -961)
+texture = ExtResource("65_vaskj")
+
 [node name="SignLeg7" type="Sprite2D" parent="Objects"]
 position = Vector2(66, 258)
 texture = ExtResource("65_vaskj")
@@ -1891,7 +1900,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("64_d5rth")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "mario minix!"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -3172,6 +3181,13 @@ warp_to = NodePath("../PipeOut")
 use_blur_transition = true
 blur_opening_speed = 3.0
 
+[node name="PipeIn9" parent="Objects" instance=ExtResource("21_qg33c")]
+position = Vector2(1888, 80)
+warping_editor_color = Color(0.501961, 1, 0.301961, 0.415686)
+warp_to = NodePath("../PipeOut")
+use_blur_transition = true
+blur_opening_speed = 3.0
+
 [node name="PipeIn6" parent="Objects" instance=ExtResource("21_qg33c")]
 position = Vector2(112, 544)
 warping_editor_display_path = false
@@ -3186,6 +3202,7 @@ position = Vector2(320, -560)
 position = Vector2(96, 304)
 
 [node name="ConsoleBlock" type="Node2D" parent="Objects"]
+visible = false
 script = ExtResource("84_vgarn")
 
 [node name="ColorRect" type="ColorRect" parent="Objects/ConsoleBlock"]
@@ -3337,9 +3354,9 @@ texture = ExtResource("82_seg3g")
 
 [node name="Label10" type="Label" parent="Objects"]
 offset_left = 1824.0
-offset_top = 32.0
+offset_top = -80.0
 offset_right = 1952.0
-offset_bottom = 64.0
+offset_bottom = -48.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
@@ -3686,6 +3703,34 @@ text = "fanmade
 extra
 worlds"
 horizontal_alignment = 1
+uppercase = true
+
+[node name="SignMinixScore" type="Sprite2D" parent="."]
+position = Vector2(320, -883)
+texture = ExtResource("94_cylmh")
+
+[node name="Label10" type="Label" parent="SignMinixScore"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -82.0
+offset_top = -47.0
+offset_right = -82.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.937255, 0.941176, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.235294, 1)
+theme_override_constants/line_spacing = -2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 24
+text = "the 
+community
+edition
+zone"
+horizontal_alignment = 1
+vertical_alignment = 1
 uppercase = true
 
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
