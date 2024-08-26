@@ -15,6 +15,8 @@ func set_min_time(to: float) -> void:
 
 func set_max_time(to: float) -> void:
 	for i in children:
+		if i.timer_pitching.wait_time > to:
+			i.timer_pitching.wait_time = to
 		i.pitching_interval_max = to
 
 
