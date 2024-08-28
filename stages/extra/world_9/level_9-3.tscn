@@ -1,56 +1,286 @@
-[gd_scene load_steps=12 format=4 uid="uid://ctmls733fo7f2"]
+[gd_scene load_steps=41 format=4 uid="uid://ctmls733fo7f2"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_3i1ag"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_7qtqb"]
-[ext_resource type="Script" path="res://engine/objects/core/music_loader/music_loader.gd" id="3_c7fn3"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_dfb4h"]
+[ext_resource type="Resource" uid="uid://dr444gme3wt8r" path="res://music/extra/world_9/24 - SuperFist [Alexander Brandon].it" id="3_yiwe0"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_3cpof"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_pajkm"]
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="5_v86sa"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_1qis6"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_exqwy"]
-[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="8_re0oe"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="8_g63jy"]
+[ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="9_rqto1"]
 [ext_resource type="TileSet" uid="uid://cisrnptu4w3tf" path="res://tilesets/volcano/volcano.tres" id="9_rtrgv"]
+[ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="10_p2yro"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_ymxjs"]
-[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="11_bvtfl"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="11_h487r"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_mrqeo"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="12_4lgnr"]
+[ext_resource type="Texture2D" uid="uid://dfi4d7levruc4" path="res://gfx/backgrounds/smasvolcanoresize.png" id="12_ox85f"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="13_ard0v"]
+[ext_resource type="Texture2D" uid="uid://dd2pd3ypmrjcb" path="res://tilesets/volcano/gfx/wide_clouds.png" id="13_el23s"]
+[ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="13_xuu8q"]
+[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="14_7h444"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="15_q10xe"]
+[ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="17_4ch66"]
+
+[sub_resource type="Gradient" id="Gradient_5c04i"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.556863, 0.556863, 0.541176, 1, 0.32549, 0.211765, 0.243137, 1, 0.607843, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mg2on"]
+gradient = SubResource("Gradient_5c04i")
+fill_to = Vector2(0, 0.863248)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7oanh"]
+
+[sub_resource type="Gradient" id="Gradient_c7nah"]
+colors = PackedColorArray(0, 0, 0, 0, 0.4, 0.4, 0.4, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b34up"]
+gradient = SubResource("Gradient_c7nah")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pudn0"]
+frequency = 0.004
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b84yi"]
+width = 800
+height = 600
+seamless = true
+seamless_blend_skirt = 0.25
+noise = SubResource("FastNoiseLite_pudn0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t1gv5"]
+shader = ExtResource("14_7h444")
+shader_parameter/density = 0.65
+shader_parameter/speed = Vector2(0.02, 0.01)
+shader_parameter/freq = 1.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_b84yi")
+
+[sub_resource type="Curve" id="Curve_4ag2n"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.381944, 1), 0.0, 0.0, 0, 0, Vector2(0.761574, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.501887), 2.1939, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_3ri61"]
+curve = SubResource("Curve_4ag2n")
+
+[sub_resource type="Curve" id="Curve_5o2tk"]
+_data = [Vector2(0, 0.411321), 0.0, 0.0, 0, 0, Vector2(0.256944, 0.698113), 0.0, 0.0, 0, 0, Vector2(0.585648, 0.366038), 2.83511, 2.83511, 0, 0, Vector2(1, 0.471698), -2.29604, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_2tkxs"]
+curve = SubResource("Curve_5o2tk")
+
+[sub_resource type="Curve" id="Curve_gajam"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ylh60"]
+curve = SubResource("Curve_gajam")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h2imk"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(320, 490, 0)
+emission_shape = 3
+emission_box_extents = Vector3(320, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+radial_velocity_min = -50.0
+radial_velocity_max = 50.0
+radial_velocity_curve = SubResource("CurveTexture_3ri61")
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_2tkxs")
+scale_over_velocity_curve = SubResource("CurveTexture_ylh60")
+
+[sub_resource type="Resource" id="Resource_pn7iv"]
+resource_local_to_scene = true
+script = ExtResource("12_4lgnr")
+creation_nodepack = ExtResource("11_h487r")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_6rqen"]
+resource_local_to_scene = true
+script = ExtResource("12_4lgnr")
+creation_nodepack = ExtResource("17_4ch66")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [node name="Level9-3" type="Node2D"]
 script = ExtResource("1_3i1ag")
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("2_7qtqb")]
-script = ExtResource("3_c7fn3")
+[node name="MusicLoader" parent="." instance=ExtResource("2_7qtqb")]
+script = ExtResource("3_dfb4h")
+tweaked_completion_music = ExtResource("4_3cpof")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
+music = Array[Resource]([ExtResource("3_yiwe0")])
+volume_db = Array[float]([0.0])
 
-[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("death_sprite") instance=ExtResource("4_pajkm")]
-position = Vector2(80, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 8.0
-platform_on_leave = 2
-script = ExtResource("5_v86sa")
-death_sprite = NodePath("SpriteDeath")
-gravity_scale = 1.0
-max_falling_speed = 500.0
+[node name="Mario" parent="." instance=ExtResource("4_pajkm")]
+position = Vector2(267, 400)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("6_1qis6")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("7_exqwy")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("7_exqwy")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("8_re0oe")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAATAA8AAQACAAIAAAATAA4AAQACAAEAAAATAA0AAQACAAAAAAASAA8AAQABAAIAAAASAA4AAQABAAEAAAASAA0AAQABAAAAAAARAA8AAQABAAIAAAARAA4AAQABAAEAAAARAA0AAQABAAAAAAAQAA8AAQABAAIAAAAQAA4AAQABAAEAAAAQAA0AAQABAAAAAAAPAA8AAQABAAIAAAAPAA4AAQABAAEAAAAPAA0AAQABAAAAAAAOAA8AAQABAAIAAAAOAA4AAQABAAEAAAAOAA0AAQABAAAAAAANAA8AAQABAAIAAAANAA4AAQABAAEAAAANAA0AAQABAAAAAAAMAA8AAQABAAIAAAAMAA4AAQABAAEAAAAMAA0AAQABAAAAAAALAA8AAQABAAIAAAALAA4AAQABAAEAAAALAA0AAQABAAAAAAAKAA8AAQABAAIAAAAKAA4AAQABAAEAAAAKAA0AAQABAAAAAAAJAA8AAQABAAIAAAAJAA4AAQABAAEAAAAJAA0AAQABAAAAAAAIAA8AAQABAAIAAAAIAA4AAQABAAEAAAAIAA0AAQABAAAAAAAHAA8AAQABAAIAAAAHAA4AAQABAAEAAAAHAA0AAQABAAAAAAAGAA8AAQABAAIAAAAGAA4AAQABAAEAAAAGAA0AAQABAAAAAAAFAA8AAQABAAIAAAAFAA4AAQABAAEAAAAFAA0AAQABAAAAAAAEAA8AAQABAAIAAAAEAA4ABwAAAAAAAAAEAA0AAQABAAAAAAADAA8AAQABAAIAAAADAA4AAQABAAEAAAADAA0AAQABAAAAAAACAA8AAQABAAIAAAACAA4AAQABAAEAAAACAA0AAQABAAAAAAABAA8AAQABAAIAAAABAA4AAQABAAEAAAABAA0AAQABAAAAAAAAAA8AAQAAAAIAAAAAAA4AAQAAAAEAAAAAAA0AAQAAAAAAAAD//w8AAwAAAAAAAAD//w4AAwAAAAAAAAD//w0AAwAAAAAAAAD//wwAAwAAAAAAAAD//wsAAwAAAAAAAAD//woAAwAAAAAAAAD//wkAAwAAAAAAAAD//wgAAwAAAAAAAAD//wcAAwAAAAAAAAD//wYAAwAAAAAAAAD//wUAAwAAAAAAAAD//wQAAwAAAAAAAAD//wMAAwAAAAAAAAD//wIAAwAAAAAAAAD//wEAAwAAAAAAAAD//wAAAwAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAHAA8AAQABAAIAAAAHAA4AAQABAAEAAAAGAA8AAQABAAIAAAAGAA4AAQABAAEAAAAFAA8AAQABAAIAAAAFAA4AAQABAAEAAAAEAA8AAQABAAIAAAAEAA4ABwAAAAAAAAADAA8AAQABAAIAAAADAA4AAQABAAEAAAACAA8AAQABAAIAAAACAA4AAQABAAEAAAABAA8AAQABAAIAAAABAA4AAQABAAEAAAAAAA8AAQABAAEAAAAAAA4AAQABAAEAAAD//w8AAwAAAAAAAAD//w4AAwAAAAAAAAD//w0AAwAAAAAAAAD//wwAAwAAAAAAAAD//wsAAwAAAAAAAAD//woAAwAAAAAAAAD//wkAAwAAAAAAAAD//wgAAwAAAAAAAAD//wcAAwAAAAAAAAD//wYAAwAAAAAAAAD//wUAAwAAAAAAAAD//wQAAwAAAAAAAAD//wMAAwAAAAAAAAD//wIAAwAAAAAAAAD//wEAAwAAAAAAAAD//wAAAwAAAAAAAAAPAAgAAwAAAAAAAAAPAA0AAQABAAAAAAAPAA4AAQABAAEAAAAPAA8AAQABAAIAAAAQAAgAAwAAAAAAAAAQAA0AAQABAAAAAAAQAA4ABwABAAAAAAAQAA8AAQABAAIAAAARAAgAAgAAAAAABAARAA0AAQABAAAAAAARAA4ABwADAAAAAAARAA8AAQABAAIAAAASAAgAAgAAAAAABAASAA0AAQABAAAAAAASAA4AAQABAAEAAAASAA8AAQABAAIAAAATAAgAAgAAAAAABAATAA0AAQACAAAAAAATAA4AAQACAAEAAAATAA8AAQACAAIAAAAPAAkAAwAAAAAAAAAQAAkAAwAAAAAAAAAUAAgAAgAAAAAABQAVAAgAAgAAAAAABQAWAAgAAgAAAAAABAAWAA0AAQAAAAAAAAAWAA4AAQAAAAEAAAAWAA8AAQAAAAIAAAAXAAgAAgAAAAAABAAXAA0AAQABAAAAAAAXAA4AAQABAAEAAAAXAA8AAQABAAIAAAAYAAgAAgAAAAAABAAYAA0AAQABAAAAAAAYAA4AAQABAAEAAAAYAA8AAQABAAIAAAAZAAgAAwAAAAAAAAAZAAkAAwAAAAAAAAAZAA0AAQABAAAAAAAZAA4AAQABAAEAAAAZAA8AAQABAAIAAAAaAAgAAwAAAAAAAAAaAAkAAwAAAAAAAAAaAA0AAQACAAAAAAAaAA4AAQACAAEAAAAaAA8AAQACAAIAAAAIAA0AAQABAAAAAAAIAA4AAQABAAEAAAAIAA8AAQABAAIAAAAJAA0AAQABAAAAAAAJAA4AAQABAAEAAAAJAA8AAQABAAIAAAAKAA0AAQABAAAAAAAKAA4AAQABAAEAAAAKAA8AAQABAAIAAAALAA0AAQABAAAAAAALAA4AAQABAAEAAAALAA8AAQABAAIAAAAMAA0AAQABAAAAAAAMAA4AAQABAAEAAAAMAA8AAQABAAIAAAANAA0AAQABAAAAAAANAA4AAQABAAEAAAANAA8AAQABAAIAAAAOAA0AAQABAAAAAAAOAA4AAQABAAEAAAAOAA8AAQABAAIAAAACAAoAAQAGAAAAAAAEAAsAAQAGAAAAAAAGAAwAAQAGAAAAAAABAAoAAQABAAAAAAAAAAoAAQABAAAAAAAAAAsAAQABAAEAAAABAAsAAQABAAEAAAABAAwAAQABAAEAAAACAAwAAQABAAEAAAADAAwAAQABAAEAAAAFAA0AAQABAAEAAAAEAA0AAQABAAEAAAADAA0AAQABAAEAAAACAA0AAQABAAEAAAABAA0AAQABAAEAAAAAAAwAAQABAAEAAAAAAA0AAQABAAEAAAABAAUAAgAAAAAABAACAAUAAgAAAAAABAARAAwABQAAAAAAAAASAAwABQABAAAAAAATAAwABQACAAAAAAAWAAwABQAAAAAAAAAXAAwABQABAAAAAAAYAAwABQACAAAAAAAKAAwABgACAAAAAAABAAkABgADAAAAAAAFAAQAAgAAAAAAAQAPAAIAAgAAAAAAAQAWAAUAAgAAAAAAAQAOAAwAAgAAAAAAAwA=")
 tile_set = ExtResource("9_rtrgv")
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("10_ymxjs")]
-script = ExtResource("11_bvtfl")
+[node name="HUD" parent="." instance=ExtResource("10_ymxjs")]
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="World" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 329.0
+offset_bottom = 49.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 3
+theme_override_fonts/font = ExtResource("11_mrqeo")
+text = "WORLD
+9-3"
+horizontal_alignment = 1
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground2"]
+offset_right = 640.0
+offset_bottom = 480.0
+texture = SubResource("GradientTexture2D_mg2on")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Smasvolcanoresize" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+clip_children = 2
+position = Vector2(512, 240)
+texture = ExtResource("12_ox85f")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer/Smasvolcanoresize"]
+material = SubResource("CanvasItemMaterial_7oanh")
+offset_left = -512.0
+offset_top = -240.0
+offset_right = 512.0
+offset_bottom = 240.0
+texture = SubResource("GradientTexture2D_b34up")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(800, 600)
+script = ExtResource("13_ard0v")
+medium = true
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground2/ParallaxLayer3"]
+material = SubResource("ShaderMaterial_t1gv5")
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0.329412, 0.337255, 0.337255, 1)
+script = ExtResource("15_q10xe")
+metadata/_edit_lock_ = true
 
 [node name="Objects" type="Node2D" parent="."]
+
+[node name="HammerBro" parent="." instance=ExtResource("8_g63jy")]
+position = Vector2(704, 240)
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(640, 0)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Parallax2D"]
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_h2imk")
+texture = ExtResource("9_rqto1")
+lifetime = 6.0
+preprocess = 2.0
+visibility_rect = Rect2(-80, -80, 800, 560)
+local_coords = true
+
+[node name="Parallax2D2" type="Parallax2D" parent="."]
+repeat_size = Vector2(640, 0)
+autoscroll = Vector2(-100, 0)
+
+[node name="Texture" type="Sprite2D" parent="Parallax2D2"]
+texture_repeat = 2
+position = Vector2(0, -16)
+texture = ExtResource("13_el23s")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 64)
+
+[node name="Parallax2D3" type="Parallax2D" parent="."]
+repeat_size = Vector2(640, 0)
+autoscroll = Vector2(-150, 0)
+
+[node name="Texture" type="Sprite2D" parent="Parallax2D3"]
+texture_repeat = 2
+position = Vector2(0, -32)
+texture = ExtResource("13_el23s")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 64)
+
+[node name="QuestionBlock" parent="." instance=ExtResource("10_p2yro")]
+position = Vector2(16, 176)
+result = SubResource("Resource_pn7iv")
+initially_visible_and_solid = false
+
+[node name="QuestionBlock3" parent="." instance=ExtResource("10_p2yro")]
+position = Vector2(112, 48)
+result = SubResource("Resource_6rqen")
+initially_visible_and_solid = false
+
+[node name="QuestionBlock2" parent="." instance=ExtResource("10_p2yro")]
+position = Vector2(112, 176)
+result = SubResource("Resource_pn7iv")
+initially_visible_and_solid = false
+
+[node name="Lava" parent="." instance=ExtResource("13_xuu8q")]
+offset_left = 640.0
+offset_top = 416.0
+offset_right = 704.0
+offset_bottom = 496.0
