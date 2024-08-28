@@ -1,0 +1,143 @@
+[gd_scene load_steps=16 format=3 uid="uid://c6jebmtmr1aap"]
+
+[ext_resource type="Script" path="res://objects/volcano/bob_omb/bob_omb.gd" id="1_qjs3i"]
+[ext_resource type="Texture2D" uid="uid://chwx41qubdkjp" path="res://objects/volcano/bob_omb/bob_omb.png" id="2_eifbl"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ugdyl"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_c5kan"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_veo6d"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="6_ylo6x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmo40"]
+size = Vector2(30, 30)
+
+[sub_resource type="Resource" id="Resource_n73cd"]
+script = ExtResource("4_veo6d")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjgae"]
+atlas = ExtResource("2_eifbl")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iktgi"]
+atlas = ExtResource("2_eifbl")
+region = Rect2(36, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ugyg"]
+atlas = ExtResource("2_eifbl")
+region = Rect2(72, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1sni"]
+atlas = ExtResource("2_eifbl")
+region = Rect2(108, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8u1b"]
+atlas = ExtResource("2_eifbl")
+region = Rect2(144, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7f66"]
+atlas = ExtResource("2_eifbl")
+region = Rect2(180, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kx12c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjgae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iktgi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ugyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1sni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ugyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1sni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8u1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7f66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8u1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7f66")
+}],
+"loop": true,
+"name": &"ignited",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7f66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1sni")
+}],
+"loop": true,
+"name": &"stomped",
+"speed": 5.0
+}]
+
+[node name="BobOmb" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_max_angle = 0.837758
+floor_snap_length = 16.0
+script = ExtResource("1_qjs3i")
+look_at_player = true
+sprite = NodePath("AnimatedSprite2D")
+speed = Vector2(50, 0)
+gravity_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_rmo40")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_ugdyl")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_rmo40")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_c5kan")
+stomping_creation = SubResource("Resource_n73cd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kx12c")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("6_ylo6x")
+metadata/_edit_lock_ = true
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

@@ -1,0 +1,142 @@
+[gd_scene load_steps=14 format=3 uid="uid://djqaqo2i2qcpx"]
+
+[ext_resource type="Script" path="res://objects/volcano/bob_omb/bob_omb.gd" id="1_wntni"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_schmo"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_ouj6r"]
+[ext_resource type="Texture2D" uid="uid://chwx41qubdkjp" path="res://objects/volcano/bob_omb/bob_omb.png" id="5_oo0ac"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="6_fi34g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmo40"]
+size = Vector2(30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjgae"]
+atlas = ExtResource("5_oo0ac")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iktgi"]
+atlas = ExtResource("5_oo0ac")
+region = Rect2(36, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ugyg"]
+atlas = ExtResource("5_oo0ac")
+region = Rect2(72, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1sni"]
+atlas = ExtResource("5_oo0ac")
+region = Rect2(108, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8u1b"]
+atlas = ExtResource("5_oo0ac")
+region = Rect2(144, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7f66"]
+atlas = ExtResource("5_oo0ac")
+region = Rect2(180, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kx12c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjgae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iktgi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ugyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1sni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ugyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1sni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8u1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7f66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8u1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7f66")
+}],
+"loop": true,
+"name": &"ignited",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7f66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1sni")
+}],
+"loop": true,
+"name": &"stomped",
+"speed": 5.0
+}]
+
+[node name="BobOmb" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_max_angle = 0.837758
+floor_snap_length = 16.0
+script = ExtResource("1_wntni")
+ignited = true
+sprite = NodePath("AnimatedSprite2D")
+gravity_scale = 0.25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_rmo40")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_schmo")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_rmo40")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_ouj6r")
+stomping_enabled = false
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"head": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kx12c")
+animation = &"stomped"
+autoplay = "stomped"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("6_fi34g")
+metadata/_edit_lock_ = true
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
