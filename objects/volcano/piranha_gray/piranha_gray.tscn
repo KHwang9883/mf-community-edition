@@ -1,0 +1,123 @@
+[gd_scene load_steps=16 format=3 uid="uid://dg7vn8nh7e4tx"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_g4p2g"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qb51g"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_k6o7d"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_y0mmm"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_f5m8v"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_c40lm"]
+[ext_resource type="Texture2D" uid="uid://cgay0oqcx75my" path="res://engine/objects/enemies/piranha_plants/textures/head_gray.png" id="7_cpvio"]
+[ext_resource type="Texture2D" uid="uid://bc63sqiltulom" path="res://engine/objects/enemies/piranha_plants/textures/stem_orange.png" id="8_c7kmd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_fvcap"]
+script = ExtResource("5_f5m8v")
+creation_nodepack = ExtResource("3_k6o7d")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Head"),
+"death_speed": Vector2(0, -250),
+"fast_death_effect": true
+}
+custom_script = ExtResource("4_y0mmm")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_on22v"]
+atlas = ExtResource("7_cpvio")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq3w0"]
+atlas = ExtResource("7_cpvio")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_np6tu"]
+atlas = ExtResource("7_cpvio")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tsmm"]
+atlas = ExtResource("7_cpvio")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qyyhh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_on22v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iq3w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_np6tu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tsmm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PiranhaGreen" type="Node2D"]
+self_modulate = Color(1, 1, 1, 0.121569)
+script = ExtResource("1_g4p2g")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_64hdc")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_qb51g")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": true,
+"fireball": true,
+"hammer": true,
+"iceball": true,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_fvcap")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_c40lm")
+metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
+
+[node name="Head" type="AnimatedSprite2D" parent="."]
+z_index = -2
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_qyyhh")
+autoplay = "default"
+metadata/_edit_group_ = true
+
+[node name="Stem" type="Sprite2D" parent="Head"]
+position = Vector2(0, 24)
+texture = ExtResource("8_c7kmd")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(0.5, -24)
+scale = Vector2(1.55, 2.4)
+metadata/_edit_lock_ = true
+
+[node name="Step" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Head" method="stop"]
