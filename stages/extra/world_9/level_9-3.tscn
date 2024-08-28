@@ -1,0 +1,56 @@
+[gd_scene load_steps=12 format=4 uid="uid://ctmls733fo7f2"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_3i1ag"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_7qtqb"]
+[ext_resource type="Script" path="res://engine/objects/core/music_loader/music_loader.gd" id="3_c7fn3"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_pajkm"]
+[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="5_v86sa"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_1qis6"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_exqwy"]
+[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="8_re0oe"]
+[ext_resource type="TileSet" uid="uid://cisrnptu4w3tf" path="res://tilesets/volcano/volcano.tres" id="9_rtrgv"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_ymxjs"]
+[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="11_bvtfl"]
+
+[node name="Level9-3" type="Node2D"]
+script = ExtResource("1_3i1ag")
+
+[node name="MusicLoader" type="Node" parent="." instance=ExtResource("2_7qtqb")]
+script = ExtResource("3_c7fn3")
+
+[node name="Mario" type="CharacterBody2D" parent="." node_paths=PackedStringArray("death_sprite") instance=ExtResource("4_pajkm")]
+position = Vector2(80, 400)
+collision_mask = 16
+slide_on_ceiling = false
+floor_max_angle = 0.837758
+floor_snap_length = 8.0
+platform_on_leave = 2
+script = ExtResource("5_v86sa")
+death_sprite = NodePath("SpriteDeath")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("6_1qis6")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" type="Control" parent="." instance=ExtResource("7_exqwy")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 11008.0
+offset_bottom = 480.0
+script = ExtResource("8_re0oe")
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAATAA8AAQACAAIAAAATAA4AAQACAAEAAAATAA0AAQACAAAAAAASAA8AAQABAAIAAAASAA4AAQABAAEAAAASAA0AAQABAAAAAAARAA8AAQABAAIAAAARAA4AAQABAAEAAAARAA0AAQABAAAAAAAQAA8AAQABAAIAAAAQAA4AAQABAAEAAAAQAA0AAQABAAAAAAAPAA8AAQABAAIAAAAPAA4AAQABAAEAAAAPAA0AAQABAAAAAAAOAA8AAQABAAIAAAAOAA4AAQABAAEAAAAOAA0AAQABAAAAAAANAA8AAQABAAIAAAANAA4AAQABAAEAAAANAA0AAQABAAAAAAAMAA8AAQABAAIAAAAMAA4AAQABAAEAAAAMAA0AAQABAAAAAAALAA8AAQABAAIAAAALAA4AAQABAAEAAAALAA0AAQABAAAAAAAKAA8AAQABAAIAAAAKAA4AAQABAAEAAAAKAA0AAQABAAAAAAAJAA8AAQABAAIAAAAJAA4AAQABAAEAAAAJAA0AAQABAAAAAAAIAA8AAQABAAIAAAAIAA4AAQABAAEAAAAIAA0AAQABAAAAAAAHAA8AAQABAAIAAAAHAA4AAQABAAEAAAAHAA0AAQABAAAAAAAGAA8AAQABAAIAAAAGAA4AAQABAAEAAAAGAA0AAQABAAAAAAAFAA8AAQABAAIAAAAFAA4AAQABAAEAAAAFAA0AAQABAAAAAAAEAA8AAQABAAIAAAAEAA4ABwAAAAAAAAAEAA0AAQABAAAAAAADAA8AAQABAAIAAAADAA4AAQABAAEAAAADAA0AAQABAAAAAAACAA8AAQABAAIAAAACAA4AAQABAAEAAAACAA0AAQABAAAAAAABAA8AAQABAAIAAAABAA4AAQABAAEAAAABAA0AAQABAAAAAAAAAA8AAQAAAAIAAAAAAA4AAQAAAAEAAAAAAA0AAQAAAAAAAAD//w8AAwAAAAAAAAD//w4AAwAAAAAAAAD//w0AAwAAAAAAAAD//wwAAwAAAAAAAAD//wsAAwAAAAAAAAD//woAAwAAAAAAAAD//wkAAwAAAAAAAAD//wgAAwAAAAAAAAD//wcAAwAAAAAAAAD//wYAAwAAAAAAAAD//wUAAwAAAAAAAAD//wQAAwAAAAAAAAD//wMAAwAAAAAAAAD//wIAAwAAAAAAAAD//wEAAwAAAAAAAAD//wAAAwAAAAAAAAA=")
+tile_set = ExtResource("9_rtrgv")
+metadata/_edit_lock_ = true
+
+[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("10_ymxjs")]
+script = ExtResource("11_bvtfl")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Objects" type="Node2D" parent="."]
