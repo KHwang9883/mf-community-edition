@@ -3,7 +3,7 @@ extends Area2D
 @export var can_break_bricks: bool = true
 
 func _ready() -> void:
-	get_tree().create_timer(0.8, false, false).timeout.connect(func() -> void:
+	get_tree().create_timer(1.0, false, false).timeout.connect(func() -> void:
 		queue_free()
 	)
 

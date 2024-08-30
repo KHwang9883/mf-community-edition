@@ -45,11 +45,11 @@ animations = [{
 "speed": 30.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jjxol"]
-radius = 32.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_1dq63"]
+radius = 64.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_uf710"]
-radius = 32.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_0j8al"]
+radius = 64.0
 
 [sub_resource type="Resource" id="Resource_4iyk4"]
 resource_local_to_scene = true
@@ -64,38 +64,40 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Sprite"),
+"death": NodePath("../../AnimatedSprite2D"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("8_1kton")
 
-[node name="Explod" type="Area2D"]
+[node name="ExplosionArea" type="Area2D"]
 collision_mask = 17
 script = ExtResource("1_cgx3v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2at77")
 autoplay = "default"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-32, 16, -32, -16, -16, -32, 16, -32, 32, -16, 32, 16, 16, 32, -16, 32)
+polygon = PackedVector2Array(-64, 16, -64, -16, -48, -48, -16, -64, 16, -64, 48, -48, 64, -16, 64, 16, 48, 48, 16, 64, -16, 64, -48, 48)
 
 [node name="Attack" type="ShapeCast2D" parent="."]
-shape = SubResource("CircleShape2D_jjxol")
+shape = SubResource("CircleShape2D_1dq63")
 target_position = Vector2(0, 0)
 max_results = 8
 collision_mask = 3
 collide_with_areas = true
 script = ExtResource("3_6r6ww")
 killer_type = &"hammer"
+trigger_enemy_failed_signal = false
 
 [node name="Body" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 7
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
-shape = SubResource("CircleShape2D_uf710")
+shape = SubResource("CircleShape2D_0j8al")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
@@ -103,7 +105,9 @@ script = ExtResource("5_ugnes")
 stomping_standard = Vector2(0, 0)
 stomping_scores = 0
 stomping_sound = null
-killing_enabled = false
+killing_immune = {
+"boomerang": false
+}
 killing_creation = SubResource("Resource_4iyk4")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("10_e7lmw")
