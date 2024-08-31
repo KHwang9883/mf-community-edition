@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=3 uid="uid://dybhtmus71y38"]
+
+[ext_resource type="PackedScene" uid="uid://vrjw4l81t48g" path="res://engine/objects/enemies/human_lab/koopa_troopa/coder_clone_running.tscn" id="1_561q1"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_hhkb1"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_xlnsc"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_r4bmt"]
+[ext_resource type="Texture2D" uid="uid://bwkirjjyle3br" path="res://objects/human_lab_2/coder_polish_clone/gfx/running.png" id="5_28il0"]
+[ext_resource type="AudioStream" uid="uid://masuqdu2sg0s" path="res://objects/human_lab_2/coder_polish_clone/sfx/AAA_Klawiatura2.wav" id="6_a0ui8"]
+
+[sub_resource type="Resource" id="Resource_kv03d"]
+resource_local_to_scene = true
+script = ExtResource("4_r4bmt")
+creation_nodepack = ExtResource("2_hhkb1")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("3_xlnsc")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5had7"]
+atlas = ExtResource("5_28il0")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mylfu"]
+atlas = ExtResource("5_28il0")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4v6i"]
+atlas = ExtResource("5_28il0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xx33o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5had7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mylfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4v6i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 50.0
+}]
+
+[node name="CoderCloneRunningPolish" instance=ExtResource("1_561q1")]
+
+[node name="EnemyAttacked" parent="Body" index="0"]
+stomping_creation = SubResource("Resource_kv03d")
+killing_creation = SubResource("Resource_kv03d")
+
+[node name="Sprite" parent="." index="3"]
+sprite_frames = SubResource("SpriteFrames_xx33o")
+
+[node name="AudioStreamPlayer2D" parent="." index="6"]
+stream = ExtResource("6_a0ui8")
