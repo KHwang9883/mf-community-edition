@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://buphy76owgf8s"]
+
+[ext_resource type="Texture2D" uid="uid://cwy3jolgs5y1r" path="res://tilesets/volcano/gfx/wheel.png" id="1_0gv2s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_viywy"]
+atlas = ExtResource("1_0gv2s")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3loup"]
+atlas = ExtResource("1_0gv2s")
+region = Rect2(0, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ld348"]
+atlas = ExtResource("1_0gv2s")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ossn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_viywy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3loup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ld348")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43ghv"]
+size = Vector2(57, 32)
+
+[node name="Wheel" type="StaticBody2D"]
+collision_layer = 112
+collision_mask = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3ossn")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_43ghv")

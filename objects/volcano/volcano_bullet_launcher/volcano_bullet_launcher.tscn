@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://cptj5kmk8fhhq"]
+
+[ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="1_pes5a"]
+[ext_resource type="Texture2D" uid="uid://t4bdhxxnkuio" path="res://objects/volcano/volcano_bullet_launcher/texture/launcher.png" id="2_8bqjn"]
+[ext_resource type="PackedScene" uid="uid://bvn8af3yhnnnv" path="res://objects/volcano/bullet_bill_perdit/bullet_bill_perdit.tscn" id="2_r0a83"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_nnpkd"]
+
+[sub_resource type="Resource" id="Resource_bpce6"]
+script = ExtResource("3_nnpkd")
+creation_nodepack = ExtResource("2_r0a83")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Animation" id="Animation_mmhx7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Launcher:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_q802t"]
+resource_name = "flash"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Launcher:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(3.784, 8.108, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rxgra"]
+_data = {
+"RESET": SubResource("Animation_mmhx7"),
+"flash": SubResource("Animation_q802t")
+}
+
+[node name="BulletLauncher" instance=ExtResource("1_pes5a")]
+bullet_bill = SubResource("Resource_bpce6")
+
+[node name="Launcher" parent="." index="1"]
+texture = ExtResource("2_8bqjn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": SubResource("AnimationLibrary_rxgra")
+}
+autoplay = "flash"
