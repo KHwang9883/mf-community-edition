@@ -15,6 +15,9 @@ func _ready() -> void:
 	tw.tween_property(bob_omb, "speed:x", 50 * bob_omb.dir, 0.9)
 	tw.tween_property(bob_omb, "global_rotation_degrees", 0, 0.01)
 	await get_tree().create_timer(0.1, false, true).timeout
+	if !is_instance_valid(bob_omb):
+		queue_free()
+		return
 	bob_omb.collision = true
 	bob_omb.gravity_scale = 0.5
 	bob_omb.reparent(Scenes.current_scene)
