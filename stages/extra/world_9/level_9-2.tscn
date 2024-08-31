@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://bt5j06x2vkkxh"]
+[gd_scene load_steps=36 format=4 uid="uid://bt5j06x2vkkxh"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_w5q24"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_flply"]
@@ -8,8 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_uxutu"]
 [ext_resource type="Texture2D" uid="uid://e4d68shwifka" path="res://gfx/backgrounds/underground_brown.png" id="8_0n4o4"]
 [ext_resource type="TileSet" uid="uid://cisrnptu4w3tf" path="res://tilesets/volcano/volcano.tres" id="9_7v3eo"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="9_yoks0"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_fbkoy"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_t5di5"]
+[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="10_x02og"]
 [ext_resource type="PackedScene" uid="uid://diu2ipea3k8qy" path="res://engine/objects/enemies/hammer_bros/fire_bro.tscn" id="11_vc82c"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_yxcev"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="12_144lv"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="12_n38dk"]
 [ext_resource type="PackedScene" uid="uid://csr5enkl02jsj" path="res://objects/volcano/goomba_volcano/goomba_volcano.tscn" id="13_egnyx"]
@@ -21,6 +25,49 @@
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="18_3bdgg"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="19_0mv3b"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="20_lcfye"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gw5q0"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_cysp2"]
+offsets = PackedFloat32Array(0, 0.4375)
+colors = PackedColorArray(0.958706, 0.14571, 0.234041, 1, 0.403903, 2.47272e-06, 1.51612e-06, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 16
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ouhu"]
+gradient = SubResource("Gradient_cysp2")
+width = 480
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cnqe4"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_n5gn5"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(0.403903, 2.47272e-06, 1.51612e-06, 1, 0.958706, 0.14571, 0.234041, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 16
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0icrb"]
+gradient = SubResource("Gradient_n5gn5")
+width = 480
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rmyug"]
+frequency = 0.004
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b84yi"]
+width = 800
+height = 600
+seamless = true
+seamless_blend_skirt = 0.25
+noise = SubResource("FastNoiseLite_rmyug")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1i0ii"]
+shader = ExtResource("10_x02og")
+shader_parameter/density = 0.65
+shader_parameter/speed = Vector2(0.02, 0.01)
+shader_parameter/freq = 1.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_b84yi")
 
 [sub_resource type="Resource" id="Resource_gfxfg"]
 resource_local_to_scene = true
@@ -63,6 +110,59 @@ tile_set = ExtResource("9_7v3eo")
 [node name="HUD" parent="." instance=ExtResource("10_t5di5")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -99
+
+[node name="Parallax2D2" type="Parallax2D" parent="."]
+z_index = -99
+scroll_scale = Vector2(0, 0)
+script = ExtResource("10_fbkoy")
+medium = true
+
+[node name="background" type="Sprite2D" parent="Parallax2D2"]
+modulate = Color(0.48, 0.48, 0.48, 0.419608)
+material = SubResource("CanvasItemMaterial_gw5q0")
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_0ouhu")
+centered = false
+script = ExtResource("9_yoks0")
+scale_min = 1.2
+scale_max = 1.6
+metadata/_edit_lock_ = true
+
+[node name="Parallax2D3" type="Parallax2D" parent="."]
+z_index = 100
+scroll_scale = Vector2(0, 0)
+script = ExtResource("10_fbkoy")
+medium = true
+
+[node name="background" type="Sprite2D" parent="Parallax2D3"]
+modulate = Color(0.48, 0.48, 0.48, 0.682353)
+material = SubResource("CanvasItemMaterial_cnqe4")
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_0icrb")
+centered = false
+script = ExtResource("9_yoks0")
+scale_min = 1.2
+scale_max = 1.6
+metadata/_edit_lock_ = true
+
+[node name="Parallax2D4" type="Parallax2D" parent="."]
+z_index = 100
+repeat_size = Vector2(800, 600)
+script = ExtResource("10_fbkoy")
+medium = true
+
+[node name="ColorRect" type="ColorRect" parent="Parallax2D4"]
+material = SubResource("ShaderMaterial_1i0ii")
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0.220288, 0, 0.0227797, 1)
+script = ExtResource("11_yxcev")
+metadata/_edit_lock_ = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 z_index = -100
@@ -72,6 +172,7 @@ repeat_times = 2
 [node name="UndergroundBrown" type="Sprite2D" parent="Parallax2D"]
 position = Vector2(256, 224)
 texture = ExtResource("8_0n4o4")
+centered = false
 metadata/_edit_lock_ = true
 
 [node name="GoombaVolcano6" parent="." instance=ExtResource("13_egnyx")]
