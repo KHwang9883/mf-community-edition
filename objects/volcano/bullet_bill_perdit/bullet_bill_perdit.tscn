@@ -1,0 +1,195 @@
+[gd_scene load_steps=25 format=3 uid="uid://bvn8af3yhnnnv"]
+
+[ext_resource type="Script" path="res://objects/volcano/bullet_bill_perdit/scripts/bullet_bill_perdit.gd" id="1_sp7ur"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_a675p"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_u8byc"]
+[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/bill/bill_gets_killed.gd" id="4_sqtma"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_7mtkt"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_3f547"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_hyw00"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_s45nj"]
+[ext_resource type="Texture2D" uid="uid://bkwng2n6qtal0" path="res://objects/volcano/bullet_bill_perdit/gfx/bullet_bill_base.png" id="9_moao4"]
+[ext_resource type="Texture2D" uid="uid://5twtweh8mo53" path="res://objects/volcano/bullet_bill_perdit/gfx/bullet_bill_fire.png" id="10_62r7j"]
+[ext_resource type="Script" path="res://objects/volcano/bullet_bill_perdit/scripts/fire_sprite.gd" id="10_ta0it"]
+[ext_resource type="Script" path="res://objects/volcano/bullet_bill_perdit/scripts/fire_area.gd" id="12_foinb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4qhu"]
+size = Vector2(32, 28)
+
+[sub_resource type="Resource" id="Resource_d54bi"]
+script = ExtResource("5_7mtkt")
+creation_nodepack = ExtResource("3_u8byc")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite")
+}
+custom_script = ExtResource("4_sqtma")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a06qs"]
+atlas = ExtResource("10_62r7j")
+region = Rect2(0, 0, 8, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnk41"]
+atlas = ExtResource("10_62r7j")
+region = Rect2(0, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jpxb"]
+atlas = ExtResource("10_62r7j")
+region = Rect2(32, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swh6p"]
+atlas = ExtResource("10_62r7j")
+region = Rect2(64, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2ddb"]
+atlas = ExtResource("10_62r7j")
+region = Rect2(96, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1d4tw"]
+atlas = ExtResource("10_62r7j")
+region = Rect2(96, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6aaq"]
+atlas = ExtResource("10_62r7j")
+region = Rect2(64, 0, 32, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ee7p8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a06qs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnk41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jpxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swh6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2ddb")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1d4tw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6aaq")
+}],
+"loop": true,
+"name": &"firing",
+"speed": 20.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vndfw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_moao4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3lai"]
+size = Vector2(80, 10)
+
+[node name="BulletBill" type="CharacterBody2D"]
+script = ExtResource("1_sp7ur")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(195, 0)
+collision = false
+metadata/_edit_pinned_properties_ = [&"collision", &"speed"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_s4qhu")
+disabled = true
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_s4qhu")
+debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_a675p")
+stomping_creation = SubResource("Resource_d54bi")
+stomping_scores = 100
+stomping_sound = ExtResource("6_3f547")
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_d54bi")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_hyw00")
+killing_sound_failed = ExtResource("8_s45nj")
+metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-64, 0)
+rotation = -1.57079
+sprite_frames = SubResource("SpriteFrames_ee7p8")
+script = ExtResource("10_ta0it")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(64, 0)
+rotation = -1.57079
+sprite_frames = SubResource("SpriteFrames_ee7p8")
+flip_v = true
+script = ExtResource("10_ta0it")
+to_dir = -1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vndfw")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-256, -256, 512, 512)
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+script = ExtResource("12_foinb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-56, 0)
+shape = SubResource("RectangleShape2D_j3lai")
+
+[node name="Area2D2" type="Area2D" parent="."]
+collision_layer = 0
+script = ExtResource("12_foinb")
+to_dir = -1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(56, 0)
+shape = SubResource("RectangleShape2D_j3lai")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="AnimatedSprite2D" method="hide"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="AnimatedSprite2D" method="hide"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
