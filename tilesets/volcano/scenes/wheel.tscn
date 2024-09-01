@@ -1,6 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://buphy76owgf8s"]
 
 [ext_resource type="Texture2D" uid="uid://cwy3jolgs5y1r" path="res://tilesets/volcano/gfx/wheel.png" id="1_0gv2s"]
+[ext_resource type="Script" path="res://tilesets/tanks/scenes/wheel_stop_on_death.gd" id="1_fy310"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_viywy"]
 atlas = ExtResource("1_0gv2s")
@@ -31,20 +32,13 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_43ghv"]
-size = Vector2(57, 32)
-
 [node name="Wheel" type="StaticBody2D"]
 process_mode = 3
-collision_layer = 112
+collision_layer = 0
 collision_mask = 0
+script = ExtResource("1_fy310")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 process_mode = 1
 sprite_frames = SubResource("SpriteFrames_3ossn")
 autoplay = "default"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_43ghv")
