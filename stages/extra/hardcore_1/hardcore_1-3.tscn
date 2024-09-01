@@ -1,10 +1,12 @@
-[gd_scene load_steps=76 format=3 uid="uid://dt0fwwihebkyb"]
+[gd_scene load_steps=79 format=3 uid="uid://dt0fwwihebkyb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_7hqwa"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_wk1q3"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_3iqtk"]
 [ext_resource type="Resource" uid="uid://csytp2m2k1jl" path="res://music/ykyrococ.mod" id="4_wqcby"]
+[ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="5_plej2"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_4j8i1"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="6_h6ao1"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_5f7sp"]
 [ext_resource type="Script" path="res://engine/components/cam_area/detection_area.gd" id="7_6toly"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="8_tdj81"]
@@ -45,6 +47,13 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="43_te76i"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="44_5jui5"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="45_vwcm6"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
+stream_count = 2
+stream_0/stream = ExtResource("5_plej2")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("6_h6ao1")
+stream_1/volume = 0.0
 
 [sub_resource type="Gradient" id="Gradient_sp2x5"]
 colors = PackedColorArray(0, 0, 1, 1, 0.972549, 0.972549, 0.972549, 1)
@@ -422,6 +431,7 @@ music = Array[Resource]([ExtResource("4_wqcby")])
 
 [node name="Mario" parent="." instance=ExtResource("4_3iqtk")]
 position = Vector2(176, 400)
+death_music_override = SubResource("AudioStreamSynchronized_d6pl4")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 drag_vertical_enabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dln23n27atbru"]
+[gd_scene load_steps=48 format=3 uid="uid://dln23n27atbru"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_uppn6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_fff3i"]
@@ -8,8 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_hgo16"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="6_6equq"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_rjpqm"]
+[ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="7_4sbb6"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_ttr7m"]
 [ext_resource type="PackedScene" uid="uid://b0bnba81jh6tn" path="res://engine/objects/enemies/spike_ceiling/spike_ceiling.tscn" id="8_itvuv"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="8_m6fbx"]
 [ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/hard_block_only.png" id="8_n7v7m"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="9_0deip"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_e6fru"]
@@ -32,6 +34,13 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="30_qp4ed"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="31_uor01"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="32_5s401"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
+stream_count = 2
+stream_0/stream = ExtResource("7_4sbb6")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("8_m6fbx")
+stream_1/volume = 0.0
 
 [sub_resource type="Gradient" id="Gradient_01f74"]
 offsets = PackedFloat32Array(0.0666667, 1)
@@ -109,6 +118,7 @@ music = Array[Resource]([ExtResource("3_ugyn3")])
 
 [node name="Mario" parent="." instance=ExtResource("4_1ohme")]
 position = Vector2(320, 336)
+death_music_override = SubResource("AudioStreamSynchronized_d6pl4")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
@@ -986,4 +996,21 @@ position = Vector2(14064, 32)
 texture = ExtResource("32_5s401")
 centered = false
 
+[connection signal="collided_wall" from="TileMap/Goomba" to="TileMap/Goomba" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378611" to="TileMap/@CharacterBody2D@378611" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378612" to="TileMap/@CharacterBody2D@378612" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378613" to="TileMap/@CharacterBody2D@378613" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378614" to="TileMap/@CharacterBody2D@378614" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378615" to="TileMap/@CharacterBody2D@378615" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378616" to="TileMap/@CharacterBody2D@378616" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378617" to="TileMap/@CharacterBody2D@378617" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378618" to="TileMap/@CharacterBody2D@378618" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/KoopaRed" to="TileMap/KoopaRed" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378650" to="TileMap/@CharacterBody2D@378650" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378651" to="TileMap/@CharacterBody2D@378651" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378664" to="TileMap/@CharacterBody2D@378664" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378665" to="TileMap/@CharacterBody2D@378665" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378745" to="TileMap/@CharacterBody2D@378745" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378754" to="TileMap/@CharacterBody2D@378754" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@378755" to="TileMap/@CharacterBody2D@378755" method="turn_x"]
 [connection signal="timeout" from="Objects/Node2D/VBoxContainer/Activation" to="Objects/Node2D/VBoxContainer" method="_on_activation_timeout"]
