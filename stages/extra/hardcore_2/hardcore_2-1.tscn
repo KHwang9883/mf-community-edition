@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dm1va3cxjc03j"]
+[gd_scene load_steps=35 format=3 uid="uid://dm1va3cxjc03j"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_lg7qv"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_6rs61"]
@@ -7,7 +7,9 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_xln5m"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_ypccd"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_nloet"]
+[ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="7_56q2u"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_wjw7s"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="8_ufujk"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_cfor1"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_thjwp"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="12_u7feq"]
@@ -26,6 +28,13 @@
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="23_awgyy"]
 [ext_resource type="Script" path="res://stages/extra/hardcore_2/scripts/lakitu_checker.gd" id="23_w50wl"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="24_0f4ut"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
+stream_count = 2
+stream_0/stream = ExtResource("7_56q2u")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("8_ufujk")
+stream_1/volume = 0.0
 
 [sub_resource type="Gradient" id="Gradient_ehahp"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -83,6 +92,7 @@ music = Array[Resource]([ExtResource("3_d3hec")])
 
 [node name="Mario" parent="." instance=ExtResource("4_ypccd")]
 position = Vector2(320, 400)
+death_music_override = SubResource("AudioStreamSynchronized_d6pl4")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false

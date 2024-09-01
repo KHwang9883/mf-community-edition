@@ -1,11 +1,13 @@
-[gd_scene load_steps=91 format=3 uid="uid://dcx4rjvxyngi3"]
+[gd_scene load_steps=94 format=3 uid="uid://dcx4rjvxyngi3"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_11iu2"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_2nus4"]
 [ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_rbdrq"]
 [ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="6_cqv32"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_4bo5l"]
+[ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="7_8wpra"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="7_xlye3"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="8_3d3lh"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="8_via3q"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="9_s847m"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="10_tjmlj"]
@@ -43,6 +45,13 @@
 [ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://stages/world_6/objects/long_platform/single_platform.tscn" id="42_sli2b"]
 [ext_resource type="Texture2D" uid="uid://bphtd571lu7hf" path="res://gfx/sign/hardcore_sign.png" id="43_oroq3"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="45_ct5tk"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
+stream_count = 2
+stream_0/stream = ExtResource("7_8wpra")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("8_3d3lh")
+stream_1/volume = 0.0
 
 [sub_resource type="Curve2D" id="Curve2D_0x2h0"]
 _data = {
@@ -625,6 +634,7 @@ secrets = Array[String](["hardcore worlds finished"])
 
 [node name="Mario" parent="." instance=ExtResource("7_xlye3")]
 position = Vector2(112, 400)
+death_music_override = SubResource("AudioStreamSynchronized_d6pl4")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
