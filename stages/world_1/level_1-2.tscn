@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://bgdaesvf0ofqu"]
+[gd_scene load_steps=93 format=3 uid="uid://bgdaesvf0ofqu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_p6ptf"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_gcmyw"]
@@ -44,6 +44,8 @@
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="41_i4k0n"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="42_uth1y"]
 [ext_resource type="Script" path="res://stages/world_1/scripts/profile_reset.gd" id="44_gshbq"]
+[ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="45_mrgf3"]
+[ext_resource type="Script" path="res://gfx/texts/signs/sign_visible_tweak.gd" id="46_xo6a8"]
 
 [sub_resource type="Gradient" id="Gradient_mwlja"]
 colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
@@ -1642,6 +1644,30 @@ shape = SubResource("WorldBoundaryShape2D_de5sm")
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("44_gshbq")
+
+[node name="Sign" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(2291, 1328)
+rotation = -0.261799
+texture = ExtResource("45_mrgf3")
+script = ExtResource("46_xo6a8")
+
+[node name="Label3" type="Label" parent="Sign"]
+offset_left = -56.9482
+offset_top = -52.1785
+offset_right = 52.0518
+offset_bottom = -10.1785
+pivot_offset = Vector2(132, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("14_64o0o")
+theme_override_font_sizes/font_size = 18
+text = "a hardcore
+world is hidden
+nearby"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="unlock_secret"]
 [connection signal="warp_started" from="PipeIn" to="HUD/World4Warp" method="activate"]
