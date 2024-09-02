@@ -1,13 +1,16 @@
-[gd_scene load_steps=40 format=3 uid="uid://wscrrfeil4p5"]
+[gd_scene load_steps=45 format=3 uid="uid://wscrrfeil4p5"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ld2mg"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_oh6c0"]
 [ext_resource type="Resource" uid="uid://b6ficv7f75qil" path="res://music/one_fine_day.xm" id="4_o8vu3"]
 [ext_resource type="AudioStream" uid="uid://dwcak56md3who" path="res://music/smw-underground.ogg" id="5_4xru0"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_fd8l8"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="6_n1m1k"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="8_sb7xw"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_ulqjw"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="11_7xhic"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="11_fg3c4"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/text_secret_passage.gd" id="12_8d6nc"]
 [ext_resource type="Script" path="res://stages/extra/human_lab/scripts/level3_clouds_modulate.gd" id="12_25q5o"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="12_gcyh4"]
 [ext_resource type="Texture2D" uid="uid://dmv5rev5xia3u" path="res://gfx/backgrounds/clouds_looping.png" id="14_8erlt"]
@@ -33,6 +36,8 @@
 [ext_resource type="PackedScene" uid="uid://dw362fu3hooyg" path="res://engine/objects/items/coin/coin_out_of_bounds.tscn" id="33_60cu0"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="34_4iaf2"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="35_vh3mx"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="37_6pdws"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/profile_reset.gd" id="38_njq2i"]
 
 [sub_resource type="Gradient" id="Gradient_k6yrm"]
 colors = PackedColorArray(0, 0, 0.247059, 1, 0.7469, 0.7469, 0.77, 1)
@@ -115,6 +120,9 @@ music_var_2 = Array[Resource]([ExtResource("5_4xru0")])
 music_var_3 = Array[Resource]([ExtResource("5_4xru0")])
 music = Array[Resource]([ExtResource("4_o8vu3")])
 
+[node name="SecretUnlocker" parent="." instance=ExtResource("5_fd8l8")]
+secrets = Array[String](["secret human lab level"])
+
 [node name="Mario" parent="." instance=ExtResource("6_n1m1k")]
 position = Vector2(80, 400)
 
@@ -137,6 +145,26 @@ layer_1/tile_data = PackedInt32Array(786438, 2, 524288, 851982, 2, 524288, 78644
 metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("12_gcyh4")]
+
+[node name="Label" type="Label" parent="HUD"]
+offset_left = 217.0
+offset_top = -22.0
+offset_right = 423.0
+offset_bottom = -7.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("11_7xhic")
+theme_override_font_sizes/font_size = 12
+text = "you have found a secret level!"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("12_8d6nc")
+tween_to = 224
+action_after_sec = 3.0
+change_scene = "res://stages/extra/human_lab/human_lab-jeansowaty.tscn"
+circle_transition_center_on_player = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -966,3 +994,13 @@ texture = ExtResource("35_vh3mx")
 [node name="GiantClouds11" type="Sprite2D" parent="Node2D"]
 position = Vector2(11168, 224)
 texture = ExtResource("35_vh3mx")
+
+[node name="PipeIn" parent="." instance=ExtResource("37_6pdws")]
+position = Vector2(10416, 400)
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("38_njq2i")
+
+[connection signal="warp_started" from="PipeIn" to="HUD/Label" method="activate"]
+[connection signal="warp_started" from="PipeIn" to="Node" method="profile_reset"]
+[connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="unlock_secret"]
