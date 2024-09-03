@@ -26,6 +26,9 @@ func _physics_process(delta: float) -> void:
 			if trigger_area.has_point(ppos):
 				_origin = global_position
 				_step = 1
+			if player:
+				if body.overlaps_body(player):
+					player.die()
 		# Stunning
 		1:
 			var player: Player = Thunder._current_player
@@ -75,4 +78,5 @@ func _explosion() -> void:
 	Scenes.current_scene.add_child(expl)
 	expl.global_transform = global_transform
 	expl.position.y += 16
+	expl.reset_physics_interpolation()
 		
