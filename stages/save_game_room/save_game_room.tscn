@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=138 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -95,6 +95,9 @@
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/secrets_block.gd" id="84_vgarn"]
 [ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/hard_block_only.png" id="85_esg68"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="90_jteik"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/koopa_liberation_deco.gd" id="91_1t1pg"]
+[ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="91_tvxxs"]
+[ext_resource type="Texture2D" uid="uid://divwatbr27ptu" path="res://stages/extra/secrets/gfx/we_want_more_shells.png" id="93_f6f35"]
 [ext_resource type="Texture2D" uid="uid://cy8l4ojo25jxx" path="res://gfx/sign/sign_minix_score.png" id="94_cylmh"]
 
 [sub_resource type="Gradient" id="Gradient_6g8qv"]
@@ -1551,15 +1554,31 @@ visible = false
 position = Vector2(0, 32)
 texture = ExtResource("56_aniok")
 
-[node name="PipeSave3" parent="." instance=ExtResource("14_lrr3l")]
+[node name="PipeSave4" parent="." instance=ExtResource("14_lrr3l")]
 position = Vector2(544, 304)
 script = ExtResource("54_c84ba")
+profile_name = "save_3"
 level_count = {
-1: 4
+1: 4,
+2: 5,
+3: 4,
+4: 4,
+5: 3,
+6: 4,
+7: 4,
+8: 4
 }
 map_scene_template = "res://stages/world_{0}/map_{0}.tscn"
+warping_editor_display_path = false
+warp_to = NodePath("../PipeOut")
+warp_to_scene = "res://stages/cutscenes/starting/starting.tscn"
+use_circle_transition = true
+circle_closing_speed = 0.03
+circle_opening_speed = 0.06
+circle_center_after_middle = true
+circle_wait_till_scene_changed = false
 
-[node name="Label" type="Label" parent="PipeSave3"]
+[node name="Label" type="Label" parent="PipeSave4"]
 offset_left = -64.0
 offset_top = -80.0
 offset_right = 64.0
@@ -1574,7 +1593,7 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("15_pr6di")
 
-[node name="CursedPipe" type="Sprite2D" parent="PipeSave3"]
+[node name="CursedPipe" type="Sprite2D" parent="PipeSave4"]
 visible = false
 position = Vector2(0, 32)
 texture = ExtResource("56_aniok")
@@ -3872,6 +3891,58 @@ texture = ExtResource("33_tsede")
 region_enabled = true
 region_rect = Rect2(0, 32, 64, 32)
 
+[node name="Sprite2D" type="Sprite2D" parent="Objects"]
+position = Vector2(4960, 369)
+texture = ExtResource("91_tvxxs")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 47)
+script = ExtResource("91_1t1pg")
+
+[node name="WeWantMoreShells2" type="Sprite2D" parent="Objects/Sprite2D"]
+show_behind_parent = true
+position = Vector2(15, 6)
+texture = ExtResource("93_f6f35")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Objects"]
+position = Vector2(5018, 369)
+texture = ExtResource("91_tvxxs")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 47)
+script = ExtResource("91_1t1pg")
+
+[node name="WeWantMoreShells" type="Sprite2D" parent="Objects/Sprite2D2"]
+show_behind_parent = true
+position = Vector2(15, 6)
+texture = ExtResource("93_f6f35")
+
+[node name="Sprite2D6" type="Sprite2D" parent="Objects"]
+position = Vector2(5194, 369)
+texture = ExtResource("91_tvxxs")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 47)
+script = ExtResource("91_1t1pg")
+
+[node name="WeWantMoreShells" type="Sprite2D" parent="Objects/Sprite2D6"]
+show_behind_parent = true
+position = Vector2(15, 6)
+texture = ExtResource("93_f6f35")
+
+[node name="Sprite2D7" type="Sprite2D" parent="Objects"]
+position = Vector2(5132, 369)
+texture = ExtResource("91_tvxxs")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 47)
+script = ExtResource("91_1t1pg")
+
+[node name="WeWantMoreShells" type="Sprite2D" parent="Objects/Sprite2D7"]
+show_behind_parent = true
+position = Vector2(15, 6)
+texture = ExtResource("93_f6f35")
+
 [node name="Lostmap" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(3520, 133)
@@ -4032,8 +4103,8 @@ uppercase = true
 [connection signal="body_exited" from="PipeSave" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
 [connection signal="body_entered" from="PipeSave2" to="CanvasLayer/Reset" method="_on_pipe_save_player_enter" unbinds=1]
 [connection signal="body_exited" from="PipeSave2" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
-[connection signal="body_entered" from="PipeSave3" to="CanvasLayer/Reset" method="_on_pipe_save_player_enter" unbinds=1]
-[connection signal="body_exited" from="PipeSave3" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="body_entered" from="PipeSave4" to="CanvasLayer/Reset" method="_on_pipe_save_player_enter" unbinds=1]
+[connection signal="body_exited" from="PipeSave4" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
 [connection signal="warp_ended" from="Objects/Node2D3/PipeIn" to="KevinLayer/Label" method="kevin_reset" binds= [true]]
 [connection signal="warp_started" from="Objects/Node2D3/PipeIn" to="KevinLayer/Label" method="kevin_reset"]
 [connection signal="block_triggered" from="Objects/ConsoleBlock" to="Objects/Node2D3/PipeIn" method="queue_free"]
