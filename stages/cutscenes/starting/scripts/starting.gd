@@ -72,6 +72,7 @@ func _flow_intros() -> void:
 	await get_tree().create_timer(1.4, false).timeout
 	main_camera_path.queue_free()
 	second_camera.enabled = true
+	second_camera.make_current()
 	second_camera_path.speed = 1100
 	
 	await get_tree().create_timer(0.1, false).timeout

@@ -84,8 +84,10 @@ func _flow_mario_enter_castle() -> void:
 			win_pose.frame = 4
 	
 	var tex: Texture2D = win_pose.sprite_frames.get_frame_texture("default", win_pose.frame)
+	@warning_ignore("integer_division")
 	win_pose.global_position.x -= tex.get_width() / 2
 	win_pose.global_position.y -= tex.get_height()
+	win_pose.reset_physics_interpolation()
 	win_pose.visible = true
 	
 	await _time(1)
