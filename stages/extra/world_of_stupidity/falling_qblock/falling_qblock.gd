@@ -39,17 +39,6 @@ func _physics_process(delta: float) -> void:
 					player.die()
 			
 			if is_on_floor():
-				# Breaks Brick
-				var bricks: bool
-				for i in get_slide_collision_count():
-					var j: KinematicCollision2D = get_slide_collision(i)
-					if j.get_collider() is StaticBumpingBlock && j.get_collider().has_method(&"bricks_break"):
-						j.get_collider().bricks_break.call_deferred()
-						bricks = true
-				# Non-stop for the thwomp who broke the bricks
-				if bricks:
-					_explosion()
-					return
 				# Stops if stunning on the ground
 				_step = 2
 				_stun()

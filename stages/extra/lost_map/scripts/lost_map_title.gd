@@ -59,13 +59,14 @@ func _ready() -> void:
 	node_2d.modulate.a = 0
 	lostmap_title_press_enter._min_a = 0.7
 	
-	await get_tree().create_timer(5, false).timeout
+	await get_tree().create_timer(1, false).timeout
+	can_start = true
+	await get_tree().create_timer(4, false).timeout
 	var tw = create_tween().set_parallel()
 	tw.tween_property(lostmap_title_mario, "modulate:a", 1, 2)
 	tw.tween_property(node_2d, "modulate:a", 1, 2)
 	
 	await tw.finished
-	can_start = true
 	_label_fader()
 
 func _label_fader() -> void:
@@ -93,7 +94,7 @@ func _physics_process(delta: float) -> void:
 		Audio.play_1d_sound(POWERUP)
 		Audio.play_1d_sound(VOICE_2)
 		
-		await get_tree().create_timer(2, false).timeout
+		await get_tree().create_timer(1.5, false).timeout
 		
 		var tw = create_tween()
 		tw.tween_property(color_rect, "modulate:a", 1, 1)

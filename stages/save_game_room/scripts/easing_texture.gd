@@ -9,7 +9,13 @@ var limits: Rect2i
 var speed: float = 0.04
 var function: Thunder.SmoothFunction = Thunder.SmoothFunction.EASE_IN_OUT
 
+@onready var _tweak: bool = SettingsManager.get_tweak("enable_smooth_cam_transitions", true)
+
 func _physics_process(delta: float) -> void:
+	if !_tweak:
+		modulate.a = 0.0 if is_black else 1.0
+		return
+	
 	if easer:
 		counter += speed * Thunder.get_delta(delta)
 		counter = clamp(counter, 0, 1)

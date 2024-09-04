@@ -10,7 +10,9 @@ var level_count: Dictionary = {
 }
 @export
 var map_scene_template: String = "res://stages/world_{0}/map_{0}.tscn"
+@export
 var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
+@export_node_path("Node2D") var reset_node_path: NodePath = ^"../CanvasLayer/Reset"
 
 var deletion_progress: float
 var _tweak: bool
@@ -20,6 +22,7 @@ var _star_sel_world: int
 var _star_sel_level: int
 
 @onready var label: Label = $Label
+@onready var reset_node: Node2D = get_node_or_null(reset_node_path)
 
 
 signal save_deleted
@@ -39,6 +42,11 @@ func _ready() -> void:
 	
 	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
 		$CursedPipe.visible = true
+	
+	if reset_node:
+		player_enter.connect(_update_reset_labels)
+	else:
+		print("[SavePipe] Set up the reset node path in inspector.")
 
 
 func _physics_process(delta: float) -> void:
@@ -62,6 +70,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if player == null: return
 	if !(event is InputEventKey && event.is_pressed() && !event.is_echo()):
 		return
 	if _tweak || !_star_world: return
@@ -80,6 +89,8 @@ func delete_save() -> void:
 	save_deleted.emit()
 	print(&"Save " + profile_name + &" deleted!")
 	Audio.play_1d_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"))
+	_star_world = false
+	_update_reset_labels()
 
 
 func pass_warp() -> void:
@@ -96,3 +107,9 @@ func pass_warp() -> void:
 		warp_to_scene = ProfileManager.current_profile.data.current_world
 	await get_tree().physics_frame
 	super()
+
+
+func _update_reset_labels() -> void:
+	if reset_node.unlock:
+		reset_node.unlock.visible = _star_world
+	reset_node.unlock2.visible = _star_world
