@@ -15,10 +15,14 @@ var default_score_values: Dictionary = {
 }
 var score_values: Dictionary = default_score_values.duplicate(true)
 
+@onready var node_2d: Node2D = $"../START/Node2D"
+
 signal score_loaded
 signal score_saved
 
 func _ready() -> void:
+	Thunder._connect(score_loaded, _on_score_loaded)
+	Thunder._connect(score_saved, _on_score_loaded)
 	if load_values_on_start:
 		load_score()
 
@@ -73,3 +77,18 @@ func save_settings() -> void:
 	var file: FileAccess = FileAccess.open(score_path, FileAccess.WRITE)
 	file.store_string(data)
 	file.close()
+
+
+func _on_score_loaded() -> void:
+	await get_tree().physics_frame
+	var map_count: int = len(node_2d.map_paths)
+	var _achievement_get: int = 0
+	
+	for i in map_count:
+		var minix_name: String = "minix_" + node_2d.map_names[i]
+		if score_values.has(minix_name) && score_values[minix_name].get("best") >= 100000:
+			_achievement_get += 1
+	print("Enough points gained for achievement: %d / %d" % [_achievement_get, map_count])
+	
+	if _achievement_get == map_count:
+		SecretsManager.set_secret("100000 points in minix maps", true, true)
