@@ -1,8 +1,9 @@
-[gd_scene load_steps=78 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=79 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_m1mir"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="2_orjok"]
 [ext_resource type="AudioStream" uid="uid://b3fi82o236yat" path="res://music/minix/minix-menu.ogg" id="3_gkuoc"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_t3gk0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_mario.gd" id="5_sdtbj"]
@@ -104,6 +105,7 @@ physics_shaper = ExtResource("13_1j748")
 physics_shaper_crouch = ExtResource("13_1j748")
 animation_sprites = ExtResource("8_oi7x3")
 animation_behavior = ExtResource("7_fman6")
+animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_crouch_reflect_fireballs = false
 extra_vars = {}
 sound_hurt = ExtResource("16_yqoxp")
@@ -208,6 +210,9 @@ animations = [{
 script = ExtResource("1_51ox0")
 time = -1
 metadata/_edit_lock_ = true
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("2_orjok")]
+secrets = Array[String](["100000 points in minix maps"])
 
 [node name="MinixScoreLoader" type="Node" parent="."]
 script = ExtResource("2_0osd1")
