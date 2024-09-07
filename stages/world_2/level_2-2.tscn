@@ -77,14 +77,6 @@ shader_parameter/wave_frequency = 16.0
 shader_parameter/wave_speed = 3.0
 shader_parameter/y_axis = false
 
-[sub_resource type="Gradient" id="Gradient_r8fau"]
-colors = PackedColorArray(0.3168, 0.504533, 0.88, 0, 0.313726, 0.501961, 0.878431, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_liwfs"]
-gradient = SubResource("Gradient_r8fau")
-height = 18
-fill_to = Vector2(0, 1)
-
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
 frames = 8
 frame_0/texture = ExtResource("12_2qftu")
@@ -116,9 +108,18 @@ metadata/_snap_enabled = true
 gradient = SubResource("Gradient_l8daq")
 fill_to = Vector2(0, 1)
 
+[sub_resource type="Gradient" id="Gradient_r8fau"]
+offsets = PackedFloat32Array(0, 0.525, 1)
+colors = PackedColorArray(0.3168, 0.504533, 0.88, 0, 0.313726, 0.501961, 0.878431, 1, 0.314, 0.502, 0.878, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_liwfs"]
+gradient = SubResource("Gradient_r8fau")
+height = 18
+fill_to = Vector2(0, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eqomc"]
 shader = ExtResource("12_tjsir")
-shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_amplitude = 0.125
 shader_parameter/wave_frequency = 50.0
 shader_parameter/wave_speed = 2.0
 shader_parameter/y_axis = true
@@ -266,31 +267,31 @@ medium = true
 script = ExtResource("27_olvbf")
 
 [node name="GiantCloud" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(-176, -108)
+position = Vector2(-120, -124)
 texture = ExtResource("41_lek3c")
 
 [node name="GiantCloud7" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(1232, -108)
+position = Vector2(1232, -124)
 texture = ExtResource("41_lek3c")
 
 [node name="GiantCloud2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(2608, -108)
+position = Vector2(2608, -124)
 texture = ExtResource("41_lek3c")
 
 [node name="GiantCloud3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(4480, -108)
+position = Vector2(4480, -124)
 texture = ExtResource("41_lek3c")
 
 [node name="GiantCloud4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(6416, -108)
+position = Vector2(6416, -124)
 texture = ExtResource("41_lek3c")
 
 [node name="GiantCloud5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(7936, -108)
+position = Vector2(7936, -124)
 texture = ExtResource("41_lek3c")
 
 [node name="GiantCloud6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(6240, -108)
+position = Vector2(6240, -124)
 texture = ExtResource("41_lek3c")
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
@@ -350,17 +351,6 @@ script = ExtResource("15_v0hqh")
 medium = true
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(640, 0)
-
-[node name="СкрываниеПерехода" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
-modulate = Color(0.478431, 0.478431, 0.478431, 1)
-position = Vector2(0, 110)
-scale = Vector2(10, 1)
-texture = SubResource("GradientTexture2D_liwfs")
-centered = false
-script = ExtResource("27_olvbf")
-
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 layer = 1
 
@@ -397,6 +387,17 @@ scale = Vector2(10, 6.25)
 texture = SubResource("GradientTexture2D_lwi7l")
 script = ExtResource("27_olvbf")
 maximum = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(640, 0)
+
+[node name="СкрываниеПерехода" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer4"]
+position = Vector2(0, 96)
+scale = Vector2(10, 1.66667)
+texture = SubResource("GradientTexture2D_liwfs")
+centered = false
+script = ExtResource("27_olvbf")
+metadata/_edit_lock_ = true
 
 [node name="CanvasGroup" type="CanvasGroup" parent="ParallaxBackground2"]
 self_modulate = Color(1, 1, 1, 0.627451)
