@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://ht5id10ochxu"]
+[gd_scene load_steps=62 format=3 uid="uid://ht5id10ochxu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gugln"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hi7ol"]
@@ -37,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="29_84blv"]
 [ext_resource type="PackedScene" uid="uid://dnyk0ph5vd52a" path="res://engine/objects/enemies/cheeps/cheep_blue.tscn" id="31_mffwr"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="32_64ams"]
+[ext_resource type="Texture2D" uid="uid://bi04kluy5weby" path="res://gfx/fancy_graphics/water_surface_front.png" id="32_klqyn"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="33_1ruqk"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="34_rlfh2"]
 [ext_resource type="PackedScene" uid="uid://chn8d8bjrm7eu" path="res://engine/objects/fluid/whirlpool.tscn" id="37_6x4d6"]
@@ -76,6 +77,14 @@ shader_parameter/wave_frequency = 16.0
 shader_parameter/wave_speed = 3.0
 shader_parameter/y_axis = false
 
+[sub_resource type="Gradient" id="Gradient_r8fau"]
+colors = PackedColorArray(0.3168, 0.504533, 0.88, 0, 0.313726, 0.501961, 0.878431, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_liwfs"]
+gradient = SubResource("Gradient_r8fau")
+height = 18
+fill_to = Vector2(0, 1)
+
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
 frames = 8
 frame_0/texture = ExtResource("12_2qftu")
@@ -94,6 +103,18 @@ frame_6/texture = ExtResource("18_7yvik")
 frame_6/duration = 0.15
 frame_7/texture = ExtResource("19_a57wy")
 frame_7/duration = 0.15
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8p31"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_l8daq"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(0.188235, 0.313726, 0.517647, 1, 0, 0.0627451, 0.439216, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lwi7l"]
+gradient = SubResource("Gradient_l8daq")
+fill_to = Vector2(0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eqomc"]
 shader = ExtResource("12_tjsir")
@@ -115,18 +136,6 @@ shader_parameter/wave_amplitude = 0.2
 shader_parameter/wave_frequency = 50.0
 shader_parameter/wave_speed = 5.0
 shader_parameter/y_axis = true
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8p31"]
-blend_mode = 1
-
-[sub_resource type="Gradient" id="Gradient_l8daq"]
-offsets = PackedFloat32Array(0, 0.5)
-colors = PackedColorArray(0.188235, 0.313726, 0.517647, 1, 0, 0.0627451, 0.439216, 1)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_lwi7l"]
-gradient = SubResource("Gradient_l8daq")
-fill_to = Vector2(0, 1)
 
 [sub_resource type="Resource" id="Resource_pup4p"]
 resource_local_to_scene = true
@@ -237,19 +246,57 @@ script = ExtResource("27_olvbf")
 medium = true
 
 [node name="niebo_swiatlo" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+visible = false
 position = Vector2(320, -6)
 scale = Vector2(8, 128)
 texture = SubResource("GradientTexture1D_4rqa5")
 script = ExtResource("27_olvbf")
+maximum = false
 
 [node name="niebo_swiatlo2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-visible = false
 position = Vector2(320, -16)
 scale = Vector2(8, 128)
 texture = SubResource("GradientTexture1D_4rqa5")
 script = ExtResource("27_olvbf")
-maximum = false
 medium = true
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Node2D" type="Node2D" parent="ParallaxBackground/ParallaxLayer3"]
+script = ExtResource("27_olvbf")
+
+[node name="GiantCloud" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+position = Vector2(-176, -108)
+texture = ExtResource("41_lek3c")
+
+[node name="GiantCloud7" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+position = Vector2(1232, -108)
+texture = ExtResource("41_lek3c")
+
+[node name="GiantCloud2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+position = Vector2(2608, -108)
+texture = ExtResource("41_lek3c")
+
+[node name="GiantCloud3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+position = Vector2(4480, -108)
+texture = ExtResource("41_lek3c")
+
+[node name="GiantCloud4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+position = Vector2(6416, -108)
+texture = ExtResource("41_lek3c")
+
+[node name="GiantCloud5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+position = Vector2(7936, -108)
+texture = ExtResource("41_lek3c")
+
+[node name="GiantCloud6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+position = Vector2(6240, -108)
+texture = ExtResource("41_lek3c")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
+z_index = 1
+position = Vector2(6576, -656)
+texture = ExtResource("42_7jfqu")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -303,6 +350,17 @@ script = ExtResource("15_v0hqh")
 medium = true
 metadata/_edit_lock_ = true
 
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(640, 0)
+
+[node name="СкрываниеПерехода" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+position = Vector2(0, 110)
+scale = Vector2(10, 1)
+texture = SubResource("GradientTexture2D_liwfs")
+centered = false
+script = ExtResource("27_olvbf")
+
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 layer = 1
 
@@ -323,47 +381,55 @@ script = ExtResource("27_olvbf")
 maximum = false
 medium = true
 
-[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-modulate = Color(1, 1, 1, 0.364706)
-material = SubResource("ShaderMaterial_eqomc")
-position = Vector2(0, 77)
-texture = ExtResource("28_w28ox")
-centered = false
-script = ExtResource("27_olvbf")
-
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-modulate = Color(1, 1, 1, 0.552941)
-material = SubResource("ShaderMaterial_b4ukj")
-position = Vector2(0, 85)
-texture = ExtResource("28_w28ox")
-centered = false
-script = ExtResource("27_olvbf")
-
-[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-material = SubResource("ShaderMaterial_fr3w8")
-position = Vector2(0, 92)
-texture = ExtResource("28_w28ox")
-centered = false
-script = ExtResource("27_olvbf")
-
 [node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-visible = false
 material = SubResource("CanvasItemMaterial_f8p31")
 position = Vector2(320, 312)
 scale = Vector2(10, 6.25)
 texture = SubResource("GradientTexture2D_lwi7l")
 script = ExtResource("27_olvbf")
-maximum = false
 medium = true
 
 [node name="Sprite2D7" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+visible = false
 material = SubResource("CanvasItemMaterial_f8p31")
 position = Vector2(320, 322)
 scale = Vector2(10, 6.25)
 texture = SubResource("GradientTexture2D_lwi7l")
 script = ExtResource("27_olvbf")
+maximum = false
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground2"]
+[node name="CanvasGroup" type="CanvasGroup" parent="ParallaxBackground2"]
+self_modulate = Color(1, 1, 1, 0.627451)
+fit_margin = 0.0
+
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground2/CanvasGroup"]
+repeat_size = Vector2(640, 0)
+follow_viewport = false
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
+modulate = Color(1, 1, 1, 0.407843)
+material = SubResource("ShaderMaterial_eqomc")
+position = Vector2(0, 81)
+texture = ExtResource("28_w28ox")
+centered = false
+script = ExtResource("27_olvbf")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
+modulate = Color(1, 1, 1, 0.807843)
+material = SubResource("ShaderMaterial_b4ukj")
+position = Vector2(0, 88)
+texture = ExtResource("32_klqyn")
+centered = false
+region_enabled = true
+region_rect = Rect2(-24, 0, 640, 30)
+script = ExtResource("27_olvbf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
+material = SubResource("ShaderMaterial_fr3w8")
+position = Vector2(0, 92)
+texture = ExtResource("32_klqyn")
+centered = false
+script = ExtResource("27_olvbf")
 
 [node name="Water" parent="." instance=ExtResource("24_58tso")]
 offset_top = 96.0
@@ -547,43 +613,6 @@ metadata/_edit_lock_ = true
 
 [node name="Checkpoint" parent="." instance=ExtResource("37_rlhmx")]
 position = Vector2(4096, 416)
-
-[node name="Node2D" type="Node2D" parent="."]
-z_index = -20
-script = ExtResource("27_olvbf")
-
-[node name="GiantCloud" type="Sprite2D" parent="Node2D"]
-position = Vector2(-176, -117)
-texture = ExtResource("41_lek3c")
-
-[node name="GiantCloud7" type="Sprite2D" parent="Node2D"]
-position = Vector2(1232, -117)
-texture = ExtResource("41_lek3c")
-
-[node name="GiantCloud2" type="Sprite2D" parent="Node2D"]
-position = Vector2(2608, -117)
-texture = ExtResource("41_lek3c")
-
-[node name="GiantCloud3" type="Sprite2D" parent="Node2D"]
-position = Vector2(4480, -117)
-texture = ExtResource("41_lek3c")
-
-[node name="GiantCloud4" type="Sprite2D" parent="Node2D"]
-position = Vector2(6416, -117)
-texture = ExtResource("41_lek3c")
-
-[node name="GiantCloud5" type="Sprite2D" parent="Node2D"]
-position = Vector2(7936, -736)
-texture = ExtResource("41_lek3c")
-
-[node name="GiantCloud6" type="Sprite2D" parent="Node2D"]
-position = Vector2(6240, -720)
-texture = ExtResource("41_lek3c")
-
-[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-z_index = 1
-position = Vector2(6576, -656)
-texture = ExtResource("42_7jfqu")
 
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 
