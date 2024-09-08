@@ -13,6 +13,26 @@ func unlock_secret(id: int = 0) -> void:
 		SecretsManager.set_secret(secrets[id], true, true, show_toast)
 
 
+func unlock_with_kevin(id: int = 0) -> void:
+	if id < len(secrets):
+		if secrets[id].is_empty(): return
+		if !KevinGlobal.activated: return
+		SecretsManager.set_secret(secrets[id], true, true, show_toast)
+
+
+## "warped", "damaged", "died"
+func unlock_if(conditions: PackedStringArray, id: int = 0) -> void:
+	for i in conditions:
+		if ProfileManager.current_profile.data.has(i):
+			return
+	unlock_secret(id)
+
+
+func unlock_with_kevin_if(conditions: PackedStringArray, id: int = 0) -> void:
+	if !KevinGlobal.activated: return
+	unlock_if(conditions, id)
+
+
 func progress_secret(id: int = 0) -> void:
 	var new_secret = SecretsManager.get_secret(secrets[id])
 	if typeof(new_secret) == TYPE_BOOL && new_secret == true:
@@ -28,4 +48,7 @@ func progress_secret(id: int = 0) -> void:
 		SecretsManager.set_secret(secrets[id], true, false, true)
 		return
 	SecretsManager.set_secret(secrets[id], new_secret, true, false)
-	
+
+
+func add_shit_to_profile(data: String, value: bool = true) -> void:
+	ProfileManager.current_profile.data[data] = value

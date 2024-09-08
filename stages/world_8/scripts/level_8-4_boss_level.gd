@@ -3,6 +3,8 @@ extends Level
 @onready var final_boss_cell = $FinalBossCell
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
+	if !Thunder._current_player: return
+	level_completed.emit()
 	final_boss_cell.cutscene()
 
 func throw_to_scene() -> void:

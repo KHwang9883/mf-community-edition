@@ -1,9 +1,8 @@
-[gd_scene load_steps=79 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=81 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_m1mir"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="2_orjok"]
 [ext_resource type="AudioStream" uid="uid://b3fi82o236yat" path="res://music/minix/minix-menu.ogg" id="3_gkuoc"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_t3gk0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_mario.gd" id="5_sdtbj"]
@@ -12,8 +11,11 @@
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="8_oi7x3"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_sdali"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="9_4mqsq"]
+[ext_resource type="Script" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_k63ai"]
+[ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_2iy48"]
 [ext_resource type="Script" path="res://engine/objects/players/player_config.gd" id="10_5y4lf"]
 [ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="11_6j6nd"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_oti5k"]
 [ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="12_nwmmf"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="13_1j748"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_script.gd" id="13_o0kdt"]
@@ -107,6 +109,9 @@ animation_sprites = ExtResource("8_oi7x3")
 animation_behavior = ExtResource("7_fman6")
 animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_crouch_reflect_fireballs = false
+grab_behavior = ExtResource("9_k63ai")
+grab_sound_grab = ExtResource("10_2iy48")
+grab_sound_kick = ExtResource("11_oti5k")
 extra_vars = {}
 sound_hurt = ExtResource("16_yqoxp")
 sound_death = ExtResource("15_4w6l4")
@@ -210,9 +215,6 @@ animations = [{
 script = ExtResource("1_51ox0")
 time = -1
 metadata/_edit_lock_ = true
-
-[node name="SecretUnlocker" parent="." instance=ExtResource("2_orjok")]
-secrets = Array[String](["100000 points in minix maps"])
 
 [node name="MinixScoreLoader" type="Node" parent="."]
 script = ExtResource("2_0osd1")
