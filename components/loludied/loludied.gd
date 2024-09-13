@@ -55,6 +55,7 @@ func _physics_process(delta: float) -> void:
 			Scenes.reload_current_scene()
 			Data.values.onetime_blocks = false
 			Thunder._current_player_state = null
+			Thunder._current_player_state_path = ""
 			ProfileManager.current_profile.data.lives = Data.values.lives
 			ProfileManager.save_current_profile()
 	else:

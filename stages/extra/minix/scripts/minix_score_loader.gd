@@ -21,6 +21,9 @@ signal score_loaded
 signal score_saved
 
 func _ready() -> void:
+	if SettingsManager.get_tweak("console_enabled", false):
+		Scenes.goto_scene(ProjectSettings.get_setting("application/thunder_settings/main_menu_path"))
+		return
 	Thunder._connect(score_loaded, _on_score_loaded)
 	Thunder._connect(score_saved, _on_score_loaded)
 	if load_values_on_start:
