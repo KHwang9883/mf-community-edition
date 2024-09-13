@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://dnjcjcgqjye3e"]
+[gd_scene load_steps=89 format=4 uid="uid://dnjcjcgqjye3e"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_4cx7o"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_ll86e"]
@@ -7,8 +7,10 @@
 [ext_resource type="Resource" uid="uid://dltdqrmihsn2x" path="res://music/extra/-+syndrome_land+-.mod" id="5_yctr3"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="6_ek3wa"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="6_pacap"]
-[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_ogsxr"]
+[ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_ogsxr"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_6iq7w"]
+[ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="8_68pfu"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_8mhb3"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_jewdb"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_he1rb"]
 [ext_resource type="Texture2D" uid="uid://cwh2ca5ds4ury" path="res://stages/extra/world_of_stupidity/world_title.png" id="11_570n5"]
@@ -35,6 +37,13 @@
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="34_8ba3o"]
 [ext_resource type="PackedScene" uid="uid://chmx1h5asmnqr" path="res://stages/extra/world_of_stupidity/hidden_piranha_head/piranha_head_hidden.tscn" id="35_jgbpr"]
 [ext_resource type="PackedScene" uid="uid://b3wk5npe3vp0x" path="res://stages/extra/world_of_stupidity/falling_qblock/falling_qblock.tscn" id="35_qr3d4"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
+stream_count = 2
+stream_0/stream = ExtResource("8_68pfu")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("9_8mhb3")
+stream_1/volume = 0.0
 
 [sub_resource type="Gradient" id="Gradient_33x6y"]
 colors = PackedColorArray(0.490196, 0.619608, 0.752941, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -723,6 +732,7 @@ secrets = Array[String](["world of stupidity completed", "world of stupidity kev
 
 [node name="Mario" parent="." instance=ExtResource("6_pacap")]
 position = Vector2(272, 0)
+death_music_override = SubResource("AudioStreamSynchronized_d6pl4")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false

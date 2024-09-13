@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://dibl8ghwq6epg"]
+[gd_scene load_steps=47 format=4 uid="uid://dibl8ghwq6epg"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_miqhr"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_0jji3"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_2hdwd"]
 [ext_resource type="Resource" uid="uid://dltdqrmihsn2x" path="res://music/extra/-+syndrome_land+-.mod" id="4_etuhf"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_m20kq"]
-[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_ue3ne"]
+[ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_ue3ne"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_01bvx"]
+[ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="7_uj21b"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="8_8nwx3"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_f7k4p"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_6rg1m"]
 [ext_resource type="Texture2D" uid="uid://cwh2ca5ds4ury" path="res://stages/extra/world_of_stupidity/world_title.png" id="12_wyrvg"]
@@ -35,6 +37,13 @@
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="32_m748w"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="33_x38ap"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="34_75367"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
+stream_count = 2
+stream_0/stream = ExtResource("7_uj21b")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("8_8nwx3")
+stream_1/volume = 0.0
 
 [sub_resource type="Gradient" id="Gradient_33x6y"]
 colors = PackedColorArray(0.490196, 0.619608, 0.752941, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -151,6 +160,7 @@ music = Array[Resource]([ExtResource("4_etuhf")])
 
 [node name="Mario" parent="." instance=ExtResource("4_2hdwd")]
 position = Vector2(192, 400)
+death_music_override = SubResource("AudioStreamSynchronized_d6pl4")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
