@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://dlxhmmom7byfb"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_rllr4"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_rci14"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="3_lku2s"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_1p2kf"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="5_6ygjd"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="6_v3vck"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="7_wlidi"]
+
+[sub_resource type="Gradient" id="Gradient_k8kgy"]
+colors = PackedColorArray(0.252823, 0.351277, 0.572329, 1, 0.584949, 0.649559, 0.763932, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3gq3s"]
+gradient = SubResource("Gradient_k8kgy")
+width = 480
+
+[node name="Level10-1" type="Node2D"]
+script = ExtResource("1_rllr4")
+metadata/_edit_lock_ = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_rci14")]
+
+[node name="Mario" parent="." instance=ExtResource("3_lku2s")]
+position = Vector2(144, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("4_1p2kf")
+metadata/_edit_lock_ = true
+
+[node name="Tile" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_set = ExtResource("5_6ygjd")
+
+[node name="HUD" parent="." instance=ExtResource("6_v3vck")]
+
+[node name="World" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 329.0
+offset_bottom = 52.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 3
+theme_override_fonts/font = ExtResource("7_wlidi")
+text = "WORLD
+10-1"
+horizontal_alignment = 1
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 240)
+rotation = 1.57079
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_3gq3s")
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+metadata/_edit_lock_ = true
