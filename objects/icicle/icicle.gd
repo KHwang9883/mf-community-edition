@@ -13,8 +13,10 @@ var _step: int
 var _vel: Vector2
 var _origin: Vector2
 var _stunspot: Vector2
+
 @onready var left_explosion: Marker2D = $LeftExplosion
 @onready var right_explosion: Marker2D = $RightExplosion
+
 
 func _physics_process(delta: float) -> void:
 	match _step:
