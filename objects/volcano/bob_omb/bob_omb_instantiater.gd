@@ -4,9 +4,7 @@ extends Node2D
 
 func _ready() -> void:
 	Thunder.reorder_top(self)
-	await get_tree().physics_frame
 	bob_omb.speed.x = 150
-	bob_omb.speed_to_dir()
 	bob_omb.collision = false
 	bob_omb.speed.y = -300
 	bob_omb.global_rotation_degrees = 0
