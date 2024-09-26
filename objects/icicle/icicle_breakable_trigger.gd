@@ -5,10 +5,10 @@ const Icicle := preload("icicle_breakable.tscn")
 @export_enum("Left:-1", "Right:1") var icicle_creation_moving_direction: int = 1
 @export_range(0, 256, 0.1, "or_greater", "suffix:px") var icicle_width: float = 32
 @export_range(0, 5, 0.01, "or_greater", "suffix:s") var icicle_creation_interval: float = 0.25
+@export_group("Collision Mask")
+@export_flags_2d_physics var ray_cast_collision_mask: int = 1
 @export_group("Sound", "sound_")
 @export var sound_ice_generation: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
-
-@onready var ray: RayCast2D = $RayCast2D
 
 
 func _ready() -> void:
@@ -18,6 +18,19 @@ func _ready() -> void:
 func _on_triggered(_body_rid: RID, body: Node2D, _body_shape_index: int, local_shape_index: int) -> void:
 	if body != Thunder._current_player:
 		return
+	
+	var ray := RayCast2D.new()
+	ray.target_position = Vector2.UP * 8
+	ray.collision_mask = ray_cast_collision_mask
+	ray.hit_from_inside = true
+	ray.collide_with_areas = true
+	ray.collide_with_bodies = false
+	ray.exclude_parent = false
+	add_child.call_deferred(ray)
+	
+	# To make the ray created successfully, it is necessary to delay the rest execution for 1 frame here.
+	for i in 2:
+		await get_tree().physics_frame
 	
 	var shape_size := (shape_owner_get_shape(shape_find_owner(local_shape_index), local_shape_index) as RectangleShape2D).size
 	ray.global_position = (shape_owner_get_owner(shape_find_owner(local_shape_index)) as CollisionShape2D).global_position + \
@@ -37,3 +50,6 @@ func _on_triggered(_body_rid: RID, body: Node2D, _body_shape_index: int, local_s
 		ray.force_raycast_update()
 		
 		await get_tree().create_timer(icicle_creation_interval, false).timeout
+	
+	# After finishing the detection, delete the ray caster to save memory
+	ray.queue_free()
