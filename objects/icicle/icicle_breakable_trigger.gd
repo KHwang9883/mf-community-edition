@@ -32,8 +32,9 @@ func _on_triggered(_body_rid: RID, body: Node2D, _body_shape_index: int, local_s
 	for i in 2:
 		await get_tree().physics_frame
 	
-	var shape_size := (shape_owner_get_shape(shape_find_owner(local_shape_index), local_shape_index) as RectangleShape2D).size
-	ray.global_position = (shape_owner_get_owner(shape_find_owner(local_shape_index)) as CollisionShape2D).global_position + \
+	var collision_shape = shape_owner_get_owner(shape_find_owner(local_shape_index)) as CollisionShape2D
+	var shape_size := (collision_shape.shape as RectangleShape2D).size
+	ray.global_position = collision_shape.global_position + \
 		Vector2(-icicle_creation_moving_direction * ((shape_size.x - icicle_width) / 2), shape_size.y / 2).rotated(global_rotation)
 	ray.force_raycast_update()
 	
