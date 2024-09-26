@@ -17,6 +17,8 @@ var last_status: int = 0
 var godlike_count: int = 0
 var godlike_bool: bool
 
+var countdown_playing: bool = false
+
 func status(combo: int) -> void:
 	if combo <= 1: return
 	
@@ -53,7 +55,7 @@ func status(combo: int) -> void:
 			_offset = 20
 			last_status = 10
 			godlike_count += 40000
-			if godlike_bool == false:
+			if godlike_bool == false && !countdown_playing:
 				_time_countdown_sound_loop()
 			_init_godlike()
 			_set_modulation()
@@ -100,8 +102,16 @@ func _init_godlike() -> void:
 			godlike_bool = false
 
 
-func _time_countdown_sound_loop() -> void:
+func _time_countdown_sound_loop(repeat = 0) -> void:
+	countdown_playing = true
+	
+	var vol = 0.0
+	if repeat > 20:
+		vol -= 1.0 * min((repeat - 20) / 3, 12)
+	
 	if godlike_count > 0:
-		Audio.play_1d_sound(scoring_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+		Audio.play_1d_sound(scoring_sound, true, { "ignore_pause": true, "bus": "1D Sound", "volume": vol })
 		await get_tree().create_timer(0.09, false, false, true).timeout
-		_time_countdown_sound_loop()
+		_time_countdown_sound_loop(repeat + 1)
+	else:
+		countdown_playing = false
