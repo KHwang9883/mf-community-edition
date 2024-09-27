@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://dlxhmmom7byfb"]
+[gd_scene load_steps=48 format=4 uid="uid://dlxhmmom7byfb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_rllr4"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_rci14"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="12_x4lgn"]
 [ext_resource type="PackedScene" uid="uid://wqjbkgomnnv0" path="res://objects/icicle/icicle.tscn" id="14_byt1l"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="17_3id8k"]
+[ext_resource type="PackedScene" uid="uid://b0f1uy0wgci6x" path="res://engine/objects/powerups/ice_flower/ice_flower.tscn" id="18_8lfgo"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="18_bxuaq"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="18_fxaym"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="18_kqmm0"]
@@ -29,6 +30,8 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="21_x84l8"]
 [ext_resource type="PackedScene" uid="uid://da0fmncf7ksxc" path="res://engine/objects/enemies/piranha_plants/piranha_ice.tscn" id="22_r56v2"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="23_sdt0r"]
+[ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="26_6ami1"]
+[ext_resource type="PackedScene" uid="uid://c02uktgryh3ku" path="res://engine/objects/enemies/paratroopas/paratroopa_blue.tscn" id="27_otasf"]
 
 [sub_resource type="Gradient" id="Gradient_k8kgy"]
 colors = PackedColorArray(0.252823, 0.351277, 0.572329, 1, 0.584949, 0.649559, 0.763932, 1)
@@ -56,6 +59,21 @@ resource_local_to_scene = true
 script = ExtResource("12_x4lgn")
 creation_fallback_node = ExtResource("10_ehmbl")
 creation_nodepack = ExtResource("11_essx5")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_5mwkv"]
+resource_local_to_scene = true
+script = ExtResource("12_x4lgn")
+creation_fallback_node = ExtResource("10_ehmbl")
+creation_nodepack = ExtResource("18_8lfgo")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -94,11 +112,31 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_i2yer"]
+resource_local_to_scene = true
+script = ExtResource("12_x4lgn")
+creation_nodepack = ExtResource("9_2wk0s")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ygas"]
 size = Vector2(96, 8)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mk2tv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_11vlt"]
 size = Vector2(128, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mk2tv"]
+size = Vector2(64, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02d1q"]
+size = Vector2(220, 8)
 
 [sub_resource type="Curve2D" id="Curve2D_llvcq"]
 _data = {
@@ -276,6 +314,10 @@ result = SubResource("Resource_b4yrv")
 position = Vector2(240, 80)
 result = SubResource("Resource_wno87")
 
+[node name="QuestionBlockFireFlower2" parent="Bonuses" instance=ExtResource("9_t5sn4")]
+position = Vector2(3600, 272)
+result = SubResource("Resource_5mwkv")
+
 [node name="Brick" parent="Bonuses" instance=ExtResource("17_3id8k")]
 position = Vector2(1136, 336)
 
@@ -289,9 +331,60 @@ position = Vector2(1200, 336)
 position = Vector2(1168, 208)
 result = SubResource("Resource_n7d6k")
 
+[node name="QuestionBlock4" parent="Bonuses" instance=ExtResource("18_kqmm0")]
+position = Vector2(3920, 272)
+result = SubResource("Resource_n7d6k")
+
+[node name="QuestionBlock6" parent="Bonuses" instance=ExtResource("18_kqmm0")]
+position = Vector2(3952, 272)
+result = SubResource("Resource_n7d6k")
+
 [node name="QuestionBlock3" parent="Bonuses" instance=ExtResource("18_kqmm0")]
 position = Vector2(1168, 80)
 result = SubResource("Resource_qhc1e")
+
+[node name="QuestionBlock5" parent="Bonuses" instance=ExtResource("18_kqmm0")]
+position = Vector2(2416, 64)
+result = SubResource("Resource_i2yer")
+
+[node name="Coin" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(2064, 272)
+
+[node name="Coin2" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(2064, 304)
+
+[node name="Coin3" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(2096, 304)
+
+[node name="Coin5" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(2064, 336)
+
+[node name="Coin6" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(2096, 336)
+
+[node name="Coin4" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(2096, 272)
+
+[node name="Coin7" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(4072, 48)
+
+[node name="Coin11" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(3697, 208)
+
+[node name="Coin12" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(3760, 208)
+
+[node name="Coin13" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(3824, 208)
+
+[node name="Coin8" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(4096, 16)
+
+[node name="Coin9" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(4096, 80)
+
+[node name="Coin10" parent="Bonuses" instance=ExtResource("9_2wk0s")]
+position = Vector2(4120, 48)
 
 [node name="Enemies" type="Node" parent="."]
 
@@ -312,7 +405,21 @@ debug_color = Color(1, 0.00539967, 0.0604556, 0.42)
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Enemies/Triggers/IcicleBreakableTrigger"]
 position = Vector2(832, -164)
+shape = SubResource("RectangleShape2D_11vlt")
+debug_color = Color(1, 0.00539967, 0.0604556, 0.42)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Enemies/Triggers/IcicleBreakableTrigger"]
+position = Vector2(1088, -4)
 shape = SubResource("RectangleShape2D_mk2tv")
+debug_color = Color(1, 0.00539967, 0.0604556, 0.42)
+
+[node name="IcicleBreakableTrigger2" parent="Enemies/Triggers" instance=ExtResource("19_wvrq8")]
+position = Vector2(960, 352)
+icicle_creation_moving_direction = -1
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Enemies/Triggers/IcicleBreakableTrigger2"]
+position = Vector2(2798, -132)
+shape = SubResource("RectangleShape2D_02d1q")
 debug_color = Color(1, 0.00539967, 0.0604556, 0.42)
 
 [node name="Icicle" parent="Enemies" instance=ExtResource("14_byt1l")]
@@ -323,6 +430,15 @@ position = Vector2(336, 224)
 
 [node name="Icicle3" parent="Enemies" instance=ExtResource("14_byt1l")]
 position = Vector2(976, 96)
+
+[node name="Icicle4" parent="Enemies" instance=ExtResource("14_byt1l")]
+position = Vector2(3696, 128)
+
+[node name="Icicle5" parent="Enemies" instance=ExtResource("14_byt1l")]
+position = Vector2(3760, 128)
+
+[node name="Icicle6" parent="Enemies" instance=ExtResource("14_byt1l")]
+position = Vector2(3824, 128)
 
 [node name="Goomba" parent="Enemies" instance=ExtResource("18_bxuaq")]
 position = Vector2(528, 336)
@@ -337,8 +453,39 @@ rotation = 3.14159
 [node name="PiranhaIce" parent="Enemies" instance=ExtResource("22_r56v2")]
 position = Vector2(1440, 192)
 
+[node name="PiranhaIce2" parent="Enemies" instance=ExtResource("22_r56v2")]
+position = Vector2(3136, 352)
+
+[node name="PiranhaIce3" parent="Enemies" instance=ExtResource("22_r56v2")]
+position = Vector2(4160, 160)
+rotation = 3.14159
+
 [node name="SpinyRed" parent="Enemies" instance=ExtResource("23_sdt0r")]
 position = Vector2(1216, 432)
+
+[node name="KoopaRed" parent="Enemies" instance=ExtResource("26_6ami1")]
+position = Vector2(1792, 176)
+
+[node name="KoopaRed2" parent="Enemies" instance=ExtResource("26_6ami1")]
+position = Vector2(2096, 112)
+
+[node name="KoopaParatroopaBlue" parent="Enemies" instance=ExtResource("27_otasf")]
+position = Vector2(2624, 128)
+
+[node name="KoopaParatroopaBlue2" parent="Enemies" instance=ExtResource("27_otasf")]
+position = Vector2(2688, 168)
+
+[node name="KoopaParatroopaBlue3" parent="Enemies" instance=ExtResource("27_otasf")]
+position = Vector2(2752, 216)
+
+[node name="SpinyRed2" parent="Enemies" instance=ExtResource("23_sdt0r")]
+position = Vector2(3184, 176)
+
+[node name="SpinyRed3" parent="Enemies" instance=ExtResource("23_sdt0r")]
+position = Vector2(3248, 176)
+
+[node name="SpinyRed4" parent="Enemies" instance=ExtResource("23_sdt0r")]
+position = Vector2(3840, 80)
 
 [node name="Platforms" type="Node" parent="."]
 
