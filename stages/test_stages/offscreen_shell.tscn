@@ -1,0 +1,109 @@
+[gd_scene load_steps=12 format=4 uid="uid://b7g3ay2re86wn"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_4v3ri"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_tbs42"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_fqvtl"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_a2yac"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_qjmpv"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_x8y81"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_85q2k"]
+[ext_resource type="PackedScene" uid="uid://ctpsv143q5pjv" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="12_ywx6a"]
+[ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="13_xmcyi"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_moufp"]
+texture = ExtResource("9_x8y81")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_iwv46"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_moufp")
+
+[node name="OffscreenShell" type="Node2D"]
+script = ExtResource("1_4v3ri")
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_tbs42")]
+
+[node name="Mario" parent="." instance=ExtResource("4_fqvtl")]
+position = Vector2(80, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("6_a2yac")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("7_qjmpv")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAAAAA0AAAAAAAAAAAABAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAD///3/AAAAAAAAAAD///7/AAAAAAAAAAD/////AAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAD//wQAAAAAAAAAAAD//wUAAAAAAAAAAAD//wYAAAAAAAAAAAD//wcAAAAAAAAAAAD//wgAAAAAAAAAAAD//wkAAAAAAAAAAAD//woAAAAAAAAAAAD//wsAAAAAAAAAAAD//wwAAAAAAAAAAAD//w0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAuAAwAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_iwv46")
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("10_85q2k")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="KoopaShellGreen" parent="." instance=ExtResource("12_ywx6a")]
+position = Vector2(208, 400)
+
+[node name="Goomba" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(368, 400)
+
+[node name="Goomba2" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(432, 400)
+
+[node name="Goomba3" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(496, 400)
+
+[node name="Goomba4" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(560, 400)
+
+[node name="Goomba5" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(624, 400)
+
+[node name="Goomba6" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(688, 400)
+
+[node name="Goomba7" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(752, 400)
+
+[node name="Goomba8" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(816, 400)
+
+[node name="Goomba9" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(880, 400)
+
+[node name="Goomba10" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(944, 400)
+
+[node name="Goomba11" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1008, 400)
+
+[node name="Goomba12" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1072, 400)
+
+[node name="Goomba13" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1136, 400)
+
+[node name="Goomba14" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1200, 400)
+
+[node name="Goomba15" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1264, 400)
+
+[node name="Goomba16" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1328, 400)
+
+[node name="Goomba17" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1392, 400)
+
+[node name="Goomba18" parent="." instance=ExtResource("13_xmcyi")]
+position = Vector2(1456, 400)
