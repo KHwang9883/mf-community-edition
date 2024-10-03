@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=68 format=3 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ct0he"]
@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="28_s6ll5"]
 [ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="29_1xufo"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="29_jo7ww"]
+[ext_resource type="Texture2D" uid="uid://bi04kluy5weby" path="res://gfx/fancy_graphics/water_surface_front.png" id="30_84sh6"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="30_yt20p"]
 [ext_resource type="PackedScene" uid="uid://dnyk0ph5vd52a" path="res://engine/objects/enemies/cheeps/cheep_blue.tscn" id="31_g3pig"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="32_450dt"]
@@ -89,7 +90,7 @@ shader_parameter/wave_frequency = 16.0
 shader_parameter/wave_speed = 3.0
 shader_parameter/y_axis = false
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_2ovoi"]
 frames = 8
 frame_0/texture = ExtResource("17_sdtro")
 frame_0/duration = 0.15
@@ -108,33 +109,50 @@ frame_6/duration = 0.15
 frame_7/texture = ExtResource("24_twp8w")
 frame_7/duration = 0.15
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_g4qe7"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t6u6i"]
 blend_mode = 1
 
-[sub_resource type="Gradient" id="Gradient_nwgrr"]
+[sub_resource type="Gradient" id="Gradient_l8daq"]
 offsets = PackedFloat32Array(0, 0.5)
 colors = PackedColorArray(0.188235, 0.313726, 0.517647, 1, 0, 0.0627451, 0.439216, 1)
 metadata/_snap_enabled = true
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_h5vdd"]
-gradient = SubResource("Gradient_nwgrr")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hgv7k"]
+gradient = SubResource("Gradient_l8daq")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2fvhh"]
+[sub_resource type="Gradient" id="Gradient_r8fau"]
+offsets = PackedFloat32Array(0, 0.525, 1)
+colors = PackedColorArray(0.3168, 0.504533, 0.88, 0, 0.313726, 0.501961, 0.878431, 1, 0.314, 0.502, 0.878, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vy1k4"]
+gradient = SubResource("Gradient_r8fau")
+height = 18
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_nyxro"]
+colors = PackedColorArray(0.345098, 0.533333, 0.878431, 1, 0.314, 0.502, 0.878, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2f0wi"]
+gradient = SubResource("Gradient_nyxro")
+height = 16
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8utpf"]
 shader = ExtResource("13_7nqqo")
-shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_amplitude = 0.125
 shader_parameter/wave_frequency = 50.0
 shader_parameter/wave_speed = 2.0
 shader_parameter/y_axis = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_00rqv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmnup"]
 shader = ExtResource("13_7nqqo")
 shader_parameter/wave_amplitude = 0.2
 shader_parameter/wave_frequency = 50.0
 shader_parameter/wave_speed = 3.0
 shader_parameter/y_axis = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cqbhi"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ce8a"]
 shader = ExtResource("13_7nqqo")
 shader_parameter/wave_amplitude = 0.2
 shader_parameter/wave_frequency = 50.0
@@ -246,13 +264,13 @@ script = ExtResource("39_6jwl0")
 medium = true
 
 [node name="niebo_swiatlo" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+visible = false
 position = Vector2(320, 1.14441e-05)
 scale = Vector2(8, 112)
 texture = SubResource("GradientTexture1D_4rqa5")
 script = ExtResource("39_6jwl0")
 
 [node name="niebo_swiatlo2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-visible = false
 position = Vector2(320, -16)
 scale = Vector2(8, 128)
 texture = SubResource("GradientTexture1D_5b5ct")
@@ -318,47 +336,87 @@ layer = 1
 motion_mirroring = Vector2(640, 0)
 metadata/_edit_lock_ = true
 
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer"]
+[node name="MediumQualityWater" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer"]
 visible = false
 z_index = 31
 offset_top = 96.0
 offset_right = 640.0
 offset_bottom = 112.0
 size_flags_vertical = 0
-texture = SubResource("AnimatedTexture_cct87")
+texture = SubResource("AnimatedTexture_2ovoi")
 stretch_mode = 1
 script = ExtResource("39_6jwl0")
 maximum = false
 medium = true
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-material = SubResource("CanvasItemMaterial_g4qe7")
+[node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+material = SubResource("CanvasItemMaterial_t6u6i")
 position = Vector2(320, 312)
 scale = Vector2(10, 6.25)
-texture = SubResource("GradientTexture2D_h5vdd")
+texture = SubResource("GradientTexture2D_hgv7k")
 script = ExtResource("39_6jwl0")
 medium = true
 
-[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-modulate = Color(1, 1, 1, 0.364706)
-material = SubResource("ShaderMaterial_2fvhh")
-position = Vector2(0, 70)
+[node name="Sprite2D7" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+visible = false
+material = SubResource("CanvasItemMaterial_t6u6i")
+position = Vector2(320, 322)
+scale = Vector2(10, 6.25)
+texture = SubResource("GradientTexture2D_hgv7k")
+script = ExtResource("39_6jwl0")
+maximum = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(640, 0)
+
+[node name="СкрываниеПерехода" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer4"]
+position = Vector2(0, 96)
+scale = Vector2(10, 1.66667)
+texture = SubResource("GradientTexture2D_vy1k4")
+centered = false
+script = ExtResource("39_6jwl0")
+metadata/_edit_lock_ = true
+
+[node name="СкрываниеПерехода2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer4"]
+visible = false
+position = Vector2(0, 112)
+scale = Vector2(10, 1)
+texture = SubResource("GradientTexture2D_2f0wi")
+centered = false
+script = ExtResource("39_6jwl0")
+maximum = false
+medium = true
+
+[node name="CanvasGroup" type="CanvasGroup" parent="ParallaxBackground2"]
+self_modulate = Color(1, 1, 1, 0.627451)
+fit_margin = 0.0
+
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground2/CanvasGroup"]
+repeat_size = Vector2(640, 0)
+follow_viewport = false
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
+modulate = Color(1, 1, 1, 0.407843)
+material = SubResource("ShaderMaterial_8utpf")
+position = Vector2(0, 81)
 texture = ExtResource("29_1xufo")
 centered = false
 script = ExtResource("39_6jwl0")
 
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-modulate = Color(1, 1, 1, 0.552941)
-material = SubResource("ShaderMaterial_00rqv")
-position = Vector2(0, 80)
-texture = ExtResource("29_1xufo")
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
+modulate = Color(1, 1, 1, 0.807843)
+material = SubResource("ShaderMaterial_tmnup")
+position = Vector2(0, 88)
+texture = ExtResource("30_84sh6")
 centered = false
+region_enabled = true
+region_rect = Rect2(-24, 0, 640, 30)
 script = ExtResource("39_6jwl0")
 
-[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-material = SubResource("ShaderMaterial_cqbhi")
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
+material = SubResource("ShaderMaterial_6ce8a")
 position = Vector2(0, 92)
-texture = ExtResource("29_1xufo")
+texture = ExtResource("30_84sh6")
 centered = false
 script = ExtResource("39_6jwl0")
 

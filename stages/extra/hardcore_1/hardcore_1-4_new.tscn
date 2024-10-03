@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://breoxb1d8e0hh"]
+[gd_scene load_steps=84 format=3 uid="uid://breoxb1d8e0hh"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ynwyp"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_5u3wi"]
@@ -56,6 +56,7 @@
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="47_bemit"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="48_nbota"]
 [ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="49_qm0ne"]
+[ext_resource type="PackedScene" uid="uid://bltp6t4sv4qno" path="res://stages/world_7/objects/question_block_life_far_away.tscn" id="57_6be4i"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
 stream_count = 2
@@ -239,20 +240,6 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_mphgh"]
-resource_local_to_scene = true
-script = ExtResource("21_3l6vv")
-creation_nodepack = ExtResource("38_ve0qo")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
 [sub_resource type="Gradient" id="Gradient_rft62"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 
@@ -276,6 +263,20 @@ fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
 
 [sub_resource type="Resource" id="Resource_bc1vt"]
+script = ExtResource("21_3l6vv")
+creation_nodepack = ExtResource("38_ve0qo")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_1jmv2"]
+resource_local_to_scene = true
 script = ExtResource("21_3l6vv")
 creation_nodepack = ExtResource("38_ve0qo")
 trans_offset = Vector2(0, 0)
@@ -1058,21 +1059,8 @@ result = SubResource("Resource_gr2u5")
 initially_visible_and_solid = false
 metadata/_edit_group_ = true
 
-[node name="VisibleOnScreenEnabler2D" parent="QuestionBlockLife" index="2"]
-position = Vector2(9.77516e-05, 0)
-scale = Vector2(4.79999, 4.8)
-
-[node name="Sprites" parent="QuestionBlockLife" index="3"]
+[node name="Sprites" parent="QuestionBlockLife" index="2"]
 modulate = Color(1, 1, 1, 0.25)
-
-[node name="QuestionBlockLife2" parent="." instance=ExtResource("37_liyoa")]
-position = Vector2(2960, -112)
-result = SubResource("Resource_mphgh")
-metadata/_edit_group_ = true
-
-[node name="VisibleOnScreenEnabler2D" parent="QuestionBlockLife2" index="2"]
-position = Vector2(9.77516e-05, 40)
-scale = Vector2(4.79999, 8.8)
 
 [node name="Water" parent="." instance=ExtResource("39_exiq7")]
 offset_left = 11392.0
@@ -1867,9 +1855,12 @@ result = SubResource("Resource_bc1vt")
 initially_visible_and_solid = false
 exists_once = true
 
+[node name="QuestionBlockLifeFarAway" parent="." instance=ExtResource("57_6be4i")]
+position = Vector2(2960, -112)
+result = SubResource("Resource_1jmv2")
+
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 
 [editable path="BowserJump"]
 [editable path="QuestionBlockLife"]
-[editable path="QuestionBlockLife2"]
