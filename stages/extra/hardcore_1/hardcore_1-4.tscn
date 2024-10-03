@@ -41,7 +41,6 @@
 [ext_resource type="PackedScene" uid="uid://kc2ukyx68s2q" path="res://engine/objects/enemies/podoboo/podoboo_volcano_launcher.tscn" id="34_kgjuo"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="35_nef8o"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="36_7jgsp"]
-[ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="37_mf4x8"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="38_y70uq"]
 [ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="39_1uki6"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="40_kvak7"]
@@ -54,6 +53,7 @@
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="47_jjlx5"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="48_2lrxe"]
 [ext_resource type="Texture2D" uid="uid://lm7lpxyaanct" path="res://gfx/sign/sign_hardcore_1-4.png" id="50_1h0uk"]
+[ext_resource type="PackedScene" uid="uid://bltp6t4sv4qno" path="res://stages/world_7/objects/question_block_life_far_away.tscn" id="53_t4x4i"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
 stream_count = 2
@@ -265,20 +265,6 @@ custom_vars = {}
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
 size = Vector2(480, 32)
 
-[sub_resource type="Resource" id="Resource_gr2u5"]
-resource_local_to_scene = true
-script = ExtResource("21_l2adl")
-creation_nodepack = ExtResource("38_y70uq")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
 [sub_resource type="Gradient" id="Gradient_rft62"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 
@@ -300,6 +286,20 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_w2bsw"]
+resource_local_to_scene = true
+script = ExtResource("21_l2adl")
+creation_nodepack = ExtResource("38_y70uq")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [node name="Level7-4" type="Node2D"]
 script = ExtResource("1_bi8uq")
@@ -993,15 +993,6 @@ metadata/_edit_group_ = true
 offset_top = -16.0
 offset_bottom = 16.0
 
-[node name="QuestionBlockLife" parent="." instance=ExtResource("37_mf4x8")]
-position = Vector2(7792, -48)
-result = SubResource("Resource_gr2u5")
-metadata/_edit_group_ = true
-
-[node name="VisibleOnScreenEnabler2D" parent="QuestionBlockLife" index="2"]
-position = Vector2(-7.9998, 8)
-scale = Vector2(5.59998, 5.6)
-
 [node name="SpinyIron19" parent="." instance=ExtResource("32_os55g")]
 position = Vector2(11840, 400)
 
@@ -1246,8 +1237,11 @@ z_index = -1
 position = Vector2(176, 234)
 texture = ExtResource("50_1h0uk")
 
+[node name="QuestionBlockLifeFarAway" parent="." instance=ExtResource("53_t4x4i")]
+position = Vector2(7792, -48)
+result = SubResource("Resource_w2bsw")
+
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 
 [editable path="BowserJump"]
-[editable path="QuestionBlockLife"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://ht5id10ochxu"]
+[gd_scene load_steps=64 format=3 uid="uid://ht5id10ochxu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gugln"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hi7ol"]
@@ -52,14 +52,14 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.
 gradient = SubResource("Gradient_16eid")
 width = 480
 
-[sub_resource type="Gradient" id="Gradient_gr2nd"]
+[sub_resource type="Gradient" id="Gradient_sc3ar"]
 offsets = PackedFloat32Array(0, 0.4375)
 colors = PackedColorArray(0.313726, 0.501961, 0.878431, 1, 0, 0.0627451, 0.12549, 1)
 metadata/_snap_enabled = true
 metadata/_snap_count = 16
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2inex"]
-gradient = SubResource("Gradient_gr2nd")
+gradient = SubResource("Gradient_sc3ar")
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_xpys4"]
@@ -99,22 +99,30 @@ frame_7/duration = 0.15
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8p31"]
 blend_mode = 1
 
-[sub_resource type="Gradient" id="Gradient_l8daq"]
+[sub_resource type="Gradient" id="Gradient_pgl7y"]
 offsets = PackedFloat32Array(0, 0.5)
 colors = PackedColorArray(0.188235, 0.313726, 0.517647, 1, 0, 0.0627451, 0.439216, 1)
 metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lwi7l"]
-gradient = SubResource("Gradient_l8daq")
+gradient = SubResource("Gradient_pgl7y")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_r8fau"]
+[sub_resource type="Gradient" id="Gradient_qn20d"]
 offsets = PackedFloat32Array(0, 0.525, 1)
 colors = PackedColorArray(0.3168, 0.504533, 0.88, 0, 0.313726, 0.501961, 0.878431, 1, 0.314, 0.502, 0.878, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_liwfs"]
-gradient = SubResource("Gradient_r8fau")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vy1k4"]
+gradient = SubResource("Gradient_qn20d")
 height = 18
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_cfp1v"]
+colors = PackedColorArray(0.345098, 0.533333, 0.878431, 1, 0.314, 0.502, 0.878, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hap7m"]
+gradient = SubResource("Gradient_cfp1v")
+height = 16
 fill_to = Vector2(0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eqomc"]
@@ -358,7 +366,7 @@ layer = 1
 motion_mirroring = Vector2(640, 0)
 metadata/_edit_lock_ = true
 
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer"]
+[node name="MediumQualityWater" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer"]
 visible = false
 z_index = 31
 offset_top = 96.0
@@ -379,25 +387,23 @@ texture = SubResource("GradientTexture2D_lwi7l")
 script = ExtResource("27_olvbf")
 medium = true
 
-[node name="Sprite2D7" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-visible = false
-material = SubResource("CanvasItemMaterial_f8p31")
-position = Vector2(320, 322)
-scale = Vector2(10, 6.25)
-texture = SubResource("GradientTexture2D_lwi7l")
-script = ExtResource("27_olvbf")
-maximum = false
-
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground2"]
-motion_mirroring = Vector2(640, 0)
-
-[node name="СкрываниеПерехода" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer4"]
+[node name="СкрываниеПерехода" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
 position = Vector2(0, 96)
 scale = Vector2(10, 1.66667)
-texture = SubResource("GradientTexture2D_liwfs")
+texture = SubResource("GradientTexture2D_vy1k4")
 centered = false
 script = ExtResource("27_olvbf")
 metadata/_edit_lock_ = true
+
+[node name="СкрываниеПерехода2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+visible = false
+position = Vector2(0, 112)
+scale = Vector2(10, 1)
+texture = SubResource("GradientTexture2D_hap7m")
+centered = false
+script = ExtResource("27_olvbf")
+maximum = false
+medium = true
 
 [node name="CanvasGroup" type="CanvasGroup" parent="ParallaxBackground2"]
 self_modulate = Color(1, 1, 1, 0.627451)
@@ -430,6 +436,8 @@ material = SubResource("ShaderMaterial_fr3w8")
 position = Vector2(0, 92)
 texture = ExtResource("32_klqyn")
 centered = false
+region_enabled = true
+region_rect = Rect2(-12, 0, 640, 30)
 script = ExtResource("27_olvbf")
 
 [node name="Water" parent="." instance=ExtResource("24_58tso")]
