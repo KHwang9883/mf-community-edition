@@ -1,0 +1,181 @@
+[gd_scene load_steps=24 format=3 uid="uid://cybsx5nq075w1"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_k26us"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_n4tw3"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_jpj86"]
+[ext_resource type="AudioStream" uid="uid://dwhsl2atuo53s" path="res://music/climbing_minigame/2.11_Echidnas_Backdown.ogg" id="4_00uoh"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_gnbr6"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_jca5s"]
+[ext_resource type="AudioStream" uid="uid://dwkfj7melj1mp" path="res://music/climbing_minigame/mario_ohno.wav" id="7_7stkv"]
+[ext_resource type="Texture2D" uid="uid://c3lq87gv2rowf" path="res://stages/extra/climbing_minigame/textures/marioline.png" id="8_qtcu2"]
+[ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_custom_camera.gd" id="9_mwl4c"]
+[ext_resource type="Texture2D" uid="uid://ceyk3iuyd8pkd" path="res://stages/extra/climbing_minigame/textures/mariomarker.png" id="9_xg2g6"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_ucgs5"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="12_3spaf"]
+[ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="14_2gpud"]
+[ext_resource type="PackedScene" uid="uid://bd71lcoapyqa7" path="res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn" id="14_sbwe8"]
+[ext_resource type="Texture2D" uid="uid://dmwfhcgla7av" path="res://gfx/backgrounds/BGCastleVertical.png" id="15_04y6r"]
+[ext_resource type="PackedScene" uid="uid://bxaj6iub5wrps" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn" id="15_vgukt"]
+[ext_resource type="PackedScene" uid="uid://fq70crcmppwi" path="res://stages/extra/climbing_minigame/objects/fish_bones/fish_bones.tscn" id="16_wrk3g"]
+[ext_resource type="PackedScene" uid="uid://dw6ydwojhxdej" path="res://stages/extra/climbing_minigame/objects/big_fish_bones/big_fish_bones.tscn" id="17_rb60j"]
+[ext_resource type="Texture2D" uid="uid://br752og2ucdxx" path="res://stages/extra/climbing_minigame/textures/goodluck.png" id="19_ttl1q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o311q"]
+size = Vector2(32, 864)
+
+[sub_resource type="Gradient" id="Gradient_p7yju"]
+colors = PackedColorArray(0.854902, 0, 0.0784314, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tgses"]
+gradient = SubResource("Gradient_p7yju")
+width = 640
+height = 480
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xm6v6"]
+blend_mode = 1
+
+[node name="ClimbingLavaRun" type="Node2D"]
+script = ExtResource("1_k26us")
+time = -1
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_n4tw3")]
+script = ExtResource("3_jpj86")
+tweaked_completion_music = ExtResource("4_gnbr6")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
+music = Array[Resource]([ExtResource("4_00uoh")])
+can_pause = true
+
+[node name="Mario" parent="." instance=ExtResource("4_jca5s")]
+position = Vector2(320, -16)
+death_music_override = ExtResource("7_7stkv")
+death_music_ignore_pause = true
+death_wait_time = 3.0
+
+[node name="HUD" parent="." instance=ExtResource("10_ucgs5")]
+
+[node name="Marioline" type="Sprite2D" parent="HUD"]
+position = Vector2(48, 224)
+texture = ExtResource("8_qtcu2")
+
+[node name="Mariomarker" type="Sprite2D" parent="HUD"]
+position = Vector2(48, 380)
+texture = ExtResource("9_xg2g6")
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="MovingGroup" type="Node2D" parent="."]
+
+[node name="PlayerCamera2D" type="Camera2D" parent="MovingGroup"]
+position = Vector2(320, 240)
+limit_left = 0
+limit_right = 640
+limit_bottom = 480
+editor_draw_screen = false
+script = ExtResource("9_mwl4c")
+force_xscroll_off = true
+
+[node name="Lava" parent="MovingGroup" instance=ExtResource("14_2gpud")]
+offset_top = 435.0
+offset_right = 640.0
+offset_bottom = 515.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MovingGroup"]
+disable_mode = 1
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MovingGroup/StaticBody2D"]
+position = Vector2(-16, 48)
+shape = SubResource("RectangleShape2D_o311q")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MovingGroup/StaticBody2D"]
+position = Vector2(656, 48)
+shape = SubResource("RectangleShape2D_o311q")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("12_3spaf")
+format = 2
+layer_0/tile_data = PackedInt32Array(851970, 196614, 0, 983059, 131072, 2, 851987, 65542, 0, 983058, 65536, 2, 851986, 196614, 0, 983057, 65536, 2, 851985, 196614, 0, 983056, 65536, 2, 851984, 196614, 0, 983055, 65536, 2, 851983, 196614, 0, 983054, 65536, 2, 851982, 196614, 0, 983053, 65536, 2, 851981, 196614, 0, 983052, 65536, 2, 851980, 196614, 0, 983051, 65536, 2, 851979, 196614, 0, 983050, 65536, 2, 851978, 196614, 0, 983049, 65536, 2, 851977, 196614, 0, 983048, 65536, 2, 851976, 196614, 0, 983047, 65536, 2, 851975, 196614, 0, 983046, 65536, 2, 851974, 196614, 0, 983045, 65536, 2, 851973, 196614, 0, 983044, 65536, 2, 851972, 196614, 0, 983043, 65536, 2, 851971, 196614, 0, 983042, 65536, 2, 983041, 65536, 2, 851969, 196614, 0, 983040, 0, 2, 851968, 6, 0)
+metadata/_edit_lock_ = true
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(0, 960)
+
+[node name="BgCastleVertical" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+position = Vector2(352, 480)
+texture = ExtResource("15_04y6r")
+metadata/_edit_lock_ = true
+
+[node name="Gradient" type="Sprite2D" parent="ParallaxBackground2"]
+modulate = Color(1, 1, 1, 0.427451)
+position = Vector2(320, 240)
+texture = SubResource("GradientTexture2D_tgses")
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Gradient" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.0784314)
+material = SubResource("CanvasItemMaterial_xm6v6")
+position = Vector2(320, 240)
+texture = SubResource("GradientTexture2D_tgses")
+metadata/_edit_lock_ = true
+
+[node name="PlatformPath" parent="." instance=ExtResource("14_sbwe8")]
+physics_interpolation_mode = 2
+position = Vector2(304, 352)
+sync_to_physics = false
+
+[node name="PlatformPath2" parent="." instance=ExtResource("14_sbwe8")]
+physics_interpolation_mode = 2
+position = Vector2(240, 80)
+sync_to_physics = false
+
+[node name="PlatformPath3" parent="." instance=ExtResource("14_sbwe8")]
+physics_interpolation_mode = 2
+position = Vector2(176, 288)
+sync_to_physics = false
+
+[node name="PlatformPath4" parent="." instance=ExtResource("14_sbwe8")]
+physics_interpolation_mode = 2
+position = Vector2(311, 194)
+sync_to_physics = false
+
+[node name="PlatformPath6" parent="." instance=ExtResource("14_sbwe8")]
+physics_interpolation_mode = 2
+position = Vector2(120, 4)
+sync_to_physics = false
+
+[node name="PlatformPath7" parent="." instance=ExtResource("14_sbwe8")]
+physics_interpolation_mode = 2
+position = Vector2(576, 128)
+sync_to_physics = false
+
+[node name="JumpingCheepsGenerator" parent="." instance=ExtResource("15_vgukt")]
+cheep_scene = ExtResource("16_wrk3g")
+enabled = false
+chance_every_sec = 0.21
+
+[node name="GeneralMovementBody2D" parent="." instance=ExtResource("17_rb60j")]
+
+[node name="Goodluck" type="Sprite2D" parent="."]
+position = Vector2(-160, 192)
+texture = ExtResource("19_ttl1q")
