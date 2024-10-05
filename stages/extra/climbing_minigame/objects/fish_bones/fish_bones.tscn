@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://fq70crcmppwi"]
+
+[ext_resource type="PackedScene" uid="uid://bpr3k5jjwy2fc" path="res://engine/objects/enemies/cheeps/cheep_red_jumping.tscn" id="1_xcjai"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_1oaj0"]
+[ext_resource type="Script" path="res://stages/extra/climbing_minigame/objects/fish_bones/fish_bones.gd" id="2_f1dmm"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_yrp8u"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_x0ca5"]
+[ext_resource type="Texture2D" uid="uid://bp2wbihw5eerr" path="res://stages/extra/climbing_minigame/textures/eryba.png" id="5_062cr"]
+
+[sub_resource type="Resource" id="Resource_g0erj"]
+resource_local_to_scene = true
+script = ExtResource("4_x0ca5")
+creation_nodepack = ExtResource("2_1oaj0")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_yrp8u")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5r5w5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_062cr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CheepRedJumping" instance=ExtResource("1_xcjai")]
+script = ExtResource("2_f1dmm")
+look_at_player = false
+force_direction = -1
+
+[node name="CollisionShape2D" parent="Body" index="0"]
+visible = true
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_g0erj")
+killing_creation = SubResource("Resource_g0erj")
+
+[node name="Sprite" parent="." index="4"]
+scale = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_5r5w5")
+offset = Vector2(-2, 0)
+flip_h = true
