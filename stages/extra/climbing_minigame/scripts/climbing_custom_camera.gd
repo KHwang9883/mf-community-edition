@@ -5,27 +5,34 @@ var can_get_faster: bool = false
 var y_counter: float
 var rand_offset: int = 60
 var flower_counter: int = 10
+var fish_preparing: bool = false
+var last_player_pos: Vector2
 
-var platform = preload("res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn")
-var skulltroopa = preload("res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.tscn")
-var coins = preload("res://stages/extra/climbing_minigame/objects/coins/coins.tscn")
-var flower = preload("res://stages/extra/climbing_minigame/objects/fire_flower/fire_flower_lava_run.tscn")
-var podoboo = preload("res://engine/objects/enemies/podoboo/podoboo.tscn")
+const platform = preload("res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn")
+const skulltroopa = preload("res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.tscn")
+const coins = preload("res://stages/extra/climbing_minigame/objects/coins/coins.tscn")
+const flower = preload("res://stages/extra/climbing_minigame/objects/fire_flower/fire_flower_lava_run.tscn")
+const podoboo = preload("res://engine/objects/enemies/podoboo/podoboo.tscn")
 #var roto = preload("res://engine/objects/enemies/rotos/roto_center.tscn")
 #var rotodisc = preload("res://engine/objects/enemies/rotos/roto_red.tscn")
+const BIG_FISH_BONES = preload("res://stages/extra/climbing_minigame/objects/big_fish_bones/big_fish_bones.tscn")
+const MARIO = preload("res://stages/extra/climbing_minigame/objects/mario.tscn")
+const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/platform_path_cloud.tscn")
+
+const ohno_sound = preload("res://music/climbing_minigame/mario_ohno.wav")
 
 @onready var platform_path: AnimatableBody2D = $"../../PlatformPath"
 @onready var platform_path_2: AnimatableBody2D = $"../../PlatformPath2"
 @onready var platform_path_3: AnimatableBody2D = $"../../PlatformPath3"
 @onready var platform_path_4: AnimatableBody2D = $"../../PlatformPath4"
 @onready var jumping_cheeps_generator: Node = $"../../JumpingCheepsGenerator"
+@onready var strelochka: Sprite2D = $"../../MovingGroup/Strelochka"
 
 @onready var mariomarker: Sprite2D = $"../../HUD/Mariomarker"
 @onready var mariomarker_init_pos: float = mariomarker.global_position.y
+@onready var goodluck: Sprite2D = $"../../HUD/Goodluck"
 
 @onready var moving_group: Node2D = $".."
-
-var ohno_sound = preload("res://music/climbing_minigame/mario_ohno.wav")
 
 var bg_sounds = []
 
@@ -48,6 +55,16 @@ func _ready() -> void:
 	
 	Audio.play_1d_sound(ohno_sound)
 	
+	var tween = goodluck.create_tween().set_trans(Tween.TRANS_SINE)
+	tween.tween_property(goodluck, "position:x", 256, 1).set_ease(Tween.EASE_OUT)
+	tween.tween_property(goodluck, "position:x", 384, 3).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(goodluck, "position:x", 816, 1).set_ease(Tween.EASE_IN)
+	tween.tween_callback(goodluck.queue_free)
+	
+	var tw = strelochka.create_tween().set_loops().set_trans(Tween.TRANS_SINE)
+	tw.tween_property(strelochka, "modulate:a", 0.0, 0.5).set_ease(Tween.EASE_IN)
+	tw.tween_property(strelochka, "modulate:a", 1.0, 0.5).set_ease(Tween.EASE_OUT)
+	
 	setup_platform(platform_path, randf_range(128, 568))
 	setup_platform(platform_path_2, randf_range(128, 568))
 	setup_platform(platform_path_3, randf_range(128, 528))
@@ -57,8 +74,17 @@ func _ready() -> void:
 	Data.values['miles'] = 0
 	
 	await Scenes.current_scene.stage_ready
+	
+	Thunder._current_player.died_with_body.connect(death_sequence)
+	
+	get_tree().create_timer(15, false).timeout.connect(func():
+		big_fish_create()
+	)
+	
 	await get_tree().create_timer(7.67, false, false, true).timeout
 	moving = true
+	if Audio._music_channels.get(1):
+		Audio._music_channels[1].process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	await get_tree().create_timer(1.0, false, false, false).timeout
 	can_get_faster = true
@@ -88,24 +114,30 @@ func _physics_process(_delta: float) -> void:
 	super(_delta)
 	
 	player = Thunder._current_player
-	if player && player.is_on_floor():
+	if player && player.is_on_floor() && !moving:
 		platform_path.collision_layer = 112
 		platform_path_2.collision_layer = 112
 		platform_path_3.collision_layer = 112
 		platform_path_4.collision_layer = 112
+	
+	if player:
+		last_player_pos = player.global_position
 	
 	var delta = Thunder.get_delta(_delta)
 	
 	if abs(moving_group.global_position.y - y_counter) > rand_offset:
 		create_platform()
 	
-	if moving && player:
+	if moving:
 		moving_group.global_position.y -= 1 * delta
 		
-		if player.global_position.y < moving_group.global_position.y + 112 && can_get_faster:
+		if last_player_pos.y < moving_group.global_position.y + 112 && can_get_faster:
 			moving_group.global_position.y -= 2 * delta
-		if player.global_position.y < moving_group.global_position.y - 16:
+		if last_player_pos.y < moving_group.global_position.y - 16:
 			moving_group.global_position.y -= 3 * delta
+		
+	if fish_preparing:
+		strelochka.position.x = move_toward(strelochka.position.x, last_player_pos.x - 27, 35 * _delta)
 	
 	mariomarker.position.y = mariomarker_init_pos + (moving_group.global_position.y / 8)
 	if mariomarker.global_position.y < 96:
@@ -115,6 +147,30 @@ func _physics_process(_delta: float) -> void:
 	
 	if Data.values['highest'] < Data.values['miles']:
 		Data.values['highest'] = Data.values['miles']
+
+
+func death_sequence(body: Node2D) -> void:
+	await get_tree().physics_frame
+	if Data.values.lives == 0:
+		body.wait_time = 3.0
+		return
+	Thunder._current_player_state = null
+	Data.values.lives -= 1
+	await get_tree().create_timer(2.0, false).timeout
+	var new_player: Player = MARIO.instantiate()
+	var new_plat = PLATFORM_PATH_CLOUD.instantiate()
+	new_player.position = moving_group.position + Vector2(320, 160)
+	new_plat.position = moving_group.position + Vector2(320, 192)
+	new_plat.modulate.a = 0.01
+	Scenes.current_scene.add_child(new_player)
+	Scenes.current_scene.add_child(new_plat)
+	new_player.invincible(3)
+	new_player.died_with_body.connect(death_sequence)
+	var tw = new_plat.create_tween()
+	tw.tween_property(new_plat, "modulate:a", 1.0, 0.25)
+	var tw2 = body.create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	tw2.tween_property(body, "modulate:a", 0.0, 0.5)
+	tw2.tween_callback(body.queue_free)
 
 
 func create_platform() -> void:
@@ -168,11 +224,29 @@ func podo_create() -> void:
 	
 	var podo1 = podoboo.instantiate()
 	podo1.position = Vector2(128, 448-16)
+	podo1.one_shot = true
 	moving_group.add_child(podo1)
 	
 	var podo2 = podoboo.instantiate()
 	podo2.position = Vector2(512, 448-16)
+	podo2.one_shot = true
 	moving_group.add_child(podo2)
+
+
+func big_fish_create() -> void:
+	get_tree().create_timer(15, false).timeout.connect(big_fish_create)
+	strelochka.position = Vector2(last_player_pos.x, 384)
+	strelochka.reset_physics_interpolation()
+	fish_preparing = true
+	
+	await get_tree().create_timer(3.0, false).timeout
+	fish_preparing = false
+	var fisj = BIG_FISH_BONES.instantiate()
+	fisj.position.x = strelochka.position.x
+	fisj.global_position.y = moving_group.global_position.y + 480 + 96
+	strelochka.position.x = -500
+	strelochka.reset_physics_interpolation()
+	Scenes.current_scene.add_child(fisj)
 
 
 #func podo_create_advanced_sequence() -> void:

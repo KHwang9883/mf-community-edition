@@ -1,0 +1,80 @@
+[gd_scene load_steps=13 format=3 uid="uid://n76i6p0gttlg"]
+
+[ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="1_dw2u4"]
+[ext_resource type="AudioStream" uid="uid://qmlfixsihevw" path="res://objects/human_lab_2/worker_clone/sfx/laugh.wav" id="2_3i0pl"]
+[ext_resource type="Texture2D" uid="uid://dmbjw6ktawse4" path="res://objects/human_lab_2/worker_clone/gfx/idle.png" id="2_86y31"]
+[ext_resource type="Texture2D" uid="uid://blx35qokiwru5" path="res://objects/human_lab_2/worker_clone/gfx/laugh.png" id="3_4wu57"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tigk"]
+atlas = ExtResource("2_86y31")
+region = Rect2(0, 0, 34, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5bjh"]
+atlas = ExtResource("2_86y31")
+region = Rect2(34, 0, 34, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rfbgd"]
+atlas = ExtResource("2_86y31")
+region = Rect2(0, 72, 34, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8wft"]
+atlas = ExtResource("2_86y31")
+region = Rect2(34, 72, 34, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbwh6"]
+atlas = ExtResource("3_4wu57")
+region = Rect2(0, 0, 34, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6j07m"]
+atlas = ExtResource("3_4wu57")
+region = Rect2(34, 0, 34, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0t6i"]
+atlas = ExtResource("3_4wu57")
+region = Rect2(68, 0, 34, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4kl8d"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"blink",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tigk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5bjh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rfbgd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8wft")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbwh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6j07m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0t6i")
+}],
+"loop": true,
+"name": &"smile",
+"speed": 10.0
+}]
+
+[node name="WorkerClone" instance=ExtResource("1_dw2u4")]
+laughing_sound = ExtResource("2_3i0pl")
+
+[node name="Sprite" parent="." index="4"]
+sprite_frames = SubResource("SpriteFrames_4kl8d")
+autoplay = "default"
