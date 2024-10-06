@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dnqmtgvyxwmq1"]
+[gd_scene load_steps=42 format=3 uid="uid://dnqmtgvyxwmq1"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_4j77h"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_qbc8q"]
@@ -6,17 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://dj2b5g2smonyu" path="res://engine/objects/enemies/_dead/enemy_stomped.tscn" id="4_q8gt8"]
 [ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/do_stomped_animated.gd" id="5_07jqh"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_xy728"]
-[ext_resource type="AudioStream" uid="uid://cca42pkmljfbr" path="res://engine/objects/enemies/human_lab/goomba/sfx/stomp.wav" id="7_h5mih"]
+[ext_resource type="AudioStream" uid="uid://c6ff1wsvkd72n" path="res://objects/human_lab_2/mutant_clone/sfx/stomp_a.ogg" id="7_g1n28"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_golpo"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_pes4i"]
-[ext_resource type="AudioStream" uid="uid://cnwriv40miqqd" path="res://engine/objects/enemies/human_lab/goomba/sfx/kick.wav" id="10_be7wf"]
-[ext_resource type="Texture2D" uid="uid://b48k05nb44v2p" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_body.png" id="11_xolc5"]
-[ext_resource type="Texture2D" uid="uid://bh5og0b1yxmf2" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_squished.png" id="12_k82av"]
-[ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/stomped_animation.gd" id="13_pd073"]
+[ext_resource type="AudioStream" uid="uid://dyix00gqfia5b" path="res://objects/human_lab_2/mutant_clone/sfx/kick_a.ogg" id="10_ekqm2"]
+[ext_resource type="Texture2D" uid="uid://353q7k3m6pd3" path="res://objects/human_lab_2/mutant_clone/gfx/body.png" id="11_5ng30"]
+[ext_resource type="Texture2D" uid="uid://dd1fgw8et5k2y" path="res://objects/human_lab_2/mutant_clone/gfx/dead.png" id="12_quxce"]
 [ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="14_yyr4b"]
 [ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs.png" id="15_fvxe3"]
 [ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="16_vewv2"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="17_43g7f"]
+[ext_resource type="Texture2D" uid="uid://c573yqqploblw" path="res://objects/human_lab_2/mutant_clone/gfx/head.png" id="18_sl6os"]
+[ext_resource type="Texture2D" uid="uid://b3oyf36tn8qos" path="res://objects/human_lab_2/mutant_clone/gfx/hands.png" id="19_ks1dy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aahbl"]
 size = Vector2(32, 54)
@@ -34,7 +35,7 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Sprite/Dead")
+"death": NodePath("")
 }
 custom_script = ExtResource("5_07jqh")
 
@@ -55,53 +56,6 @@ custom_vars = {
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("9_pes4i")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2xajt"]
-atlas = ExtResource("11_xolc5")
-region = Rect2(0, 0, 38, 54)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uml1o"]
-atlas = ExtResource("11_xolc5")
-region = Rect2(0, 54, 38, 54)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g42be"]
-atlas = ExtResource("11_xolc5")
-region = Rect2(0, 108, 38, 54)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_wd5co"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2xajt")
-}, {
-"duration": 4.0,
-"texture": SubResource("AtlasTexture_uml1o")
-}, {
-"duration": 6.0,
-"texture": SubResource("AtlasTexture_2xajt")
-}, {
-"duration": 4.0,
-"texture": SubResource("AtlasTexture_g42be")
-}],
-"loop": true,
-"name": &"default",
-"speed": 50.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a0iak"]
-atlas = ExtResource("12_k82av")
-region = Rect2(0, 0, 44, 52)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_sa645"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a0iak")
-}],
-"loop": false,
-"name": &"default",
-"speed": 50.0
-}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_80lua"]
 atlas = ExtResource("15_fvxe3")
@@ -216,7 +170,23 @@ animations = [{
 "speed": 50.0
 }]
 
-[node name="Clone01" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8untb"]
+atlas = ExtResource("18_sl6os")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_darys"]
+atlas = ExtResource("18_sl6os")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ppwk"]
+atlas = ExtResource("19_ks1dy")
+region = Rect2(0, 0, 49, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cpvn"]
+atlas = ExtResource("19_ks1dy")
+region = Rect2(0, 26, 49, 26)
+
+[node name="CloneMutant" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -224,6 +194,7 @@ floor_max_angle = 0.837758
 floor_snap_length = 20.0
 script = ExtResource("1_4j77h")
 look_at_player = true
+turn_sprite = false
 sprite = NodePath("Sprite")
 speed = Vector2(50, 0)
 gravity_scale = 0.5
@@ -246,40 +217,51 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 script = ExtResource("3_t24y4")
 stomping_creation = SubResource("Resource_kg3jd")
 stomping_scores = 100
-stomping_sound = ExtResource("7_h5mih")
+stomping_sound = ExtResource("7_g1n28")
 killing_creation = SubResource("Resource_8814w")
 killing_scores = 100
-killing_sound_succeeded = ExtResource("10_be7wf")
+killing_sound_succeeded = ExtResource("10_ekqm2")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_wd5co")
-autoplay = "default"
-
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
-visible = false
-position = Vector2(0, 26)
-sprite_frames = SubResource("SpriteFrames_sa645")
-offset = Vector2(0, -25)
-script = ExtResource("13_pd073")
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 16)
+texture = ExtResource("11_5ng30")
 
 [node name="DeadRotating" type="Sprite2D" parent="Sprite"]
 visible = false
-texture = ExtResource("12_k82av")
-region_enabled = true
+texture = ExtResource("12_quxce")
+offset = Vector2(0, -18)
 region_rect = Rect2(0, 0, 44, 52)
 script = ExtResource("14_yyr4b")
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
-position = Vector2(0, 22)
+position = Vector2(0, 11)
 sprite_frames = SubResource("SpriteFrames_7io13")
 autoplay = "default"
 script = ExtResource("16_vewv2")
 enemy_center_node = NodePath("../..")
 
+[node name="Head" type="Sprite2D" parent="Sprite"]
+position = Vector2(-32, -44)
+texture = SubResource("AtlasTexture_8untb")
+centered = false
+
+[node name="Head2" type="Sprite2D" parent="Sprite"]
+position = Vector2(0, -44)
+texture = SubResource("AtlasTexture_darys")
+centered = false
+
+[node name="Hands" type="Sprite2D" parent="Sprite"]
+texture = SubResource("AtlasTexture_3ppwk")
+offset = Vector2(-1, 1)
+
+[node name="Hands2" type="Sprite2D" parent="Sprite"]
+texture = SubResource("AtlasTexture_6cpvn")
+offset = Vector2(-1, 1)
+
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-20, -32, 40, 64)
+rect = Rect2(-32, -32, 64, 64)
 script = ExtResource("17_43g7f")
 metadata/_edit_lock_ = true
 
