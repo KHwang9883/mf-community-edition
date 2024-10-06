@@ -1,16 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://dw6ydwojhxdej"]
+[gd_scene load_steps=10 format=3 uid="uid://dw6ydwojhxdej"]
 
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_dvnlh"]
+[ext_resource type="Script" path="res://stages/extra/climbing_minigame/objects/big_fish_bones/big_fish_bones.gd" id="1_7wg7v"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_sbhod"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_bft6w"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_vqc1d"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_lnw3l"]
-[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_7tggp"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_04y4w"]
-[ext_resource type="Texture2D" uid="uid://c8au1fjmwjesr" path="res://engine/objects/enemies/cheeps/textures/cheep_red.png" id="8_wkp8t"]
+[ext_resource type="Texture2D" uid="uid://ciqq3d8hilund" path="res://stages/extra/climbing_minigame/textures/eryba2.png" id="8_3ihxw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a7shn"]
-size = Vector2(32, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_cht0s"]
+radius = 64.0
 
 [sub_resource type="Resource" id="Resource_x2p3g"]
 resource_local_to_scene = true
@@ -30,67 +29,51 @@ custom_vars = {
 }
 custom_script = ExtResource("4_vqc1d")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1kpu1"]
-atlas = ExtResource("8_wkp8t")
-region = Rect2(0, 0, 31, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_my7te"]
-atlas = ExtResource("8_wkp8t")
-region = Rect2(0, 32, 31, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kvv45"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1kpu1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_my7te")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="BigFishBones" type="CharacterBody2D"]
-script = ExtResource("1_dvnlh")
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_7wg7v")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(50, -750)
+gravity_scale = 0.25
+max_falling_speed = 750.0
+collision = false
+correct_collision = false
 
 [node name="Body" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-visible = false
-shape = SubResource("RectangleShape2D_a7shn")
+shape = SubResource("CircleShape2D_cht0s")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("2_sbhod")
-stomping_creation = SubResource("Resource_x2p3g")
-stomping_scores = 100
-stomping_sound = ExtResource("6_7tggp")
+stomping_standard = Vector2(0, 0)
+stomping_creation = null
+stomping_scores = 0
+stomping_sound = null
 killing_immune = {
-"beetroot": false,
+"beetroot": true,
 "boomerang": false,
-"fireball": false,
-"hammer": false,
-"iceball": false,
+"fireball": true,
+"iceball": true,
 "shell": false,
 "shell_defence": 0,
-"shell_forced": false,
-"starman": false
+"shell_forced": false
 }
 killing_creation = SubResource("Resource_x2p3g")
-killing_scores = 100
+killing_scores = 1000
 killing_sound_succeeded = ExtResource("7_04y4w")
+frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_kvv45")
-autoplay = "default"
+[node name="Sprite" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("8_3ihxw")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(3.8147e-06, 3.8147e-06)
-scale = Vector2(4.8, 4.8)
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-128, -144, 256, 288)
 metadata/_edit_lock_ = true

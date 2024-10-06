@@ -1,11 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://cybsx5nq075w1"]
+[gd_scene load_steps=24 format=3 uid="uid://cybsx5nq075w1"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_k26us"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_n4tw3"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_jpj86"]
 [ext_resource type="AudioStream" uid="uid://dwhsl2atuo53s" path="res://music/climbing_minigame/2.11_Echidnas_Backdown.ogg" id="4_00uoh"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_gnbr6"]
-[ext_resource type="PackedScene" uid="uid://bodwa5aeyxbn3" path="res://stages/extra/climbing_minigame/objects/mario.tscn" id="6_1ddga"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_jca5s"]
+[ext_resource type="AudioStream" uid="uid://dwkfj7melj1mp" path="res://music/climbing_minigame/mario_ohno.wav" id="7_7stkv"]
 [ext_resource type="Texture2D" uid="uid://c3lq87gv2rowf" path="res://stages/extra/climbing_minigame/textures/marioline.png" id="8_qtcu2"]
 [ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_custom_camera.gd" id="9_mwl4c"]
 [ext_resource type="Texture2D" uid="uid://ceyk3iuyd8pkd" path="res://stages/extra/climbing_minigame/textures/mariomarker.png" id="9_xg2g6"]
@@ -60,7 +61,11 @@ boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_00uoh")])
 can_pause = true
 
-[node name="Mario2" parent="." instance=ExtResource("6_1ddga")]
+[node name="Mario" parent="." instance=ExtResource("4_jca5s")]
+position = Vector2(320, -16)
+death_music_override = ExtResource("7_7stkv")
+death_music_ignore_pause = true
+death_wait_time = 3.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -116,11 +121,6 @@ shape = SubResource("RectangleShape2D_o311q")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="MovingGroup/StaticBody2D"]
 position = Vector2(656, 48)
 shape = SubResource("RectangleShape2D_o311q")
-
-[node name="Strelochka" type="Sprite2D" parent="MovingGroup"]
-position = Vector2(-112, 384)
-texture = ExtResource("20_jm3op")
-centered = false
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("12_3spaf")
@@ -180,3 +180,8 @@ enabled = false
 chance_every_sec = 0.21
 speed_min = Vector2(-400, -600)
 speed_max = Vector2(-150, -400)
+
+[node name="Strelochka" type="Sprite2D" parent="."]
+position = Vector2(-112, 384)
+texture = ExtResource("20_jm3op")
+centered = false
