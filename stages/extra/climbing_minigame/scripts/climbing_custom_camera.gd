@@ -1,5 +1,7 @@
 extends PlayerCamera2D
 
+@export_file("*.tscn", "*.scn") var final_cutscene: String
+
 var moving: bool = false
 var can_get_faster: bool = false
 var y_counter: float
@@ -7,6 +9,8 @@ var rand_offset: int = 60
 var flower_counter: int = 10
 var fish_preparing: bool = false
 var last_player_pos: Vector2
+
+var _transition_started: bool = false
 
 const platform = preload("res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn")
 const skulltroopa = preload("res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.tscn")
@@ -133,7 +137,7 @@ func _physics_process(_delta: float) -> void:
 		
 		if last_player_pos.y < moving_group.global_position.y + 112 && can_get_faster:
 			moving_group.global_position.y -= 2 * delta
-		if last_player_pos.y < moving_group.global_position.y - 16:
+		if last_player_pos.y < moving_group.global_position.y - 16 && can_get_faster:
 			moving_group.global_position.y -= 3 * delta
 		
 	if fish_preparing:
@@ -141,7 +145,7 @@ func _physics_process(_delta: float) -> void:
 	
 	mariomarker.position.y = mariomarker_init_pos + (moving_group.global_position.y / 8)
 	if mariomarker.global_position.y < 96:
-		print("Change")
+		start_transition()
 	
 	Data.values['miles'] = int(abs(moving_group.global_position.y))
 	
@@ -154,13 +158,14 @@ func death_sequence(body: Node2D) -> void:
 	if Data.values.lives == 0:
 		body.wait_time = 3.0
 		return
-	Thunder._current_player_state = null
 	Data.values.lives -= 1
 	await get_tree().create_timer(2.0, false).timeout
+	Thunder.reset_player_state()
 	var new_player: Player = MARIO.instantiate()
+	new_player.suit = null
 	var new_plat = PLATFORM_PATH_CLOUD.instantiate()
 	new_player.position = moving_group.position + Vector2(320, 160)
-	new_plat.position = moving_group.position + Vector2(320, 192)
+	new_plat.position = moving_group.position + Vector2(320, 176)
 	new_plat.modulate.a = 0.01
 	Scenes.current_scene.add_child(new_player)
 	Scenes.current_scene.add_child(new_plat)
@@ -285,3 +290,33 @@ func big_fish_create() -> void:
 	#rotoi.add_child(rotodisci)
 	#
 	#Scenes.current_scene.add_child(rotoi)
+
+
+func start_transition() -> void:
+	if _transition_started:
+		return
+	_transition_started = true
+	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+	Data.values.checkpoint = -1
+	Data.values.checked_cps = []
+	
+	if final_cutscene:
+		if !_crossfade:
+			TransitionManager.accept_transition(
+				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+					.instantiate()
+					.with_speeds(0.04, -0.1)
+					.with_pause()
+					.on_player_after_middle(true)
+			)
+			
+			await TransitionManager.transition_middle
+			Scenes.goto_scene(final_cutscene)
+		else:
+			TransitionManager.accept_transition(
+				load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+					.instantiate()
+					.with_scene(final_cutscene)
+			)
+	else:
+		printerr("[Level] Jump to scene is not defined in the level.")
