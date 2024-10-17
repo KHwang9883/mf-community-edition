@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cybsx5nq075w1"]
+[gd_scene load_steps=25 format=3 uid="uid://cybsx5nq075w1"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_k26us"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_n4tw3"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dmwfhcgla7av" path="res://gfx/backgrounds/BGCastleVertical.png" id="15_04y6r"]
 [ext_resource type="PackedScene" uid="uid://bxaj6iub5wrps" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn" id="15_vgukt"]
 [ext_resource type="PackedScene" uid="uid://fq70crcmppwi" path="res://stages/extra/climbing_minigame/objects/fish_bones/fish_bones.tscn" id="16_wrk3g"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="19_s0br3"]
 [ext_resource type="Texture2D" uid="uid://br752og2ucdxx" path="res://stages/extra/climbing_minigame/textures/goodluck.png" id="19_ttl1q"]
 [ext_resource type="Texture2D" uid="uid://jhd21joawail" path="res://stages/extra/climbing_minigame/textures/strelochka.png" id="20_jm3op"]
 
@@ -34,6 +35,9 @@ fill_to = Vector2(0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o311q"]
 size = Vector2(32, 864)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3fhm2"]
+normal = Vector2(0, 1)
 
 [node name="ClimbingLavaRun" type="Node2D"]
 script = ExtResource("1_k26us")
@@ -97,6 +101,7 @@ limit_right = 640
 limit_bottom = 480
 editor_draw_screen = false
 script = ExtResource("9_mwl4c")
+final_cutscene = "res://stages/world_1/lava_end_cutscene.tscn"
 force_xscroll_off = true
 
 [node name="Lava" parent="MovingGroup" instance=ExtResource("14_2gpud")]
@@ -180,3 +185,9 @@ enabled = false
 chance_every_sec = 0.21
 speed_min = Vector2(-400, -600)
 speed_max = Vector2(-150, -400)
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("19_s0br3")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(0, 480)
+shape = SubResource("WorldBoundaryShape2D_3fhm2")
