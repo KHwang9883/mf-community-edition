@@ -1,6 +1,8 @@
 extends Level
 
 @export var climbing_scene: String = "res://stages/extra/climbing_minigame/climbing_lava_run.tscn"
+@export var climbing_set_difficulty := 0
+@export var climbing_after_scene: String = ""
 @onready var lava_bowser: Node2D = $LavaBowser
 
 
@@ -44,6 +46,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Data.values.checked_cps = []
 	
 	if climbing_scene:
+		Data.values['lavarun_difficulty'] = climbing_set_difficulty
+		Data.values['lavarun_after'] = climbing_after_scene
 		if !_crossfade:
 			TransitionManager.accept_transition(
 				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")

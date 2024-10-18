@@ -1,0 +1,363 @@
+[gd_scene load_steps=28 format=3 uid="uid://b2107xnpbc4pw"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_7kgk0"]
+[ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="2_d1073"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="3_qxvym"]
+[ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_pqs8p"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_eiild"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/end_cutscene_lava.gd" id="6_ww88o"]
+[ext_resource type="PackedScene" uid="uid://d13yixatuidg5" path="res://stages/world_1/objects/1-4_castle_brick_alt.tscn" id="7_bccga"]
+[ext_resource type="PackedScene" uid="uid://cdb6ogevepciu" path="res://stages/world_1/objects/1-4_castle_brick.tscn" id="8_opjna"]
+[ext_resource type="PackedScene" uid="uid://cy7wyb2fljl2l" path="res://stages/world_1/objects/1-4_castle_brick_small.tscn" id="9_u0vpn"]
+[ext_resource type="Script" path="res://stages/world_1/objects/1_4_castle_brick.gd" id="10_3aulp"]
+[ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="11_wwcgs"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="12_lqia2"]
+[ext_resource type="Texture2D" uid="uid://c7madb3fe540" path="res://tilesets/castle/gfx/bowser_portrait.png" id="13_qoefs"]
+[ext_resource type="Texture2D" uid="uid://bcb0p63rnf2gm" path="res://tilesets/castle/gfx/bowser_portrait_anim.png" id="14_2d5yl"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_victr"]
+normal = Vector2(0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7fsd"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 0, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqelp"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 81, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58iks"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 162, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hoi7a"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 243, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5inyw"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 324, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsb46"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 405, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inomm"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 486, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4fte"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 567, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wur67"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 648, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8c1l"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 729, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruiwa"]
+atlas = ExtResource("14_2d5yl")
+region = Rect2(0, 810, 80, 81)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7ehpg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7fsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqelp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58iks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hoi7a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5inyw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsb46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inomm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4fte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wur67")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8c1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ruiwa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 33.0
+}]
+
+[node name="LavaEndCutscene" type="Node2D"]
+script = ExtResource("1_7kgk0")
+goto_path = "res://stages/world_7/end_cutscene_7.tscn"
+intro_music = null
+transition_sound = null
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_offset = Vector2(200, 0)
+motion_mirroring = Vector2(1023, 480)
+
+[node name="BgCastle" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(512, 240)
+texture = ExtResource("2_d1073")
+metadata/_edit_lock_ = true
+
+[node name="Mario2" parent="." instance=ExtResource("3_qxvym")]
+position = Vector2(320, 496)
+gravity_scale = 0.1
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("4_pqs8p")
+
+[node name="CamArea" parent="." instance=ExtResource("5_eiild")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("6_ww88o")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="StaticBodyAlt5" parent="Node2D" instance=ExtResource("7_bccga")]
+position = Vector2(496, 304)
+
+[node name="StaticBodyAlt6" parent="Node2D" instance=ExtResource("7_bccga")]
+position = Vector2(400, 304)
+
+[node name="StaticBodyAlt7" parent="Node2D" instance=ExtResource("7_bccga")]
+position = Vector2(304, 304)
+
+[node name="StaticBody2D11" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(544, 304)
+delay = 0.4
+
+[node name="StaticBody2D12" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(576, 336)
+disable_mode = 0
+collision_layer = 0
+delay = 0.4
+
+[node name="StaticBody2D29" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(608, 304)
+disable_mode = 0
+delay = 0.7
+
+[node name="StaticBody2D27" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(608, 368)
+disable_mode = 0
+collision_layer = 0
+delay = 0.4
+
+[node name="StaticBody2D28" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(608, 432)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D13" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(544, 368)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D14" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(576, 400)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D17" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(544, 432)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D19" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(576, 464)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D20" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(640, 464)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D21" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(544, 496)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D22" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(608, 496)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D23" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(672, 496)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D24" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(672, 432)
+disable_mode = 0
+collision_layer = 0
+delay = 0.4
+
+[node name="StaticBody2D25" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(672, 368)
+disable_mode = 0
+collision_layer = 0
+delay = 0.7
+
+[node name="StaticBody2D26" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(672, 304)
+disable_mode = 0
+delay = 0.8
+
+[node name="StaticBody2D32" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(640, 112)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D33" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(608, 80)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D34" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(672, 80)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D35" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(640, 48)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D36" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(672, 16)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D37" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(640, -16)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D38" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(608, 16)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D39" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(576, -16)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D40" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(512, -16)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D41" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(544, 16)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D42" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(576, 48)
+disable_mode = 0
+collision_layer = 0
+delay = 0.6
+
+[node name="StaticBody2D30" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(640, 336)
+disable_mode = 0
+collision_layer = 0
+delay = 0.7
+
+[node name="StaticBody2D31" parent="Node2D" instance=ExtResource("8_opjna")]
+position = Vector2(640, 400)
+disable_mode = 0
+collision_layer = 0
+delay = 0.4
+
+[node name="StaticBody2D15" parent="Node2D" instance=ExtResource("9_u0vpn")]
+position = Vector2(528, 400)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D18" parent="Node2D" instance=ExtResource("9_u0vpn")]
+position = Vector2(528, 464)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D16" parent="Node2D" instance=ExtResource("9_u0vpn")]
+position = Vector2(528, 336)
+disable_mode = 0
+collision_layer = 0
+
+[node name="StaticBody2D43" type="StaticBody2D" parent="Node2D" groups=["1-4_castle"]]
+position = Vector2(432, 336)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("10_3aulp")
+rotate_fixed = -15.0
+
+[node name="GrayPlatformBg" type="Sprite2D" parent="Node2D/StaticBody2D43"]
+z_index = -1
+texture = ExtResource("11_wwcgs")
+
+[node name="GrayPlatformBg2" type="Sprite2D" parent="Node2D/StaticBody2D43"]
+z_index = -1
+position = Vector2(56, 57)
+texture = ExtResource("11_wwcgs")
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("12_lqia2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(0, 528)
+shape = SubResource("WorldBoundaryShape2D_victr")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["1-4_castle"]]
+position = Vector2(192, 128)
+script = ExtResource("10_3aulp")
+
+[node name="BowserPortrait6" type="Sprite2D" parent="StaticBody2D"]
+z_index = -15
+position = Vector2(-64, -80)
+texture = ExtResource("13_qoefs")
+centered = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StaticBody2D/BowserPortrait6"]
+sprite_frames = SubResource("SpriteFrames_7ehpg")
+autoplay = "default"
+centered = false

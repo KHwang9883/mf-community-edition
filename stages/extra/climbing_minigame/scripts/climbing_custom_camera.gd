@@ -2,6 +2,8 @@ extends PlayerCamera2D
 
 @export_file("*.tscn", "*.scn") var final_cutscene: String
 
+@export var difficulty = 0
+
 var moving: bool = false
 var can_get_faster: bool = false
 var y_counter: float
@@ -17,11 +19,13 @@ const skulltroopa = preload("res://stages/extra/climbing_minigame/objects/paratr
 const coins = preload("res://stages/extra/climbing_minigame/objects/coins/coins.tscn")
 const flower = preload("res://stages/extra/climbing_minigame/objects/fire_flower/fire_flower_lava_run.tscn")
 const podoboo = preload("res://engine/objects/enemies/podoboo/podoboo.tscn")
+const STIHL = preload("res://stages/extra/climbing_minigame/objects/stihl/stihl.tscn")
 #var roto = preload("res://engine/objects/enemies/rotos/roto_center.tscn")
 #var rotodisc = preload("res://engine/objects/enemies/rotos/roto_red.tscn")
 const BIG_FISH_BONES = preload("res://stages/extra/climbing_minigame/objects/big_fish_bones/big_fish_bones.tscn")
 const MARIO = preload("res://stages/extra/climbing_minigame/objects/mario.tscn")
 const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/platform_path_cloud.tscn")
+const BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_launcher_structure.tscn")
 
 const ohno_sound = preload("res://music/climbing_minigame/mario_ohno.wav")
 
@@ -43,9 +47,7 @@ var bg_sounds = []
 func _ready() -> void:
 	super()
 
-	get_tree().create_timer(20, false).timeout.connect(func():
-		podo_create()
-	)
+	get_tree().create_timer(20, false).timeout.connect(podo_create)
 
 	#get_tree().create_timer(40, false).timeout.connect(func():
 		#roto_create()
@@ -74,16 +76,24 @@ func _ready() -> void:
 	setup_platform(platform_path_3, randf_range(128, 528))
 	setup_platform(platform_path_4, randf_range(128, 568))
 
-	Data.values['highest'] = Data.values['miles'] if 'miles' in Data.values else 0
-	Data.values['miles'] = 0
+	#Data.values['highest'] = Data.values['miles'] if 'miles' in Data.values else 0
+	#Data.values['miles'] = 0
+	
+	if 'lavarun_difficulty' in Data.values:
+		difficulty = Data.values['lavarun_difficulty']
+	if 'lavarun_after' in Data.values:
+		final_cutscene = Data.values['lavarun_after']
 
 	await Scenes.current_scene.stage_ready
 
 	Thunder._current_player.died_with_body.connect(death_sequence)
 
-	get_tree().create_timer(15, false).timeout.connect(func():
-		big_fish_create()
-	)
+	get_tree().create_timer(15, false).timeout.connect(big_fish_create)
+	
+	if difficulty > 0:
+		get_tree().create_timer(25, false).timeout.connect(bullet_create)
+	if difficulty > 1:
+		get_tree().create_timer(25, false).timeout.connect(stihl_create)
 
 	await get_tree().create_timer(7.67, false, false, true).timeout
 	moving = true
@@ -143,14 +153,14 @@ func _physics_process(_delta: float) -> void:
 	if fish_preparing:
 		strelochka.position.x = move_toward(strelochka.position.x, last_player_pos.x - 27, 35 * _delta)
 
-	mariomarker.position.y = mariomarker_init_pos + (moving_group.global_position.y / 8)
+	mariomarker.position.y = mariomarker_init_pos + (moving_group.global_position.y / 8 / (difficulty + 1))
 	if mariomarker.global_position.y < 96:
 		start_transition()
 
-	Data.values['miles'] = int(abs(moving_group.global_position.y))
-
-	if Data.values['highest'] < Data.values['miles']:
-		Data.values['highest'] = Data.values['miles']
+	#Data.values['miles'] = int(abs(moving_group.global_position.y))
+#
+	#if Data.values['highest'] < Data.values['miles']:
+		#Data.values['highest'] = Data.values['miles']
 
 
 func death_sequence(body: Node2D) -> void:
@@ -254,6 +264,24 @@ func big_fish_create() -> void:
 	Scenes.current_scene.add_child(fisj)
 
 
+func stihl_create() -> void:
+	get_tree().create_timer(20, false).timeout.connect(stihl_create)
+	
+	var stihl = STIHL.instantiate()
+	moving_group.add_child(stihl)
+	stihl.global_position = global_position + Vector2(randi_range(-320, 320), 480)
+	stihl.reset_physics_interpolation()
+
+
+func bullet_create() -> void:
+	get_tree().create_timer(10, false).timeout.connect(bullet_create)
+	
+	var bul = BULLET_LAUNCHER_STRUCTURE.instantiate()
+	Scenes.current_scene.add_child(bul)
+	bul.global_position = Vector2(16, global_position.y - 480 - 32)
+	bul.reset_physics_interpolation()
+
+
 #func podo_create_advanced_sequence() -> void:
 	#get_tree().create_timer(30, false).timeout.connect(podo_create_advanced_sequence)
 	#
@@ -299,6 +327,7 @@ func start_transition() -> void:
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	Data.values.checkpoint = -1
 	Data.values.checked_cps = []
+	Data.values.erase('lavarun_difficulty')
 
 	if final_cutscene:
 		if !_crossfade:
