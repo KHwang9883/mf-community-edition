@@ -9,7 +9,7 @@ func _ready() -> void:
 
 
 func _on_window_mouse_entered() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	SettingsManager.show_mouse()
 
 
 func _on_shell_button_pressed() -> void:
@@ -28,4 +28,3 @@ func _on_menu_button_index_pressed(index: int) -> void:
 		popup.set_item_checked(i, i == index)
 	#popup.set_item_checked(id, true)
 	control.visible = index == popup.item_count - 1
-		
