@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://uweth0r3m5tb"]
+[gd_scene load_steps=53 format=3 uid="uid://uweth0r3m5tb"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_cv33x"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_f4ujg"]
@@ -22,14 +22,12 @@
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="20_dmae8"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="21_cu5fn"]
 [ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="22_uahu2"]
-[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="23_7hvnw"]
-[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="24_3vrwd"]
-[ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="25_totyg"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="27_cc6pb"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="28_tud1w"]
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="29_jrq8v"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="29_vqhym"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="30_rh2j3"]
+[ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="30_rvst4"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="31_335n5"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="32_o4mg8"]
 
@@ -304,28 +302,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k1p7w"]
-shader = ExtResource("23_7hvnw")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 2.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ro8f"]
-shader = ExtResource("23_7hvnw")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wib4b"]
-shader = ExtResource("23_7hvnw")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 5.0
-shader_parameter/y_axis = true
-
 [node name="BonusLevel-1" type="Control"]
+physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -710,52 +688,6 @@ texture = ExtResource("22_uahu2")
 position = Vector2(592, 456)
 texture = ExtResource("22_uahu2")
 
-[node name="Node2D" type="Node2D" parent="Objects/Node2D2"]
-z_index = 99
-
-[node name="Sprite2D4" type="Sprite2D" parent="Objects/Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.364706)
-material = SubResource("ShaderMaterial_k1p7w")
-position = Vector2(0, 404)
-texture = ExtResource("24_3vrwd")
-centered = false
-
-[node name="Sprite2D3" type="Sprite2D" parent="Objects/Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.498039)
-material = SubResource("ShaderMaterial_7ro8f")
-position = Vector2(0, 412)
-texture = ExtResource("24_3vrwd")
-centered = false
-
-[node name="Sprite2D2" type="Sprite2D" parent="Objects/Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.662745)
-material = SubResource("ShaderMaterial_wib4b")
-position = Vector2(0, 418)
-texture = ExtResource("24_3vrwd")
-centered = false
-
-[node name="ColorRect" type="ColorRect" parent="Objects/Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.666667)
-z_index = 31
-offset_top = 448.0
-offset_right = 640.0
-offset_bottom = 480.0
-size_flags_vertical = 3
-color = Color(0.345098, 0.533333, 0.878431, 1)
-metadata/_edit_lock_ = true
-
-[node name="Node2D3" type="Node2D" parent="Objects"]
-visible = false
-script = ExtResource("10_4s6np")
-maximum = false
-medium = true
-minimum = true
-
-[node name="Water" parent="Objects/Node2D3" instance=ExtResource("25_totyg")]
-offset_top = 432.0
-offset_right = 640.0
-offset_bottom = 480.0
-
 [node name="SpinyRed" parent="Objects" instance=ExtResource("27_cc6pb")]
 position = Vector2(304, 400)
 speed = Vector2(0, 0)
@@ -792,6 +724,7 @@ metadata/_edit_lock_ = true
 
 [node name="RedMushroom" parent="Objects" instance=ExtResource("31_335n5")]
 position = Vector2(304, 208)
+to_suit = "super"
 appear_distance = 0.0
 speed = Vector2(0, 0)
 metadata/_edit_lock_ = true
@@ -800,5 +733,7 @@ metadata/_edit_lock_ = true
 position = Vector2(464, 208)
 appear_distance = 0.0
 metadata/_edit_lock_ = true
+
+[node name="Water" parent="." instance=ExtResource("30_rvst4")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

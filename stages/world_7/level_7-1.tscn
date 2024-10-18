@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://4fkrdoon6rp4"]
+[gd_scene load_steps=77 format=4 uid="uid://4fkrdoon6rp4"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_mmr3n"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_8nqb1"]
@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="23_vc08i"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="24_gnkju"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="25_ev5qy"]
-[ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="26_ie7v1"]
 [ext_resource type="PackedScene" uid="uid://dnyk0ph5vd52a" path="res://engine/objects/enemies/cheeps/cheep_blue.tscn" id="27_b32py"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="28_g8wi8"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="29_jk5bx"]
@@ -39,6 +38,19 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="37_p7ym1"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="38_5o8m2"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="39_4n4mw"]
+[ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="39_hskfk"]
+[ext_resource type="Texture2D" uid="uid://dsijqvsl47riy" path="res://engine/objects/fluid/textures/water_smooth_0.png" id="40_bqeoi"]
+[ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="41_b0jad"]
+[ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="42_60gch"]
+[ext_resource type="Texture2D" uid="uid://dp3ivcsnm7xb0" path="res://engine/objects/fluid/textures/water_smooth_3.png" id="43_3hxa1"]
+[ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="44_ould4"]
+[ext_resource type="Texture2D" uid="uid://bhlgs2eebvaxr" path="res://engine/objects/fluid/textures/water_smooth_5.png" id="45_bd1d7"]
+[ext_resource type="Texture2D" uid="uid://baa2ywxd73mvl" path="res://engine/objects/fluid/textures/water_smooth_6.png" id="46_shg66"]
+[ext_resource type="Texture2D" uid="uid://ctwrhebqj6fd6" path="res://engine/objects/fluid/textures/water_smooth_7.png" id="47_8lyuv"]
+[ext_resource type="Script" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="48_p356p"]
+[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="49_5tjlr"]
+[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="50_okrup"]
+[ext_resource type="Texture2D" uid="uid://bi04kluy5weby" path="res://gfx/fancy_graphics/water_surface_front.png" id="51_nlsyd"]
 
 [sub_resource type="Gradient" id="Gradient_ehahp"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -162,6 +174,107 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_cj7ty"]
+frames = 8
+frame_0/texture = ExtResource("40_bqeoi")
+frame_0/duration = 0.15
+frame_1/texture = ExtResource("41_b0jad")
+frame_1/duration = 0.15
+frame_2/texture = ExtResource("42_60gch")
+frame_2/duration = 0.15
+frame_3/texture = ExtResource("43_3hxa1")
+frame_3/duration = 0.15
+frame_4/texture = ExtResource("44_ould4")
+frame_4/duration = 0.15
+frame_5/texture = ExtResource("45_bd1d7")
+frame_5/duration = 0.15
+frame_6/texture = ExtResource("46_shg66")
+frame_6/duration = 0.15
+frame_7/texture = ExtResource("47_8lyuv")
+frame_7/duration = 0.15
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8hsg"]
+size = Vector2(1, 1)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_x1ccn"]
+frames = 8
+frame_0/texture = ExtResource("40_bqeoi")
+frame_0/duration = 0.15
+frame_1/texture = ExtResource("41_b0jad")
+frame_1/duration = 0.15
+frame_2/texture = ExtResource("42_60gch")
+frame_2/duration = 0.15
+frame_3/texture = ExtResource("43_3hxa1")
+frame_3/duration = 0.15
+frame_4/texture = ExtResource("44_ould4")
+frame_4/duration = 0.15
+frame_5/texture = ExtResource("45_bd1d7")
+frame_5/duration = 0.15
+frame_6/texture = ExtResource("46_shg66")
+frame_6/duration = 0.15
+frame_7/texture = ExtResource("47_8lyuv")
+frame_7/duration = 0.15
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kcru5"]
+shader = ExtResource("49_5tjlr")
+shader_parameter/wave_amplitude = 0.125
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 2.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_udn8k"]
+shader = ExtResource("49_5tjlr")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 3.0
+shader_parameter/y_axis = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oplah"]
+shader = ExtResource("49_5tjlr")
+shader_parameter/wave_amplitude = 0.2
+shader_parameter/wave_frequency = 50.0
+shader_parameter/wave_speed = 5.0
+shader_parameter/y_axis = true
+
+[sub_resource type="Gradient" id="Gradient_gr2nd"]
+offsets = PackedFloat32Array(0, 0.4375)
+colors = PackedColorArray(0.313726, 0.501961, 0.878431, 1, 0, 0.0627451, 0.12549, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 16
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iebtr"]
+gradient = SubResource("Gradient_gr2nd")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_06ekm"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_vltsm"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(0.188235, 0.313726, 0.517647, 1, 0, 0.0627451, 0.439216, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6bd4q"]
+gradient = SubResource("Gradient_vltsm")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_r8fau"]
+offsets = PackedFloat32Array(0, 0.525, 1)
+colors = PackedColorArray(0.3168, 0.504533, 0.88, 0, 0.313726, 0.501961, 0.878431, 1, 0.314, 0.502, 0.878, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y0ep7"]
+gradient = SubResource("Gradient_r8fau")
+height = 18
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_7ydli"]
+colors = PackedColorArray(0.345098, 0.533333, 0.878431, 1, 0.314, 0.502, 0.878, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e26ha"]
+gradient = SubResource("Gradient_7ydli")
+height = 16
+fill_to = Vector2(0, 1)
 
 [node name="Level7-1" type="Node2D"]
 script = ExtResource("1_mmr3n")
@@ -584,13 +697,6 @@ position = Vector2(2272, 288)
 [node name="PiranhaGreen2" parent="Objects" instance=ExtResource("25_ev5qy")]
 position = Vector2(2464, 352)
 
-[node name="Water" parent="." instance=ExtResource("26_ie7v1")]
-offset_top = 424.0
-offset_right = 11040.0
-offset_bottom = 576.0
-border_color = Color(0, 0, 1, 0)
-metadata/_edit_lock_ = true
-
 [node name="PiranhaPink" parent="." instance=ExtResource("34_8s3rc")]
 position = Vector2(9504, 288)
 
@@ -699,3 +805,142 @@ metadata/_edit_lock_ = true
 position = Vector2(11248, 256)
 texture = ExtResource("39_4n4mw")
 metadata/_edit_lock_ = true
+
+[node name="Water2" type="Node2D" parent="."]
+position = Vector2(0, 424)
+
+[node name="WaterMin" type="VBoxContainer" parent="Water2"]
+modulate = Color(1, 1, 1, 0.545098)
+offset_right = 11040.0
+offset_bottom = 528.0
+theme_override_constants/separation = 0
+script = ExtResource("39_hskfk")
+
+[node name="TextureRect" type="TextureRect" parent="Water2/WaterMin"]
+visible = false
+z_index = 31
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_cj7ty")
+stretch_mode = 1
+script = ExtResource("37_p7ym1")
+maximum = false
+minimum = true
+
+[node name="Area2D" type="Area2D" parent="Water2/WaterMin" groups=["#water"]]
+visible = false
+z_index = 1
+collision_layer = 128
+collision_mask = 7
+script = ExtResource("48_p356p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water2/WaterMin/Area2D"]
+shape = SubResource("RectangleShape2D_w8hsg")
+
+[node name="ColorRect" type="ColorRect" parent="Water2/WaterMin"]
+visible = false
+z_index = 31
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.345098, 0.533333, 0.878431, 1)
+script = ExtResource("37_p7ym1")
+maximum = false
+minimum = true
+
+[node name="WaterMed" type="Node2D" parent="Water2"]
+script = ExtResource("37_p7ym1")
+maximum = false
+medium = true
+
+[node name="Parallax2D" type="Parallax2D" parent="Water2/WaterMed"]
+repeat_size = Vector2(640, 0)
+
+[node name="MediumQualityWater" type="TextureRect" parent="Water2/WaterMed/Parallax2D"]
+z_index = 31
+offset_right = 640.0
+offset_bottom = 16.0
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_x1ccn")
+stretch_mode = 1
+script = ExtResource("37_p7ym1")
+maximum = false
+medium = true
+
+[node name="WaterMax" type="Node2D" parent="Water2"]
+script = ExtResource("37_p7ym1")
+medium = true
+
+[node name="CanvasGroup" type="CanvasGroup" parent="Water2/WaterMax"]
+self_modulate = Color(1, 1, 1, 0.627451)
+z_index = 15
+fit_margin = 0.0
+script = ExtResource("37_p7ym1")
+
+[node name="Parallax2D" type="Parallax2D" parent="Water2/WaterMax/CanvasGroup"]
+repeat_size = Vector2(640, 0)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Water2/WaterMax/CanvasGroup/Parallax2D"]
+modulate = Color(1, 1, 1, 0.407843)
+material = SubResource("ShaderMaterial_kcru5")
+position = Vector2(0, -15)
+texture = ExtResource("50_okrup")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 60)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Water2/WaterMax/CanvasGroup/Parallax2D"]
+modulate = Color(1, 1, 1, 0.807843)
+material = SubResource("ShaderMaterial_udn8k")
+position = Vector2(0, -8)
+texture = ExtResource("51_nlsyd")
+centered = false
+region_enabled = true
+region_rect = Rect2(-24, 0, 640, 30)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Water2/WaterMax/CanvasGroup/Parallax2D"]
+material = SubResource("ShaderMaterial_oplah")
+position = Vector2(0, -4)
+texture = ExtResource("51_nlsyd")
+centered = false
+region_enabled = true
+region_rect = Rect2(-12, 0, 640, 30)
+
+[node name="Parallax2D" type="Parallax2D" parent="Water2/WaterMax"]
+repeat_size = Vector2(640, 0)
+
+[node name="background2" type="Sprite2D" parent="Water2/WaterMax/Parallax2D"]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+z_index = -1
+position = Vector2(319.968, 256)
+scale = Vector2(10.001, 7.5)
+texture = SubResource("GradientTexture2D_iebtr")
+script = ExtResource("37_p7ym1")
+medium = true
+
+[node name="Sprite2D6" type="Sprite2D" parent="Water2/WaterMax/Parallax2D"]
+z_index = 11
+material = SubResource("CanvasItemMaterial_06ekm")
+position = Vector2(320, 216)
+scale = Vector2(10, 6.25)
+texture = SubResource("GradientTexture2D_6bd4q")
+script = ExtResource("37_p7ym1")
+medium = true
+
+[node name="СкрываниеПерехода" type="Sprite2D" parent="Water2/WaterMax/Parallax2D"]
+z_index = 14
+position = Vector2(0, 3.05176e-05)
+scale = Vector2(10, 1.66667)
+texture = SubResource("GradientTexture2D_y0ep7")
+centered = false
+script = ExtResource("37_p7ym1")
+
+[node name="СкрываниеПерехода2" type="Sprite2D" parent="Water2/WaterMax/Parallax2D"]
+visible = false
+z_index = 14
+position = Vector2(0, 16)
+scale = Vector2(10, 1)
+texture = SubResource("GradientTexture2D_e26ha")
+centered = false
+script = ExtResource("37_p7ym1")
+maximum = false
+medium = true

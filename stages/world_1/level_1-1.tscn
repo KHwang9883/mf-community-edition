@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://dtfhvfw317yu"]
+[gd_scene load_steps=131 format=3 uid="uid://dtfhvfw317yu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gyuum"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="3_12ohb"]
@@ -50,6 +50,7 @@
 [ext_resource type="PackedScene" uid="uid://2ea3ayd2sj7i" path="res://tilesets/overworld_green/scenes/hill.tscn" id="25_shmuf"]
 [ext_resource type="PackedScene" uid="uid://c553718ou3hgm" path="res://tilesets/overworld_green/scenes/tree_long.tscn" id="26_lclbn"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="26_n28yo"]
+[ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="26_yfb60"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="27_gwisc"]
 [ext_resource type="PackedScene" uid="uid://b5yuesg8w3nk7" path="res://tilesets/overworld_green/scenes/woods.tscn" id="27_n434y"]
 [ext_resource type="PackedScene" uid="uid://bmkaknlavrwxp" path="res://tilesets/overworld_green/scenes/fence.tscn" id="28_scmnv"]
@@ -64,9 +65,7 @@
 [ext_resource type="Texture2D" uid="uid://tki7rbs8vxw6" path="res://tilesets/overworld_green/gfx/rock_platform.png" id="34_o42kw"]
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="37_i8hne"]
 [ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="38_d8stk"]
-[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="38_qa412"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="39_em1rs"]
-[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="39_r7mud"]
 [ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="42_4mb0p"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="65_puwu0"]
 [ext_resource type="Texture2D" uid="uid://468lmypqkgsm" path="res://gfx/texts/signs/1-1_jump.png" id="69_n7q2s"]
@@ -213,27 +212,6 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0c31a"]
-shader = ExtResource("38_qa412")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 2.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hhyy"]
-shader = ExtResource("38_qa412")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m8wha"]
-shader = ExtResource("38_qa412")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 5.0
-shader_parameter/y_axis = true
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_16k21"]
 tile_data = PackedInt32Array(0, 1, 65536, 65536, 1, 0, 1, 1, 0, 65537, 1, 65536)
@@ -1520,28 +1498,9 @@ z_index = -15
 position = Vector2(6208, 288)
 texture = ExtResource("37_i8hne")
 
-[node name="Sprite2D4" type="Sprite2D" parent="Node2D"]
-self_modulate = Color(1, 1, 1, 0.427451)
-z_index = 13
-material = SubResource("ShaderMaterial_0c31a")
-position = Vector2(0, 1396)
-texture = ExtResource("39_r7mud")
-centered = false
-
-[node name="Sprite2D3" type="Sprite2D" parent="Node2D"]
-self_modulate = Color(1, 1, 1, 0.701961)
-z_index = 13
-material = SubResource("ShaderMaterial_1hhyy")
-position = Vector2(0, 1404)
-texture = ExtResource("39_r7mud")
-centered = false
-
-[node name="Sprite2D2" type="Sprite2D" parent="Node2D"]
-z_index = 13
-material = SubResource("ShaderMaterial_m8wha")
-position = Vector2(0, 1410)
-texture = ExtResource("39_r7mud")
-centered = false
+[node name="Water" parent="Node2D" instance=ExtResource("26_yfb60")]
+position = Vector2(0, 1423)
+disable_collision = true
 
 [node name="FancyBush" type="Sprite2D" parent="Node2D"]
 z_index = 18
