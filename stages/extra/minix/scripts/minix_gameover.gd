@@ -22,26 +22,26 @@ func _ready() -> void:
 func _on_mario_died() -> void:
 	await get_tree().create_timer(4.0, false).timeout
 	Pause.get_child(0).open_blocked = true
-	
+
 	var minix_name: String = "minix_" + starter.current_map.map_name
 	minix_score_loader.save_score.call_deferred(Data.values.score, minix_name)
-	
+
 	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	SettingsManager.show_mouse()
 	await get_tree().physics_frame
 	var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "modulate:a", 1.0, 0.5)
-	
+
 	score.text = str(Data.values.score)
 	if !"godlikes" in Data.values:
 		Data.values.godlikes = 0
 	godlikes.text = str(Data.values.godlikes)
-	
+
 	var secs: int = int(Data.values.lasted)
 	print("Game ended with time: ", secs)
 	var mins: int = floor(secs / 60)
 	secs -= mins * 60
-	
+
 	lasted.text = lasted_template % [mins, secs]
 	map_label.text = starter.map_names[starter.map_id]
 	minix_controls.focused = true

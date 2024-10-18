@@ -15,8 +15,8 @@ func _ready() -> void:
 	if !"bonus_game" in Data.values || !Data.values.bonus_game || !SettingsManager.get_tweak("minigames_in_main_worlds", true):
 		queue_free()
 		return
-	
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+	SettingsManager.show_mouse()
 	Data.values.bonus_game = false
 	modulate.a = 0.0
 	create_tween().tween_property(self, "modulate:a", 1.0, 1.0)
@@ -25,7 +25,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !hovered:
 		click_on_me.rotation = lerp_angle(click_on_me.rotation, 0, 30 * delta)
-		
+
 		return
 	a += delta * 3
 	position.y = init_pos.y + sin(a) * 10
@@ -44,6 +44,6 @@ func _on_mouse_exited() -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if !hovered: return
-	
+
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_pressed():
 		Scenes.goto_scene(bonus_level_path)
