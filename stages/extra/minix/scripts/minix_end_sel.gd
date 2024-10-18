@@ -2,8 +2,8 @@ extends MenuSelection
 
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	Pause.get_child(0).open_blocked = false
 	Audio.stop_all_musics()
 	Data.reset_all_values()

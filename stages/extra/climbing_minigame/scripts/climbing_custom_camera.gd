@@ -78,7 +78,7 @@ func _ready() -> void:
 
 	#Data.values['highest'] = Data.values['miles'] if 'miles' in Data.values else 0
 	#Data.values['miles'] = 0
-	
+
 	if 'lavarun_difficulty' in Data.values:
 		difficulty = Data.values['lavarun_difficulty']
 	if 'lavarun_after' in Data.values:
@@ -89,7 +89,7 @@ func _ready() -> void:
 	Thunder._current_player.died_with_body.connect(death_sequence)
 
 	get_tree().create_timer(15, false).timeout.connect(big_fish_create)
-	
+
 	if difficulty > 0:
 		get_tree().create_timer(25, false).timeout.connect(bullet_create)
 	if difficulty > 1:
@@ -266,7 +266,7 @@ func big_fish_create() -> void:
 
 func stihl_create() -> void:
 	get_tree().create_timer(20, false).timeout.connect(stihl_create)
-	
+
 	var stihl = STIHL.instantiate()
 	moving_group.add_child(stihl)
 	stihl.global_position = global_position + Vector2(randi_range(-320, 320), 480)
@@ -275,7 +275,7 @@ func stihl_create() -> void:
 
 func bullet_create() -> void:
 	get_tree().create_timer(10, false).timeout.connect(bullet_create)
-	
+
 	var bul = BULLET_LAUNCHER_STRUCTURE.instantiate()
 	Scenes.current_scene.add_child(bul)
 	bul.global_position = Vector2(16, global_position.y - 480 - 32)
