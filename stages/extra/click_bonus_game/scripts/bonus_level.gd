@@ -85,6 +85,7 @@ func complete() -> void:
 		mario.completed = true
 		mario.gravity_scale = 0
 		mario.vel_set_y(-50)
+		mario.collision = false
 
 	for i in 3:
 		await get_tree().create_timer(0.6, false, false, true).timeout

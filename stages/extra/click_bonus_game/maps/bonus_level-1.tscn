@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bkifngv828m4r"]
+[gd_scene load_steps=24 format=3 uid="uid://bkifngv828m4r"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_xvhno"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_lagxp"]
@@ -19,9 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="16_xqkaj"]
 [ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="17_k7gm0"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="17_wd4fy"]
-[ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="18_g8mjd"]
-[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="20_3cosy"]
-[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="21_5rymx"]
+[ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="19_1ljor"]
 
 [sub_resource type="Gradient" id="Gradient_q18w8"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 0.988235, 1)
@@ -44,28 +42,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k1p7w"]
-shader = ExtResource("20_3cosy")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 2.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ro8f"]
-shader = ExtResource("20_3cosy")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wib4b"]
-shader = ExtResource("20_3cosy")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 5.0
-shader_parameter/y_axis = true
-
 [node name="BonusLevel-1" type="Control"]
+physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -199,6 +177,8 @@ speed = Vector2(0, 0)
 position = Vector2(304, 400)
 speed = Vector2(0, 0)
 
+[node name="Water" parent="." instance=ExtResource("19_1ljor")]
+
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("9_82ncv")
 
@@ -211,50 +191,5 @@ texture = ExtResource("17_k7gm0")
 z_index = -1
 position = Vector2(192, 446)
 texture = ExtResource("17_k7gm0")
-
-[node name="Node2D" type="Node2D" parent="Node2D2"]
-z_index = 99
-
-[node name="Sprite2D4" type="Sprite2D" parent="Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.364706)
-material = SubResource("ShaderMaterial_k1p7w")
-position = Vector2(0, 404)
-texture = ExtResource("21_5rymx")
-centered = false
-
-[node name="Sprite2D3" type="Sprite2D" parent="Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.498039)
-material = SubResource("ShaderMaterial_7ro8f")
-position = Vector2(0, 412)
-texture = ExtResource("21_5rymx")
-centered = false
-
-[node name="Sprite2D2" type="Sprite2D" parent="Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.662745)
-material = SubResource("ShaderMaterial_wib4b")
-position = Vector2(0, 418)
-texture = ExtResource("21_5rymx")
-centered = false
-
-[node name="ColorRect" type="ColorRect" parent="Node2D2/Node2D"]
-modulate = Color(1, 1, 1, 0.666667)
-z_index = 31
-offset_top = 448.0
-offset_right = 640.0
-offset_bottom = 480.0
-size_flags_vertical = 3
-color = Color(0.345098, 0.533333, 0.878431, 1)
-
-[node name="Node2D3" type="Node2D" parent="."]
-visible = false
-script = ExtResource("9_82ncv")
-maximum = false
-medium = true
-minimum = true
-
-[node name="Water" parent="Node2D3" instance=ExtResource("18_g8mjd")]
-offset_top = 432.0
-offset_right = 640.0
-offset_bottom = 480.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

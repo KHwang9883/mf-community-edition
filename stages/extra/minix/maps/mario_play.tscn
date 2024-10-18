@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bn27wl07v41xw"]
+[gd_scene load_steps=24 format=3 uid="uid://bn27wl07v41xw"]
 
 [ext_resource type="Script" path="res://stages/extra/minix/maps/minix_map.gd" id="1_5l8vl"]
 [ext_resource type="AudioStream" uid="uid://qejkmpd35gmd" path="res://music/minix/custom/muzyka-mario.ogg" id="2_wwqjy"]
@@ -11,16 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="7_u1s1r"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="8_wfiw4"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="9_htqj0"]
-[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="10_k3txo"]
-[ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="11_slchu"]
-[ext_resource type="Texture2D" uid="uid://dsijqvsl47riy" path="res://engine/objects/fluid/textures/water_smooth_0.png" id="12_8qapa"]
-[ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="13_sd7pl"]
-[ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="14_ou731"]
-[ext_resource type="Texture2D" uid="uid://dp3ivcsnm7xb0" path="res://engine/objects/fluid/textures/water_smooth_3.png" id="15_4r2mn"]
-[ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="16_ni73k"]
-[ext_resource type="Texture2D" uid="uid://bhlgs2eebvaxr" path="res://engine/objects/fluid/textures/water_smooth_5.png" id="17_p445f"]
-[ext_resource type="Texture2D" uid="uid://baa2ywxd73mvl" path="res://engine/objects/fluid/textures/water_smooth_6.png" id="18_pwxj1"]
-[ext_resource type="Texture2D" uid="uid://ctwrhebqj6fd6" path="res://engine/objects/fluid/textures/water_smooth_7.png" id="19_ec44l"]
+[ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="12_b82de"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="20_70w0t"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="21_ixleu"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="22_r26ox"]
@@ -42,32 +33,6 @@ width = 640
 height = 48
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebek4"]
-shader = ExtResource("10_k3txo")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = true
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_m7ts3"]
-frames = 8
-frame_0/texture = ExtResource("12_8qapa")
-frame_0/duration = 0.15
-frame_1/texture = ExtResource("13_sd7pl")
-frame_1/duration = 0.15
-frame_2/texture = ExtResource("14_ou731")
-frame_2/duration = 0.15
-frame_3/texture = ExtResource("15_4r2mn")
-frame_3/duration = 0.15
-frame_4/texture = ExtResource("16_ni73k")
-frame_4/duration = 0.15
-frame_5/texture = ExtResource("17_p445f")
-frame_5/duration = 0.15
-frame_6/texture = ExtResource("18_pwxj1")
-frame_6/duration = 0.15
-frame_7/texture = ExtResource("19_ec44l")
-frame_7/duration = 0.15
 
 [sub_resource type="Gradient" id="Gradient_pey5g"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -207,47 +172,9 @@ texture = SubResource("GradientTexture2D_pdcuo")
 centered = false
 script = ExtResource("9_htqj0")
 
-[node name="Sprite2D3" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.552941)
-material = SubResource("ShaderMaterial_ebek4")
-position = Vector2(-32, 452)
-texture = ExtResource("11_slchu")
-centered = false
-region_rect = Rect2(0, 0, 640, 30)
-script = ExtResource("9_htqj0")
-
-[node name="Sprite2D4" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.552941)
-material = SubResource("ShaderMaterial_ebek4")
-position = Vector2(608, 452)
-texture = ExtResource("11_slchu")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 640, 30)
-script = ExtResource("9_htqj0")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.545098)
-z_index = 31
-offset_left = -32.0
-offset_top = 464.0
-offset_right = 672.0
-offset_bottom = 480.0
-size_flags_vertical = 0
-texture = SubResource("AnimatedTexture_m7ts3")
-stretch_mode = 1
-script = ExtResource("9_htqj0")
-maximum = false
-medium = true
-minimum = true
-
-[node name="ColorRect" type="ColorRect" parent="TextureRect"]
-layout_mode = 0
-offset_top = 16.0
-offset_right = 704.0
-offset_bottom = 48.0
-size_flags_vertical = 3
-color = Color(0.345098, 0.533333, 0.878431, 1)
+[node name="Water" parent="." instance=ExtResource("12_b82de")]
+position = Vector2(0, 464)
+disable_collision = true
 
 [node name="ParallaxBackground" type="Node2D" parent="."]
 

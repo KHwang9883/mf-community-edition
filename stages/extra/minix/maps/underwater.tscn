@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_5klii"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="2_x0d46"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="3_edxrf"]
-[ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="4_mynjo"]
 [ext_resource type="AudioStream" uid="uid://lkb401j465fp" path="res://music/minix/custom/subsea.ogg" id="4_rlu0c"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="5_d4302"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="6_erdsl"]
@@ -19,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cflp8o7nv1erj" path="res://stages/extra/minix/textures/fancy_pipe_ultra_4k.png" id="15_ishtd"]
 [ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="16_b0f6s"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="17_cu6ni"]
+[ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="19_2x5j5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twtvg"]
 atlas = ExtResource("7_7a771")
@@ -138,16 +138,6 @@ tile_set = ExtResource("2_x0d46")
 format = 2
 layer_0/tile_data = PackedInt32Array(131075, 2, 131072, 131088, 2, 131072, 262144, 1, 0, 458755, 1, 0, 458756, 1, 0, 589833, 1, 0, 589834, 1, 0, 458766, 1, 0, 458767, 1, 0, 458768, 1, 0)
 
-[node name="Water" parent="." instance=ExtResource("4_mynjo")]
-offset_left = -32.0
-offset_top = 37.0
-offset_right = 672.0
-offset_bottom = 517.0
-metadata/_edit_lock_ = true
-
-[node name="ColorRect" parent="Water" index="2"]
-visible = false
-
 [node name="ParallaxBackground" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
@@ -253,4 +243,28 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("16_b0f6s")
 script = ExtResource("17_cu6ni")
 
-[editable path="Water"]
+[node name="Water2" parent="." instance=ExtResource("19_2x5j5")]
+position = Vector2(0, 35)
+
+[node name="Area2D" parent="Water2/WaterMin" index="1"]
+visible = true
+
+[node name="CollisionShape2D" parent="Water2/WaterMin/Area2D" index="0"]
+visible = false
+
+[node name="background2" parent="Water2/WaterMax/Parallax2D" index="0"]
+visible = false
+maximum = false
+medium = false
+
+[node name="Sprite2D6" parent="Water2/WaterMax/Parallax2D" index="1"]
+visible = false
+position = Vector2(320, 231.5)
+scale = Vector2(10, 6.73438)
+maximum = false
+medium = false
+
+[node name="СкрываниеПерехода2" parent="Water2/WaterMax/Parallax2D" index="3"]
+visible = true
+
+[editable path="Water2"]
