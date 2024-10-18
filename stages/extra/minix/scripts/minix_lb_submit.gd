@@ -22,7 +22,7 @@ var submitting = false
 var has_errored: bool = false
 var dufhdiufsfdoi: bool
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	if !is_enabled:
 		if congrats.visible && please_type.visible:
 			super()
@@ -30,7 +30,7 @@ func _handle_select() -> void:
 			return
 		Audio.play_1d_sound(preload("res://stages/extra/minix/status/minix_coin_time.wav"))
 		return
-	super()
+	super(mouse_input)
 	minix_controls.focused = false
 	please_type.visible = true
 	submitting_box.visible = false

@@ -10,8 +10,8 @@ func _ready() -> void:
 	place.text = "%s." % (get_index() + 1)
 
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	if parent.expanded == self:
 		parent.expanded = null
 	else:

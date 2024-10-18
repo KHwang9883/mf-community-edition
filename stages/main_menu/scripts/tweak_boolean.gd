@@ -21,13 +21,13 @@ func _ready() -> void:
 			is_blocked = true
 
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	if is_blocked: return
 	
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	_handle_toggle(!tweak)
 	if !tweak:
-		super()
+		super(mouse_input)
 	else:
 		Audio.play_1d_sound(toggle_off, true, { "ignore_pause": true, "bus": "1D Sound" })
 

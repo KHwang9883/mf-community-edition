@@ -28,9 +28,9 @@ func _ready():
 	_update_string.call_deferred()
 
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	_toggle_preview()
-	super()
+	super(mouse_input)
 
 
 func _physics_process(delta: float) -> void:

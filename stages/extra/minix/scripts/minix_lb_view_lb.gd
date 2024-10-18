@@ -3,8 +3,8 @@ extends MenuSelection
 @export var gameover = false
 @onready var parent: MenuItemsController = get_parent()
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	parent.focused = false
 	
 	var lb = Scenes.current_scene.get_node("START/Leaderboard")
