@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene load_steps=83 format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -211,6 +211,9 @@ animations = [{
 "name": &"default",
 "speed": 0.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_22gor"]
+size = Vector2(832, 32)
 
 [node name="Minix" type="Node2D"]
 script = ExtResource("1_51ox0")
@@ -960,7 +963,11 @@ script = ExtResource("68_vmjpb")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 position = Vector2(0, -32)
-polygon = PackedVector2Array(-96, 608, 736, 608, 736, -96, 768, -96, 768, 640, -128, 640, -128, -96, -96, -96)
+polygon = PackedVector2Array(-96, 608, 736, 608, 736, -800, 768, -800, 768, 640, -128, 640, -128, -800, -96, -800)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(320, -816)
+shape = SubResource("RectangleShape2D_22gor")
 
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer/score" method="_on_minix_score_loader_score_loaded"]
 [connection signal="score_loaded" from="MinixScoreLoader" to="START/Node2D/VBoxContainer/HBoxContainer2/score" method="_on_minix_score_loader_score_loaded"]
