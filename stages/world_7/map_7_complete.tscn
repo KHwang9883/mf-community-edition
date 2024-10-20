@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dkom4k0l2w1sb"]
+[gd_scene load_steps=37 format=3 uid="uid://dkom4k0l2w1sb"]
 
 [ext_resource type="PackedScene" uid="uid://bxyjgsiel1kgl" path="res://engine/scenes/map/complete_template.tscn" id="1_ppbxs"]
 [ext_resource type="Texture2D" uid="uid://c3s25rr15fphk" path="res://gfx/map/world_names/world_7.png" id="2_xt8gu"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://tgbow7hvmh8m" path="res://gfx/fancy_graphics/world_texts/world_7.png" id="5_cedka"]
 [ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="5_lg3cl"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="6_407s8"]
-[ext_resource type="Texture2D" uid="uid://d0wiu7ws1tjao" path="res://gfx/fancy_graphics/world_texts/complete.png" id="6_l7clr"]
+[ext_resource type="Texture2D" uid="uid://7vktv8j4hxpa" path="res://gfx/fancy_graphics/world_texts/completed.png" id="6_iad8l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uckvt"]
 atlas = ExtResource("4_61v2s")
@@ -130,6 +130,98 @@ animations = [{
 "speed": 25.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tp623"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(0, 78, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eaowu"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(0, 156, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxjvf"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(0, 234, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxjin"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(0, 312, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0riw"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(424, 0, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvn3r"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(424, 78, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lt1sn"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(424, 156, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13y7p"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(424, 234, 424, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdw61"]
+atlas = ExtResource("6_iad8l")
+region = Rect2(424, 312, 424, 78)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_irgjq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tp623")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eaowu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxjvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxjin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0riw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvn3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lt1sn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13y7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdw61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13y7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lt1sn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvn3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0riw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxjin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxjvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eaowu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 25.0
+}]
+
 [node name="Map-complete" instance=ExtResource("1_ppbxs")]
 goto_scene = "res://stages/world_8/map_8.tscn"
 world_name = "7"
@@ -163,9 +255,10 @@ texture = ExtResource("5_cedka")
 offset = Vector2(0, 48)
 script = ExtResource("4_6ggei")
 
-[node name="Complete" type="Sprite2D" parent="GUI/WorldText/World1" index="0"]
-position = Vector2(0, 108)
-texture = ExtResource("6_l7clr")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GUI/WorldText/World1" index="0"]
+position = Vector2(0, 112)
+sprite_frames = SubResource("SpriteFrames_irgjq")
+autoplay = "default"
 offset = Vector2(0, 24)
 
 [node name="Map7-complete" type="Sprite2D" parent="." index="3"]
