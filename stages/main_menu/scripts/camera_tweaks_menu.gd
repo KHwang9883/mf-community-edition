@@ -1,7 +1,7 @@
-extends Camera2D
+extends "res://engine/scenes/main_menu/scripts/opt_camera_2d.gd"
 
 @export var margin: int = 24
-@onready var tweaks: MenuItemsController = $"../../Tweaks"
 
 func _ready() -> void:
-	limit_bottom = (margin * 2) + tweaks.size.y
+	super()
+	limit_bottom = (margin * 2) + menu_controller.size.y

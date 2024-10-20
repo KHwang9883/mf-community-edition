@@ -15,6 +15,8 @@ const COIN = preload("res://engine/objects/items/coin/coin.wav")
 var has_update: bool
 
 func _ready() -> void:
+	SettingsManager.show_mouse()
+	
 	await get_tree().create_timer(1.0, true, false, true).timeout
 	http_request.request_completed.connect(_on_http_get, CONNECT_ONE_SHOT)
 	

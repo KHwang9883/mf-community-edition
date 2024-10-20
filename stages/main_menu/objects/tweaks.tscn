@@ -172,12 +172,19 @@ script = ExtResource("7_jdt55")
 smooth_speed = 0.4
 position_padding = 20
 
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/Selector"]
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
+physics_interpolation_mode = 1
+process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 640
 limit_bottom = 480
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
+editor_draw_screen = false
 script = ExtResource("8_jrjpr")
+menu_controller_path = NodePath("../Tweaks")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -207,3 +214,4 @@ vertical_alignment = 2
 uppercase = true
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Tweaks" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Tweaks" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]

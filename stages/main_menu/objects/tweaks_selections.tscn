@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=41 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="2_5xeuf"]
@@ -12,11 +12,12 @@
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="5_dhfy0"]
 [ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="5_fjyvq"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/console_patch.gd" id="12_4rgcr"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_4hroi"]
 color = Color(0, 0, 0.329412, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xun1n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugvyo"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
@@ -24,6 +25,11 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lobhh"]
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xun1n"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kc7pf"]
 resource_local_to_scene = true
@@ -129,6 +135,11 @@ resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_84j8u"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_k41b8"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
@@ -143,6 +154,35 @@ theme_override_constants/separation = 14
 script = ExtResource("1_e1b0h")
 focused = false
 prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator5" type="HSeparator" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="HSeparator5"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "general"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator6" type="HSeparator" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -175,6 +215,45 @@ theme_override_font_sizes/font_size = 13
 text = "please press enter"
 uppercase = true
 script = ExtResource("4_knu6m")
+
+[node name="HBoxContainer25" type="HBoxContainer" parent="."]
+layout_mode = 2
+script = ExtResource("3_pxu1a")
+tweak_name = "mouse_in_menus"
+default_value = true
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="HBoxContainer25"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "mouse input in menus"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="HBoxContainer25"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ugvyo")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer25/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
@@ -222,7 +301,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "revamp some extra levels"
+text = "revamp level design of some extra levels"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="HBoxContainer2"]
@@ -416,7 +495,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "minigames in main worlds
+text = "enable minigames in main worlds
 (from 5.08+)"
 uppercase = true
 
@@ -532,7 +611,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "stomping combos"
+text = "enable stomping combos"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="HBoxContainer12"]
@@ -558,6 +637,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "life_every_2_mil_score"
+default_value = true
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer13"]
@@ -570,7 +650,8 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "extra life every 1,000,000 score points"
+text = "give an extra life
+every 1,000,000 score points"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="HBoxContainer13"]
@@ -1062,7 +1143,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "player skidding effects"
+text = "enable player skidding effects"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="HBoxContainer17"]
@@ -1101,7 +1182,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "achievement notifications"
+text = "enable achievement notifications"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="HBoxContainer21"]
@@ -1112,6 +1193,44 @@ texture = SubResource("AtlasTexture_xv7yg")
 stretch_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="HBoxContainer21/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HBoxContainer26" type="HBoxContainer" parent="."]
+layout_mode = 2
+script = ExtResource("12_w1vvf")
+tweak_name = "custom_mouse_cursor"
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="HBoxContainer26"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "custom mouse cursor"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="HBoxContainer26"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_84j8u")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer26/Toggle"]
 modulate = Color(0, 0, 0, 0.462745)
 z_index = -1
 layout_mode = 2
