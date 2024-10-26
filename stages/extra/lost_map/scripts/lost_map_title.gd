@@ -10,7 +10,6 @@ extends Node2D
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
 
 const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
-const VOICE_2 = preload("res://engine/objects/core/checkpoint/sounds/voice2.ogg")
 
 var label_template = "[center][i]%s"
 
@@ -92,7 +91,7 @@ func _physics_process(delta: float) -> void:
 	if can_start && Input.is_action_just_pressed("ui_accept"):
 		can_start = false
 		Audio.play_1d_sound(POWERUP)
-		Audio.play_1d_sound(VOICE_2)
+		Audio.play_1d_sound(CharacterManager.get_voice_line("checkpoint")[1])
 		
 		await get_tree().create_timer(1.5, false).timeout
 		
