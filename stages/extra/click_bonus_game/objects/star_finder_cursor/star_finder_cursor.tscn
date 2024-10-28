@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://bfcf0c50beo18"]
+
+[ext_resource type="Texture2D" uid="uid://caixe24mix6j3" path="res://stages/extra/click_bonus_game/textures/star_finder_cursor.png" id="1_jspt5"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/cursor.gd" id="2_7l1lt"]
+[ext_resource type="Texture2D" uid="uid://bo5i266chqrwh" path="res://stages/extra/click_bonus_game/textures/star_effect.png" id="3_xw5pp"]
+
+[sub_resource type="Gradient" id="Gradient_65cgq"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_06yjw"]
+gradient = SubResource("Gradient_65cgq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gtk1h"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 600.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, 1500, 0)
+color_ramp = SubResource("GradientTexture1D_06yjw")
+
+[sub_resource type="Gradient" id="Gradient_vmkxg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tkrsw"]
+gradient = SubResource("Gradient_vmkxg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8xrgc"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 400.0
+initial_velocity_max = 800.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, 1000, 0)
+color_ramp = SubResource("GradientTexture1D_tkrsw")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nfyne"]
+radius = 2.0
+
+[node name="StarFinderCursor" type="Sprite2D"]
+physics_interpolation_mode = 2
+position = Vector2(-16, -16)
+texture = ExtResource("1_jspt5")
+script = ExtResource("2_7l1lt")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_gtk1h")
+texture = ExtResource("3_xw5pp")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_8xrgc")
+texture = ExtResource("3_xw5pp")
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+
+[node name="Area2D" type="Area2D" parent="." groups=["mouse_cursor"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_nfyne")
