@@ -3,6 +3,7 @@ extends MenuSelection
 @export var tweak_name: String
 @export var default_value: bool
 @export var lock_behind_story_mode: bool = false
+@export_multiline var tweak_description: String
 
 var toggle_off = preload("res://sfx/tweak_off.mp3")
 @onready var toggle: TextureRect = $Toggle
@@ -19,6 +20,13 @@ func _ready() -> void:
 		if !SecretsManager.is_endgame():
 			lab.text = "??????? (beat story mode to unlock!)"
 			is_blocked = true
+
+
+func _handle_focused(focus) -> void:
+	super(focus)
+	if !focus: return
+	if tweak_description:
+		get_parent().emit_signal(&"_tweak_desc")
 
 
 func _handle_select(mouse_input: bool = false) -> void:
@@ -44,6 +52,9 @@ func _physics_process(delta: float) -> void:
 		var _set: bool = _handle_toggle(true)
 		if _set:
 			Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	elif Input.is_action_just_pressed(&"ui_select"):
+		if tweak_description:
+			$"../../../../CanvasLayer".show_description(tweak_description, $Label.text)
 
 
 func _handle_toggle(to_set: bool) -> bool:

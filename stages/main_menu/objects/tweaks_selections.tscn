@@ -7,10 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://d3pdff2cvdkxc" path="res://sfx/tweak_off.mp3" id="3_bcwg7"]
 [ext_resource type="AudioStream" uid="uid://b1xmpmuvfvqef" path="res://sfx/tweak_on.mp3" id="3_ltw82"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_boolean.gd" id="3_pxu1a"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="4_knu6m"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_exit.gd" id="5_cvfb0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="5_dhfy0"]
 [ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="5_fjyvq"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_quality.gd" id="12_4kuwt"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/console_patch.gd" id="12_4rgcr"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
 
@@ -203,10 +203,15 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "character editor"
+text = "character"
 uppercase = true
 
-[node name="Value" type="Label" parent="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 8
+
+[node name="Value" type="Label" parent="HBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
@@ -217,15 +222,50 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 13
-text = "please press enter"
+text = "mario"
 uppercase = true
-script = ExtResource("4_knu6m")
+
+[node name="arrow" type="Label" parent="HBoxContainer/HBoxContainer/Value"]
+layout_mode = 0
+offset_left = -32.0
+offset_right = -7.0
+offset_bottom = 16.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "<--"
+uppercase = true
+script = ExtResource("5_dhfy0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="arrow" type="Label" parent="HBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "-->"
+uppercase = true
+script = ExtResource("5_dhfy0")
+left_side = false
 
 [node name="HBoxContainer25" type="HBoxContainer" parent="."]
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "mouse_in_menus"
 default_value = true
+tweak_description = "you will be able to select and interact with menu controls such as this one using your mouse cursor"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer25"]
@@ -294,6 +334,9 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "remade_levels"
 default_value = true
+tweak_description = "this tweak aims to improve the original buziol's level design in several extra levels, which are too similar to each other, by making them more unique.
+
+credit to serafimgws for the new level design"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer2"]
@@ -333,6 +376,9 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "progress_continue"
 default_value = true
+tweak_description = "each time you complete a level, a one-time save is made with your entire progress, including your power state, lives, and the level you were on. You can access it at any time.
+
+caution: some advancements are incompatible with this feature and may not be completed!"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer24"]
@@ -372,6 +418,9 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "load_save_from_world_start"
+tweak_description = "copies the behavior over from the original game, where save pipes ignore the level you were on.
+
+notice: enabling this tweak will not reset your save pipe until you enter it"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer20"]
@@ -410,6 +459,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "harder_level_design"
+tweak_description = "some story mode levels, such as 1-1, 1-2, 2-4, 4-2, 6-2, 7-3, and 8-4, will have the more difficult v1.16.1 level design"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer19"]
@@ -449,6 +499,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "bowser_stomping"
+tweak_description = "mimics the behavior from the original, where the player receives a push forwards each time bowser is stomped, and cannot bounce as high"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer4"]
@@ -488,6 +539,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "minigames_in_main_worlds"
+tweak_description = "v5.08 added minigames, such as the \"star finder\", \"lava run\", and map enemy encounters. this tweak also goes beyond the first 3 worlds and adds more challenging minigames throughout all the story mode"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer5"]
@@ -527,6 +579,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "brick_bumping_mushrooms"
+tweak_description = "super mushrooms and other moving bonuses bounce up and change direction when the player hits a bumpable block below them"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer7"]
@@ -566,6 +619,7 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "checkpoints"
 default_value = true
+tweak_description = "v4.4 added checkpoints to the whole game. disabling this tweak makes the game more challenging"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer10"]
@@ -604,6 +658,9 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "stomping_combo"
+tweak_description = "stomping combos were not a thing in the original mario forever. the stomping combo goes like this:
+
+100 > 200 > 400 > 500 > 800 > 1000 > 2000 > 4000 > 5000 > 8000 > 1up > back to 100"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer12"]
@@ -643,6 +700,7 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "life_every_2_mil_score"
 default_value = true
+tweak_description = "this tweak brings score points an actual use!"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer13"]
@@ -682,6 +740,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "better_springboards"
+tweak_description = "the original game required the user to press the jump button up to 7 frames in advance before touching the springboard. disabling this tweak makes the player always jump at the maximum height as long as you hold the jump button, making springboards a little easier to control"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer6"]
@@ -720,6 +779,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "retro_scroll"
+tweak_description = "similar to a challenge mode from New Super Mario Bros. DS"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer15"]
@@ -900,11 +960,83 @@ left_side = false
 
 [node name="HBoxContainer9" type="HBoxContainer" parent="."]
 layout_mode = 2
+script = ExtResource("12_4kuwt")
+tweak_description = "this is not a tweak, but rather a quick access to a quality setting from the options screen"
+
+[node name="Label" type="Label" parent="HBoxContainer9"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "quality"
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer9"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 8
+
+[node name="Value" type="Label" parent="HBoxContainer9/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "medium"
+uppercase = true
+
+[node name="arrow" type="Label" parent="HBoxContainer9/HBoxContainer/Value"]
+layout_mode = 0
+offset_left = -32.0
+offset_right = -7.0
+offset_bottom = 16.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "<--"
+uppercase = true
+script = ExtResource("5_dhfy0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer9/HBoxContainer"]
+layout_mode = 2
+
+[node name="arrow" type="Label" parent="HBoxContainer9/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "-->"
+uppercase = true
+script = ExtResource("5_dhfy0")
+left_side = false
+
+[node name="HBoxContainer27" type="HBoxContainer" parent="."]
+layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "replace_circle_transitions_with_fades"
 selected_sound = ExtResource("3_ltw82")
 
-[node name="Label" type="Label" parent="HBoxContainer9"]
+[node name="Label" type="Label" parent="HBoxContainer27"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
@@ -918,14 +1050,14 @@ text = "replace circle transitions with fades
 (from 5.0+)"
 uppercase = true
 
-[node name="Toggle" type="TextureRect" parent="HBoxContainer9"]
+[node name="Toggle" type="TextureRect" parent="HBoxContainer27"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_yh062")
 stretch_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="HBoxContainer9/Toggle"]
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer27/Toggle"]
 modulate = Color(0, 0, 0, 0.462745)
 z_index = -1
 layout_mode = 2
@@ -1059,6 +1191,7 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "enable_blur_transitions"
 default_value = true
+tweak_description = "adds a blur transition each time the player warps into a new area. disable this to make the new area load immediately"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer23"]
@@ -1136,6 +1269,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "pause_on_suit_change"
+tweak_description = "each time the player receives a damage or dies, the world around them halts for a second, giving more time for the user to react"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer16"]
@@ -1174,6 +1308,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "player_skid_animation"
+tweak_description = "enables the skidding animation and particles like in other mario games"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer17"]
@@ -1213,6 +1348,7 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "secrets_notification"
 default_value = true
+tweak_description = "each time an achievement gets unlocked, a pop up will appear for a few seconds and a sound effect will play"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer21"]
@@ -1251,6 +1387,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("12_w1vvf")
 tweak_name = "custom_mouse_cursor"
+tweak_description = "sets a custom mouse cursor image from mario worker 1.0 source files"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer26"]
@@ -1291,6 +1428,7 @@ script = ExtResource("3_pxu1a")
 tweak_name = "secret_mode_new_death_sounds"
 default_value = true
 lock_behind_story_mode = true
+tweak_description = "disabling this tweak will force only one sound effect to play on death in the secret game mode, instead of playing a bunch of random ones, for accessibility"
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="HBoxContainer14"]
