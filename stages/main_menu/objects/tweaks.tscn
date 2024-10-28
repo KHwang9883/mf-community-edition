@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c2mch7wqmlcgp"]
+[gd_scene load_steps=31 format=3 uid="uid://c2mch7wqmlcgp"]
 
 [ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="1_fcdr4"]
 [ext_resource type="Texture2D" uid="uid://bpkndt6n365gx" path="res://stages/main_menu/textures/tweak_bg.png" id="2_4c2j4"]
@@ -10,6 +10,10 @@
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="7_jdt55"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="8_i5nl3"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="8_jrjpr"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="11_igxil"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_description.gd" id="12_cheln"]
+[ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="13_1g7cx"]
+[ext_resource type="Script" path="res://objects/message_block/blinking_text.gd" id="14_ayerv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_smql5"]
 shader = ExtResource("1_fcdr4")
@@ -112,6 +116,14 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_knrxj"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0.188235, 0.513726, 0.635294)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vfjrk"]
+gradient = SubResource("Gradient_knrxj")
+width = 8
+
 [node name="Tweaks" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -211,6 +223,126 @@ contact us on
 our discord
 server!"
 vertical_alignment = 2
+uppercase = true
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 319.0
+offset_right = 124.0
+offset_bottom = 464.0
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("8_i5nl3")
+theme_override_font_sizes/font_size = 11
+text = "please press
+space key to
+view tweak
+description!"
+horizontal_alignment = 3
+vertical_alignment = 2
+uppercase = true
+script = ExtResource("11_igxil")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 4
+script = ExtResource("12_cheln")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+process_mode = 3
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(0, 0, 0, 0)
+
+[node name="Box" type="Node2D" parent="CanvasLayer"]
+process_mode = 3
+
+[node name="Texture" type="TextureRect" parent="CanvasLayer/Box"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -100.0
+offset_right = 240.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_vfjrk")
+
+[node name="Text" type="Label" parent="CanvasLayer/Box/Texture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 27)
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0.341176, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("8_i5nl3")
+theme_override_font_sizes/font_size = 12
+text = "MESSAGE BOX"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="Text2" type="Label" parent="CanvasLayer/Box/Texture"]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(0, 27)
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("13_1g7cx")
+theme_override_font_sizes/font_size = 18
+text = "PRESS SPACE KEY"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("14_ayerv")
+
+[node name="Text3" type="Label" parent="CanvasLayer/Box/Texture"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -48.0
+offset_bottom = -5.0
+grow_horizontal = 2
+pivot_offset = Vector2(0, 27)
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 0.513726, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("8_i5nl3")
+theme_override_font_sizes/font_size = 12
+text = "PRESS SPACE KEY"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
 uppercase = true
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Tweaks" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]

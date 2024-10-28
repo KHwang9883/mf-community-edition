@@ -24,7 +24,7 @@ var _original_time_scale: float
 
 
 func _ready() -> void:
-	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	SettingsManager.show_mouse()
 	Data.values.bonus_game = false
 	var mario: Player = Thunder._current_player
 	if is_instance_valid(mario): mario.completed = true

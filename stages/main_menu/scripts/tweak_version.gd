@@ -9,6 +9,7 @@ var STRING: Array = [
 
 @export var tweak_name: String
 @export var default_value: bool
+@export_multiline var tweak_description: String
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 @onready var arrow_l: Label = $HBoxContainer/Value/arrow
@@ -16,6 +17,11 @@ var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 
 func _handle_select(mouse_input: bool = false) -> void:
+	if !focused || !get_parent().focused: return
+	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
+	
+	SettingsManager.set_tweak(tweak_name, wrapi(tweak + 1, 0, 4))
+	_toggled_option(tweak)
 	return
 
 
