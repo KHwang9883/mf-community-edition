@@ -10,15 +10,24 @@ var hover_count: int = 0
 @onready var gpu_particles_2d = $GPUParticles2D
 @onready var gpu_particles_2d_2 = $GPUParticles2D2
 @onready var area_2d: Area2D = $Area2D
+@export var camera_ref: NodePath
+@onready var camera: Camera2D = get_node(camera_ref)
+
+var _saved_mouse_pos: Vector2
 
 
 func _ready() -> void:
 	timer.timeout.connect(_create_effect)
 
 
+func _physics_process(_delta: float) -> void:
+	global_position = _saved_mouse_pos + camera.offset
+
+
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
-		global_position = event.global_position
+		_saved_mouse_pos = event.global_position
+		global_position = _saved_mouse_pos + camera.offset
 	
 	if !Scenes.current_scene.can_interact:
 		return

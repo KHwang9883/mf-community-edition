@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://s4fip2enup6u"]
+[gd_scene load_steps=23 format=3 uid="uid://s4fip2enup6u"]
 
 [ext_resource type="AudioStream" uid="uid://bn1cfpnnh836i" path="res://stages/extra/click_bonus_game/sfx/game_started-.wav" id="1_2w8xq"]
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/text_find_yellow_stars.gd" id="2_80l6o"]
@@ -13,9 +13,6 @@
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/gui_star.gd" id="11_f2lao"]
 [ext_resource type="Texture2D" uid="uid://vdnmtnh6a3mn" path="res://stages/extra/click_bonus_game/textures/bonus_star.png" id="12_87hb4"]
 [ext_resource type="Texture2D" uid="uid://b6i0laheaghh6" path="res://gfx/fancy_graphics/sparkle_giant.png" id="13_bqy7f"]
-[ext_resource type="Texture2D" uid="uid://caixe24mix6j3" path="res://stages/extra/click_bonus_game/textures/star_finder_cursor.png" id="14_m8qf2"]
-[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/cursor.gd" id="15_7g8qc"]
-[ext_resource type="Texture2D" uid="uid://bo5i266chqrwh" path="res://stages/extra/click_bonus_game/textures/star_effect.png" id="16_uftx6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lqfj7"]
 atlas = ExtResource("4_jppu3")
@@ -56,42 +53,6 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.08
 scale_max = 0.08
 color_ramp = SubResource("GradientTexture1D_xnb34")
-
-[sub_resource type="Gradient" id="Gradient_65cgq"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_06yjw"]
-gradient = SubResource("Gradient_65cgq")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gtk1h"]
-particle_flag_disable_z = true
-direction = Vector3(0, -1, 0)
-initial_velocity_min = 100.0
-initial_velocity_max = 600.0
-angular_velocity_min = -360.0
-angular_velocity_max = 360.0
-gravity = Vector3(0, 1500, 0)
-color_ramp = SubResource("GradientTexture1D_06yjw")
-
-[sub_resource type="Gradient" id="Gradient_vmkxg"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_tkrsw"]
-gradient = SubResource("Gradient_vmkxg")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8xrgc"]
-particle_flag_disable_z = true
-direction = Vector3(0, -1, 0)
-spread = 180.0
-initial_velocity_min = 400.0
-initial_velocity_max = 800.0
-angular_velocity_min = -360.0
-angular_velocity_max = 360.0
-gravity = Vector3(0, 1000, 0)
-color_ramp = SubResource("GradientTexture1D_tkrsw")
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_nfyne"]
-radius = 2.0
 
 [node name="Heads-Up Display" type="CanvasLayer"]
 
@@ -193,36 +154,3 @@ texture = ExtResource("13_bqy7f")
 [node name="_Timer_17714" type="Timer" parent="Path2D/PathFollow2D"]
 wait_time = 0.2
 one_shot = true
-
-[node name="StarFinderCursor" type="Sprite2D" parent="."]
-position = Vector2(-16, -16)
-texture = ExtResource("14_m8qf2")
-script = ExtResource("15_7g8qc")
-
-[node name="Timer" type="Timer" parent="StarFinderCursor"]
-wait_time = 0.05
-autostart = true
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="StarFinderCursor"]
-emitting = false
-process_material = SubResource("ParticleProcessMaterial_gtk1h")
-texture = ExtResource("16_uftx6")
-lifetime = 0.4
-one_shot = true
-explosiveness = 1.0
-fixed_fps = 60
-
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="StarFinderCursor"]
-emitting = false
-amount = 15
-process_material = SubResource("ParticleProcessMaterial_8xrgc")
-texture = ExtResource("16_uftx6")
-lifetime = 0.8
-one_shot = true
-explosiveness = 1.0
-fixed_fps = 60
-
-[node name="Area2D" type="Area2D" parent="StarFinderCursor" groups=["mouse_cursor"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StarFinderCursor/Area2D"]
-shape = SubResource("CircleShape2D_nfyne")
