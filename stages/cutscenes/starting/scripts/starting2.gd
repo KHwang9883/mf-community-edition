@@ -6,7 +6,6 @@ extends Node2D
 @onready var camera_2d = $Camera2D
 @onready var destruction = $Destruction
 @onready var tanks = $Tanks
-@onready var mario = $Mario
 
 var _original_time_scale: float
 var _skippable: bool
@@ -25,7 +24,7 @@ func _restore() -> void:
 
 func _ready() -> void:
 	_flow_intros()
-	mario.completed = true
+	Thunder._current_player.completed = true
 	await get_tree().create_timer(1.2, false).timeout
 	_skippable = true
 
@@ -54,9 +53,9 @@ func _flow_intros() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if tanks.global_position.x < 100:
-		mario.direction = -1
-		mario.speed.x = -180
-		mario.sprite.speed_scale = 5
+		Thunder._current_player.direction = -1
+		Thunder._current_player.speed.x = -180
+		Thunder._current_player.sprite.speed_scale = 5
 
 func _unhandled_input(event: InputEvent):
 	if !_skippable: return

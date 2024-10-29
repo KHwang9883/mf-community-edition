@@ -4,7 +4,7 @@ extends Node2D
 
 @onready var music_loader = $MusicLoader
 @onready var camera_2d = $Camera2D
-@onready var mario = $Mario
+@onready var mario: Player = Thunder._current_player
 @onready var cell_peach = $CellPeach
 @onready var win_pose = $WinPose
 

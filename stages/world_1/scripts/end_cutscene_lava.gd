@@ -1,7 +1,7 @@
 extends Node
 
 @onready var lava_end_cutscene: LevelCutscene = $".."
-@onready var mario = Thunder._current_player
+@onready var mario: Player = Thunder._current_player
 
 var _transition: bool = false
 

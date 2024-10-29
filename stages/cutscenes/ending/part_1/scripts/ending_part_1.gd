@@ -12,7 +12,7 @@ const DAMAGED_TILE = preload("res://stages/cutscenes/ending/part_1/scripts/damag
 @onready var destruction: AudioStreamPlayer = $Destruction
 
 @onready var mario_path: PathFollow2D = $Path2D2/PathFollow2D
-@onready var mario: CharacterBody2D = $Path2D2/PathFollow2D/Mario2
+@onready var mario: Player = Thunder._current_player
 @onready var peach_path: PathFollow2D = $Path2D2/PathFollow2D2
 @onready var peach: Sprite2D = $Path2D2/PathFollow2D2/Peach
 
