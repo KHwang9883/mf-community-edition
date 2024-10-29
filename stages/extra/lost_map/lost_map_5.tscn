@@ -1,11 +1,12 @@
-[gd_scene load_steps=37 format=3 uid="uid://ktsy78p1xrca"]
+[gd_scene load_steps=38 format=3 uid="uid://ktsy78p1xrca"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_o8dn7"]
+[ext_resource type="AudioStream" uid="uid://ylpjis71vd26" path="res://music/extra/smw-bonus-clear.ogg" id="2_rg2ol"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_w8au1"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_whvb6"]
 [ext_resource type="AudioStream" uid="uid://crkruc3dfofrp" path="res://music/lostmap/lostmap_5.ogg" id="4_c5ff8"]
-[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_pjaei"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="5_tddc3"]
+[ext_resource type="AudioStream" uid="uid://csqg16k26jclf" path="res://music/extra/smw-death_extra.ogg" id="7_6jod1"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_f37nf"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_kms7h"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_w2jln"]
@@ -85,10 +86,11 @@ custom_vars = {}
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_o8dn7")
+completion_music = ExtResource("2_rg2ol")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_w8au1")]
 script = ExtResource("3_whvb6")
-tweaked_completion_music = ExtResource("4_pjaei")
+tweaked_completion_music = ExtResource("2_rg2ol")
 ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([])
 music_var_2 = Array[Resource]([])
@@ -108,6 +110,7 @@ music = Array[Resource]([ExtResource("4_c5ff8")])
 
 [node name="Mario" parent="." instance=ExtResource("5_tddc3")]
 position = Vector2(224, 399)
+death_music_override = ExtResource("7_6jod1")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
