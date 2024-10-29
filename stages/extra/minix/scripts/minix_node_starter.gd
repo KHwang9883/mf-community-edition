@@ -9,7 +9,7 @@ var current_music_from_map: int = -1
 var _continued: bool
 
 @onready var music_loader_intro: Node = $"../../MusicLoaderIntro"
-@onready var mario: CharacterBody2D = $"../../Mario"
+@onready var mario: Player = Thunder._current_player
 @onready var maps: Node2D = $"../../Maps"
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
 @onready var minix_controls: MenuItemsController = $MinixControls

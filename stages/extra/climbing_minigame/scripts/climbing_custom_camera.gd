@@ -27,8 +27,6 @@ const MARIO = preload("res://stages/extra/climbing_minigame/objects/mario.tscn")
 const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/platform_path_cloud.tscn")
 const BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_launcher_structure.tscn")
 
-const ohno_sound = preload("res://music/climbing_minigame/mario_ohno.wav")
-
 @onready var platform_path: AnimatableBody2D = $"../../PlatformPath"
 @onready var platform_path_2: AnimatableBody2D = $"../../PlatformPath2"
 @onready var platform_path_3: AnimatableBody2D = $"../../PlatformPath3"
@@ -46,6 +44,8 @@ var bg_sounds = []
 
 func _ready() -> void:
 	super()
+	if CharacterManager.get_character_name() == "Luigi":
+		mariomarker.texture = preload("res://stages/extra/climbing_minigame/textures/luigimarker.png")
 
 	get_tree().create_timer(20, false).timeout.connect(podo_create)
 
@@ -59,7 +59,7 @@ func _ready() -> void:
 
 	y_counter = moving_group.global_position.y
 
-	Audio.play_1d_sound(ohno_sound)
+	Audio.play_1d_sound(CharacterManager.get_voice_line("oh_no"))
 
 	var tween = goodluck.create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_property(goodluck, "position:x", 256, 1).set_ease(Tween.EASE_OUT)
@@ -171,21 +171,21 @@ func death_sequence(body: Node2D) -> void:
 	Data.values.lives -= 1
 	await get_tree().create_timer(2.0, false).timeout
 	Thunder.reset_player_state()
-	var new_player: Player = MARIO.instantiate()
-	new_player.suit = null
+	var new_player = MARIO.instantiate()
+	#new_player.suit = null
 	var new_plat = PLATFORM_PATH_CLOUD.instantiate()
 	new_player.position = moving_group.position + Vector2(320, 160)
 	new_plat.position = moving_group.position + Vector2(320, 176)
 	new_plat.modulate.a = 0.01
 	Scenes.current_scene.add_child(new_player)
 	Scenes.current_scene.add_child(new_plat)
-	new_player.invincible(3)
-	new_player.died_with_body.connect(death_sequence)
 	var tw = new_plat.create_tween()
 	tw.tween_property(new_plat, "modulate:a", 1.0, 0.25)
 	var tw2 = body.create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 	tw2.tween_property(body, "modulate:a", 0.0, 0.5)
 	tw2.tween_callback(body.queue_free)
+	Thunder._current_player.invincible.call_deferred(3)
+	Thunder._current_player.died_with_body.connect(death_sequence, CONNECT_DEFERRED)
 
 
 func create_platform() -> void:
