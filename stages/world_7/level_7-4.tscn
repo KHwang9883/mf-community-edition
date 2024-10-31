@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://di2fnbwgknfnk"]
+[gd_scene load_steps=88 format=3 uid="uid://di2fnbwgknfnk"]
 
 [ext_resource type="Script" path="res://stages/world_1/scripts/level_1_4.gd" id="1_6w73y"]
 [ext_resource type="AudioStream" uid="uid://bd7r5d5eb275q" path="res://music/smw-haunted-house.ogg" id="3_hlt6e"]
@@ -43,8 +43,13 @@
 [ext_resource type="PackedScene" uid="uid://cvfwhq3j5n5k5" path="res://engine/objects/enemies/cheeps/cheep_yellow.tscn" id="41_qsvo1"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="42_k0tdy"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="43_2sbw3"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="43_30wrp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="44_c6gwd"]
 [ext_resource type="PackedScene" uid="uid://bltp6t4sv4qno" path="res://stages/world_7/objects/question_block_life_far_away.tscn" id="45_1ba1l"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="45_opvg7"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="46_areoq"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="46_lyn3j"]
+[ext_resource type="Texture2D" uid="uid://c8au1fjmwjesr" path="res://engine/objects/enemies/cheeps/textures/cheep_red.png" id="47_05wym"]
 [ext_resource type="Script" path="res://stages/world_1/objects/1_4_castle_brick.gd" id="47_jojpe"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="47_w3sh1"]
 [ext_resource type="PackedScene" uid="uid://cdb6ogevepciu" path="res://stages/world_1/objects/1-4_castle_brick.tscn" id="48_q3roq"]
@@ -225,6 +230,39 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_myunp"]
+resource_local_to_scene = true
+script = ExtResource("46_lyn3j")
+creation_nodepack = ExtResource("44_c6gwd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("45_opvg7")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wrij"]
+atlas = ExtResource("47_05wym")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vja5u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wrij")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="Resource" id="Resource_ewm17"]
 resource_local_to_scene = true
@@ -970,6 +1008,14 @@ texture = SubResource("GradientTexture2D_2ajlu")
 offset = Vector2(0, 8)
 script = ExtResource("47_w3sh1")
 
+[node name="BowserFakeReveal" type="Node" parent="LavaBowser"]
+script = ExtResource("43_30wrp")
+creation = SubResource("Resource_myunp")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_vja5u")
+
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("41_7xtg6")
 
@@ -1124,12 +1170,10 @@ collision_layer = 0
 
 [node name="StaticBody2D29" parent="Node2D3" instance=ExtResource("48_q3roq")]
 position = Vector2(8928, 304)
-disable_mode = 0
 collision_layer = 0
 
 [node name="StaticBody2D27" parent="Node2D3" instance=ExtResource("48_q3roq")]
 position = Vector2(8928, 368)
-disable_mode = 0
 collision_layer = 0
 
 [node name="StaticBody2D28" parent="Node2D3" instance=ExtResource("48_q3roq")]

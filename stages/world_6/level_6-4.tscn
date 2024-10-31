@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://dspfdhsnbjj0w"]
+[gd_scene load_steps=70 format=3 uid="uid://dspfdhsnbjj0w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ibs2y"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_c7djl"]
@@ -42,6 +42,11 @@
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="39_yf68k"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="42_8gobm"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="43_6i7no"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="43_r70ur"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="44_1w7he"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="45_ha8y4"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="46_4k7d4"]
+[ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="47_d05h2"]
 
 [sub_resource type="Curve2D" id="Curve2D_k5i2x"]
 _data = {
@@ -211,6 +216,39 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_cy427"]
+resource_local_to_scene = true
+script = ExtResource("46_4k7d4")
+creation_nodepack = ExtResource("44_1w7he")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("45_ha8y4")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6trn5"]
+atlas = ExtResource("47_d05h2")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p1rt6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6trn5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Level6-4" type="Node2D"]
 script = ExtResource("1_ibs2y")
@@ -654,6 +692,14 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_jjlqr")
 offset = Vector2(0, 8)
 script = ExtResource("43_6i7no")
+
+[node name="BowserFakeReveal" type="Node" parent="LavaBowser"]
+script = ExtResource("43_r70ur")
+creation = SubResource("Resource_cy427")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_p1rt6")
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("37_wr58c")
