@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://dr7s8f6ht3s4f"]
+[gd_scene load_steps=84 format=3 uid="uid://dr7s8f6ht3s4f"]
 
 [ext_resource type="Script" path="res://stages/world_1/scripts/level_1_4.gd" id="1_8fo2g"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_wr4k5"]
@@ -33,11 +33,16 @@
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="34_wpot0"]
 [ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="35_eemyd"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="35_g05w5"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="35_ojvk2"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="35_v1rcn"]
 [ext_resource type="Script" path="res://stages/world_1/objects/1_4_castle_brick.gd" id="35_vrvxn"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="36_0r4ch"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="36_qdb4j"]
 [ext_resource type="PackedScene" uid="uid://cdb6ogevepciu" path="res://stages/world_1/objects/1-4_castle_brick.tscn" id="37_1cy53"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="37_w5whu"]
 [ext_resource type="PackedScene" uid="uid://cy7wyb2fljl2l" path="res://stages/world_1/objects/1-4_castle_brick_small.tscn" id="38_ly8kt"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="38_vuacj"]
+[ext_resource type="Texture2D" uid="uid://b4wbjvprni38v" path="res://engine/objects/enemies/lakitus/textures/lakitu.png" id="39_778tp"]
 [ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="39_t11cp"]
 [ext_resource type="PackedScene" uid="uid://d13yixatuidg5" path="res://stages/world_1/objects/1-4_castle_brick_alt.tscn" id="40_hta36"]
 
@@ -325,6 +330,39 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_xfjir"]
+resource_local_to_scene = true
+script = ExtResource("38_vuacj")
+creation_nodepack = ExtResource("36_0r4ch")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("37_w5whu")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lmf4"]
+atlas = ExtResource("39_778tp")
+region = Rect2(93, 144, 31, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54fpr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lmf4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rc67s"]
 atlas = ExtResource("39_t11cp")
@@ -749,6 +787,14 @@ texture = SubResource("GradientTexture2D_38kum")
 offset = Vector2(0, 8)
 script = ExtResource("36_qdb4j")
 
+[node name="BowserFakeReveal" type="Node" parent="LavaBowser"]
+script = ExtResource("35_ojvk2")
+creation = SubResource("Resource_xfjir")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_54fpr")
+
 [node name="Node2D2" type="Node2D" parent="."]
 position = Vector2(64, 0)
 
@@ -823,7 +869,6 @@ collision_layer = 0
 
 [node name="StaticBody2D29" parent="Node2D2" instance=ExtResource("37_1cy53")]
 position = Vector2(8928, 304)
-disable_mode = 0
 collision_layer = 0
 
 [node name="StaticBody2D27" parent="Node2D2" instance=ExtResource("37_1cy53")]

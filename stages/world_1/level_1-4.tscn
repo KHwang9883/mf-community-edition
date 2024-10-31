@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://c0r6ld204t00b"]
+[gd_scene load_steps=88 format=3 uid="uid://c0r6ld204t00b"]
 
 [ext_resource type="Script" path="res://stages/world_1/scripts/level_1_4.gd" id="1_fj1pm"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_orbv5"]
@@ -44,6 +44,11 @@
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="38_q7ory"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="39_0gixq"]
 [ext_resource type="Texture2D" uid="uid://842fv7cdaynf" path="res://gfx/texts/signs/1-4_bowser.png" id="39_ln2lb"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="40_fx4xp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="41_vckpg"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="42_3bjfw"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="43_hxgk4"]
+[ext_resource type="Texture2D" uid="uid://dwtn8cky8tb3l" path="res://engine/objects/enemies/goombas/textures/goomba.png" id="44_81tmg"]
 [ext_resource type="Script" path="res://gfx/texts/signs/sign_visible_tweak.gd" id="44_do2lu"]
 [ext_resource type="PackedScene" uid="uid://cdb6ogevepciu" path="res://stages/world_1/objects/1-4_castle_brick.tscn" id="46_nfxgh"]
 [ext_resource type="PackedScene" uid="uid://cy7wyb2fljl2l" path="res://stages/world_1/objects/1-4_castle_brick_small.tscn" id="47_lyunm"]
@@ -53,7 +58,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_gjfjy"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -240, 16, 0, 0, 0, 0, 576, 16)
+"points": PackedVector2Array(0, 0, 0, 0, -32, 16, 0, 0, 0, 0, 576, 16)
 }
 point_count = 2
 
@@ -225,6 +230,46 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_lhk6i"]
+resource_local_to_scene = true
+script = ExtResource("43_hxgk4")
+creation_nodepack = ExtResource("41_vckpg")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("42_3bjfw")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtr3k"]
+atlas = ExtResource("44_81tmg")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ex0mi"]
+atlas = ExtResource("44_81tmg")
+region = Rect2(31, 0, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4a18m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtr3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ex0mi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_77cvc"]
 atlas = ExtResource("49_xys77")
@@ -954,6 +999,14 @@ texture = SubResource("GradientTexture2D_ibnqb")
 offset = Vector2(0, 8)
 script = ExtResource("38_q7ory")
 
+[node name="BowserFakeReveal" type="Node" parent="LavaBowser"]
+script = ExtResource("40_fx4xp")
+creation = SubResource("Resource_lhk6i")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_4a18m")
+
 [node name="Hints" type="Node2D" parent="."]
 script = ExtResource("44_do2lu")
 
@@ -1079,17 +1132,14 @@ collision_layer = 0
 
 [node name="StaticBody2D29" parent="Node2D2" instance=ExtResource("46_nfxgh")]
 position = Vector2(8928, 304)
-disable_mode = 0
 collision_layer = 0
 
 [node name="StaticBody2D27" parent="Node2D2" instance=ExtResource("46_nfxgh")]
 position = Vector2(8928, 368)
-disable_mode = 0
 collision_layer = 0
 
 [node name="StaticBody2D28" parent="Node2D2" instance=ExtResource("46_nfxgh")]
 position = Vector2(8928, 432)
-disable_mode = 0
 collision_layer = 0
 
 [node name="StaticBody2D13" parent="Node2D2" instance=ExtResource("46_nfxgh")]

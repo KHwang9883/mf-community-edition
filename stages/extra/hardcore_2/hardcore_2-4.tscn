@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://cbskrpypej1ka"]
+[gd_scene load_steps=69 format=3 uid="uid://cbskrpypej1ka"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_o68eq"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_03qkn"]
@@ -39,8 +39,13 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="34_cfsqg"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="35_qhryj"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="36_kq15a"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="36_pg6ck"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="37_7e74k"]
 [ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="37_7kpr7"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="37_8fooa"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="38_ffavd"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="39_rt45n"]
+[ext_resource type="Texture2D" uid="uid://b4wbjvprni38v" path="res://engine/objects/enemies/lakitus/textures/lakitu.png" id="40_pimqq"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="42_p7e4a"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="43_sgnuv"]
 
@@ -172,6 +177,39 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_v017v"]
+resource_local_to_scene = true
+script = ExtResource("39_rt45n")
+creation_nodepack = ExtResource("37_8fooa")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("38_ffavd")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88kbf"]
+atlas = ExtResource("40_pimqq")
+region = Rect2(93, 144, 31, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3te4s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88kbf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jmib0"]
 size = Vector2(480, 32)
@@ -532,6 +570,14 @@ position = Vector2(8912, 48)
 
 [node name="LavaBowser" parent="Objects/Normal Objects" instance=ExtResource("32_hjjqo")]
 position = Vector2(8432, 426)
+
+[node name="BowserFakeReveal" type="Node" parent="Objects/Normal Objects/LavaBowser"]
+script = ExtResource("36_pg6ck")
+creation = SubResource("Resource_v017v")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Objects/Normal Objects/LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_3te4s")
 
 [node name="GrayPlatformBg" type="Sprite2D" parent="Objects/Normal Objects"]
 z_index = -1

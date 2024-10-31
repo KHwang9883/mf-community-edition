@@ -1,9 +1,9 @@
-[gd_scene load_steps=56 format=3 uid="uid://cqt4blkghat8m"]
+[gd_scene load_steps=73 format=3 uid="uid://cqt4blkghat8m"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_uxdbk"]
+[ext_resource type="AudioStream" uid="uid://q68yn50uncsv" path="res://music/lostmap/lostmap_completed.ogg" id="2_03pos"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_b5aq3"]
 [ext_resource type="AudioStream" uid="uid://bu6qpsfv70rkn" path="res://music/lostmap/lostmap_6.ogg" id="4_4tcss"]
-[ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="4_cq2bo"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="6_s6ybk"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_uxfxd"]
 [ext_resource type="AudioStream" uid="uid://csqg16k26jclf" path="res://music/extra/smw-death_extra.ogg" id="7_xludn"]
@@ -27,11 +27,16 @@
 [ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="32_1jjw5"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="33_68tef"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="34_wqkwe"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="35_r27hj"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="36_d54tp"]
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="36_l0c3q"]
 [ext_resource type="PackedScene" uid="uid://crb8jkwa0r1dl" path="res://engine/objects/enemies/spinies/spiny_iron.tscn" id="37_7mnme"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="37_e3d33"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="37_g161h"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="38_53830"]
 [ext_resource type="Script" path="res://stages/world_6/scripts/maze_script.gd" id="38_efdmx"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="38_nkegp"]
+[ext_resource type="Texture2D" uid="uid://6jvnknfhxi0m" path="res://engine/objects/enemies/spinies/textures/spiny_iron.png" id="39_bnxs0"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="47_2iacm"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="48_wma5r"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="49_s48dv"]
@@ -114,11 +119,14 @@ custom_vars = {}
 size = Vector2(480, 32)
 
 [sub_resource type="Gradient" id="Gradient_rft62"]
+offsets = PackedFloat32Array(0.125, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_n8rgy"]
 gradient = SubResource("Gradient_rft62")
-width = 112
+width = 128
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cuv64"]
 size = Vector2(17530, 1824)
@@ -135,7 +143,166 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
 
+[sub_resource type="Resource" id="Resource_sqnvb"]
+resource_local_to_scene = true
+script = ExtResource("38_53830")
+creation_nodepack = ExtResource("36_d54tp")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("37_e3d33")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mqcf"]
+atlas = ExtResource("39_bnxs0")
+region = Rect2(0, 32, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1d8oi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mqcf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="Resource" id="Resource_0ujwq"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_asstc"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_gnmtp"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_n3i7m"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_5ocw1"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_rm18w"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_gmih8"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_l3fyy"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_su7wf"]
+resource_local_to_scene = true
+script = ExtResource("26_8qr26")
+creation_nodepack = ExtResource("25_xc4ed")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_twsjt"]
 resource_local_to_scene = true
 script = ExtResource("26_8qr26")
 creation_nodepack = ExtResource("25_xc4ed")
@@ -167,16 +334,18 @@ custom_vars = {}
 [node name="Level7-4" type="Node2D"]
 script = ExtResource("1_uxdbk")
 time = 480
+completion_music = ExtResource("2_03pos")
 completion_write_save = false
-jump_to_scene = "res://stages/extra/hardcore_1/end_cutscene.tscn"
+jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
 
 [node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("2_b5aq3")
-boss_music_var_1 = ExtResource("4_cq2bo")
+tweaked_completion_music = ExtResource("2_03pos")
+boss_music_var_1 = ExtResource("10_kg1jp")
 music = Array[Resource]([ExtResource("4_4tcss")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("6_s6ybk")]
-secrets = Array[String](["passage to hardcore 2"])
+secrets = Array[String](["lost map completed"])
 
 [node name="Mario" parent="." instance=ExtResource("7_uxfxd")]
 position = Vector2(240, 272)
@@ -245,14 +414,15 @@ uppercase = true
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(1, 0)
 motion_mirroring = Vector2(1023, 0)
 
 [node name="BgCastle" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-texture_repeat = 2
+texture_repeat = 3
+position = Vector2(0, -16)
 texture = ExtResource("20_mykc5")
 centered = false
-region_rect = Rect2(-4, 0, 4416, 480)
+region_enabled = true
+region_rect = Rect2(0, -16, 1023, 512)
 metadata/_edit_lock_ = true
 
 [node name="Gradient" type="Sprite2D" parent="ParallaxBackground"]
@@ -416,7 +586,7 @@ metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 z_index = -20
-position = Vector2(13585.6, 0.0436772)
+position = Vector2(13585.6, -15.9563)
 rotation = 1.5708
 scale = Vector2(1, 13588.6)
 texture = SubResource("GradientTexture1D_n8rgy")
@@ -472,6 +642,14 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_2ajlu")
 offset = Vector2(0, 8)
 script = ExtResource("51_2p65g")
+
+[node name="BowserFakeReveal" type="Node" parent="LavaBowser"]
+script = ExtResource("35_r27hj")
+creation = SubResource("Resource_sqnvb")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_1d8oi")
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("47_2iacm")
@@ -715,39 +893,39 @@ result = SubResource("Resource_0ujwq")
 
 [node name="QuestionBlock2" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(9904, 48)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_asstc")
 
 [node name="QuestionBlock3" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(9936, 48)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_gnmtp")
 
 [node name="QuestionBlock4" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(9968, 48)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_n3i7m")
 
 [node name="QuestionBlock5" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(10032, 48)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_5ocw1")
 
 [node name="QuestionBlock6" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(10064, 48)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_rm18w")
 
 [node name="QuestionBlock7" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(10096, 48)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_gmih8")
 
 [node name="QuestionBlock8" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(9904, 208)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_l3fyy")
 
 [node name="QuestionBlock9" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(9936, 208)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_su7wf")
 
 [node name="QuestionBlock10" parent="." instance=ExtResource("37_g161h")]
 position = Vector2(9968, 208)
-result = SubResource("Resource_0ujwq")
+result = SubResource("Resource_twsjt")
 
 [node name="QuestionBlockFireFlower" parent="." instance=ExtResource("38_nkegp")]
 position = Vector2(10000, 208)

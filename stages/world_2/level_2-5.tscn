@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://brtc0tw8taj68"]
+[gd_scene load_steps=66 format=3 uid="uid://brtc0tw8taj68"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_6d70v"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_pw2a1"]
@@ -41,7 +41,12 @@
 [ext_resource type="PackedScene" uid="uid://uhf6frao7p1m" path="res://engine/objects/enemies/podoboo/podoboo.tscn" id="39_swa3y"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="40_0e3vc"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="42_kmrk6"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="43_7s52o"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="43_sm1jw"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="44_hmdyd"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="45_5cu5f"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="46_77sex"]
+[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="47_u46es"]
 
 [sub_resource type="Curve2D" id="Curve2D_aapar"]
 _data = {
@@ -166,6 +171,39 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_wujrx"]
+resource_local_to_scene = true
+script = ExtResource("46_77sex")
+creation_nodepack = ExtResource("44_hmdyd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("45_5cu5f")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umkjp"]
+atlas = ExtResource("47_u46es")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dbiqa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umkjp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Level2-5" type="Node2D"]
 script = ExtResource("1_6d70v")
@@ -723,5 +761,13 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_tr048")
 offset = Vector2(0, 8)
 script = ExtResource("43_sm1jw")
+
+[node name="BowserFakeReveal" type="Node" parent="LavaBowser"]
+script = ExtResource("43_7s52o")
+creation = SubResource("Resource_wujrx")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_dbiqa")
 
 [editable path="BowserJump"]
