@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=147 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -106,6 +106,7 @@
 [ext_resource type="Texture2D" uid="uid://bnucsxo6tbbgi" path="res://gfx/sign/stupidity_zone.png" id="96_8mrny"]
 [ext_resource type="Texture2D" uid="uid://coxt78xfny30q" path="res://gfx/sign/stupidity_text.png" id="97_hb60x"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/stupidity_warp_node.gd" id="104_d0la8"]
+[ext_resource type="Script" path="res://engine/objects/detectors/player_detection.gd" id="107_o2hlg"]
 
 [sub_resource type="Gradient" id="Gradient_6g8qv"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 1, 1)
@@ -783,6 +784,9 @@ alpha_curve = SubResource("CurveTexture_tqubx")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cjko6"]
 load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4vmn"]
+size = Vector2(32, 32)
 
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_yuddw")
@@ -2971,6 +2975,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="Achievement22" type="HBoxContainer" parent="Objects/text blah blah2"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
@@ -4071,7 +4076,7 @@ position = Vector2(3520, 133)
 texture = ExtResource("75_2rxnu")
 
 [node name="PipeIn" parent="." instance=ExtResource("21_qg33c")]
-position = Vector2(7520, 368)
+position = Vector2(7527, 504)
 trigger_finish = true
 warping_sound = ExtResource("79_tlm30")
 
@@ -4213,6 +4218,46 @@ use_circle_transition = true
 [node name="Node" type="Node" parent="PipeIn2"]
 script = ExtResource("104_d0la8")
 
+[node name="AreaExtra TRUE" type="Area2D" parent="."]
+script = ExtResource("107_o2hlg")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExtra TRUE"]
+position = Vector2(320, -592)
+shape = SubResource("RectangleShape2D_b4vmn")
+
+[node name="AreaExtra FALSE" type="Area2D" parent="."]
+script = ExtResource("107_o2hlg")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExtra FALSE"]
+position = Vector2(96, 336)
+shape = SubResource("RectangleShape2D_b4vmn")
+
+[node name="AreaMain TRUE" type="Area2D" parent="."]
+script = ExtResource("107_o2hlg")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaMain TRUE"]
+position = Vector2(96, 145)
+shape = SubResource("RectangleShape2D_b4vmn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AreaMain TRUE"]
+position = Vector2(96, 272)
+shape = SubResource("RectangleShape2D_b4vmn")
+
+[node name="AreaMain FALSE" type="Area2D" parent="."]
+script = ExtResource("107_o2hlg")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaMain FALSE"]
+position = Vector2(96, 320)
+shape = SubResource("RectangleShape2D_b4vmn")
+
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Node2D/SaveroomGiantSunray" method="ease_hide"]
@@ -4242,6 +4287,10 @@ script = ExtResource("104_d0la8")
 [connection signal="warp_started" from="Objects/Node2D3/PipeIn" to="KevinLayer/Label" method="kevin_reset"]
 [connection signal="block_triggered" from="Objects/ConsoleBlock" to="Objects/Node2D3/PipeIn" method="queue_free"]
 [connection signal="warp_started" from="PipeIn2" to="PipeIn2/Node" method="trigger"]
+[connection signal="player_enter" from="AreaExtra TRUE" to="CamAreaNewSecrets" method="set_deferred" binds= [&"smooth_transition", true]]
+[connection signal="player_enter" from="AreaExtra FALSE" to="CamAreaNewSecrets" method="set_deferred" binds= [&"smooth_transition", false]]
+[connection signal="player_enter" from="AreaMain TRUE" to="CamArea" method="set_deferred" binds= [&"smooth_transition", true]]
+[connection signal="player_enter" from="AreaMain FALSE" to="CamArea" method="set_deferred" binds= [&"smooth_transition", false]]
 
 [editable path="CanvasLayer/Reset"]
 [editable path="CanvasLayer/Reset2"]

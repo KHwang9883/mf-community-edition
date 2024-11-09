@@ -9,6 +9,7 @@ var _transition: bool = false
 func _ready() -> void:
 	mario.jump(400)
 	mario.collision = false
+	mario.completed = true
 	Audio.play_1d_sound(mario.suit.physics_config.sound_jump)
 
 func _physics_process(delta: float) -> void:
