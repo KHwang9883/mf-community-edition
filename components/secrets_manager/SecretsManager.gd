@@ -58,7 +58,7 @@ func queue_achievement(text: String) -> void:
 
 
 func show_achievement(text: String) -> void:
-	Audio.play_1d_sound(preload("res://components/secrets_manager/desktop_toast_default.wav"))
+	#Audio.play_1d_sound(preload("res://components/secrets_manager/desktop_toast_default.wav"))
 	label.text = ""
 	label.size.x = 192
 	label.position.y = marker_2d.position.y + label.size.y + 8

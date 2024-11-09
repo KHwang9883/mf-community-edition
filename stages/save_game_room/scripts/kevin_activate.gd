@@ -1,5 +1,8 @@
 extends Label
 
+signal activated
+signal deactivated
+
 var string = "kevin"
 var progress = 0
 
@@ -19,6 +22,10 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	text = ""
+	var player: Player = Thunder._current_player
+	if !player: return
+	if player.warp != player.Warp.NONE: return
+	if !SecretsManager.is_endgame(): return
 	
 	for i in range(progress):
 		text += string[i]
@@ -36,6 +43,7 @@ func _physics_process(_delta: float) -> void:
 			else:
 				Audio.play_1d_sound(KEVIN_ACTIVATED)
 				KevinGlobal.activated = true
+				activated.emit()
 				Thunder._current_camera.shock(0.5, Vector2(0.4, 0.4))
 		elif Input.is_anything_pressed():
 			is_pressed = true
@@ -54,6 +62,7 @@ func _physics_process(_delta: float) -> void:
 		# Reset Kevin mode
 		if Input.is_key_pressed(KEY_BACKSPACE):
 			kevin_reset()
+			deactivated.emit()
 
 
 func kevin_reset(no_music: bool = false) -> void:
