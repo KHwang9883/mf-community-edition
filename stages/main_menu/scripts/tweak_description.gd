@@ -19,6 +19,7 @@ func _ready() -> void:
 	box.scale = Vector2.ZERO
 	label_2.visible = false
 	tweaks.add_user_signal("_tweak_desc")
+	tweaks.add_user_signal("_show_desc")
 	tweaks.connect(&"selected", func(a, b, c, d):
 		label_2.visible = false
 	)
