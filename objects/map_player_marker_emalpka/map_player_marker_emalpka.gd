@@ -29,11 +29,13 @@ func _physics_process(delta: float) -> void:
 		counter += 10 * delta
 		malpka.position.y = 0 - abs(sin(counter) * 12) - 4
 	
-	var player = Scenes.current_scene.get_node_or_null(Scenes.current_scene.player)
+	var pl = Scenes.current_scene.get_node_or_null(Scenes.current_scene.player)
 	
-	if !is_instance_valid(player): return
+	if !is_instance_valid(pl): return
 	
-	if player.reached && player.current_marker == self && !activated:
+	if pl.reached && pl.current_marker == self && !activated:
 		activated = true
 		malpka.visible = true
 		Audio.play_1d_sound(MALPKA)
+		await get_tree().create_timer(0.6, true, false, true).timeout
+		Audio.play_1d_sound(CharacterManager.get_voice_line("oh_no"), true, { ignore_pause = true })

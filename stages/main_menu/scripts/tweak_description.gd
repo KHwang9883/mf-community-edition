@@ -25,6 +25,7 @@ func _ready() -> void:
 	tweaks.connect(&"_tweak_desc", func():
 		label_2.visible = true
 	)
+	tweaks.connect(&"_show_desc", show_description)
 
 
 func _physics_process(delta: float) -> void:

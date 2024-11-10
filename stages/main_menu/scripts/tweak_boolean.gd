@@ -53,8 +53,8 @@ func _physics_process(delta: float) -> void:
 		if _set:
 			Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	elif Input.is_action_just_pressed(&"ui_select"):
-		if tweak_description:
-			$"../../../../CanvasLayer".show_description(tweak_description, $Label.text)
+		if tweak_description && !is_blocked:
+			get_parent().emit_signal(&"_show_desc", tweak_description, $Label.text)
 
 
 func _handle_toggle(to_set: bool) -> bool:
