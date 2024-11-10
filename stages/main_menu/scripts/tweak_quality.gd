@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		_toggled_option(old_value, SettingsManager.settings.quality)
 	elif Input.is_action_just_pressed(&"ui_select"):
 		if tweak_description:
-			$"../../../../CanvasLayer".show_description(tweak_description, $Label.text)
+			get_parent().emit_signal(&"_show_desc", tweak_description, $Label.text)
 
 
 func _toggled_option(old_val, new_val) -> void:
