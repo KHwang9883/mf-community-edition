@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://tyy6hygtwt4d"]
+[gd_scene load_steps=49 format=3 uid="uid://tyy6hygtwt4d"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_t0t22"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_s2mry"]
@@ -11,8 +11,11 @@
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/star_sine_movement.gd" id="8_agdoa"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_xxorm"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="9_6nn73"]
+[ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://tilesets/skyland/gfx/big_clouds.png" id="9_tvdr2"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="10_33by5"]
+[ext_resource type="Texture2D" uid="uid://c83yeno04gxim" path="res://tilesets/skyland/gfx/cloud_face_anim.png" id="10_x5tvn"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="11_eket3"]
+[ext_resource type="Script" path="res://stages/world_4/scripts/big_clouds_face_anim.gd" id="11_swat5"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="12_kd5d2"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="13_65bqs"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="14_8u7nb"]
@@ -59,6 +62,98 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 0.988235, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_qrgok"]
 gradient = SubResource("Gradient_q18w8")
 width = 480
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_135r0"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(0, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qma3y"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(30, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7272j"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(60, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d3sg"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(90, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnl2o"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(120, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1fsa"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(150, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7mec"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(180, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltyjo"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(210, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fbob"]
+atlas = ExtResource("10_x5tvn")
+region = Rect2(240, 0, 30, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_88fj5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1fsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fbob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 40.0
+}]
 
 [sub_resource type="Resource" id="Resource_0uqxv"]
 resource_local_to_scene = true
@@ -278,6 +373,15 @@ scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_qrgok")
 centered = false
 metadata/_edit_lock_ = true
+
+[node name="BigClouds" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(0, 320)
+texture = ExtResource("9_tvdr2")
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" parent="ParallaxBackground/BigClouds"]
+position = Vector2(176, -80)
+sprite_frames = SubResource("SpriteFrames_88fj5")
+script = ExtResource("11_swat5")
 
 [node name="FancyBg" type="Sprite2D" parent="ParallaxBackground"]
 position = Vector2(320, 240)

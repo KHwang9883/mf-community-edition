@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://c7xio0v7xfki4"]
+[gd_scene load_steps=56 format=3 uid="uid://c7xio0v7xfki4"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_x4v40"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_acvhf"]
@@ -10,8 +10,11 @@
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/star_path_follow.gd" id="7_na2vc"]
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/star_sine_movement.gd" id="8_4okn7"]
 [ext_resource type="Texture2D" uid="uid://mxicaln3cacf" path="res://stages/extra/click_bonus_game/textures/fancy_bg.png" id="9_6jlxr"]
+[ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://tilesets/skyland/gfx/big_clouds.png" id="10_bqrhf"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_i5bi8"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="11_xquip"]
+[ext_resource type="Texture2D" uid="uid://c83yeno04gxim" path="res://tilesets/skyland/gfx/cloud_face_anim.png" id="11_y7kto"]
+[ext_resource type="Script" path="res://stages/world_4/scripts/big_clouds_face_anim.gd" id="12_6vjte"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="12_471pb"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="13_8nvgo"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="14_bub1q"]
@@ -44,6 +47,98 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 1, 1, 0.988235, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_qrgok"]
 gradient = SubResource("Gradient_q18w8")
 width = 480
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_135r0"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(0, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qma3y"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(30, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7272j"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(60, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d3sg"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(90, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnl2o"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(120, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1fsa"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(150, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7mec"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(180, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltyjo"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(210, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fbob"]
+atlas = ExtResource("11_y7kto")
+region = Rect2(240, 0, 30, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q68is"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1fsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fbob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 40.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_88svi"]
 atlas = ExtResource("20_tb1pl")
@@ -366,6 +461,44 @@ scale = Vector2(1, 2674)
 texture = SubResource("GradientTexture1D_qrgok")
 centered = false
 metadata/_edit_lock_ = true
+
+[node name="BigClouds" type="Sprite2D" parent="Node2D2"]
+z_index = -20
+position = Vector2(0, 320)
+texture = ExtResource("10_bqrhf")
+script = ExtResource("10_i5bi8")
+maximum = false
+medium = true
+minimum = true
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" parent="Node2D2/BigClouds"]
+position = Vector2(176, -80)
+sprite_frames = SubResource("SpriteFrames_q68is")
+script = ExtResource("12_6vjte")
+
+[node name="BigClouds2" type="Sprite2D" parent="Node2D2"]
+self_modulate = Color(1, 1, 1, 0.513726)
+z_index = -20
+position = Vector2(752, 320)
+texture = ExtResource("10_bqrhf")
+script = ExtResource("10_i5bi8")
+maximum = false
+medium = true
+minimum = true
+
+[node name="BigClouds3" type="Sprite2D" parent="Node2D2"]
+z_index = -20
+position = Vector2(1280, 320)
+texture = ExtResource("10_bqrhf")
+script = ExtResource("10_i5bi8")
+maximum = false
+medium = true
+minimum = true
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" parent="Node2D2/BigClouds3"]
+position = Vector2(112, -64)
+sprite_frames = SubResource("SpriteFrames_q68is")
+script = ExtResource("12_6vjte")
 
 [node name="FancyBg" type="Sprite2D" parent="Node2D2"]
 z_index = -20
