@@ -18,6 +18,10 @@ func _ready() -> void:
 	#set_secret("bowser the devastator defeated333333333333333", true)
 	#await get_tree().create_timer(2.0).timeout
 	#set_secret("mushroom plague", true)
+	Data.life_added.connect(func():
+		if Data.values.lives >= 99:
+			set_secret("got 100 extra lives at once", true)
+	)
 
 
 func _physics_process(delta: float) -> void:
