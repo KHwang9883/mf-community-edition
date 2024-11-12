@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dwugm1bn3fvwm"]
+[gd_scene load_steps=60 format=3 uid="uid://dwugm1bn3fvwm"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_p3xyl"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3bfl6"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_pwd3b"]
 [ext_resource type="Resource" uid="uid://csytp2m2k1jl" path="res://music/ykyrococ.mod" id="4_sfaje"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_4bpy6"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="6_g4e5b"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_4u7ii"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_ac0s6"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_oqivd"]
@@ -226,6 +227,11 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_sfaje")])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("6_g4e5b")]
+secrets = Array[String](["all secret rooms found"])
+progress_by_id = "6-3"
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("4_pwd3b")]
 position = Vector2(144, 400)
@@ -928,3 +934,4 @@ position = Vector2(4848, 368)
 position = Vector2(4880, 368)
 
 [connection signal="level_completed" from="." to="CoinCheck" method="check_for_treasure"]
+[connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="progress_secret"]

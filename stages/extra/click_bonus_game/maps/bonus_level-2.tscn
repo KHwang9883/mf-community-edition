@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://cppbs8he406s7"]
+[gd_scene load_steps=36 format=4 uid="uid://cppbs8he406s7"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_78w7w"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_vi6hj"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://bmkaknlavrwxp" path="res://tilesets/overworld_green/scenes/fence.tscn" id="24_r6fst"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="26_0htpl"]
 [ext_resource type="PackedScene" uid="uid://bfcf0c50beo18" path="res://stages/extra/click_bonus_game/objects/star_finder_cursor/star_finder_cursor.tscn" id="26_1qa3o"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="28_stpvi"]
 
 [sub_resource type="Curve2D" id="Curve2D_obbvm"]
 _data = {
@@ -384,4 +385,10 @@ position = Vector2(480, 400)
 [node name="StarFinderCursor" parent="." instance=ExtResource("26_1qa3o")]
 camera_ref = NodePath("../Node2D/Camera2D")
 
+[node name="SecretUnlocker" parent="." instance=ExtResource("28_stpvi")]
+secrets = Array[String](["all bonus levels beaten"])
+progress_by_id = "two"
+progress_to = 5
+
+[connection signal="level_complete" from="." to="SecretUnlocker" method="progress_secret"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

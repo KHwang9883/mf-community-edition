@@ -99,7 +99,7 @@ func _fade_out() -> void:
 				.instantiate()
 				.with_speeds(0.04, -0.1)
 				.with_pause()
-				.on_player_after_middle(true)
+				#.on_player_after_middle(true)
 		)
 		
 		await TransitionManager.transition_middle

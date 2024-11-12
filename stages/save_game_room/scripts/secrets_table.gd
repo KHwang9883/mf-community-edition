@@ -17,7 +17,8 @@ func _ready() -> void:
 				toggler = labels[i]
 				break
 		
-		if SecretsManager.secrets.get(achievement.secret_id) == true:
+		var secr = SecretsManager.secrets.get(achievement.secret_id)
+		if typeof(secr) == TYPE_BOOL && secr == true:
 			toggle_yes(toggler)
 		
 

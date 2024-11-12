@@ -1,5 +1,7 @@
 extends Control
 
+signal level_complete
+
 const APPLEUSE = preload("res://stages/extra/click_bonus_game/sfx/appleuse.ogg")
 const DISCOVEREDGUNPOWDER_ = preload("res://stages/extra/click_bonus_game/sfx/discoveredgunpowder-.wav")
 const MARIO_OHNO = preload("res://music/climbing_minigame/mario_ohno.wav")
@@ -68,6 +70,7 @@ func _ready() -> void:
 
 func complete() -> void:
 	set_deferred("can_interact", false)
+	level_complete.emit()
 
 	await get_tree().create_timer(0.6, false).timeout
 	Audio.play_1d_sound(APPLEUSE, true, { ignore_pause = true })

@@ -505,7 +505,9 @@ script = ExtResource("3_5p4rg")
 music = Array[Resource]([ExtResource("3_a3jbr"), ExtResource("4_dbiv5")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("7_r21lo")]
-secrets = Array[String](["passage to world 8"])
+secrets = Array[String](["passage to world 8", "all secret rooms found"])
+progress_by_id = "3-1"
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("4_2gjr3")]
 position = Vector2(167, 400)
@@ -1607,3 +1609,4 @@ position = Vector2(3616, 784)
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="unlock_secret"]
 [connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="activate"]
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped"]]
+[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="progress_secret" binds= [1]]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://bkifngv828m4r"]
+[gd_scene load_steps=27 format=3 uid="uid://bkifngv828m4r"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_xvhno"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_lagxp"]
 [ext_resource type="Resource" uid="uid://biwuot8qud6ob" path="res://music/extra/u_feel_it.mod" id="3_d2uxo"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_gn718"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_ont0f"]
 [ext_resource type="PackedScene" uid="uid://s4fip2enup6u" path="res://stages/extra/click_bonus_game/objects/heads_up_display.tscn" id="5_p3gca"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="6_ly1s3"]
 [ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://tilesets/skyland/gfx/big_clouds.png" id="7_7kfmr"]
@@ -60,6 +61,11 @@ metadata/_edit_lock_ = true
 music = Array[Resource]([ExtResource("3_d2uxo")])
 play_immediately = false
 start_from_sec = Array[float]([0.0, 103.8])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("4_ont0f")]
+secrets = Array[String](["all bonus levels beaten"])
+progress_by_id = "one"
+progress_to = 5
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.4
@@ -201,4 +207,5 @@ texture = ExtResource("17_k7gm0")
 [node name="StarFinderCursor" parent="." instance=ExtResource("21_62bsr")]
 camera_ref = NodePath("../Node2D/Camera2D")
 
+[connection signal="level_complete" from="." to="SecretUnlocker" method="progress_secret"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

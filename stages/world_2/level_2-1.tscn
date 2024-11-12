@@ -203,7 +203,9 @@ music = Array[Resource]([ExtResource("3_784ol"), ExtResource("4_y4qvn")])
 volume_db = Array[float]([4.0, 0.0])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("5_uy1ol")]
-secrets = Array[String](["bowser the devastator"])
+secrets = Array[String](["bowser the devastator", "all secret rooms found"])
+progress_by_id = "2-1"
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("5_qc2in")]
 position = Vector2(80, 400)
@@ -776,6 +778,7 @@ metadata/_edit_lock_ = true
 [node name="CoinBonusLevel" parent="." instance=ExtResource("49_6ph53")]
 position = Vector2(5312, 108)
 
+[connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="progress_secret" binds= [1]]
 [connection signal="warp_started" from="PipeIn3" to="MusicLoader" method="pause_music"]
 [connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="unlock_secret"]
 [connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]

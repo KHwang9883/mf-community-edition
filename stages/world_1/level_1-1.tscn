@@ -1231,7 +1231,9 @@ music = Array[Resource]([ExtResource("3_12ohb"), ExtResource("4_a7s12")])
 volume_db = Array[float]([4.0, 0.0])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("5_snemb")]
-secrets = Array[String](["mushroom plague"])
+secrets = Array[String](["mushroom plague", "all secret rooms found"])
+progress_by_id = "1-1"
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("4_dyf8h")]
 position = Vector2(80, 400)
@@ -2291,4 +2293,5 @@ metadata/_edit_lock_ = true
 position = Vector2(320, 1088)
 
 [connection signal="warp_started" from="PipeInSecret" to="SecretUnlocker" method="unlock_secret"]
+[connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="progress_secret" binds= [1]]
 [connection signal="warp_ended" from="PipeOut4" to="PipeInSecret" method="queue_free"]
