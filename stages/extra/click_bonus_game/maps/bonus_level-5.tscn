@@ -1,8 +1,9 @@
-[gd_scene load_steps=56 format=3 uid="uid://c7xio0v7xfki4"]
+[gd_scene load_steps=57 format=3 uid="uid://c7xio0v7xfki4"]
 
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level.gd" id="1_x4v40"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_acvhf"]
 [ext_resource type="Resource" uid="uid://biwuot8qud6ob" path="res://music/extra/u_feel_it.mod" id="3_fv4u4"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_8kd6r"]
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/camera_level_5.gd" id="4_knnq6"]
 [ext_resource type="PackedScene" uid="uid://s4fip2enup6u" path="res://stages/extra/click_bonus_game/objects/heads_up_display.tscn" id="5_y8ade"]
 [ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/bonus_level_5_moving_group.gd" id="6_3q2a4"]
@@ -261,6 +262,11 @@ metadata/_edit_lock_ = true
 music = Array[Resource]([ExtResource("3_fv4u4")])
 play_immediately = false
 start_from_sec = Array[float]([0.0])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("4_8kd6r")]
+secrets = Array[String](["all bonus levels beaten"])
+progress_by_id = "five"
+progress_to = 5
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.4
@@ -718,4 +724,5 @@ metadata/_edit_lock_ = true
 [node name="StarFinderCursor" parent="." instance=ExtResource("25_cmkis")]
 camera_ref = NodePath("../Node2D/Camera2D")
 
+[connection signal="level_complete" from="." to="SecretUnlocker" method="progress_secret"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

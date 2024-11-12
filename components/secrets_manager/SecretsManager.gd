@@ -34,7 +34,7 @@ func set_secret(secret: String, value: Variant, save: bool = true, show_toast: b
 	if secret in secrets && secrets[secret] == value:
 		return
 	if SettingsManager.get_tweak("console_enabled", false):
-		print("[SecretsManager] Console tweak is enabled! Didn't set %s to %s" % [str(value), secret])
+		print("[Secrets Manager] Console tweak is enabled! Didn't set %s to %s" % [str(value), secret])
 		return
 	if !secret in secrets && show_toast && SettingsManager.get_tweak("secrets_notification", true):
 		queue_achievement(secret)
@@ -87,7 +87,7 @@ func load_secrets() -> void:
 		return
 	
 	secrets = data
-	print("[SecretsManager] Achievements loaded.")
+	print("[Secrets Manager] Achievements loaded.")
 
 func save_secrets() -> void:
 	_save_queued = true

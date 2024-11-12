@@ -1,7 +1,8 @@
-[gd_scene load_steps=53 format=3 uid="uid://nldjy280mjea"]
+[gd_scene load_steps=54 format=3 uid="uid://nldjy280mjea"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ccv0s"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ply3w"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_80eap"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_y2a8l"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="5_5en8e"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="5_o4qvs"]
@@ -230,6 +231,11 @@ metadata/_edit_lock_ = true
 script = ExtResource("3_ply3w")
 music = Array[Resource]([ExtResource("5_o4qvs")])
 volume_db = Array[float]([4.0])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("4_80eap")]
+secrets = Array[String](["all secret rooms found"])
+progress_by_id = "2-4"
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("4_y2a8l")]
 position = Vector2(240, 400)
@@ -844,3 +850,5 @@ texture = ExtResource("39_87bpp")
 z_index = 9
 position = Vector2(2560, 144)
 texture = ExtResource("39_87bpp")
+
+[connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="progress_secret"]

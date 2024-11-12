@@ -564,7 +564,9 @@ script = ExtResource("3_gcmyw")
 music = Array[Resource]([ExtResource("5_myapj")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("4_ex788")]
-secrets = Array[String](["passage to world 4", "passage to hardcore 1"])
+secrets = Array[String](["passage to world 4", "passage to hardcore 1", "all secret rooms found"])
+progress_by_id = "1-2"
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("4_jw6ru")]
 position = Vector2(80, 960)
@@ -1688,3 +1690,4 @@ uppercase = true
 [connection signal="warp_started" from="PipeIn4" to="HUD/HardcoreWarp" method="activate"]
 [connection signal="warp_started" from="PipeIn4" to="Node" method="profile_reset"]
 [connection signal="warp_started" from="PipeIn4" to="SecretUnlocker" method="unlock_secret" binds= [1]]
+[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="progress_secret" binds= [2]]

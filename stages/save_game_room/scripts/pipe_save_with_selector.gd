@@ -106,6 +106,7 @@ func pass_warp() -> void:
 		print(Data.values.map_force_selected_marker)
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
 		warp_to_scene = ProfileManager.current_profile.data.current_world
+	Data.values.skip_progress_continue = true
 	await get_tree().physics_frame
 	super()
 

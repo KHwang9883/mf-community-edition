@@ -12,7 +12,6 @@ var moving = 0
 var timer = Timer.new()
 
 @onready var bonus_star: Sprite2D = $BonusStar
-@onready var star_finder_cursor: Sprite2D = Scenes.current_scene.get_node("Heads-Up Display/StarFinderCursor")
 
 func _ready() -> void:
 	velocity = velocity.rotated(deg_to_rad(randi_range(0, 360)))

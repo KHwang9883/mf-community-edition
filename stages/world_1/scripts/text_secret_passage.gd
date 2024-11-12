@@ -27,6 +27,7 @@ func activate() -> void:
 		var _remade: bool = SettingsManager.get_tweak("remade_levels", true)
 		Data.values.checkpoint = -1
 		Data.values.checked_cps = []
+		Data.values.skip_progress_continue = true
 		var goto_scene: String = remade_level_tweak_scene if remade_level_tweak_scene && _remade else change_scene
 		if save_to_profile_as_current_world:
 			ProfileManager.current_profile.data.current_world = goto_scene
