@@ -25,6 +25,7 @@ func _physics_process(_delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	if player.warp != player.Warp.NONE: return
+	if player.no_movement: return
 	if !SecretsManager.is_endgame(): return
 	
 	for i in range(progress):
