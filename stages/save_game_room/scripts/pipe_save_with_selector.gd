@@ -15,6 +15,8 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export_node_path("Node2D") var reset_node_path: NodePath = ^"../CanvasLayer/Reset"
 
 var deletion_progress: float
+var is_empty: bool
+var is_cursed: bool
 var _tweak: bool
 
 var _star_world: bool
@@ -23,7 +25,7 @@ var _star_sel_level: int
 
 @onready var label: Label = $Label
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
-
+@onready var kevin_activation_label: Label = $"../KevinLayer/KevinActivationLabel"
 
 signal save_deleted
 
@@ -31,6 +33,13 @@ func _ready() -> void:
 	super()
 	if Engine.is_editor_hint(): return
 	player_exit.connect(func(): deletion_progress = 0)
+	kevin_activation_label.activated.connect(func():
+		if !is_empty && !is_cursed:
+			collision_mask = 0
+	)
+	kevin_activation_label.deactivated.connect(func():
+		collision_mask = 1
+	)
 	
 	_tweak = SettingsManager.get_tweak("load_save_from_world_start", false)
 	var prof = ProfileManager.profiles.get(profile_name)
@@ -42,6 +51,7 @@ func _ready() -> void:
 	
 	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
 		$CursedPipe.visible = true
+		is_cursed = true
 	
 	if reset_node:
 		player_enter.connect(_update_reset_labels)
@@ -92,6 +102,7 @@ func delete_save() -> void:
 	_star_world = false
 	_update_reset_labels()
 	$CursedPipe.visible = false
+	is_cursed = false
 
 
 func pass_warp() -> void:
@@ -107,6 +118,9 @@ func pass_warp() -> void:
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
 		warp_to_scene = ProfileManager.current_profile.data.current_world
 	Data.values.skip_progress_continue = true
+	# Activate Kevin in saved pipe on enter
+	if is_cursed:
+		KevinGlobal.activated = true
 	await get_tree().physics_frame
 	super()
 

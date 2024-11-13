@@ -14,6 +14,7 @@ var value
 
 func _ready():
 	_update_string.call_deferred()
+	SettingsManager.settings_updated.connect(_update_string)
 	value = $HBoxContainer/Value
 
 
