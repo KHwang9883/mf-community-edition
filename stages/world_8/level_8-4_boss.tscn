@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://b3bt8fm030vlj"]
+[gd_scene load_steps=20 format=3 uid="uid://b3bt8fm030vlj"]
 
 [ext_resource type="Script" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_jgcj0"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_rkrt5"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_848hw"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_yg3yx"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="5_6ppj3"]
+[ext_resource type="Script" path="res://stages/world_8/scripts/story_mode_secret_activator.gd" id="5_hl31x"]
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="6_3bkkl"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_tqj1s"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_ufid8"]
@@ -39,7 +40,10 @@ boss_music_volume_db = Array[float]([0.0, 0.0, 0.0])
 boss_music_start_from_sec = Array[float]([0.0, 0.0, 0.0])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("4_848hw")]
-secrets = Array[String](["story mode no hit", "story mode without warps no death"])
+secrets = Array[String](["story mode no hit", "story mode no death", "story mode in secret mode", "story mode no warps", "story mode beetroot"])
+
+[node name="Node" type="Node" parent="SecretUnlocker"]
+script = ExtResource("5_hl31x")
 
 [node name="Mario" parent="." instance=ExtResource("4_yg3yx")]
 position = Vector2(96, 336)
@@ -107,4 +111,4 @@ position = Vector2(448, 336)
 [node name="LavaBowser" parent="." instance=ExtResource("16_8grry")]
 position = Vector2(16, 432)
 
-[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_if" binds= [PackedStringArray("warped", "died"), 1]]
+[connection signal="level_completed" from="." to="SecretUnlocker/Node" method="perform_checks_and_unlock"]

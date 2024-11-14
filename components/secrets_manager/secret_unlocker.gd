@@ -49,9 +49,8 @@ func progress_secret(id: int = 0) -> void:
 		print("[Secrets] ID %d already has %s" % [id, progress_by_id])
 		return
 	new_secret.append(progress_by_id)
-	var complete: bool
+	
 	if len(new_secret) >= progress_to:
-		complete = true
 		SecretsManager.set_secret(secrets[id], true, false, true)
 		print("[Secrets] ID %d has been completed! total %d" % [id, progress_to])
 		return

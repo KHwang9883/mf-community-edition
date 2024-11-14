@@ -46,6 +46,7 @@ func show_message() -> void:
 	#box = GlobalViewport.vp.get_node(^"Box")
 	#box.position = Thunder._current_camera.get_screen_center_position()
 	box.position = Vector2(320, 240) #как же похуй...
+	reset_physics_interpolation()
 	
 	var tw = get_tree().create_tween().bind_node(box).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(box, ^"scale", Vector2.ONE, 0.5)

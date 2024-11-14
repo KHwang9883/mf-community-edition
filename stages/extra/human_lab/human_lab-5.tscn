@@ -919,7 +919,7 @@ script = ExtResource("3_pifh8")
 music = Array[Resource]([ExtResource("4_tb11i")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("4_b0xam")]
-secrets = Array[String](["human laboratory completed"])
+secrets = Array[String](["human laboratory completed", "human lab in secret mode"])
 
 [node name="Mario" parent="." instance=ExtResource("5_vjd1l")]
 position = Vector2(80, 400)
@@ -1392,6 +1392,7 @@ position = Vector2(3200, 400)
 texture = ExtResource("41_ok0iu")
 
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
+[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 [connection signal="player_enter" from="Objects/Node2D/Area2D" to="Objects/Node2D" method="_on_area_2d_player_enter"]
 [connection signal="player_exit" from="Objects/Node2D/Area2D" to="Objects/Node2D" method="_on_area_2d_player_exit"]
 [connection signal="finished" from="Objects/Node2D/AudioStreamPlayer2D" to="Objects/Node2D" method="_on_audio_stream_player_2d_finished"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=169 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=171 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://dgvxy6qwwrxi7" path="res://gfx/fancy_graphics/saveroom_giant_sunray.png" id="10_j0xnu"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="11_lxbw5"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/easing_texture.gd" id="11_obqea"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/custom_prcon_selection.gd" id="11_t2ent"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_smei1"]
 [ext_resource type="Texture2D" uid="uid://bhdvcmxlf3ejv" path="res://engine/tilesets/overworld/default_grass.png" id="12_wbmhm"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="13_2ogi0"]
@@ -114,6 +115,7 @@
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/progress_continue_skipper.gd" id="100_imftg"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/stupidity_warp_node.gd" id="104_d0la8"]
 [ext_resource type="Script" path="res://engine/objects/detectors/player_detection.gd" id="107_o2hlg"]
+[ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="115_nqbov"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s8jwb"]
 shader = ExtResource("10_ij62y")
@@ -927,6 +929,9 @@ mouse_filter = 1
 script = ExtResource("10_82cq3")
 pipe_out = NodePath("../../PipeOut")
 
+[node name="TextureRect" parent="CanvasLayer2/ProgressContinue/VBoxContainer" index="0"]
+script = ExtResource("11_t2ent")
+
 [node name="CursedPreview" type="AnimatedSprite2D" parent="CanvasLayer2/ProgressContinue"]
 visible = false
 material = SubResource("ShaderMaterial_s8jwb")
@@ -1737,8 +1742,8 @@ script = ExtResource("15_pr6di")
 
 [node name="CursedPipe" type="Sprite2D" parent="PipeSave"]
 visible = false
-position = Vector2(0, 32)
 texture = ExtResource("56_aniok")
+offset = Vector2(0, 32)
 
 [node name="PipeSave2" parent="." instance=ExtResource("14_lrr3l")]
 position = Vector2(416, 304)
@@ -1783,8 +1788,8 @@ script = ExtResource("15_pr6di")
 
 [node name="CursedPipe" type="Sprite2D" parent="PipeSave2"]
 visible = false
-position = Vector2(0, 32)
 texture = ExtResource("56_aniok")
+offset = Vector2(0, 32)
 
 [node name="PipeSave4" parent="." instance=ExtResource("14_lrr3l")]
 position = Vector2(544, 304)
@@ -1829,8 +1834,8 @@ script = ExtResource("15_pr6di")
 
 [node name="CursedPipe" type="Sprite2D" parent="PipeSave4"]
 visible = false
-position = Vector2(0, 32)
 texture = ExtResource("56_aniok")
+offset = Vector2(0, 32)
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -3336,21 +3341,13 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="text blah blah3" type="VBoxContainer" parent="Objects"]
-offset_left = -304.0
-offset_top = -944.0
-offset_right = -48.0
-offset_bottom = -592.0
-theme_override_constants/separation = 2
-script = ExtResource("78_bvu8r")
-
-[node name="Achievement23" type="HBoxContainer" parent="Objects/text blah blah3"]
+[node name="Achievement31" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
-secret_id = "story mode no warps"
+secret_id = "all toad houses found"
 
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement23"]
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement31"]
 custom_minimum_size = Vector2(0, 27)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -3360,11 +3357,11 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "story mode without warps"
+text = "all 4 toad houses found"
 vertical_alignment = 1
 uppercase = true
 
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement23"]
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement31"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
@@ -3376,11 +3373,19 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
+[node name="text blah blah3" type="VBoxContainer" parent="Objects"]
+offset_left = -304.0
+offset_top = -944.0
+offset_right = -48.0
+offset_bottom = -592.0
+theme_override_constants/separation = 2
+script = ExtResource("78_bvu8r")
+
 [node name="Achievement24" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
-secret_id = "story mode kevin mode"
+secret_id = "story mode in secret mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement24"]
 custom_minimum_size = Vector2(0, 27)
@@ -3408,11 +3413,44 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
+[node name="Achievement23" type="HBoxContainer" parent="Objects/text blah blah3"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode no warps"
+
+[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement23"]
+custom_minimum_size = Vector2(0, 27)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 20
+text = "story mode in ????? mode
+ warpless"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement23"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_6tkxo")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
 [node name="Achievement25" type="HBoxContainer" parent="Objects/text blah blah3"]
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
-secret_id = "human lab kevin mode"
+secret_id = "human lab in secret mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement25"]
 custom_minimum_size = Vector2(0, 27)
@@ -3444,7 +3482,7 @@ uppercase = true
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
-secret_id = "lost map kevin mode"
+secret_id = "lost map in secret mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement26"]
 custom_minimum_size = Vector2(0, 27)
@@ -3476,7 +3514,7 @@ uppercase = true
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
-secret_id = "world of stupidity kevin mode"
+secret_id = "world of stupidity secret mode"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement27"]
 layout_mode = 2
@@ -3551,7 +3589,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "story mode without warps
+text = "story mode warpless
  no death"
 vertical_alignment = 1
 uppercase = true
@@ -4407,6 +4445,10 @@ metadata/_edit_lock_ = true
 position = Vector2(96, 320)
 shape = SubResource("RectangleShape2D_b4vmn")
 
+[node name="MessageBlock" parent="." instance=ExtResource("115_nqbov")]
+position = Vector2(16, 608)
+message = "you can only do this challenge on an empty save pipe!"
+
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Node2D/SaveroomGiantSunray" method="ease_hide"]
@@ -4453,5 +4495,6 @@ shape = SubResource("RectangleShape2D_b4vmn")
 [connection signal="player_enter" from="AreaMain TRUE" to="CamArea" method="set_deferred" binds= [&"smooth_transition", true]]
 [connection signal="player_enter" from="AreaMain FALSE" to="CamArea" method="set_deferred" binds= [&"smooth_transition", false]]
 
+[editable path="CanvasLayer2/ProgressContinue"]
 [editable path="CanvasLayer/Reset"]
 [editable path="CanvasLayer/Reset2"]

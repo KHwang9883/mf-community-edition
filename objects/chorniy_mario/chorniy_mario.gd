@@ -63,6 +63,7 @@ const APPEAR = preload("res://objects/chorniy_mario/appear.ogg")
 
 var mario_pos: Vector2
 var appear_triggered = false
+var cutscene: bool = false
 var wait_time: float
 
 var pause: bool = false
@@ -73,6 +74,7 @@ func hide_text() -> void:
 func _ready() -> void:
 	if !is_instance_valid(mario): return
 	mario_pos = mario.global_position
+	reset_physics_interpolation()
 	var _death_sound = DEATH_SOUNDS[1]
 	if _random_sounds_tweak:
 		_death_sound = DEATH_SOUNDS.pick_random()
@@ -90,13 +92,14 @@ func _physics_process(_delta: float) -> void:
 	if !appear_triggered && (is_instance_valid(mario) && !mario_pos.is_equal_approx(mario.global_position) ):
 		appear_triggered = true
 		await get_tree().create_timer(1, false, true, false).timeout
-		Audio.play_1d_sound(APPEAR)
+		if !cutscene:
+			Audio.play_1d_sound(APPEAR)
 	
 	if !appear_triggered: return
 	if !is_instance_valid(mario):
 		return
 	
-	if mario.completed:
+	if mario.completed && !cutscene:
 		kevin_podokh()
 		return
 	
@@ -115,12 +118,14 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	global_position = pos
+	if pos.is_equal_approx(Vector2(-100, -100)):
+		reset_physics_interpolation()
 	sprite.animation = animation
 	sprite.frame = frame
 	sprite.flip_h = flip_h
 	sprite.sprite_frames = frames
 	
-	if overlaps_body(mario) && !mario.warp:
+	if overlaps_body(mario) && !mario.warp && !cutscene:
 		mario.die()
 		kevin_podokh()
 
@@ -138,6 +143,8 @@ func _map_process(_delta: float) -> void:
 	
 	if !player.reached:
 		global_position = pos
+	if pos.is_equal_approx(Vector2(-100, -100)):
+		reset_physics_interpolation()
 	sprite.animation = animation
 	sprite.frame = frame
 	sprite.flip_h = flip_h
