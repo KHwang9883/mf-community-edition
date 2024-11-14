@@ -17,7 +17,7 @@ func suspended_game_logic() -> void:
 		var suit_frames: SpriteFrames = CharacterManager.get_suit(profile.saved_player_state).animation_sprites
 		state_preview.sprite_frames = suit_frames
 		state_preview.play(&"walk")
-		if profile.get(&"kevin_mode_enabled"):
+		if profile.saved_profile_data.get(&"kevin_mode_enabled"):
 			cursed_preview.sprite_frames = suit_frames
 			cursed_preview.visible = true
 			cursed_preview.play(&"walk")

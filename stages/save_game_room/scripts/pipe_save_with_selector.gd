@@ -17,6 +17,7 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 var deletion_progress: float
 var is_empty: bool
 var is_cursed: bool
+var is_blocked: bool
 var _tweak: bool
 
 var _star_world: bool
@@ -26,6 +27,7 @@ var _star_sel_level: int
 @onready var label: Label = $Label
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
 @onready var kevin_activation_label: Label = $"../KevinLayer/KevinActivationLabel"
+@onready var cursed_pipe: Sprite2D = $CursedPipe
 
 signal save_deleted
 
@@ -33,12 +35,13 @@ func _ready() -> void:
 	super()
 	if Engine.is_editor_hint(): return
 	player_exit.connect(func(): deletion_progress = 0)
-	kevin_activation_label.activated.connect(func():
-		if !is_empty && !is_cursed:
-			collision_mask = 0
+	warp_started.connect(func():
+		if KevinGlobal.activated:
+			cursed_pipe.visible = true
 	)
+	kevin_activation_label.activated.connect(block_pure_pipe)
 	kevin_activation_label.deactivated.connect(func():
-		collision_mask = 1
+		is_blocked = false
 	)
 	
 	_tweak = SettingsManager.get_tweak("load_save_from_world_start", false)
@@ -50,8 +53,11 @@ func _ready() -> void:
 		_star_sel_level = int(wnumbers[1])
 	
 	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
-		$CursedPipe.visible = true
+		cursed_pipe.visible = true
 		is_cursed = true
+	
+	if KevinGlobal.activated:
+		block_pure_pipe.call_deferred()
 	
 	if reset_node:
 		player_enter.connect(_update_reset_labels)
@@ -76,7 +82,15 @@ func _physics_process(delta: float) -> void:
 				_star_sel_level = mini(_star_sel_level, level_count[_star_sel_world])
 				label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
 		
-	super(delta)
+	if !player: return
+	if !is_blocked:
+		_warp_initiator()
+	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
+		player.up_down = 0
+		Scenes.current_scene.get_node(^"MessageBlock").show_message.call_deferred()
+
+	if !_on_warp: return
+	_warping_process(delta)
 
 
 func _input(event: InputEvent) -> void:
@@ -101,8 +115,9 @@ func delete_save() -> void:
 	Audio.play_1d_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"))
 	_star_world = false
 	_update_reset_labels()
-	$CursedPipe.visible = false
+	cursed_pipe.visible = false
 	is_cursed = false
+	is_blocked = false
 
 
 func pass_warp() -> void:
@@ -121,6 +136,8 @@ func pass_warp() -> void:
 	# Activate Kevin in saved pipe on enter
 	if is_cursed:
 		KevinGlobal.activated = true
+	if KevinGlobal.activated:
+		ProfileManager.current_profile.data.kevin_mode_enabled = true
 	await get_tree().physics_frame
 	super()
 
@@ -129,3 +146,8 @@ func _update_reset_labels() -> void:
 	if reset_node.unlock:
 		reset_node.unlock.visible = _star_world
 	reset_node.unlock2.visible = _star_world
+
+
+func block_pure_pipe() -> void:
+	if !is_empty && !is_cursed:
+		is_blocked = true

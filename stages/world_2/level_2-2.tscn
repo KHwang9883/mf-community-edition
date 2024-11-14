@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://ht5id10ochxu"]
+[gd_scene load_steps=65 format=3 uid="uid://ht5id10ochxu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gugln"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hi7ol"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://d0v12838slwnk" path="res://gfx/backgrounds/UWcoral2.png" id="15_f8kv5"]
 [ext_resource type="Script" path="res://shaders/quality_shader_set.gd" id="15_v0hqh"]
 [ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="16_r7bri"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="16_vo1ks"]
 [ext_resource type="Texture2D" uid="uid://bhlgs2eebvaxr" path="res://engine/objects/fluid/textures/water_smooth_5.png" id="17_brcb2"]
 [ext_resource type="Texture2D" uid="uid://baa2ywxd73mvl" path="res://engine/objects/fluid/textures/water_smooth_6.png" id="18_7yvik"]
 [ext_resource type="Texture2D" uid="uid://ctwrhebqj6fd6" path="res://engine/objects/fluid/textures/water_smooth_7.png" id="19_a57wy"]
@@ -52,14 +53,15 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.
 gradient = SubResource("Gradient_16eid")
 width = 480
 
-[sub_resource type="Gradient" id="Gradient_sc3ar"]
+[sub_resource type="Gradient" id="Gradient_anfir"]
 offsets = PackedFloat32Array(0, 0.4375)
 colors = PackedColorArray(0.313726, 0.501961, 0.878431, 1, 0, 0.0627451, 0.12549, 1)
 metadata/_snap_enabled = true
 metadata/_snap_count = 16
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2inex"]
-gradient = SubResource("Gradient_sc3ar")
+gradient = SubResource("Gradient_anfir")
+height = 480
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_xpys4"]
@@ -106,6 +108,7 @@ metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lwi7l"]
 gradient = SubResource("Gradient_pgl7y")
+height = 400
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_qn20d"]
@@ -248,11 +251,12 @@ medium = true
 
 [node name="background2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color(0.478431, 0.478431, 0.478431, 1)
-position = Vector2(319.968, 352)
-scale = Vector2(10.001, 7.5)
+position = Vector2(0, 112)
+scale = Vector2(10, 1)
 texture = SubResource("GradientTexture2D_2inex")
-script = ExtResource("27_olvbf")
-medium = true
+centered = false
+script = ExtResource("16_vo1ks")
+axis = "y"
 
 [node name="niebo_swiatlo" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 visible = false
@@ -382,7 +386,7 @@ medium = true
 [node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
 material = SubResource("CanvasItemMaterial_f8p31")
 position = Vector2(320, 312)
-scale = Vector2(10, 6.25)
+scale = Vector2(10, 1)
 texture = SubResource("GradientTexture2D_lwi7l")
 script = ExtResource("27_olvbf")
 medium = true

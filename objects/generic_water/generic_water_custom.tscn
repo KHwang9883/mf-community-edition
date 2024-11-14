@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cgw53vgjiurmx"]
+[gd_scene load_steps=32 format=3 uid="uid://cgw53vgjiurmx"]
 
 [ext_resource type="Script" path="res://objects/generic_water/generic_water_custom.gd" id="1_1y8sr"]
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="1_kdudl"]
@@ -15,6 +15,7 @@
 [ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="12_swfn1"]
 [ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="13_shwks"]
 [ext_resource type="Texture2D" uid="uid://bi04kluy5weby" path="res://gfx/fancy_graphics/water_surface_front.png" id="14_07gix"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="16_32evt"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_7pmt6"]
 frames = 8
@@ -78,14 +79,15 @@ shader_parameter/wave_frequency = 50.0
 shader_parameter/wave_speed = 5.0
 shader_parameter/y_axis = true
 
-[sub_resource type="Gradient" id="Gradient_te3u4"]
+[sub_resource type="Gradient" id="Gradient_otj1j"]
 offsets = PackedFloat32Array(0, 0.4375)
 colors = PackedColorArray(0.313726, 0.501961, 0.878431, 1, 0, 0.0627451, 0.12549, 1)
 metadata/_snap_enabled = true
 metadata/_snap_count = 16
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_b3thi"]
-gradient = SubResource("Gradient_te3u4")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cmbl8"]
+gradient = SubResource("Gradient_otj1j")
+height = 480
 fill_to = Vector2(0, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jot1a"]
@@ -219,15 +221,18 @@ region_rect = Rect2(-12, 0, 640, 30)
 
 [node name="Parallax2D" type="Parallax2D" parent="WaterMax"]
 repeat_size = Vector2(640, 0)
-
-[node name="background2" type="Sprite2D" parent="WaterMax/Parallax2D"]
-modulate = Color(0.478431, 0.478431, 0.478431, 1)
-z_index = -1
-position = Vector2(319.968, 256)
-scale = Vector2(10.001, 7.5)
-texture = SubResource("GradientTexture2D_b3thi")
 script = ExtResource("10_ppk0r")
 medium = true
+
+[node name="background3" type="Sprite2D" parent="WaterMax/Parallax2D"]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+z_index = -1
+position = Vector2(0, 16)
+scale = Vector2(10, 1)
+texture = SubResource("GradientTexture2D_cmbl8")
+centered = false
+script = ExtResource("16_32evt")
+axis = "y"
 
 [node name="Sprite2D6" type="Sprite2D" parent="WaterMax/Parallax2D"]
 z_index = 11
@@ -235,8 +240,6 @@ material = SubResource("CanvasItemMaterial_jot1a")
 position = Vector2(320, 216)
 scale = Vector2(10, 6.25)
 texture = SubResource("GradientTexture2D_a3nsy")
-script = ExtResource("10_ppk0r")
-medium = true
 
 [node name="СкрываниеПерехода" type="Sprite2D" parent="WaterMax/Parallax2D"]
 z_index = 14

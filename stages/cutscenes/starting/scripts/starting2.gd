@@ -31,7 +31,7 @@ func _ready() -> void:
 func _flow_intros() -> void:
 	music_loader.play_buffered()
 	
-	await get_tree().create_timer(5.1, false).timeout
+	await get_tree().create_timer(2.0, false).timeout
 	
 	var tw = create_tween()
 	tw.tween_property(camera_2d, "speed", 230, 1)

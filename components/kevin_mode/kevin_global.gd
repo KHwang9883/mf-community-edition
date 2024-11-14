@@ -1,5 +1,7 @@
 extends Node
 
+const KEVIN_SCENE = preload("res://objects/chorniy_mario/chorniy_mario.tscn")
+
 var activated: bool = false
 var _current_kevin: Area2D
 
@@ -10,11 +12,10 @@ func _ready() -> void:
 func add_kevin() -> void:
 	await get_tree().physics_frame
 	if !activated || Scenes.current_scene.name == 'SaveGameRoom': return
-	var kevin = preload("res://objects/chorniy_mario/chorniy_mario.tscn").instantiate()
-	kevin.global_position = Vector2(-100, -100)
+	var kevin := KEVIN_SCENE.instantiate()
+	kevin.position = Vector2(-100, -100)
 	_current_kevin = kevin
 	Scenes.current_scene.add_child(kevin)
-	kevin.reset_physics_interpolation()
 
 func patch_mario() -> void:
 	if Scenes.current_scene.name == "SaveGameRoom": return

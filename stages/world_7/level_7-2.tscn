@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=69 format=3 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ct0he"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://c4m5sukol1d28" path="res://gfx/backgrounds/UWcoral.png" id="14_w6oot"]
 [ext_resource type="Texture2D" uid="uid://d0v12838slwnk" path="res://gfx/backgrounds/UWcoral2.png" id="15_s8evc"]
 [ext_resource type="Texture2D" uid="uid://cat3i3pljsllh" path="res://gfx/backgrounds/UWrocks.png" id="16_b15gp"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="16_oaham"]
 [ext_resource type="Texture2D" uid="uid://dsijqvsl47riy" path="res://engine/objects/fluid/textures/water_smooth_0.png" id="17_sdtro"]
 [ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="18_wyvfd"]
 [ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="19_ldlip"]
@@ -57,14 +58,15 @@ height = 480
 fill_from = Vector2(1, 0)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_l51fc"]
+[sub_resource type="Gradient" id="Gradient_sc3ar"]
 offsets = PackedFloat32Array(0, 0.4375)
 colors = PackedColorArray(0.313726, 0.501961, 0.878431, 1, 0, 0.0627451, 0.12549, 1)
 metadata/_snap_enabled = true
 metadata/_snap_count = 16
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_a37oo"]
-gradient = SubResource("Gradient_l51fc")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sauhq"]
+gradient = SubResource("Gradient_sc3ar")
+height = 480
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_0gws5"]
@@ -119,6 +121,7 @@ metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hgv7k"]
 gradient = SubResource("Gradient_l8daq")
+height = 400
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_r8fau"]
@@ -254,14 +257,17 @@ metadata/_edit_lock_ = true
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.5, 1)
 motion_mirroring = Vector2(640, 0)
-
-[node name="background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-modulate = Color(0.478431, 0.478431, 0.478431, 1)
-position = Vector2(319.968, 352)
-scale = Vector2(10.001, 7.5)
-texture = SubResource("GradientTexture2D_a37oo")
 script = ExtResource("39_6jwl0")
 medium = true
+
+[node name="background2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+position = Vector2(0, 112)
+scale = Vector2(10, 1)
+texture = SubResource("GradientTexture2D_sauhq")
+centered = false
+script = ExtResource("16_oaham")
+axis = "y"
 
 [node name="niebo_swiatlo" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 visible = false
@@ -352,7 +358,7 @@ medium = true
 [node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
 material = SubResource("CanvasItemMaterial_t6u6i")
 position = Vector2(320, 312)
-scale = Vector2(10, 6.25)
+scale = Vector2(10, 1)
 texture = SubResource("GradientTexture2D_hgv7k")
 script = ExtResource("39_6jwl0")
 medium = true
