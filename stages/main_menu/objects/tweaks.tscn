@@ -1,16 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://c2mch7wqmlcgp"]
+[gd_scene load_steps=14 format=3 uid="uid://c2mch7wqmlcgp"]
 
 [ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="1_fcdr4"]
 [ext_resource type="Texture2D" uid="uid://bpkndt6n365gx" path="res://stages/main_menu/textures/tweak_bg.png" id="2_4c2j4"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="3_j4li8"]
 [ext_resource type="Texture2D" uid="uid://b8wl5dmi8an1w" path="res://stages/main_menu/textures/tweaks.png" id="4_orn0c"]
 [ext_resource type="PackedScene" uid="uid://kiw6yxeov3fj" path="res://stages/main_menu/objects/tweaks_selections.tscn" id="5_v0prp"]
-[ext_resource type="AudioStream" uid="uid://baoxhpfyoq70u" path="res://engine/components/ui/_sounds/select_controls.wav" id="6_jvpc0"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="7_jdt55"]
-[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="8_i1yfq"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="8_i5nl3"]
-[ext_resource type="Script" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="8_jrjpr"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="9_2h3k8"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="11_igxil"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_description.gd" id="12_cheln"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="13_1g7cx"]
@@ -80,31 +75,6 @@ render_target_update_mode = 4
 
 [node name="Tweaks" parent="SubViewportContainer/SubViewport" instance=ExtResource("5_v0prp")]
 physics_interpolation_mode = 1
-control_sound = ExtResource("6_jvpc0")
-
-[node name="Selector" type="Node2D" parent="SubViewportContainer/SubViewport"]
-physics_interpolation_mode = 1
-script = ExtResource("7_jdt55")
-smooth_speed = 0.4
-position_padding = 20
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Selector"]
-sprite_frames = ExtResource("8_i1yfq")
-script = ExtResource("9_2h3k8")
-
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
-physics_interpolation_mode = 1
-process_callback = 0
-limit_left = 0
-limit_top = 0
-limit_right = 640
-limit_bottom = 480
-limit_smoothed = true
-position_smoothing_enabled = true
-position_smoothing_speed = 25.0
-editor_draw_screen = false
-script = ExtResource("8_jrjpr")
-menu_controller_path = NodePath("../Tweaks")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -252,6 +222,3 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 3
 uppercase = true
-
-[connection signal="selected" from="SubViewportContainer/SubViewport/Tweaks" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
-[connection signal="selected" from="SubViewportContainer/SubViewport/Tweaks" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]

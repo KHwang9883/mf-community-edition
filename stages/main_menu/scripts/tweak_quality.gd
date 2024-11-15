@@ -26,6 +26,13 @@ func _handle_select(mouse_input: bool = false) -> void:
 	_toggled_option(old_value, SettingsManager.settings.quality)
 
 
+func _handle_focused(focus) -> void:
+	super(focus)
+	if !focus: return
+	if tweak_description:
+		$"../..".emit_signal(&"_tweak_desc", get_parent())
+
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if !get_parent().focused: return
@@ -49,7 +56,7 @@ func _physics_process(delta: float) -> void:
 		_toggled_option(old_value, SettingsManager.settings.quality)
 	elif Input.is_action_just_pressed(&"ui_select"):
 		if tweak_description:
-			get_parent().emit_signal(&"_show_desc", tweak_description, $Label.text)
+			$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
 
 
 func _toggled_option(old_val, new_val) -> void:
