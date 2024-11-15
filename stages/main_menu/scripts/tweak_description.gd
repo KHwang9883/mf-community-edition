@@ -11,7 +11,7 @@ signal message_hidden
 @onready var text: Label = $Box/Texture/Text
 @onready var text_2: Label = $Box/Texture/Text3
 @onready var label_2: Label = $"../Label2"
-@onready var tweaks: MenuItemsController = $"../SubViewportContainer/SubViewport/Tweaks"
+@onready var tweaks: Control = $"../SubViewportContainer/SubViewport/Tweaks"
 @onready var parent: Control = $".."
 @onready var color_rect: ColorRect = $ColorRect
 
@@ -20,13 +20,18 @@ func _ready() -> void:
 	label_2.visible = false
 	tweaks.add_user_signal("_tweak_desc")
 	tweaks.add_user_signal("_show_desc")
-	tweaks.connect(&"selected", func(a, b, c, d):
-		label_2.visible = false
-	)
-	tweaks.connect(&"_tweak_desc", func():
-		label_2.visible = true
+	tweaks.get_node(^"Tweaks").connect(&"selected", _set_invis.unbind(4))
+	tweaks.get_node(^"Gameplay").connect(&"selected", _set_invis.unbind(4))
+	tweaks.get_node(^"Aesthetic").connect(&"selected", _set_invis.unbind(4))
+	tweaks.connect(&"_tweak_desc", func(controller):
+		if controller.focused:
+			label_2.visible = true
 	)
 	tweaks.connect(&"_show_desc", show_description)
+
+
+func _set_invis() -> void:
+	label_2.visible = false
 
 
 func _physics_process(delta: float) -> void:

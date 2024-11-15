@@ -8,7 +8,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	await get_tree().physics_frame
 	get_parent().move_selector(0)
 	Scenes.current_scene.get_node("Menu/MainMenuControls").focused = true
-	Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks").focused = false
+	Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/Tweaks").focused = false
 	
 	SettingsManager.save_tweaks()
 	SettingsManager.save_settings()

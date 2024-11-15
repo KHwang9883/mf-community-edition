@@ -20,13 +20,14 @@ func _ready() -> void:
 		if !SecretsManager.is_endgame():
 			lab.text = "??????? (beat story mode to unlock!)"
 			is_blocked = true
+			tweak_description = "this tweak will be available after you complete the story mode!"
 
 
 func _handle_focused(focus) -> void:
 	super(focus)
 	if !focus: return
 	if tweak_description:
-		get_parent().emit_signal(&"_tweak_desc")
+		$"../..".emit_signal(&"_tweak_desc", get_parent())
 
 
 func _handle_select(mouse_input: bool = false) -> void:
@@ -42,7 +43,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if !focused: return
+	if !focused || !get_parent().focused: return
 	
 	if Input.is_action_just_pressed("ui_left"):
 		var _set: bool = _handle_toggle(false)
@@ -53,8 +54,8 @@ func _physics_process(delta: float) -> void:
 		if _set:
 			Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	elif Input.is_action_just_pressed(&"ui_select"):
-		if tweak_description && !is_blocked:
-			get_parent().emit_signal(&"_show_desc", tweak_description, $Label.text)
+		if tweak_description:
+			$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
 
 
 func _handle_toggle(to_set: bool) -> bool:
