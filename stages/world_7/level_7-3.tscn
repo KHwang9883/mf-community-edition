@@ -1,15 +1,19 @@
-[gd_scene load_steps=46 format=4 uid="uid://l6cie3cqgpd2"]
+[gd_scene load_steps=50 format=4 uid="uid://l6cie3cqgpd2"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ebj5x"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_4o0yg"]
 [ext_resource type="Resource" uid="uid://csytp2m2k1jl" path="res://music/ykyrococ.mod" id="3_mbm8a"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_75tr1"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_rdafg"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="5_52gfd"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_e434v"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_1wl85"]
+[ext_resource type="PackedScene" uid="uid://chn6sxklw0ntb" path="res://components/secrets_manager/coin_checker.tscn" id="8_3ofjh"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_qmkm5"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="9_3sa3a"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/text_secret_passage.gd" id="10_ln5wx"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="11_c3ym6"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="11_nwbct"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="13_8ms2m"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="15_ecsvv"]
 [ext_resource type="PackedScene" uid="uid://dbpihjuw0gc01" path="res://engine/objects/bumping_blocks/question_block/templates/Beetroot Question Block.tscn" id="18_545bl"]
@@ -33,11 +37,11 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="36_av5fc"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://gfx/misc/castle_big.png" id="37_fc4w4"]
 
-[sub_resource type="Gradient" id="Gradient_hj1gu"]
+[sub_resource type="Gradient" id="Gradient_yk6hd"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_u10lc"]
-gradient = SubResource("Gradient_hj1gu")
+gradient = SubResource("Gradient_yk6hd")
 width = 640
 height = 480
 fill_from = Vector2(1, 0)
@@ -164,6 +168,11 @@ jump_to_scene = "res://stages/world_7/map_7.tscn"
 script = ExtResource("3_4o0yg")
 music = Array[Resource]([ExtResource("3_mbm8a")])
 
+[node name="SecretUnlocker" parent="." instance=ExtResource("4_rdafg")]
+secrets = Array[String](["all toad houses found"])
+progress_by_id = "7-3"
+progress_to = 5
+
 [node name="Mario" parent="." instance=ExtResource("4_75tr1")]
 position = Vector2(144, 400)
 
@@ -216,6 +225,24 @@ text = "WORLD
 7-3"
 horizontal_alignment = 1
 
+[node name="ToadWarp" type="Node2D" parent="HUD"]
+position = Vector2(320, -32)
+script = ExtResource("10_ln5wx")
+speed_sec = 1.0
+
+[node name="Label2" type="Label" parent="HUD/ToadWarp"]
+offset_left = -132.0
+offset_right = 132.0
+offset_bottom = 28.0
+pivot_offset = Vector2(132, 8)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("11_nwbct")
+theme_override_font_sizes/font_size = 20
+text = "you have unlocked a secret toad house!"
+horizontal_alignment = 1
+uppercase = true
+
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -100
 
@@ -226,6 +253,210 @@ metadata/_edit_lock_ = true
 
 [node name="FinishLine" parent="." instance=ExtResource("36_av5fc")]
 position = Vector2(10560, 416)
+
+[node name="CoinChecker" parent="." instance=ExtResource("8_3ofjh")]
+toad_scene = "res://stages/extra/toad_house/maps/toad_house_7.tscn"
+
+[node name="Coin" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(1968, 144)
+
+[node name="Coin2" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(1968, 112)
+
+[node name="Coin3" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(1968, 80)
+
+[node name="Coin4" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2032, 144)
+
+[node name="Coin5" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2032, 112)
+
+[node name="Coin6" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2032, 80)
+
+[node name="Coin7" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2832, 144)
+
+[node name="Coin8" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2832, 112)
+
+[node name="Coin9" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2832, 80)
+
+[node name="Coin10" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2896, 144)
+
+[node name="Coin11" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2896, 112)
+
+[node name="Coin12" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(2896, 80)
+
+[node name="Coin13" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3120, 144)
+
+[node name="Coin14" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3120, 112)
+
+[node name="Coin15" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3120, 80)
+
+[node name="Coin16" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3184, 144)
+
+[node name="Coin17" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3184, 112)
+
+[node name="Coin18" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3184, 80)
+
+[node name="Coin19" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3984, 144)
+
+[node name="Coin20" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3984, 112)
+
+[node name="Coin21" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(3984, 80)
+
+[node name="Coin22" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4048, 144)
+
+[node name="Coin23" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4048, 112)
+
+[node name="Coin24" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4048, 80)
+
+[node name="Coin25" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4400, 48)
+
+[node name="Coin26" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4400, 80)
+
+[node name="Coin27" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4400, 16)
+
+[node name="Coin28" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4848, 48)
+
+[node name="Coin29" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4848, 80)
+
+[node name="Coin30" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(4848, 16)
+
+[node name="Coin31" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(5232, 48)
+
+[node name="Coin32" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(5232, 80)
+
+[node name="Coin33" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(5232, 16)
+
+[node name="Coin34" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6096, 80)
+
+[node name="Coin35" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6128, 80)
+
+[node name="Coin36" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6288, 80)
+
+[node name="Coin37" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6320, 80)
+
+[node name="Coin38" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6480, 80)
+
+[node name="Coin39" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6512, 80)
+
+[node name="Coin40" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6864, 112)
+
+[node name="Coin41" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(6896, 112)
+
+[node name="Coin42" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(7184, 144)
+
+[node name="Coin43" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(7216, 144)
+
+[node name="Coin44" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(7344, 112)
+
+[node name="Coin45" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(7376, 112)
+
+[node name="Coin46" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(7760, 112)
+
+[node name="Coin47" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(7792, 112)
+
+[node name="Coin48" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(7984, 80)
+
+[node name="Coin49" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8016, 80)
+
+[node name="Coin50" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8208, 112)
+
+[node name="Coin51" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8240, 112)
+
+[node name="Coin52" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8432, 80)
+
+[node name="Coin53" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8464, 80)
+
+[node name="Coin54" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8656, 112)
+
+[node name="Coin55" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8688, 112)
+
+[node name="Coin56" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8944, 80)
+
+[node name="Coin57" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(8976, 80)
+
+[node name="Coin58" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(9232, 112)
+
+[node name="Coin59" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(9264, 112)
+
+[node name="Coin60" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(9584, 80)
+
+[node name="Coin61" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(9616, 80)
+
+[node name="Coin62" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(9808, 176)
+
+[node name="Coin63" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(9840, 176)
+
+[node name="Coin64" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(10160, 240)
+
+[node name="Coin65" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(10192, 240)
+
+[node name="Coin66" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(10352, 112)
+
+[node name="Coin67" parent="CoinChecker" instance=ExtResource("15_ecsvv")]
+position = Vector2(10384, 112)
 
 [node name="CastleBig" type="Sprite2D" parent="."]
 position = Vector2(10980, 240)
@@ -266,207 +497,6 @@ position = Vector2(2128, 304)
 result = SubResource("Resource_t1t5h")
 initially_visible_and_solid = false
 exists_once = true
-
-[node name="Coin" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(1968, 144)
-
-[node name="Coin2" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(1968, 112)
-
-[node name="Coin3" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(1968, 80)
-
-[node name="Coin4" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2032, 144)
-
-[node name="Coin5" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2032, 112)
-
-[node name="Coin6" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2032, 80)
-
-[node name="Coin7" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2832, 144)
-
-[node name="Coin8" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2832, 112)
-
-[node name="Coin9" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2832, 80)
-
-[node name="Coin10" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2896, 144)
-
-[node name="Coin11" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2896, 112)
-
-[node name="Coin12" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(2896, 80)
-
-[node name="Coin13" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3120, 144)
-
-[node name="Coin14" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3120, 112)
-
-[node name="Coin15" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3120, 80)
-
-[node name="Coin16" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3184, 144)
-
-[node name="Coin17" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3184, 112)
-
-[node name="Coin18" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3184, 80)
-
-[node name="Coin19" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3984, 144)
-
-[node name="Coin20" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3984, 112)
-
-[node name="Coin21" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(3984, 80)
-
-[node name="Coin22" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4048, 144)
-
-[node name="Coin23" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4048, 112)
-
-[node name="Coin24" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4048, 80)
-
-[node name="Coin25" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4400, 48)
-
-[node name="Coin26" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4400, 80)
-
-[node name="Coin27" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4400, 16)
-
-[node name="Coin28" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4848, 48)
-
-[node name="Coin29" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4848, 80)
-
-[node name="Coin30" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(4848, 16)
-
-[node name="Coin31" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(5232, 48)
-
-[node name="Coin32" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(5232, 80)
-
-[node name="Coin33" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(5232, 16)
-
-[node name="Coin34" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6096, 80)
-
-[node name="Coin35" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6128, 80)
-
-[node name="Coin36" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6288, 80)
-
-[node name="Coin37" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6320, 80)
-
-[node name="Coin38" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6480, 80)
-
-[node name="Coin39" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6512, 80)
-
-[node name="Coin40" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6864, 112)
-
-[node name="Coin41" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(6896, 112)
-
-[node name="Coin42" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(7184, 144)
-
-[node name="Coin43" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(7216, 144)
-
-[node name="Coin44" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(7344, 112)
-
-[node name="Coin45" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(7376, 112)
-
-[node name="Coin46" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(7760, 112)
-
-[node name="Coin47" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(7792, 112)
-
-[node name="Coin48" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(7984, 80)
-
-[node name="Coin49" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8016, 80)
-
-[node name="Coin50" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8208, 112)
-
-[node name="Coin51" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8240, 112)
-
-[node name="Coin52" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8432, 80)
-
-[node name="Coin53" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8464, 80)
-
-[node name="Coin54" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8656, 112)
-
-[node name="Coin55" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8688, 112)
-
-[node name="Coin56" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8944, 80)
-
-[node name="Coin57" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(8976, 80)
-
-[node name="Coin58" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(9232, 112)
-
-[node name="Coin59" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(9264, 112)
-
-[node name="Coin60" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(9584, 80)
-
-[node name="Coin61" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(9616, 80)
-
-[node name="Coin62" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(9808, 176)
-
-[node name="Coin63" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(9840, 176)
-
-[node name="Coin64" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(10160, 240)
-
-[node name="Coin65" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(10192, 240)
-
-[node name="Coin66" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(10352, 112)
-
-[node name="Coin67" parent="Objects" instance=ExtResource("15_ecsvv")]
-position = Vector2(10384, 112)
 
 [node name="Checkpoint" parent="." instance=ExtResource("35_g02ct")]
 position = Vector2(5920, 160)
@@ -689,5 +719,6 @@ position = Vector2(10848, 256)
 texture = ExtResource("32_h2tgy")
 metadata/_edit_lock_ = true
 
+[connection signal="coin_checked_success" from="CoinChecker" to="SecretUnlocker" method="progress_secret"]
 [connection signal="player_enter" from="Area2D" to="JumpingCheepsGenerator" method="enable"]
 [connection signal="player_exit" from="Area2D" to="JumpingCheepsGenerator" method="disable"]

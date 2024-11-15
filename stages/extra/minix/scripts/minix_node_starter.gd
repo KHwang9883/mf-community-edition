@@ -19,6 +19,8 @@ signal game_started
 
 func _ready() -> void:
 	Scenes.custom_scenes.minix_node = self
+	SettingsManager.set_tweak("life_every_2_mil_score", false)
+	SettingsManager.set_tweak("stomping_combo", false)
 	for i in maps.get_children():
 		if !i is MinixMap:
 			continue

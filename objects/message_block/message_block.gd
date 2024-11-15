@@ -39,7 +39,7 @@ func show_message() -> void:
 	box.scale = Vector2.ZERO
 	text.text = message
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	Audio.play_1d_sound(MESSAGE_BLOCK)
+	Audio.play_1d_sound(MESSAGE_BLOCK, true, {ignore_pause = true})
 	get_tree().paused = true
 	
 	#box.reparent(GlobalViewport.vp)
