@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://ht5id10ochxu"]
+[gd_scene load_steps=66 format=3 uid="uid://ht5id10ochxu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gugln"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hi7ol"]
@@ -8,7 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="6_j7p04"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_k14ad"]
 [ext_resource type="AudioStream" uid="uid://co70gdke0u16k" path="res://music/smb3-underwater.ogg" id="7_g1g5x"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_id3b8"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_k5rv5"]
 [ext_resource type="TileSet" uid="uid://7ahm7i5kbbn6" path="res://tilesets/underwater/underwater.tres" id="9_ivf0b"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_fok48"]
@@ -20,10 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://cat3i3pljsllh" path="res://gfx/backgrounds/UWrocks.png" id="13_mwyjq"]
 [ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="13_n8den"]
 [ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="14_ecsp7"]
-[ext_resource type="Script" path="res://stages/world_1/scripts/text_secret_passage.gd" id="14_sfrik"]
 [ext_resource type="Texture2D" uid="uid://c4m5sukol1d28" path="res://gfx/backgrounds/UWcoral.png" id="14_td8co"]
 [ext_resource type="Texture2D" uid="uid://dp3ivcsnm7xb0" path="res://engine/objects/fluid/textures/water_smooth_3.png" id="15_5vkg5"]
-[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="15_a5y4e"]
 [ext_resource type="Texture2D" uid="uid://d0v12838slwnk" path="res://gfx/backgrounds/UWcoral2.png" id="15_f8kv5"]
 [ext_resource type="Script" path="res://shaders/quality_shader_set.gd" id="15_v0hqh"]
 [ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="16_r7bri"]
@@ -181,11 +178,6 @@ var_3_volume_db = Array[float]([0.0, 4.0])
 music = Array[Resource]([ExtResource("4_xum7a"), ExtResource("6_j7p04")])
 volume_db = Array[float]([0.0, 4.0])
 
-[node name="SecretUnlocker" parent="." instance=ExtResource("7_id3b8")]
-secrets = Array[String](["all toad houses found"])
-progress_by_id = "2-2"
-progress_to = 5
-
 [node name="Mario" parent="." instance=ExtResource("4_p0ll4")]
 position = Vector2(80, 0)
 
@@ -238,24 +230,6 @@ theme_override_fonts/font = ExtResource("11_jm226")
 text = "WORLD
 2-2"
 horizontal_alignment = 1
-
-[node name="ToadWarp" type="Node2D" parent="HUD"]
-position = Vector2(320, -32)
-script = ExtResource("14_sfrik")
-speed_sec = 1.0
-
-[node name="Label2" type="Label" parent="HUD/ToadWarp"]
-offset_left = -132.0
-offset_right = 132.0
-offset_bottom = 28.0
-pivot_offset = Vector2(132, 8)
-theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("15_a5y4e")
-theme_override_font_sizes/font_size = 20
-text = "you have unlocked a secret toad house!"
-horizontal_alignment = 1
-uppercase = true
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("11_5gdh8")
@@ -333,13 +307,9 @@ texture = ExtResource("41_lek3c")
 position = Vector2(6240, -124)
 texture = ExtResource("41_lek3c")
 
-[node name="GiantCloud8" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
-position = Vector2(6814, -679)
-texture = ExtResource("41_lek3c")
-
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Node2D"]
 z_index = 1
-position = Vector2(6565, -559)
+position = Vector2(6576, -656)
 texture = ExtResource("42_7jfqu")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -495,7 +465,6 @@ minimum = true
 
 [node name="CoinChecker" type="Node2D" parent="."]
 script = ExtResource("35_xp41n")
-toad_scene = "res://stages/extra/toad_house/maps/toad_house_1.tscn"
 
 [node name="Coin" parent="CoinChecker" instance=ExtResource("29_84blv")]
 position = Vector2(1008, 144)
@@ -598,7 +567,6 @@ metadata/_edit_lock_ = true
 
 [node name="QuestionBlockFireFlower" parent="Objects" instance=ExtResource("20_uga5i")]
 position = Vector2(464, 336)
-disable_mode = 0
 result = SubResource("Resource_pup4p")
 
 [node name="CheepBlue" parent="Objects" instance=ExtResource("31_mffwr")]
@@ -663,7 +631,6 @@ metadata/_edit_lock_ = true
 [node name="Checkpoint" parent="." instance=ExtResource("37_rlhmx")]
 position = Vector2(4096, 416)
 
-[connection signal="coin_checked_success" from="CoinChecker" to="SecretUnlocker" method="progress_secret"]
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 
 [editable path="Water"]

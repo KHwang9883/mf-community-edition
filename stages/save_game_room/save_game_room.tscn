@@ -1,4 +1,4 @@
-[gd_scene load_steps=171 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=174 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="5_1d41w"]
 [ext_resource type="PackedScene" uid="uid://cl58fmmyu8xha" path="res://engine/components/progress_continue/progress_continue_screen.tscn" id="6_drrs7"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_vufed"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/restore_tweaks_from_minix.gd" id="7_1qauj"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_6taja"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="9_6jkwo"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/custom_progress_continue_screen.gd" id="10_82cq3"]
@@ -80,6 +81,7 @@
 [ext_resource type="Script" path="res://objects/pipe_warp_custom/pipe_in_tweaked_custom.gd" id="59_ti1vt"]
 [ext_resource type="Texture2D" uid="uid://dbxt1cl71fxix" path="res://gfx/sign_small_upside_down_broken.png" id="60_bnpkh"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/spider.gd" id="60_hpsoc"]
+[ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="61_cu44g"]
 [ext_resource type="AudioStream" uid="uid://c0niykpi0ounv" path="res://engine/objects/enemies/human_lab/koopa_bro/sfx/throw.wav" id="63_gtcg3"]
 [ext_resource type="Texture2D" uid="uid://c5lb7k53xnvs8" path="res://gfx/sign/sign_saveroom.png" id="63_nbacx"]
 [ext_resource type="Texture2D" uid="uid://dwbubrok7amgc" path="res://gfx/sign/sign_minix_welcome_arrow.png" id="64_8vihd"]
@@ -785,6 +787,9 @@ radius = 24.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e5uii"]
 size = Vector2(64, 96)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jrfa4"]
+size = Vector2(224, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_um1io"]
 atlas = ExtResource("59_52xgh")
 region = Rect2(0, 0, 32, 32)
@@ -909,6 +914,9 @@ script = ExtResource("2_daqfu")
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("100_imftg")
+
+[node name="RestoreTweaksFromMinix" type="Node" parent="."]
+script = ExtResource("7_1qauj")
 
 [node name="Mario" parent="." instance=ExtResource("4_gl3qo")]
 position = Vector2(96, 176)
@@ -1611,6 +1619,41 @@ human lab level"
 horizontal_alignment = 1
 uppercase = true
 
+[node name="AllAchievements" type="StaticBody2D" parent="ScriptedEvents"]
+position = Vector2(1008, 128)
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("41_03xon")
+callback_only = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScriptedEvents/AllAchievements"]
+shape = SubResource("RectangleShape2D_jrfa4")
+
+[node name="Sprite2D" type="Sprite2D" parent="ScriptedEvents/AllAchievements"]
+texture_repeat = 2
+texture = ExtResource("85_esg68")
+region_enabled = true
+region_rect = Rect2(0, 0, 224, 32)
+
+[node name="Label3" type="Label" parent="ScriptedEvents/AllAchievements"]
+offset_left = -64.0
+offset_top = -96.0
+offset_right = 64.0
+offset_bottom = -73.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "COSTS 2 LIVES"
+horizontal_alignment = 1
+
+[node name="BoomerangFlower" parent="ScriptedEvents/AllAchievements" instance=ExtResource("61_cu44g")]
+position = Vector2(0, -32)
+force_powerup_state = true
+score = 0
+supply_behavior = true
+supply_modify_lives = -2
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Reset" parent="CanvasLayer" instance=ExtResource("14_xt7b1")]
@@ -1878,6 +1921,7 @@ metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="ResetPowerBlock" parent="Objects" instance=ExtResource("19_xtt8k")]
 position = Vector2(720, 208)
+disable_mode = 0
 
 [node name="PipeIn2" parent="Objects" instance=ExtResource("21_qg33c")]
 position = Vector2(3520, 304)
@@ -1898,7 +1942,7 @@ use_circle_transition = true
 [node name="PipeInTweaked6" parent="Objects" instance=ExtResource("21_qg33c")]
 position = Vector2(5280, 336)
 script = ExtResource("59_ti1vt")
-warp_to_remade_scene_tweak = "res://stages/extra/secrets/koopa_troopa_liberation_new.tscn"
+warp_to_remade_scene_tweak = ""
 warp_to_scene = "res://stages/extra/secrets/koopa_troopa_liberation.tscn"
 warping_sound = ExtResource("59_mqp80")
 use_circle_transition = true
@@ -1931,6 +1975,7 @@ circle_wait_till_scene_changed = false
 process_mode = 4
 visible = false
 position = Vector2(832, -688)
+collision_mask = 0
 warp_to_scene = "res://stages/mario_forever_flash/world_1/level_f1-1.tscn"
 use_circle_transition = true
 circle_wait_till_scene_changed = false
@@ -1969,9 +2014,9 @@ frequency = 2.0
 
 [node name="Label" type="Label" parent="Objects/Node2D2"]
 offset_left = 802.0
-offset_top = 160.0
+offset_top = 176.0
 offset_right = 1245.0
-offset_bottom = 189.0
+offset_bottom = 205.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
@@ -2072,9 +2117,9 @@ uppercase = true
 
 [node name="Label8" type="Label" parent="Objects"]
 offset_left = -576.0
-offset_top = -992.0
+offset_top = -989.0
 offset_right = -64.0
-offset_bottom = -960.0
+offset_bottom = -957.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
@@ -2499,7 +2544,12 @@ texture = ExtResource("13_w2ncv")
 
 [node name="FancyBush9" type="Sprite2D" parent="Objects/Node2D4"]
 z_index = 1
-position = Vector2(736, -528)
+position = Vector2(960, -528)
+texture = ExtResource("13_w2ncv")
+
+[node name="FancyBush13" type="Sprite2D" parent="Objects/Node2D4"]
+z_index = 1
+position = Vector2(1664, -512)
 texture = ExtResource("13_w2ncv")
 
 [node name="FancyBush12" type="Sprite2D" parent="Objects/Node2D4"]
@@ -2509,12 +2559,12 @@ texture = ExtResource("13_w2ncv")
 
 [node name="FancyBush10" type="Sprite2D" parent="Objects/Node2D4"]
 z_index = 1
-position = Vector2(1328, -520)
+position = Vector2(1408, -520)
 texture = ExtResource("13_w2ncv")
 
 [node name="FancyBush11" type="Sprite2D" parent="Objects/Node2D4"]
 z_index = 1
-position = Vector2(-480, -598)
+position = Vector2(-304, -535)
 texture = ExtResource("13_w2ncv")
 
 [node name="text blah blah" type="VBoxContainer" parent="Objects"]
@@ -3009,9 +3059,9 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="text blah blah2" type="VBoxContainer" parent="Objects"]
-offset_left = -592.0
+offset_left = -528.0
 offset_top = -944.0
-offset_right = -336.0
+offset_right = -112.0
 offset_bottom = -592.0
 theme_override_constants/separation = 2
 script = ExtResource("78_bvu8r")
@@ -3031,8 +3081,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "100,000 points in all
- mario minix maps"
+text = "100,000 points in all mario minix maps"
 vertical_alignment = 1
 uppercase = true
 
@@ -3064,8 +3113,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "30,000 points in all
- climbing maps"
+text = "30,000 points in all climbing maps"
 vertical_alignment = 1
 uppercase = true
 
@@ -3096,8 +3144,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "70,000 points in
- starman running"
+text = "70,000 points in starman running"
 vertical_alignment = 1
 uppercase = true
 
@@ -3128,8 +3175,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "world of stupidity
- completed"
+text = "world of stupidity completed"
 vertical_alignment = 1
 uppercase = true
 
@@ -3226,8 +3272,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "secret human laboratory
- level"
+text = "secret human laboratory level"
 vertical_alignment = 1
 uppercase = true
 
@@ -3250,7 +3295,6 @@ script = ExtResource("80_dw3tv")
 secret_id = "got 100 extra lives at once"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement28"]
-custom_minimum_size = Vector2(0, 27)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -3259,8 +3303,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "got 100 extra lives during
- playthrough"
+text = "got 100 extra lives during playthrough"
 vertical_alignment = 1
 uppercase = true
 
@@ -3283,7 +3326,6 @@ script = ExtResource("80_dw3tv")
 secret_id = "all secret rooms found"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement29"]
-custom_minimum_size = Vector2(0, 27)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -3292,8 +3334,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "all 7 secret room warps
- found"
+text = "all 7 secret room warps found"
 vertical_alignment = 1
 uppercase = true
 
@@ -3316,7 +3357,6 @@ script = ExtResource("80_dw3tv")
 secret_id = "all bonus levels beaten"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement30"]
-custom_minimum_size = Vector2(0, 27)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -3348,7 +3388,6 @@ script = ExtResource("80_dw3tv")
 secret_id = "all toad houses found"
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement31"]
-custom_minimum_size = Vector2(0, 27)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -3357,7 +3396,7 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "all 4 toad houses found"
+text = "all 5 toad houses found"
 vertical_alignment = 1
 uppercase = true
 
@@ -3373,183 +3412,13 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="text blah blah3" type="VBoxContainer" parent="Objects"]
-offset_left = -304.0
-offset_top = -944.0
-offset_right = -48.0
-offset_bottom = -592.0
-theme_override_constants/separation = 2
-script = ExtResource("78_bvu8r")
-
-[node name="Achievement24" type="HBoxContainer" parent="Objects/text blah blah3"]
-layout_mode = 2
-theme_override_constants/separation = 0
-script = ExtResource("80_dw3tv")
-secret_id = "story mode in secret mode"
-
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement24"]
-custom_minimum_size = Vector2(0, 27)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/line_spacing = -3
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_acdmo")
-theme_override_font_sizes/font_size = 20
-text = "story mode in ????? mode"
-vertical_alignment = 1
-uppercase = true
-
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement24"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_6tkxo")
-theme_override_font_sizes/font_size = 28
-text = "no"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="Achievement23" type="HBoxContainer" parent="Objects/text blah blah3"]
-layout_mode = 2
-theme_override_constants/separation = 0
-script = ExtResource("80_dw3tv")
-secret_id = "story mode no warps"
-
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement23"]
-custom_minimum_size = Vector2(0, 27)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/line_spacing = -3
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_acdmo")
-theme_override_font_sizes/font_size = 20
-text = "story mode in ????? mode
- warpless"
-vertical_alignment = 1
-uppercase = true
-
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement23"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_6tkxo")
-theme_override_font_sizes/font_size = 28
-text = "no"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="Achievement25" type="HBoxContainer" parent="Objects/text blah blah3"]
-layout_mode = 2
-theme_override_constants/separation = 0
-script = ExtResource("80_dw3tv")
-secret_id = "human lab in secret mode"
-
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement25"]
-custom_minimum_size = Vector2(0, 27)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/line_spacing = -3
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_acdmo")
-theme_override_font_sizes/font_size = 20
-text = "human lab in ????? mode"
-vertical_alignment = 1
-uppercase = true
-
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement25"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_6tkxo")
-theme_override_font_sizes/font_size = 28
-text = "no"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="Achievement26" type="HBoxContainer" parent="Objects/text blah blah3"]
-layout_mode = 2
-theme_override_constants/separation = 0
-script = ExtResource("80_dw3tv")
-secret_id = "lost map in secret mode"
-
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement26"]
-custom_minimum_size = Vector2(0, 27)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/line_spacing = -3
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_acdmo")
-theme_override_font_sizes/font_size = 20
-text = "lost map in ????? mode"
-vertical_alignment = 1
-uppercase = true
-
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement26"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_6tkxo")
-theme_override_font_sizes/font_size = 28
-text = "no"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="Achievement27" type="HBoxContainer" parent="Objects/text blah blah3"]
-layout_mode = 2
-theme_override_constants/separation = 0
-script = ExtResource("80_dw3tv")
-secret_id = "world of stupidity secret mode"
-
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement27"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/line_spacing = -3
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_acdmo")
-theme_override_font_sizes/font_size = 20
-text = "world of stupidity
- in ????? mode"
-vertical_alignment = 1
-uppercase = true
-
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement27"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_6tkxo")
-theme_override_font_sizes/font_size = 28
-text = "no"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="Achievement31" type="HBoxContainer" parent="Objects/text blah blah3"]
+[node name="Achievement33" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
 secret_id = "story mode no hit"
 
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement31"]
-custom_minimum_size = Vector2(0, 27)
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement33"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -3562,7 +3431,7 @@ text = "story mode no hit"
 vertical_alignment = 1
 uppercase = true
 
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement31"]
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement33"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
@@ -3574,13 +3443,13 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="Achievement32" type="HBoxContainer" parent="Objects/text blah blah3"]
+[node name="Achievement34" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
 secret_id = "story mode no death"
 
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement32"]
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement34"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -3589,12 +3458,11 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "story mode warpless
- no death"
+text = "story mode warpless no deaths"
 vertical_alignment = 1
 uppercase = true
 
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement32"]
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement34"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
@@ -3606,13 +3474,13 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="Achievement28" type="HBoxContainer" parent="Objects/text blah blah3"]
+[node name="Achievement35" type="HBoxContainer" parent="Objects/text blah blah2"]
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
 secret_id = "story mode beetroot"
 
-[node name="Label7" type="Label" parent="Objects/text blah blah3/Achievement28"]
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement35"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -3621,12 +3489,11 @@ theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("FontVariation_acdmo")
 theme_override_font_sizes/font_size = 20
-text = "story mode no hit
- in beetroot suit only"
+text = "story mode no hit in beetroot suit only"
 vertical_alignment = 1
 uppercase = true
 
-[node name="Toggle" type="Label" parent="Objects/text blah blah3/Achievement28"]
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement35"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
@@ -3637,6 +3504,170 @@ text = "no"
 horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
+
+[node name="Achievement24" type="HBoxContainer" parent="Objects/text blah blah2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode in secret mode"
+
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement24"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 20
+text = "story mode in ????? mode"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement24"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_6tkxo")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Achievement25" type="HBoxContainer" parent="Objects/text blah blah2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "story mode no warps"
+
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement25"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 20
+text = "story mode in ????? mode warpless"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement25"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_6tkxo")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Achievement26" type="HBoxContainer" parent="Objects/text blah blah2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "human lab in secret mode"
+
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement26"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 20
+text = "human lab in ????? mode"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement26"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_6tkxo")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Achievement27" type="HBoxContainer" parent="Objects/text blah blah2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "lost map in secret mode"
+
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement27"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 20
+text = "lost map in ????? mode"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement27"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_6tkxo")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Achievement32" type="HBoxContainer" parent="Objects/text blah blah2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("80_dw3tv")
+secret_id = "world of stupidity secret mode"
+
+[node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement32"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_acdmo")
+theme_override_font_sizes/font_size = 20
+text = "world of stupidity in ????? mode"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/text blah blah2/Achievement32"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_6tkxo")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="text blah blah3" type="VBoxContainer" parent="Objects"]
+visible = false
+offset_left = -304.0
+offset_top = -944.0
+offset_right = -48.0
+offset_bottom = -592.0
+theme_override_constants/separation = 2
+script = ExtResource("78_bvu8r")
 
 [node name="PipeIn5" parent="Objects" instance=ExtResource("21_qg33c")]
 position = Vector2(96, 272)
@@ -3718,7 +3749,7 @@ uppercase = true
 
 [node name="ColorRect2" type="ColorRect" parent="Objects/ConsoleBlock"]
 offset_left = -640.0
-offset_top = -960.0
+offset_top = -944.0
 offset_bottom = -576.0
 color = Color(0, 0, 0, 0.619608)
 
@@ -3913,7 +3944,7 @@ theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 21
 text = "human laboratory
-world 2
+world 
 
 by coreshinobi124"
 horizontal_alignment = 1
@@ -4488,6 +4519,7 @@ message = "you can only do this challenge on an empty save pipe!"
 [connection signal="warp_started" from="Objects/PipeIn4" to="Node" method="skip_continue_save"]
 [connection signal="warp_ended" from="Objects/Node2D3/PipeIn" to="KevinLayer/KevinActivationLabel" method="kevin_reset" binds= [true]]
 [connection signal="warp_started" from="Objects/Node2D3/PipeIn" to="KevinLayer/KevinActivationLabel" method="kevin_reset"]
+[connection signal="all_achievements_done" from="Objects/text blah blah" to="ScriptedEvents/AllAchievements" method="activate"]
 [connection signal="block_triggered" from="Objects/ConsoleBlock" to="Objects/Node2D3/PipeIn" method="queue_free"]
 [connection signal="warp_started" from="PipeIn2" to="PipeIn2/Node" method="trigger"]
 [connection signal="player_enter" from="AreaExtra TRUE" to="CamAreaNewSecrets" method="set_deferred" binds= [&"smooth_transition", true]]
