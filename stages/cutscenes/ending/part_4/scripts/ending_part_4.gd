@@ -14,6 +14,7 @@ const KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
 
 var _original_time_scale: float
 var _skippable: bool
+var _skippable_plus: bool
 var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 var walked: bool = false
@@ -81,6 +82,8 @@ func _flow_stare() -> void:
 	
 	await _time(5)
 	node_2d.speed = 20
+	if _skippable:
+		_skippable_plus = true
 
 func _time(t: float) -> void:
 	await get_tree().create_timer(t, false).timeout
@@ -98,9 +101,12 @@ func _unhandled_input(event: InputEvent):
 	if !_skippable: return
 	if event.is_action_pressed(&"pause_toggle"):
 		_fade_out()
+	if event.is_action_pressed(&"m_attack") && _skippable_plus:
+		_fade_out()
 
 func _fade_out() -> void:
 	_skippable = false
+	_skippable_plus = false
 	
 	_restore()
 	await get_tree().physics_frame

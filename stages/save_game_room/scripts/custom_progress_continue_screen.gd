@@ -22,7 +22,6 @@ func suspended_game_logic() -> void:
 			cursed_preview.visible = true
 			cursed_preview.play(&"walk")
 	Scenes.custom_scenes.pause.open_blocked = true
-	Data.technical_values.impulse_progress_continue = false
 	
 	animation_player.play(&"init")
 	toggle()
