@@ -4,7 +4,6 @@ signal level_complete
 
 const APPLEUSE = preload("res://stages/extra/click_bonus_game/sfx/appleuse.ogg")
 const DISCOVEREDGUNPOWDER_ = preload("res://stages/extra/click_bonus_game/sfx/discoveredgunpowder-.wav")
-const MARIO_OHNO = preload("res://music/climbing_minigame/mario_ohno.wav")
 
 @export var try_count: int = 10
 
@@ -23,6 +22,8 @@ var _original_time_scale: float
 @onready var try_next_time: Sprite2D = $"Heads-Up Display/TryNextTime"
 @onready var h_box_container: HBoxContainer = $"Heads-Up Display/HBoxContainer"
 @onready var tries: HBoxContainer = $"Heads-Up Display/Tries"
+
+@onready var MARIO_OHNO = CharacterManager.get_voice_line("oh_no")
 
 
 func _ready() -> void:
