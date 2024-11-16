@@ -143,3 +143,4 @@ func _on_collided_wall() -> void:
 				j.get_collider().got_bumped.call_deferred(self)
 			elif j.get_collider().has_method(&"bricks_break"):
 				j.get_collider().bricks_break.call_deferred()
+	turn_x()
