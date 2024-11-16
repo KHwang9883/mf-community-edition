@@ -6,7 +6,6 @@ extends Node2D
 @onready var camera_2d = $Camera2D
 @onready var mario: Player = Thunder._current_player
 @onready var cell_peach = $CellPeach
-@onready var win_pose = $WinPose
 
 var _original_time_scale: float
 var _skippable: bool
@@ -69,31 +68,15 @@ func _flow_mario_enter_castle() -> void:
 	cell_peach.speed_scale = 0
 	mario.speed.x = 0
 	mario_walking = false
-	mario.visible = false
-	
-	match mario.suit.name:
-		"small":
-			win_pose.frame = 0
-		"super":
-			win_pose.frame = 1
-		"fireball":
-			win_pose.frame = 2
-		"beetroot":
-			win_pose.frame = 3
-		"green_lui":
-			win_pose.frame = 4
-	
-	var tex: Texture2D = win_pose.sprite_frames.get_frame_texture("default", win_pose.frame)
-	@warning_ignore("integer_division")
-	win_pose.global_position.x -= tex.get_width() / 2
-	win_pose.global_position.y -= tex.get_height()
-	win_pose.reset_physics_interpolation()
-	win_pose.visible = true
+	mario.warp = mario.Warp.IN
+	@warning_ignore("int_as_enum_without_match", "int_as_enum_without_cast")
+	mario.warp_dir = 99
+	mario.sprite.set_animation(&"win")
 	
 	await _time(1)
 	
 	var tw = create_tween()
-	tw.tween_property(win_pose, "modulate:a", 0.0, 0.5)
+	tw.tween_property(mario, "modulate:a", 0.0, 0.5)
 	await _time(1.5)
 	
 	_fade_out()

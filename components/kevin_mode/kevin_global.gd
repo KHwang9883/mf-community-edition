@@ -21,3 +21,7 @@ func patch_mario() -> void:
 	if Scenes.current_scene.name == "SaveGameRoom": return
 	if is_instance_valid(Thunder._current_player) && activated:
 		Thunder._current_player.death_check_for_lives = false
+		Thunder._current_player.death_wait_time = 9999999
+		Thunder._current_player.died_with_body.connect(func(body):
+			body.process_mode = Node.PROCESS_MODE_INHERIT
+		)

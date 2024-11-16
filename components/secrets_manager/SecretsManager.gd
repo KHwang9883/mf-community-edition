@@ -1,11 +1,13 @@
 extends CanvasLayer
 
 const secrets_path = "user://achievements.thss"
+const SECRET_NOTIFICATION = null
 
 var secrets: Dictionary = {}
 var toast_queue: Array[String] = []
 
 var _save_queued: bool
+var _is_free: bool = true
 
 @onready var label: Label = $Map
 @onready var ninepatch: NinePatchRect = $Map/Title
@@ -14,10 +16,6 @@ var _save_queued: bool
 func _ready() -> void:
 	load_secrets()
 	reparent.call_deferred(GlobalViewport.vp, false)
-	#await get_tree().create_timer(3.0).timeout
-	#set_secret("bowser the devastator defeated333333333333333", true)
-	#await get_tree().create_timer(2.0).timeout
-	#set_secret("mushroom plague", true)
 	Data.life_added.connect(func():
 		if Data.values.lives >= 99:
 			set_secret("got 100 extra lives at once", true)
@@ -28,6 +26,9 @@ func _physics_process(delta: float) -> void:
 	if _save_queued:
 		_save_queued = false
 		SettingsManager.save_data(secrets, secrets_path, "Achievements")
+	if _is_free && toast_queue.size() > 0:
+		_is_free = false
+		show_achievement(toast_queue.pop_back())
 
 
 func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true) -> void:
@@ -56,13 +57,10 @@ func is_endgame() -> bool:
 
 func queue_achievement(text: String) -> void:
 	toast_queue.append(text)
-	if len(toast_queue) == 1:
-		toast_queue.clear()
-		show_achievement(text)
 
 
 func show_achievement(text: String) -> void:
-	#Audio.play_1d_sound(preload("res://components/secrets_manager/desktop_toast_default.wav"))
+	Audio.play_1d_sound(SECRET_NOTIFICATION)
 	label.text = ""
 	label.size.x = 192
 	label.position.y = marker_2d.position.y + label.size.y + 8
@@ -76,8 +74,8 @@ func show_achievement(text: String) -> void:
 	if len(toast_queue) == 0:
 		tw = create_tween()
 		tw.tween_property(label, "modulate:a", 0.0, 2.0)
-	else:
-		show_achievement(toast_queue.pop_back())
+	
+	_is_free = true
 
 
 func load_secrets() -> void:

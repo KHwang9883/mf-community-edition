@@ -28,6 +28,7 @@ func check_for_coins() -> void:
 	Data.technical_values.map_scene = Scenes.current_scene.jump_to_scene
 	Scenes.current_scene.jump_to_scene = toad_scene
 	Scenes.current_scene.completion_center_on_player_after_transition = true
+	coin_checked_success.emit()
 	
 	if string_node:
 		string_node.activate()

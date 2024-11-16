@@ -26,6 +26,7 @@ const BIG_FISH_BONES = preload("res://stages/extra/climbing_minigame/objects/big
 const MARIO = preload("res://stages/extra/climbing_minigame/objects/mario.tscn")
 const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/platform_path_cloud.tscn")
 const BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_launcher_structure.tscn")
+const SND_BOWSER_LAUGH = preload("res://music/climbing_minigame/snd_bowser_laugh.ogg")
 
 @onready var platform_path: AnimatableBody2D = $"../../PlatformPath"
 @onready var platform_path_2: AnimatableBody2D = $"../../PlatformPath2"
@@ -103,7 +104,9 @@ func _ready() -> void:
 	await get_tree().create_timer(1.0, false, false, false).timeout
 	can_get_faster = true
 
-	await get_tree().create_timer(2.0, false, false, false).timeout
+	await get_tree().create_timer(0.6, false, false, false).timeout
+	Audio.play_1d_sound(preload("res://music/climbing_minigame/snd_bowser_laugh.ogg"))
+	await get_tree().create_timer(1.4, false, false, false).timeout
 	jumping_cheeps_generator.enabled = true
 
 

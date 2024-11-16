@@ -92,8 +92,12 @@ func _physics_process(_delta: float) -> void:
 	if !appear_triggered && (is_instance_valid(mario) && !mario_pos.is_equal_approx(mario.global_position) ):
 		appear_triggered = true
 		await get_tree().create_timer(1, false, true, false).timeout
+		visible = false
 		if !cutscene:
 			Audio.play_1d_sound(APPEAR)
+		for i in 2:
+			await get_tree().physics_frame
+		visible = true
 	
 	if !appear_triggered: return
 	if !is_instance_valid(mario):
@@ -118,8 +122,6 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	global_position = pos
-	if pos.is_equal_approx(Vector2(-100, -100)):
-		reset_physics_interpolation()
 	sprite.animation = animation
 	sprite.frame = frame
 	sprite.flip_h = flip_h
@@ -139,12 +141,18 @@ func _map_process(_delta: float) -> void:
 	var flip_h = player.player.flip_h
 	var frames = player.player.sprite_frames
 	
+	if !appear_triggered:
+		appear_triggered = true
+		await get_tree().create_timer(1, false, true, false).timeout
+		visible = false
+		for i in 2:
+			await get_tree().physics_frame
+		visible = true
+	
 	await get_tree().create_timer(1.0 if !player.is_faster else 0.15, false, true, false).timeout
 	
 	if !player.reached:
 		global_position = pos
-	if pos.is_equal_approx(Vector2(-100, -100)):
-		reset_physics_interpolation()
 	sprite.animation = animation
 	sprite.frame = frame
 	sprite.flip_h = flip_h
