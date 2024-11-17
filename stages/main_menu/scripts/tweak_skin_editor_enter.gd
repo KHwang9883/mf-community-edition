@@ -31,10 +31,10 @@ func _handle_select(mouse_input: bool = false) -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 	
-	if !get_parent().focused: return
-	
 	arrow_r.visible = focused
 	arrow_l.visible = focused
+	
+	if !get_parent().focused: return
 	
 	if !focused: return
 	
