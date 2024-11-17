@@ -10,5 +10,6 @@ func _handle_select(mouse_input: bool = false) -> void:
 	Scenes.current_scene.get_node("Menu/MainMenuControls").focused = true
 	Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/Tweaks").focused = false
 	
+	SkinsManager.load_external_textures()
 	SettingsManager.save_tweaks()
 	SettingsManager.save_settings()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=51 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_exit.gd" id="5_cvfb0"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="5_dhfy0"]
 [ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="5_fjyvq"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_skin_selector.gd" id="6_n68nh"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_quality.gd" id="12_4kuwt"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/console_patch.gd" id="12_4rgcr"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
@@ -92,6 +93,16 @@ atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q28t2"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqk6g"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_td6w7"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
@@ -348,7 +359,7 @@ left_side = false
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Tweaks"]
 layout_mode = 2
-script = ExtResource("2_pysyt")
+script = ExtResource("6_n68nh")
 
 [node name="Label" type="Label" parent="Tweaks/HBoxContainer2"]
 layout_mode = 2
@@ -520,7 +531,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "go back"
+text = "save and go back"
 uppercase = true
 
 [node name="Gameplay" type="VBoxContainer" parent="."]
@@ -1047,6 +1058,84 @@ texture = SubResource("AtlasTexture_q28t2")
 stretch_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="Gameplay/HBoxContainer15/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HBoxContainer16" type="HBoxContainer" parent="Gameplay"]
+layout_mode = 2
+script = ExtResource("3_pxu1a")
+tweak_name = "f3_keybind"
+tweak_description = "enables a quick shortcut to save game room using f3 key"
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="Gameplay/HBoxContainer16"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "f3 keybind to save game room"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="Gameplay/HBoxContainer16"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_eqk6g")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Gameplay/HBoxContainer16/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HBoxContainer17" type="HBoxContainer" parent="Gameplay"]
+layout_mode = 2
+script = ExtResource("3_pxu1a")
+tweak_name = "f4_keybind"
+tweak_description = "enables a quick shortcut to main menu using f4 key"
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="Gameplay/HBoxContainer17"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "f4 keybind to main menu"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="Gameplay/HBoxContainer17"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_td6w7")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Gameplay/HBoxContainer17/Toggle"]
 modulate = Color(0, 0, 0, 0.462745)
 z_index = -1
 layout_mode = 2

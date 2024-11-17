@@ -14,7 +14,7 @@ func suspended_game_logic() -> void:
 	label_text += profile.title_level
 	level_label.text = label_text
 	if profile.get(&"saved_player_state"):
-		var suit_frames: SpriteFrames = CharacterManager.get_suit(profile.saved_player_state).animation_sprites
+		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(CharacterManager.get_suit(profile.saved_player_state))
 		state_preview.sprite_frames = suit_frames
 		state_preview.play(&"walk")
 		if profile.saved_profile_data.get(&"kevin_mode_enabled"):
