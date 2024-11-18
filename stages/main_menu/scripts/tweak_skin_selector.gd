@@ -1,5 +1,7 @@
 extends MenuSelection
 
+@export_multiline var tweak_description: String
+
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 var skin_list: Array = [""]
 var skin_sel_index: int
@@ -10,6 +12,13 @@ var skin_sel_index: int
 
 func _ready():
 	_update_string.call_deferred()
+
+
+func _handle_focused(focus) -> void:
+	super(focus)
+	if !focus: return
+	if tweak_description:
+		$"../..".emit_signal(&"_tweak_desc", get_parent())
 
 
 func _handle_select(mouse_input: bool = false) -> void:

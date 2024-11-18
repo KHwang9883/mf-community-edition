@@ -252,7 +252,7 @@ boss_music_var_1 = ExtResource("4_tcp1l")
 music = Array[Resource]([ExtResource("4_jj2qm")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("5_vupbl")]
-secrets = Array[String](["hardcore worlds finished"])
+secrets = Array[String](["hardcore worlds finished", "hardcore 2 secret mode"])
 
 [node name="Mario" parent="." instance=ExtResource("4_o3fis")]
 position = Vector2(104, 336)
@@ -1145,7 +1145,8 @@ visible = false
 position = Vector2(8731, 560)
 shape = SubResource("RectangleShape2D_gp4os")
 
-[connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
+[connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
+[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 
 [editable path="Objects/Normal Objects/BowserJump"]
