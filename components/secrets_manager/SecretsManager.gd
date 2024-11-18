@@ -12,6 +12,7 @@ var _is_free: bool = true
 @onready var label: Label = $Map
 @onready var ninepatch: NinePatchRect = $Map/Title
 @onready var marker_2d: Marker2D = $Marker2D
+@onready var vignette: Sprite2D = $Vignette
 
 func _ready() -> void:
 	load_secrets()
@@ -19,6 +20,9 @@ func _ready() -> void:
 	Data.life_added.connect(func():
 		if Data.values.lives >= 99:
 			set_secret("got 100 extra lives at once", true)
+	)
+	SettingsManager.tweaks_updated.connect(func():
+		vignette.visible = SettingsManager.get_tweak(&"vignette", false)
 	)
 
 

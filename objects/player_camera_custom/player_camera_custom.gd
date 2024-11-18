@@ -36,10 +36,28 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 		var _prev_pos: Vector2 = global_position
 		global_position = Vector2(Thunder._current_player.global_position)
 		if is_retro_scroll():
-			if (global_position.x < _prev_pos.x && retro_scroll_direction == 1) || (global_position.x > _prev_pos.x && retro_scroll_direction == -1):
+			var scr_dir: int = retro_scroll_direction
+			if _prev_pos.x > limit_right - 320 && scr_dir == 1:
+				_prev_pos.x = limit_right - 320
+			elif _prev_pos.x < limit_left + 320 && scr_dir == -1:
+				_prev_pos.x = limit_left + 320
+			elif _prev_pos.y > limit_top - 240 && scr_dir == 3:
+				_prev_pos.y = limit_top - 240
+			elif _prev_pos.y < limit_top + 240 && scr_dir == 2:
+				_prev_pos.y = limit_top + 240
+			
+			if (
+				(global_position.x < _prev_pos.x && scr_dir == 1) || # Right
+				(global_position.x > _prev_pos.x && scr_dir == -1)   # Left
+			):
 				global_position.x = _prev_pos.x
-			if (global_position.y < _prev_pos.y && retro_scroll_direction == 3) || (global_position.y > _prev_pos.y && retro_scroll_direction == 2):
+			
+			if (
+				(global_position.y < _prev_pos.y && scr_dir == 3) || # Down
+				(global_position.y > _prev_pos.y && scr_dir == 2)    # Up
+			):
 				global_position.y = _prev_pos.y
+			
 		if reset_interpolation:
 			reset_physics_interpolation()
 			_xscroll = 0
