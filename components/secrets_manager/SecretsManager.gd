@@ -24,6 +24,8 @@ func _ready() -> void:
 	SettingsManager.tweaks_updated.connect(func():
 		vignette.visible = SettingsManager.get_tweak(&"vignette", false)
 	)
+	await get_tree().physics_frame
+	vignette.visible = SettingsManager.get_tweak(&"vignette", false)
 
 
 func _physics_process(delta: float) -> void:
