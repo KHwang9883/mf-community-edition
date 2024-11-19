@@ -7,13 +7,13 @@ const game_key: String = "Mario_Forever_Community_Edition_Update"
 
 const url: String = \
 
-"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/2b36d28c807ddc1f8ba157d07acf6cba9266eb68/update_check.json"
+"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
 
 var url_open: String = "https://gist.github.com/jue131/f7ad31818af19fa91b5175cb67340529"
 
 const SELECT_ENTER = preload("res://engine/components/ui/_sounds/select_enter.wav")
 const COIN = preload("res://sfx/clear.wav")
-@onready var version = ProjectSettings.get_setting("application/thunder_settings/version", 0)
+@onready var version: int = ProjectSettings.get_setting("application/thunder_settings/version", 0)
 
 @onready var update_found: Label = $"../UpdateFound"
 @onready var http_request: HTTPRequest = $"../HTTPRequest"
