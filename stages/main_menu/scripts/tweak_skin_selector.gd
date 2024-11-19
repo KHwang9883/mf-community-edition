@@ -53,6 +53,9 @@ func _physics_process(delta: float) -> void:
 		skin_sel_index = wrapi(skin_sel_index - 1, 0, skin_list.size())
 		SettingsManager.settings.skin = skin_list[skin_sel_index]
 		_toggled_option(old_value, SettingsManager.settings.skin)
+	elif Input.is_action_just_pressed(&"ui_select"):
+		if tweak_description:
+			$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
 
 
 func _toggled_option(old_val, new_val) -> void:
