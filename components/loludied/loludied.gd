@@ -51,6 +51,7 @@ func _physics_process(delta: float) -> void:
 		color_rect.modulate.a = min(color_rect.modulate.a + 5 * delta, 1)
 		
 		if Input.is_action_just_pressed("ui_accept"):
+			Audio.stop_all_sounds()
 			deactivate()
 			Scenes.reload_current_scene()
 			Data.values.onetime_blocks = false
