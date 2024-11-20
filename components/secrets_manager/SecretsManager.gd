@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 const secrets_path = "user://achievements.thss"
-const SECRET_NOTIFICATION = null
+const SECRET_NOTIFICATION = preload("res://components/secrets_manager/achievement.wav")
 
 var secrets: Dictionary = {}
 var toast_queue: Array[String] = []
