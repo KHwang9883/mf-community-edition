@@ -12,8 +12,8 @@ func _ready() -> void:
 	if !SettingsManager.get_tweak("minigames_in_main_worlds", true):
 		return
 	Scenes.current_scene.level_completed.connect(check_for_coins, CONNECT_DEFERRED)
-	child_exiting_tree.connect(_on_child_exiting_tree.unbind(1), CONNECT_DEFERRED)
 	await get_tree().physics_frame
+	child_exiting_tree.connect(_on_child_exiting_tree.unbind(1), CONNECT_DEFERRED)
 	for i in get_children():
 		if i.has_signal(&"bumped"):
 			Thunder._connect(i.bumped, _on_child_exiting_tree, CONNECT_DEFERRED)
