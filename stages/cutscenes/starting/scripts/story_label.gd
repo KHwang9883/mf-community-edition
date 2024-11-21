@@ -5,7 +5,7 @@ var speed = 6
 
 func _ready() -> void:
 	modulate.a = 0
-	text = text % CharacterManager.get_character_display_name()
+	text = text.format([CharacterManager.get_character_display_name()], "%s")
 
 func _physics_process(delta: float) -> void:
 	global_position.y -= speed * delta

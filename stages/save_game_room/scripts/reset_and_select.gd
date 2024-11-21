@@ -3,8 +3,9 @@ extends "res://engine/scenes/save_game_room/scripts/reset.gd"
 #var can_select: bool
 
 @onready var _tweak: bool = SettingsManager.get_tweak("load_save_from_world_start", false)
-@onready var unlock: Label = get_node_or_null("Unlock")
-@onready var unlock2: Label = $Unlock2
+@onready var unlock: Label = get_node_or_null(^"VBoxContainer/Unlock")
+@onready var unlock2: Label = get_node_or_null(^"VBoxContainer/Unlock2")
+@onready var secrets: Label = get_node_or_null(^"VBoxContainer/Secrets")
 
 func _ready() -> void:
 	move_down_by_px += 16
