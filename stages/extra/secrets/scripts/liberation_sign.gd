@@ -10,3 +10,8 @@ func create(upwards: bool = false) -> void:
 	keyboard.reset_physics_interpolation()
 	if upwards:
 		keyboard.speed.y = -300
+	if SettingsManager.get_quality() == SettingsManager.QUALITY.MIN:
+		keyboard.scale.y *= -1
+		keyboard.default_speed_x_min = 0
+		keyboard.default_speed_x_max = 0
+		keyboard.speed.x = 0
