@@ -131,7 +131,7 @@ func pass_warp() -> void:
 		ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
 	if _star_world && _star_sel_level:
 		Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
-		print(Data.values.map_force_selected_marker)
+		#print(Data.values.map_force_selected_marker)
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
 		warp_to_scene = ProfileManager.current_profile.data.current_world
 	Data.values.skip_progress_continue = true
@@ -148,6 +148,20 @@ func _update_reset_labels() -> void:
 	if reset_node.unlock:
 		reset_node.unlock.visible = _star_world
 	reset_node.unlock2.visible = _star_world
+	reset_node.secrets.visible = false
+	if !_star_world && profile_name in ProfileManager.profiles:
+		var _arr: PackedStringArray = ["warpless", "no hit", "no deaths"]
+		var _prof = ProfileManager.profiles[profile_name].data
+		if "died" in _prof:
+			_arr.remove_at(2)
+		if "damaged" in _prof:
+			_arr.remove_at(1)
+		if "warped" in _prof:
+			_arr.remove_at(0)
+		if _arr.is_empty():
+			return
+		reset_node.secrets.text = "applicable for %s" % ", ".join(_arr)
+		reset_node.secrets.visible = true
 
 
 func block_pure_pipe() -> void:

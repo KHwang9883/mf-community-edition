@@ -17,7 +17,7 @@ func unlock_with_kevin(id: int = 0) -> void:
 	if id < len(secrets):
 		if secrets[id].is_empty(): return
 		if !KevinGlobal.activated:
-			print("[Secrets] ID %d check failed (simple)" % [id])
+			print("[Secrets] ID %d check failed (secret mode)" % [id])
 			return
 		SecretsManager.set_secret(secrets[id], true, true, show_toast)
 
@@ -33,7 +33,7 @@ func unlock_if(conditions: PackedStringArray, id: int = 0) -> void:
 
 func unlock_with_kevin_if(conditions: PackedStringArray, id: int = 0) -> void:
 	if !KevinGlobal.activated:
-		print("[Secrets] ID %d check failed (complex conditions)" % [id])
+		print("[Secrets] ID %d check failed (secret mode and conditions)" % [id])
 		return
 	unlock_if(conditions, id)
 

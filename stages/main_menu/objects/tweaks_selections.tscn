@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=54 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -17,7 +17,9 @@
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="15_lbl8e"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="16_4e6sj"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_preset_selections.gd" id="16_xo152"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="17_xjt7h"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_reset_to_default.gd" id="17_yhxg0"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="18_kemdi"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_4hroi"]
@@ -191,6 +193,50 @@ theme_override_constants/separation = 14
 script = ExtResource("1_e1b0h")
 focused = false
 prev_screen_node_path = NodePath("Exit2")
+
+[node name="HSeparator7" type="HSeparator" parent="Tweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="PresetsButton" type="HBoxContainer" parent="Tweaks/HSeparator7"]
+process_mode = 4
+visible = false
+layout_mode = 2
+offset_top = -28.0
+offset_right = 456.0
+offset_bottom = -14.0
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../../Presets")
+menu_selector_path = NodePath("../../../Selector4")
+
+[node name="Label" type="Label" parent="Tweaks/HSeparator7/PresetsButton"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "tweak presets"
+uppercase = true
+
+[node name="Value" type="Label" parent="Tweaks/HSeparator7/PresetsButton"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
 
 [node name="GameplayButton" type="HBoxContainer" parent="Tweaks"]
 layout_mode = 2
@@ -1082,7 +1128,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "f3_keybind"
-tweak_description = "enables a quick shortcut to save game room using f3 key"
+tweak_description = "enables a quick shortcut to save game room using f3 key."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Gameplay/HBoxContainer16"]
@@ -1095,7 +1141,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "f3 keybind to save game room."
+text = "f3 keybind to save game room"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="Gameplay/HBoxContainer16"]
@@ -1121,7 +1167,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "f4_keybind"
-tweak_description = "enables a quick shortcut to main menu using f4 key"
+tweak_description = "enables a quick shortcut to main menu using f4 key."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Gameplay/HBoxContainer17"]
@@ -1134,7 +1180,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "f4 keybind to main menu."
+text = "f4 keybind to main menu"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="Gameplay/HBoxContainer17"]
@@ -1233,7 +1279,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "soundtrack:"
+text = "soundtrack"
 uppercase = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Aesthetic/HBoxContainerSoundtrack"]
@@ -1902,6 +1948,264 @@ theme_override_font_sizes/font_size = 12
 text = "go back"
 uppercase = true
 
+[node name="Presets" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 1672.0
+offset_top = 22.0
+offset_right = 2128.0
+offset_bottom = 454.0
+theme_override_constants/separation = 14
+script = ExtResource("1_e1b0h")
+focused = false
+prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator2" type="HSeparator" parent="Presets"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="Presets/HSeparator2"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "presets"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator3" type="HSeparator" parent="Presets"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Gameplay" type="HBoxContainer" parent="Presets"]
+layout_mode = 2
+script = ExtResource("16_xo152")
+tweak_name = "bgm_as_in_version"
+selected_sound = ExtResource("3_bcwg7")
+
+[node name="Label" type="Label" parent="Presets/Gameplay"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "gameplay"
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Presets/Gameplay"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 8
+
+[node name="Value" type="Label" parent="Presets/Gameplay/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "mixed"
+uppercase = true
+
+[node name="arrow" type="Label" parent="Presets/Gameplay/HBoxContainer/Value"]
+layout_mode = 0
+offset_left = -32.0
+offset_right = -7.0
+offset_bottom = 16.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "<--"
+uppercase = true
+script = ExtResource("5_dhfy0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Presets/Gameplay/HBoxContainer"]
+layout_mode = 2
+
+[node name="arrow" type="Label" parent="Presets/Gameplay/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "-->"
+uppercase = true
+script = ExtResource("5_dhfy0")
+left_side = false
+
+[node name="Aesthetics" type="HBoxContainer" parent="Presets"]
+layout_mode = 2
+script = ExtResource("12_4kuwt")
+tweak_description = "this is not a tweak, but rather a quick access to a quality setting from the options screen"
+
+[node name="Label" type="Label" parent="Presets/Aesthetics"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "aesthetics"
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Presets/Aesthetics"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 8
+
+[node name="Value" type="Label" parent="Presets/Aesthetics/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "medium"
+uppercase = true
+
+[node name="arrow" type="Label" parent="Presets/Aesthetics/HBoxContainer/Value"]
+layout_mode = 0
+offset_left = -32.0
+offset_right = -7.0
+offset_bottom = 16.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "<--"
+uppercase = true
+script = ExtResource("5_dhfy0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Presets/Aesthetics/HBoxContainer"]
+layout_mode = 2
+
+[node name="arrow" type="Label" parent="Presets/Aesthetics/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "-->"
+uppercase = true
+script = ExtResource("5_dhfy0")
+left_side = false
+
+[node name="HBoxContainer14" type="HBoxContainer" parent="Presets"]
+layout_mode = 2
+script = ExtResource("17_yhxg0")
+
+[node name="Label" type="Label" parent="Presets/HBoxContainer14"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "reset all tweaks to default"
+uppercase = true
+
+[node name="Value" type="Label" parent="Presets/HBoxContainer14"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
+[node name="Exit" type="HBoxContainer" parent="Presets"]
+layout_mode = 2
+size_flags_vertical = 10
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../Tweaks")
+menu_selector_path = NodePath("../../Selector")
+
+[node name="Label" type="Label" parent="Presets/Exit"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "cancel"
+uppercase = true
+
+[node name="Exit2" type="HBoxContainer" parent="Presets"]
+layout_mode = 2
+size_flags_vertical = 8
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../Tweaks")
+menu_selector_path = NodePath("../../Selector")
+
+[node name="Label" type="Label" parent="Presets/Exit2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "save"
+uppercase = true
+
 [node name="Selector" type="Node2D" parent="."]
 physics_interpolation_mode = 1
 script = ExtResource("15_lbl8e")
@@ -1932,6 +2236,16 @@ position_padding = 20
 sprite_frames = ExtResource("16_4e6sj")
 script = ExtResource("17_xjt7h")
 
+[node name="Selector4" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("15_lbl8e")
+smooth_speed = 0.4
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector4"]
+sprite_frames = ExtResource("16_4e6sj")
+script = ExtResource("17_xjt7h")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 process_callback = 0
@@ -1952,3 +2266,5 @@ menu_controller_path = NodePath("../Tweaks")
 [connection signal="selected" from="Gameplay" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="Aesthetic" to="Selector3" method="handle_selection"]
 [connection signal="selected" from="Aesthetic" to="Camera2D" method="handle_selection"]
+[connection signal="selected" from="Presets" to="Camera2D" method="handle_selection"]
+[connection signal="selected" from="Presets" to="Selector4" method="handle_selection"]
