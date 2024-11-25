@@ -2,10 +2,22 @@ extends "res://engine/components/progress_continue/scripts/progress_continue_scr
 
 @onready var cursed_preview: AnimatedSprite2D = $CursedPreview
 
+func _ready() -> void:
+	if ProfileManager.profiles.has("suspended") && SecretsManager.is_console_enabled():
+		if !ProfileManager.profiles.suspended.get("executed"):
+			print(SecretsManager.is_console_enabled())
+			animation_player.play(&"init")
+			trigger_pipe()
+			Data.technical_values.impulse_progress_continue = false
+			return
+	super()
+
+
 func suspended_game_logic() -> void:
 	var player: Player = Thunder._current_player
 	player.no_movement = true
 	player.hide()
+	
 
 	profile = ProfileManager.profiles.suspended.data
 	scene = profile.scene
@@ -13,6 +25,10 @@ func suspended_game_logic() -> void:
 ")
 	label_text += profile.title_level
 	level_label.text = label_text
+	
+	if profile.get(&"executed"):
+		SecretsManager._has_cheated = true
+	
 	if profile.get(&"saved_player_state"):
 		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(CharacterManager.get_suit(profile.saved_player_state))
 		state_preview.sprite_frames = suit_frames

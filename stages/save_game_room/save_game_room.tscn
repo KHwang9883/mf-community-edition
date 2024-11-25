@@ -1,4 +1,4 @@
-[gd_scene load_steps=175 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=180 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -117,8 +117,10 @@
 [ext_resource type="Texture2D" uid="uid://coxt78xfny30q" path="res://gfx/sign/stupidity_text.png" id="97_hb60x"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/progress_continue_skipper.gd" id="100_imftg"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/stupidity_warp_node.gd" id="104_d0la8"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/warning_console_block.gd" id="104_im8vt"]
 [ext_resource type="Script" path="res://engine/objects/detectors/player_detection.gd" id="107_o2hlg"]
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="115_nqbov"]
+[ext_resource type="Shader" path="res://objects/message_block/hsv.gdshader" id="121_78dp6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s8jwb"]
 shader = ExtResource("10_ij62y")
@@ -898,6 +900,21 @@ load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4vmn"]
 size = Vector2(32, 32)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mu3nu"]
+resource_local_to_scene = true
+shader = ExtResource("121_78dp6")
+shader_parameter/hue = 0.12
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[sub_resource type="Gradient" id="Gradient_tv66u"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.51, 0, 0.00849987, 0.705882)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hyfrs"]
+gradient = SubResource("Gradient_tv66u")
+width = 284
+
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_yuddw")
 time = -1
@@ -1406,12 +1423,14 @@ script = ExtResource("10_cgryk")
 amplitude = Vector2(20, 5)
 random_phase = true
 sprite_path = NodePath("CloudSecret")
+metadata/_edit_lock_ = true
 
 [node name="CloudSecret" type="AnimatedSprite2D" parent="Node2D3"]
 position = Vector2(192, 144)
 sprite_frames = SubResource("SpriteFrames_8pv1u")
 autoplay = "default"
 script = ExtResource("46_51bc7")
+metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="Node2D3/CloudSecret"]
 show_behind_parent = true
@@ -2306,9 +2325,9 @@ texture = ExtResource("64_8vihd")
 
 [node name="Label" type="Label" parent="Objects/SignMinixWelcomeArrow"]
 offset_left = -64.0
-offset_top = -28.0
+offset_top = -27.0
 offset_right = 29.0
-offset_bottom = 26.0
+offset_bottom = 27.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
@@ -3398,6 +3417,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
 secret_id = "all secret rooms found"
+progress_to = 7
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement29"]
 layout_mode = 2
@@ -3429,6 +3449,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
 secret_id = "all bonus levels beaten"
+progress_to = 5
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement30"]
 layout_mode = 2
@@ -3460,6 +3481,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("80_dw3tv")
 secret_id = "all toad houses found"
+progress_to = 5
 
 [node name="Label7" type="Label" parent="Objects/text blah blah2/Achievement31"]
 layout_mode = 2
@@ -3826,7 +3848,6 @@ position = Vector2(320, -560)
 position = Vector2(96, 304)
 
 [node name="ConsoleBlock" type="Node2D" parent="Objects"]
-visible = false
 script = ExtResource("84_vgarn")
 
 [node name="ColorRect" type="ColorRect" parent="Objects/ConsoleBlock"]
@@ -3868,6 +3889,7 @@ theme_override_font_sizes/font_size = 32
 text = "disable console tweak first!"
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("104_im8vt")
 
 [node name="Label11" type="Label" parent="Objects/ConsoleBlock/Node2D5"]
 offset_left = -4496.0
@@ -3882,6 +3904,7 @@ theme_override_font_sizes/font_size = 20
 text = "disable console tweak first!"
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("104_im8vt")
 
 [node name="ColorRect2" type="ColorRect" parent="Objects/ConsoleBlock"]
 offset_left = -640.0
@@ -3921,6 +3944,7 @@ theme_override_font_sizes/font_size = 32
 text = "disable console tweak first!"
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("104_im8vt")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Objects/ConsoleBlock"]
 collision_layer = 112
@@ -4616,6 +4640,28 @@ shape = SubResource("RectangleShape2D_b4vmn")
 position = Vector2(16, 608)
 message = "you can only do this challenge on an empty save pipe!"
 
+[node name="MessageBlock2" parent="." instance=ExtResource("115_nqbov")]
+position = Vector2(48, 608)
+message = "warning!
+
+one or more console commands, or a console tweak, have been activated. this will affect your save game, and you will not be able to get achievements in this save until it is reset.
+try warping once again to proceed.
+
+"
+
+[node name="AnimatedSprite2D" parent="MessageBlock2/Sprites" index="1"]
+material = SubResource("ShaderMaterial_mu3nu")
+
+[node name="Texture" parent="MessageBlock2/CanvasLayer/Box" index="0"]
+offset_left = -210.0
+offset_top = -96.0
+offset_right = 210.0
+offset_bottom = 96.0
+texture = SubResource("GradientTexture1D_hyfrs")
+
+[node name="Text" parent="MessageBlock2/CanvasLayer/Box/Texture" index="0"]
+theme_override_font_sizes/font_size = 16
+
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Node2D/SaveroomGiantSunray" method="ease_hide"]
@@ -4663,3 +4709,4 @@ message = "you can only do this challenge on an empty save pipe!"
 [connection signal="player_enter" from="AreaMain FALSE" to="CamArea" method="set_deferred" binds= [&"smooth_transition", false]]
 
 [editable path="CanvasLayer2/ProgressContinue"]
+[editable path="MessageBlock2"]

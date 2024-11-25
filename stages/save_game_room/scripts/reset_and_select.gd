@@ -8,6 +8,7 @@ extends "res://engine/scenes/save_game_room/scripts/reset.gd"
 @onready var secrets: Label = get_node_or_null(^"VBoxContainer/Secrets")
 
 func _ready() -> void:
+	super()
 	move_down_by_px += 16
 	if _tweak:
 		unlock2.text = 'to select a level, disable the "always load first level" tweak'

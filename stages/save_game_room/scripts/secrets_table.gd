@@ -15,7 +15,7 @@ func _ready() -> void:
 		var labels = achievement.get_children()
 		for i in len(labels):
 			if !labels[i] is Label:
-				print((labels[i] as Node).get_path())
+				#print(labels[i].get_path())
 				continue
 			if i == 1:
 				toggler = labels[i]
@@ -23,6 +23,8 @@ func _ready() -> void:
 		
 		var secr = SecretsManager.secrets.get(achievement.secret_id)
 		if typeof(secr) == TYPE_BOOL && secr == true:
+			toggle_yes(toggler)
+		elif typeof(secr) == TYPE_ARRAY && len(secr) >= achievement.progress_to:
 			toggle_yes(toggler)
 		else:
 			not_done = true
