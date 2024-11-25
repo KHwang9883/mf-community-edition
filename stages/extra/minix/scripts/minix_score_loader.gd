@@ -21,7 +21,7 @@ signal score_loaded
 signal score_saved
 
 func _ready() -> void:
-	if SettingsManager.get_tweak("console_enabled", false):
+	if SecretsManager.is_console_enabled():
 		Scenes.goto_scene(ProjectSettings.get_setting("application/thunder_settings/main_menu_path"))
 		return
 	Thunder._connect(score_loaded, _on_score_loaded)

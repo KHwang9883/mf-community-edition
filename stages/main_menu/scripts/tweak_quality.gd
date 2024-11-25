@@ -1,9 +1,9 @@
 extends MenuSelection
 
 const STRING := [
-	"Minimum",
-	"medium",
-	"Maximum"
+	"classic",
+	"modern",
+	"modern + softendo"
 ]
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")

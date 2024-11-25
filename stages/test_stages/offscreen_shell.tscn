@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b7g3ay2re86wn"]
+[gd_scene load_steps=17 format=4 uid="uid://b7g3ay2re86wn"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_4v3ri"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_tbs42"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_x8y81"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_85q2k"]
 [ext_resource type="PackedScene" uid="uid://c02uktgryh3ku" path="res://engine/objects/enemies/paratroopas/paratroopa_blue.tscn" id="10_xl50g"]
+[ext_resource type="Script" path="res://stages/test_stages/test_scripts/test.gd" id="12_ai8ln"]
+[ext_resource type="Texture2D" uid="uid://b0lmhrk7erkld" path="res://engine/objects/platform/platform.png" id="12_d21w0"]
 [ext_resource type="PackedScene" uid="uid://ctpsv143q5pjv" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="12_ywx6a"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="13_xmcyi"]
 
@@ -22,6 +24,15 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 112
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_moufp")
+
+[sub_resource type="Curve2D" id="Curve2D_ew0dt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 272, 288, 0, 0, 0, 0, 272, 96)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3018y"]
+size = Vector2(96, 16)
 
 [node name="OffscreenShell" type="Node2D"]
 script = ExtResource("1_4v3ri")
@@ -110,5 +121,27 @@ position = Vector2(1392, 400)
 position = Vector2(1456, 400)
 
 [node name="KoopaParatroopaBlue" parent="." instance=ExtResource("10_xl50g")]
-position = Vector2(304, 368)
+position = Vector2(304, 512)
 jumping_speed = 900.0
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ew0dt")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(272, 288)
+rotates = false
+cubic_interp = false
+loop = false
+script = ExtResource("12_ai8ln")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Path2D/PathFollow2D"]
+collision_layer = 112
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/AnimatableBody2D"]
+shape = SubResource("RectangleShape2D_3018y")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatableBody2D"]
+physics_interpolation_mode = 2
+texture = ExtResource("12_d21w0")

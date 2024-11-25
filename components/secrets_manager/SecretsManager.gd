@@ -8,6 +8,7 @@ var toast_queue: Array[String] = []
 
 var _save_queued: bool
 var _is_free: bool = true
+var _has_cheated: bool = false
 
 @onready var label: Label = $Map
 @onready var ninepatch: NinePatchRect = $Map/Title
@@ -40,7 +41,7 @@ func _physics_process(delta: float) -> void:
 func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true) -> void:
 	if secret in secrets && secrets[secret] == value:
 		return
-	if SettingsManager.get_tweak("console_enabled", false):
+	if is_console_enabled():
 		print("[Secrets Manager] Console tweak is enabled! Didn't set %s to %s" % [str(value), secret])
 		return
 	if !secret in secrets && show_toast && SettingsManager.get_tweak("secrets_notification", true):
@@ -96,3 +97,6 @@ func load_secrets() -> void:
 func save_secrets() -> void:
 	_save_queued = true
 	
+
+func is_console_enabled() -> bool:
+	return SettingsManager.get_tweak("console_enabled", false) || Console.command_executed || _has_cheated

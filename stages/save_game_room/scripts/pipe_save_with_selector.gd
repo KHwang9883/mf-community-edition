@@ -2,6 +2,8 @@
 @tool
 extends "res://engine/objects/warps/pipe_in.gd"
 
+const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
+
 @export
 var profile_name: String
 @export
@@ -18,6 +20,7 @@ var deletion_progress: float
 var is_empty: bool
 var is_cursed: bool
 var is_blocked: bool
+var cheat_warned: bool
 var _tweak: bool
 
 var _star_world: bool
@@ -28,6 +31,7 @@ var _star_sel_level: int
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
 @onready var kevin_activation_label: Label = $"../KevinLayer/KevinActivationLabel"
 @onready var cursed_pipe: Sprite2D = $CursedPipe
+
 
 signal save_deleted
 
@@ -64,7 +68,6 @@ func _ready() -> void:
 	else:
 		print("[SavePipe] Set up the reset node path in inspector.")
 
-
 func _physics_process(delta: float) -> void:
 	if player != null:
 		if Input.is_action_pressed(&"a_delete"):
@@ -77,17 +80,23 @@ func _physics_process(delta: float) -> void:
 		
 		if _star_world:
 			if Input.is_action_just_pressed("a_tab") && len(level_count) > 1:
-				Audio.play_1d_sound(preload("res://engine/components/hud/sounds/scoring.wav"))
+				Audio.play_1d_sound(SCORING)
 				_star_sel_world = _star_sel_world + 1 if _star_sel_world < len(level_count) else level_count.keys()[0]
 				_star_sel_level = mini(_star_sel_level, level_count[_star_sel_world])
 				label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
-		
+	
 	if !player: return
-	if !is_blocked:
+	
+	if !is_blocked && (cheat_warned || !SecretsManager.is_console_enabled()):
 		_warp_initiator()
 	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
 		player.up_down = 0
-		Scenes.current_scene.get_node(^"MessageBlock").show_message.call_deferred()
+		if !cheat_warned:
+			Scenes.current_scene.get_node(^"MessageBlock2").show_message()
+			cheat_warned = true
+		else:
+			Scenes.current_scene.get_node(^"MessageBlock").show_message.call_deferred()
+	
 
 	if !_on_warp: return
 	_warping_process(delta)
@@ -102,7 +111,7 @@ func _input(event: InputEvent) -> void:
 		if event.keycode - 48 == _star_sel_level:
 			return
 		if event.keycode - 48 <= level_count[_star_sel_world]:
-			Audio.play_1d_sound(preload("res://engine/components/hud/sounds/scoring.wav"))
+			Audio.play_1d_sound(SCORING)
 			_star_sel_level = event.keycode - 48
 			label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
 	
@@ -124,6 +133,10 @@ func delete_save() -> void:
 
 func pass_warp() -> void:
 	ProfileManager.set_current_profile(profile_name)
+	if SecretsManager.is_console_enabled():
+		ProfileManager.current_profile.data.executed = true
+	if ProfileManager.current_profile.data.get("executed"):
+		SecretsManager._has_cheated = true
 	if _tweak:
 		ProfileManager.current_profile.data.completed_levels = []
 	target = null
@@ -149,9 +162,15 @@ func _update_reset_labels() -> void:
 		reset_node.unlock.visible = _star_world
 	reset_node.unlock2.visible = _star_world
 	reset_node.secrets.visible = false
+	
 	if !_star_world && profile_name in ProfileManager.profiles:
-		var _arr: PackedStringArray = ["warpless", "no hit", "no deaths"]
 		var _prof = ProfileManager.profiles[profile_name].data
+		if _prof.get("executed"):
+			reset_node.secrets.text = "not applicable for any achievement, please reset"
+			reset_node.secrets.visible = true
+			return
+		
+		var _arr: PackedStringArray = ["warpless", "no hit", "no deaths"]
 		if "died" in _prof:
 			_arr.remove_at(2)
 		if "damaged" in _prof:

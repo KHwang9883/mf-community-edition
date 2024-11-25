@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=4 uid="uid://4fkrdoon6rp4"]
+[gd_scene load_steps=72 format=4 uid="uid://4fkrdoon6rp4"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_mmr3n"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_8nqb1"]
@@ -39,14 +39,8 @@
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="38_5o8m2"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="39_4n4mw"]
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="39_hskfk"]
-[ext_resource type="Texture2D" uid="uid://dsijqvsl47riy" path="res://engine/objects/fluid/textures/water_smooth_0.png" id="40_bqeoi"]
-[ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="41_b0jad"]
-[ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="42_60gch"]
-[ext_resource type="Texture2D" uid="uid://dp3ivcsnm7xb0" path="res://engine/objects/fluid/textures/water_smooth_3.png" id="43_3hxa1"]
-[ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="44_ould4"]
-[ext_resource type="Texture2D" uid="uid://bhlgs2eebvaxr" path="res://engine/objects/fluid/textures/water_smooth_5.png" id="45_bd1d7"]
-[ext_resource type="Texture2D" uid="uid://baa2ywxd73mvl" path="res://engine/objects/fluid/textures/water_smooth_6.png" id="46_shg66"]
-[ext_resource type="Texture2D" uid="uid://ctwrhebqj6fd6" path="res://engine/objects/fluid/textures/water_smooth_7.png" id="47_8lyuv"]
+[ext_resource type="Shader" path="res://engine/shaders/animated_texture.gdshader" id="41_1d534"]
+[ext_resource type="Texture2D" uid="uid://bi5kq6ccklanm" path="res://engine/objects/fluid/textures/water_smooth.png" id="42_mtg32"]
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="48_p356p"]
 [ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="49_5tjlr"]
 [ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="50_okrup"]
@@ -175,46 +169,26 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_cj7ty"]
-frames = 8
-frame_0/texture = ExtResource("40_bqeoi")
-frame_0/duration = 0.15
-frame_1/texture = ExtResource("41_b0jad")
-frame_1/duration = 0.15
-frame_2/texture = ExtResource("42_60gch")
-frame_2/duration = 0.15
-frame_3/texture = ExtResource("43_3hxa1")
-frame_3/duration = 0.15
-frame_4/texture = ExtResource("44_ould4")
-frame_4/duration = 0.15
-frame_5/texture = ExtResource("45_bd1d7")
-frame_5/duration = 0.15
-frame_6/texture = ExtResource("46_shg66")
-frame_6/duration = 0.15
-frame_7/texture = ExtResource("47_8lyuv")
-frame_7/duration = 0.15
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a78gj"]
+shader = ExtResource("41_1d534")
+shader_parameter/frame_size = Vector2(1, 8)
+shader_parameter/frame_count = 8
+shader_parameter/frames_per_row = 1
+shader_parameter/time_scale = 6.0
+shader_parameter/frame_offset = 0
+shader_parameter/sprite_sheet = ExtResource("42_mtg32")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_60fr4"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0nsko"]
+width = 64
+height = 16
+noise = SubResource("FastNoiseLite_60fr4")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w8hsg"]
 size = Vector2(1, 1)
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_x1ccn"]
-frames = 8
-frame_0/texture = ExtResource("40_bqeoi")
-frame_0/duration = 0.15
-frame_1/texture = ExtResource("41_b0jad")
-frame_1/duration = 0.15
-frame_2/texture = ExtResource("42_60gch")
-frame_2/duration = 0.15
-frame_3/texture = ExtResource("43_3hxa1")
-frame_3/duration = 0.15
-frame_4/texture = ExtResource("44_ould4")
-frame_4/duration = 0.15
-frame_5/texture = ExtResource("45_bd1d7")
-frame_5/duration = 0.15
-frame_6/texture = ExtResource("46_shg66")
-frame_6/duration = 0.15
-frame_7/texture = ExtResource("47_8lyuv")
-frame_7/duration = 0.15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kcru5"]
 shader = ExtResource("49_5tjlr")
@@ -827,9 +801,10 @@ script = ExtResource("39_hskfk")
 [node name="TextureRect" type="TextureRect" parent="Water2/WaterMin"]
 visible = false
 z_index = 31
+material = SubResource("ShaderMaterial_a78gj")
 layout_mode = 2
 size_flags_vertical = 0
-texture = SubResource("AnimatedTexture_cj7ty")
+texture = SubResource("NoiseTexture2D_0nsko")
 stretch_mode = 1
 script = ExtResource("37_p7ym1")
 maximum = false
@@ -865,10 +840,11 @@ repeat_size = Vector2(640, 0)
 
 [node name="MediumQualityWater" type="TextureRect" parent="Water2/WaterMed/Parallax2D"]
 z_index = 31
+material = SubResource("ShaderMaterial_a78gj")
 offset_right = 640.0
 offset_bottom = 16.0
 size_flags_vertical = 0
-texture = SubResource("AnimatedTexture_x1ccn")
+texture = SubResource("NoiseTexture2D_0nsko")
 stretch_mode = 1
 script = ExtResource("37_p7ym1")
 maximum = false
