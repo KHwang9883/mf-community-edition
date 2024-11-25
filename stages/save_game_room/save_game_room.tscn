@@ -1,4 +1,4 @@
-[gd_scene load_steps=180 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=181 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -83,6 +83,7 @@
 [ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="61_cu44g"]
 [ext_resource type="AudioStream" uid="uid://c0niykpi0ounv" path="res://engine/objects/enemies/human_lab/koopa_bro/sfx/throw.wav" id="63_gtcg3"]
 [ext_resource type="Texture2D" uid="uid://c5lb7k53xnvs8" path="res://gfx/sign/sign_saveroom.png" id="63_nbacx"]
+[ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="63_qpnqr"]
 [ext_resource type="Texture2D" uid="uid://cwwgmgsjprj1p" path="res://engine/scenes/save_game_room/textures/reset_counter_bg.png" id="64_5nfk3"]
 [ext_resource type="Texture2D" uid="uid://dwbubrok7amgc" path="res://gfx/sign/sign_minix_welcome_arrow.png" id="64_8vihd"]
 [ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="64_d5rth"]
@@ -791,7 +792,7 @@ radius = 24.0
 size = Vector2(64, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jrfa4"]
-size = Vector2(224, 32)
+size = Vector2(96, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_um1io"]
 atlas = ExtResource("59_52xgh")
@@ -1663,7 +1664,7 @@ shape = SubResource("RectangleShape2D_jrfa4")
 texture_repeat = 2
 texture = ExtResource("85_esg68")
 region_enabled = true
-region_rect = Rect2(0, 0, 224, 32)
+region_rect = Rect2(0, 0, 96, 32)
 
 [node name="Label3" type="Label" parent="ScriptedEvents/AllAchievements"]
 offset_left = -64.0
@@ -1683,6 +1684,9 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -2
+
+[node name="PlatformPath" parent="ScriptedEvents/AllAchievements" instance=ExtResource("63_qpnqr")]
+position = Vector2(-192, -16)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -4382,12 +4386,16 @@ texture = ExtResource("65_65wpm")
 [node name="SignHardcoreUnlocked2" type="Sprite2D" parent="Objects"]
 position = Vector2(7184, 218)
 texture = ExtResource("65_65wpm")
+script = ExtResource("12_smei1")
+medium = true
 
 [node name="SignSmallUpsideDown4" type="Sprite2D" parent="Objects"]
 z_index = -1
 position = Vector2(7184, 276)
 texture = ExtResource("96_3comp")
 region_rect = Rect2(0, 31, 82, 38)
+script = ExtResource("12_smei1")
+medium = true
 
 [node name="Label9" type="Label" parent="Objects"]
 offset_left = 7104.0
@@ -4421,6 +4429,8 @@ zone!!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+script = ExtResource("12_smei1")
+medium = true
 
 [node name="Label18" type="Label" parent="Objects"]
 offset_left = 7136.0
@@ -4436,13 +4446,18 @@ text = "warning!"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+script = ExtResource("12_smei1")
+medium = true
 
 [node name="StupidityZone" type="Sprite2D" parent="Objects"]
 position = Vector2(7102, 74)
 texture = ExtResource("96_8mrny")
 centered = false
+script = ExtResource("12_smei1")
+medium = true
 
 [node name="StupidityText" type="Sprite2D" parent="Objects"]
+z_index = -10
 position = Vector2(7392, 256)
 texture = ExtResource("97_hb60x")
 script = ExtResource("10_cgryk")

@@ -28,6 +28,7 @@ var _original_time_scale: float
 
 func _ready() -> void:
 	SettingsManager.show_mouse()
+	Scenes.pre_scene_changed.connect(_restore)
 	Data.values.bonus_game = false
 	var mario: Player = Thunder._current_player
 	if is_instance_valid(mario): mario.completed = true
@@ -117,7 +118,7 @@ func gameover() -> void:
 
 func switch_scene() -> void:
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
-	_restore()
+	#_restore()
 
 	if !_crossfade:
 		TransitionManager.accept_transition(
@@ -141,12 +142,14 @@ func _enter_tree() -> void:
 	print('[Minigame] altered time scale from %s' % Engine.time_scale)
 	_original_time_scale = Engine.time_scale
 	Engine.time_scale = 1.2
+	Input.use_accumulated_input = false
 
 
 func _restore() -> void:
 	print('[Minigame] restored time scale %s' % _original_time_scale)
 	Engine.time_scale = _original_time_scale
 	SettingsManager.show_mouse()
+	Input.use_accumulated_input = true
 
 
 func _on_timer_timeout() -> void:
