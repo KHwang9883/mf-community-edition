@@ -11,6 +11,11 @@ func throw_to_scene() -> void:
 	SecretsManager.set_secret("story mode completed", true)
 	ProfileManager.current_profile.data.star_world = true
 	ProfileManager.save_current_profile()
+	if (
+		ProfileManager.profiles.has("suspended") &&
+		ProfileManager.profiles.suspended.saved_profile == ProfileManager.current_profile.name
+	):
+		ProfileManager.delete_profile(&"suspended")
 	await get_tree().create_timer(0.8, false, false).timeout
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
