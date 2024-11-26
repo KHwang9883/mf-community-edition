@@ -45,7 +45,7 @@ func _physics_process(_delta: float) -> void:
 				Audio.play_1d_sound(KEVIN_ACTIVATED)
 				KevinGlobal.activated = true
 				activated.emit()
-				Thunder._current_camera.shock(0.5, Vector2(0.4, 0.4))
+				Thunder._current_camera.shock(0.5, Vector2(1, 1))
 		elif Input.is_anything_pressed():
 			is_pressed = true
 			progress = 0

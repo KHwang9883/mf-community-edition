@@ -27,6 +27,7 @@ func _start_transition() -> void:
 				.with_speeds(0.02, -0.1)
 		)
 	else:
+		Audio.stop_all_sounds()
 		get_tree().paused = false
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
