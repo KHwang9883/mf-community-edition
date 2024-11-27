@@ -15,6 +15,7 @@ var map_scene_template: String = "res://stages/world_{0}/map_{0}.tscn"
 @export
 var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export_node_path("Node2D") var reset_node_path: NodePath = ^"../CanvasLayer/Reset"
+@export_node_path("Label") var kevin_label_path: NodePath = ^"../KevinLayer/KevinActivationLabel"
 
 var deletion_progress: float
 var is_empty: bool
@@ -29,7 +30,7 @@ var _star_sel_level: int
 
 @onready var label: Label = $Label
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
-@onready var kevin_activation_label: Label = $"../KevinLayer/KevinActivationLabel"
+@onready var kevin_activation_label: Label = get_node_or_null(kevin_label_path)
 @onready var cursed_pipe: Sprite2D = $CursedPipe
 
 
