@@ -75,7 +75,7 @@ func _physics_process(_delta: float) -> void:
 
 func _unhandled_input(event: InputEvent):
 	if !_skippable: return
-	if event.is_action_pressed(&"pause_toggle"):
+	if event.is_action_pressed(&"ui_cancel"):
 		_fade_out()
 
 func _fade_out() -> void:

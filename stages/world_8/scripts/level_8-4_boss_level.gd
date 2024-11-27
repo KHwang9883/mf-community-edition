@@ -1,11 +1,13 @@
 extends Level
 
 @onready var final_boss_cell = $FinalBossCell
+@onready var music_loader: Node = $MusicLoader
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	if !Thunder._current_player: return
 	level_completed.emit()
 	final_boss_cell.cutscene()
+	music_loader.play_buffered()
 
 func throw_to_scene() -> void:
 	SecretsManager.set_secret("story mode completed", true)
@@ -13,7 +15,7 @@ func throw_to_scene() -> void:
 	ProfileManager.save_current_profile()
 	if (
 		ProfileManager.profiles.has("suspended") &&
-		ProfileManager.profiles.suspended.saved_profile == ProfileManager.current_profile.name
+		ProfileManager.profiles.suspended.data.saved_profile == ProfileManager.current_profile.name
 	):
 		ProfileManager.delete_profile(&"suspended")
 	await get_tree().create_timer(0.8, false, false).timeout

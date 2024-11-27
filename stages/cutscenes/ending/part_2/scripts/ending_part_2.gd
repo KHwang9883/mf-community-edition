@@ -1,4 +1,4 @@
-extends Node2D
+extends LevelCutscene
 
 @export var goto_scene: String
 
@@ -8,8 +8,7 @@ extends Node2D
 @onready var cell_peach = $CellPeach
 
 var _original_time_scale: float
-var _skippable: bool
-var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+#var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 var set_looking: bool = false
 var mario_walking: bool = false
@@ -29,8 +28,8 @@ func _restore() -> void:
 func _ready() -> void:
 	_flow_intros()
 	mario.completed = true
-	await get_tree().create_timer(1.2, false).timeout
-	_skippable = true
+	super()
+
 
 func _flow_intros() -> void:
 	await _time(3)
@@ -98,12 +97,12 @@ func _physics_process(_delta: float) -> void:
 		_flow_mario_enter_castle()
 
 func _unhandled_input(event: InputEvent):
-	if !_skippable: return
-	if event.is_action_pressed(&"pause_toggle"):
+	if !skippable: return
+	if event.is_action_pressed(&"ui_cancel"):
 		_fade_out()
 
 func _fade_out() -> void:
-	_skippable = false
+	skippable = false
 	
 	_restore()
 	await get_tree().physics_frame
