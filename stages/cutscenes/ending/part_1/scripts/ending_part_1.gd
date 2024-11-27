@@ -1,6 +1,6 @@
-extends Node2D
+extends LevelCutscene
 
-@export_file("*.tscn", "*.scn") var goto_path: String
+#@export_file("*.tscn", "*.scn") var goto_path: String
 
 const JUMP = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 const EXPLOSION_TANK = preload("res://stages/cutscenes/ending/part_1/scripts/explosion_tank.tscn")
@@ -22,22 +22,20 @@ const DAMAGED_TILE = preload("res://stages/cutscenes/ending/part_1/scripts/damag
 @onready var brick_generators = $BrickGenerators
 
 var _original_time_scale: float
-var has_skipped: bool = false
+#var has_skipped: bool = false
 
 var counter: float = -1.0
 var pipe_broken: bool = false
 
 var trans: bool = false
 
-var _skippable: bool
-var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+#var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 func _ready() -> void:
 	_flow_intros()
 	mario.completed = true
-	
-	await get_tree().create_timer(1.2, false).timeout
-	_skippable = true
+	super()
+
 
 func _enter_tree() -> void:
 	print('[Cutscene] altered time scale from %s' % Engine.time_scale)
@@ -139,12 +137,12 @@ func _flow_intros():
 
 
 func _unhandled_input(event: InputEvent):
-	if !_skippable: return
-	if event.is_action_pressed(&"pause_toggle"):
+	if !skippable: return
+	if event.is_action_pressed(&"ui_cancel"):
 		_start_transition()
 
 func _start_transition() -> void:
-	_skippable = false
+	skippable = false
 	
 	_restore()
 	await get_tree().physics_frame
