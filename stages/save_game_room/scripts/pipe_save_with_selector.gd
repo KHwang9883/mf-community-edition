@@ -48,26 +48,15 @@ func _ready() -> void:
 	kevin_activation_label.deactivated.connect(func():
 		is_blocked = false
 	)
-	
 	_tweak = SettingsManager.get_tweak("load_save_from_world_start", false)
-	var prof = ProfileManager.profiles.get(profile_name)
-	if prof && prof.data.get("star_world"):
-		_star_world = prof.data.star_world
-		var wnumbers: Array = prof.get_world_numbers().split("-")
-		_star_sel_world = int(wnumbers[0])
-		_star_sel_level = int(wnumbers[1])
 	
-	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
-		cursed_pipe.visible = true
-		is_cursed = true
-	
-	if KevinGlobal.activated:
-		block_pure_pipe.call_deferred()
+	_update_save()
 	
 	if reset_node:
 		player_enter.connect(_update_reset_labels)
 	else:
 		print("[SavePipe] Set up the reset node path in inspector.")
+
 
 func _physics_process(delta: float) -> void:
 	if player != null:
@@ -116,6 +105,28 @@ func _input(event: InputEvent) -> void:
 			_star_sel_level = event.keycode - 48
 			label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
 	
+
+func _update_save() -> void:
+	is_empty = false
+	is_blocked = false
+	is_cursed = false
+	_star_world = false
+	cheat_warned = false
+	cursed_pipe.visible = false
+	
+	var prof = ProfileManager.profiles.get(profile_name)
+	if prof && prof.data.get("star_world"):
+		_star_world = prof.data.star_world
+		var wnumbers: Array = prof.get_world_numbers().split("-")
+		_star_sel_world = int(wnumbers[0])
+		_star_sel_level = int(wnumbers[1])
+	
+	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
+		cursed_pipe.visible = true
+		is_cursed = true
+	
+	if KevinGlobal.activated:
+		block_pure_pipe.call_deferred()
 
 
 func delete_save() -> void:

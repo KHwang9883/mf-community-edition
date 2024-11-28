@@ -1,7 +1,7 @@
 extends "res://objects/player_camera_custom/player_camera_custom.gd"
 
 
-var target = 480
+var target = 608
 var amount = 18 * 32
 var count = 0
 var mov = false
