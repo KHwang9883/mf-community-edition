@@ -1,4 +1,4 @@
-[gd_scene load_steps=196 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=198 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -61,7 +61,6 @@
 [ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="33_sjfld"]
 [ext_resource type="Texture2D" uid="uid://dgdr3lr7v06mc" path="res://tilesets/overworld_green/gfx/green_pipe.png" id="33_tsede"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://tilesets/underground/gfx/purple_pipe.png" id="34_5433o"]
-[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="34_gx86i"]
 [ext_resource type="Texture2D" uid="uid://dxfdf1vhn16ie" path="res://tilesets/overworld_green/gfx/pink_platform.png" id="35_06je7"]
 [ext_resource type="Texture2D" uid="uid://tki7rbs8vxw6" path="res://tilesets/overworld_green/gfx/rock_platform.png" id="36_csfwx"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/hardcore_pipe.gd" id="41_03xon"]
@@ -125,7 +124,9 @@
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/progress_continue_skipper.gd" id="100_imftg"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/stupidity_warp_node.gd" id="104_d0la8"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/warning_console_block.gd" id="104_im8vt"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/plushy_sun_attacker.gd" id="107_et8u3"]
 [ext_resource type="Script" path="res://engine/objects/detectors/player_detection.gd" id="107_o2hlg"]
+[ext_resource type="Script" path="res://stages/save_game_room/plushy_sun_4.gd" id="107_tcwtx"]
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="115_nqbov"]
 [ext_resource type="Shader" path="res://objects/message_block/hsv.gdshader" id="121_78dp6"]
 
@@ -926,6 +927,9 @@ animations = [{
 "name": &"default",
 "speed": 25.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7irnw"]
+radius = 56.0
 
 [sub_resource type="FontVariation" id="FontVariation_acdmo"]
 base_font = ExtResource("78_vkeyl")
@@ -2812,22 +2816,66 @@ rotation_speed = 250.0
 [node name="PlushySun" type="Sprite2D" parent="Objects/Node2D4"]
 position = Vector2(2048, 80)
 texture = ExtResource("33_sjfld")
-script = ExtResource("34_gx86i")
+script = ExtResource("107_tcwtx")
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D4/PlushySun"]
+show_behind_parent = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Node2D4/PlushySun/Area2D"]
+shape = SubResource("CircleShape2D_7irnw")
+
+[node name="EnemyAttacked" type="Node" parent="Objects/Node2D4/PlushySun/Area2D"]
+script = ExtResource("107_et8u3")
 
 [node name="PlushySun2" type="Sprite2D" parent="Objects/Node2D4"]
 position = Vector2(2896, 80)
 texture = ExtResource("33_sjfld")
-script = ExtResource("34_gx86i")
+script = ExtResource("107_tcwtx")
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D4/PlushySun2"]
+show_behind_parent = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Node2D4/PlushySun2/Area2D"]
+shape = SubResource("CircleShape2D_7irnw")
+
+[node name="EnemyAttacked" type="Node" parent="Objects/Node2D4/PlushySun2/Area2D"]
+script = ExtResource("107_et8u3")
 
 [node name="PlushySun3" type="Sprite2D" parent="Objects/Node2D4"]
 position = Vector2(3344, 144)
 texture = ExtResource("33_sjfld")
-script = ExtResource("34_gx86i")
+script = ExtResource("107_tcwtx")
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D4/PlushySun3"]
+show_behind_parent = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Node2D4/PlushySun3/Area2D"]
+shape = SubResource("CircleShape2D_7irnw")
+
+[node name="EnemyAttacked" type="Node" parent="Objects/Node2D4/PlushySun3/Area2D"]
+script = ExtResource("107_et8u3")
 
 [node name="PlushySun4" type="Sprite2D" parent="Objects/Node2D4"]
 position = Vector2(6288, 176)
 texture = ExtResource("33_sjfld")
-script = ExtResource("34_gx86i")
+script = ExtResource("107_tcwtx")
+
+[node name="Area2D" type="Area2D" parent="Objects/Node2D4/PlushySun4"]
+show_behind_parent = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Node2D4/PlushySun4/Area2D"]
+shape = SubResource("CircleShape2D_7irnw")
+
+[node name="EnemyAttacked" type="Node" parent="Objects/Node2D4/PlushySun4/Area2D"]
+script = ExtResource("107_et8u3")
 
 [node name="FancyBush5" type="Sprite2D" parent="Objects/Node2D4"]
 z_index = -1
