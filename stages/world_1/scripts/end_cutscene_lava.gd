@@ -10,6 +10,7 @@ func _ready() -> void:
 	mario.jump(400)
 	mario.collision = false
 	mario.completed = true
+	Audio.stop_all_sounds()
 	Audio.play_1d_sound(mario.suit.physics_config.sound_jump)
 
 func _physics_process(delta: float) -> void:

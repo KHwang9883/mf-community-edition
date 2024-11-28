@@ -23,6 +23,7 @@ func activate() -> void:
 	flying.angle = randf_range(0, 360)
 	Scenes.current_scene.add_child(flying)
 	flying.global_transform = global_transform
+	flying.reset_physics_interpolation()
 	
 	Scenes.current_scene.h_box_container._star_collected()
 	queue_free()

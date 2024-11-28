@@ -3,9 +3,8 @@ extends "res://engine/components/progress_continue/scripts/progress_continue_scr
 @onready var cursed_preview: AnimatedSprite2D = $CursedPreview
 
 func _ready() -> void:
-	if ProfileManager.profiles.has("suspended") && SecretsManager.is_console_enabled():
-		if !ProfileManager.profiles.suspended.get("executed"):
-			print(SecretsManager.is_console_enabled())
+	if ProfileManager.profiles.has("suspended") && ProfileManager.profiles.suspended.get("executed"):
+		if !SecretsManager.is_console_enabled():
 			animation_player.play(&"init")
 			trigger_pipe()
 			Data.technical_values.impulse_progress_continue = false
