@@ -57,7 +57,6 @@ func switch_page() -> void:
 		pipes[i].position.y = pipe_init_y + 192
 		pipes[i].reset_physics_interpolation()
 		pipes[i].profile_name = pipes_name[i].left(-1) + str(int(pipes_name[i].right(1)) + (page * 3))
-		print(str(int(pipes_name[i].right(1)) + (page * 3)))
 		
 		pipes[i].label.update_label()
 		pipes[i]._update_save()
