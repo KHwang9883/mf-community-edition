@@ -6,6 +6,7 @@ const APPLEUSE = preload("res://stages/extra/click_bonus_game/sfx/appleuse.ogg")
 const DISCOVEREDGUNPOWDER_ = preload("res://stages/extra/click_bonus_game/sfx/discoveredgunpowder-.wav")
 
 @export var try_count: int = 10
+@export var mario_special_case: bool = false
 
 var can_interact = false
 
@@ -22,6 +23,7 @@ var _original_time_scale: float
 @onready var try_next_time: Sprite2D = $"Heads-Up Display/TryNextTime"
 @onready var h_box_container: HBoxContainer = $"Heads-Up Display/HBoxContainer"
 @onready var tries: HBoxContainer = $"Heads-Up Display/Tries"
+@onready var parallax_bg: ParallaxLayer = get_node_or_null(^"ParallaxBackground/ParallaxLayer")
 
 @onready var MARIO_OHNO = CharacterManager.get_voice_line("oh_no")
 
@@ -84,9 +86,20 @@ func complete() -> void:
 	_hide_all_text()
 	Audio.stop_music_channel(1, true)
 
+	var _hud = heads_up_display
+	if mario_special_case:
+		_hud = parallax_bg
+		Thunder._current_camera.mov = false
+		var _tw = Thunder._current_camera.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+		_tw.tween_property(Thunder._current_camera, ^"offset:x", Thunder._current_camera.target + 192, 0.4)
+	
 	var mario: Player = Thunder._current_player
 	if mario:
-		mario.reparent(heads_up_display)
+		var old_mar_pos: Vector2 = mario.global_position
+		mario.reparent(_hud)
+		if mario_special_case:
+			mario.position = old_mar_pos
+		mario.reset_physics_interpolation()
 		mario.completed = true
 		mario.gravity_scale = 0
 		mario.vel_set_y(-50)
@@ -94,7 +107,7 @@ func complete() -> void:
 
 	for i in 3:
 		await get_tree().create_timer(0.6, false, false, true).timeout
-		Thunder.add_lives(1, heads_up_display)
+		Thunder.add_lives(1, _hud)
 		Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"))
 
 	await get_tree().create_timer(1.2, false).timeout
