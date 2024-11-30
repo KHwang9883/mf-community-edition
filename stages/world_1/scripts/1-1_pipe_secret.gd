@@ -20,6 +20,7 @@ func _spawn_lives() -> void:
 		life.appear_distance = 0
 		scene.add_child(life)
 		life.global_position = i.global_position + Vector2(0, -16)
+		life.reset_physics_interpolation()
 	
 	text.modulate.a = 1.0
 	var tw = create_tween().bind_node(text)
