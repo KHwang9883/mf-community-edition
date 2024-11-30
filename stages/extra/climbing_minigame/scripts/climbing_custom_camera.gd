@@ -341,6 +341,7 @@ func start_transition() -> void:
 					.with_pause()
 					.on_player_after_middle(true)
 			)
+			get_tree().paused = true
 
 			await TransitionManager.transition_middle
 			Scenes.goto_scene(final_cutscene)
