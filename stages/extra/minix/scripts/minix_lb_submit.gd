@@ -82,7 +82,7 @@ func _physics_process(delta: float) -> void:
 			"score": Data.values.score,
 			"godlikes": Data.values.godlikes,
 			"time": int(Data.values.lasted),
-			"version": 2, # GAME VERSION
+			"version": ProjectSettings.get_setting("application/thunder_settings/version", 0), # GAME VERSION
 			"map": starter.map_names[starter.map_id],
 			"username": line_edit.text,
 			"game": "MINIX"
