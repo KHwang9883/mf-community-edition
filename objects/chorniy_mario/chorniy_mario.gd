@@ -91,13 +91,14 @@ func _physics_process(_delta: float) -> void:
 	
 	if !appear_triggered && (is_instance_valid(mario) && !mario_pos.is_equal_approx(mario.global_position) ):
 		appear_triggered = true
-		await get_tree().create_timer(1, false, true, false).timeout
-		visible = false
-		if !cutscene:
-			Audio.play_1d_sound(APPEAR)
-		for i in 2:
-			await get_tree().physics_frame
-		visible = true
+		get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
+			visible = false
+			if !cutscene:
+				Audio.play_1d_sound(APPEAR)
+			for i in 2:
+				await get_tree().physics_frame
+			visible = true
+		)
 	
 	if !appear_triggered: return
 	if !is_instance_valid(mario):
@@ -113,23 +114,26 @@ func _physics_process(_delta: float) -> void:
 	var flip_h = mario.sprite.flip_h
 	var frames = mario.sprite.sprite_frames
 	
-	await get_tree().create_timer(1, false, true, false).timeout
+	get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
+		if pause: return
+		
+		if !is_instance_valid(mario):
+			kevin_podokh()
+			return
+		
+		global_position = pos
+		sprite.animation = animation
+		sprite.frame = frame
+		sprite.flip_h = flip_h
+		sprite.sprite_frames = frames
+		
+		if overlaps_body(mario) && !mario.warp && !cutscene:
+			mario.die()
+			kevin_podokh()
+	)
 	
-	if pause: return
-	
-	if !is_instance_valid(mario):
-		kevin_podokh()
-		return
-	
-	global_position = pos
-	sprite.animation = animation
-	sprite.frame = frame
-	sprite.flip_h = flip_h
-	sprite.sprite_frames = frames
-	
-	if overlaps_body(mario) && !mario.warp && !cutscene:
-		mario.die()
-		kevin_podokh()
+
+var map_count: int
 
 func _map_process(_delta: float) -> void:
 	scale = Vector2(0.5, 0.5)
@@ -143,20 +147,26 @@ func _map_process(_delta: float) -> void:
 	
 	if !appear_triggered:
 		appear_triggered = true
-		await get_tree().create_timer(1, false, true, false).timeout
-		visible = false
-		for i in 2:
-			await get_tree().physics_frame
-		visible = true
+		#await get_tree().create_timer(1, false, true, false).timeout
+		#visible = false
+		#for i in 2:
+		#	await get_tree().physics_frame
+		#visible = true
 	
-	await get_tree().create_timer(1.0 if !player.is_faster else 0.15, false, true, false).timeout
-	
-	if !player.reached:
-		global_position = pos
-	sprite.animation = animation
-	sprite.frame = frame
-	sprite.flip_h = flip_h
-	sprite.sprite_frames = frames
+	get_tree().create_timer(1.0 if !player.is_faster else 0.15, false, true, false).timeout.connect(func():
+		if !player.reached:
+			global_position = pos
+		if map_count < 2:
+			visible = false
+			map_count += 1
+		else:
+			visible = true
+		sprite.animation = animation
+		sprite.frame = frame
+		sprite.flip_h = flip_h
+		sprite.sprite_frames = frames
+	)
+
 
 func kevin_podokh() -> void:
 	queue_free()

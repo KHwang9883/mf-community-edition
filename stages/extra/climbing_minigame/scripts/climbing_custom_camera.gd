@@ -104,9 +104,9 @@ func _ready() -> void:
 	await get_tree().create_timer(1.0, false, false, false).timeout
 	can_get_faster = true
 
-	await get_tree().create_timer(0.6, false, false, false).timeout
+	await get_tree().create_timer(0.4, false, false, true).timeout
 	Audio.play_1d_sound(preload("res://music/climbing_minigame/snd_bowser_laugh.ogg"))
-	await get_tree().create_timer(1.4, false, false, false).timeout
+	await get_tree().create_timer(1.5, false, false, false).timeout
 	jumping_cheeps_generator.enabled = true
 
 
