@@ -95,7 +95,7 @@ func _physics_process(_delta: float) -> void:
 		get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
 			visible = false
 			if !cutscene:
-				Audio.play_1d_sound(APPEAR)
+				Audio.play_1d_sound(APPEAR, true, { ignore_pause = true })
 			for i in 2:
 				await get_tree().physics_frame
 			visible = true

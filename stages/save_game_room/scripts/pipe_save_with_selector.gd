@@ -81,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		_warp_initiator()
 	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
 		player.up_down = 0
-		if !cheat_warned:
+		if !cheat_warned && SecretsManager.is_console_enabled():
 			Scenes.current_scene.get_node(^"MessageBlock2").show_message()
 			cheat_warned = true
 		else:
@@ -107,7 +107,6 @@ func _input(event: InputEvent) -> void:
 	
 
 func _update_save() -> void:
-	is_empty = false
 	is_blocked = false
 	is_cursed = false
 	_star_world = false
