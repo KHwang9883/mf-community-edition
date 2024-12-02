@@ -1,11 +1,11 @@
-[gd_scene load_steps=56 format=3 uid="uid://bwyuvtyce0so0"]
+[gd_scene load_steps=58 format=3 uid="uid://bwyuvtyce0so0"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_morq1"]
 [ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="3_k02uv"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_mt3gq"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_t6cwn"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="5_7rvvr"]
-[ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_471td"]
+[ext_resource type="AudioStream" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_471td"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="6_5cirm"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_hatcb"]
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="6_vtbbg"]
@@ -100,6 +100,13 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_6ayp0"]
 gradient = SubResource("Gradient_k5ryj")
+width = 112
+
+[sub_resource type="Gradient" id="Gradient_pxhwg"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vkyrq"]
+gradient = SubResource("Gradient_pxhwg")
 width = 112
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ey3w8"]
@@ -211,16 +218,19 @@ horizontal_alignment = 1
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2(1023, 0)
 
-[node name="BgCastle" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(511, 240)
+[node name="BgCastle2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(512, 240)
 texture = ExtResource("9_hbpw7")
+region_enabled = true
+region_rect = Rect2(0, -16, 1023, 512)
+metadata/_edit_lock_ = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(1792, 0)
-scale = Vector2(1, 481)
+scale = Vector2(1, 494)
 texture = SubResource("GradientTexture1D_hb20x")
 
 [node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer"]
@@ -231,8 +241,9 @@ flip_h = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_left = 2048.0
+offset_top = -16.0
 offset_right = 10528.0
-offset_bottom = 480.0
+offset_bottom = 496.0
 color = Color(0, 0, 0, 0.564706)
 
 [node name="Objects" type="Node2D" parent="."]
@@ -463,6 +474,15 @@ position = Vector2(12276, 0.0389367)
 rotation = 1.5708
 scale = Vector2(1, 12279)
 texture = SubResource("GradientTexture1D_6ayp0")
+centered = false
+script = ExtResource("29_nkc82")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Node2D"]
+z_index = -20
+position = Vector2(-16, 0)
+rotation = -1.5708
+scale = Vector2(1, 13588.6)
+texture = SubResource("GradientTexture1D_vkyrq")
 centered = false
 script = ExtResource("29_nkc82")
 
