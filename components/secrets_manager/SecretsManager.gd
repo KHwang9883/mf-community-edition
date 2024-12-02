@@ -67,7 +67,7 @@ func queue_achievement(text: String) -> void:
 
 
 func show_achievement(text: String) -> void:
-	Audio.play_1d_sound(SECRET_NOTIFICATION)
+	Audio.play_1d_sound(SECRET_NOTIFICATION, true, { ignore_pause = true, bus = "1D Sound" })
 	label.text = ""
 	label.size.x = 192
 	label.position.y = marker_2d.position.y + label.size.y + 8

@@ -43,11 +43,11 @@ func _flow_intros() -> void:
 	
 	await _time(3)
 	
-	Audio.play_1d_sound(BOBAS_MARIO_1)
+	Audio.play_1d_sound(BOBAS_MARIO_1, false, { ignore_pause = true })
 	await _time(2)
-	Audio.play_1d_sound(BOBAS_MARIO_2)
+	Audio.play_1d_sound(BOBAS_MARIO_2, false, { ignore_pause = true })
 	await _time(1)
-	Audio.play_1d_sound(BOBAS_MARIO_3)
+	Audio.play_1d_sound(BOBAS_MARIO_3, false, { ignore_pause = true })
 	
 	await _time(1)
 	_bobas_spawner()

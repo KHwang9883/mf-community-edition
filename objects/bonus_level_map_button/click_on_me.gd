@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_mouse_entered() -> void:
-	Audio.play_1d_sound(LAKITU_REK)
+	Audio.play_1d_sound(LAKITU_REK, true, { ignore_pause = true })
 	hovered = true
 
 

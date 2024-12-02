@@ -55,7 +55,7 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 		has_update = true
 		if dict.get("open_to", "").begins_with("https://"):
 			url_open = dict.open_to
-		Audio.play_1d_sound(COIN)
+		Audio.play_1d_sound(COIN, true, { ignore_pause = true })
 
 
 func _physics_process(delta: float) -> void:
@@ -64,5 +64,5 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_select"):
 		OS.shell_open(url_open)
-		Audio.play_1d_sound(SELECT_ENTER)
+		#Audio.play_1d_sound(SELECT_ENTER)
 		get_tree().quit()

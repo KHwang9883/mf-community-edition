@@ -36,6 +36,6 @@ func _physics_process(delta: float) -> void:
 	if pl.reached && pl.current_marker == self && !activated:
 		activated = true
 		malpka.visible = true
-		Audio.play_1d_sound(MALPKA)
+		Audio.play_1d_sound(MALPKA, true, { ignore_pause = true })
 		await get_tree().create_timer(0.6, true, false, true).timeout
 		Audio.play_1d_sound(CharacterManager.get_voice_line("oh_no"), true, { ignore_pause = true })

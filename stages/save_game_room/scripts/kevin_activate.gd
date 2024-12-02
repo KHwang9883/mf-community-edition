@@ -40,9 +40,9 @@ func _physics_process(_delta: float) -> void:
 			progress += 1
 			print(progress)
 			if progress < len(string):
-				Audio.play_1d_sound(SECRET_CODE_TYPE)
+				Audio.play_1d_sound(SECRET_CODE_TYPE, true, { ignore_pause = true })
 			else:
-				Audio.play_1d_sound(KEVIN_ACTIVATED)
+				Audio.play_1d_sound(KEVIN_ACTIVATED, true, { ignore_pause = true })
 				KevinGlobal.activated = true
 				activated.emit()
 				Thunder._current_camera.shock(0.5, Vector2(1, 1))
