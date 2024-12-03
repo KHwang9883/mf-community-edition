@@ -51,7 +51,7 @@ func progress_secret(id: int = 0) -> void:
 	new_secret.append(progress_by_id)
 	
 	if len(new_secret) >= progress_to:
-		SecretsManager.set_secret(secrets[id], true, false, true)
+		SecretsManager.set_secret(secrets[id], true, true, true)
 		print("[Secrets] ID %d has been completed! total %d" % [id, progress_to])
 		return
 	SecretsManager.set_secret(secrets[id], new_secret, true, false)
