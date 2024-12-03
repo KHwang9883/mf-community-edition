@@ -1,4 +1,4 @@
-[gd_scene load_steps=133 format=4 uid="uid://dtfhvfw317yu"]
+[gd_scene load_steps=134 format=4 uid="uid://dtfhvfw317yu"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gyuum"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="3_12ohb"]
@@ -56,6 +56,7 @@
 [ext_resource type="Texture2D" uid="uid://bvajkyj7q5nih" path="res://gfx/texts/signs/1-1_pipes.png" id="28_ibei5"]
 [ext_resource type="PackedScene" uid="uid://bmkaknlavrwxp" path="res://tilesets/overworld_green/scenes/fence.tscn" id="28_scmnv"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="29_3iane"]
+[ext_resource type="Script" path="res://gfx/texts/signs/sign_visible_tweak.gd" id="29_7a8pa"]
 [ext_resource type="PackedScene" uid="uid://7mptmhf8i48o" path="res://tilesets/overworld_green/scenes/hill_alt.tscn" id="29_putia"]
 [ext_resource type="PackedScene" uid="uid://0kwfitomdt1h" path="res://tilesets/overworld_green/scenes/woods_alt.tscn" id="30_3qshg"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="30_vri36"]
@@ -1635,11 +1636,13 @@ z_index = 18
 position = Vector2(7408, 464)
 texture = ExtResource("42_4mb0p")
 
-[node name="1-1Jump" type="Sprite2D" parent="Node2D"]
+[node name="1-1Jump" type="Sprite2D" parent="."]
+z_index = -7
 position = Vector2(1841, 345)
 texture = ExtResource("28_ibei5")
+script = ExtResource("29_7a8pa")
 
-[node name="LabelMisterEarl" parent="Node2D/1-1Jump" instance=ExtResource("70_p5ci4")]
+[node name="LabelMisterEarl" parent="1-1Jump" instance=ExtResource("70_p5ci4")]
 offset_left = -80.0
 offset_top = -35.0
 offset_right = 80.0
@@ -1653,7 +1656,7 @@ clip_text = true
 script = ExtResource("71_rbdpq")
 action = "m_down"
 
-[node name="1-1Arrow" type="Sprite2D" parent="Node2D/1-1Jump"]
+[node name="1-1Arrow" type="Sprite2D" parent="1-1Jump"]
 position = Vector2(89, -121)
 texture = ExtResource("31_naltf")
 script = ExtResource("32_hnveu")
