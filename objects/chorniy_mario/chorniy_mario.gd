@@ -68,6 +68,7 @@ var cutscene: bool = false
 var wait_time: float
 
 var pause: bool = false
+var warp_invinc_timer: float
 
 func hide_text() -> void:
 	kevin_text_2.visible = false
@@ -84,11 +85,12 @@ func _ready() -> void:
 	mario.death_music_ignore_pause = true
 	mario.died.connect(loludied)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if !is_instance_valid(mario):
 		if is_instance_valid(player):
-			_map_process(_delta)
+			_map_process(delta)
 		return
+	if warp_invinc_timer > 0: warp_invinc_timer -= delta * 50
 	
 	if !appear_triggered && (is_instance_valid(mario) && !mario_pos.is_equal_approx(mario.global_position) ):
 		appear_triggered = true
@@ -114,6 +116,8 @@ func _physics_process(_delta: float) -> void:
 	var frame = mario.sprite.frame
 	var flip_h = mario.sprite.flip_h
 	var frames = mario.sprite.sprite_frames
+	if mario.warp && mario.warp_dir == mario.WarpDir.UP:
+		warp_invinc_timer = 15
 	
 	get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
 		if pause: return
@@ -128,7 +132,7 @@ func _physics_process(_delta: float) -> void:
 		sprite.flip_h = flip_h
 		sprite.sprite_frames = frames
 		
-		if overlaps_body(mario) && !mario.warp && !cutscene:
+		if overlaps_body(mario) && !mario.warp && warp_invinc_timer <= 0 && !cutscene:
 			mario.die()
 			kevin_podokh()
 	)

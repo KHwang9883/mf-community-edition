@@ -109,9 +109,11 @@ func _input(event: InputEvent) -> void:
 func _update_save() -> void:
 	is_blocked = false
 	is_cursed = false
+	#is_empty = false
 	_star_world = false
 	cheat_warned = false
 	cursed_pipe.visible = false
+	label.remove_theme_color_override(&"font_color")
 	
 	var prof = ProfileManager.profiles.get(profile_name)
 	if prof && prof.data.get("star_world"):
