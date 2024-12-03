@@ -116,9 +116,15 @@ func _update_save() -> void:
 	var prof = ProfileManager.profiles.get(profile_name)
 	if prof && prof.data.get("star_world"):
 		_star_world = prof.data.star_world
-		var wnumbers: Array = prof.get_world_numbers().split("-")
+		label.add_theme_color_override(&"font_color", Color.LIGHT_GREEN)
+		var wnumbers: Array
+		if prof.data.get("star_numbers"):
+			wnumbers = prof.data.star_numbers.split("-")
+		else:
+			wnumbers = prof.get_world_numbers().split("-")
 		_star_sel_world = int(wnumbers[0])
 		_star_sel_level = int(wnumbers[1])
+		label.set_world_numbers("-".join(wnumbers))
 	
 	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
 		cursed_pipe.visible = true
@@ -136,6 +142,7 @@ func delete_save() -> void:
 	print(&"Save " + profile_name + &" deleted!")
 	Audio.play_1d_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"))
 	_star_world = false
+	label.remove_theme_color_override(&"font_color")
 	_update_reset_labels()
 	cursed_pipe.visible = false
 	is_cursed = false
@@ -150,12 +157,18 @@ func pass_warp() -> void:
 		SecretsManager._has_cheated = true
 	if _tweak:
 		ProfileManager.current_profile.data.completed_levels = []
+		_star_sel_level = 1
 	target = null
-	if _star_world && _star_sel_world:
-		ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
-	if _star_world && _star_sel_level:
-		Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
-		#print(Data.values.map_force_selected_marker)
+	if _star_world:
+		if _star_sel_level && _star_sel_world:
+			ProfileManager.current_profile.data.star_numbers = &"%d-%d" % [_star_sel_world, _star_sel_level]
+			ProfileManager.save_current_profile()
+		if _star_sel_world:
+			ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
+		if _star_sel_level:
+			Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
+			#print(Data.values.map_force_selected_marker)
+	
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
 		warp_to_scene = ProfileManager.current_profile.data.current_world
 	Data.values.skip_progress_continue = true
