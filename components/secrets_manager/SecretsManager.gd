@@ -39,7 +39,8 @@ func _physics_process(delta: float) -> void:
 
 
 func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true) -> void:
-	if secret in secrets && secrets[secret] == value:
+	if secret in secrets && (typeof(value) == TYPE_BOOL && secrets[secret] == value):
+		print("Save cancelled, %s already exists!" % secret)
 		return
 	if is_console_enabled():
 		print("[Secrets Manager] Console tweak is enabled! Didn't set %s to %s" % [str(value), secret])
