@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://bfyla0aynqum2"]
+[gd_scene load_steps=71 format=4 uid="uid://bfyla0aynqum2"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_alfld"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_npv5p"]
@@ -51,6 +51,7 @@
 [ext_resource type="Script" path="res://stages/extra/world_9_syzx/world_9-3_platforms.gd" id="46_g5yd3"]
 [ext_resource type="Script" path="res://engine/objects/detectors/player_detection.gd" id="47_573o5"]
 [ext_resource type="AudioStream" uid="uid://c26br0stvjxr2" path="res://sfx/lava_up.wav" id="48_416vc"]
+[ext_resource type="Script" path="res://stages/extra/world_9_syzx/advanced_edition_node.gd" id="52_m2xvt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p360x"]
 texture = ExtResource("9_jr88s")
@@ -821,22 +822,13 @@ result = SubResource("Resource_r3mmx")
 position = Vector2(7555, 416)
 
 [node name="KoopaParatroopaGreen" parent="." instance=ExtResource("34_8hydp")]
-position = Vector2(3984, 224)
+position = Vector2(3984, 208)
 
 [node name="KoopaParatroopaGreen2" parent="." instance=ExtResource("34_8hydp")]
 position = Vector2(4640, 192)
 
 [node name="KoopaRed" parent="." instance=ExtResource("35_7a66b")]
 position = Vector2(3728, 112)
-
-[node name="BulletLauncher5" parent="." instance=ExtResource("36_of54l")]
-position = Vector2(3376, 304.16)
-
-[node name="BulletBillBase13" parent="." instance=ExtResource("37_7ac8u")]
-offset_left = 3360.0
-offset_top = 288.0
-offset_right = 3392.0
-offset_bottom = 320.0
 
 [node name="Checkpoint" parent="." instance=ExtResource("38_doonh")]
 position = Vector2(4352, 416)
@@ -862,9 +854,6 @@ podoboo_max_speed = 200
 
 [node name="SpikeballBro" parent="." instance=ExtResource("43_g3vss")]
 position = Vector2(2384, 368)
-
-[node name="SpikeballBro2" parent="." instance=ExtResource("43_g3vss")]
-position = Vector2(2880, 64)
 
 [node name="Springboard" parent="." instance=ExtResource("44_8k0my")]
 position = Vector2(5040, 368)
@@ -947,6 +936,31 @@ only_once = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(4912, 200)
 shape = SubResource("RectangleShape2D_y38lv")
+
+[node name="Node2D2" type="Node2D" parent="."]
+modulate = Color(1, 0.52549, 0.52549, 1)
+script = ExtResource("52_m2xvt")
+
+[node name="SpikeballBro2" parent="Node2D2" instance=ExtResource("43_g3vss")]
+position = Vector2(2880, 64)
+
+[node name="BulletLauncher5" parent="Node2D2" instance=ExtResource("36_of54l")]
+position = Vector2(3376, 304.16)
+
+[node name="BulletBillBase13" parent="Node2D2" instance=ExtResource("37_7ac8u")]
+offset_left = 3360.0
+offset_top = 288.0
+offset_right = 3392.0
+offset_bottom = 320.0
+
+[node name="Node2D3" type="Node2D" parent="."]
+modulate = Color(0.517647, 1, 0.533333, 1)
+script = ExtResource("52_m2xvt")
+inverted = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Node2D3"]
+tile_map_data = PackedByteArray("AABpAAkAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_5acn0")
 
 [connection signal="platform_fall" from="Path2D" to="Path2D/PlatformPathGray" method="fall_off"]
 [connection signal="platform_fall" from="Path2D" to="Path2D/PlatformPathGray2" method="fall_off"]

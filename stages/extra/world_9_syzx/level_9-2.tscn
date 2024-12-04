@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=4 uid="uid://dvwe7p41ph1mc"]
+[gd_scene load_steps=111 format=4 uid="uid://dvwe7p41ph1mc"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0rqt2"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_2n0x5"]
@@ -56,6 +56,7 @@
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="48_8qfbd"]
 [ext_resource type="PackedScene" uid="uid://ddldd020oordq" path="res://engine/objects/platform/platform_path_small.tscn" id="53_iidoe"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="53_lr8ya"]
+[ext_resource type="Script" path="res://stages/extra/world_9_syzx/advanced_edition_node.gd" id="57_q8ay6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jnujg"]
 texture = ExtResource("9_veb0w")
@@ -524,12 +525,6 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Curve2D" id="Curve2D_0la26"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 4784, 464, 0, 0, 0, 0, 5104, 160)
-}
-point_count = 2
-
 [sub_resource type="Curve2D" id="Curve2D_bqucq"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 5296, 256, 0, 0, 0, 0, 5504, 256)
@@ -542,9 +537,21 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Curve2D" id="Curve2D_hex0j"]
+[sub_resource type="Curve2D" id="Curve2D_deg8h"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 6672, 416, 0, 0, 0, 0, 6928, 416)
+"points": PackedVector2Array(0, 0, 0, 0, 6656, 416, 0, 0, 0, 0, 6944, 416)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_0la26"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 4784, 464, 0, 0, 0, 0, 5104, 160)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_dq4x7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 4816, 432, 0, 0, 0, 0, 5072, 192)
 }
 point_count = 2
 
@@ -764,7 +771,7 @@ tile_set = SubResource("TileSet_ugggq")
 [node name="TileMapLayer4" type="TileMapLayer" parent="."]
 position = Vector2(6, 0)
 scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AABpABQAAQAAAAAAAABvABYAAQAAAAAAAAB0ABsAAQAAAAAABQB4ABsAAQAAAAAABACHABYAAQAAAAAAAAB+ABYAAQAAAAAAAADkABEAAQAAAAAAAADpABEAAQAAAAAAAADuAA0AAQAAAAAAAQD0AA0AAQAAAAAAAQCBARwAAQAAAAAAAACHARcAAQAAAAAAAACQARcAAQAAAAAAAACZARcAAQAAAAAAAACZAQsAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AABpABQAAQAAAAAAAABvABYAAQAAAAAAAAB0ABsAAQAAAAAABQB4ABsAAQAAAAAABACHABYAAQAAAAAAAAB+ABYAAQAAAAAAAADkABEAAQAAAAAAAADpABEAAQAAAAAAAADuAA0AAQAAAAAAAQD0AA0AAQAAAAAAAQCBARwAAQAAAAAAAACHARcAAQAAAAAAAACZARcAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_ugggq")
 
 [node name="HUD" parent="." instance=ExtResource("15_oxwde")]
@@ -922,15 +929,6 @@ offset_left = 1654.0
 offset_top = 288.0
 offset_right = 1686.0
 offset_bottom = 320.0
-
-[node name="BulletLauncher3" parent="." instance=ExtResource("22_cqlax")]
-position = Vector2(4560, 400)
-
-[node name="BulletBillBase3" parent="." instance=ExtResource("23_llk1n")]
-offset_left = 4544.0
-offset_top = 384.0
-offset_right = 4576.0
-offset_bottom = 416.0
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -1187,41 +1185,8 @@ position = Vector2(7264, 288)
 [node name="PiranhaGreen13" parent="." instance=ExtResource("43_icn3r")]
 position = Vector2(7328, 256)
 
-[node name="PiranhaGreen6" parent="." instance=ExtResource("43_icn3r")]
-position = Vector2(4736, 384)
-
 [node name="Goomba" parent="." instance=ExtResource("44_qn1x1")]
 position = Vector2(1584, 368)
-
-[node name="Goomba2" parent="." instance=ExtResource("44_qn1x1")]
-position = Vector2(3696, 48)
-
-[node name="Goomba3" parent="." instance=ExtResource("44_qn1x1")]
-position = Vector2(3856, 48)
-
-[node name="RotoCenter" parent="." instance=ExtResource("45_y30e1")]
-position = Vector2(806, 16)
-
-[node name="RotoRed2" parent="RotoCenter" instance=ExtResource("46_4awih")]
-position = Vector2(0, 150)
-phase = 90.0
-frequency = -250.0
-
-[node name="RotoCenter3" parent="." instance=ExtResource("45_y30e1")]
-position = Vector2(1958, 240)
-
-[node name="RotoRed2" parent="RotoCenter3" instance=ExtResource("46_4awih")]
-position = Vector2(0, 150)
-phase = 90.0
-frequency = -250.0
-
-[node name="RotoCenter4" parent="." instance=ExtResource("45_y30e1")]
-position = Vector2(2256, 144)
-
-[node name="RotoRed2" parent="RotoCenter4" instance=ExtResource("46_4awih")]
-position = Vector2(0, -150)
-phase = -90.0
-frequency = -250.0
 
 [node name="RotoCenter2" parent="." instance=ExtResource("45_y30e1")]
 position = Vector2(1136, 368)
@@ -1278,14 +1243,6 @@ result = SubResource("Resource_m3vo4")
 position = Vector2(4592, 272)
 result = SubResource("Resource_y7pat")
 
-[node name="Path2D2" type="Path2D" parent="."]
-curve = SubResource("Curve2D_0la26")
-
-[node name="PlatformPathSmall" parent="Path2D2" instance=ExtResource("53_iidoe")]
-position = Vector2(4784, 464)
-speed = 50.0
-smooth_enabled = false
-
 [node name="Path2D3" type="Path2D" parent="."]
 curve = SubResource("Curve2D_bqucq")
 
@@ -1311,7 +1268,108 @@ position = Vector2(7520, 416)
 position = Vector2(7344, 240)
 
 [node name="Path2D5" type="Path2D" parent="."]
-curve = SubResource("Curve2D_hex0j")
+curve = SubResource("Curve2D_deg8h")
 
-[node name="PlatformPath2" parent="Path2D5" instance=ExtResource("43_y578t")]
-position = Vector2(6672, 416)
+[node name="PlatformPathSmall" parent="Path2D5" instance=ExtResource("53_iidoe")]
+position = Vector2(6656, 416)
+
+[node name="Node2D3" type="Node2D" parent="."]
+modulate = Color(1, 0.615686, 0.615686, 1)
+script = ExtResource("57_q8ay6")
+
+[node name="RotoCenter" parent="Node2D3" instance=ExtResource("45_y30e1")]
+position = Vector2(806, 16)
+
+[node name="RotoRed2" parent="Node2D3/RotoCenter" instance=ExtResource("46_4awih")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -250.0
+
+[node name="RotoCenter3" parent="Node2D3" instance=ExtResource("45_y30e1")]
+position = Vector2(1958, 240)
+
+[node name="RotoRed2" parent="Node2D3/RotoCenter3" instance=ExtResource("46_4awih")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -250.0
+
+[node name="RotoCenter4" parent="Node2D3" instance=ExtResource("45_y30e1")]
+position = Vector2(2256, 144)
+
+[node name="RotoRed2" parent="Node2D3/RotoCenter4" instance=ExtResource("46_4awih")]
+position = Vector2(0, -150)
+phase = -90.0
+frequency = -250.0
+
+[node name="Goomba2" parent="Node2D3" instance=ExtResource("44_qn1x1")]
+position = Vector2(3696, 48)
+
+[node name="Goomba3" parent="Node2D3" instance=ExtResource("44_qn1x1")]
+position = Vector2(3856, 48)
+
+[node name="BulletLauncher3" parent="Node2D3" instance=ExtResource("22_cqlax")]
+position = Vector2(4560, 400)
+
+[node name="BulletBillBase3" parent="Node2D3" instance=ExtResource("23_llk1n")]
+offset_left = 4544.0
+offset_top = 384.0
+offset_right = 4576.0
+offset_bottom = 416.0
+
+[node name="PiranhaGreen6" parent="Node2D3" instance=ExtResource("43_icn3r")]
+position = Vector2(4736, 384)
+
+[node name="Path2D2" type="Path2D" parent="Node2D3"]
+curve = SubResource("Curve2D_0la26")
+
+[node name="PlatformPathSmall" parent="Node2D3/Path2D2" instance=ExtResource("53_iidoe")]
+position = Vector2(4784, 464)
+speed = 50.0
+smooth_enabled = false
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="Node2D3"]
+position = Vector2(-2, 0)
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAADARgAAQAAAAAAAAAIARgAAQAAAAAAAACZAQsAAQAAAAAAAQCQARcAAQAAAAAAAQA=")
+tile_set = SubResource("TileSet_ugggq")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Node2D3"]
+tile_set = SubResource("TileSet_ugggq")
+
+[node name="Node2D4" type="Node2D" parent="."]
+modulate = Color(0.615686, 1, 0.615686, 1)
+script = ExtResource("57_q8ay6")
+inverted = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Node2D4"]
+tile_map_data = PackedByteArray("AADIAAsAAQAAAAAABQA=")
+tile_set = SubResource("TileSet_ugggq")
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="Node2D4"]
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAADARgAAQAAAAAAAAAIARgAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_ugggq")
+
+[node name="Brick" parent="Node2D4" instance=ExtResource("24_qmeek")]
+position = Vector2(4624, 272)
+
+[node name="Path2D2" type="Path2D" parent="Node2D4"]
+curve = SubResource("Curve2D_dq4x7")
+
+[node name="PlatformPath2" parent="Node2D4/Path2D2" instance=ExtResource("43_y578t")]
+position = Vector2(4816, 432)
+
+[node name="Coin26" parent="Node2D4" instance=ExtResource("25_kexm0")]
+position = Vector2(6416, 272)
+
+[node name="Coin27" parent="Node2D4" instance=ExtResource("25_kexm0")]
+position = Vector2(6416, 240)
+
+[node name="Coin28" parent="Node2D4" instance=ExtResource("25_kexm0")]
+position = Vector2(6416, 208)
+
+[node name="Coin" parent="." instance=ExtResource("25_kexm0")]
+position = Vector2(1959, 208)
+
+[node name="Coin2" parent="." instance=ExtResource("25_kexm0")]
+position = Vector2(2256, 112)
