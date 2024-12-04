@@ -27,6 +27,8 @@ func suspended_game_logic() -> void:
 	
 	if profile.get(&"executed"):
 		SecretsManager._has_cheated = true
+	if profile.get(&"advanced_edition"):
+		ProfileManager.current_profile.data.advanced_edition = true
 	
 	if profile.get(&"saved_player_state"):
 		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(CharacterManager.get_suit(profile.saved_player_state))
