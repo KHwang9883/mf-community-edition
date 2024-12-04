@@ -1,18 +1,14 @@
-[gd_scene load_steps=39 format=4 uid="uid://bfyla0aynqum2"]
+[gd_scene load_steps=38 format=4 uid="uid://bfyla0aynqum2"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_alfld"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_npv5p"]
-[ext_resource type="Script" path="res://engine/objects/core/music_loader/music_loader.gd" id="3_gm310"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_td102"]
 [ext_resource type="AudioStream" uid="uid://c5khvmh458ujd" path="res://stages/extra/secrets/music/BasicInstinct.mod" id="4_we8l2"]
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="5_rd7xx"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_xhudd"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_s518n"]
-[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="8_egbxf"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_jr88s"]
 [ext_resource type="Texture2D" uid="uid://diufcy5iwqm3f" path="res://tilesets/volcano/gfx/hardblock.png" id="10_e7bck"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_m4khn"]
-[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="11_fsjxc"]
 [ext_resource type="Texture2D" uid="uid://ci168f4ljtq6a" path="res://tilesets/overworld_red/gfx/overworld_tileset.png" id="11_n7nyr"]
 [ext_resource type="Texture2D" uid="uid://6110am7wr7ow" path="res://tilesets/castle/gfx/gray_platform.png" id="12_5a6ry"]
 [ext_resource type="Texture2D" uid="uid://bwpquuu1dl163" path="res://stages/extra/world_9_syzx/gfx/9-3_bg.png" id="12_qtsa2"]
@@ -206,7 +202,50 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_g3oea"]
+resource_local_to_scene = true
+script = ExtResource("25_uqyua")
+creation_nodepack = ExtResource("22_o4y5i")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [sub_resource type="Resource" id="Resource_3xhe3"]
+resource_local_to_scene = true
+script = ExtResource("25_uqyua")
+creation_fallback_node = ExtResource("27_1pf0o")
+creation_nodepack = ExtResource("28_4dauf")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_5prpl"]
+resource_local_to_scene = true
+script = ExtResource("25_uqyua")
+creation_nodepack = ExtResource("22_o4y5i")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_r3mmx"]
 resource_local_to_scene = true
 script = ExtResource("25_uqyua")
 creation_fallback_node = ExtResource("27_1pf0o")
@@ -225,32 +264,20 @@ custom_vars = {}
 script = ExtResource("1_alfld")
 jump_to_scene = "res://stages/extra/world_9_syzx/map_9.tscn"
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("2_npv5p")]
-script = ExtResource("3_gm310")
+[node name="MusicLoader" parent="." instance=ExtResource("2_npv5p")]
 music = Array[Resource]([ExtResource("4_we8l2")])
 
-[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("4_td102")]
+[node name="Player" parent="." instance=ExtResource("4_td102")]
 position = Vector2(176, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 12.0
-platform_on_leave = 2
-script = ExtResource("5_rd7xx")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("6_xhudd")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("7_s518n")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("7_s518n")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("8_egbxf")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -258,8 +285,7 @@ tile_map_data = PackedByteArray("AAACAA0AAgABAAAAAAD//w0AAgAAAAAAAAD//w4AAgAAAAE
 tile_set = SubResource("TileSet_5acn0")
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("10_m4khn")]
-script = ExtResource("11_fsjxc")
+[node name="HUD" parent="." instance=ExtResource("10_m4khn")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -421,7 +447,7 @@ result = SubResource("Resource_ga8xm")
 
 [node name="QuestionBlock2" parent="." instance=ExtResource("24_b5kt2")]
 position = Vector2(368, 288)
-result = SubResource("Resource_ga8xm")
+result = SubResource("Resource_g3oea")
 
 [node name="QuestionBlock3" parent="." instance=ExtResource("24_b5kt2")]
 position = Vector2(368, 176)
@@ -438,8 +464,8 @@ position = Vector2(4464, 304)
 
 [node name="QuestionBlock4" parent="." instance=ExtResource("24_b5kt2")]
 position = Vector2(4432, 304)
-result = SubResource("Resource_ga8xm")
+result = SubResource("Resource_5prpl")
 
 [node name="QuestionBlock5" parent="." instance=ExtResource("24_b5kt2")]
 position = Vector2(4400, 272)
-result = SubResource("Resource_3xhe3")
+result = SubResource("Resource_r3mmx")
