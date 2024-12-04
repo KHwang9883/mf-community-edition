@@ -82,4 +82,5 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files) 
 
 	stream.stereo = !options["force/mono"]
 	stream.loop_mode = options["playback/loop_mode"]
+	stream.interpolation_mode = options["playback/interpolation"]
 	return ResourceSaver.save(stream, "%s.%s" % [save_path, _get_save_extension()])
