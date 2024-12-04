@@ -1,109 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://b7eavmhombhly"]
+[gd_scene load_steps=11 format=3 uid="uid://b7eavmhombhly"]
 
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="1_85d7i"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_leaderboard_loading_text.gd" id="2_pfn1e"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_menu_controller.gd" id="3_8igr3"]
-[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/mario_selector.png" id="3_vajtn"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="4_4o22c"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_lb_back.gd" id="5_o0rjb"]
 [ext_resource type="Texture2D" uid="uid://f8uqwsggii0k" path="res://stages/extra/minix/textures/hiscore_button_bg_ninepatch.png" id="6_hytpw"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="6_omaws"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="7_3hbi8"]
 [ext_resource type="Script" path="res://stages/extra/minix/scripts/minix_leaderboard_map_selector.gd" id="7_odyxk"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
-atlas = ExtResource("3_vajtn")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_v65u6"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vq72u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ceg4y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3l365")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vjno")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p4p38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vmyvm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmhu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kcft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5s4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2lhkc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1wal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}],
-"loop": false,
-"name": &"default",
-"speed": 20.0
-}]
+[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="7_qtv61"]
 
 [node name="Control" type="Control"]
 process_mode = 3
@@ -148,7 +54,6 @@ offset_bottom = 40.0
 script = ExtResource("5_o0rjb")
 
 [node name="Selector" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_v65u6")
 script = ExtResource("4_4o22c")
 smooth_speed = 0.4
 position_padding = 16
@@ -158,6 +63,10 @@ limit_left = 0
 limit_top = 0
 limit_right = 640
 limit_bottom = 636
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+sprite_frames = ExtResource("6_omaws")
+script = ExtResource("7_qtv61")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10

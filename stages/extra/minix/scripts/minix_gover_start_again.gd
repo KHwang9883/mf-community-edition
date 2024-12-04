@@ -4,6 +4,7 @@ extends MenuSelection
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 func _handle_select(mouse_input: bool = false) -> void:
+	Audio.stop_all_sounds()
 	super(mouse_input)
 	TransitionManager.transition_middle.connect(func():
 		TransitionManager.current_transition.paused = true
