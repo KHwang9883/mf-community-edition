@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dikleqhkedcrb"]
+[gd_scene load_steps=37 format=3 uid="uid://dikleqhkedcrb"]
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_bmpkr"]
 [ext_resource type="AudioStream" uid="uid://dooguig5sr56s" path="res://music/extra/world_9_syzx/dyna-k_music6.mod" id="3_rbhek"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cm4havsld8lo8" path="res://gfx/map/world_names/world_9.png" id="13_oo4jx"]
 [ext_resource type="Texture2D" uid="uid://bmmc5enstq6c0" path="res://gfx/fancy_graphics/world_texts/world_9.png" id="14_eik7c"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/world_text.gd" id="14_kgyg0"]
+[ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="14_kx8t2"]
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="16_mdikp"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/start_text.gd" id="17_i0k5o"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/player_icon.gd" id="18_ga5y6"]
@@ -34,6 +35,12 @@
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="30_cjd1g"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="31_evt6l"]
 [ext_resource type="PackedScene" uid="uid://r6db0501lsxu" path="res://objects/bonus_level_map_button/bonus_level_click_on_me.tscn" id="32_ay0k0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ew2s8"]
+shader = ExtResource("14_kx8t2")
+shader_parameter/hue = -0.03
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_bmpkr")
@@ -111,13 +118,24 @@ script = ExtResource("14_kgyg0")
 position = Vector2(0, 146)
 
 [node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
+position = Vector2(-30, 0)
 texture = ExtResource("13_oo4jx")
+region_enabled = true
+region_rect = Rect2(0, 0, 218, 70)
 script = ExtResource("12_1nw7e")
 maximum = false
 medium = true
 minimum = true
 
+[node name="Sprite2D2" type="Sprite2D" parent="GUI2/WorldText/Sprite2D"]
+material = SubResource("ShaderMaterial_ew2s8")
+position = Vector2(138, 0)
+texture = ExtResource("13_oo4jx")
+region_enabled = true
+region_rect = Rect2(216, 0, 58, 70)
+
 [node name="World1" type="Sprite2D" parent="GUI2/WorldText"]
+visible = false
 texture = ExtResource("14_eik7c")
 script = ExtResource("12_1nw7e")
 
