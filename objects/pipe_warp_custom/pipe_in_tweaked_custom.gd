@@ -8,3 +8,8 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	if warp_to_remade_scene_tweak != "" && SettingsManager.get_tweak("remade_levels", true):
 		warp_to_scene = warp_to_remade_scene_tweak
+
+func pass_warp() -> void:
+	Audio.stop_all_musics()
+	Audio.stop_all_sounds()
+	super()

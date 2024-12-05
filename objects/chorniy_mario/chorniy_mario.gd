@@ -41,8 +41,8 @@ const DEATH_SOUNDS = [
 	preload("res://objects/chorniy_mario/death_sounds/sndNewLuckyShot.ogg"),
 	preload("res://objects/chorniy_mario/death_sounds/sndNewTeeth.ogg"),
 	preload("res://objects/chorniy_mario/death_sounds/sndNewUltra.ogg"),
-	preload("res://objects/chorniy_mario/death_sounds/sndserafim.ogg"),
-	preload("res://objects/chorniy_mario/death_sounds/spongebob-fail.mp3"),
+	preload("res://objects/chorniy_mario/death_sounds/sndserafim.ogg"),preload("res://objects/chorniy_mario/death_sounds/dom2.mp3"),
+	preload("res://objects/chorniy_mario/death_sounds/spongebob-fail.mp3"),preload("res://objects/chorniy_mario/death_sounds/ktkm9.mod"),
 	preload("res://objects/chorniy_mario/death_sounds/ssbannouncer-game.mp3"),preload("res://objects/chorniy_mario/death_sounds/thirdstar/bongcrash2buziol.wav.ogg"),
 	preload("res://objects/chorniy_mario/death_sounds/tf2-critical-hit.mp3"),preload("res://objects/chorniy_mario/death_sounds/thirdstar/MEGAMAN A57AAA.wav.ogg"), 
 	preload("res://objects/chorniy_mario/death_sounds/xQc.ogg"), preload("res://objects/chorniy_mario/death_sounds/thirdstar/mario_justwhatineeded.wav.ogg"),preload("res://objects/chorniy_mario/death_sounds/thirdstar/111.ogg"), preload("res://objects/chorniy_mario/death_sounds/thirdstar/3123.ogg"), preload("res://objects/chorniy_mario/death_sounds/thirdstar/211223.ogg"), preload("res://objects/chorniy_mario/death_sounds/thirdstar/1094589562262655078.mp3"), preload("res://objects/chorniy_mario/death_sounds/thirdstar/1101937374214246542.mp3"),
@@ -81,7 +81,7 @@ func _ready() -> void:
 	if _random_sounds_tweak:
 		_death_sound = DEATH_SOUNDS.pick_random()
 	mario.death_music_override = _death_sound
-	wait_time = mario.death_music_override.get_length() + 0.5
+	wait_time = _death_sound.get_length() + (0.5 if _death_sound != DEATH_SOUNDS[1] else 0.0)
 	mario.death_music_ignore_pause = true
 	mario.died.connect(loludied)
 
