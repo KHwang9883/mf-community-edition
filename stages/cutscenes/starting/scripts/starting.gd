@@ -84,7 +84,7 @@ func _flow_intros() -> void:
 
 func _unhandled_input(event: InputEvent):
 	if !_skippable: return
-	if event is InputEventKey:
+	if event is InputEventKey || event is InputEventJoypadButton:
 		_fade_out()
 
 func _fade_out() -> void:
