@@ -116,7 +116,7 @@ func _physics_process(delta: float) -> void:
 	var frame = mario.sprite.frame
 	var flip_h = mario.sprite.flip_h
 	var frames = mario.sprite.sprite_frames
-	if mario.warp && mario.warp_dir == mario.WarpDir.UP:
+	if mario.warp != 0 && mario.warp_dir == mario.WarpDir.UP:
 		warp_invinc_timer = 15
 	
 	get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
