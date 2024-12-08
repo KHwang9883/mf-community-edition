@@ -60,7 +60,8 @@ func _ready() -> void:
 
 	y_counter = moving_group.global_position.y
 
-	Audio.play_1d_sound(CharacterManager.get_voice_line("oh_no"))
+	var _voices = CharacterManager.get_voice_line("oh_no")
+	Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)])
 
 	var tween = goodluck.create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_property(goodluck, "position:x", 256, 1).set_ease(Tween.EASE_OUT)
