@@ -116,7 +116,7 @@ func complete() -> void:
 
 func gameover() -> void:
 	set_deferred("can_interact", false)
-	Audio.play_1d_sound(MARIO_OHNO)
+	Audio.play_1d_sound(MARIO_OHNO[randi_range(0, len(MARIO_OHNO) - 1)])
 
 	var tw = create_tween()
 	tw.tween_property(try_next_time, "modulate:a", 1.0, 0.3)
