@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cybsx5nq075w1"]
+[gd_scene load_steps=28 format=3 uid="uid://cybsx5nq075w1"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_k26us"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_n4tw3"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bodwa5aeyxbn3" path="res://stages/extra/climbing_minigame/objects/mario.tscn" id="6_1ddga"]
 [ext_resource type="Texture2D" uid="uid://c3lq87gv2rowf" path="res://stages/extra/climbing_minigame/textures/marioline.png" id="8_qtcu2"]
 [ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_custom_camera.gd" id="9_mwl4c"]
-[ext_resource type="Texture2D" uid="uid://ceyk3iuyd8pkd" path="res://stages/extra/climbing_minigame/textures/mariomarker.png" id="9_xg2g6"]
+[ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_head.gd" id="10_qcp1f"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_ucgs5"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="12_3spaf"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="14_2gpud"]
@@ -32,6 +32,21 @@ width = 640
 height = 480
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_vcanh"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c0xwk"]
+gradient = SubResource("Gradient_vcanh")
+width = 56
+height = 56
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.9, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7d5gc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o311q"]
 size = Vector2(32, 864)
@@ -83,7 +98,11 @@ texture = ExtResource("8_qtcu2")
 
 [node name="Mariomarker" type="Sprite2D" parent="HUD"]
 position = Vector2(48, 380)
-texture = ExtResource("9_xg2g6")
+texture = SubResource("GradientTexture2D_c0xwk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD/Mariomarker"]
+sprite_frames = SubResource("SpriteFrames_7d5gc")
+script = ExtResource("10_qcp1f")
 
 [node name="Goodluck" type="Sprite2D" parent="HUD"]
 physics_interpolation_mode = 1

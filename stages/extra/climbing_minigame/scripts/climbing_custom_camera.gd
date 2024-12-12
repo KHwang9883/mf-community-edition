@@ -45,8 +45,8 @@ var bg_sounds = []
 
 func _ready() -> void:
 	super()
-	if CharacterManager.get_character_name() == "Luigi":
-		mariomarker.texture = preload("res://stages/extra/climbing_minigame/textures/luigimarker.png")
+	#if CharacterManager.get_character_name() == "Luigi":
+	#	mariomarker.texture = preload("res://stages/extra/climbing_minigame/textures/luigimarker.png")
 
 	get_tree().create_timer(20, false).timeout.connect(podo_create)
 

@@ -42,7 +42,7 @@ func die(tags: Dictionary = {}) -> void:
 	Audio.play_music(
 		suit.sound_death if !death_music_override else death_music_override,
 		1 if death_stop_music else 2,
-		{pitch = suit.sound_pitch} if !death_music_ignore_pause && !_suit_pause_tweak else {
+		{pitch = suit.sound_pitch} if !death_music_ignore_pause else {
 			pitch = suit.sound_pitch,
 			ignore_pause = true
 		}
@@ -55,9 +55,9 @@ func die(tags: Dictionary = {}) -> void:
 				db.wait_time = death_wait_time
 				db.check_for_lives = death_check_for_lives
 				db.jump_to_scene = death_jump_to_scene
-				if _suit_pause_tweak:
-					Scenes.custom_scenes.pause.paused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_INHERIT))
-					Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
+				#if _suit_pause_tweak:
+				#	Scenes.custom_scenes.pause.paused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_INHERIT))
+				#	Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
 					var character_death_sprite = CharacterManager.get_misc_texture("death", "Mario")

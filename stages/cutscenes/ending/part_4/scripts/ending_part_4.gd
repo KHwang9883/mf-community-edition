@@ -37,7 +37,7 @@ func _ready() -> void:
 func _flow_intros() -> void:
 	color_rect.modulate.a = 0
 	node_2d.modulate.a = 0
-	camera_2d.speed = -20
+	camera_2d.speed = -22
 	
 	await _time(6.3)
 	toad.speed = 100
