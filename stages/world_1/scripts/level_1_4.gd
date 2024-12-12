@@ -33,7 +33,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	get_tree().call_group(&"1-4_castle", &"set_falling")
 	falling_below_y_offset = 666
 	
-	Audio.play_sound(CharacterManager.get_voice_line("fall"), Thunder._current_player, true, { ignore_pause = true })
+	var _voices = CharacterManager.get_voice_line("fall")
+	Audio.play_sound(_voices[randi_range(0, len(_voices) - 1)], Thunder._current_player, true, { ignore_pause = true })
 	Thunder._current_player.gravity_scale = 0.1
 	if Thunder._current_player.speed.y < 0:
 		Thunder._current_player.speed.y = 0
