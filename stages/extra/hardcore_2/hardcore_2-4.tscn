@@ -1,13 +1,14 @@
-[gd_scene load_steps=70 format=3 uid="uid://cbskrpypej1ka"]
+[gd_scene load_steps=71 format=3 uid="uid://cbskrpypej1ka"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_o68eq"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_03qkn"]
 [ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="4_jj2qm"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_o3fis"]
-[ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="4_tcp1l"]
+[ext_resource type="AudioStream" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="4_tcp1l"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_vupbl"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_l2g1y"]
 [ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="6_lvjcw"]
+[ext_resource type="Script" path="res://stages/extra/lost_map/scripts/delete_suspended_progress.gd" id="6_y4vo8"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_8l0d0"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="7_ky5if"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="8_u7gpi"]
@@ -253,6 +254,9 @@ music = Array[Resource]([ExtResource("4_jj2qm")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("5_vupbl")]
 secrets = Array[String](["hardcore worlds finished", "hardcore 2 secret mode"])
+
+[node name="Node3" type="Node" parent="SecretUnlocker"]
+script = ExtResource("6_y4vo8")
 
 [node name="Mario" parent="." instance=ExtResource("4_o3fis")]
 position = Vector2(104, 336)
@@ -1147,6 +1151,7 @@ shape = SubResource("RectangleShape2D_gp4os")
 
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
+[connection signal="level_completed" from="." to="SecretUnlocker/Node3" method="delete_suspended"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 
 [editable path="Objects/Normal Objects/BowserJump"]

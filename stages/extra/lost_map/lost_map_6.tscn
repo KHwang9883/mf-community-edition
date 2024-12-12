@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cqt4blkghat8m"]
+[gd_scene load_steps=72 format=3 uid="uid://cqt4blkghat8m"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_uxdbk"]
 [ext_resource type="AudioStream" uid="uid://q68yn50uncsv" path="res://music/lostmap/lostmap_completed.ogg" id="2_03pos"]
@@ -36,6 +36,7 @@
 [ext_resource type="Script" path="res://stages/world_6/scripts/maze_script.gd" id="38_efdmx"]
 [ext_resource type="Texture2D" uid="uid://6jvnknfhxi0m" path="res://engine/objects/enemies/spinies/textures/spiny_iron.png" id="39_bnxs0"]
 [ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="42_7g6ss"]
+[ext_resource type="Script" path="res://stages/extra/lost_map/scripts/delete_suspended_progress.gd" id="43_5wudc"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="47_2iacm"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="48_wma5r"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="49_s48dv"]
@@ -331,6 +332,9 @@ music = Array[Resource]([ExtResource("4_4tcss")])
 [node name="SecretUnlocker" parent="." instance=ExtResource("6_s6ybk")]
 secrets = Array[String](["lost map completed", "lost map in secret mode"])
 
+[node name="Node3" type="Node" parent="."]
+script = ExtResource("43_5wudc")
+
 [node name="Mario" parent="." instance=ExtResource("7_uxfxd")]
 position = Vector2(240, 272)
 death_music_override = ExtResource("7_xludn")
@@ -624,7 +628,7 @@ metadata/_edit_lock_ = true
 z_index = -1
 tile_set = ExtResource("48_wma5r")
 format = 2
-layer_0/tile_data = PackedInt32Array(11, 2, 393216, 400, 2, 393216)
+layer_0/tile_data = PackedInt32Array(11, 2, 393216, 400, 2, 393216, 53, 2, 393216, 72, 2, 393216, 102, 2, 393216, 589939, 2, 393216, 130, 2, 196608, 721073, 2, 196608, 786583, 2, 196608, 196, 2, 393216, 213, 2, 393216, 232, 2, 393216, 655593, 2, 393216, 786698, 2, 196608, 852222, 2, 196608, 303, 2, 393216, 590125, 2, 327680, 721227, 2, 196608, 349, 2, 393216, 368, 2, 393216, 391, 2, 393216, 382, 2, 196608, 336, 2, 393216, 169, 2, 393216, 284, 2, 393216)
 
 [node name="AudioAreaCave" parent="." instance=ExtResource("49_s48dv")]
 visible = false
@@ -930,9 +934,11 @@ trigger_area = Rect2(-80, -272, 160, 720)
 position = Vector2(9456, 224)
 
 [node name="LavaBubbles" parent="." instance=ExtResource("42_7g6ss")]
+z_index = -1
 position = Vector2(3872, 224)
 
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
+[connection signal="level_completed" from="." to="Node3" method="delete_suspended"]
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 

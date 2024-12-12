@@ -1,15 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://c2mch7wqmlcgp"]
+[gd_scene load_steps=13 format=3 uid="uid://c2mch7wqmlcgp"]
 
 [ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="1_fcdr4"]
 [ext_resource type="Texture2D" uid="uid://bpkndt6n365gx" path="res://stages/main_menu/textures/tweak_bg.png" id="2_4c2j4"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="3_j4li8"]
 [ext_resource type="Texture2D" uid="uid://b8wl5dmi8an1w" path="res://stages/main_menu/textures/tweaks.png" id="4_orn0c"]
 [ext_resource type="PackedScene" uid="uid://kiw6yxeov3fj" path="res://stages/main_menu/objects/tweaks_selections.tscn" id="5_v0prp"]
+[ext_resource type="Script" path="res://stages/main_menu/objects/label_space_key.gd" id="7_lpv5f"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="8_i5nl3"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="11_igxil"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_description.gd" id="12_cheln"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="13_1g7cx"]
-[ext_resource type="Script" path="res://objects/message_block/blinking_text.gd" id="14_ayerv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_smql5"]
 shader = ExtResource("1_fcdr4")
@@ -107,7 +106,7 @@ uppercase = true
 layout_mode = 0
 offset_left = 11.0
 offset_top = 319.0
-offset_right = 124.0
+offset_right = 130.0
 offset_bottom = 464.0
 theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
@@ -119,13 +118,13 @@ theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("8_i5nl3")
 theme_override_font_sizes/font_size = 11
 text = "please press
-space key to
-view tweak
+%s
+for a tweak
 description!"
-horizontal_alignment = 3
 vertical_alignment = 2
+autowrap_mode = 3
 uppercase = true
-script = ExtResource("11_igxil")
+script = ExtResource("7_lpv5f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 4
@@ -193,11 +192,11 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("13_1g7cx")
 theme_override_font_sizes/font_size = 18
-text = "PRESS SPACE KEY"
+text = "PRESS %s"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
-script = ExtResource("14_ayerv")
+script = ExtResource("7_lpv5f")
 
 [node name="Text3" type="Label" parent="CanvasLayer/Box/Texture"]
 layout_mode = 1
