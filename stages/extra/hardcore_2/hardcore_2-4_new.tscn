@@ -1,9 +1,10 @@
-[gd_scene load_steps=102 format=3 uid="uid://dcx4rjvxyngi3"]
+[gd_scene load_steps=103 format=3 uid="uid://dcx4rjvxyngi3"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_11iu2"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_2nus4"]
-[ext_resource type="Resource" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_rbdrq"]
+[ext_resource type="AudioStream" uid="uid://bexk1qd4psene" path="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod" id="5_rbdrq"]
 [ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="6_cqv32"]
+[ext_resource type="Script" path="res://stages/extra/lost_map/scripts/delete_suspended_progress.gd" id="6_gf63k"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_4bo5l"]
 [ext_resource type="AudioStream" uid="uid://dfhdjdtb7xk4c" path="res://music/extra/hardcore-die-lol.ogg" id="7_8wpra"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_xlye3"]
@@ -669,6 +670,9 @@ music = Array[Resource]([ExtResource("6_cqv32")])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("7_4bo5l")]
 secrets = Array[String](["hardcore worlds finished", "hardcore 2 secret mode"])
+
+[node name="Node3" type="Node" parent="SecretUnlocker"]
+script = ExtResource("6_gf63k")
 
 [node name="Mario" parent="." instance=ExtResource("7_xlye3")]
 position = Vector2(112, 400)
@@ -1766,6 +1770,7 @@ shape = SubResource("RectangleShape2D_ru5bo")
 
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
+[connection signal="level_completed" from="." to="SecretUnlocker/Node3" method="delete_suspended"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 
 [editable path="Objects/Normal Objects/BowserJump"]

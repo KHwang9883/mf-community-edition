@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b3bt8fm030vlj"]
+[gd_scene load_steps=28 format=3 uid="uid://b3bt8fm030vlj"]
 
 [ext_resource type="Script" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_jgcj0"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_rkrt5"]
@@ -19,6 +19,8 @@
 [ext_resource type="AudioStream" uid="uid://bwlhej5mao270" path="res://music/smw2-bowser.ogg" id="15_yrdk2"]
 [ext_resource type="PackedScene" uid="uid://bqxorfeujkfsl" path="res://stages/world_8/objects/lava_bowser_8-4.tscn" id="16_8grry"]
 [ext_resource type="PackedScene" uid="uid://d2bajdy6e54hb" path="res://objects/final_boss_cell/final_boss_cell.tscn" id="17_hlk8d"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="20_h186j"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="21_rqkhf"]
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_8xn02"]
 
@@ -27,6 +29,25 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -64, 0, 0, 0, 0, 0, -64, 0)
 }
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_7qctq"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fegcr"]
+gradient = SubResource("Gradient_7qctq")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_3cqhw"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8byrw"]
+gradient = SubResource("Gradient_3cqhw")
+width = 112
 
 [node name="Level8-4Boss" type="Node2D"]
 script = ExtResource("1_jgcj0")
@@ -118,5 +139,62 @@ position = Vector2(448, 336)
 
 [node name="LavaBowser" parent="." instance=ExtResource("16_8grry")]
 position = Vector2(16, 432)
+
+[node name="Node2D" type="Node2D" parent="LavaBowser"]
+script = ExtResource("20_h186j")
+
+[node name="ochko" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(368, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("21_rqkhf")
+
+[node name="ochko5" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(488, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("21_rqkhf")
+
+[node name="ochko6" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(608, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("21_rqkhf")
+
+[node name="ochko2" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(248, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("21_rqkhf")
+
+[node name="ochko3" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(128, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("21_rqkhf")
+
+[node name="ochko4" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(16, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("21_rqkhf")
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("20_h186j")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+z_index = -20
+position = Vector2(640, 0.039)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_8byrw")
+centered = false
+script = ExtResource("20_h186j")
 
 [connection signal="level_completed" from="." to="SecretUnlocker/Node" method="perform_checks_and_unlock"]

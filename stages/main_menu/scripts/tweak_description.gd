@@ -23,6 +23,7 @@ func _ready() -> void:
 	tweaks.get_node(^"Tweaks").connect(&"selected", _set_invis.unbind(4))
 	tweaks.get_node(^"Gameplay").connect(&"selected", _set_invis.unbind(4))
 	tweaks.get_node(^"Aesthetic").connect(&"selected", _set_invis.unbind(4))
+	tweaks.get_node(^"Presets").connect(&"selected", _set_invis.unbind(4))
 	tweaks.connect(&"_tweak_desc", func(controller):
 		if controller.focused:
 			label_2.visible = true

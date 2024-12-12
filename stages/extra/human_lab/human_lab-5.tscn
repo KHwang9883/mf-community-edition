@@ -1,9 +1,10 @@
-[gd_scene load_steps=181 format=3 uid="uid://nyfj5ovg0sh8"]
+[gd_scene load_steps=182 format=3 uid="uid://nyfj5ovg0sh8"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_coxvy"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_pifh8"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_b0xam"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="4_tb11i"]
+[ext_resource type="Script" path="res://stages/extra/lost_map/scripts/delete_suspended_progress.gd" id="5_mnsqu"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_vjd1l"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_y6jyy"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_x3w07"]
@@ -986,6 +987,9 @@ music = Array[Resource]([ExtResource("4_tb11i")])
 [node name="SecretUnlocker" parent="." instance=ExtResource("4_b0xam")]
 secrets = Array[String](["human laboratory completed", "human lab in secret mode"])
 
+[node name="Node3" type="Node" parent="SecretUnlocker"]
+script = ExtResource("5_mnsqu")
+
 [node name="Mario" parent="." instance=ExtResource("5_vjd1l")]
 position = Vector2(80, 400)
 
@@ -1458,6 +1462,7 @@ position = Vector2(3200, 400)
 texture = ExtResource("41_ok0iu")
 
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
+[connection signal="level_completed" from="." to="SecretUnlocker/Node3" method="delete_suspended"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 [connection signal="player_enter" from="Objects/Node2D/Area2D" to="Objects/Node2D" method="_on_area_2d_player_enter"]
 [connection signal="player_exit" from="Objects/Node2D/Area2D" to="Objects/Node2D" method="_on_area_2d_player_exit"]

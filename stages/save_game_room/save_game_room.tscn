@@ -1,4 +1,4 @@
-[gd_scene load_steps=199 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=202 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -107,11 +107,14 @@
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/kevin_activate.gd" id="77_s7vb4"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/secrets_table.gd" id="78_bvu8r"]
 [ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="78_vkeyl"]
+[ext_resource type="Script" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="78_yjld5"]
+[ext_resource type="Script" path="res://stages/save_game_room/scripts/select_level_label.gd" id="79_ntcy7"]
 [ext_resource type="AudioStream" uid="uid://cbw3tcy4guuc3" path="res://objects/chorniy_mario/death_sounds/sb.ogg" id="79_tlm30"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/secrets_table_achievement.gd" id="80_dw3tv"]
 [ext_resource type="Texture2D" uid="uid://dpayh6jbqhpy3" path="res://gfx/starman_running_star_2.png" id="82_seg3g"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/secrets_block.gd" id="84_vgarn"]
 [ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/hard_block_only.png" id="85_esg68"]
+[ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/item_shop_label.gd" id="88_ctl7w"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="90_jteik"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/koopa_liberation_deco.gd" id="91_1t1pg"]
 [ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="91_tvxxs"]
@@ -2169,9 +2172,9 @@ texture_under = ExtResource("64_5nfk3")
 texture_progress = ExtResource("65_h2h5r")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Reset"]
-offset_left = 208.0
+offset_left = 192.0
 offset_top = -56.0
-offset_right = 624.0
+offset_right = 640.0
 offset_bottom = -10.0
 size_flags_vertical = 3
 theme_override_constants/separation = 3
@@ -2183,9 +2186,11 @@ theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 21
-text = "TO DELETE A SAVE, PRESS AND HOLD DEL BUTTON FOR 3 SEC."
+text = "TO DELETE A SAVE, HOLD %s FOR 3 SEC."
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("78_yjld5")
+action = "a_delete"
 
 [node name="Unlock" type="Label" parent="CanvasLayer/Reset/VBoxContainer"]
 layout_mode = 2
@@ -2194,9 +2199,11 @@ theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 21
-text = "to select a world, press tab button."
+text = "to select a world, press %s."
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("78_yjld5")
+action = "a_tab"
 
 [node name="Unlock2" type="Label" parent="CanvasLayer/Reset/VBoxContainer"]
 layout_mode = 2
@@ -2208,6 +2215,7 @@ theme_override_font_sizes/font_size = 21
 text = "to select a level, use corresponding number buttons."
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("79_ntcy7")
 
 [node name="Secrets" type="Label" parent="CanvasLayer/Reset/VBoxContainer"]
 visible = false
@@ -2222,7 +2230,6 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="Reset2" type="Node2D" parent="CanvasLayer"]
-visible = false
 position = Vector2(-96, 6)
 script = ExtResource("54_5dq5r")
 
@@ -2238,9 +2245,9 @@ texture_under = ExtResource("64_5nfk3")
 texture_progress = ExtResource("65_h2h5r")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Reset2"]
-offset_left = 208.0
+offset_left = 192.0
 offset_top = -56.0
-offset_right = 624.0
+offset_right = 640.0
 offset_bottom = -10.0
 size_flags_vertical = 3
 theme_override_constants/separation = 3
@@ -2252,9 +2259,11 @@ theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 21
-text = "TO DELETE A SAVE, PRESS AND HOLD DEL BUTTON FOR 3 SEC."
+text = "TO DELETE A SAVE, PRESS AND HOLD %s FOR 3 SEC."
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("78_yjld5")
+action = "a_delete"
 
 [node name="Unlock2" type="Label" parent="CanvasLayer/Reset2/VBoxContainer"]
 layout_mode = 2
@@ -2266,6 +2275,7 @@ theme_override_font_sizes/font_size = 21
 text = "to select a level, use corresponding number buttons."
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("79_ntcy7")
 
 [node name="Secrets" type="Label" parent="CanvasLayer/Reset2/VBoxContainer"]
 visible = false
@@ -2470,6 +2480,9 @@ theme_override_font_sizes/font_size = 21
 text = "YOU CAN EXCHANGE SOME LIVES FOR ONE OF THESE ITEMS!!!
 BUT BE CAREFUL, SOMETIMES LIVES ARE MORE IMPORTANT THAN THIS STUFF."
 horizontal_alignment = 1
+uppercase = true
+script = ExtResource("88_ctl7w")
+action = "m_up"
 
 [node name="Label" type="Label" parent="Objects"]
 offset_left = 752.0
