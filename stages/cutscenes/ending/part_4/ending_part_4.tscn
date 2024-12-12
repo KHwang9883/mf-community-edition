@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cgsc783wuxspv"]
+[gd_scene load_steps=41 format=3 uid="uid://cgsc783wuxspv"]
 
 [ext_resource type="Texture2D" uid="uid://cpc057l26xydx" path="res://engine/objects/platform/tank_ground.png" id="1_57tac"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="1_d85am"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://djuoyh4schdj1" path="res://stages/cutscenes/ending/part_4/gfx/broken_tank_bg.png" id="1_iv5sh"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="3_6muub"]
 [ext_resource type="PackedScene" uid="uid://cfdgwxnth6m3d" path="res://tilesets/tanks/scenes/dark_cloud.tscn" id="3_dhveu"]
+[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="5_y8ep0"]
 [ext_resource type="Texture2D" uid="uid://87ovuili333b" path="res://stages/cutscenes/ending/part_4/gfx/broken_tank1.png" id="6_im2sr"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="6_x3u41"]
 [ext_resource type="Texture2D" uid="uid://bwmn6afydgupe" path="res://stages/cutscenes/ending/part_4/gfx/bowser_broken.png" id="7_g31a6"]
 [ext_resource type="Script" path="res://stages/cutscenes/starting/scripts/camera_part2.gd" id="8_jlky5"]
 [ext_resource type="Script" path="res://stages/cutscenes/ending/part_4/scripts/bowser_broken.gd" id="9_82rsq"]
@@ -28,6 +30,23 @@ gradient = SubResource("Gradient_xw2og")
 width = 640
 height = 480
 fill_to = Vector2(0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pgqxo"]
+frequency = 0.004
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_at0fl"]
+width = 800
+height = 600
+seamless = true
+seamless_blend_skirt = 0.25
+noise = SubResource("FastNoiseLite_pgqxo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4moe7"]
+shader = ExtResource("5_y8ep0")
+shader_parameter/density = 0.65
+shader_parameter/speed = Vector2(0.02, 0.01)
+shader_parameter/freq = 1.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_at0fl")
 
 [sub_resource type="Curve2D" id="Curve2D_epa2n"]
 _data = {
@@ -204,29 +223,18 @@ modulate = Color(1, 1, 1, 0.454902)
 position = Vector2(-193, 384)
 texture = ExtResource("1_iv5sh")
 
-[node name="Cloud" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
-z_index = 2
-position = Vector2(490, 71)
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(800, 600)
+script = ExtResource("1_d85am")
+medium = true
 
-[node name="Cloud2" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
-z_index = 2
-position = Vector2(232, 58)
-
-[node name="Cloud3" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
-z_index = 2
-position = Vector2(63, 136)
-
-[node name="Cloud4" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
-z_index = 2
-position = Vector2(-159, 47)
-
-[node name="Cloud5" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
-z_index = 2
-position = Vector2(-379, 103)
-
-[node name="Cloud6" parent="ParallaxBackground/ParallaxLayer3" instance=ExtResource("3_dhveu")]
-z_index = 2
-position = Vector2(-557, 62)
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
+material = SubResource("ShaderMaterial_4moe7")
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("6_x3u41")
+metadata/_edit_lock_ = true
 
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 layer = 10

@@ -1,11 +1,15 @@
 extends Label
 
+@export var call_by_pronouns: bool = true
 
 var speed = 6
 
 func _ready() -> void:
 	modulate.a = 0
-	text = text.format([CharacterManager.get_character_display_name()], "%s")
+	if call_by_pronouns:
+		text = text.format([CharacterManager.get_character_story_text(0)], "%s")
+	else:
+		text = text.format([CharacterManager.get_character_story_text(2), CharacterManager.get_character_display_name()], "%s")
 
 func _physics_process(delta: float) -> void:
 	global_position.y -= speed * delta
