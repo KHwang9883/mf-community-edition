@@ -1,4 +1,4 @@
-[gd_scene load_steps=202 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=204 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -134,6 +134,8 @@
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="115_nqbov"]
 [ext_resource type="Shader" path="res://objects/message_block/hsv.gdshader" id="121_78dp6"]
 [ext_resource type="Texture2D" uid="uid://bgvmhpdvcdrpp" path="res://gfx/sign/sign_minix_welcome.png" id="127_tmf5d"]
+[ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="135_b1hml"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="136_g8fdh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s8jwb"]
 shader = ExtResource("10_ij62y")
@@ -5248,6 +5250,13 @@ texture = SubResource("GradientTexture1D_hyfrs")
 
 [node name="Text" parent="MessageBlock2/CanvasLayer/Box/Texture" index="0"]
 theme_override_font_sizes/font_size = 16
+
+[node name="HarderDesignNode" parent="." instance=ExtResource("135_b1hml")]
+inverted = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="HarderDesignNode"]
+tile_map_data = PackedByteArray("AABgAA0AAgAAAAAAAABhAA0AAgAAAAAAAABmAA0AAAAAAAAAAAB1AA0AAAACAAAAAAB6AA0AAAAAAAAAAAB6AA4AAAAAAAEAAAB6AA8AAAAAAAIAAAB7AA0AAAABAAAAAAB7AA4AAAABAAEAAAB7AA8AAAABAAIAAACIAA0AAAABAAAAAACIAA4AAAABAAEAAACIAA8AAAABAAIAAACJAA0AAAACAAAAAACJAA4AAAACAAEAAACJAA8AAAACAAIAAAB0AA0AAAABAAAAAAB0AA4AAAABAAEAAAB0AA8AAAABAAIAAAB1AA4AAAACAAEAAAB1AA8AAAACAAIAAABmAA4AAAAAAAEAAABmAA8AAAAAAAIAAABnAA0AAAABAAAAAABnAA4AAAABAAEAAABnAA8AAAABAAIAAABiAA0AAgAAAAAAAACQAA0AAgAAAAAAAACPAA0AAgAAAAAAAACOAA0AAgAAAAAAAAA=")
+tile_set = ExtResource("136_g8fdh")
 
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
