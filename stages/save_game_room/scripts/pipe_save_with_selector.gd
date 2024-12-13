@@ -68,11 +68,15 @@ func _physics_process(delta: float) -> void:
 		else:
 			deletion_progress = clampf(deletion_progress - delta, 0, 1)
 		
-		if _star_world:
-			if Input.is_action_just_pressed("a_tab") && len(level_count) > 1:
+		if _star_world && Input.is_action_just_pressed("a_tab"):
+			if player.up_down == 0 && len(level_count) > 1:
 				Audio.play_1d_sound(SCORING)
 				_star_sel_world = _star_sel_world + 1 if _star_sel_world < len(level_count) else level_count.keys()[0]
 				_star_sel_level = mini(_star_sel_level, level_count[_star_sel_world])
+				label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
+			elif player.up_down < -0.5:
+				Audio.play_1d_sound(SCORING)
+				_star_sel_level = wrapi(_star_sel_level + 1, 1, level_count[_star_sel_world] + 1)
 				label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
 	
 	if !player: return
