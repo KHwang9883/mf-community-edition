@@ -173,7 +173,7 @@ func pass_warp() -> void:
 			ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
 		if _star_sel_level:
 			Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
-			#print(Data.values.map_force_selected_marker)
+			Data.values.map_force_go_next = true
 	
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
 		warp_to_scene = ProfileManager.current_profile.data.current_world
