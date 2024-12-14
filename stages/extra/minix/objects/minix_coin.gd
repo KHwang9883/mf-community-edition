@@ -18,3 +18,12 @@ func collect() -> void:
 	
 	Audio.play_sound(sound, self, false)
 	parent.queue_free()
+
+func collect_bump() -> void:
+	NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:
+		eff.score_given = 200
+	).create_2d().bind_global_transform()
+	
+	Audio.play_sound(sound, self, false)
+	parent.queue_free()
+	

@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://bgoltym0mckv5"]
+[gd_scene load_steps=21 format=3 uid="uid://bgoltym0mckv5"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_p08dt"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_76vgf"]
 [ext_resource type="Script" path="res://stages/extra/minix/objects/minix_coin.gd" id="2_dqype"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_pwym4"]
 [ext_resource type="Texture2D" uid="uid://c4ka53gh2wyai" path="res://stages/extra/minix/objects/coin_walking.png" id="11_bh7dd"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_8wrbc"]
 
@@ -132,6 +133,14 @@ position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_m8jgg")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("4_pwym4")
+stomping_enabled = false
+killing_immune = {
+"head": false
+}
+frozen_enabled = false
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, 2)
 sprite_frames = SubResource("SpriteFrames_gip70")
@@ -145,3 +154,4 @@ metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Area2D" method="collect_bump"]

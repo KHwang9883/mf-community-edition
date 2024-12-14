@@ -21,6 +21,13 @@ func _ready() -> void:
 	Scenes.custom_scenes.minix_node = self
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
+	
+	Scenes.current_scene.stage_ready.connect(func():
+		if "minix_continue" in Data.values:
+			return
+		minix_controls.focused = true
+	, CONNECT_ONE_SHOT)
+	
 	for i in maps.get_children():
 		if !i is MinixMap:
 			continue
