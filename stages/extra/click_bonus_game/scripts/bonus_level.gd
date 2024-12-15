@@ -56,6 +56,10 @@ func _ready() -> void:
 	tw2.tween_property(use_mouse, "modulate:a", 0.0, 1.5)
 
 	path_2d.active = true
+	Console.executed.connect(func(command_name, args):
+		if command_name == "finish" && can_interact:
+			complete()
+	)
 
 	await get_tree().create_timer(2, false).timeout
 

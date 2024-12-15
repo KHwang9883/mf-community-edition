@@ -17,7 +17,9 @@ func _ready() -> void:
 		return
 
 	SettingsManager.show_mouse()
-	Data.values.bonus_game = false
+	get_tree().physics_frame.connect(func():
+		Data.values.bonus_game = false
+	, CONNECT_ONE_SHOT)
 	modulate.a = 0.0
 	create_tween().tween_property(self, "modulate:a", 1.0, 1.0)
 
