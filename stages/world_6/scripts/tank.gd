@@ -13,6 +13,6 @@ func _asfhpsofu() -> void:
 	var path = scene_file_path
 	if !profile.has_completed(path):
 		profile.complete_level(path)
-		if Data.values.get("map_force_selected_marker"):
-			Data.values.map_force_go_next = true
 		ProfileManager.save_current_profile()
+	if Data.values.get("map_force_selected_marker"):
+		Data.values.map_force_go_next = true

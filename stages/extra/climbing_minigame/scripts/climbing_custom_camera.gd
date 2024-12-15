@@ -49,6 +49,11 @@ func _ready() -> void:
 	#	mariomarker.texture = preload("res://stages/extra/climbing_minigame/textures/luigimarker.png")
 
 	get_tree().create_timer(20, false).timeout.connect(podo_create)
+	
+	Console.executed.connect(func(command_name, args):
+		if command_name == "finish" && !TransitionManager.current_transition:
+			start_transition()
+	)
 
 	#get_tree().create_timer(40, false).timeout.connect(func():
 		#roto_create()

@@ -15,13 +15,13 @@ func _input(event: InputEvent) -> void:
 	if !event.is_pressed() || event.is_echo(): return
 	
 	if event is InputEventKey:
-		if event.is_action_pressed(next_action):
+		if next_action && event.is_action_pressed(next_action):
 			progress += 1
 			#print(progress)
 		else:
 			progress = 0
 			#print("RESET")
-	elif event is InputEventKey || event is InputEventJoypadButton:
+	elif event is InputEventJoypadButton:
 		progress = 0
 		#print("RESET")
 	

@@ -164,6 +164,8 @@ func pass_warp() -> void:
 	if _tweak:
 		ProfileManager.current_profile.data.completed_levels = []
 		_star_sel_level = 1
+	if ProfileManager.current_profile.data.get("lives") && is_cursed:
+		Data.values.lives = ProfileManager.current_profile.data.lives
 	target = null
 	if _star_world:
 		if _star_sel_level && _star_sel_world:

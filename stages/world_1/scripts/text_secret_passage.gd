@@ -34,6 +34,9 @@ func activate() -> void:
 		else:
 			Data.values.skip_progress_continue = true
 		
+		if Data.values.get("map_force_selected_marker"):
+			Data.values.map_force_go_next = true
+		
 		if _crossfade:
 			TransitionManager.accept_transition(
 				load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
