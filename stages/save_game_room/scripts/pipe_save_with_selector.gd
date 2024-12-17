@@ -16,6 +16,7 @@ var map_scene_template: String = "res://stages/world_{0}/map_{0}.tscn"
 var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export_node_path("Node2D") var reset_node_path: NodePath = ^"../CanvasLayer/Reset"
 @export_node_path("Label") var kevin_label_path: NodePath = ^"../KevinLayer/KevinActivationLabel"
+@export var force_disable_level_save: bool = false
 
 var deletion_progress: float
 var is_empty: bool
@@ -131,6 +132,11 @@ func _update_save() -> void:
 		_star_sel_world = int(wnumbers[0])
 		_star_sel_level = int(wnumbers[1])
 		label.set_world_numbers("-".join(wnumbers))
+	elif force_disable_level_save:
+		var world_numbers: String = prof.get_world_numbers().get_slice("-", 0)
+		if !world_numbers.is_empty():
+			label._tweak = true
+			label.set_world_numbers(world_numbers)
 	
 	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
 		cursed_pipe.visible = true
@@ -161,7 +167,8 @@ func pass_warp() -> void:
 		ProfileManager.current_profile.data.executed = true
 	if ProfileManager.current_profile.data.get("executed"):
 		SecretsManager._has_cheated = true
-	if _tweak:
+	
+	if _tweak || (force_disable_level_save && !_star_world):
 		ProfileManager.current_profile.data.completed_levels = []
 		_star_sel_level = 1
 	if ProfileManager.current_profile.data.get("lives") && is_cursed:
