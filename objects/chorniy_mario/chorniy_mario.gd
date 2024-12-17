@@ -61,6 +61,7 @@ const APPEAR = preload("res://objects/chorniy_mario/appear.ogg")
 @onready var player = get_node_or_null("../Player")
 @onready var kevin_text_2 = $KevinText2
 @onready var _random_sounds_tweak: bool = SettingsManager.get_tweak("secret_mode_new_death_sounds")
+@onready var cloud_light_effect: Sprite2D = $CloudLightEffect
 
 var mario_pos: Vector2
 var appear_triggered = false
@@ -152,6 +153,8 @@ func _map_process(_delta: float) -> void:
 	
 	if !appear_triggered:
 		appear_triggered = true
+		Thunder.reorder_on_top_of(self, player)
+		cloud_light_effect.self_modulate.a = 0.75
 		#await get_tree().create_timer(1, false, true, false).timeout
 		#visible = false
 		#for i in 2:
@@ -166,6 +169,7 @@ func _map_process(_delta: float) -> void:
 			map_count += 1
 		else:
 			visible = true
+			#z_index = 1
 		sprite.animation = animation
 		sprite.frame = frame
 		sprite.flip_h = flip_h
