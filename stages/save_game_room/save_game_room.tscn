@@ -1,7 +1,8 @@
-[gd_scene load_steps=204 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=205 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_e17d3"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_jjm06"]
 [ext_resource type="AudioStream" uid="uid://c1va567cln81n" path="res://engine/scenes/save_game_room/music/save_game_room.it" id="3_5sf1o"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_gl3qo"]
@@ -1004,6 +1005,7 @@ width = 284
 script = ExtResource("1_yuddw")
 time = -1
 enable_restart_in_pause = false
+completion_music = ExtResource("2_e17d3")
 falling_below_screen_action = 3
 falling_below_warp_to = NodePath("PipeOut")
 metadata/_edit_lock_ = true
@@ -1296,7 +1298,7 @@ map_scene_template = "res://stages/world_{0}/map_{0}.tscn"
 level_scene_template = "res://stages/world_{0}/level_{0}-{1}.tscn"
 reset_node_path = NodePath("../CanvasLayer/Reset")
 kevin_label_path = NodePath("../KevinLayer/KevinActivationLabel")
-force_disable_level_save = null
+force_disable_level_save = false
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/cutscenes/starting/starting.tscn"
@@ -1370,7 +1372,7 @@ map_scene_template = "res://stages/world_{0}/map_{0}.tscn"
 level_scene_template = "res://stages/world_{0}/level_{0}-{1}.tscn"
 reset_node_path = NodePath("../CanvasLayer/Reset")
 kevin_label_path = NodePath("../KevinLayer/KevinActivationLabel")
-force_disable_level_save = null
+force_disable_level_save = false
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/cutscenes/starting/starting.tscn"
@@ -1444,7 +1446,7 @@ map_scene_template = "res://stages/world_{0}/map_{0}.tscn"
 level_scene_template = "res://stages/world_{0}/level_{0}-{1}.tscn"
 reset_node_path = NodePath("../CanvasLayer/Reset")
 kevin_label_path = NodePath("../KevinLayer/KevinActivationLabel")
-force_disable_level_save = null
+force_disable_level_save = false
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/cutscenes/starting/starting.tscn"
@@ -4362,6 +4364,7 @@ tile_set = ExtResource("136_g8fdh")
 [connection signal="warp_started" from="Objects/PipeIn4" to="Node" method="skip_continue_save"]
 [connection signal="warp_ended" from="Objects/Node2D3/PipeIn" to="KevinLayer/KevinActivationLabel" method="kevin_reset" binds= [true]]
 [connection signal="warp_started" from="Objects/Node2D3/PipeIn" to="KevinLayer/KevinActivationLabel" method="kevin_reset"]
+[connection signal="all_achievements_done" from="Objects/text blah blah" to="ScriptedEvents/AllAchievements" method="activate"]
 [connection signal="block_triggered" from="Objects/ConsoleBlock" to="Objects/Node2D3/PipeIn" method="queue_free"]
 [connection signal="warp_started" from="PipeIn2" to="PipeIn2/Node" method="trigger"]
 [connection signal="player_enter" from="AreaExtra TRUE" to="CamAreaNewSecrets" method="set_deferred" binds= [&"smooth_transition", true]]
