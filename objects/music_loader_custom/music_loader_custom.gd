@@ -48,6 +48,7 @@ func _ready():
 	# Soundtrack Stuff
 	if SettingsManager.get_tweak("alt_completion_music", false) && Scenes.current_scene is Level:
 		Scenes.current_scene.completion_music = tweaked_completion_music
+		Scenes.current_scene.DEFAULT_COMPLETION = tweaked_completion_music
 	
 	var bgm_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
 	if bgm_tweak >= 1 && bgm_tweak <= 3:

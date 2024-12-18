@@ -50,11 +50,22 @@ func progress_secret(id: int = 0) -> void:
 		return
 	new_secret.append(progress_by_id)
 	
+	var can_notify: bool = SettingsManager.get_tweak("secrets_notification", true)
+	
 	if len(new_secret) >= progress_to:
-		SecretsManager.set_secret(secrets[id], true, true, true)
+		SecretsManager.set_secret(secrets[id], true, true, false)
+		if can_notify:
+			SecretsManager.queue_achievement(secrets[id])
 		print("[Secrets] ID %d has been completed! total %d" % [id, progress_to])
 		return
 	SecretsManager.set_secret(secrets[id], new_secret, true, false)
+	if can_notify:
+		var _current_progress: int = len(SecretsManager.secrets[secrets[id]])
+		SecretsManager.queue_achievement(
+			"%s: %d / %d" % [secrets[id], _current_progress, progress_to],
+			"achievement progress",
+			false
+		)
 	print("[Secrets] ID %d progressed with %s out of total %d" % [id, progress_by_id, progress_to])
 
 ## This is adding garbage to profile for "unlock_if" method to prevent unlocking some secrets during gameplay

@@ -4,7 +4,7 @@ const secrets_path = "user://achievements.thss"
 const SECRET_NOTIFICATION = preload("res://components/secrets_manager/achievement.wav")
 
 var secrets: Dictionary = {}
-var toast_queue: Array[String] = []
+var toast_queue: Array[Array] = []
 
 var _save_queued: bool
 var _is_free: bool = true
@@ -35,7 +35,8 @@ func _physics_process(delta: float) -> void:
 		SettingsManager.save_data(secrets, secrets_path, "Achievements")
 	if _is_free && toast_queue.size() > 0:
 		_is_free = false
-		show_achievement(toast_queue.pop_back())
+		var _toast = toast_queue.pop_back()
+		show_achievement(_toast.pop_front(), _toast.pop_front(), _toast.pop_front())
 
 
 func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true) -> void:
@@ -67,18 +68,20 @@ func is_endgame() -> bool:
 	return has_secret("story mode completed")
 
 
-func queue_achievement(text: String) -> void:
-	toast_queue.append(text)
+func queue_achievement(text: String, title: String = "achievement unlocked!", emit_sound: bool = true) -> void:
+	var _toast := [text, title, emit_sound]
+	toast_queue.append(_toast)
 
 
-func show_achievement(text: String) -> void:
-	Audio.play_1d_sound(SECRET_NOTIFICATION, true, { ignore_pause = true, bus = "1D Sound" })
+func show_achievement(text: String, title: String, emit_sound: bool) -> void:
+	if emit_sound:
+		Audio.play_1d_sound(SECRET_NOTIFICATION, true, { ignore_pause = true, bus = "1D Sound" })
 	label.text = ""
 	label.size.x = 192
 	label.position.y = marker_2d.position.y + label.size.y + 8
 	label.modulate.a = 1.0
-	label.text = "achievement unlocked!
-%s" % text
+	label.text = "%s
+%s" % [title, text]
 	var tw = create_tween().set_parallel()
 	tw.tween_property(label, "position:y", marker_2d.position.y, 0.8)
 	tw.tween_property(label, "modulate:a", marker_2d.modulate.a, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)

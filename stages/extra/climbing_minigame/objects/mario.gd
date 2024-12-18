@@ -1,7 +1,7 @@
 extends "res://engine/objects/players/player.gd"
 
 func _ready() -> void:
-	var _fal = CharacterManager.get_voice_line("fall")
+	var _fal = CharacterManager.get_voice_line("fall_death")
 	death_music_override = _fal[randi_range(0, len(_fal) - 1)]
 	super()
 
