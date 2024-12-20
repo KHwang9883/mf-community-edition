@@ -22,6 +22,7 @@ var deletion_progress: float
 var is_empty: bool
 var is_cursed: bool
 var is_blocked: bool
+var save_is_cheated: bool
 var cheat_warned: bool
 var _tweak: bool
 
@@ -117,6 +118,7 @@ func _update_save() -> void:
 	#is_empty = false
 	_star_world = false
 	cheat_warned = false
+	save_is_cheated = false
 	cursed_pipe.visible = false
 	label.remove_theme_color_override(&"font_color")
 	
@@ -132,7 +134,7 @@ func _update_save() -> void:
 		_star_sel_world = int(wnumbers[0])
 		_star_sel_level = int(wnumbers[1])
 		label.set_world_numbers("-".join(wnumbers))
-	elif force_disable_level_save:
+	elif force_disable_level_save && prof:
 		var world_numbers: String = prof.get_world_numbers().get_slice("-", 0)
 		if !world_numbers.is_empty():
 			label._tweak = true
@@ -159,6 +161,7 @@ func delete_save() -> void:
 	cursed_pipe.visible = false
 	is_cursed = false
 	is_blocked = false
+	save_is_cheated = false
 
 
 func pass_warp() -> void:
@@ -202,11 +205,14 @@ func _update_reset_labels() -> void:
 	reset_node.unlock2.visible = _star_world
 	reset_node.secrets.visible = false
 	
-	if !_star_world && profile_name in ProfileManager.profiles:
+	if profile_name in ProfileManager.profiles:
 		var _prof = ProfileManager.profiles[profile_name].data
 		if _prof.get("executed"):
 			reset_node.secrets.text = "not applicable for any achievement, please reset"
 			reset_node.secrets.visible = true
+			return
+		
+		if _star_world:
 			return
 		
 		var _arr: PackedStringArray = ["warpless", "no hit", "no deaths"]

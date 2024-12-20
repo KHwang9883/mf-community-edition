@@ -21,5 +21,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_pipe_save_player_enter() -> void:
+	position.x = 0
 	super()
 	#move_down_by_px = first_pos + (16 * int(can_select))
+
+
+func _player_enter_centered() -> void:
+	_on_pipe_save_player_enter()
+	position.x = -96

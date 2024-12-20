@@ -1,0 +1,173 @@
+[gd_scene load_steps=29 format=4 uid="uid://bnsl7pxqipcdj"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_m7irh"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_7d6or"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_wc1ua"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_1u21j"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_vwwsm"]
+[ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="8_kkqds"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_sxehd"]
+[ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="9_kr1uj"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_ewm0j"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_txwcg"]
+[ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="15_efb8x"]
+[ext_resource type="PackedScene" uid="uid://csxupm6tw1xtm" path="res://engine/objects/bosses/bowser/variants/bowser_bullet_launcher.tscn" id="16_6p4no"]
+[ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="17_5u5r5"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="18_eied0"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="19_e6c4x"]
+[ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="20_cqb64"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="21_hv5p1"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="22_uns2s"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="23_oiohj"]
+[ext_resource type="Texture2D" uid="uid://b528adctx21jm" path="res://engine/objects/enemies/hammer_bros/textures/red_bro.png" id="24_hks4r"]
+
+[sub_resource type="Curve2D" id="Curve2D_0l02r"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64, 0, 0, 0, 0, 0, 544, 0)
+}
+point_count = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gpcci"]
+texture = ExtResource("10_ewm0j")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_rfpwe"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_gpcci")
+
+[sub_resource type="Gradient" id="Gradient_gn2bs"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_higib"]
+gradient = SubResource("Gradient_gn2bs")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_j36sr"]
+resource_local_to_scene = true
+script = ExtResource("23_oiohj")
+creation_nodepack = ExtResource("21_hv5p1")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("22_uns2s")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3j0s"]
+atlas = ExtResource("24_hks4r")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qc1fb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3j0s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BowserTest" type="Node2D"]
+script = ExtResource("1_m7irh")
+completion_music = ExtResource("2_7d6or")
+
+[node name="MusicLoader" parent="." instance=ExtResource("3_wc1ua")]
+
+[node name="Player" parent="." instance=ExtResource("5_1u21j")]
+position = Vector2(80, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_vwwsm")
+metadata/_edit_lock_ = true
+
+[node name="BowserTrigger" parent="." instance=ExtResource("8_kkqds")]
+position = Vector2(448, 240)
+curve = SubResource("Curve2D_0l02r")
+trigger_area = Rect2(0, 0, 32, 960)
+boss_music = ExtResource("9_kr1uj")
+
+[node name="CameraArea" parent="." instance=ExtResource("8_sxehd")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAXAAoAAAAAAAAAAAAnAAoAAAAAAAAAAAALAAsAAAAAAAAAAAAKAAsAAAAAAAAAAAAJAAsAAAAAAAAAAAAIAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAAGAAwAAAAAAAAAAAAFAAwAAAAAAAAAAAAEAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAXAAsAAAAAAAAAAAAXAAwAAAAAAAAAAAAXAA0AAAAAAAAAAAAXAA4AAAAAAAAAAAAXAA8AAAAAAAAAAAAnAAsAAAAAAAAAAAAnAAwAAAAAAAAAAAAnAA0AAAAAAAAAAAAnAA4AAAAAAAAAAAAnAA8AAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAASAAkAAAAAAAAAAAATAAkAAAAAAAAAAAAUAAkAAAAAAAAAAAAVAAkAAAAAAAAAAAAWAAkAAAAAAAAAAAAXAAkAAAAAAAAAAAAYAAkAAAAAAAAAAAAZAAkAAAAAAAAAAAAaAAkAAAAAAAAAAAAbAAkAAAAAAAAAAAAcAAkAAAAAAAAAAAAdAAkAAAAAAAAAAAAeAAkAAAAAAAAAAAAfAAkAAAAAAAAAAAAgAAkAAAAAAAAAAAAhAAkAAAAAAAAAAAAiAAkAAAAAAAAAAAAjAAkAAAAAAAAAAAAkAAkAAAAAAAAAAAAlAAkAAAAAAAAAAAAmAAkAAAAAAAAAAAAnAAkAAAAAAAAAAAAoAAkAAAAAAAAAAAApAAkAAAAAAAAAAAAqAAkAAAAAAAAAAAArAAkAAAAAAAAAAAAsAAkAAAAAAAAAAAAtAAkAAAAAAAAAAAAuAAkAAAAAAAAAAAAvAAkAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_rfpwe")
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("11_txwcg")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="BowserEdge" parent="." instance=ExtResource("15_efb8x")]
+position = Vector2(752, 48)
+
+[node name="BowserEdge2" parent="." instance=ExtResource("15_efb8x")]
+position = Vector2(1264, 48)
+
+[node name="BowserWithCannon" parent="." instance=ExtResource("16_6p4no")]
+position = Vector2(1152, 256)
+
+[node name="LavaBowser" parent="." instance=ExtResource("17_5u5r5")]
+position = Vector2(784, 416)
+metadata/_edit_group_ = true
+
+[node name="Node2D" type="Node2D" parent="LavaBowser"]
+script = ExtResource("18_eied0")
+
+[node name="ochko" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(400, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_higib")
+offset = Vector2(0, 8)
+script = ExtResource("19_e6c4x")
+
+[node name="ochko2" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(288, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_higib")
+offset = Vector2(0, 8)
+script = ExtResource("19_e6c4x")
+
+[node name="ochko3" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(160, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_higib")
+offset = Vector2(0, 8)
+script = ExtResource("19_e6c4x")
+
+[node name="ochko4" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(48, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_higib")
+offset = Vector2(0, 8)
+script = ExtResource("19_e6c4x")
+
+[node name="BowserFakeReveal" type="Node" parent="LavaBowser"]
+script = ExtResource("20_cqb64")
+creation = SubResource("Resource_j36sr")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_qc1fb")
