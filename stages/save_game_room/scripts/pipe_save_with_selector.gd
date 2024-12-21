@@ -3,6 +3,10 @@
 extends "res://engine/objects/warps/pipe_in.gd"
 
 const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
+const message_warning_from_save: String = """warning!
+
+one or more console commands, or a console tweak, have been activated in this save. this affected your save data, and you will not be able to get achievements in this save until it is reset.
+try warping once again to proceed."""
 
 @export
 var profile_name: String
@@ -22,7 +26,6 @@ var deletion_progress: float
 var is_empty: bool
 var is_cursed: bool
 var is_blocked: bool
-var save_is_cheated: bool
 var cheat_warned: bool
 var _tweak: bool
 
@@ -34,7 +37,8 @@ var _star_sel_level: int
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
 @onready var kevin_activation_label: Label = get_node_or_null(kevin_label_path)
 @onready var cursed_pipe: Sprite2D = $CursedPipe
-
+@onready var message_block_2: AnimatableBody2D = Scenes.current_scene.get_node(^"MessageBlock2")
+@onready var message_warning: String = message_block_2.message
 
 signal save_deleted
 
@@ -82,13 +86,17 @@ func _physics_process(delta: float) -> void:
 				label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
 	
 	if !player: return
+	var console_enabled: bool = SecretsManager.is_console_enabled()
+	var prof = ProfileManager.profiles.get(profile_name)
+	var save_is_cheated: bool = prof && prof.data.get("executed")
 	
-	if !is_blocked && (cheat_warned || !SecretsManager.is_console_enabled()):
+	if !is_blocked && (cheat_warned || (!console_enabled && !save_is_cheated)):
 		_warp_initiator()
 	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
 		player.up_down = 0
-		if !cheat_warned && SecretsManager.is_console_enabled():
-			Scenes.current_scene.get_node(^"MessageBlock2").show_message()
+		if !cheat_warned && (console_enabled || save_is_cheated):
+			message_block_2.message = message_warning_from_save if save_is_cheated else message_warning
+			message_block_2.show_message()
 			cheat_warned = true
 		else:
 			Scenes.current_scene.get_node(^"MessageBlock").show_message.call_deferred()
@@ -118,7 +126,6 @@ func _update_save() -> void:
 	#is_empty = false
 	_star_world = false
 	cheat_warned = false
-	save_is_cheated = false
 	cursed_pipe.visible = false
 	label.remove_theme_color_override(&"font_color")
 	
@@ -161,7 +168,6 @@ func delete_save() -> void:
 	cursed_pipe.visible = false
 	is_cursed = false
 	is_blocked = false
-	save_is_cheated = false
 
 
 func pass_warp() -> void:
