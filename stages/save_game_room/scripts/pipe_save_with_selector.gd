@@ -21,6 +21,7 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export_node_path("Node2D") var reset_node_path: NodePath = ^"../CanvasLayer/Reset"
 @export_node_path("Label") var kevin_label_path: NodePath = ^"../KevinLayer/KevinActivationLabel"
 @export var force_disable_level_save: bool = false
+@export var set_data_to_profile: String
 
 var deletion_progress: float
 var is_empty: bool
@@ -201,6 +202,8 @@ func pass_warp() -> void:
 		KevinGlobal.activated = true
 	if KevinGlobal.activated:
 		ProfileManager.current_profile.data.kevin_mode_enabled = true
+	if set_data_to_profile:
+		ProfileManager.current_profile.data[set_data_to_profile] = true
 	await get_tree().physics_frame
 	super()
 
