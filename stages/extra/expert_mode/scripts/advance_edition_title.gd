@@ -99,6 +99,9 @@ func _physics_process(delta: float) -> void:
 		tw.tween_property(color_rect, "modulate:a", 1, 1)
 		await tw.finished
 		
+		ProfileManager.current_profile.data.current_world = goto_scene
+		ProfileManager.save_current_profile()
+		
 		var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 		
 		if !_crossfade:
