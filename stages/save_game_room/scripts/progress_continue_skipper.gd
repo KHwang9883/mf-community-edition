@@ -22,7 +22,7 @@ func set_regular_edition() -> void:
 
 
 func mario_forever_advance() -> void:
-	ProfileManager.current_profile.data.mario_forever_advance = true
+	ProfileManager.current_profile.data.mario_forever_expert = true
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
 	SettingsManager.set_tweak("harder_level_design", true)
