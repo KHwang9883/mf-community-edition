@@ -1,6 +1,7 @@
-[gd_scene load_steps=47 format=3 uid="uid://cvloktwmjho3f"]
+[gd_scene load_steps=49 format=3 uid="uid://cvloktwmjho3f"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_sl3b3"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_6p5lh"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_luo1f"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_bpf0y"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_cti5d"]
@@ -31,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="27_gct11"]
 [ext_resource type="PackedScene" uid="uid://dvmhwh1khygq6" path="res://engine/objects/bumping_blocks/brick/brick_grey.tscn" id="28_btvwq"]
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="29_a3yor"]
+[ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="29_hc7tw"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="30_rmf8s"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="31_lad3m"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="32_d4qqe"]
@@ -111,6 +113,7 @@ custom_vars = {}
 
 [node name="Level8-2" type="Node2D"]
 script = ExtResource("1_sl3b3")
+completion_music = ExtResource("2_6p5lh")
 jump_to_scene = "res://stages/world_8/map_8.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_luo1f")]
@@ -350,20 +353,41 @@ position = Vector2(3088, 336)
 [node name="SpinyRed4" parent="." instance=ExtResource("24_xy2dn")]
 position = Vector2(6800, 336)
 
-[node name="RotoCenter" parent="." instance=ExtResource("25_7ja4q")]
+[node name="EasierDesignNode" parent="." instance=ExtResource("29_hc7tw")]
+modulate = Color(0.509804, 0.529412, 1, 1)
+inverted = true
+
+[node name="RotoCenter" parent="EasierDesignNode" instance=ExtResource("25_7ja4q")]
 position = Vector2(3456, 336)
 
-[node name="RotoRed" parent="RotoCenter" instance=ExtResource("26_1wis0")]
+[node name="RotoRed" parent="EasierDesignNode/RotoCenter" instance=ExtResource("26_1wis0")]
 position = Vector2(0, 150)
 phase = 90.0
 frequency = -150.0
 
-[node name="RotoCenter2" parent="." instance=ExtResource("25_7ja4q")]
+[node name="RotoCenter2" parent="EasierDesignNode" instance=ExtResource("25_7ja4q")]
 position = Vector2(3552, 336)
 
-[node name="RotoRed" parent="RotoCenter2" instance=ExtResource("26_1wis0")]
+[node name="RotoRed" parent="EasierDesignNode/RotoCenter2" instance=ExtResource("26_1wis0")]
 position = Vector2(150, 0)
 frequency = -150.0
+
+[node name="HarderDesignNode" parent="." instance=ExtResource("29_hc7tw")]
+
+[node name="RotoCenter3" parent="HarderDesignNode" instance=ExtResource("25_7ja4q")]
+position = Vector2(3456, 336)
+
+[node name="RotoRed" parent="HarderDesignNode/RotoCenter3" instance=ExtResource("26_1wis0")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -250.0
+
+[node name="RotoCenter4" parent="HarderDesignNode" instance=ExtResource("25_7ja4q")]
+position = Vector2(3552, 336)
+
+[node name="RotoRed" parent="HarderDesignNode/RotoCenter4" instance=ExtResource("26_1wis0")]
+position = Vector2(150, 0)
+frequency = -250.0
 
 [node name="Thwomp" parent="." instance=ExtResource("27_gct11")]
 position = Vector2(3856, 64)

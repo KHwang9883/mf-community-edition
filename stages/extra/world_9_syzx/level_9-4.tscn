@@ -1,7 +1,8 @@
-[gd_scene load_steps=56 format=4 uid="uid://bbvem6ftvskch"]
+[gd_scene load_steps=58 format=4 uid="uid://bbvem6ftvskch"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_spmyb"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i03uk"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_vds5n"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_c011h"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_mueup"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_tnbv6"]
@@ -150,8 +151,12 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fwgg"]
+size = Vector2(37, 32)
+
 [node name="Level9-4" type="Node2D"]
 script = ExtResource("1_spmyb")
+completion_music = ExtResource("2_vds5n")
 jump_to_scene = "res://stages/extra/world_9_syzx/map_9_complete.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_i03uk")]
@@ -1055,6 +1060,14 @@ position = Vector2(7424, 352)
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("42_0634j")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(4301.5, 208)
+shape = SubResource("RectangleShape2D_4fwgg")
 
 [connection signal="level_completed" from="." to="Parallax2D/Area2D" method="queue_free"]
 [connection signal="level_completed" from="." to="Node" method="_on_finish"]
