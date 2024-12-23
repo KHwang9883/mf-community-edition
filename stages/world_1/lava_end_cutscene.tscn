@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://s3qf2vsie4gg"]
+[gd_scene load_steps=20 format=3 uid="uid://s3qf2vsie4gg"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_qwxd0"]
 [ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="1_t1tud"]
@@ -14,6 +14,29 @@
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="12_cyq2t"]
 [ext_resource type="Script" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="13_hkaqm"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qkcx3"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_7mqsr"]
+colors = PackedColorArray(0.854902, 0, 0.0784314, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_us21m"]
+gradient = SubResource("Gradient_7mqsr")
+width = 640
+height = 480
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_p7yju"]
+colors = PackedColorArray(0.854902, 0, 0.0784314, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_73rwm"]
+gradient = SubResource("Gradient_p7yju")
+width = 640
+height = 480
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_victr"]
 normal = Vector2(0, 1)
 
@@ -23,15 +46,32 @@ goto_path = "res://stages/world_1/end_cutscene.tscn"
 intro_music = null
 transition_sound = null
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Gradient" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.0784314)
+material = SubResource("CanvasItemMaterial_qkcx3")
+position = Vector2(320, 240)
+texture = SubResource("GradientTexture2D_us21m")
+metadata/_edit_lock_ = true
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_offset = Vector2(200, 0)
-motion_mirroring = Vector2(1023, 480)
+motion_mirroring = Vector2(1023, 0)
 
 [node name="BgCastle" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(512, 240)
 texture = ExtResource("1_t1tud")
+region_enabled = true
+region_rect = Rect2(0, -48, 1023, 576)
+metadata/_edit_lock_ = true
+
+[node name="Gradient" type="Sprite2D" parent="ParallaxBackground"]
+modulate = Color(1, 1, 1, 0.427451)
+position = Vector2(320, 240)
+texture = SubResource("GradientTexture2D_73rwm")
 metadata/_edit_lock_ = true
 
 [node name="Mario2" parent="." instance=ExtResource("3_kwlv4")]
