@@ -1,6 +1,6 @@
 extends MenuSelection
 
-var STRING: Array = [
+@export var character_list: Array = [
 	"Mario",
 	"Luigi",
 ]
@@ -20,10 +20,10 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if !focused || !get_parent().focused: return
 	var old_value = SettingsManager.settings.character
 	
-	if old_value == STRING[0]:
-		SettingsManager.settings.character = STRING[1]
-	elif old_value == STRING[1]:
-		SettingsManager.settings.character = STRING[0]
+	if old_value == character_list[0]:
+		SettingsManager.settings.character = character_list[1]
+	elif old_value == character_list[1]:
+		SettingsManager.settings.character = character_list[0]
 	_toggled_option(old_value, SettingsManager.settings.character)
 	#Scenes.current_scene.get_node("Window").visible = true
 
@@ -41,10 +41,10 @@ func _physics_process(delta: float) -> void:
 	var old_value = SettingsManager.settings.character
 	
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
-		if old_value == STRING[0]:
-			SettingsManager.settings.character = STRING[1]
-		elif old_value == STRING[1]:
-			SettingsManager.settings.character = STRING[0]
+		if old_value == character_list[0]:
+			SettingsManager.settings.character = character_list[1]
+		elif old_value == character_list[1]:
+			SettingsManager.settings.character = character_list[0]
 		_toggled_option(old_value, SettingsManager.settings.character)
 
 
