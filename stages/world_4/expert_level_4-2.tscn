@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://c8eibnikkrh1r"]
+[gd_scene load_steps=69 format=4 uid="uid://c8eibnikkrh1r"]
 
 [ext_resource type="PackedScene" uid="uid://denh5x0fbof2s" path="res://stages/world_4/level_4-2.tscn" id="1_i6pwy"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_62165"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="21_pomb7"]
 [ext_resource type="PackedScene" uid="uid://btd4qa0fl8542" path="res://engine/objects/platform/platform_path_cloud.tscn" id="22_axrhr"]
 [ext_resource type="PackedScene" uid="uid://bcap4n8ixow6c" path="res://tilesets/overworld_green/scenes/hill_alt_behind.tscn" id="22_hpaef"]
+[ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="23_f2bx8"]
 [ext_resource type="PackedScene" uid="uid://buffffum3vt01" path="res://tilesets/overworld_green/scenes/hills.tscn" id="23_gcia7"]
 [ext_resource type="PackedScene" uid="uid://fmb8jpw0aqv1" path="res://tilesets/overworld_green/scenes/tree_long_offset.tscn" id="24_gi0l1"]
 [ext_resource type="PackedScene" uid="uid://ruhmwca3hsm0" path="res://tilesets/overworld_green/scenes/tree_short_offset.tscn" id="25_e2ah5"]
@@ -44,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://dxfdf1vhn16ie" path="res://tilesets/overworld_green/gfx/pink_platform.png" id="37_dvjcv"]
 [ext_resource type="Texture2D" uid="uid://bwdmd8nbose76" path="res://tilesets/skyland/gfx/cloud_tile.png" id="38_somc5"]
 [ext_resource type="Texture2D" uid="uid://bj33k7j0mswhb" path="res://tilesets/skyland/gfx/rockland.png" id="39_mek8g"]
+[ext_resource type="Script" path="res://stages/extra/secrets/scripts/goompa_party_killer.gd" id="46_thhyf"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_upymj"]
 stream_count = 2
@@ -706,6 +708,9 @@ sources/6 = SubResource("TileSetAtlasSource_cli2y")
 sources/7 = SubResource("TileSetAtlasSource_fwkrx")
 pattern_0 = SubResource("TileMapPattern_16k21")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xxb8"]
+size = Vector2(64, 144)
+
 [node name="Level4-2" instance=ExtResource("1_i6pwy")]
 completion_music = ExtResource("2_62165")
 jump_to_scene = "res://stages/world_4/expert_map_4.tscn"
@@ -722,6 +727,9 @@ cubic_interp = false
 script = ExtResource("6_oaryf")
 speed = 100.0
 
+[node name="PlayerCamera2D" parent="Path2D6/PathFollow2D" index="0"]
+enable_right_border_death = false
+
 [node name="QuestionBlockLife" parent="." index="8"]
 result = SubResource("Resource_ry5t8")
 
@@ -729,7 +737,7 @@ result = SubResource("Resource_ry5t8")
 result = SubResource("Resource_kftfw")
 
 [node name="KoopaRed2" parent="." index="14"]
-position = Vector2(2256, 512)
+position = Vector2(2816, 544)
 
 [node name="QuestionBlock2" parent="." index="68"]
 result = SubResource("Resource_tfvna")
@@ -789,10 +797,10 @@ position = Vector2(8496, -624)
 result = SubResource("Resource_xn0ak")
 
 [node name="Goomba4" parent="." index="98"]
-position = Vector2(4432, 176)
+position = Vector2(4368, 496)
 
 [node name="Goomba5" parent="." index="99"]
-position = Vector2(4496, 176)
+position = Vector2(4352, 496)
 
 [node name="Checkpoint" parent="." index="122"]
 position = Vector2(9664, -544)
@@ -805,6 +813,7 @@ texture = ExtResource("13_mwsmc")
 [node name="FinishLine" parent="." index="128"]
 position = Vector2(32, 944)
 direction_to_complete = -1
+use_strict_detection_area = true
 player_walking_speed = -125.0
 
 [node name="Finishline" parent="FinishLine" index="0"]
@@ -863,35 +872,9 @@ result = null
 [node name="NodeExtraEnemies" type="Node2D" parent="." index="138"]
 unique_name_in_owner = true
 process_mode = 4
-visible = false
 position = Vector2(0, 32000)
 
-[node name="SpinyRed17" parent="NodeExtraEnemies" index="0" instance=ExtResource("12_jtht6")]
-position = Vector2(2928, -176)
-look_at_player = false
-force_direction = 1
-
-[node name="SpinyRed18" parent="NodeExtraEnemies" index="1" instance=ExtResource("12_jtht6")]
-position = Vector2(3504, -112)
-look_at_player = false
-force_direction = 1
-
-[node name="SpinyRed19" parent="NodeExtraEnemies" index="2" instance=ExtResource("12_jtht6")]
-position = Vector2(3760, -208)
-look_at_player = false
-force_direction = 1
-
-[node name="SpinyRed20" parent="NodeExtraEnemies" index="3" instance=ExtResource("12_jtht6")]
-position = Vector2(4240, -304)
-look_at_player = false
-force_direction = 1
-
-[node name="SpinyRed21" parent="NodeExtraEnemies" index="4" instance=ExtResource("12_jtht6")]
-position = Vector2(5344, -560)
-look_at_player = false
-force_direction = 1
-
-[node name="Goomba11" parent="NodeExtraEnemies" index="5" instance=ExtResource("19_we624")]
+[node name="Goomba11" parent="NodeExtraEnemies" index="0" instance=ExtResource("19_we624")]
 position = Vector2(7536, -688)
 look_at_player = false
 force_direction = 1
@@ -899,172 +882,183 @@ force_direction = 1
 [node name="NodeNoCheckpoint" type="Node2D" parent="." index="139"]
 unique_name_in_owner = true
 process_mode = 4
-visible = false
 position = Vector2(0, 32000)
 
 [node name="SpinyRed17" parent="NodeNoCheckpoint" index="0" instance=ExtResource("12_jtht6")]
 position = Vector2(8368, -624)
-look_at_player = false
 force_direction = 1
 
 [node name="KoopaGreen6" parent="NodeNoCheckpoint" index="1" instance=ExtResource("20_nhnuc")]
 position = Vector2(8624, -624)
-look_at_player = false
 force_direction = 1
 
 [node name="KoopaGreen7" parent="NodeNoCheckpoint" index="2" instance=ExtResource("20_nhnuc")]
 position = Vector2(8432, -624)
-look_at_player = false
 force_direction = 1
 
 [node name="KoopaGreen8" parent="NodeNoCheckpoint" index="3" instance=ExtResource("20_nhnuc")]
 position = Vector2(8496, -624)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed18" parent="NodeNoCheckpoint" index="4" instance=ExtResource("12_jtht6")]
-position = Vector2(8048, -560)
-look_at_player = false
+position = Vector2(7920, -560)
 force_direction = 1
 sprite = NodePath("../SpinyRed17/Sprite")
 
 [node name="SpinyRed" parent="NodeNoCheckpoint" index="5" instance=ExtResource("12_jtht6")]
 position = Vector2(2640, -112)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed8" parent="NodeNoCheckpoint" index="6" instance=ExtResource("12_jtht6")]
 position = Vector2(2512, -112)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed9" parent="NodeNoCheckpoint" index="7" instance=ExtResource("12_jtht6")]
 position = Vector2(2576, -112)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed7" parent="NodeNoCheckpoint" index="8" instance=ExtResource("12_jtht6")]
-position = Vector2(2256, 16)
-look_at_player = false
+position = Vector2(2224, 16)
 force_direction = 1
 
 [node name="SpinyRed2" parent="NodeNoCheckpoint" index="9" instance=ExtResource("12_jtht6")]
-position = Vector2(3152, -112)
-look_at_player = false
+position = Vector2(3056, -112)
 force_direction = 1
 
 [node name="SpinyRed3" parent="NodeNoCheckpoint" index="10" instance=ExtResource("12_jtht6")]
-position = Vector2(3664, -112)
-look_at_player = false
+position = Vector2(3504, -112)
 force_direction = 1
 
 [node name="SpinyRed4" parent="NodeNoCheckpoint" index="11" instance=ExtResource("12_jtht6")]
-position = Vector2(3920, -208)
-look_at_player = false
+position = Vector2(3760, -208)
 force_direction = 1
 
 [node name="SpinyRed10" parent="NodeNoCheckpoint" index="12" instance=ExtResource("12_jtht6")]
 position = Vector2(4432, -304)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed11" parent="NodeNoCheckpoint" index="13" instance=ExtResource("12_jtht6")]
 position = Vector2(4496, -304)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed12" parent="NodeNoCheckpoint" index="14" instance=ExtResource("12_jtht6")]
 position = Vector2(5616, -560)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed14" parent="NodeNoCheckpoint" index="15" instance=ExtResource("12_jtht6")]
 position = Vector2(5552, -560)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed13" parent="NodeNoCheckpoint" index="16" instance=ExtResource("12_jtht6")]
 position = Vector2(5680, -560)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed5" parent="NodeNoCheckpoint" index="17" instance=ExtResource("12_jtht6")]
 position = Vector2(6960, -560)
-look_at_player = false
 force_direction = 1
 
 [node name="SpinyRed15" parent="NodeNoCheckpoint" index="18" instance=ExtResource("12_jtht6")]
-position = Vector2(7344, -688)
-look_at_player = false
+position = Vector2(7280, -688)
 force_direction = 1
 
 [node name="KoopaGreen" parent="NodeNoCheckpoint" index="19" instance=ExtResource("20_nhnuc")]
-position = Vector2(2736, -176)
-look_at_player = false
+position = Vector2(2928, -176)
 force_direction = 1
 
 [node name="KoopaGreen2" parent="NodeNoCheckpoint" index="20" instance=ExtResource("20_nhnuc")]
 position = Vector2(4560, -304)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba" parent="NodeNoCheckpoint" index="21" instance=ExtResource("19_we624")]
 position = Vector2(4176, -272)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba6" parent="NodeNoCheckpoint" index="22" instance=ExtResource("19_we624")]
 position = Vector2(4752, -336)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba9" parent="NodeNoCheckpoint" index="23" instance=ExtResource("19_we624")]
 position = Vector2(7088, -560)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba10" parent="NodeNoCheckpoint" index="24" instance=ExtResource("19_we624")]
 position = Vector2(7024, -560)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba7" parent="NodeNoCheckpoint" index="25" instance=ExtResource("19_we624")]
 position = Vector2(4976, -336)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba8" parent="NodeNoCheckpoint" index="26" instance=ExtResource("19_we624")]
 position = Vector2(5072, -368)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba2" parent="NodeNoCheckpoint" index="27" instance=ExtResource("19_we624")]
 position = Vector2(4112, -272)
-look_at_player = false
 force_direction = 1
 
 [node name="Goomba3" parent="NodeNoCheckpoint" index="28" instance=ExtResource("19_we624")]
 position = Vector2(4048, -272)
-look_at_player = false
 force_direction = 1
 
 [node name="KoopaRed" parent="NodeNoCheckpoint" index="29" instance=ExtResource("21_pomb7")]
 position = Vector2(1296, 400)
-look_at_player = false
 force_direction = 1
 
 [node name="KoopaRed3" parent="NodeNoCheckpoint" index="30" instance=ExtResource("21_pomb7")]
-position = Vector2(5840, -560)
-look_at_player = false
+position = Vector2(5456, -560)
 force_direction = 1
 
 [node name="PlatformPathCloud6" parent="NodeNoCheckpoint" index="31" instance=ExtResource("22_axrhr")]
-position = Vector2(912, -31616)
+position = Vector2(912, 384)
 falling_enabled = true
+
+[node name="Thwomp" parent="NodeNoCheckpoint" index="32" instance=ExtResource("23_f2bx8")]
+position = Vector2(7856, -896)
+
+[node name="Thwomp2" parent="NodeNoCheckpoint" index="33" instance=ExtResource("23_f2bx8")]
+position = Vector2(6816, -864)
+trigger_area = Rect2(-80, -128, 160, 512)
+
+[node name="Thwomp5" parent="NodeNoCheckpoint" index="34" instance=ExtResource("23_f2bx8")]
+position = Vector2(4352, -576)
+collision_layer = 4096
+trigger_area = Rect2(-80, -128, 160, 512)
+
+[node name="Thwomp6" parent="NodeNoCheckpoint" index="35" instance=ExtResource("23_f2bx8")]
+position = Vector2(2832, -448)
+collision_layer = 4096
+trigger_area = Rect2(-80, -128, 160, 512)
+
+[node name="Thwomp7" parent="NodeNoCheckpoint" index="36" instance=ExtResource("23_f2bx8")]
+position = Vector2(2144, -256)
+collision_layer = 4096
+trigger_area = Rect2(-80, -128, 160, 512)
+
+[node name="Thwomp3" parent="NodeNoCheckpoint" index="37" instance=ExtResource("23_f2bx8")]
+position = Vector2(6880, -864)
+trigger_area = Rect2(-80, -128, 160, 512)
+
+[node name="Thwomp4" parent="NodeNoCheckpoint" index="38" instance=ExtResource("23_f2bx8")]
+position = Vector2(5056, -864)
+trigger_area = Rect2(-80, -240, 160, 480)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." index="140"]
 tile_map_data = PackedByteArray("AAD//w0AAAABAAAAAAD//w4AAAABAAEAAAD//w8AAAABAAIAAAAAAA0AAAABAAAAAAAAAA4AAAABAAEAAAAAAA8AAAABAAIAAAD+/w0AAAABAAAAAAD+/w4AAAABAAEAAAD+/w8AAAABAAIAAAD9/w0AAAABAAAAAAD9/w4AAAABAAEAAAD9/w8AAAABAAIAAAD8/w0AAAABAAAAAAD8/w4AAAABAAEAAAD8/w8AAAABAAIAAAD7/w0AAAABAAAAAAD7/w4AAAABAAEAAAD7/w8AAAABAAIAAAD6/w0AAAABAAAAAAD6/w4AAAABAAEAAAD6/w8AAAABAAIAAAD5/w0AAAABAAAAAAD5/w4AAAABAAEAAAD5/w8AAAABAAIAAAD4/w0AAAABAAAAAAD4/wwAAAABAAAAAAD4/wsAAAABAAAAAAD4/woAAAABAAAAAAD4/wkAAAABAAAAAAD4/wgAAAABAAAAAAD4/wcAAAABAAAAAAD4/wYAAAABAAAAAAD4/wUAAAABAAAAAAD4/wQAAAABAAAAAAD4/wMAAAABAAAAAAD4/wIAAAABAAAAAAD4/wEAAAABAAAAAAD4/wAAAAABAAAAAAD4////AAABAAAAAAD4//7/AAABAAAAAAD4//3/AAABAAAAAAD4//z/AAABAAAAAAA=")
 tile_set = SubResource("TileSet_tv8df")
+
+[node name="Area2D" type="Area2D" parent="." index="141"]
+collision_layer = 0
+collision_mask = 4098
+script = ExtResource("46_thhyf")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(4352, 568)
+shape = SubResource("RectangleShape2D_0xxb8")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="Area2D" index="1"]
+position = Vector2(2832, 576)
+shape = SubResource("RectangleShape2D_0xxb8")
 
 [editable path="Checkpoint"]
 [editable path="FinishLine"]

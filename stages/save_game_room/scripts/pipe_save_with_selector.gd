@@ -38,7 +38,7 @@ var _star_sel_level: int
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
 @onready var kevin_activation_label: Label = get_node_or_null(kevin_label_path)
 @onready var cursed_pipe: Sprite2D = $CursedPipe
-@onready var message_block_2: AnimatableBody2D = Scenes.current_scene.get_node(^"MessageBlock2")
+@onready var message_block_2: AnimatableBody2D = %MessageBlock2
 @onready var message_warning: String = message_block_2.message
 
 signal save_deleted
