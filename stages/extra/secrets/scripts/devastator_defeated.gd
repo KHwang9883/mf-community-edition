@@ -12,6 +12,8 @@ func _physics_process(delta: float) -> void:
 	if trail_timer > 0.0: trail_timer -= 1 * Thunder.get_delta(delta)
 	if trail_timer <= 0.0:
 		trail_timer = 1.5
+		if bowser.modulate.a != 1.0:
+			return
 		Effect.trail.call_deferred(
 			bowser, 
 			bowser.sprite.sprite_frames.get_frame_texture(bowser.sprite.animation, bowser.sprite.frame),
