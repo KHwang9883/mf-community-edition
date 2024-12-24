@@ -22,7 +22,7 @@ func _handle_focused(focus) -> void:
 
 
 func _handle_select(mouse_input: bool = false) -> void:
-	super(mouse_input)
+	#super(mouse_input)
 	if !focused || !get_parent().focused: return
 	var old_value = SettingsManager.settings.skin
 	

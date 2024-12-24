@@ -4,6 +4,7 @@ extends MenuSelection
 	"Mario",
 	"Luigi",
 ]
+var selection_index: int
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
@@ -16,16 +17,13 @@ func _ready():
 
 
 func _handle_select(mouse_input: bool = false) -> void:
-	super(mouse_input)
+	#super(mouse_input)
 	if !focused || !get_parent().focused: return
 	var old_value = SettingsManager.settings.character
 	
-	if old_value == character_list[0]:
-		SettingsManager.settings.character = character_list[1]
-	elif old_value == character_list[1]:
-		SettingsManager.settings.character = character_list[0]
+	selection_index = wrapi(selection_index + 1, 0, character_list.size())
+	SettingsManager.settings.character = character_list[selection_index]
 	_toggled_option(old_value, SettingsManager.settings.character)
-	#Scenes.current_scene.get_node("Window").visible = true
 
 
 func _physics_process(delta: float) -> void:
@@ -40,11 +38,13 @@ func _physics_process(delta: float) -> void:
 	
 	var old_value = SettingsManager.settings.character
 	
-	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
-		if old_value == character_list[0]:
-			SettingsManager.settings.character = character_list[1]
-		elif old_value == character_list[1]:
-			SettingsManager.settings.character = character_list[0]
+	if Input.is_action_just_pressed("ui_right"):
+		selection_index = wrapi(selection_index + 1, 0, character_list.size())
+		SettingsManager.settings.character = character_list[selection_index]
+		_toggled_option(old_value, SettingsManager.settings.character)
+	elif Input.is_action_just_pressed("ui_left"):
+		selection_index = wrapi(selection_index - 1, 0, character_list.size())
+		SettingsManager.settings.character = character_list[selection_index]
 		_toggled_option(old_value, SettingsManager.settings.character)
 
 
@@ -57,3 +57,7 @@ func _toggled_option(old_val, new_val) -> void:
 
 func _update_string() -> void:
 	value.text = SettingsManager.settings.character
+	var findings := clampi(int(character_list.find(SettingsManager.settings.character)), 0, 99)
+	selection_index = findings
+	if selection_index >= character_list.size():
+		selection_index = 0
