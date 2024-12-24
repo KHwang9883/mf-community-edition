@@ -1,16 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://11rglio46j2f"]
+[gd_scene load_steps=10 format=3 uid="uid://11rglio46j2f"]
 
 [ext_resource type="Script" path="res://engine/scenes/credits/scripts/credits.gd" id="1_bxfeg"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_07kxb"]
-[ext_resource type="Resource" uid="uid://c54m13b157yo7" path="res://engine/scenes/credits/music/credits.mod" id="3_l5y3g"]
+[ext_resource type="AudioStream" uid="uid://c54m13b157yo7" path="res://engine/scenes/credits/music/credits.mod" id="3_l5y3g"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_qdnht"]
 [ext_resource type="Texture2D" uid="uid://gck1i1ncrdk4" path="res://engine/scenes/credits/textures/credits_bg.png" id="4_v1gyi"]
 [ext_resource type="AudioStream" uid="uid://bscilq38lwwup" path="res://music/blastar_restart.ogg" id="5_leevr"]
 [ext_resource type="Texture2D" uid="uid://yww51xa0itpo" path="res://gfx/credits/credits.png" id="5_r502t"]
+[ext_resource type="Script" path="res://stages/main_menu/scripts/credits_scroll.gd" id="7_8lyfr"]
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_3spo4"]
 
 [node name="CreditsTemplate" type="Control"]
+physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,12 +51,11 @@ play_globally = 2
 texture = ExtResource("4_v1gyi")
 centered = false
 
-[node name="Parallax2D" type="Parallax2D" parent="."]
-repeat_size = Vector2(0, 1968)
-autoscroll = Vector2(0, -40)
-follow_viewport = false
-ignore_camera_scroll = true
+[node name="Node2D" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("7_8lyfr")
+speed = 40.0
 
-[node name="Credits" type="Sprite2D" parent="Parallax2D"]
+[node name="Credits" type="Sprite2D" parent="Node2D"]
 position = Vector2(320, 1216)
 texture = ExtResource("5_r502t")
