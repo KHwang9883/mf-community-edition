@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://yic8fm1axs4l"]
+[gd_scene load_steps=91 format=3 uid="uid://yic8fm1axs4l"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_bi8uq"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_adjyt"]
@@ -33,7 +33,6 @@
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="23_1wnfj"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="24_hp6ad"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="26_mk8r5"]
-[ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="27_j141y"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="28_qjjny"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="29_rnsy6"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="30_55ghs"]
@@ -269,9 +268,6 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
-size = Vector2(480, 32)
 
 [sub_resource type="Gradient" id="Gradient_rft62"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -726,14 +722,6 @@ position = Vector2(12976, 48)
 
 [node name="BowserEdge2" parent="." instance=ExtResource("26_mk8r5")]
 position = Vector2(13488, 48)
-
-[node name="BowserJump" parent="." instance=ExtResource("27_j141y")]
-position = Vector2(13184, 272)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" parent="BowserJump" index="0"]
-position = Vector2(48, 0)
-shape = SubResource("RectangleShape2D_n4m03")
 
 [node name="Checkpoint" parent="." instance=ExtResource("28_qjjny")]
 position = Vector2(11376, 256)
@@ -1303,5 +1291,4 @@ result = SubResource("Resource_w2bsw")
 [connection signal="level_completed" from="." to="SecretUnlocker/Node3" method="delete_suspended"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 
-[editable path="BowserJump"]
 [editable path="Water2"]

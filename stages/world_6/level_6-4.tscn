@@ -1,6 +1,7 @@
-[gd_scene load_steps=70 format=3 uid="uid://dspfdhsnbjj0w"]
+[gd_scene load_steps=69 format=3 uid="uid://dspfdhsnbjj0w"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_ibs2y"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_s81if"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_c7djl"]
 [ext_resource type="AudioStream" uid="uid://bd7r5d5eb275q" path="res://music/smw-haunted-house.ogg" id="3_yhsec"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_bpv6u"]
@@ -22,7 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="21_vcm2g"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="22_4ecqb"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="23_irfsw"]
-[ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="24_7lmj3"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="25_ysr70"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="28_ervct"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="30_qvhtu"]
@@ -183,9 +183,6 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
-size = Vector2(480, 32)
-
 [sub_resource type="Curve2D" id="Curve2D_3uke6"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 1376, 352, 0, 0, 0, 0, 2112, 352)
@@ -252,6 +249,7 @@ animations = [{
 
 [node name="Level6-4" type="Node2D"]
 script = ExtResource("1_ibs2y")
+completion_music = ExtResource("2_s81if")
 completion_write_save = false
 jump_to_scene = "res://stages/world_6/end_cutscene_6.tscn"
 completion_center_on_player_after_transition = true
@@ -514,14 +512,6 @@ position = Vector2(12976, 48)
 [node name="BowserEdge2" parent="." instance=ExtResource("23_irfsw")]
 position = Vector2(13488, 48)
 
-[node name="BowserJump" parent="." instance=ExtResource("24_7lmj3")]
-position = Vector2(13184, 272)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" parent="BowserJump" index="0"]
-position = Vector2(48, 0)
-shape = SubResource("RectangleShape2D_n4m03")
-
 [node name="Checkpoint" parent="." instance=ExtResource("25_ysr70")]
 position = Vector2(6304, 416)
 
@@ -764,5 +754,3 @@ script = ExtResource("43_6i7no")
 [connection signal="player_enter" from="Area2D3" to="Node2" method="entered"]
 [connection signal="player_enter" from="Area2D2correct" to="correct" method="play"]
 [connection signal="player_enter" from="Area2D4correct" to="correct" method="play"]
-
-[editable path="BowserJump"]

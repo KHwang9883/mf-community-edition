@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://bnsl7pxqipcdj"]
+[gd_scene load_steps=30 format=4 uid="uid://bnsl7pxqipcdj"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_m7irh"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_7d6or"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="9_kr1uj"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_ewm0j"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_txwcg"]
+[ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="12_8uk6f"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="15_efb8x"]
 [ext_resource type="PackedScene" uid="uid://csxupm6tw1xtm" path="res://engine/objects/bosses/bowser/variants/bowser_bullet_launcher.tscn" id="16_6p4no"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="17_5u5r5"]
@@ -23,7 +24,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_0l02r"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -64, 0, 0, 0, 0, 0, 544, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 256, 0, 0, 0, 0, 0, 544, 0)
 }
 point_count = 2
 
@@ -91,17 +92,18 @@ completion_music = ExtResource("2_7d6or")
 [node name="MusicLoader" parent="." instance=ExtResource("3_wc1ua")]
 
 [node name="Player" parent="." instance=ExtResource("5_1u21j")]
-position = Vector2(80, 400)
+position = Vector2(672, 272)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("7_vwwsm")
 metadata/_edit_lock_ = true
 
-[node name="BowserTrigger" parent="." instance=ExtResource("8_kkqds")]
+[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("8_kkqds")]
 position = Vector2(448, 240)
 curve = SubResource("Curve2D_0l02r")
 trigger_area = Rect2(0, 0, 32, 960)
+trigger_bowser = NodePath("../BowserWithCannon")
 boss_music = ExtResource("9_kr1uj")
 
 [node name="CameraArea" parent="." instance=ExtResource("8_sxehd")]
@@ -126,8 +128,10 @@ position = Vector2(752, 48)
 [node name="BowserEdge2" parent="." instance=ExtResource("15_efb8x")]
 position = Vector2(1264, 48)
 
-[node name="BowserWithCannon" parent="." instance=ExtResource("16_6p4no")]
-position = Vector2(1152, 256)
+[node name="Bowser" parent="." instance=ExtResource("12_8uk6f")]
+position = Vector2(1520, 256)
+status_interval = Array[float]([3.0, 3.0, 3.0])
+status = Array[StringName]([&"flame", &"flame", &"multiflames"])
 
 [node name="LavaBowser" parent="." instance=ExtResource("17_5u5r5")]
 position = Vector2(784, 416)
@@ -171,3 +175,7 @@ creation = SubResource("Resource_j36sr")
 [node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
 visible = false
 sprite_frames = SubResource("SpriteFrames_qc1fb")
+
+[node name="BowserWithCannon" parent="." instance=ExtResource("16_6p4no")]
+position = Vector2(1152, 256)
+health = 3

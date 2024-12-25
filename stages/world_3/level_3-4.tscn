@@ -1,6 +1,7 @@
-[gd_scene load_steps=58 format=3 uid="uid://bwyuvtyce0so0"]
+[gd_scene load_steps=56 format=3 uid="uid://bwyuvtyce0so0"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_morq1"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_jqfyc"]
 [ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="3_k02uv"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_mt3gq"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_t6cwn"]
@@ -23,10 +24,9 @@
 [ext_resource type="PackedScene" uid="uid://c4h7mvbgsj5si" path="res://engine/objects/enemies/falling_blocks/templates/Falling Stone Brick.tscn" id="19_omkyg"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="20_dba8a"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="21_uydls"]
-[ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="22_jxobr"]
-[ext_resource type="PackedScene" uid="uid://v8yd4gsc1bdg" path="res://stages/world_3/scripts/fast_flame.tscn" id="23_ifoia"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="24_2flj7"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="24_c01xw"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_flame.gd" id="24_ejltw"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="25_bcpc0"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="26_5a6mr"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="28_448s3"]
@@ -78,22 +78,6 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 86, -4544, 0, 0, 0, 0, 330, -4544)
 }
 point_count = 2
-
-[sub_resource type="Resource" id="Resource_717oo"]
-script = ExtResource("24_2flj7")
-creation_nodepack = ExtResource("23_ifoia")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
-size = Vector2(480, 32)
 
 [sub_resource type="Gradient" id="Gradient_k5ryj"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -159,6 +143,7 @@ animations = [{
 
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_morq1")
+completion_music = ExtResource("2_jqfyc")
 completion_write_save = false
 jump_to_scene = "res://stages/world_3/end_cutscene_3.tscn"
 completion_center_on_player_after_transition = true
@@ -380,23 +365,18 @@ smooth_enabled = false
 [node name="Bowser" parent="." instance=ExtResource("20_dba8a")]
 position = Vector2(12096, 256)
 status_interval = Array[float]([3.0])
-status = Array[StringName]([&"flame"])
-flame = SubResource("Resource_717oo")
+status = Array[StringName]([&"flamefast"])
 speed = Vector2(150, 0)
+
+[node name="attack_flamefast" type="Node" parent="Bowser"]
+script = ExtResource("24_ejltw")
+flame_speed_x = 300.0
 
 [node name="BowserEdge" parent="." instance=ExtResource("21_uydls")]
 position = Vector2(11696, 48)
 
 [node name="BowserEdge2" parent="." instance=ExtResource("21_uydls")]
 position = Vector2(12208, 48)
-
-[node name="BowserJump" parent="." instance=ExtResource("22_jxobr")]
-position = Vector2(11904, 272)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" parent="BowserJump" index="0"]
-position = Vector2(48, 0)
-shape = SubResource("RectangleShape2D_n4m03")
 
 [node name="Checkpoint" parent="." instance=ExtResource("24_c01xw")]
 position = Vector2(6912, 320)
@@ -535,5 +515,3 @@ creation = SubResource("Resource_paele")
 [node name="Sprite" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal"]
 visible = false
 sprite_frames = SubResource("SpriteFrames_afcor")
-
-[editable path="BowserJump"]

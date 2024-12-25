@@ -1,6 +1,7 @@
-[gd_scene load_steps=71 format=3 uid="uid://cbskrpypej1ka"]
+[gd_scene load_steps=70 format=3 uid="uid://cbskrpypej1ka"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_o68eq"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_jelfw"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_03qkn"]
 [ext_resource type="AudioStream" uid="uid://bqeophqiakq4k" path="res://music/smw2-castle.ogg" id="4_jj2qm"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_o3fis"]
@@ -43,7 +44,6 @@
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="36_kq15a"]
 [ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="36_pg6ck"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="37_7e74k"]
-[ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="37_7kpr7"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="37_8fooa"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="38_ffavd"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="39_rt45n"]
@@ -213,9 +213,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmib0"]
-size = Vector2(480, 32)
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i8hl8"]
 blend_mode = 1
 light_mode = 1
@@ -244,6 +241,7 @@ size = Vector2(17482, 1824)
 
 [node name="Hardcore2-4" type="Node2D"]
 script = ExtResource("1_o68eq")
+completion_music = ExtResource("2_jelfw")
 completion_write_save = false
 jump_to_scene = "res://stages/extra/hardcore_2/end_cutscene.tscn"
 
@@ -597,14 +595,6 @@ z_index = -1
 position = Vector2(8445, 341)
 texture = ExtResource("33_c0mw4")
 flip_h = true
-
-[node name="BowserJump" parent="Objects/Normal Objects" instance=ExtResource("37_7kpr7")]
-position = Vector2(8608, 272)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" parent="Objects/Normal Objects/BowserJump" index="0"]
-position = Vector2(48, 0)
-shape = SubResource("RectangleShape2D_jmib0")
 
 [node name="Rotodiscs" type="Node2D" parent="Objects"]
 
@@ -1150,8 +1140,6 @@ position = Vector2(8731, 560)
 shape = SubResource("RectangleShape2D_gp4os")
 
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
-[connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 [connection signal="level_completed" from="." to="SecretUnlocker/Node3" method="delete_suspended"]
+[connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
-
-[editable path="Objects/Normal Objects/BowserJump"]
