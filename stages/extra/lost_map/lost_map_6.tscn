@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://cqt4blkghat8m"]
+[gd_scene load_steps=70 format=3 uid="uid://cqt4blkghat8m"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_uxdbk"]
 [ext_resource type="AudioStream" uid="uid://q68yn50uncsv" path="res://music/lostmap/lostmap_completed.ogg" id="2_03pos"]
@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="28_10x8g"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="29_iklvb"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="31_ridij"]
-[ext_resource type="PackedScene" uid="uid://ds7djsmp0wtrq" path="res://engine/objects/bosses/bowser/bowser_jump.tscn" id="32_1jjw5"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="33_68tef"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="34_wqkwe"]
 [ext_resource type="Script" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="35_r27hj"]
@@ -254,9 +253,6 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4m03"]
-size = Vector2(480, 32)
 
 [sub_resource type="Gradient" id="Gradient_rft62"]
 offsets = PackedFloat32Array(0.125, 1)
@@ -504,14 +500,6 @@ position = Vector2(12976, 48)
 
 [node name="BowserEdge2" parent="." instance=ExtResource("31_ridij")]
 position = Vector2(13488, 48)
-
-[node name="BowserJump" parent="." instance=ExtResource("32_1jjw5")]
-position = Vector2(13184, 272)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" parent="BowserJump" index="0"]
-position = Vector2(48, 0)
-shape = SubResource("RectangleShape2D_n4m03")
 
 [node name="Checkpoint" parent="." instance=ExtResource("33_68tef")]
 position = Vector2(11296, -544)
@@ -942,5 +930,3 @@ position = Vector2(3872, 224)
 [connection signal="level_completed" from="." to="Node3" method="delete_suspended"]
 [connection signal="level_completed" from="." to="HUD/Label2" method="activate"]
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
-
-[editable path="BowserJump"]
