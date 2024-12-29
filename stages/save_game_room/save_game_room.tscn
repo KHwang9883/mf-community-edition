@@ -1,4 +1,4 @@
-[gd_scene load_steps=212 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=214 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -142,6 +142,7 @@
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="135_b1hml"]
 [ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="136_g8fdh"]
 [ext_resource type="Shader" path="res://shaders/cull_mask.gdshader" id="139_xw4f4"]
+[ext_resource type="PackedScene" uid="uid://ooj2vullj5a5" path="res://stages/save_game_room/objects/pipe_in_placeholder.tscn" id="143_yxggr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_exaka"]
 shader = ExtResource("139_xw4f4")
@@ -1005,6 +1006,13 @@ load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4vmn"]
 size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r3xhu"]
+resource_local_to_scene = true
+shader = ExtResource("121_78dp6")
+shader_parameter/hue = 0.12
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mu3nu"]
 resource_local_to_scene = true
@@ -2073,6 +2081,7 @@ circle_wait_till_scene_changed = false
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="ScriptedEvents/PipeSave5"]
+z_index = -6
 offset_left = -64.0
 offset_top = -80.0
 offset_right = 64.0
@@ -2144,6 +2153,7 @@ circle_wait_till_scene_changed = false
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="ScriptedEvents/PipeSave6"]
+z_index = -6
 offset_left = -64.0
 offset_top = -80.0
 offset_right = 64.0
@@ -2215,6 +2225,7 @@ circle_wait_till_scene_changed = false
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="ScriptedEvents/PipeSave7"]
+z_index = -6
 offset_left = -64.0
 offset_top = -80.0
 offset_right = 64.0
@@ -3479,11 +3490,11 @@ z_index = 1
 position = Vector2(-1152, -506)
 texture = ExtResource("13_w2ncv")
 
-[node name="SignMinixWelcomeArrow2" type="Sprite2D" parent="Objects/Node2D4"]
+[node name="SignMinixWelcomeArrow2" type="Sprite2D" parent="Objects"]
 position = Vector2(528, -950)
 texture = ExtResource("65_65wpm")
 
-[node name="Label" type="Label" parent="Objects/Node2D4/SignMinixWelcomeArrow2"]
+[node name="Label" type="Label" parent="Objects/SignMinixWelcomeArrow2"]
 offset_left = -48.0
 offset_top = -26.0
 offset_right = 45.0
@@ -3501,19 +3512,19 @@ vertical_alignment = 1
 uppercase = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Arrow2" type="Sprite2D" parent="Objects/Node2D4/SignMinixWelcomeArrow2"]
+[node name="Arrow2" type="Sprite2D" parent="Objects/SignMinixWelcomeArrow2"]
 position = Vector2(-61, 0)
 texture = ExtResource("113_3auel")
 
-[node name="Arrow3" type="Sprite2D" parent="Objects/Node2D4/SignMinixWelcomeArrow2"]
+[node name="Arrow3" type="Sprite2D" parent="Objects/SignMinixWelcomeArrow2"]
 position = Vector2(62, 0)
 texture = ExtResource("113_3auel")
 
-[node name="SignLeg19" type="Sprite2D" parent="Objects/Node2D4/SignMinixWelcomeArrow2"]
+[node name="SignLeg19" type="Sprite2D" parent="Objects/SignMinixWelcomeArrow2"]
 position = Vector2(-32, 56)
 texture = ExtResource("65_vaskj")
 
-[node name="SignLeg20" type="Sprite2D" parent="Objects/Node2D4/SignMinixWelcomeArrow2"]
+[node name="SignLeg20" type="Sprite2D" parent="Objects/SignMinixWelcomeArrow2"]
 position = Vector2(32, 56)
 texture = ExtResource("65_vaskj")
 
@@ -4596,6 +4607,19 @@ shape = SubResource("RectangleShape2D_b4vmn")
 position = Vector2(16, 608)
 message = "you can only do this challenge on an empty save pipe!"
 
+[node name="MessageBlockPlaceholder" parent="." instance=ExtResource("115_nqbov")]
+position = Vector2(80, 608)
+message = "this pipe is not connected to anything yet!
+extra content will keep growing with each game update, stay tuned!"
+font_size = 16
+
+[node name="AnimatedSprite2D" parent="MessageBlockPlaceholder/Sprites" index="1"]
+material = SubResource("ShaderMaterial_r3xhu")
+
+[node name="Texture" parent="MessageBlockPlaceholder/CanvasLayer/Box" index="0"]
+offset_left = -160.0
+offset_right = 160.0
+
 [node name="MessageBlock2" parent="." instance=ExtResource("115_nqbov")]
 unique_name_in_owner = true
 position = Vector2(48, 608)
@@ -4605,6 +4629,7 @@ one or more console commands, or a console tweak, have been activated. this will
 try warping once again to proceed.
 
 "
+font_size = 16
 
 [node name="AnimatedSprite2D" parent="MessageBlock2/Sprites" index="1"]
 material = SubResource("ShaderMaterial_mu3nu")
@@ -4630,6 +4655,27 @@ tile_set = ExtResource("136_g8fdh")
 
 [node name="PlatformPath" parent="." instance=ExtResource("63_qpnqr")]
 position = Vector2(464, -736)
+
+[node name="PipeInPlaceholder" parent="." instance=ExtResource("143_yxggr")]
+position = Vector2(960, -688)
+
+[node name="PipeInPlaceholder2" parent="." instance=ExtResource("143_yxggr")]
+position = Vector2(1600, -720)
+
+[node name="PipeInPlaceholder3" parent="." instance=ExtResource("143_yxggr")]
+position = Vector2(1728, -656)
+
+[node name="PipeInPlaceholder4" parent="." instance=ExtResource("143_yxggr")]
+position = Vector2(2176, -656)
+
+[node name="PipeInPlaceholder5" parent="." instance=ExtResource("143_yxggr")]
+position = Vector2(2304, -656)
+
+[node name="PipeInPlaceholder6" parent="." instance=ExtResource("143_yxggr")]
+position = Vector2(2432, -656)
+
+[node name="PipeInPlaceholder7" parent="." instance=ExtResource("143_yxggr")]
+position = Vector2(160, -1136)
 
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/Gradient" method="ease_hide"]
 [connection signal="view_section_changed" from="CamArea" to="ParallaxBackground/GradientSecrets" method="ease_hide"]
@@ -4690,6 +4736,14 @@ position = Vector2(464, -736)
 [connection signal="player_enter" from="AreaExtra FALSE" to="CamAreaNewSecrets" method="set_deferred" binds= [&"smooth_transition", false]]
 [connection signal="player_enter" from="AreaMain TRUE" to="CamArea" method="set_deferred" binds= [&"smooth_transition", true]]
 [connection signal="player_enter" from="AreaMain FALSE" to="CamArea" method="set_deferred" binds= [&"smooth_transition", false]]
+[connection signal="warp_started" from="PipeInPlaceholder" to="MessageBlockPlaceholder" method="show_message"]
+[connection signal="warp_started" from="PipeInPlaceholder2" to="MessageBlockPlaceholder" method="show_message"]
+[connection signal="warp_started" from="PipeInPlaceholder3" to="MessageBlockPlaceholder" method="show_message"]
+[connection signal="warp_started" from="PipeInPlaceholder4" to="MessageBlockPlaceholder" method="show_message"]
+[connection signal="warp_started" from="PipeInPlaceholder5" to="MessageBlockPlaceholder" method="show_message"]
+[connection signal="warp_started" from="PipeInPlaceholder6" to="MessageBlockPlaceholder" method="show_message"]
+[connection signal="warp_started" from="PipeInPlaceholder7" to="MessageBlockPlaceholder" method="show_message"]
 
 [editable path="CanvasLayer2/ProgressContinue"]
+[editable path="MessageBlockPlaceholder"]
 [editable path="MessageBlock2"]

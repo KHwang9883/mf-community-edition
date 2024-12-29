@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=4 uid="uid://bbvem6ftvskch"]
+[gd_scene load_steps=59 format=4 uid="uid://bbvem6ftvskch"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_spmyb"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i03uk"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_autoscroll.gd" id="6_xq6mt"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_atyno"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_e8dkr"]
+[ext_resource type="Script" path="res://stages/extra/world_9_syzx/music_mixed_tweak.gd" id="8_e7sdu"]
 [ext_resource type="PackedScene" uid="uid://0s1sj8ke5lyv" path="res://engine/objects/platform/platform_path_tank_floor.tscn" id="8_g4oa6"]
 [ext_resource type="TileSet" uid="uid://c40wyx3trs5d2" path="res://tilesets/tanks/tank_tileset.tres" id="10_mwhbg"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_nvo0c"]
@@ -164,8 +165,8 @@ script = ExtResource("3_c011h")
 tweaked_completion_music = ExtResource("4_tnbv6")
 ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([ExtResource("5_r3vry")])
-music_var_2 = Array[Resource]([])
-music_var_3 = Array[Resource]([])
+music_var_2 = Array[Resource]([ExtResource("5_r3vry")])
+music_var_3 = Array[Resource]([ExtResource("5_7cuuq")])
 var_1_volume_db = Array[float]([0.0])
 var_1_start_from_sec = Array[float]([0.0])
 var_2_volume_db = Array[float]([0.0])
@@ -177,7 +178,11 @@ boss_music_var_2 = null
 boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
-music = Array[Resource]([ExtResource("5_7cuuq")])
+music = Array[Resource]([ExtResource("5_7cuuq"), ExtResource("5_r3vry")])
+play_immediately = false
+
+[node name="Node" type="Node" parent="MusicLoader"]
+script = ExtResource("8_e7sdu")
 
 [node name="Player" parent="." instance=ExtResource("4_mueup")]
 position = Vector2(176, 400)

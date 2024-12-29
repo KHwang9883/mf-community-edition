@@ -1,12 +1,15 @@
-[gd_scene load_steps=71 format=4 uid="uid://bfyla0aynqum2"]
+[gd_scene load_steps=74 format=4 uid="uid://bfyla0aynqum2"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_alfld"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_npv5p"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_sg6ew"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_c32u3"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_dmqcj"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_td102"]
 [ext_resource type="AudioStream" uid="uid://c5khvmh458ujd" path="res://stages/extra/secrets/music/BasicInstinct.mod" id="4_we8l2"]
+[ext_resource type="AudioStream" uid="uid://cnhd12uyiagxr" path="res://music/extra/world_9_syzx/!kazan-f.ogg" id="6_qgvxx"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_xhudd"]
+[ext_resource type="Script" path="res://stages/extra/world_9_syzx/music_mixed_tweak.gd" id="7_8360t"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_s518n"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_jr88s"]
 [ext_resource type="Texture2D" uid="uid://diufcy5iwqm3f" path="res://tilesets/volcano/gfx/hardblock.png" id="10_e7bck"]
@@ -323,15 +326,16 @@ size = Vector2(96, 112)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_alfld")
+completion_music = ExtResource("2_sg6ew")
 jump_to_scene = "res://stages/extra/world_9_syzx/map_9.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_npv5p")]
 script = ExtResource("3_c32u3")
 tweaked_completion_music = ExtResource("4_dmqcj")
 ignore_fade_in_tweak = false
-music_var_1 = Array[Resource]([])
-music_var_2 = Array[Resource]([])
-music_var_3 = Array[Resource]([])
+music_var_1 = Array[Resource]([ExtResource("6_qgvxx")])
+music_var_2 = Array[Resource]([ExtResource("6_qgvxx")])
+music_var_3 = Array[Resource]([ExtResource("4_we8l2")])
 var_1_volume_db = Array[float]([0.0])
 var_1_start_from_sec = Array[float]([0.0])
 var_2_volume_db = Array[float]([0.0])
@@ -343,7 +347,11 @@ boss_music_var_2 = null
 boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
-music = Array[Resource]([ExtResource("4_we8l2")])
+music = Array[Resource]([ExtResource("4_we8l2"), ExtResource("6_qgvxx")])
+play_immediately = false
+
+[node name="Node" type="Node" parent="MusicLoader"]
+script = ExtResource("7_8360t")
 
 [node name="Player" parent="." instance=ExtResource("4_td102")]
 position = Vector2(176, 400)

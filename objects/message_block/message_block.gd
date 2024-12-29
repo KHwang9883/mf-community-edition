@@ -1,6 +1,8 @@
 extends StaticBumpingBlock
 
 @export_multiline var message: String
+@export var font_size: int = 18
+@export var box_size := Vector2(284, 128)
 
 const MESSAGE_BLOCK = preload("res://objects/message_block/message_block.wav")
 
@@ -38,6 +40,7 @@ func show_message() -> void:
 	message_shown.emit()
 	box.scale = Vector2.ZERO
 	text.text = message
+	text.add_theme_font_size_override(&"font_size", font_size)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	Audio.play_1d_sound(MESSAGE_BLOCK, true, {ignore_pause = true})
 	get_tree().paused = true

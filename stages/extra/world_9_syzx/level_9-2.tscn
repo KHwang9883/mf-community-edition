@@ -1,7 +1,8 @@
-[gd_scene load_steps=111 format=4 uid="uid://dvwe7p41ph1mc"]
+[gd_scene load_steps=113 format=4 uid="uid://dvwe7p41ph1mc"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0rqt2"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_2n0x5"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ivpok"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_82jac"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_aa1xd"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_k66st"]
@@ -9,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://j2421xpr613r" path="res://music/extra/world_9_syzx/the_glory.mod" id="6_hnbl2"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_tyh7d"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_hcexr"]
+[ext_resource type="Script" path="res://stages/extra/world_9_syzx/music_mixed_tweak.gd" id="8_d0ha6"]
 [ext_resource type="Texture2D" uid="uid://jyw17rjqnji" path="res://tilesets/starland/gfx/starland_ground.png" id="9_veb0w"]
 [ext_resource type="Texture2D" uid="uid://uejrjui7n1cg" path="res://tilesets/underground/gfx/blue_hard_block.png" id="10_uv8c2"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://tilesets/underground/gfx/purple_pipe.png" id="11_3fxsj"]
@@ -42,7 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://q8l5ujr14min" path="res://gfx/sign/sign_leg.png" id="38_nvmps"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="39_qib08"]
 [ext_resource type="Texture2D" uid="uid://cplqyrqgikdet" path="res://engine/objects/enemies/spinies/textures/spiny_egg_iron.png" id="40_f4dn4"]
-[ext_resource type="PackedScene" path="res://engine/objects/enemies/lakitus/dark_lakitu.tscn" id="40_jtiir"]
+[ext_resource type="PackedScene" uid="uid://b5conqf0uopg0" path="res://engine/objects/enemies/lakitus/dark_lakitu.tscn" id="40_jtiir"]
 [ext_resource type="Texture2D" uid="uid://btqb5ucetcx4t" path="res://engine/objects/enemies/lakitus/textures/dark_lakitu_blink_cloud.png" id="41_sm6ad"]
 [ext_resource type="PackedScene" uid="uid://chl763u8ojfs2" path="res://engine/objects/enemies/piranha_plants/piranha_blue.tscn" id="43_icn3r"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="43_y578t"]
@@ -557,6 +559,7 @@ point_count = 2
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_0rqt2")
+completion_music = ExtResource("2_ivpok")
 jump_to_scene = "res://stages/extra/world_9_syzx/map_9.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_2n0x5")]
@@ -565,7 +568,7 @@ tweaked_completion_music = ExtResource("4_aa1xd")
 ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([ExtResource("5_nq3di")])
 music_var_2 = Array[Resource]([ExtResource("5_nq3di")])
-music_var_3 = Array[Resource]([])
+music_var_3 = Array[Resource]([ExtResource("6_hnbl2")])
 var_1_volume_db = Array[float]([0.0])
 var_1_start_from_sec = Array[float]([0.0])
 var_2_volume_db = Array[float]([0.0])
@@ -577,7 +580,11 @@ boss_music_var_2 = null
 boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
-music = Array[Resource]([ExtResource("6_hnbl2")])
+music = Array[Resource]([ExtResource("6_hnbl2"), ExtResource("5_nq3di")])
+play_immediately = false
+
+[node name="Node" type="Node" parent="MusicLoader"]
+script = ExtResource("8_d0ha6")
 
 [node name="Player" parent="." instance=ExtResource("4_k66st")]
 position = Vector2(128, 400)
