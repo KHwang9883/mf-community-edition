@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://wxnlimcno4dl"]
+
+[ext_resource type="PackedScene" uid="uid://41pe2tixm5n8" path="res://stages/world_2/EmalpkaMomento2.tscn" id="1_72wsn"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_db5tt"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="3_h7wub"]
+[ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="4_5xdiq"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="5_yu3n6"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="6_oi684"]
+
+[sub_resource type="Resource" id="Resource_r8bc1"]
+resource_local_to_scene = true
+script = ExtResource("5_yu3n6")
+creation_fallback_node = ExtResource("3_h7wub")
+creation_nodepack = ExtResource("4_5xdiq")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[node name="EmalpkaMomento" instance=ExtResource("1_72wsn")]
+time = 120
+completion_music = ExtResource("2_db5tt")
+jump_to_scene = "res://stages/world_2/expert_map_2.tscn"
+
+[node name="QuestionBlockBeetroot" parent="." index="9"]
+result = SubResource("Resource_r8bc1")
+
+[node name="HammerBro" parent="." index="17"]
+attacking_delay = 0.6
+
+[node name="HammerBro2" parent="." index="18" instance=ExtResource("6_oi684")]
+position = Vector2(544, 400)
+
+[node name="HammerBroJumpMarker" parent="." index="19"]
+hammer_bros_jumping_type = 2
+
+[node name="Node" parent="." index="27"]
+enemies = Array[NodePath]([NodePath("../HammerBro"), NodePath("../HammerBro2")])

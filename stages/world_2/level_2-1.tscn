@@ -1,6 +1,7 @@
-[gd_scene load_steps=64 format=3 uid="uid://dlti0l2n1ix8d"]
+[gd_scene load_steps=65 format=3 uid="uid://dlti0l2n1ix8d"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0omu6"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_i4w4y"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="3_784ol"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_hmq3v"]
 [ext_resource type="AudioStream" uid="uid://dwcak56md3who" path="res://music/smw-underground.ogg" id="4_y4qvn"]
@@ -195,6 +196,7 @@ size = Vector2(5696, 800)
 
 [node name="Level2-1" type="Node2D"]
 script = ExtResource("1_0omu6")
+completion_music = ExtResource("2_i4w4y")
 jump_to_scene = "res://stages/world_2/map_2.tscn"
 
 [node name="MusicLoader" type="Node" parent="."]
@@ -355,6 +357,9 @@ region_enabled = true
 region_rect = Rect2(0, 0, 784, 64)
 script = ExtResource("16_k3p35")
 speed = 100.0
+
+[node name="Checkpoint" parent="." instance=ExtResource("31_2wari")]
+position = Vector2(4560, 416)
 
 [node name="Brick" parent="." instance=ExtResource("19_y8fy1")]
 position = Vector2(1456, 240)
@@ -663,9 +668,6 @@ warping_editor_color = Color(0.501961, 0.298039, 0.737255, 0.6)
 warp_direction = 1
 warp_to = NodePath("../PipeOut3")
 use_blur_transition = true
-
-[node name="Checkpoint" parent="." instance=ExtResource("31_2wari")]
-position = Vector2(4560, 416)
 
 [node name="PiranhaGreen" parent="." instance=ExtResource("32_irmey")]
 position = Vector2(3552, 192)

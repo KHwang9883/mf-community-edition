@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=4 uid="uid://dxqr6xmj8wu31"]
+[gd_scene load_steps=29 format=4 uid="uid://dxqr6xmj8wu31"]
 
 [ext_resource type="PackedScene" uid="uid://dtfhvfw317yu" path="res://stages/world_1/level_1-1.tscn" id="1_s8ojd"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_n6qn0"]
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="8_a1qhc"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="8_n6nqm"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="9_1lpya"]
 [ext_resource type="PackedScene" uid="uid://brkhmn6vdf25a" path="res://engine/objects/bumping_blocks/question_block/templates/Poison Mushroom Question Block.tscn" id="10_6uh7f"]
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="11_jgmeu"]
 [ext_resource type="PackedScene" uid="uid://dgcgfl28trox0" path="res://engine/objects/springboard/springboard.tscn" id="12_422kx"]
@@ -111,10 +112,10 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_3tjxq"]
+[sub_resource type="Resource" id="Resource_y56m0"]
 resource_local_to_scene = true
 script = ExtResource("15_8stx6")
-creation_nodepack = ExtResource("12_yf6us")
+creation_nodepack = ExtResource("11_jgmeu")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -210,7 +211,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_y56m0"]
+[sub_resource type="Resource" id="Resource_goqxy"]
 resource_local_to_scene = true
 script = ExtResource("15_8stx6")
 creation_nodepack = ExtResource("11_jgmeu")
@@ -373,7 +374,7 @@ result = null
 result = null
 
 [node name="QuestionBlock3" parent="." index="67"]
-result = SubResource("Resource_3tjxq")
+result = SubResource("Resource_y56m0")
 
 [node name="QuestionBlock4" parent="." index="68"]
 result = SubResource("Resource_862jk")
@@ -460,7 +461,12 @@ position = Vector2(1904, 576)
 [node name="KoopaGreen2" parent="." index="146"]
 position = Vector2(6032, 400)
 
-[node name="PipeOut4" parent="." index="157"]
+[node name="PipeIn3" parent="." index="148" instance=ExtResource("9_1lpya")]
+position = Vector2(6560, 304)
+warp_to = NodePath("../PipeOut")
+use_blur_transition = true
+
+[node name="PipeOut4" parent="." index="158"]
 position = Vector2(48, 432)
 
 [node name="Marker2D" parent="LifeSpawns" index="0"]
@@ -482,7 +488,10 @@ position = Vector2(4202, 562)
 position = Vector2(3882, 562)
 
 [node name="Marker2D8" parent="LifeSpawns" index="7"]
-position = Vector2(4091, 562)
+position = Vector2(4091, 416)
+
+[node name="Marker2D6" parent="LifeSpawns" index="9"]
+position = Vector2(5479, 576)
 
 [node name="Marker2D5" parent="LifeSpawns" index="10"]
 position = Vector2(6322, 562)
@@ -490,7 +499,7 @@ position = Vector2(6322, 562)
 [node name="Marker2D2" parent="LifeSpawns" index="11"]
 position = Vector2(6191, 562)
 
-[node name="PoisonSpawns" type="Node2D" parent="." index="159"]
+[node name="PoisonSpawns" type="Node2D" parent="." index="160"]
 
 [node name="Marker2D" type="Marker2D" parent="PoisonSpawns" index="0"]
 position = Vector2(1728, 416)
@@ -499,10 +508,10 @@ position = Vector2(1728, 416)
 position = Vector2(720, 416)
 
 [node name="Marker2D5" type="Marker2D" parent="PoisonSpawns" index="2"]
-position = Vector2(3344, 416)
+position = Vector2(4001, 416)
 
 [node name="Marker2D6" type="Marker2D" parent="PoisonSpawns" index="3"]
-position = Vector2(3504, 416)
+position = Vector2(4161, 416)
 
 [node name="Marker2D10" type="Marker2D" parent="PoisonSpawns" index="4"]
 position = Vector2(3920, 416)
@@ -522,39 +531,44 @@ position = Vector2(5184, 416)
 [node name="Marker2D9" type="Marker2D" parent="PoisonSpawns" index="9"]
 position = Vector2(5424, 416)
 
-[node name="KoopaRed6" parent="." index="160" instance=ExtResource("8_n6nqm")]
+[node name="Marker2D11" type="Marker2D" parent="PoisonSpawns" index="10"]
+position = Vector2(5536, 416)
+
+[node name="KoopaRed6" parent="." index="161" instance=ExtResource("8_n6nqm")]
 position = Vector2(832, 400)
 
-[node name="KoopaRed7" parent="." index="161" instance=ExtResource("8_n6nqm")]
+[node name="KoopaRed7" parent="." index="162" instance=ExtResource("8_n6nqm")]
 position = Vector2(896, 400)
 
-[node name="CoinBonusLevel" parent="." index="163"]
+[node name="CoinBonusLevel" parent="." index="164"]
 position = Vector2(320, 838)
 
-[node name="Thwomp" parent="." index="164" instance=ExtResource("8_a1qhc")]
+[node name="Thwomp" parent="." index="165" instance=ExtResource("8_a1qhc")]
 position = Vector2(64, 1024)
 
-[node name="QuestionBlockPoisonous" parent="." index="165" instance=ExtResource("10_6uh7f")]
+[node name="QuestionBlockPoisonous" parent="." index="166" instance=ExtResource("10_6uh7f")]
 position = Vector2(560, 304)
-result = SubResource("Resource_y56m0")
+result = SubResource("Resource_goqxy")
 
-[node name="KoopaRed" parent="." index="166" instance=ExtResource("8_n6nqm")]
+[node name="KoopaRed" parent="." index="167" instance=ExtResource("8_n6nqm")]
 position = Vector2(1808, 400)
 
-[node name="KoopaRed2" parent="." index="167" instance=ExtResource("8_n6nqm")]
+[node name="KoopaRed2" parent="." index="168" instance=ExtResource("8_n6nqm")]
 position = Vector2(1904, 400)
 
-[node name="Springboard" parent="." index="168" instance=ExtResource("12_422kx")]
+[node name="Springboard" parent="." index="169" instance=ExtResource("12_422kx")]
 position = Vector2(2320, 400)
 
-[node name="Springboard2" parent="." index="169" instance=ExtResource("12_422kx")]
+[node name="Springboard2" parent="." index="170" instance=ExtResource("12_422kx")]
 position = Vector2(4208, 336)
 
-[node name="KoopaRed3" parent="." index="170" instance=ExtResource("8_n6nqm")]
+[node name="KoopaRed3" parent="." index="171" instance=ExtResource("8_n6nqm")]
 position = Vector2(4016, 400)
 
-[node name="KoopaRed4" parent="." index="171" instance=ExtResource("8_n6nqm")]
+[node name="KoopaRed4" parent="." index="172" instance=ExtResource("8_n6nqm")]
 position = Vector2(4080, 400)
 
-[node name="KoopaRed5" parent="." index="172" instance=ExtResource("8_n6nqm")]
+[node name="KoopaRed5" parent="." index="173" instance=ExtResource("8_n6nqm")]
 position = Vector2(4144, 400)
+
+[connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="progress_secret" binds= [1]]
