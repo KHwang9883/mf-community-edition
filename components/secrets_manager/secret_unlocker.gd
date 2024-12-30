@@ -38,26 +38,33 @@ func unlock_with_kevin_if(conditions: PackedStringArray, id: int = 0) -> void:
 	unlock_if(conditions, id)
 
 
-func progress_secret(id: int = 0) -> void:
+func progress_secret(id: int = 0, replace_on_complete: bool = true) -> void:
 	var new_secret = SecretsManager.get_secret(secrets[id])
+	# Stop all further logic if already finished the progress
 	if typeof(new_secret) == TYPE_BOOL && new_secret == true:
 		print("[Secrets] ID %d has already been completed" % id)
 		return
 	if new_secret == null:
 		new_secret = []
+	
+	# Ignore progression if already has it in user's saved array progress
 	if new_secret.has(progress_by_id):
 		print("[Secrets] ID %d already has %s" % [id, progress_by_id])
 		return
 	new_secret.append(progress_by_id)
 	
+	# Notify only if tweak is enabled
 	var can_notify: bool = SettingsManager.get_tweak("secrets_notification", true)
 	
+	# Finishing the progress, getting an achievement
 	if len(new_secret) >= progress_to:
-		SecretsManager.set_secret(secrets[id], true, true, false)
+		SecretsManager.set_secret(secrets[id], true if replace_on_complete else new_secret, true, false)
 		if can_notify:
 			SecretsManager.queue_achievement(secrets[id])
 		print("[Secrets] ID %d has been completed! total %d" % [id, progress_to])
 		return
+	
+	# Progressing the achievement
 	SecretsManager.set_secret(secrets[id], new_secret, true, false)
 	if can_notify:
 		var _current_progress: int = len(SecretsManager.secrets[secrets[id]])
