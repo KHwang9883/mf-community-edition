@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cg1joxja7s50n"]
+[gd_scene load_steps=26 format=3 uid="uid://cg1joxja7s50n"]
 
 [ext_resource type="PackedScene" uid="uid://brtc0tw8taj68" path="res://stages/world_2/level_2-5.tscn" id="1_k11wj"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_3fdkw"]
@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="8_nkte3"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="8_y064d"]
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="9_75uwc"]
+[ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/bowser_fake_reveal_w2.gd" id="12_c4cq6"]
+[ext_resource type="Texture2D" uid="uid://dwgb38fjcwjhp" path="res://engine/objects/enemies/koopas/textures/shell_red.png" id="16_wq6cu"]
 
 [sub_resource type="Resource" id="Resource_m3d8w"]
 resource_local_to_scene = true
@@ -77,7 +79,7 @@ custom_vars = {}
 blend_mode = 1
 light_mode = 1
 
-[sub_resource type="Resource" id="Resource_1m4xh"]
+[sub_resource type="Resource" id="Resource_ibkci"]
 resource_local_to_scene = true
 script = ExtResource("8_y064d")
 creation_nodepack = ExtResource("6_4oddl")
@@ -90,10 +92,25 @@ visi_z_index = 1
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("Sprite"),
+"death": NodePath("Sprite2"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("7_d3nvv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inl7t"]
+atlas = ExtResource("16_wq6cu")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rosfx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inl7t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Level2-5" instance=ExtResource("1_k11wj")]
 jump_to_scene = "res://stages/world_2/expert_end_cutscene_2.tscn"
@@ -245,7 +262,12 @@ metadata/_edit_lock_ = true
 layer_0/tile_data = PackedInt32Array(852019, 2, 196608, 196669, 2, 393216, 786508, 2, 393216, 852153, 2, 196608, 196784, 2, 393216, 196630, 2, 393216, 786466, 2, 393216, 196700, 2, 458752, 393346, 2, 458752, 196763, 2, 458752, 852078, 2, 393216, 458974, 2, 458752, 917718, 2, 458752, 65738, 2, 327680, 196684, 2, 327680, 917741, 2, 196608, 458792, 2, 393216)
 
 [node name="BowserFakeReveal" parent="LavaBowser" index="17"]
-creation = SubResource("Resource_1m4xh")
+script = ExtResource("12_c4cq6")
+creation_2 = SubResource("Resource_ibkci")
+
+[node name="Sprite2" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal" index="1"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_rosfx")
 
 [node name="Thwomp" parent="." index="74" instance=ExtResource("9_75uwc")]
 position = Vector2(384, 96)
