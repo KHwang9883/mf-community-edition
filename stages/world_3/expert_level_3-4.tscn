@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdfmc8ctxsfjl"]
+
+[ext_resource type="PackedScene" uid="uid://bwyuvtyce0so0" path="res://stages/world_3/level_3-4.tscn" id="1_onc78"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_vxcu3"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_wupb8"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_lklr4"]
+
+[sub_resource type="Resource" id="Resource_jr80y"]
+resource_local_to_scene = true
+script = ExtResource("4_lklr4")
+creation_nodepack = ExtResource("2_vxcu3")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("3_wupb8")
+
+[node name="Level3-4" instance=ExtResource("1_onc78")]
+jump_to_scene = "res://stages/world_3/expert_end_cutscene_3.tscn"
+
+[node name="BowserFakeReveal" parent="LavaBowser" index="17"]
+creation = SubResource("Resource_jr80y")

@@ -1,0 +1,115 @@
+[gd_scene load_steps=15 format=3 uid="uid://c0xw8pv2k47ct"]
+
+[ext_resource type="Script" path="res://objects/grabbable_brick/thrown_grabbable_brick.gd" id="1_p61ld"]
+[ext_resource type="Texture2D" uid="uid://dy0g2gbnmur25" path="res://objects/grabbable_brick/textures/brick.png" id="2_mbog5"]
+[ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="3_0myw1"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_2fnc7"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="5_48vx4"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_tcemg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpwvt"]
+atlas = ExtResource("2_mbog5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyr3o"]
+atlas = ExtResource("2_mbog5")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqmlv"]
+atlas = ExtResource("2_mbog5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pctnt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpwvt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyr3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqmlv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w0ybq"]
+size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7r1y"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i8vt1"]
+size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nbrnw"]
+size = Vector2(40, 30)
+
+[node name="ThrownGrabbableBrick" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_max_angle = 0.820305
+floor_snap_length = 20.0
+script = ExtResource("1_p61ld")
+gravity_scale = 0.5
+vertical_correction_amount = 3
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pctnt")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_w0ybq")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_r7r1y")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("4_2fnc7")
+stomping_enabled = false
+stomping_standard = Vector2(0, 0)
+stomping_creation = null
+stomping_scores = 100
+stomping_sound = ExtResource("5_48vx4")
+killing_enabled = false
+killing_creation = null
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_tcemg")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+shape = SubResource("RectangleShape2D_i8vt1")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("3_0myw1")
+killer_type = &"starman"
+killing_detection_scale = 2.0
+special_tags = Array[StringName]([&"no_score"])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
+
+[node name="Area2D" type="Area2D" parent="." groups=["#side_grabbable"]]
+visible = false
+collision_layer = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_nbrnw")
+
+[connection signal="collided_ceiling" from="." to="." method="bricks_break"]
+[connection signal="collided_wall" from="." to="." method="bricks_break"]
+[connection signal="killed" from="Attack" to="." method="_on_attack_killed"]
+[connection signal="killed_failed" from="Attack" to="." method="bricks_break"]
