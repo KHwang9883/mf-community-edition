@@ -3,6 +3,8 @@ extends Area2D
 const ICE_2 = preload("./ice2.wav")
 const DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_debris.tscn")
 
+var THWOMP_ICICLE = load("res://objects/thwomp_chilly/thwomp_icicle.tscn")
+
 @export var stunning_sound: AudioStream = preload("res://engine/objects/projectiles/sounds/stun.wav")
 @export var explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
@@ -83,7 +85,7 @@ func _explosion() -> void:
 
 
 func _on_timer_timeout() -> void:
-	NodeCreator.prepare_2d(load("./thwomp_icicle.tscn"), self) \
+	NodeCreator.prepare_2d(THWOMP_ICICLE, self) \
 		.bind_global_transform(Vector2(32, 0) * dir).create_2d(true).call_method(func(eff):
 		eff.dir = dir
 		)
