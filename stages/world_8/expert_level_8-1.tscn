@@ -1,0 +1,767 @@
+[gd_scene load_steps=50 format=3 uid="uid://b5hubqnjc4hu5"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_drpig"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ctvaa"]
+[ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_v7pnx"]
+[ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="3_mib74"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_r7v04"]
+[ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="5_fa1x0"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_sw4mk"]
+[ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="7_ihoco"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_5eilu"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="9_xqfq6"]
+[ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="10_6agtp"]
+[ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="11_vvgwy"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="12_4ckim"]
+[ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="13_oveyd"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="14_1v5af"]
+[ext_resource type="PackedScene" uid="uid://c02e27qkcrmvw" path="res://engine/objects/centipede/centipede.tscn" id="15_oolm5"]
+[ext_resource type="PackedScene" uid="uid://dvcxbvtn34x5w" path="res://engine/objects/centipede/centipede_pathpoints.tscn" id="16_dh8qe"]
+[ext_resource type="PackedScene" uid="uid://dpli8hxnleju4" path="res://engine/objects/centipede/centipede_pathpoint.tscn" id="17_7u5k7"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="18_k3ia6"]
+[ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="19_cnv0c"]
+[ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="20_1hh8n"]
+[ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="21_4ndl5"]
+[ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="22_1ymln"]
+[ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="23_mkjju"]
+[ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="24_ap30o"]
+[ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="25_5lfen"]
+[ext_resource type="Texture2D" uid="uid://c7madb3fe540" path="res://tilesets/castle/gfx/bowser_portrait.png" id="26_gx1sn"]
+[ext_resource type="Texture2D" uid="uid://bcb0p63rnf2gm" path="res://tilesets/castle/gfx/bowser_portrait_anim.png" id="27_0hkj5"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="28_msnk1"]
+[ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="29_ceyti"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="30_e0s6s"]
+
+[sub_resource type="Resource" id="Resource_84omh"]
+script = ExtResource("14_1v5af")
+creation_fallback_node = ExtResource("12_4ckim")
+creation_nodepack = ExtResource("13_oveyd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_cxvdw"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_scaga"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7fsd"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 0, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqelp"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 81, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58iks"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 162, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hoi7a"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 243, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5inyw"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 324, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsb46"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 405, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inomm"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 486, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4fte"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 567, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wur67"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 648, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8c1l"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 729, 80, 81)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruiwa"]
+atlas = ExtResource("27_0hkj5")
+region = Rect2(0, 810, 80, 81)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ta0o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7fsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqelp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58iks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hoi7a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5inyw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsb46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inomm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4fte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wur67")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8c1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ruiwa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 33.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_675bo"]
+offsets = PackedFloat32Array(0.125, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pis6e"]
+gradient = SubResource("Gradient_675bo")
+width = 112
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxbsh"]
+size = Vector2(7482, 1296)
+
+[node name="Level8-1" type="Node2D"]
+script = ExtResource("1_drpig")
+completion_music = ExtResource("2_ctvaa")
+jump_to_scene = "res://stages/world_8/map_8.tscn"
+
+[node name="MusicLoader" type="Node" parent="."]
+script = ExtResource("2_v7pnx")
+music = Array[Resource]([ExtResource("3_mib74")])
+
+[node name="Mario" parent="." instance=ExtResource("4_r7v04")]
+position = Vector2(128, 272)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("5_fa1x0")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("6_sw4mk")]
+offset_right = 7398.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("7_ihoco")
+format = 2
+layer_0/tile_data = PackedInt32Array(983059, 131076, 2, 917523, 131076, 1, 851987, 131076, 1, 786451, 131076, 1, 720915, 131076, 1, 655379, 131076, 1, 589843, 131076, 0, 983058, 4, 2, 917522, 4, 1, 851986, 4, 1, 786450, 4, 1, 720914, 4, 1, 655378, 4, 1, 589842, 4, 0, 983056, 131076, 2, 917520, 131076, 1, 851984, 131076, 1, 786448, 131076, 1, 720912, 131076, 1, 655376, 131076, 1, 589840, 131076, 0, 983055, 4, 2, 917519, 4, 1, 851983, 4, 1, 786447, 4, 1, 720911, 4, 1, 655375, 4, 1, 589839, 4, 0, 983053, 131076, 2, 917517, 131076, 1, 851981, 131076, 1, 786445, 131076, 1, 720909, 131076, 1, 655373, 131076, 1, 589837, 131076, 0, 983052, 4, 2, 917516, 4, 1, 851980, 4, 1, 786444, 4, 1, 720908, 4, 1, 655372, 4, 1, 589836, 4, 0, 983050, 131076, 2, 917514, 131076, 1, 851978, 131076, 1, 786442, 131076, 1, 720906, 131076, 1, 655370, 131076, 1, 589834, 131076, 0, 983049, 4, 2, 917513, 4, 1, 851977, 4, 1, 786441, 4, 1, 720905, 4, 1, 655369, 4, 1, 589833, 4, 0, 983047, 131076, 2, 917511, 131076, 1, 851975, 131076, 1, 786439, 131076, 1, 720903, 131076, 1, 655367, 131076, 1, 589831, 131076, 0, 983046, 4, 2, 851974, 4, 1, 786438, 4, 1, 720902, 4, 1, 655366, 4, 1, 589830, 4, 0, 983043, 4, 2, 917507, 4, 1, 851971, 4, 1, 786435, 4, 1, 720899, 4, 1, 655363, 4, 1, 589827, 4, 0, 983041, 131076, 2, 917505, 131076, 1, 851969, 131076, 1, 786433, 131076, 1, 720897, 131076, 1, 655361, 131076, 1, 589825, 131076, 0, 983040, 4, 2, 917504, 4, 1, 851968, 4, 1, 786432, 4, 1, 720896, 4, 1, 655360, 4, 1, 589824, 4, 0, -524289, 131072, 0, -458753, 131072, 0, -393217, 131072, 0, -327681, 131072, 0, -262145, 131072, 0, -196609, 131072, 0, -131073, 131072, 0, -65537, 131072, 0, -1, 131072, 0, 65535, 131072, 0, 131071, 131072, 0, 196607, 131072, 0, 262143, 131072, 0, 327679, 131072, 0, 393215, 131072, 0, 458751, 131072, 0, 524287, 131072, 0, 589823, 131072, 0, 655398, 131072, 0, 655399, 131072, 0, 589863, 131072, 0, 589864, 131072, 0, 524328, 131072, 0, 524327, 131072, 0, 524326, 131072, 0, 589862, 131072, 0, 655400, 131072, 0, 50, 131072, 0, 65586, 131072, 0, 131122, 131072, 0, 196658, 131072, 0, 262194, 131072, 0, 327730, 131072, 0, 393266, 131072, 0, 524340, 131072, 0, 524341, 131072, 0, 524342, 131072, 0, 655412, 131072, 0, 655413, 131072, 0, 655414, 131072, 0, 393272, 131072, 0, 327736, 131072, 0, 262200, 131072, 0, 196664, 131072, 0, 131128, 131072, 0, 65592, 131072, 0, 56, 131072, 0, 589886, 131072, 0, 589887, 131072, 0, 589888, 131072, 0, 589889, 131072, 0, 589890, 131072, 0, 589891, 131072, 0, 589892, 131072, 0, 589893, 131072, 0, 589895, 131072, 0, 589896, 131072, 0, 589897, 131072, 0, 589898, 131072, 0, 589899, 131072, 0, 589900, 131072, 0, 589901, 131072, 0, 589902, 131072, 0, 589903, 131072, 0, 720958, 131072, 0, 720959, 131072, 0, 720960, 131072, 0, 720961, 131072, 0, 720962, 131072, 0, 720963, 131072, 0, 720964, 131072, 0, 720965, 131072, 0, 720966, 131072, 0, 720967, 131072, 0, 720968, 131072, 0, 720969, 131072, 0, 720970, 131072, 0, 720971, 131072, 0, 720972, 131072, 0, 720973, 131072, 0, 720974, 131072, 0, 720975, 131072, 0, 262208, 131072, 0, 262223, 131072, 0, 262221, 131072, 0, 589894, 131072, 0, 327780, 131072, 0, 589934, 131072, 0, 393336, 131072, 0, 524409, 0, 0, 524410, 65536, 0, 589946, 0, 0, 589947, 65536, 0, 524411, 0, 0, 524412, 65536, 0, 589948, 0, 0, 589949, 65536, 0, 655485, 0, 0, 655486, 65536, 0, 589950, 0, 0, 589951, 65536, 0, 524415, 0, 0, 524416, 65536, 0, 589952, 0, 0, 589953, 65536, 0, 524417, 0, 0, 524418, 65536, 0, 589954, 0, 0, 589955, 65536, 0, 524419, 0, 0, 524420, 65536, 0, 589956, 0, 0, 589957, 65536, 0, 655493, 0, 0, 655494, 65536, 0, 589958, 0, 0, 589959, 65536, 0, 524423, 0, 0, 524424, 65536, 0, 589960, 0, 0, 589961, 65536, 0, 524425, 0, 0, 524426, 65536, 0, 589962, 0, 0, 589963, 65536, 0, 524427, 0, 0, 524428, 65536, 0, 589964, 0, 0, 589965, 65536, 0, 655501, 0, 0, 655502, 65536, 0, 589966, 0, 0, 589967, 65536, 0, 524431, 0, 0, 524432, 65536, 0, 589968, 0, 0, 589969, 65536, 0, 524433, 0, 0, 524434, 65536, 0, 524435, 131072, 0, 524436, 131072, 0, 458898, 131072, 0, 393362, 131072, 0, 327826, 131072, 0, 262290, 131072, 0, 262292, 131072, 0, 148, 131072, 0, 983198, 0, 0, 983199, 65536, 0, 983203, 0, 0, 983204, 65536, 0, 983208, 0, 0, 983209, 65536, 0, 983214, 0, 0, 983215, 65536, 0, 458942, 131072, 0, 852166, 0, 0, 721095, 0, 0, 786631, 131072, 0, 196808, 0, 0, 655560, 131072, 0, 201, 0, 0, 65737, 131072, 0, 131273, 131072, 0, 524477, 0, 0, 524478, 65536, 0, 327876, 131072, 0, 917702, 131072, 0, 852167, 65536, 0, 262344, 131072, 0, 721096, 65536, 0, 196809, 65536, 0, 202, 65536, 0, 917716, 131072, 0, 917717, 131072, 0, 852180, 0, 0, 852181, 65536, 0, 983252, 131072, 0, 1048788, 131072, 0, 983238, 131072, 0, 1048774, 131072, 0, 786645, 131072, 0, 721109, 0, 0, 721110, 65536, 0, 655574, 0, 0, 655575, 65536, 0, 721111, 0, 0, 721112, 65536, 0, 655576, 0, 0, 655577, 65536, 0, 721113, 0, 0, 721114, 65536, 0, 655578, 0, 0, 655579, 65536, 0, 721115, 0, 0, 721116, 65536, 0, 655580, 0, 0, 655581, 65536, 0, 721117, 0, 0, 721118, 65536, 0, 655582, 0, 0, 655583, 65536, 0, 721119, 0, 0, 721120, 65536, 0, 655584, 0, 0, 655585, 65536, 0, 721121, 0, 0, 721122, 65536, 0, 721123, 0, 0, 721124, 65536, 0, 655586, 131072, 0, 655587, 131072, 0, 786657, 131072, 0, 786658, 0, 0, 786659, 65536, 0, 786660, 0, 0, 786661, 65536, 0, 786662, 131072, 0, 786663, 131072, 0, 786664, 131072, 0, 852195, 131072, 0, 852196, 131072, 0, 917731, 0, 0, 917732, 65536, 0, 786654, 131072, 0, 852190, 131072, 0, 917726, 131072, 0, 852187, 131072, 0, 917723, 131072, 0, 852186, 131072, 0, 786652, 0, 0, 786653, 65536, 0, 786650, 0, 0, 786651, 65536, 0, 917721, 0, 0, 917722, 65536, 0, 786665, 131072, 0, 786666, 131072, 0, 786667, 131072, 0, 786668, 131072, 0, 786669, 131072, 0, 786670, 131072, 0, 786671, 131072, 0, 238, 131072, 0, 65774, 131072, 0, 131310, 131072, 0, 196846, 131072, 0, 262382, 131072, 0, 327918, 131072, 0, 393454, 131072, 0, 458990, 131072, 0, 524526, 131072, 0, 590062, 131072, 0, 655598, 131072, 0, 721134, 131072, 0, -786194, 131072, 0, -720658, 131072, 0, -655122, 131072, 0, -589586, 131072, 0, -524050, 131072, 0, -458514, 131072, 0, -392978, 131072, 0, -327442, 131072, 0, -261906, 131072, 0, -196370, 131072, 0, -130834, 131072, 0, -65298, 131072, 0, 589828, 131076, 0, 655364, 131076, 1, 720900, 131076, 1, 786436, 131076, 1, 851972, 131076, 1, 917508, 131076, 1, 983044, 131076, 2, 917510, 4, 1, 983070, 0, 0, 983071, 65536, 0, 983131, 0, 0, 983132, 65536, 0, 983143, 0, 0, 983144, 65536, 0, 589986, 131072, 0, 327851, 0, 0, 327852, 65536, 0, 196779, 0, 0, 196780, 65536, 0, 65707, 0, 0, 65708, 65536, 0, -65365, 0, 0, -65364, 65536, 0, -196437, 0, 0, -196436, 65536, 0, -327509, 0, 0, -327508, 65536, 0, -458581, 0, 0, -458580, 65536, 0, -589653, 0, 0, -589652, 65536, 0, -720725, 0, 0, -720724, 65536, 0, -851797, 0, 0, -851796, 65536, 0, -982869, 0, 0, -982868, 65536, 0, -1113941, 0, 0, -1113940, 65536, 0, -1048405, 131072, 0, -917333, 131072, 0, -1048404, 131072, 0, -917332, 131072, 0, -786261, 131072, 0, -786260, 131072, 0, -655189, 131072, 0, -655188, 131072, 0, -524117, 131072, 0, -524116, 131072, 0, -393045, 131072, 0, -393044, 131072, 0, -261973, 131072, 0, -261972, 131072, 0, -130901, 131072, 0, -130900, 131072, 0, 171, 131072, 0, 172, 131072, 0, 131243, 131072, 0, 131244, 131072, 0, 262315, 131072, 0, 262316, 131072, 0, 590004, 131072, 0)
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("8_5eilu")]
+
+[node name="World" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 329.0
+offset_bottom = 49.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 3
+theme_override_fonts/font = ExtResource("9_xqfq6")
+text = "WORLD
+*8-1  "
+horizontal_alignment = 1
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_offset = Vector2(200, 0)
+motion_mirroring = Vector2(1023, 0)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="BgCastle2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+z_index = -99
+texture_repeat = 3
+position = Vector2(0, -16)
+texture = ExtResource("10_6agtp")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, -16, 1023, 512)
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="QuestionBlock26" parent="Objects" instance=ExtResource("11_vvgwy")]
+position = Vector2(1264, 112)
+result = SubResource("Resource_84omh")
+
+[node name="Centipedes" type="Node2D" parent="."]
+
+[node name="Centipede" parent="Centipedes" instance=ExtResource("15_oolm5")]
+position = Vector2(784, 288)
+block_amount = 3
+waiting = 0.15
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_area = Rect2(-8, 0, 48, 480)
+
+[node name="Centipede2" parent="Centipedes" instance=ExtResource("15_oolm5")]
+position = Vector2(784, 288)
+moving_sound = SubResource("AudioStreamWAV_cxvdw")
+block_amount = 3
+waiting = 0.15
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_area = Rect2(-8, 0, 48, 480)
+
+[node name="Centipede3" parent="Centipedes" instance=ExtResource("15_oolm5")]
+position = Vector2(784, 288)
+moving_sound = SubResource("AudioStreamWAV_cxvdw")
+block_amount = 3
+waiting = 0.15
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_area = Rect2(-8, 0, 48, 480)
+
+[node name="CentipedePathpoints" parent="." instance=ExtResource("16_dh8qe")]
+
+[node name="CentipedePathpoint" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(784, 288)
+
+[node name="CentipedePathpoint2" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(1200, 288)
+
+[node name="CentipedePathpoint3" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(1200, 352)
+
+[node name="CentipedePathpoint4" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(1328, 352)
+
+[node name="CentipedePathpoint5" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(1328, 288)
+
+[node name="CentipedePathpoint6" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(1968, 288)
+
+[node name="CentipedePathpoint7" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(1968, 320)
+
+[node name="CentipedePathpoint8" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(2608, 320)
+
+[node name="CentipedePathpoint9" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(2608, 416)
+
+[node name="CentipedePathpoint10" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(2928, 416)
+
+[node name="CentipedePathpoint11" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(2928, 256)
+
+[node name="CentipedePathpoint12" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(2768, 256)
+
+[node name="CentipedePathpoint13" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(2768, 128)
+
+[node name="CentipedePathpoint14" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3088, 128)
+
+[node name="CentipedePathpoint15" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3088, 288)
+
+[node name="CentipedePathpoint16" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3408, 288)
+
+[node name="CentipedePathpoint17" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3408, 320)
+
+[node name="CentipedePathpoint18" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3728, 320)
+
+[node name="CentipedePathpoint19" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3728, 192)
+
+[node name="CentipedePathpoint20" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3504, 192)
+
+[node name="CentipedePathpoint21" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3504, 320)
+
+[node name="CentipedePathpoint22" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3568, 320)
+
+[node name="CentipedePathpoint23" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3568, 288)
+
+[node name="CentipedePathpoint24" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3888, 288)
+
+[node name="CentipedePathpoint25" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(3888, 352)
+
+[node name="CentipedePathpoint26" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(4848, 352)
+
+[node name="CentipedePathpoint27" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(4848, 384)
+
+[node name="CentipedePathpoint28" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5168, 384)
+
+[node name="CentipedePathpoint29" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5168, 256)
+
+[node name="CentipedePathpoint30" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5488, 256)
+
+[node name="CentipedePathpoint31" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5488, 384)
+
+[node name="CentipedePathpoint32" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5520, 384)
+
+[node name="CentipedePathpoint33" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5520, 256)
+
+[node name="CentipedePathpoint34" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5872, 256)
+
+[node name="CentipedePathpoint35" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(5872, 288)
+
+[node name="CentipedePathpoint36" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(6160, 288)
+
+[node name="CentipedePathpoint37" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(6160, 256)
+
+[node name="CentipedePathpoint38" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(6480, 256)
+
+[node name="CentipedePathpoint39" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(6480, 704)
+
+[node name="CentipedePathpoint40" parent="CentipedePathpoints" instance=ExtResource("17_7u5k7")]
+position = Vector2(-1904, 704)
+
+[node name="Coin" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(1584, 144)
+
+[node name="Coin2" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(1584, 176)
+
+[node name="Coin3" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(1584, 208)
+
+[node name="Coin4" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(1840, 208)
+
+[node name="Coin7" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(2192, 144)
+
+[node name="Coin8" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(2256, 144)
+
+[node name="Coin11" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(3056, 176)
+
+[node name="Coin12" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(3088, 176)
+
+[node name="Coin13" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(3120, 176)
+
+[node name="Coin17" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(5808, 176)
+
+[node name="Coin18" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(5840, 176)
+
+[node name="Coin19" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(5872, 176)
+
+[node name="Coin20" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(6608, 144)
+
+[node name="Coin21" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(6640, 144)
+
+[node name="Coin22" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(6672, 144)
+
+[node name="Coin14" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(3344, 208)
+
+[node name="Coin15" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(3376, 208)
+
+[node name="Coin16" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(3408, 208)
+
+[node name="Coin9" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(2320, 144)
+
+[node name="Coin10" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(2384, 144)
+
+[node name="Coin5" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(1840, 176)
+
+[node name="Coin6" parent="." instance=ExtResource("18_k3ia6")]
+position = Vector2(1840, 144)
+
+[node name="RotoCenter" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(2064, 144)
+
+[node name="RotoRed" parent="RotoCenter" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(150, 0)
+frequency = -50.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter4" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(3216, 176)
+
+[node name="RotoRed" parent="RotoCenter4" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, -150)
+phase = -90.0
+frequency = -250.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter5" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(3536, 304)
+
+[node name="RotoRed" parent="RotoCenter5" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, -150)
+phase = -90.0
+frequency = -125.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter7" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(4752, 272)
+
+[node name="RotoRed" parent="RotoCenter7" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, 180)
+amplitude = Vector2(180, 180)
+phase = 90.0
+frequency = -50.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter10" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(5200, 304)
+
+[node name="RotoRed" parent="RotoCenter10" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, 64)
+amplitude = Vector2(64, 64)
+phase = 90.0
+frequency = 100.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter11" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(5776, 304)
+
+[node name="RotoRed" parent="RotoCenter11" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, -64)
+amplitude = Vector2(64, 64)
+phase = -90.0
+frequency = -100.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter12" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(6288, 176)
+
+[node name="RotoRed" parent="RotoCenter12" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(-64, 0)
+amplitude = Vector2(64, 64)
+phase = 180.0
+frequency = 100.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter8" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(4752, 144)
+
+[node name="RotoRed" parent="RotoCenter8" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, 180)
+amplitude = Vector2(180, 180)
+phase = 90.0
+frequency = -50.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter9" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(4752, 16)
+
+[node name="RotoRed" parent="RotoCenter9" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, 180)
+amplitude = Vector2(180, 180)
+phase = 90.0
+frequency = -50.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter6" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(3856, 208)
+
+[node name="RotoRed" parent="RotoCenter6" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, 180)
+amplitude = Vector2(180, 180)
+phase = 90.0
+frequency = -125.0
+metadata/_edit_lock_ = true
+
+[node name="RotoCenter2" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(2480, 144)
+
+[node name="RotoRed" parent="RotoCenter2" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, 150)
+amplitude_enable = true
+amplitude_changing_speed = 350.0
+phase = 90.0
+frequency = -50.0
+
+[node name="RotoCenter3" parent="." instance=ExtResource("19_cnv0c")]
+position = Vector2(2544, 144)
+
+[node name="RotoRed" parent="RotoCenter3" instance=ExtResource("20_1hh8n")]
+material = SubResource("CanvasItemMaterial_scaga")
+position = Vector2(0, 180)
+amplitude = Vector2(180, 180)
+phase = 90.0
+frequency = -250.0
+metadata/_edit_lock_ = true
+
+[node name="Spike" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(2256, 288)
+
+[node name="Spike4" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(4176, 256)
+
+[node name="Spike11" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(4208, 256)
+
+[node name="Spike13" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(320, 288)
+
+[node name="Spike14" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(416, 288)
+
+[node name="Spike15" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(512, 288)
+
+[node name="Spike16" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(608, 288)
+
+[node name="Spike5" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(4432, 256)
+
+[node name="Spike12" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(4496, 256)
+
+[node name="Spike17" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(4752, 128)
+
+[node name="Spike18" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(4752, 32)
+rotation = 3.14159
+scale = Vector2(-1, 1)
+
+[node name="Spike6" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(6288, 131)
+
+[node name="Spike7" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(6416, 96)
+
+[node name="Spike2" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(2288, 288)
+
+[node name="Spike3" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(2320, 288)
+
+[node name="Thwomp" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(4032, 32)
+
+[node name="Thwomp13" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(4096, 192)
+
+[node name="Thwomp8" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(992, 32)
+
+[node name="Thwomp9" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(1312, 32)
+
+[node name="Thwomp10" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(1712, 32)
+
+[node name="Thwomp11" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(2944, 32)
+
+[node name="Thwomp12" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(3328, 32)
+
+[node name="Thwomp2" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(4288, 32)
+
+[node name="Thwomp14" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(4352, 192)
+
+[node name="Thwomp3" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(4544, 32)
+
+[node name="Thwomp4" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(5088, 64)
+
+[node name="Thwomp5" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(5248, 64)
+
+[node name="Thwomp6" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(5408, 128)
+
+[node name="Thwomp7" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(5600, 96)
+
+[node name="Thwomp15" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(6112, 32)
+
+[node name="Thwomp16" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(6816, 32)
+
+[node name="Thwomp17" parent="." instance=ExtResource("22_1ymln")]
+position = Vector2(6912, 32)
+
+[node name="BulletLauncher" parent="." instance=ExtResource("23_mkjju")]
+position = Vector2(6096, 208)
+
+[node name="BulletBillBase" parent="." instance=ExtResource("24_ap30o")]
+offset_left = 6080.0
+offset_top = 191.84
+offset_right = 6112.0
+offset_bottom = 223.84
+
+[node name="BulletLauncher3" parent="." instance=ExtResource("23_mkjju")]
+position = Vector2(6288, 144.16)
+
+[node name="BulletBillBase3" parent="." instance=ExtResource("24_ap30o")]
+offset_left = 6272.0
+offset_top = 128.0
+offset_right = 6304.0
+offset_bottom = 160.0
+
+[node name="Spike8" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(6416, 291)
+
+[node name="BulletLauncher4" parent="." instance=ExtResource("23_mkjju")]
+position = Vector2(6416, 304.16)
+
+[node name="BulletBillBase4" parent="." instance=ExtResource("24_ap30o")]
+offset_left = 6400.0
+offset_top = 288.0
+offset_right = 6432.0
+offset_bottom = 320.0
+
+[node name="Spike9" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(6384, 323)
+
+[node name="Spike10" parent="." instance=ExtResource("21_4ndl5")]
+position = Vector2(6352, 416)
+
+[node name="BulletLauncher5" parent="." instance=ExtResource("23_mkjju")]
+position = Vector2(6384, 336.16)
+
+[node name="BulletBillBase5" parent="." instance=ExtResource("24_ap30o")]
+offset_left = 6368.0
+offset_top = 320.0
+offset_right = 6400.0
+offset_bottom = 352.0
+
+[node name="BulletLauncher2" parent="." instance=ExtResource("23_mkjju")]
+position = Vector2(6064, 240.16)
+
+[node name="BulletBillBase2" parent="." instance=ExtResource("24_ap30o")]
+offset_left = 6048.0
+offset_top = 224.0
+offset_right = 6080.0
+offset_bottom = 256.0
+
+[node name="FinishLine" parent="." instance=ExtResource("25_5lfen")]
+position = Vector2(6976, 320)
+
+[node name="BowserPortrait6" type="Sprite2D" parent="."]
+z_index = -15
+position = Vector2(640, 32)
+texture = ExtResource("26_gx1sn")
+centered = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BowserPortrait6"]
+sprite_frames = SubResource("SpriteFrames_0ta0o")
+autoplay = "default"
+centered = false
+
+[node name="BowserPortrait7" type="Sprite2D" parent="."]
+z_index = -15
+position = Vector2(1648, 32)
+texture = ExtResource("26_gx1sn")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BowserPortrait7"]
+sprite_frames = SubResource("SpriteFrames_0ta0o")
+autoplay = "default"
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -20
+script = ExtResource("28_msnk1")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+z_index = 40
+position = Vector2(13585.6, -16.2063)
+rotation = 1.5708
+scale = Vector2(1.14509, 13588.6)
+texture = SubResource("GradientTexture1D_pis6e")
+centered = false
+script = ExtResource("28_msnk1")
+
+[node name="TileMap" type="TileMap" parent="Node2D"]
+tile_set = ExtResource("29_ceyti")
+format = 2
+layer_0/tile_data = PackedInt32Array(720935, 2, 393216, 15, 2, 196608, 720949, 2, 393216, 786502, 2, 393216, 393316, 2, 393216, 721021, 2, 458752, 721037, 2, 458752, 393412, 2, 393216, 852193, 2, 393216, 168, 2, 327680, 327880, 2, 196608)
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("30_e0s6s")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+visible = false
+position = Vector2(3731, 168)
+shape = SubResource("RectangleShape2D_qxbsh")
