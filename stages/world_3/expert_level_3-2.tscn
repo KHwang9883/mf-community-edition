@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=4 uid="uid://c7gh404dybg61"]
+[gd_scene load_steps=25 format=4 uid="uid://c7gh404dybg61"]
 
 [ext_resource type="PackedScene" uid="uid://debc5q6nijthm" path="res://stages/world_3/level_3-2.tscn" id="1_fw4do"]
 [ext_resource type="AudioStream" uid="uid://cyrq625tllkaw" path="res://music/smb-underground.ogg" id="2_hl5ar"]
 [ext_resource type="AudioStream" uid="uid://rbc5celaucxd" path="res://music/extra/expert_mode/check_the_temperature.ogg" id="3_3it4p"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="3_t02sf"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="4_4ruy1"]
+[ext_resource type="Texture2D" uid="uid://8ek1m41iv2ij" path="res://gfx/backgrounds/underground_cold.png" id="4_wrv70"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="5_0a1x7"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="6_lwehr"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="7_i7kth"]
@@ -17,6 +18,36 @@
 [ext_resource type="PackedScene" uid="uid://da0fmncf7ksxc" path="res://engine/objects/enemies/piranha_plants/piranha_ice.tscn" id="14_w1dg7"]
 
 [sub_resource type="Resource" id="Resource_4kopa"]
+resource_local_to_scene = true
+script = ExtResource("5_0a1x7")
+creation_fallback_node = ExtResource("3_t02sf")
+creation_nodepack = ExtResource("4_4ruy1")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_58qd1"]
+resource_local_to_scene = true
+script = ExtResource("5_0a1x7")
+creation_fallback_node = ExtResource("3_t02sf")
+creation_nodepack = ExtResource("4_4ruy1")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_5k2ii"]
 resource_local_to_scene = true
 script = ExtResource("5_0a1x7")
 creation_fallback_node = ExtResource("3_t02sf")
@@ -102,7 +133,6 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [node name="Level3-2" instance=ExtResource("1_fw4do")]
-time = 440
 jump_to_scene = "res://stages/world_3/expert_map_3.tscn"
 
 [node name="MusicLoader" parent="." index="0"]
@@ -126,6 +156,9 @@ text = "WORLD
 position = Vector2(320, 58)
 scale = Vector2(1, 1.2)
 
+[node name="CanvasModulate" parent="." index="8"]
+color = Color(0.529412, 0.627451, 0.705882, 1)
+
 [node name="ParallaxLayer2" parent="ParallaxBackground" index="0"]
 motion_scale = Vector2(0, 0)
 
@@ -137,6 +170,10 @@ motion_mirroring = Vector2(0, 480)
 
 [node name="Underground2" parent="ParallaxBackground/ParallaxLayer" index="0"]
 position = Vector2(0, 0)
+texture = ExtResource("4_wrv70")
+
+[node name="CanvasModulate" parent="ParallaxBackground/ParallaxLayer/FancyGraphics" index="0"]
+color = Color(0.529412, 0.627451, 0.705882, 1)
 
 [node name="Goomba5" parent="." index="10"]
 position = Vector2(1648, 1680)
@@ -214,10 +251,10 @@ position = Vector2(5776, 1072)
 position = Vector2(7984, 1072)
 
 [node name="Coin82" parent="." index="68" instance=ExtResource("7_vneak")]
-position = Vector2(7984, 1264)
+position = Vector2(7984, 1296)
 
 [node name="Brick6" parent="." index="150"]
-position = Vector2(7984, 1232)
+position = Vector2(7984, 1264)
 
 [node name="Brick7" parent="." index="151"]
 position = Vector2(2224, 1200)
@@ -230,11 +267,11 @@ result = SubResource("Resource_4kopa")
 
 [node name="QuestionBlockBeetroot2" parent="." index="169" instance=ExtResource("8_1pwsg")]
 position = Vector2(5520, 1072)
-result = SubResource("Resource_4kopa")
+result = SubResource("Resource_58qd1")
 
 [node name="QuestionBlockBeetroot3" parent="." index="170" instance=ExtResource("8_1pwsg")]
 position = Vector2(5872, 1072)
-result = SubResource("Resource_4kopa")
+result = SubResource("Resource_5k2ii")
 
 [node name="QuestionBlockLife" parent="." index="171"]
 result = SubResource("Resource_5m2i7")
@@ -378,53 +415,50 @@ position = Vector2(7056, 1072)
 [node name="JumpingGoomba12" parent="." index="234" instance=ExtResource("9_7h7jo")]
 position = Vector2(7408, 1200)
 
-[node name="JumpingGoomba13" parent="." index="235" instance=ExtResource("9_7h7jo")]
-position = Vector2(7536, 1360)
-
-[node name="JumpingGoomba14" parent="." index="236" instance=ExtResource("9_7h7jo")]
+[node name="JumpingGoomba14" parent="." index="235" instance=ExtResource("9_7h7jo")]
 position = Vector2(7600, 1360)
 
-[node name="JumpingGoomba15" parent="." index="237" instance=ExtResource("9_7h7jo")]
+[node name="JumpingGoomba15" parent="." index="236" instance=ExtResource("9_7h7jo")]
 position = Vector2(8240, 1232)
 
-[node name="JumpingGoomba11" parent="." index="238" instance=ExtResource("9_7h7jo")]
+[node name="JumpingGoomba11" parent="." index="237" instance=ExtResource("9_7h7jo")]
 position = Vector2(7024, 1360)
 
-[node name="JumpingGoomba8" parent="." index="239" instance=ExtResource("9_7h7jo")]
+[node name="JumpingGoomba8" parent="." index="238" instance=ExtResource("9_7h7jo")]
 position = Vector2(6352, 1360)
 
-[node name="JumpingGoomba5" parent="." index="240" instance=ExtResource("9_7h7jo")]
+[node name="JumpingGoomba5" parent="." index="239" instance=ExtResource("9_7h7jo")]
 position = Vector2(3024, 1200)
 
-[node name="JumpingGoomba4" parent="." index="241" instance=ExtResource("9_7h7jo")]
+[node name="JumpingGoomba4" parent="." index="240" instance=ExtResource("9_7h7jo")]
 position = Vector2(431, 1360)
 
-[node name="SpinyRed4" parent="." index="242" instance=ExtResource("10_8ukd7")]
+[node name="SpinyRed4" parent="." index="241" instance=ExtResource("10_8ukd7")]
 position = Vector2(464, 1360)
 
-[node name="SpinyRed5" parent="." index="243" instance=ExtResource("10_8ukd7")]
+[node name="SpinyRed5" parent="." index="242" instance=ExtResource("10_8ukd7")]
 position = Vector2(1520, 1360)
 
-[node name="SpinyRed6" parent="." index="244" instance=ExtResource("10_8ukd7")]
+[node name="SpinyRed6" parent="." index="243" instance=ExtResource("10_8ukd7")]
 position = Vector2(3504, 1360)
 
-[node name="SpinyRed7" parent="." index="245" instance=ExtResource("10_8ukd7")]
+[node name="SpinyRed7" parent="." index="244" instance=ExtResource("10_8ukd7")]
 position = Vector2(3984, 1168)
 
-[node name="SpinyRed8" parent="." index="246" instance=ExtResource("10_8ukd7")]
+[node name="SpinyRed8" parent="." index="245" instance=ExtResource("10_8ukd7")]
 position = Vector2(4048, 1168)
 
-[node name="SpinyRed9" parent="." index="247" instance=ExtResource("10_8ukd7")]
+[node name="SpinyRed9" parent="." index="246" instance=ExtResource("10_8ukd7")]
 position = Vector2(4112, 1168)
 
-[node name="PiranhaIce" parent="." index="248" instance=ExtResource("14_w1dg7")]
+[node name="PiranhaIce" parent="." index="247" instance=ExtResource("14_w1dg7")]
 position = Vector2(4160, 1184)
 
-[node name="PiranhaIce2" parent="." index="249" instance=ExtResource("14_w1dg7")]
+[node name="PiranhaIce2" parent="." index="248" instance=ExtResource("14_w1dg7")]
 position = Vector2(5120, 1280)
 
-[node name="PiranhaIce3" parent="." index="250" instance=ExtResource("14_w1dg7")]
+[node name="PiranhaIce3" parent="." index="249" instance=ExtResource("14_w1dg7")]
 position = Vector2(5248, 1248)
 
-[node name="PiranhaIce4" parent="." index="251" instance=ExtResource("14_w1dg7")]
+[node name="PiranhaIce4" parent="." index="250" instance=ExtResource("14_w1dg7")]
 position = Vector2(6624, 1248)

@@ -51,6 +51,8 @@ func _physics_process(delta: float) -> void:
 	var rect: float = sprite_2d.region_rect.position.y
 	if rect > 0.0:
 		sprite_2d.region_rect.position.y -= 200 * delta
+		if sprite_2d.region_rect.position.y < 0.0:
+			sprite_2d.region_rect.position.y = 0.0
 	elif !ooawel:
 		ooawel = true
 		sprite_2d.region_rect.position.y = 0.0
