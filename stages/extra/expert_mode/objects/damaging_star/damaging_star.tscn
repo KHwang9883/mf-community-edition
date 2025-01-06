@@ -1,0 +1,103 @@
+[gd_scene load_steps=16 format=3 uid="uid://c8du38fqix3l6"]
+
+[ext_resource type="Script" path="res://stages/extra/expert_mode/objects/damaging_star/damaging_star.gd" id="1_6f3pn"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ximy6"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_gd0el"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_dvlsh"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_vo82j"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_k6o8o"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_1ity1"]
+[ext_resource type="Texture2D" uid="uid://n78q25x8elff" path="res://stages/extra/expert_mode/objects/damaging_star/starfall.png" id="8_8pokk"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_c7yb2"]
+[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="9_4jojo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3h74u"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tskrr"]
+radius = 15.0
+
+[sub_resource type="Resource" id="Resource_ivcei"]
+resource_local_to_scene = true
+script = ExtResource("6_k6o8o")
+creation_nodepack = ExtResource("4_dvlsh")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("5_vo82j")
+
+[sub_resource type="Gradient" id="Gradient_ha2mt"]
+offsets = PackedFloat32Array(0.536585, 1)
+colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_swwn6"]
+gradient = SubResource("Gradient_ha2mt")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.857143, 0.142857)
+metadata/_snap_enabled = true
+metadata/_snap_count = 7
+
+[node name="DamagingStar" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 96
+script = ExtResource("1_6f3pn")
+sprite = NodePath("Sprite2D")
+speed = Vector2(-75, 75)
+gravity_scale = 0.2
+max_falling_speed = 1250.0
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_3h74u")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
+collision_layer = 4
+script = ExtResource("2_ximy6")
+solid = false
+turn_back = false
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("CircleShape2D_tskrr")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_gd0el")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"fireball": true,
+"iceball": true
+}
+killing_creation = SubResource("Resource_ivcei")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_1ity1")
+killing_sound_failed = ExtResource("8_c7yb2")
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
+
+[node name="Vision" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-64, -64, 128, 128)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("8_8pokk")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+scale = Vector2(0.4, 0.4)
+color = Color(1, 1, 0.439216, 1)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_swwn6")
+script = ExtResource("9_4jojo")

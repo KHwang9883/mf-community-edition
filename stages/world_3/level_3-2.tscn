@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=4 uid="uid://debc5q6nijthm"]
+[gd_scene load_steps=59 format=4 uid="uid://debc5q6nijthm"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_d4ljw"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_n6fty"]
@@ -16,6 +16,7 @@
 [ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="17_lc15o"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="18_66com"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="19_7mljc"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="20_8r3ym"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="21_d1esh"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="23_c4o37"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="24_1jjcf"]
@@ -35,16 +36,6 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="40_mf4yr"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="41_etjqg"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="42_72wi1"]
-
-[sub_resource type="Gradient" id="Gradient_5x42y"]
-colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_j6ovo"]
-gradient = SubResource("Gradient_5x42y")
-width = 640
-height = 176
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0, 0)
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -76,6 +67,16 @@ shader_parameter/density = 0.65
 shader_parameter/speed = Vector2(0.02, 0.01)
 shader_parameter/freq = 1.0
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_2awxr")
+
+[sub_resource type="Gradient" id="Gradient_5x42y"]
+colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j6ovo"]
+gradient = SubResource("Gradient_5x42y")
+width = 640
+height = 176
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fn47q"]
 particles_animation = true
@@ -258,13 +259,6 @@ text = "WORLD
 3-2"
 horizontal_alignment = 1
 
-[node name="PointLight2D" type="PointLight2D" parent="HUD"]
-position = Vector2(320, 86)
-blend_mode = 1
-range_layer_min = -512
-texture = SubResource("GradientTexture2D_j6ovo")
-script = ExtResource("12_ejqfo")
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("12_ejqfo")
@@ -273,6 +267,7 @@ medium = true
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -1
 motion_scale = Vector2(0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
@@ -292,6 +287,7 @@ centered = false
 metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -1
 
 [node name="Underground2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color(1, 1, 1, 0.607843)
@@ -322,6 +318,18 @@ offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("18_66com")
 metadata/_edit_lock_ = true
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0, 0)
+script = ExtResource("12_ejqfo")
+
+[node name="PointLight2D" type="PointLight2D" parent="Parallax2D"]
+position = Vector2(320, 86)
+blend_mode = 1
+range_z_max = -1
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_j6ovo")
+script = ExtResource("12_ejqfo")
 
 [node name="Goomba5" parent="." instance=ExtResource("26_7cbin")]
 position = Vector2(1648, 1360)
@@ -590,6 +598,7 @@ texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
+script = ExtResource("20_8r3ym")
 
 [node name="PipeBg7" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -609,6 +618,7 @@ texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
+script = ExtResource("20_8r3ym")
 
 [node name="PipeBg2" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -629,6 +639,7 @@ lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
 collision_base_size = 0.1
+script = ExtResource("20_8r3ym")
 
 [node name="PipeBg3" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -656,6 +667,7 @@ texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
+script = ExtResource("20_8r3ym")
 
 [node name="PipeBg5" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -676,6 +688,7 @@ lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
 collision_base_size = 0.1
+script = ExtResource("20_8r3ym")
 
 [node name="PipeBg6" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -696,6 +709,7 @@ lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
 collision_base_size = 0.1
+script = ExtResource("20_8r3ym")
 
 [node name="PipeBg10" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -716,6 +730,7 @@ lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
 collision_base_size = 0.1
+script = ExtResource("20_8r3ym")
 
 [node name="PipeBg11" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -735,6 +750,7 @@ texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
 randomness = 0.5
+script = ExtResource("20_8r3ym")
 
 [node name="Checkpoint" parent="." instance=ExtResource("33_owu2o")]
 position = Vector2(4592, 1184)
