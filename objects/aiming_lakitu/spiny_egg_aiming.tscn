@@ -1,0 +1,141 @@
+[gd_scene load_steps=20 format=3 uid="uid://kk78bojpaosr"]
+
+[ext_resource type="Script" path="res://objects/aiming_lakitu/spiny_egg_aiming.gd" id="1_dlvh3"]
+[ext_resource type="PackedScene" uid="uid://dpv4ov40yd1bb" path="res://engine/objects/enemies/spinies/spiny_red_hardcore.tscn" id="2_euwtd"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_i1mdp"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="4_c8yg7"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="5_nturp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_ngfnk"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_w5ruh"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_vrdia"]
+[ext_resource type="Texture2D" uid="uid://ds44e07jvbojq" path="res://engine/objects/enemies/spinies/textures/spiny_egg_red.png" id="9_g8e3j"]
+[ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="10_kvncq"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="11_omwx7"]
+
+[sub_resource type="Resource" id="Resource_dd6cf"]
+script = ExtResource("3_i1mdp")
+creation_nodepack = ExtResource("2_euwtd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnevv"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wnvj"]
+radius = 16.0
+
+[sub_resource type="Resource" id="Resource_2cclf"]
+resource_local_to_scene = true
+script = ExtResource("3_i1mdp")
+creation_nodepack = ExtResource("6_ngfnk")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 2
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Killed"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("7_w5ruh")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdbsm"]
+atlas = ExtResource("9_g8e3j")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fmln3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdbsm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igr41"]
+atlas = ExtResource("10_kvncq")
+region = Rect2(0, 33, 31, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3cd5"]
+size = Vector2(32, 31)
+
+[node name="SpinyRedEgg" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_dlvh3")
+spiny_creation = SubResource("Resource_dd6cf")
+free_offscreen = true
+sprite = NodePath("Sprite")
+gravity_scale = 0.0
+max_falling_speed = 500.0
+auto_update_up_direction = false
+metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_gnevv")
+disabled = true
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("4_c8yg7")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("CircleShape2D_0wnvj")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("5_nturp")
+stomping_standard = Vector2(0, 0)
+killing_creation = SubResource("Resource_2cclf")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("8_vrdia")
+custom_vars = {
+"attachment_killed": NodePath(""),
+"attachment_stomped": NodePath("")
+}
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fmln3")
+autoplay = "default"
+
+[node name="Killed" type="Sprite2D" parent="Sprite"]
+visible = false
+texture = SubResource("AtlasTexture_igr41")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-128, -128, 256, 256)
+script = ExtResource("11_omwx7")
+metadata/_edit_lock_ = true
+
+[node name="SolidChecker" type="Area2D" parent="."]
+visible = false
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+shape = SubResource("RectangleShape2D_j3cd5")
+
+[connection signal="collided_ceiling" from="." to="." method="vel_set_y" binds= [220.0]]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Killed" method="show"]

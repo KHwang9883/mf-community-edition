@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8du38fqix3l6"]
+[gd_scene load_steps=17 format=3 uid="uid://c8du38fqix3l6"]
 
 [ext_resource type="Script" path="res://stages/extra/expert_mode/objects/damaging_star/damaging_star.gd" id="1_6f3pn"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ximy6"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://n78q25x8elff" path="res://stages/extra/expert_mode/objects/damaging_star/starfall.png" id="8_8pokk"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_c7yb2"]
 [ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="9_4jojo"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_cq5t7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3h74u"]
 radius = 15.0
@@ -95,9 +96,19 @@ metadata/_edit_lock_ = true
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("8_8pokk")
 
-[node name="PointLight2D2" type="PointLight2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("10_cq5t7")
+medium = true
+
+[node name="PointLight2D2" type="PointLight2D" parent="Node2D"]
 scale = Vector2(0.4, 0.4)
 color = Color(1, 1, 0.439216, 1)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_swwn6")
 script = ExtResource("9_4jojo")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_trail"]
