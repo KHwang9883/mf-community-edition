@@ -16,8 +16,6 @@ func _ready() -> void:
 
 
 func _on_trail() -> void:
-	if SettingsManager.get_quality() == SettingsManager.QUALITY.MIN:
-		return
 	var trail = Effect.trail(self, sprite_node.texture, Vector2.ZERO, sprite_node.flip_h, false, true, 0.12, 0.25)
 	trail.rotation = sprite_node.rotation
 	Thunder.reorder_on_top_of(trail, self)
@@ -33,6 +31,9 @@ func _physics_process(delta: float) -> void:
 		expl.position = global_position
 		Scenes.current_scene.add_child(expl)
 		queue_free()
+		
+		if SettingsManager.get_quality() == SettingsManager.QUALITY.MIN:
+			return
 		var trail = Effect.trail(self, STAR_EFFECT, Vector2.ZERO, false, false, true, 0.025, 1.5)
 		_effect_tweener(trail, -128)
 		var trail2 = Effect.trail(self, STAR_EFFECT, Vector2.ZERO, false, false, true, 0.025, 1.5)
@@ -41,7 +42,7 @@ func _physics_process(delta: float) -> void:
 
 func _effect_tweener(trail: Sprite2D, offset: float) -> void:
 	var tw = trail.create_tween().set_loops()
-	tw.tween_property(trail, "rotation_degrees", -360, 0.4)
+	tw.tween_property(trail, "rotation_degrees", -360, 0.6)
 	tw.tween_callback(func():
 		trail.rotation_degrees = 0.0
 		trail.reset_physics_interpolation()

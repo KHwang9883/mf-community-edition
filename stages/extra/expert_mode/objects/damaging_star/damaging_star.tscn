@@ -31,8 +31,8 @@ visi_z_index = 1
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, -250)
+"death": NodePath("../../Sprite2D"),
+"death_speed": Vector2(100, -250)
 }
 custom_script = ExtResource("5_vo82j")
 
@@ -65,7 +65,7 @@ shape = SubResource("CircleShape2D_3h74u")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
-collision_layer = 4
+collision_layer = 5
 script = ExtResource("2_ximy6")
 solid = false
 turn_back = false
@@ -79,8 +79,11 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 script = ExtResource("3_gd0el")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
+"boomerang": false,
 "fireball": true,
-"iceball": true
+"hammer": false,
+"iceball": true,
+"starman": false
 }
 killing_creation = SubResource("Resource_ivcei")
 killing_scores = 100
@@ -111,4 +114,5 @@ script = ExtResource("9_4jojo")
 wait_time = 0.05
 autostart = true
 
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="timeout" from="Timer" to="." method="_on_trail"]
