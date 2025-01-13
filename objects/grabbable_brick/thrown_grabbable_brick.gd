@@ -60,6 +60,8 @@ func _on_attack_killed(what: Node, _result: Dictionary) -> void:
 	if what == self: return
 	# Combo
 	if _result.result:
+		if !what.get("killing_can_combo"):
+			return
 		if !combo.get_combo() <= 0:
 			what.sound_pitch = 1 + combo.get_combo() * 0.135
 		combo.combo()

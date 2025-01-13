@@ -1,8 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://cg1joxja7s50n"]
+[gd_scene load_steps=28 format=3 uid="uid://cg1joxja7s50n"]
 
 [ext_resource type="PackedScene" uid="uid://brtc0tw8taj68" path="res://stages/world_2/level_2-5.tscn" id="1_k11wj"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_3fdkw"]
 [ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/bowser_advance_trigger.gd" id="2_ptdga"]
+[ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_tj7dm"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="3_bbgpc"]
 [ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/bowser_advance_checker.gd" id="3_ltjmr"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="4_jeef1"]
@@ -97,6 +98,24 @@ custom_vars = {
 }
 custom_script = ExtResource("7_d3nvv")
 
+[sub_resource type="Resource" id="Resource_k7rga"]
+resource_local_to_scene = true
+script = ExtResource("8_y064d")
+creation_nodepack = ExtResource("6_4oddl")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("7_d3nvv")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_inl7t"]
 atlas = ExtResource("16_wq6cu")
 region = Rect2(96, 0, 32, 28)
@@ -114,6 +133,8 @@ animations = [{
 
 [node name="Level2-5" instance=ExtResource("1_k11wj")]
 jump_to_scene = "res://stages/world_2/expert_end_cutscene_2.tscn"
+
+[node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("2_tj7dm")]
 
 [node name="Mario" parent="." index="1"]
 position = Vector2(256, 336)
@@ -264,6 +285,7 @@ layer_0/tile_data = PackedInt32Array(852019, 2, 196608, 196669, 2, 393216, 78650
 [node name="BowserFakeReveal" parent="LavaBowser" index="17"]
 script = ExtResource("12_c4cq6")
 creation_2 = SubResource("Resource_ibkci")
+creation = SubResource("Resource_k7rga")
 
 [node name="Sprite2" type="AnimatedSprite2D" parent="LavaBowser/BowserFakeReveal" index="1"]
 visible = false
