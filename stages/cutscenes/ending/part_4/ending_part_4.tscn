@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cgsc783wuxspv"]
+[gd_scene load_steps=35 format=3 uid="uid://cgsc783wuxspv"]
 
 [ext_resource type="Texture2D" uid="uid://cpc057l26xydx" path="res://engine/objects/platform/tank_ground.png" id="1_57tac"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="1_d85am"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://djuoyh4schdj1" path="res://stages/cutscenes/ending/part_4/gfx/broken_tank_bg.png" id="1_iv5sh"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="3_6muub"]
 [ext_resource type="PackedScene" uid="uid://cfdgwxnth6m3d" path="res://tilesets/tanks/scenes/dark_cloud.tscn" id="3_dhveu"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="5_y8ep0"]
+[ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="5_l0h46"]
 [ext_resource type="Texture2D" uid="uid://87ovuili333b" path="res://stages/cutscenes/ending/part_4/gfx/broken_tank1.png" id="6_im2sr"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="6_x3u41"]
 [ext_resource type="Texture2D" uid="uid://bwmn6afydgupe" path="res://stages/cutscenes/ending/part_4/gfx/bowser_broken.png" id="7_g31a6"]
@@ -20,6 +20,8 @@
 [ext_resource type="Script" path="res://stages/cutscenes/ending/part_4/scripts/credits_moving.gd" id="16_2onth"]
 [ext_resource type="Texture2D" uid="uid://doqjpis7cehb2" path="res://stages/cutscenes/ending/part_4/gfx/the_end.png" id="16_247pt"]
 [ext_resource type="Texture2D" uid="uid://6i5pb0fnjlkm" path="res://stages/cutscenes/ending/part_4/gfx/buziol_credits.png" id="17_7ytfa"]
+[ext_resource type="Material" uid="uid://coknea5vg1j00" path="res://materials/ending_particles_material.tres" id="17_68myc"]
+[ext_resource type="Material" uid="uid://dbo8ioi41p8hl" path="res://materials/ending_particles.tres" id="17_ejlxa"]
 [ext_resource type="Texture2D" uid="uid://328dqcm0enim" path="res://stages/cutscenes/ending/part_4/gfx/press_key.png" id="19_c5ryu"]
 
 [sub_resource type="Gradient" id="Gradient_xw2og"]
@@ -30,23 +32,6 @@ gradient = SubResource("Gradient_xw2og")
 width = 640
 height = 480
 fill_to = Vector2(0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_pgqxo"]
-frequency = 0.004
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_at0fl"]
-width = 800
-height = 600
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_pgqxo")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4moe7"]
-shader = ExtResource("5_y8ep0")
-shader_parameter/density = 0.65
-shader_parameter/speed = Vector2(0.02, 0.01)
-shader_parameter/freq = 1.0
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_at0fl")
 
 [sub_resource type="Curve2D" id="Curve2D_epa2n"]
 _data = {
@@ -124,36 +109,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v5ecv"]
-particles_animation = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 25
-particles_anim_loop = false
-
-[sub_resource type="Curve" id="Curve_fyy28"]
-min_value = -1.0
-_data = [Vector2(0, -1), 0.0, 0.0, 0, 0]
-point_count = 1
-
-[sub_resource type="Curve" id="Curve_scyht"]
-min_value = -1.0
-_data = [Vector2(0, -1), 0.0, 0.0, 0, 0]
-point_count = 1
-
-[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_aalo4"]
-curve_x = SubResource("Curve_fyy28")
-curve_y = SubResource("Curve_scyht")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ler8m"]
-particle_flag_disable_z = true
-directional_velocity_min = 40.0
-directional_velocity_max = 40.0
-directional_velocity_curve = SubResource("CurveXYZTexture_aalo4")
-orbit_velocity_max = 0.04
-gravity = Vector3(0, 0, 0)
-anim_speed_min = 1.0
-anim_speed_max = 1.0
-
 [node name="EndingPart4" type="Node2D"]
 script = ExtResource("1_iohfk")
 
@@ -229,7 +184,7 @@ script = ExtResource("1_d85am")
 medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
-material = SubResource("ShaderMaterial_4moe7")
+material = ExtResource("5_l0h46")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -295,28 +250,28 @@ sprite_frames = SubResource("SpriteFrames_d40dx")
 autoplay = "default"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_v5ecv")
+material = ExtResource("17_68myc")
 position = Vector2(0, 256)
 amount = 12
-process_material = SubResource("ParticleProcessMaterial_ler8m")
+process_material = ExtResource("17_ejlxa")
 texture = ExtResource("12_i87e8")
 lifetime = 1.8
 fixed_fps = 60
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_v5ecv")
+material = ExtResource("17_68myc")
 position = Vector2(-288, 352)
 amount = 12
-process_material = SubResource("ParticleProcessMaterial_ler8m")
+process_material = ExtResource("17_ejlxa")
 texture = ExtResource("12_i87e8")
 lifetime = 1.8
 fixed_fps = 60
 
 [node name="GPUParticles2D3" type="GPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_v5ecv")
+material = ExtResource("17_68myc")
 position = Vector2(-613, 384)
 amount = 12
-process_material = SubResource("ParticleProcessMaterial_ler8m")
+process_material = ExtResource("17_ejlxa")
 texture = ExtResource("12_i87e8")
 lifetime = 1.8
 fixed_fps = 60

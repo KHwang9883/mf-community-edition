@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://7y7mgdlcfwlj"]
+[gd_scene load_steps=29 format=3 uid="uid://7y7mgdlcfwlj"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_6uxxv"]
 [ext_resource type="Script" path="res://stages/world_3/scripts/end_cutscene.gd" id="2_2xkkk"]
@@ -8,11 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://dcc24xfje7sld" path="res://tilesets/starland/gfx/starland_hill.png" id="8_6hqsd"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_ldrsc"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_fgu8i"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="10_futlc"]
 [ext_resource type="Texture2D" uid="uid://5p36u73djuoh" path="res://gfx/backgrounds/starland.png" id="10_wuivo"]
+[ext_resource type="Material" uid="uid://catvtcld2ik45" path="res://materials/fog3-1.tres" id="11_bh34o"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_dvlkd"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_rqjvk"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_8jwgi"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="14_xdcd8"]
 [ext_resource type="Script" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="14_xep76"]
 
 [sub_resource type="Gradient" id="Gradient_hwlet"]
@@ -42,33 +43,6 @@ colors = PackedColorArray(0.116, 0, 0.24, 1, 0, 0.184314, 0.458824, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_kqyyq"]
 gradient = SubResource("Gradient_ig6vp")
 width = 640
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_brn6b"]
-noise_type = 3
-seed = 4
-frequency = 0.004
-offset = Vector3(0, -347.84, 0)
-fractal_octaves = 3
-fractal_weighted_strength = 1.0
-domain_warp_frequency = 35.04
-domain_warp_fractal_gain = -2.38
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nia6d"]
-width = 800
-height = 510
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_brn6b")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q25xn"]
-shader = ExtResource("10_futlc")
-shader_parameter/density = 1.0
-shader_parameter/speed = Vector2(0.02, 0)
-shader_parameter/freq = 0.96
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_nia6d")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xe3cr"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_kgk31"]
 offsets = PackedFloat32Array(0.1, 0.5, 1)
@@ -121,9 +95,6 @@ frame_1/texture = SubResource("GradientTexture2D_mbq22")
 frame_1/duration = 0.05
 frame_2/texture = SubResource("GradientTexture2D_tnbvb")
 frame_2/duration = 0.05
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3krl6"]
-blend_mode = 1
 
 [node name="CaveCutscene" type="Node2D"]
 script = ExtResource("1_6uxxv")
@@ -234,7 +205,7 @@ medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
 modulate = Color(1, 1, 1, 0.666667)
-material = SubResource("ShaderMaterial_q25xn")
+material = ExtResource("11_bh34o")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -262,13 +233,13 @@ medium = true
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_xe3cr")
+material = ExtResource("14_xdcd8")
 position = Vector2(624, 368)
 texture = SubResource("AnimatedTexture_qbywt")
 
 [node name="AnimatedSprite2D2" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_3krl6")
+material = ExtResource("14_xdcd8")
 position = Vector2(368, 416)
 texture = SubResource("AnimatedTexture_qbywt")
 

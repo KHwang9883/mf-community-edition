@@ -1,7 +1,8 @@
-[gd_scene load_steps=45 format=3 uid="uid://bhmbv3jpgywgx"]
+[gd_scene load_steps=43 format=3 uid="uid://bhmbv3jpgywgx"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_bgghj"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_6owex"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_yxicm"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_snkgg"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://stages/mario_forever_flash/music/smb1_course_clear.ogg" id="4_7mea6"]
 [ext_resource type="AudioStream" uid="uid://cyrq625tllkaw" path="res://music/smb-underground.ogg" id="5_ybulp"]
@@ -14,7 +15,7 @@
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="12_43ep3"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="13_kuruo"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://gfx/backgrounds/underground.png" id="14_akr5e"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="15_85kd2"]
+[ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="16_5nu4i"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="16_06qlu"]
 [ext_resource type="Texture2D" uid="uid://bobuc77r6at1w" path="res://stages/mario_forever_flash/world_1/MFF 1-2.PNG" id="20_llful"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="24_dq1hs"]
@@ -52,23 +53,6 @@ colors = PackedColorArray(0.0646965, 0.0646965, 0.0646965, 1, 0, 0, 0.25098, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_83ypb"]
 gradient = SubResource("Gradient_bribe")
 width = 480
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ua01n"]
-frequency = 0.004
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2awxr"]
-width = 800
-height = 600
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_ua01n")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ifp5"]
-shader = ExtResource("15_85kd2")
-shader_parameter/density = 0.65
-shader_parameter/speed = Vector2(0.02, 0.01)
-shader_parameter/freq = 1.0
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_2awxr")
 
 [sub_resource type="Gradient" id="Gradient_c0yv7"]
 colors = PackedColorArray(0.476577, 0.476579, 0.476578, 1, 1, 1, 1, 0)
@@ -123,6 +107,7 @@ custom_vars = {}
 
 [node name="LevelF1-2" type="Node2D"]
 script = ExtResource("1_bgghj")
+completion_music = ExtResource("2_yxicm")
 jump_to_scene = "res://stages/world_3/map_3.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_6owex")]
@@ -262,7 +247,7 @@ script = ExtResource("13_kuruo")
 medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer3"]
-material = SubResource("ShaderMaterial_8ifp5")
+material = ExtResource("16_5nu4i")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -388,14 +373,14 @@ z_index = -13
 position = Vector2(4688, 1364)
 
 [connection signal="collided_wall" from="TileMap/Goomba" to="TileMap/Goomba" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27535" to="TileMap/@CharacterBody2D@27535" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27536" to="TileMap/@CharacterBody2D@27536" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27537" to="TileMap/@CharacterBody2D@27537" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27538" to="TileMap/@CharacterBody2D@27538" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27539" to="TileMap/@CharacterBody2D@27539" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27540" to="TileMap/@CharacterBody2D@27540" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27541" to="TileMap/@CharacterBody2D@27541" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27542" to="TileMap/@CharacterBody2D@27542" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266800" to="TileMap/@CharacterBody2D@266800" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266801" to="TileMap/@CharacterBody2D@266801" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266802" to="TileMap/@CharacterBody2D@266802" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266803" to="TileMap/@CharacterBody2D@266803" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266804" to="TileMap/@CharacterBody2D@266804" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266805" to="TileMap/@CharacterBody2D@266805" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266806" to="TileMap/@CharacterBody2D@266806" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266807" to="TileMap/@CharacterBody2D@266807" method="turn_x"]
 [connection signal="collided_wall" from="TileMap/KoopaGreen" to="TileMap/KoopaGreen" method="turn_x"]
 [connection signal="collided_wall" from="TileMap/KoopaRed" to="TileMap/KoopaRed" method="turn_x"]
-[connection signal="collided_wall" from="TileMap/@CharacterBody2D@27543" to="TileMap/@CharacterBody2D@27543" method="turn_x"]
+[connection signal="collided_wall" from="TileMap/@CharacterBody2D@266808" to="TileMap/@CharacterBody2D@266808" method="turn_x"]

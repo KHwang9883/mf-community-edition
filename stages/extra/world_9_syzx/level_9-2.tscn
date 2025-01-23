@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=4 uid="uid://dvwe7p41ph1mc"]
+[gd_scene load_steps=109 format=4 uid="uid://dvwe7p41ph1mc"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_0rqt2"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_2n0x5"]
@@ -24,12 +24,13 @@
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="19_68b2x"]
 [ext_resource type="Texture2D" uid="uid://5p36u73djuoh" path="res://gfx/backgrounds/starland.png" id="19_cepsk"]
 [ext_resource type="Texture2D" uid="uid://bh1pnvt3386ec" path="res://stages/extra/world_9_syzx/gfx/9-2_bg.png" id="19_dh0ii"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="20_qr53s"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="21_n62u0"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="22_cqlax"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="22_hdjpj"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="23_llk1n"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="24_qmeek"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="25_kexm0"]
+[ext_resource type="Material" uid="uid://catvtcld2ik45" path="res://materials/fog3-1.tres" id="26_e4626"]
 [ext_resource type="Texture2D" uid="uid://cacq4bhiloiho" path="res://gfx/starland_tree_minimum_light.png" id="26_xxv0v"]
 [ext_resource type="PackedScene" uid="uid://dbpihjuw0gc01" path="res://engine/objects/bumping_blocks/question_block/templates/Beetroot Question Block.tscn" id="28_bvdby"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="29_151fa"]
@@ -293,9 +294,6 @@ width = 640
 height = 508
 fill_to = Vector2(0, 1)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cndbu"]
-blend_mode = 1
-
 [sub_resource type="Gradient" id="Gradient_yunwy"]
 interpolation_mode = 2
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.564706)
@@ -312,33 +310,6 @@ colors = PackedColorArray(0, 0, 0.701961, 0.607843)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_h0ej4"]
 gradient = SubResource("Gradient_2tse4")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_px74u"]
-noise_type = 3
-seed = 4
-frequency = 0.004
-offset = Vector3(0, -347.84, 0)
-fractal_octaves = 3
-fractal_weighted_strength = 1.0
-domain_warp_frequency = 35.04
-domain_warp_fractal_gain = -2.38
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nodyw"]
-width = 800
-height = 510
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_px74u")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u5kfe"]
-shader = ExtResource("20_qr53s")
-shader_parameter/density = 1.0
-shader_parameter/speed = Vector2(0.02, 0)
-shader_parameter/freq = 0.96
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_nodyw")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rqcqr"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_32pip"]
 offsets = PackedFloat32Array(0.1, 0.5, 1)
@@ -828,7 +799,7 @@ medium = true
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
-material = SubResource("CanvasItemMaterial_cndbu")
+material = ExtResource("22_hdjpj")
 position = Vector2(0, 256)
 texture = SubResource("GradientTexture2D_ql5cv")
 centered = false
@@ -907,7 +878,7 @@ medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground2/ParallaxLayer4"]
 modulate = Color(1, 1, 1, 0.8)
-material = SubResource("ShaderMaterial_u5kfe")
+material = ExtResource("26_e4626")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -1056,13 +1027,13 @@ medium = true
 
 [node name="AnimatedSprite2D2" type="Sprite2D" parent="Node2D"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_rqcqr")
+material = ExtResource("22_hdjpj")
 position = Vector2(2928, 368)
 texture = SubResource("AnimatedTexture_lhagu")
 
 [node name="AnimatedSprite2D3" type="Sprite2D" parent="Node2D"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_rqcqr")
+material = ExtResource("22_hdjpj")
 position = Vector2(7600, 368)
 texture = SubResource("AnimatedTexture_lhagu")
 

@@ -1,17 +1,19 @@
-[gd_scene load_steps=44 format=4 uid="uid://c64f6dimfqxkc"]
+[gd_scene load_steps=42 format=4 uid="uid://c64f6dimfqxkc"]
 
 [ext_resource type="PackedScene" uid="uid://qfxyyb211vse" path="res://stages/extra/toad_house/maps/toad_house_1.tscn" id="1_1fwps"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_7cldn"]
 [ext_resource type="TileSet" uid="uid://u38rgbe7os0u" path="res://tilesets/starland/starland.tres" id="2_gbnwh"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="3_qbbh0"]
 [ext_resource type="Texture2D" uid="uid://dcc24xfje7sld" path="res://tilesets/starland/gfx/starland_hill.png" id="4_apav3"]
+[ext_resource type="Material" uid="uid://catvtcld2ik45" path="res://materials/fog3-1.tres" id="8_34u1e"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="8_mr617"]
 [ext_resource type="Texture2D" uid="uid://5p36u73djuoh" path="res://gfx/backgrounds/starland.png" id="9_urcq2"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="10_niou1"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_7l20p"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="12_lnqbf"]
 [ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="13_2npt4"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="14_ufwu3"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="15_2ojyv"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="16_f5m4w"]
 [ext_resource type="Script" path="res://stages/extra/toad_house/objects/roulette_block/powerup_extension.gd" id="16_wl2nb"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="17_2vs5k"]
 [ext_resource type="Texture2D" uid="uid://cnw7t13m2bojq" path="res://tilesets/underground/gfx/underground_lamp.png" id="18_485rh"]
@@ -45,30 +47,6 @@ colors = PackedColorArray(0.309804, 0.25098, 0.482353, 1, 0.631373, 0.466667, 0.
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_vup1p"]
 gradient = SubResource("Gradient_3ws18")
 width = 480
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_4n2be"]
-noise_type = 3
-seed = 4
-frequency = 0.004
-offset = Vector3(0, -347.84, 0)
-fractal_octaves = 3
-fractal_weighted_strength = 1.0
-domain_warp_frequency = 35.04
-domain_warp_fractal_gain = -2.38
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n8sh4"]
-width = 800
-height = 510
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_4n2be")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_22kpu"]
-shader = ExtResource("10_niou1")
-shader_parameter/density = 1.0
-shader_parameter/speed = Vector2(0.02, 0)
-shader_parameter/freq = 0.96
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_n8sh4")
 
 [sub_resource type="Resource" id="Resource_0bol0"]
 resource_local_to_scene = true
@@ -141,9 +119,6 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 custom_script = ExtResource("16_wl2nb")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yshu8"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_riyfo"]
 offsets = PackedFloat32Array(0.1, 0.5, 1)
@@ -224,6 +199,7 @@ fill_to = Vector2(1, 0.125)
 metadata/_snap_enabled = true
 
 [node name="ToadHouse2" instance=ExtResource("1_1fwps")]
+completion_music = ExtResource("2_7cldn")
 
 [node name="TileMapLayer" parent="." index="4"]
 tile_map_data = PackedByteArray("AAACAA0AAAABAAAAAAAUAA0ABAAAAAAAAQARAA8AAAACAAIAAAARAA4AAAACAAEAAAARAA0AAAACAAAAAAAQAA8AAAABAAIAAAAQAA4AAAABAAEAAAAQAA0AAAABAAAAAAAPAA8AAAABAAIAAAAPAA4AAAABAAEAAAAPAA0AAAABAAAAAAAOAA8AAAABAAIAAAAOAA4AAAABAAEAAAAOAA0AAAABAAAAAAANAA8AAAABAAIAAAANAA4AAAABAAEAAAANAA0AAAABAAAAAAAMAA8AAAABAAIAAAAMAA4AAAABAAEAAAAMAA0AAAABAAAAAAALAA8AAAABAAIAAAALAA4AAAABAAEAAAALAA0AAAABAAAAAAAKAA8AAAABAAIAAAAKAA4AAAABAAEAAAAKAA0AAAABAAAAAAAJAA8AAAABAAIAAAAJAA4AAAABAAEAAAAJAA0AAAABAAAAAAAIAA8AAAABAAIAAAAIAA4AAAABAAEAAAAIAA0AAAABAAAAAAAHAA8AAAABAAIAAAAHAA4AAAABAAEAAAAHAA0AAAABAAAAAAAGAA8AAAABAAIAAAAGAA4AAAABAAEAAAAGAA0AAAABAAAAAAAFAA8AAAABAAIAAAAFAA4AAAABAAEAAAAFAA0AAAABAAAAAAAEAA8AAAABAAIAAAAEAA4AAAABAAEAAAAEAA0AAAABAAAAAAADAA8AAAABAAIAAAADAA4AAAABAAEAAAADAA0AAAABAAAAAAACAA8AAAABAAIAAAACAA4AAAABAAEAAAABAA8AAAABAAIAAAABAA4AAAABAAEAAAABAA0AAwADAAAAAAAAAA8AAAABAAIAAAAAAA4AAAABAAEAAAAAAA0AAAABAAAAAAD//w8AAAAAAAIAAAD//w4AAAAAAAEAAAD//w0AAAAAAAAAAAASAA0AAQAAAAAAAAATAA0AAQAAAAAAAAABAAwAAwAAAAEAAAARAAsAAwADAAEAAAA=")
@@ -370,7 +346,7 @@ medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4" index="0"]
 modulate = Color(1, 1, 1, 0.666667)
-material = SubResource("ShaderMaterial_22kpu")
+material = ExtResource("8_34u1e")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -425,7 +401,7 @@ medium = true
 
 [node name="AnimatedSprite2D8" type="Sprite2D" parent="Node2D" index="0"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_yshu8")
+material = ExtResource("16_f5m4w")
 position = Vector2(48, 400)
 texture = SubResource("AnimatedTexture_sh300")
 

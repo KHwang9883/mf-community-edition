@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bkmrru22ynu0t"]
+[gd_scene load_steps=45 format=3 uid="uid://bkmrru22ynu0t"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_7weo5"]
 [ext_resource type="AudioStream" uid="uid://ylpjis71vd26" path="res://music/extra/smw-bonus-clear.ogg" id="2_83swy"]
@@ -15,8 +15,8 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="13_ker25"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="13_mofrr"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="16_ht2mc"]
-[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="17_6mmy4"]
 [ext_resource type="Texture2D" uid="uid://c4m5sukol1d28" path="res://gfx/backgrounds/UWcoral.png" id="18_1rtxq"]
+[ext_resource type="Material" uid="uid://ctvm6eweeo2si" path="res://materials/underwater_bg_wave.tres" id="18_yedrf"]
 [ext_resource type="Script" path="res://shaders/quality_shader_set.gd" id="19_he6wb"]
 [ext_resource type="Texture2D" uid="uid://d0v12838slwnk" path="res://gfx/backgrounds/UWcoral2.png" id="20_cfsmh"]
 [ext_resource type="Texture2D" uid="uid://c2uhsw3sxuals" path="res://tilesets/underwater/gfx/underwater_green_block.png" id="21_0x7co"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="21_hcrai"]
 [ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="22_qlf03"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="23_fkx3h"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="23_h7q2n"]
 [ext_resource type="PackedScene" uid="uid://cdfqlkg8w5yc8" path="res://engine/objects/enemies/electric_coral/electric_coral.tscn" id="24_4trd8"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="25_sea3u"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="26_dncai"]
@@ -62,16 +63,6 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 112
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_2mu6l")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dl7b"]
-shader = ExtResource("17_6mmy4")
-shader_parameter/wave_amplitude = 0.004
-shader_parameter/wave_frequency = 16.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = false
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qo1ou"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_a4oab"]
 offsets = PackedFloat32Array(0, 0.5)
@@ -265,7 +256,7 @@ metadata/_edit_lock_ = true
 
 [node name="UWcoral" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.215686)
-material = SubResource("ShaderMaterial_8dl7b")
+material = ExtResource("18_yedrf")
 position = Vector2(2624, 1024)
 texture = ExtResource("18_1rtxq")
 centered = false
@@ -278,7 +269,7 @@ metadata/_edit_lock_ = true
 [node name="UWcoral2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.435294)
 texture_repeat = 2
-material = SubResource("ShaderMaterial_8dl7b")
+material = ExtResource("18_yedrf")
 position = Vector2(0, 1120)
 texture = ExtResource("20_cfsmh")
 centered = false
@@ -291,7 +282,7 @@ metadata/_edit_lock_ = true
 [node name="UWrocks2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.607843)
 texture_repeat = 2
-material = SubResource("ShaderMaterial_8dl7b")
+material = ExtResource("18_yedrf")
 position = Vector2(-323, 1164)
 texture = ExtResource("21_dj7ld")
 centered = false
@@ -303,7 +294,7 @@ metadata/_edit_lock_ = true
 
 [node name="UWrocks" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 texture_repeat = 2
-material = SubResource("ShaderMaterial_8dl7b")
+material = ExtResource("18_yedrf")
 position = Vector2(0, 1189)
 texture = ExtResource("21_dj7ld")
 centered = false
@@ -322,7 +313,7 @@ metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
 visible = false
-material = SubResource("CanvasItemMaterial_qo1ou")
+material = ExtResource("23_h7q2n")
 position = Vector2(639.998, 720.363)
 rotation = 1.5708
 scale = Vector2(3.61949, 640)
@@ -331,7 +322,7 @@ script = ExtResource("13_ker25")
 
 [node name="Sprite2D5" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
 visible = false
-material = SubResource("CanvasItemMaterial_qo1ou")
+material = ExtResource("23_h7q2n")
 position = Vector2(639.998, 719)
 rotation = 1.5708
 scale = Vector2(3.615, 640)

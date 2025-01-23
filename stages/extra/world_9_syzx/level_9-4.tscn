@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://bbvem6ftvskch"]
+[gd_scene load_steps=58 format=4 uid="uid://bbvem6ftvskch"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_spmyb"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i03uk"]
@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://cfdgwxnth6m3d" path="res://tilesets/tanks/scenes/dark_cloud.tscn" id="13_8i2d4"]
 [ext_resource type="Script" path="res://engine/objects/enemies/spikes/spike.gd" id="14_pkf07"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="14_w4ar6"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="15_6ndsv"]
 [ext_resource type="Texture2D" uid="uid://b8idq72xw2p21" path="res://stages/extra/hardcore_2/objects/spike_hard_block_gray.png" id="15_kq7rv"]
 [ext_resource type="PackedScene" uid="uid://cjroicsm5yiy6" path="res://engine/objects/enemies/spikeball_launcher/spikeball_launcher.tscn" id="16_plq58"]
 [ext_resource type="Script" path="res://stages/extra/world_9_syzx/advanced_edition_node.gd" id="17_kxh1q"]
@@ -41,6 +40,7 @@
 [ext_resource type="PackedScene" uid="uid://s1e7n1cfnhy8" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher.tscn" id="31_hpw1c"]
 [ext_resource type="Texture2D" uid="uid://cinosbf4fs2wr" path="res://gfx/misc/launcher-middle-rounded.png" id="32_tm1r7"]
 [ext_resource type="Texture2D" uid="uid://c71p4qophl50v" path="res://gfx/misc/launcher-base-rounded.png" id="33_6thoe"]
+[ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="33_feobv"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="35_onri6"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="36_wlnxm"]
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="37_u376h"]
@@ -63,23 +63,6 @@ colors = PackedColorArray(0.0313726, 0, 0, 1, 0.156863, 0.156863, 0.156863, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_6p4b0"]
 gradient = SubResource("Gradient_f8ifp")
 fill_to = Vector2(0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_20bdd"]
-frequency = 0.004
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qrnc7"]
-width = 800
-height = 600
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_20bdd")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xtgw1"]
-shader = ExtResource("15_6ndsv")
-shader_parameter/density = 0.65
-shader_parameter/speed = Vector2(0.02, 0.01)
-shader_parameter/freq = 1.0
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_qrnc7")
 
 [sub_resource type="Resource" id="Resource_3iikn"]
 resource_local_to_scene = true
@@ -424,7 +407,7 @@ region_rect = Rect2(0, 0, 640, 64)
 layer = 10
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_xtgw1")
+material = ExtResource("33_feobv")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
