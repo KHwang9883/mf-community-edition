@@ -3,12 +3,15 @@ extends Control
 const SHADER_CACHER = preload("res://stages/intro/shader_cacher.tscn")
 
 @onready var disclaimer: TextureRect = $CenterContainer/TextureRect
-@onready var icon: Sprite2D = $Icon
+@onready var icon: TextureRect = $CenterContainer/Icon
+@onready var text: Label = $Text
+
 var loading_finished: bool = false
 var loading_init: bool = false
 
 func _ready() -> void:
 	SettingsManager.enable_shortcut_scene_change_keys = false
+	print("[Startup] Preparing to compile shaders...")
 	await get_tree().create_timer(0.6, false, true, false).timeout
 	print("[Startup] Compiling shaders...")
 	var cacher = SHADER_CACHER.instantiate()
@@ -26,6 +29,7 @@ func _physics_process(delta: float) -> void:
 
 
 func display_disclaimer() -> void:
+	text.queue_free()
 	icon.queue_free()
 	var tw = disclaimer.create_tween()
 	tw.tween_property(disclaimer, "modulate:a", 1.0, 0.6)
