@@ -1,6 +1,7 @@
-[gd_scene load_steps=65 format=3 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=63 format=3 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_hci3h"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ct0he"]
 [ext_resource type="AudioStream" uid="uid://c6dc6y4bvfej4" path="res://music/smas-underwater.mp3" id="3_nfpdo"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_u2ge6"]
@@ -14,17 +15,20 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_m8i25"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_xgwno"]
 [ext_resource type="Script" path="res://engine/objects/enemies/cheeps/cheep_generator.gd" id="12_tsa8f"]
-[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="13_7nqqo"]
 [ext_resource type="Texture2D" uid="uid://c4m5sukol1d28" path="res://gfx/backgrounds/UWcoral.png" id="14_w6oot"]
 [ext_resource type="Texture2D" uid="uid://d0v12838slwnk" path="res://gfx/backgrounds/UWcoral2.png" id="15_s8evc"]
 [ext_resource type="Texture2D" uid="uid://cat3i3pljsllh" path="res://gfx/backgrounds/UWrocks.png" id="16_b15gp"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="16_oaham"]
+[ext_resource type="Material" uid="uid://ctvm6eweeo2si" path="res://materials/underwater_bg_wave.tres" id="18_a7vr5"]
 [ext_resource type="Script" path="res://shaders/quality_shader_set.gd" id="20_t1jbt"]
-[ext_resource type="Shader" path="res://engine/shaders/animated_texture.gdshader" id="22_b3ftu"]
-[ext_resource type="Texture2D" uid="uid://bi5kq6ccklanm" path="res://engine/objects/fluid/textures/water_smooth.png" id="23_dnxxq"]
+[ext_resource type="Material" uid="uid://crtvyydxdkshm" path="res://engine/objects/fluid/textures/water_material.tres" id="23_txtng"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="24_tflvp"]
+[ext_resource type="Material" uid="uid://ddji86t8p2a06" path="res://objects/generic_water/generic_water_custom1.tres" id="25_161xo"]
 [ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="25_flqmw"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="26_2f7s0"]
+[ext_resource type="Material" uid="uid://b6cuxjo68mhke" path="res://objects/generic_water/generic_water_custom2.tres" id="26_vxnmm"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="27_cybmm"]
+[ext_resource type="Material" uid="uid://cvu24wmut1v3x" path="res://objects/generic_water/generic_water_custom3.tres" id="27_q01qg"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="28_s6ll5"]
 [ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="29_1xufo"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="29_jo7ww"]
@@ -79,22 +83,6 @@ colors = PackedColorArray(0.439216, 0.580392, 0.878431, 1)
 gradient = SubResource("Gradient_2abnp")
 width = 80
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ybuq1"]
-shader = ExtResource("13_7nqqo")
-shader_parameter/wave_amplitude = 0.004
-shader_parameter/wave_frequency = 16.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a78gj"]
-shader = ExtResource("22_b3ftu")
-shader_parameter/frame_size = Vector2(1, 8)
-shader_parameter/frame_count = 8
-shader_parameter/frames_per_row = 1
-shader_parameter/time_scale = 6.0
-shader_parameter/frame_offset = 0
-shader_parameter/sprite_sheet = ExtResource("23_dnxxq")
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_60fr4"]
 noise_type = 5
 fractal_type = 0
@@ -103,9 +91,6 @@ fractal_type = 0
 width = 64
 height = 16
 noise = SubResource("FastNoiseLite_60fr4")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t6u6i"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_l8daq"]
 offsets = PackedFloat32Array(0, 0.5)
@@ -134,27 +119,6 @@ gradient = SubResource("Gradient_nyxro")
 height = 16
 fill_to = Vector2(0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8utpf"]
-shader = ExtResource("13_7nqqo")
-shader_parameter/wave_amplitude = 0.125
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 2.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmnup"]
-shader = ExtResource("13_7nqqo")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ce8a"]
-shader = ExtResource("13_7nqqo")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 5.0
-shader_parameter/y_axis = true
-
 [sub_resource type="Resource" id="Resource_pup4p"]
 resource_local_to_scene = true
 script = ExtResource("29_jo7ww")
@@ -172,6 +136,7 @@ custom_vars = {}
 
 [node name="Level7-2" type="Node2D"]
 script = ExtResource("1_f3t4r")
+completion_music = ExtResource("2_hci3h")
 jump_to_scene = "res://stages/world_7/map_7.tscn"
 
 [node name="MusicLoader" type="Node" parent="."]
@@ -281,7 +246,7 @@ medium = true
 
 [node name="UWcoral" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.215686)
-material = SubResource("ShaderMaterial_ybuq1")
+material = ExtResource("18_a7vr5")
 position = Vector2(2624, 128)
 texture = ExtResource("14_w6oot")
 centered = false
@@ -293,7 +258,7 @@ medium = true
 [node name="UWcoral2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.435294)
 texture_repeat = 2
-material = SubResource("ShaderMaterial_ybuq1")
+material = ExtResource("18_a7vr5")
 position = Vector2(0, 224)
 texture = ExtResource("15_s8evc")
 centered = false
@@ -306,7 +271,7 @@ metadata/_edit_lock_ = true
 [node name="UWrocks2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.607843)
 texture_repeat = 2
-material = SubResource("ShaderMaterial_ybuq1")
+material = ExtResource("18_a7vr5")
 position = Vector2(-323, 268)
 texture = ExtResource("16_b15gp")
 centered = false
@@ -317,7 +282,7 @@ medium = true
 
 [node name="UWrocks" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 texture_repeat = 2
-material = SubResource("ShaderMaterial_ybuq1")
+material = ExtResource("18_a7vr5")
 position = Vector2(0, 293)
 texture = ExtResource("16_b15gp")
 centered = false
@@ -338,7 +303,7 @@ metadata/_edit_lock_ = true
 [node name="MediumQualityWater" type="TextureRect" parent="ParallaxBackground2/ParallaxLayer"]
 visible = false
 z_index = 31
-material = SubResource("ShaderMaterial_a78gj")
+material = ExtResource("23_txtng")
 offset_top = 96.0
 offset_right = 640.0
 offset_bottom = 112.0
@@ -350,7 +315,7 @@ maximum = false
 medium = true
 
 [node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-material = SubResource("CanvasItemMaterial_t6u6i")
+material = ExtResource("24_tflvp")
 position = Vector2(320, 312)
 scale = Vector2(10, 1)
 texture = SubResource("GradientTexture2D_hgv7k")
@@ -359,7 +324,7 @@ medium = true
 
 [node name="Sprite2D7" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
 visible = false
-material = SubResource("CanvasItemMaterial_t6u6i")
+material = ExtResource("24_tflvp")
 position = Vector2(320, 322)
 scale = Vector2(10, 6.25)
 texture = SubResource("GradientTexture2D_hgv7k")
@@ -397,7 +362,7 @@ follow_viewport = false
 
 [node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
 modulate = Color(1, 1, 1, 0.407843)
-material = SubResource("ShaderMaterial_8utpf")
+material = ExtResource("25_161xo")
 position = Vector2(0, 81)
 texture = ExtResource("29_1xufo")
 centered = false
@@ -405,7 +370,7 @@ script = ExtResource("39_6jwl0")
 
 [node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
 modulate = Color(1, 1, 1, 0.807843)
-material = SubResource("ShaderMaterial_tmnup")
+material = ExtResource("26_vxnmm")
 position = Vector2(0, 88)
 texture = ExtResource("30_84sh6")
 centered = false
@@ -414,7 +379,7 @@ region_rect = Rect2(-24, 0, 640, 30)
 script = ExtResource("39_6jwl0")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/CanvasGroup/Parallax2D"]
-material = SubResource("ShaderMaterial_6ce8a")
+material = ExtResource("27_q01qg")
 position = Vector2(0, 92)
 texture = ExtResource("30_84sh6")
 centered = false

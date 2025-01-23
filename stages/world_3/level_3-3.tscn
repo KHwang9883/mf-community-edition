@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=4 uid="uid://bwr844qulxx0m"]
+[gd_scene load_steps=102 format=4 uid="uid://bwr844qulxx0m"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_5j5oj"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_5b1ay"]
@@ -33,11 +33,11 @@
 [ext_resource type="Script" path="res://engine/objects/effects/starfall/starfall_generator.gd" id="22_nyws4"]
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="24_7t6eg"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="25_tsyyj"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="26_3240u"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="26_i8e3e"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="27_gar0m"]
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="27_kalye"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="27_yr7mr"]
+[ext_resource type="Material" uid="uid://catvtcld2ik45" path="res://materials/fog3-1.tres" id="28_pm85i"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="29_fg3xc"]
 [ext_resource type="PackedScene" uid="uid://cexk2yxt5uemn" path="res://engine/objects/bumping_blocks/question_block/templates/Star Question Block.tscn" id="29_it0ha"]
 [ext_resource type="PackedScene" uid="uid://12ak5pa7cf8u" path="res://engine/objects/powerups/super_star/super_star.tscn" id="30_xltns"]
@@ -48,6 +48,7 @@
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://gfx/misc/castle_big.png" id="34_q606i"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="37_sdksw"]
 [ext_resource type="PackedScene" uid="uid://chn6sxklw0ntb" path="res://components/secrets_manager/coin_checker.tscn" id="40_xd6ci"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="49_vv1sm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4lmp"]
 texture = ExtResource("8_euidw")
@@ -270,30 +271,6 @@ animations = [{
 "name": &"default",
 "speed": 25.0
 }]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_pka26"]
-noise_type = 3
-seed = 4
-frequency = 0.004
-offset = Vector3(0, -347.84, 0)
-fractal_octaves = 3
-fractal_weighted_strength = 1.0
-domain_warp_frequency = 35.04
-domain_warp_fractal_gain = -2.38
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_41kqr"]
-width = 800
-height = 510
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_pka26")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qt3wa"]
-shader = ExtResource("26_3240u")
-shader_parameter/density = 1.0
-shader_parameter/speed = Vector2(0.02, 0)
-shader_parameter/freq = 0.96
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_41kqr")
 
 [sub_resource type="Gradient" id="Gradient_4a3qe"]
 colors = PackedColorArray(0.476577, 0.476579, 0.476578, 1, 1, 1, 1, 0)
@@ -582,9 +559,6 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 8320, 400, 0, 0, 0, 0, 7808, 400)
 }
 point_count = 2
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_07k2i"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_kvylg"]
 offsets = PackedFloat32Array(0.1, 0.5, 1)
@@ -1158,7 +1132,7 @@ medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
 modulate = Color(1, 1, 1, 0.666667)
-material = SubResource("ShaderMaterial_qt3wa")
+material = ExtResource("28_pm85i")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -1510,77 +1484,77 @@ medium = true
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(144, 368)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D2" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(2640, 368)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D3" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(3472, 368)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D4" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(3920, 416)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D5" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(4176, 368)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D6" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(5648, 304)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D7" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(6224, 416)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D9" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(6992, 368)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D10" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(7664, 368)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D11" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(8624, 416)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D8" type="Sprite2D" parent="Node2D2"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_07k2i")
+material = ExtResource("49_vv1sm")
 position = Vector2(752, 416)
 texture = SubResource("AnimatedTexture_4sa1y")
 metadata/_edit_lock_ = true

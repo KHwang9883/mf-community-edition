@@ -1,24 +1,16 @@
-[gd_scene load_steps=27 format=3 uid="uid://cgw53vgjiurmx"]
+[gd_scene load_steps=24 format=3 uid="uid://cgw53vgjiurmx"]
 
 [ext_resource type="Script" path="res://objects/generic_water/generic_water_custom.gd" id="1_1y8sr"]
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="1_kdudl"]
-[ext_resource type="Shader" path="res://engine/shaders/animated_texture.gdshader" id="3_7f0if"]
-[ext_resource type="Texture2D" uid="uid://bi5kq6ccklanm" path="res://engine/objects/fluid/textures/water_smooth.png" id="4_s1qmx"]
+[ext_resource type="Material" uid="uid://crtvyydxdkshm" path="res://engine/objects/fluid/textures/water_material.tres" id="3_rq8vw"]
+[ext_resource type="Material" uid="uid://ddji86t8p2a06" path="res://objects/generic_water/generic_water_custom1.tres" id="6_rc3g5"]
+[ext_resource type="Material" uid="uid://b6cuxjo68mhke" path="res://objects/generic_water/generic_water_custom2.tres" id="8_yhs2t"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_ppk0r"]
+[ext_resource type="Material" uid="uid://cvu24wmut1v3x" path="res://objects/generic_water/generic_water_custom3.tres" id="10_qbdrx"]
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="11_ejdtg"]
-[ext_resource type="Shader" path="res://engine/shaders/waver.gdshader" id="12_swfn1"]
 [ext_resource type="Texture2D" uid="uid://cg4ubywbfy72o" path="res://gfx/fancy_graphics/water_surface.png" id="13_shwks"]
 [ext_resource type="Texture2D" uid="uid://bi04kluy5weby" path="res://gfx/fancy_graphics/water_surface_front.png" id="14_07gix"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="16_32evt"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a78gj"]
-shader = ExtResource("3_7f0if")
-shader_parameter/frame_size = Vector2(1, 8)
-shader_parameter/frame_count = 8
-shader_parameter/frames_per_row = 1
-shader_parameter/time_scale = 6.0
-shader_parameter/frame_offset = 0
-shader_parameter/sprite_sheet = ExtResource("4_s1qmx")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_60fr4"]
 noise_type = 5
@@ -31,27 +23,6 @@ noise = SubResource("FastNoiseLite_60fr4")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wwo5s"]
 size = Vector2(1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vxx2m"]
-shader = ExtResource("12_swfn1")
-shader_parameter/wave_amplitude = 0.125
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 2.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5vye"]
-shader = ExtResource("12_swfn1")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 3.0
-shader_parameter/y_axis = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g0jbc"]
-shader = ExtResource("12_swfn1")
-shader_parameter/wave_amplitude = 0.2
-shader_parameter/wave_frequency = 50.0
-shader_parameter/wave_speed = 5.0
-shader_parameter/y_axis = true
 
 [sub_resource type="Gradient" id="Gradient_otj1j"]
 offsets = PackedFloat32Array(0, 0.4375)
@@ -107,7 +78,7 @@ script = ExtResource("1_kdudl")
 [node name="TextureRect" type="TextureRect" parent="WaterMin"]
 visible = false
 z_index = 31
-material = SubResource("ShaderMaterial_a78gj")
+material = ExtResource("3_rq8vw")
 layout_mode = 2
 size_flags_vertical = 0
 texture = SubResource("NoiseTexture2D_0nsko")
@@ -146,7 +117,7 @@ repeat_size = Vector2(640, 0)
 
 [node name="MediumQualityWater" type="TextureRect" parent="WaterMed/Parallax2D"]
 z_index = 31
-material = SubResource("ShaderMaterial_a78gj")
+material = ExtResource("3_rq8vw")
 offset_right = 640.0
 offset_bottom = 16.0
 size_flags_vertical = 0
@@ -171,7 +142,7 @@ repeat_size = Vector2(640, 0)
 
 [node name="Sprite2D4" type="Sprite2D" parent="WaterMax/CanvasGroup/Parallax2D"]
 modulate = Color(1, 1, 1, 0.407843)
-material = SubResource("ShaderMaterial_vxx2m")
+material = ExtResource("6_rc3g5")
 position = Vector2(0, -15)
 texture = ExtResource("13_shwks")
 centered = false
@@ -180,7 +151,7 @@ region_rect = Rect2(0, 0, 640, 60)
 
 [node name="Sprite2D3" type="Sprite2D" parent="WaterMax/CanvasGroup/Parallax2D"]
 modulate = Color(1, 1, 1, 0.807843)
-material = SubResource("ShaderMaterial_q5vye")
+material = ExtResource("8_yhs2t")
 position = Vector2(0, -8)
 texture = ExtResource("14_07gix")
 centered = false
@@ -188,7 +159,7 @@ region_enabled = true
 region_rect = Rect2(-24, 0, 640, 30)
 
 [node name="Sprite2D2" type="Sprite2D" parent="WaterMax/CanvasGroup/Parallax2D"]
-material = SubResource("ShaderMaterial_g0jbc")
+material = ExtResource("10_qbdrx")
 position = Vector2(0, -4)
 texture = ExtResource("14_07gix")
 centered = false

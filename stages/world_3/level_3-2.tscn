@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=4 uid="uid://debc5q6nijthm"]
+[gd_scene load_steps=56 format=4 uid="uid://debc5q6nijthm"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_d4ljw"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_n6fty"]
@@ -12,11 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_7v2ci"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_8efpi"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_ejqfo"]
+[ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="14_htsl7"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://gfx/backgrounds/underground.png" id="15_2jq1x"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="17_lc15o"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="18_66com"]
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="19_7mljc"]
+[ext_resource type="Material" uid="uid://bfnyr7gfug8qw" path="res://materials/bubble_canvas_item.tres" id="19_ol4cm"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="20_8r3ym"]
+[ext_resource type="Material" uid="uid://bj3abhylmlcbb" path="res://materials/pipe_bubbles.tres" id="20_nt8wa"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="21_d1esh"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="23_c4o37"]
 [ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="24_1jjcf"]
@@ -51,23 +53,6 @@ colors = PackedColorArray(0.0646965, 0.0646965, 0.0646965, 1, 0, 0, 0.25098, 1)
 gradient = SubResource("Gradient_bribe")
 width = 480
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ua01n"]
-frequency = 0.004
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2awxr"]
-width = 800
-height = 600
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_ua01n")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ifp5"]
-shader = ExtResource("17_lc15o")
-shader_parameter/density = 0.65
-shader_parameter/speed = Vector2(0.02, 0.01)
-shader_parameter/freq = 1.0
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_2awxr")
-
 [sub_resource type="Gradient" id="Gradient_5x42y"]
 colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
 
@@ -77,25 +62,6 @@ width = 640
 height = 176
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fn47q"]
-particles_animation = true
-particles_anim_h_frames = 5
-particles_anim_v_frames = 1
-particles_anim_loop = true
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d778b"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(20, 0, 0)
-direction = Vector3(0, -1, 0)
-spread = 0.0
-initial_velocity_min = 50.0
-initial_velocity_max = 250.0
-gravity = Vector3(0, 0, 0)
-anim_speed_min = 25.0
-anim_speed_max = 25.0
-collision_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_c0yv7"]
 colors = PackedColorArray(0.476577, 0.476579, 0.476578, 1, 1, 1, 1, 0)
@@ -312,7 +278,7 @@ script = ExtResource("12_ejqfo")
 medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer3"]
-material = SubResource("ShaderMaterial_8ifp5")
+material = ExtResource("14_htsl7")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -591,9 +557,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 183)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
@@ -611,9 +577,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg7"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 183)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
@@ -631,9 +597,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg2"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 240)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
@@ -660,9 +626,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg4"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 183)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
@@ -680,9 +646,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg5"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 183)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
@@ -701,9 +667,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg6"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 183)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
@@ -722,9 +688,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg10"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 183)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0
@@ -743,9 +709,9 @@ region_rect = Rect2(0, 0, 64, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg11"]
 modulate = Color(1, 1, 1, 0.494118)
 z_index = -30
-material = SubResource("CanvasItemMaterial_fn47q")
+material = ExtResource("19_ol4cm")
 position = Vector2(0, 183)
-process_material = SubResource("ParticleProcessMaterial_d778b")
+process_material = ExtResource("20_nt8wa")
 texture = ExtResource("32_2osb1")
 lifetime = 10.0
 preprocess = 1.0

@@ -1,6 +1,7 @@
 [gd_scene load_steps=82 format=4 uid="uid://dvs3d2ernm7m6"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_18jpy"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_tlt33"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wcgs6"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_2xe1p"]
 [ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="4_ry3yr"]
@@ -10,13 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_l75l4"]
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="10_y26sj"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_og1l4"]
-[ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="12_jpbln"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="13_4vjhy"]
 [ext_resource type="Script" path="res://stages/world_8/scripts/lava_top_hud.gd" id="13_8tww7"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="13_k4b81"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="14_hji7w"]
 [ext_resource type="Texture2D" uid="uid://dmwfhcgla7av" path="res://gfx/backgrounds/BGCastleVertical.png" id="14_icaa1"]
 [ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="15_a3lhi"]
+[ext_resource type="Material" uid="uid://buxudaaft4i5o" path="res://materials/level_8-3.tres" id="15_m8ecg"]
 [ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="16_lc55d"]
 [ext_resource type="Texture2D" uid="uid://c0wwmb1p27s8h" path="res://stages/world_8/objects/rising_lava/rising_lava.png" id="16_mr5pq"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="17_17nil"]
@@ -42,12 +43,6 @@
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="41_y0osg"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="42_rtype"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="43_mobt2"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_02onp"]
-shader = ExtResource("12_jpbln")
-shader_parameter/hue = 0.0
-shader_parameter/saturation = 0.0
-shader_parameter/value = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x53we"]
 atlas = ExtResource("16_mr5pq")
@@ -321,6 +316,7 @@ size = Vector2(992, 9552)
 
 [node name="Level8-3" type="Node2D"]
 script = ExtResource("1_18jpy")
+completion_music = ExtResource("2_tlt33")
 jump_to_scene = "res://stages/world_8/map_8.tscn"
 
 [node name="Darkness" type="CanvasModulate" parent="."]
@@ -386,7 +382,7 @@ offset = Vector2(0, -16)
 script = ExtResource("13_8tww7")
 
 [node name="LavaHUD" type="AnimatedSprite2D" parent="HUD"]
-material = SubResource("ShaderMaterial_02onp")
+material = ExtResource("15_m8ecg")
 position = Vector2(28, 188)
 sprite_frames = SubResource("SpriteFrames_1ack5")
 autoplay = "default"

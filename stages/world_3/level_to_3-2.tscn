@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cag4dyqih2sey"]
+[gd_scene load_steps=44 format=3 uid="uid://cag4dyqih2sey"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_hjl81"]
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_yrnaq"]
@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="7_d5r3c"]
 [ext_resource type="Texture2D" uid="uid://1n3cepbaofmv" path="res://tilesets/starland/gfx/purple_pipe_entering_another.png" id="8_5gjsk"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="8_6h14m"]
-[ext_resource type="Shader" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="10_hhw67"]
+[ext_resource type="Material" uid="uid://catvtcld2ik45" path="res://materials/fog3-1.tres" id="10_iiv7f"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_jopky"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="12_fvjq6"]
 [ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="13_7tp3m"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://cap474aghtv3s" path="res://tilesets/starland/gfx/scenery_tiles.png" id="21_55rfq"]
 [ext_resource type="PackedScene" uid="uid://cex5bahi2ueay" path="res://tilesets/starland/scenes/starland_hill.tscn" id="22_ar66q"]
 [ext_resource type="PackedScene" uid="uid://b4cdjhog42c1i" path="res://tilesets/starland/scenes/starland_hill_alt.tscn" id="23_jo7y4"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="24_ypjl4"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -37,30 +38,6 @@ colors = PackedColorArray(0, 0, 0.74902, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_he7o3"]
 gradient = SubResource("Gradient_lyuwg")
 width = 9000
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_8347j"]
-noise_type = 3
-seed = 4
-frequency = 0.004
-offset = Vector3(0, -347.84, 0)
-fractal_octaves = 3
-fractal_weighted_strength = 1.0
-domain_warp_frequency = 35.04
-domain_warp_fractal_gain = -2.38
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rxmj8"]
-width = 800
-height = 510
-seamless = true
-seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_8347j")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0kqv"]
-shader = ExtResource("10_hhw67")
-shader_parameter/density = 1.0
-shader_parameter/speed = Vector2(0.02, 0)
-shader_parameter/freq = 0.96
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_rxmj8")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ikjwn"]
 texture = ExtResource("18_phij6")
@@ -213,9 +190,6 @@ fill_to = Vector2(0.857143, 0.142857)
 metadata/_snap_enabled = true
 metadata/_snap_count = 7
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qj5ns"]
-blend_mode = 1
-
 [sub_resource type="Gradient" id="Gradient_x51ka"]
 offsets = PackedFloat32Array(0.1, 0.5, 1)
 colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.74902, 0.984314, 0.545098, 0.984314, 0)
@@ -348,7 +322,7 @@ medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
 modulate = Color(1, 1, 1, 0.8)
-material = SubResource("ShaderMaterial_h0kqv")
+material = ExtResource("10_iiv7f")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0, 0, 0, 1)
@@ -433,6 +407,6 @@ texture = SubResource("GradientTexture2D_ydsvg")
 
 [node name="AnimatedSprite2D4" type="Sprite2D" parent="Stars/Node2D"]
 modulate = Color(1, 1, 1, 0.541176)
-material = SubResource("CanvasItemMaterial_qj5ns")
+material = ExtResource("24_ypjl4")
 position = Vector2(206, 414)
 texture = SubResource("AnimatedTexture_6mb6k")

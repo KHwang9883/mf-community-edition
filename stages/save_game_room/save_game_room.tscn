@@ -1,4 +1,4 @@
-[gd_scene load_steps=215 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=202 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/custom_progress_continue_screen.gd" id="10_82cq3"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="10_cgryk"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="10_g7r8l"]
-[ext_resource type="Shader" path="res://objects/chorniy_mario/grayscale.gdshader" id="10_ij62y"]
 [ext_resource type="Texture2D" uid="uid://dgvxy6qwwrxi7" path="res://gfx/fancy_graphics/saveroom_giant_sunray.png" id="10_j0xnu"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="11_lxbw5"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/easing_texture.gd" id="11_obqea"]
@@ -27,10 +26,12 @@
 [ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="13_w2ncv"]
 [ext_resource type="Texture2D" uid="uid://d0atmplnh2ssq" path="res://gfx/fancy_graphics/sceneria_drzowatne_outline.png" id="14_4tihk"]
 [ext_resource type="PackedScene" uid="uid://dyg18uvaedfxp" path="res://engine/objects/warps/pipe_save.tscn" id="14_lrr3l"]
+[ext_resource type="Material" uid="uid://c17r7oabypbcx" path="res://objects/chorniy_mario/grayscale.tres" id="14_tlg8n"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="15_6bwv2"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/saved_level_label.gd" id="15_pr6di"]
 [ext_resource type="Texture2D" uid="uid://c2xfexiy1rnqh" path="res://engine/tilesets/overworld/overworld_classic.png" id="16_2s87c"]
 [ext_resource type="Script" path="res://engine/components/cam_area/detection_area.gd" id="16_h7rg8"]
+[ext_resource type="Material" uid="uid://bkck6uoldtwwu" path="res://engine/objects/players/prefabs/materials/stars.tres" id="16_k1i2r"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="16_se7ro"]
 [ext_resource type="Texture2D" uid="uid://0u75c85478qe" path="res://gfx/fancy_graphics/rurex_outline.png" id="16_wg23m"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="17_20lrt"]
@@ -136,64 +137,14 @@
 [ext_resource type="Texture2D" uid="uid://khpwkkxbytkv" path="res://gfx/sign/arrow_up.png" id="113_3auel"]
 [ext_resource type="PackedScene" uid="uid://c7fxspkxvrfks" path="res://stages/save_game_room/objects/achievements_ce_p2.tscn" id="113_4fflf"]
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="115_nqbov"]
-[ext_resource type="Shader" path="res://objects/message_block/hsv.gdshader" id="121_78dp6"]
 [ext_resource type="Texture2D" uid="uid://bgvmhpdvcdrpp" path="res://gfx/sign/sign_minix_welcome.png" id="127_tmf5d"]
 [ext_resource type="Script" path="res://stages/save_game_room/scripts/label_secret_react.gd" id="129_hhyol"]
+[ext_resource type="Material" uid="uid://d1ugwoshsm3a6" path="res://materials/sgr_stars.tres" id="132_ho418"]
 [ext_resource type="Texture2D" uid="uid://dsxh7dvtbj4sa" path="res://gfx/sign/sign_reversed.png" id="132_uxqt2"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="135_b1hml"]
 [ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="136_g8fdh"]
-[ext_resource type="Shader" path="res://shaders/cull_mask.gdshader" id="139_xw4f4"]
+[ext_resource type="Shader" path="res://objects/message_block/hsv.gdshader" id="142_a6k2i"]
 [ext_resource type="PackedScene" uid="uid://ooj2vullj5a5" path="res://stages/save_game_room/objects/pipe_in_placeholder.tscn" id="143_yxggr"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_exaka"]
-shader = ExtResource("139_xw4f4")
-
-[sub_resource type="Gradient" id="Gradient_gqmd6"]
-offsets = PackedFloat32Array(0, 0.9)
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_dofeb"]
-gradient = SubResource("Gradient_gqmd6")
-width = 384
-height = 384
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.7, 0.5)
-metadata/_snap_enabled = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s8jwb"]
-shader = ExtResource("10_ij62y")
-shader_parameter/offset = -0.3
-
-[sub_resource type="Curve" id="Curve_iu6ih"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_sg0bf"]
-curve = SubResource("Curve_iu6ih")
-
-[sub_resource type="Curve" id="Curve_q63ak"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_edd8w"]
-curve = SubResource("Curve_q63ak")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bac4a"]
-lifetime_randomness = 0.3
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 24.0
-angle_min = -180.0
-angle_max = 180.0
-spread = 180.0
-initial_velocity_min = 25.0
-initial_velocity_max = 75.0
-gravity = Vector3(0, 0, 0)
-scale_min = 0.1
-scale_max = 0.3
-scale_curve = SubResource("CurveTexture_edd8w")
-alpha_curve = SubResource("CurveTexture_sg0bf")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ihry0"]
 load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
@@ -970,54 +921,22 @@ spacing_bottom = -2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vc5fc"]
 size = Vector2(64, 32)
 
-[sub_resource type="Curve" id="Curve_btxey"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_tqubx"]
-curve = SubResource("Curve_btxey")
-
-[sub_resource type="Curve" id="Curve_7lna3"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_ok6qt"]
-curve = SubResource("Curve_7lna3")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6suum"]
-lifetime_randomness = 0.3
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(0, 4, 0)
-emission_shape = 3
-emission_box_extents = Vector3(120, 1, 1)
-angle_min = -180.0
-angle_max = 180.0
-direction = Vector3(0, -1, 0)
-spread = 75.0
-initial_velocity_min = 25.0
-initial_velocity_max = 75.0
-gravity = Vector3(0, 0, 0)
-scale_min = 0.1
-scale_max = 0.3
-scale_curve = SubResource("CurveTexture_ok6qt")
-alpha_curve = SubResource("CurveTexture_tqubx")
-
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cjko6"]
 load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4vmn"]
 size = Vector2(32, 32)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r3xhu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p62qk"]
 resource_local_to_scene = true
-shader = ExtResource("121_78dp6")
+shader = ExtResource("142_a6k2i")
 shader_parameter/hue = 0.12
 shader_parameter/saturation = 0.0
 shader_parameter/value = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mu3nu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jmoju"]
 resource_local_to_scene = true
-shader = ExtResource("121_78dp6")
+shader = ExtResource("142_a6k2i")
 shader_parameter/hue = 0.12
 shader_parameter/saturation = 0.0
 shader_parameter/value = 0.0
@@ -1055,11 +974,6 @@ script = ExtResource("7_1qauj")
 [node name="Mario" parent="." instance=ExtResource("4_gl3qo")]
 position = Vector2(96, 176)
 
-[node name="Sprite2D" type="Sprite2D" parent="Mario"]
-clip_children = 2
-material = SubResource("ShaderMaterial_exaka")
-texture = SubResource("GradientTexture2D_dofeb")
-
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
 limit_top = -1000
@@ -1081,7 +995,7 @@ script = ExtResource("11_t2ent")
 
 [node name="CursedPreview" type="AnimatedSprite2D" parent="CanvasLayer2/ProgressContinue"]
 visible = false
-material = SubResource("ShaderMaterial_s8jwb")
+material = ExtResource("14_tlg8n")
 position = Vector2(272, 284)
 sprite_frames = ExtResource("11_lxbw5")
 animation = &"walk"
@@ -1092,7 +1006,7 @@ modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
 position = Vector2(0, 13)
 amount = 24
-process_material = SubResource("ParticleProcessMaterial_bac4a")
+process_material = ExtResource("16_k1i2r")
 texture = SubResource("CompressedTexture2D_ihry0")
 lifetime = 0.5
 
@@ -4394,7 +4308,7 @@ modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
 position = Vector2(320, 480)
 amount = 24
-process_material = SubResource("ParticleProcessMaterial_6suum")
+process_material = ExtResource("132_ho418")
 texture = SubResource("CompressedTexture2D_cjko6")
 lifetime = 0.5
 
@@ -4623,7 +4537,7 @@ extra content will keep growing with each game update, stay tuned!"
 font_size = 16
 
 [node name="AnimatedSprite2D" parent="MessageBlockPlaceholder/Sprites" index="1"]
-material = SubResource("ShaderMaterial_r3xhu")
+material = SubResource("ShaderMaterial_p62qk")
 
 [node name="Texture" parent="MessageBlockPlaceholder/CanvasLayer/Box" index="0"]
 offset_left = -160.0
@@ -4641,7 +4555,7 @@ try warping once again to proceed.
 font_size = 16
 
 [node name="AnimatedSprite2D" parent="MessageBlock2/Sprites" index="1"]
-material = SubResource("ShaderMaterial_mu3nu")
+material = SubResource("ShaderMaterial_jmoju")
 
 [node name="Texture" parent="MessageBlock2/CanvasLayer/Box" index="0"]
 offset_left = -210.0

@@ -1,10 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://b6r0c5ki0fat4"]
+[gd_scene load_steps=34 format=3 uid="uid://b6r0c5ki0fat4"]
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_2u162"]
-[ext_resource type="Resource" uid="uid://dq411m31x4mq3" path="res://music/map8.mod" id="3_5is33"]
+[ext_resource type="AudioStream" uid="uid://d3uvv7yymwfwi" path="res://music/map8.mod" id="3_5is33"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ngtoq"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="4_1w7g1"]
-[ext_resource type="Shader" path="res://engine/shaders/hsv_global.gdshader" id="4_h7feu"]
+[ext_resource type="Material" uid="uid://b0fr7piwjuxt2" path="res://materials/map_8_hsv.tres" id="4_6uxq0"]
 [ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="5_b8mn7"]
 [ext_resource type="Texture2D" uid="uid://b75120vukokyu" path="res://gfx/map/maps/map8.png" id="5_x71yg"]
 [ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="6_2m4ja"]
@@ -19,35 +19,20 @@
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="12_4dsjp"]
 [ext_resource type="Texture2D" uid="uid://b13ibm0nudhyk" path="res://gfx/fancy_graphics/world_texts/world_8.png" id="13_cvmbo"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/marker_space.gd" id="13_sb2n8"]
+[ext_resource type="Material" uid="uid://gpgw7y2fuiqu" path="res://materials/map_8_hsv2.tres" id="14_jeaup"]
 [ext_resource type="Texture2D" uid="uid://cyx06gn10n78x" path="res://engine/scenes/map/textures/debug.png" id="14_lmq15"]
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_b8pmt"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/player_icon.gd" id="16_3vx6r"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_y7nqp"]
 [ext_resource type="Texture2D" uid="uid://cm3ivuidbyon1" path="res://gfx/fancy_graphics/map_jump_to_start.png" id="17_rw1pu"]
-[ext_resource type="Shader" path="res://objects/chorniy_mario/grayscale.gdshader" id="19_1mhkg"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_b5kmq"]
 [ext_resource type="PackedScene" uid="uid://dgyfu1v14ewiu" path="res://gfx/fancy_graphics/quality_dots.tscn" id="20_8myw2"]
 [ext_resource type="Texture2D" uid="uid://o7g45tfg2ic8" path="res://gfx/fancy_graphics/Bowsert.png" id="21_8g361"]
+[ext_resource type="Material" uid="uid://dpwcqva66u2sf" path="res://materials/grayscale.tres" id="21_ryg14"]
 [ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/map_bowser.gd" id="22_d5vrl"]
 [ext_resource type="Texture2D" uid="uid://2i26237mu3av" path="res://gfx/fancy_graphics/skulsl_map8.png" id="28_33m86"]
 [ext_resource type="Texture2D" uid="uid://cyonp6akvmsvq" path="res://gfx/map/extra_decos/fishbone.png" id="30_1qldw"]
 [ext_resource type="Texture2D" uid="uid://c2y1yh8nhxnin" path="res://gfx/map/extra_decos/sharkbone.png" id="31_3s0c1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gppgm"]
-shader = ExtResource("4_h7feu")
-shader_parameter/hue = 0.0
-shader_parameter/saturation = -0.73
-shader_parameter/value = -0.18
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cbysh"]
-shader = ExtResource("4_h7feu")
-shader_parameter/hue = 0.0
-shader_parameter/saturation = -0.75
-shader_parameter/value = -0.1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m6cj0"]
-shader = ExtResource("19_1mhkg")
-shader_parameter/offset = 0.0
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_2u162")
@@ -61,7 +46,7 @@ start_from_sec = Array[float]([0.0, 43.8])
 
 [node name="Bg" type="Sprite2D" parent="."]
 z_index = -1
-material = SubResource("ShaderMaterial_gppgm")
+material = ExtResource("4_6uxq0")
 texture = ExtResource("4_1w7g1")
 centered = false
 region_enabled = true
@@ -130,7 +115,7 @@ position = Vector2(0, 146)
 
 [node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
 visible = false
-material = SubResource("ShaderMaterial_cbysh")
+material = ExtResource("14_jeaup")
 texture = ExtResource("8_dwdps")
 script = ExtResource("19_b5kmq")
 maximum = false
@@ -172,7 +157,7 @@ layer = 0
 script = ExtResource("19_b5kmq")
 
 [node name="GwiazdkowyMapowy" type="Sprite2D" parent="BG/Node2D"]
-material = SubResource("ShaderMaterial_m6cj0")
+material = ExtResource("21_ryg14")
 position = Vector2(320, 32)
 texture = ExtResource("11_2xn6r")
 script = ExtResource("12_4dsjp")
