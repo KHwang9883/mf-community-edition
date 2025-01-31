@@ -55,6 +55,7 @@ func _physics_process(_delta: float) -> void:
 		music_loader.index = 1
 		node_2d.visible = true
 		node_2d_2.visible = true
+		SecretsManager.set_secret("hint_guy_encountered", true, true, false)
 		#music_overlay.displaying_mode = music_overlay.DisplayingMode.TYPER
 		#music_overlay.play(1)
 	
