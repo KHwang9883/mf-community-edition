@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=55 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -34,6 +34,11 @@ atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f0vq5"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wm24y"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
@@ -173,6 +178,11 @@ atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s7o5r"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sffp6"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
@@ -628,11 +638,8 @@ theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 [node name="HBoxContainer2" type="HBoxContainer" parent="Gameplay"]
 layout_mode = 2
 script = ExtResource("3_pxu1a")
-tweak_name = "remade_levels"
-default_value = true
-tweak_description = "this tweak aims to improve the original buziol's level design in several extra levels, which are too similar to each other, by making them more unique.
-
-credit to serafimgws for the new level design."
+tweak_name = "autorun"
+tweak_description = "if enabled, inverts the behavior of the run button: holding it will make the player walk instead."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Gameplay/HBoxContainer2"]
@@ -645,17 +652,59 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "revamp level design of some extra levels"
+text = "autorun"
 uppercase = true
 
 [node name="Toggle" type="TextureRect" parent="Gameplay/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_xun1n")
+texture = SubResource("AtlasTexture_wm24y")
 stretch_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="Gameplay/HBoxContainer2/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Gameplay"]
+layout_mode = 2
+script = ExtResource("3_pxu1a")
+tweak_name = "remade_levels"
+default_value = true
+tweak_description = "this tweak aims to improve the original buziol's level design in several extra levels, which are too similar to each other, by making them more unique.
+
+credit to serafimgws for the new level design."
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="Gameplay/HBoxContainer3"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "revamp level design of some extra levels"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="Gameplay/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xun1n")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Gameplay/HBoxContainer3/Toggle"]
 modulate = Color(0, 0, 0, 0.462745)
 z_index = -1
 layout_mode = 2
@@ -674,7 +723,7 @@ tweak_name = "progress_continue"
 default_value = true
 tweak_description = "each time you complete a level, a one-time save is made with your entire progress, including your power state, lives, and the level you were on. You can access it at any time.
 
-"
+notice: if the f3 shortcut tweak is enabled, this screen won't be shown. it can be triggered by going to save room through the pause menu."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Gameplay/HBoxContainer24"]
@@ -1003,7 +1052,9 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "retro_scroll"
-tweak_description = "similar to a challenge mode from New Super Mario Bros. DS, you will not be able to backtrack."
+tweak_description = "similar to a challenge mode from New Super Mario Bros. DS, you will not be able to backtrack.
+
+this challenge is completely optional and there is no reward for it."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Gameplay/HBoxContainer15"]
@@ -1248,6 +1299,8 @@ left_side = false
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "replace_circle_transitions_with_fades"
+tweak_description = "if enabled, almost all circle transitions between scenes will be replaced by crossfades, with the game pausing in the process. also adds a zoom-out transition for main menu.
+such transitions take slightly less time than the default circle ones."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Aesthetic/HBoxContainer27"]
@@ -1448,7 +1501,9 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "hint_signs"
 default_value = true
-tweak_description = "enabling this will add some tutorial signs introduced in v5.08."
+tweak_description = "enabling this will add some tutorial signs introduced in v5.08.
+
+it may also show signs that can hint to a secret level passage."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Aesthetic/HBoxContainer11"]
@@ -1568,7 +1623,7 @@ layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "secrets_notification"
 default_value = true
-tweak_description = "each time an achievement gets unlocked, a pop up will appear for a few seconds and a sound effect will play."
+tweak_description = "each time an achievement gets unlocked or it progresses further, a pop up will appear for a few seconds and, if unlocked, a sound effect will play."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Aesthetic/HBoxContainer21"]
@@ -1646,6 +1701,7 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "vignette"
+tweak_description = "adds a \"crt-like\" overlay on screen."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Aesthetic/HBoxContainer29"]
@@ -1830,7 +1886,11 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "f3_keybind"
-tweak_description = "enables a quick shortcut to save game room using f3 key."
+tweak_description = "enables a quick shortcut to save game room using f3 key.
+
+attention: pressing f3 will automatically skip the progress continue screen! to show it, use \"go to save room\" option from pause menu.
+
+notice: if you are in options and have not selected \"exit\" (or escape key) to go back, pressing f3 will not save the options you've changed! it will also not reset the scene if you're already in save room."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Presets/HBoxContainer16"]
@@ -1869,7 +1929,9 @@ stretch_mode = 2
 layout_mode = 2
 script = ExtResource("3_pxu1a")
 tweak_name = "f4_keybind"
-tweak_description = "enables a quick shortcut to main menu using f4 key."
+tweak_description = "enables a quick shortcut to main menu using f4 key.
+
+notice: you cannot reset the scene if you are already in main menu."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Presets/HBoxContainer17"]
@@ -1911,7 +1973,7 @@ tweak_name = "additional_save_pipes"
 default_value = true
 tweak_description = "adds paging to story mode save profiles (as bumpable blocks), for a total of 9 saves.
 
-notice: disabling this tweak will not reset your save data."
+notice: disabling this tweak will not reset your save data, but other saves may become inaccessible until you toggle it back on."
 selected_sound = ExtResource("3_ltw82")
 
 [node name="Label" type="Label" parent="Presets/HBoxContainer18"]
@@ -1976,6 +2038,49 @@ texture = SubResource("AtlasTexture_s7o5r")
 stretch_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="Presets/HBoxContainer21/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HBoxContainer22" type="HBoxContainer" parent="Presets"]
+layout_mode = 2
+script = ExtResource("3_pxu1a")
+tweak_name = "show_warning_on_revamped_levels"
+default_value = true
+tweak_description = "if enabled, shows a message about revamped levels before playing one and lets the player choose which variant to play.
+
+if disabled, skips straight to the level, based on if the \"revamp level design\" tweak is enabled or not."
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="Presets/HBoxContainer22"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "show a warning before playing
+revamped levels"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="Presets/HBoxContainer22"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_sffp6")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Presets/HBoxContainer22/Toggle"]
 modulate = Color(0, 0, 0, 0.462745)
 z_index = -1
 layout_mode = 2
