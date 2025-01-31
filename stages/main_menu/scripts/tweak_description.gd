@@ -51,8 +51,17 @@ func _physics_process(delta: float) -> void:
 func show_description(desc: String, title: String) -> void:
 	message_shown.emit()
 	box.scale = Vector2.ZERO
+	var btexture: TextureRect = $Box/Texture
 	text.text = desc
 	text_2.text = title
+	text.size.y = 0
+	btexture.size.y = text.size.y + 16
+	btexture.position.y = btexture.size.y / -2
+	text.position.y = 0
+	text.size.y = 0
+	text.size.y += 16
+	text.reset_physics_interpolation()
+	btexture.reset_physics_interpolation()
 	#$Box/Texture.size.y = text.get_line_height() * text.get_line_count() + 8
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	Audio.play_1d_sound(MESSAGE_BLOCK)
@@ -74,6 +83,7 @@ func show_description(desc: String, title: String) -> void:
 func hide_message() -> void:
 	if !is_instance_valid(box): return
 	message_hidden.emit()
+	Audio.play_1d_sound(preload("res://engine/components/ui/_sounds/select_enter.wav"), false, {ignore_pause = true})
 	
 	var tw2 = get_tree().create_tween().bind_node(color_rect).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw2.tween_property(color_rect, ^"color:a", 0.0, 0.5)

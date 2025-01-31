@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dw6ydwojhxdej"]
+[gd_scene load_steps=11 format=3 uid="uid://dw6ydwojhxdej"]
 
 [ext_resource type="Script" path="res://stages/extra/climbing_minigame/objects/big_fish_bones/big_fish_bones.gd" id="1_7wg7v"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_sbhod"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_vqc1d"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_lnw3l"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_04y4w"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_u5rhv"]
 [ext_resource type="Texture2D" uid="uid://ciqq3d8hilund" path="res://stages/extra/climbing_minigame/textures/eryba2.png" id="8_3ihxw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cht0s"]
@@ -64,8 +65,9 @@ killing_immune = {
 "shell_forced": false
 }
 killing_creation = SubResource("Resource_x2p3g")
-killing_scores = 1000
+killing_scores = 800
 killing_sound_succeeded = ExtResource("7_04y4w")
+killing_sound_failed = ExtResource("7_u5rhv")
 frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
@@ -77,3 +79,5 @@ texture = ExtResource("8_3ihxw")
 self_modulate = Color(1, 1, 1, 0)
 rect = Rect2(-128, -144, 256, 288)
 metadata/_edit_lock_ = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
