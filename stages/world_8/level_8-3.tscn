@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=4 uid="uid://dvs3d2ernm7m6"]
+[gd_scene load_steps=85 format=4 uid="uid://dvs3d2ernm7m6"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_18jpy"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_tlt33"]
@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="25_45fsu"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="26_rnb6j"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="28_vs3by"]
+[ext_resource type="Script" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="30_67gf5"]
 [ext_resource type="AudioStream" uid="uid://c26br0stvjxr2" path="res://sfx/lava_up.wav" id="30_ga5ds"]
 [ext_resource type="AudioStream" uid="uid://dsv6yiepip4o8" path="res://engine/objects/enemies/thwomp/sounds/laughing.wav" id="31_5dkk3"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="37_uc4ui"]
@@ -183,6 +184,18 @@ colors = PackedColorArray(0.517647, 0, 0, 1, 0.567762, 0, 0, 0.896104, 1, 0, 0, 
 gradient = SubResource("Gradient_pynlr")
 fill_from = Vector2(1, 1)
 
+[sub_resource type="Gradient" id="Gradient_7qctq"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oxtd7"]
+gradient = SubResource("Gradient_7qctq")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_k7fsd"]
 atlas = ExtResource("19_qcshw")
 region = Rect2(0, 0, 80, 81)
@@ -319,10 +332,6 @@ script = ExtResource("1_18jpy")
 completion_music = ExtResource("2_tlt33")
 jump_to_scene = "res://stages/world_8/map_8.tscn"
 
-[node name="Darkness" type="CanvasModulate" parent="."]
-color = Color(0.537011, 0.537011, 0.537011, 1)
-script = ExtResource("40_x4r7x")
-
 [node name="MusicLoader" parent="." instance=ExtResource("2_wcgs6")]
 script = ExtResource("3_2xe1p")
 tweaked_completion_music = ExtResource("4_sre8n")
@@ -411,10 +420,6 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="Darkness2" type="CanvasModulate" parent="ParallaxBackground"]
-color = Color(0.537011, 0.537011, 0.537011, 1)
-script = ExtResource("40_x4r7x")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -617,6 +622,7 @@ scale = Vector2(11, 3.5)
 texture = SubResource("GradientTexture2D_kcwew")
 
 [node name="PointLight2D" type="PointLight2D" parent="Node2D/Sprite2D"]
+visible = false
 position = Vector2(0, 82.2857)
 scale = Vector2(1, 3.85714)
 energy = 1.5
@@ -645,6 +651,52 @@ bus = &"Sound"
 [node name="Timer" type="Timer" parent="Node2D"]
 wait_time = 18.0
 autostart = true
+
+[node name="Node2D" type="Node2D" parent="Node2D"]
+position = Vector2(40, 432)
+script = ExtResource("40_x4r7x")
+
+[node name="ochko" type="PointLight2D" parent="Node2D/Node2D"]
+position = Vector2(368, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_oxtd7")
+offset = Vector2(0, 8)
+script = ExtResource("30_67gf5")
+
+[node name="ochko5" type="PointLight2D" parent="Node2D/Node2D"]
+position = Vector2(488, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_oxtd7")
+offset = Vector2(0, 8)
+script = ExtResource("30_67gf5")
+
+[node name="ochko6" type="PointLight2D" parent="Node2D/Node2D"]
+position = Vector2(608, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_oxtd7")
+offset = Vector2(0, 8)
+script = ExtResource("30_67gf5")
+
+[node name="ochko2" type="PointLight2D" parent="Node2D/Node2D"]
+position = Vector2(248, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_oxtd7")
+offset = Vector2(0, 8)
+script = ExtResource("30_67gf5")
+
+[node name="ochko3" type="PointLight2D" parent="Node2D/Node2D"]
+position = Vector2(128, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_oxtd7")
+offset = Vector2(0, 8)
+script = ExtResource("30_67gf5")
+
+[node name="ochko4" type="PointLight2D" parent="Node2D/Node2D"]
+position = Vector2(16, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_oxtd7")
+offset = Vector2(0, 8)
+script = ExtResource("30_67gf5")
 
 [node name="Spike" parent="." instance=ExtResource("16_lc55d")]
 position = Vector2(112, -192)
@@ -897,7 +949,7 @@ tile_set = ExtResource("41_y0osg")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D2"]
 z_index = 50
-position = Vector2(13592, -8704)
+position = Vector2(13576, -8704)
 rotation = 1.5708
 scale = Vector2(1, 13588.6)
 texture = SubResource("GradientTexture1D_eq42k")
