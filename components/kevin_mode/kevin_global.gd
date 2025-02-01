@@ -11,6 +11,8 @@ func _ready() -> void:
 
 func add_kevin() -> void:
 	await get_tree().physics_frame
+	if !OS.has_feature("template") && Input.is_action_pressed("a_delete"):
+		activated = true
 	if !activated || Scenes.current_scene.name == 'SaveGameRoom': return
 	var kevin := KEVIN_SCENE.instantiate()
 	kevin.position = Vector2(-100, -100)

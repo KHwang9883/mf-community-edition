@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://byadcxgx6k3x8"]
+[gd_scene load_steps=22 format=3 uid="uid://byadcxgx6k3x8"]
 
 [ext_resource type="Script" path="res://objects/revamped_level_warning/revamped_level_warning.gd" id="1_0dnm7"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="1_hn21l"]
@@ -6,11 +6,9 @@
 [ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="3_7cueh"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="4_udbve"]
 [ext_resource type="Texture2D" uid="uid://dphjpmu2xobjk" path="res://objects/revamped_level_warning/textures/12321.png" id="5_q38iu"]
-[ext_resource type="Script" path="res://engine/components/progress_continue/scripts/continue_sel.gd" id="6_45s2k"]
-[ext_resource type="Script" path="res://engine/components/progress_continue/scripts/no_sel.gd" id="8_wv1ea"]
+[ext_resource type="Script" path="res://objects/revamped_level_warning/revamp_new_sel.gd" id="7_yy12n"]
+[ext_resource type="Script" path="res://objects/revamped_level_warning/revamp_fckoff.gd" id="8_jmtey"]
 [ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="9_ayvkh"]
-[ext_resource type="Script" path="res://stages/save_game_room/scripts/warning_console_block.gd" id="10_7rdby"]
-[ext_resource type="Script" path="res://engine/components/progress_continue/scripts/erase_sel.gd" id="10_eauon"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="11_anq62"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
@@ -93,7 +91,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
@@ -122,6 +120,7 @@ _data = {
 }
 
 [node name="RevampWarning" type="CanvasLayer"]
+process_mode = 3
 layer = 2
 
 [node name="Control" type="Control" parent="."]
@@ -162,36 +161,58 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -146.0
-offset_top = -124.0
+offset_top = -120.0
 offset_right = 146.0
-offset_bottom = -16.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 6
 script = ExtResource("4_udbve")
 focused = false
-prev_screen_node_path = NodePath("TextureRect2")
+prev_screen_node_path = NodePath("../Control/TextureRect4")
 
 [node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
 texture = SubResource("AtlasTexture_owgpr")
 stretch_mode = 3
-script = ExtResource("6_45s2k")
+script = ExtResource("7_yy12n")
 
 [node name="TextureRect2" type="TextureRect" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
 texture = SubResource("AtlasTexture_6jwks")
 stretch_mode = 3
-script = ExtResource("8_wv1ea")
+script = ExtResource("7_yy12n")
+is_new = false
 
 [node name="TextureRect3" type="TextureRect" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
 texture = SubResource("AtlasTexture_7rn1e")
 stretch_mode = 3
-script = ExtResource("10_eauon")
+script = ExtResource("8_jmtey")
+
+[node name="Control" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect4" type="TextureRect" parent="Control/Control"]
+visible = false
+offset_left = 272.0
+offset_top = 608.0
+offset_right = 554.0
+offset_bottom = 638.0
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = SubResource("AtlasTexture_7rn1e")
+stretch_mode = 3
+script = ExtResource("8_jmtey")
+set_tweak_off = false
 
 [node name="GamePaused" type="TextureRect" parent="Control"]
 layout_mode = 1
@@ -228,7 +249,7 @@ from the original game.
 a level revamp has been done by:
 serafimgws
 
-to play the revamped version, select \"play recommended\".
+to play the revamped version, select \"play recommended\". (default)
 
 if you wish to play the old version, select \"play original\".
 
@@ -239,7 +260,6 @@ in the tweaks menu (accessible from the main menu)."
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
-script = ExtResource("10_7rdby")
 
 [node name="Node" type="Node" parent="Control"]
 script = ExtResource("11_anq62")
