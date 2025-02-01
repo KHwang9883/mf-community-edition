@@ -23,11 +23,25 @@ func activate() -> void:
 		#ProfileManager.set_current_profile("debug")
 		await get_tree().create_timer(action_after_sec, false).timeout
 		
+		var revamper = get_node_or_null("RevampWarning/Control")
+		if remade_level_tweak_scene && revamper:
+			revamper.selected_new.connect(func() -> void:
+				change_scene = remade_level_tweak_scene
+				trigger_transition()
+			)
+			revamper.selected_old.connect(func() -> void:
+				trigger_transition()
+			)
+			revamper.toggle()
+		else:
+			trigger_transition()
+
+
+func trigger_transition() -> void:
 		var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
-		var _remade: bool = SettingsManager.get_tweak("remade_levels", true)
 		Data.values.checkpoint = -1
 		Data.values.checked_cps = []
-		var goto_scene: String = remade_level_tweak_scene if remade_level_tweak_scene && _remade else change_scene
+		var goto_scene: String = change_scene
 		if save_to_profile_as_current_world:
 			ProfileManager.current_profile.data.current_world = goto_scene
 			ProfileManager.save_current_profile()

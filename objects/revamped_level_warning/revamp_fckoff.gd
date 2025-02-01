@@ -25,4 +25,3 @@ func _handle_select(mouse_input: bool = false) -> void:
 	prog.toggle(true)
 	
 	_has_started = true
-	get_parent().focused = false

@@ -4,6 +4,8 @@ var opened: bool
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
+@onready var _warn_tweak: bool = SettingsManager.get_tweak("show_warning_on_revamped_levels", true)
+@onready var _remade_tweak: bool = SettingsManager.get_tweak("remade_levels", true)
 
 signal popped
 signal closed
@@ -26,6 +28,12 @@ func toggle(force_close: bool = false) -> void:
 		if ProfileManager.current_profile.data.get("advanced_edition", null):
 			selected_new.emit()
 			print("[RevampMessage] Advanced Edition Forced to new Level Design.")
+			return
+		if !_warn_tweak:
+			if _remade_tweak:
+				selected_new.emit()
+			else:
+				selected_old.emit()
 			return
 		popped.emit()
 		Audio.play_1d_sound(preload("res://objects/message_block/message_block.wav"), true, {ignore_pause = true})
