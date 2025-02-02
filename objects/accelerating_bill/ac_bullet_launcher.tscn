@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://iwrxr2jacojf"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.gd" id="1_guv2y"]
+[ext_resource type="PackedScene" uid="uid://cr8cqo8kbc27p" path="res://objects/accelerating_bill/accelerating_bill.tscn" id="2_jj1nm"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_fui8b"]
+[ext_resource type="Texture2D" uid="uid://dnulatlbw47ic" path="res://objects/accelerating_bill/texture/ac_bill_launcher_head.png" id="4_t67wo"]
+
+[sub_resource type="Resource" id="Resource_b3ipg"]
+script = ExtResource("3_fui8b")
+creation_nodepack = ExtResource("2_jj1nm")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abljg"]
+size = Vector2(32, 32)
+
+[node name="AcceleratingBillLauncher" type="AnimatableBody2D"]
+collision_layer = 112
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("1_guv2y")
+bullet_bill = SubResource("Resource_b3ipg")
+first_shooting_delay = 0.8
+shooting_delay_min = 2.0
+metadata/_edit_pinned_properties_ = [&"bullet_bill"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_abljg")
+
+[node name="Launcher" type="Sprite2D" parent="."]
+texture = ExtResource("4_t67wo")
+metadata/_edit_lock_ = true
+
+[node name="PosBullet" type="Marker2D" parent="Launcher"]
+visible = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+enable_node_path = NodePath("../Interval")
+
+[node name="Interval" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
+[connection signal="timeout" from="Interval" to="." method="_on_bullet_launched"]

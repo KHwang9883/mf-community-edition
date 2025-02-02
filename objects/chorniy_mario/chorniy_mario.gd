@@ -66,7 +66,6 @@ const APPEAR = preload("res://objects/chorniy_mario/appear.ogg")
 var mario_pos: Vector2
 var appear_triggered = false
 var cutscene: bool = false
-var wait_time: float
 
 var pause: bool = false
 var warp_invinc_timer: float
@@ -82,9 +81,9 @@ func _ready() -> void:
 	if _random_sounds_tweak:
 		_death_sound = DEATH_SOUNDS.pick_random()
 	mario.death_music_override = _death_sound
-	wait_time = _death_sound.get_length() + (0.5 if _death_sound != DEATH_SOUNDS[1] else 0.0)
+	KevinGlobal.wait_time = _death_sound.get_length() + (0.5 if _death_sound != DEATH_SOUNDS[1] else 0.0)
 	mario.death_music_ignore_pause = true
-	mario.died.connect(loludied)
+
 
 func _physics_process(delta: float) -> void:
 	if !is_instance_valid(mario):
@@ -182,8 +181,3 @@ func kevin_podokh() -> void:
 	var ex = EXPLOSION.instantiate()
 	ex.global_position = global_position
 	Scenes.current_scene.add_child(ex)
-
-func loludied() -> void:
-	Data.values.lives -= 1
-	Scenes.custom_scenes.pause.open_blocked = true
-	Loludied.get_child(0).activate(wait_time)
