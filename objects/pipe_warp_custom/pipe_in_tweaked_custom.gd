@@ -4,6 +4,7 @@ extends "res://engine/objects/warps/pipe_in.gd"
 @export_file("*.tscn", "*.scn") var warp_to_remade_scene_tweak: String
 var revamper
 signal go
+var dismissed: bool = false
 
 func _ready() -> void:
 	super()
@@ -15,16 +16,14 @@ func _ready() -> void:
 	
 	revamper.selected_new.connect(func() -> void:
 		warp_to_scene = warp_to_remade_scene_tweak
-		go.emit()
+		dismissed = true
 	)
 	revamper.selected_old.connect(func() -> void:
-		go.emit()
+		dismissed = true
 	)
 
-func pass_warp() -> void:
-	if revamper:
+func _warping_process(delta: float) -> void:
+	if revamper && _duration >= _target && !dismissed:
 		revamper.toggle()
-		await go
-	Audio.stop_all_musics()
-	Audio.stop_all_sounds()
-	super()
+	else:
+		super(delta)

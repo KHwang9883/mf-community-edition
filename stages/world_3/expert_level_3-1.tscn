@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c0kxa8mci4e8m"]
+[gd_scene load_steps=30 format=3 uid="uid://c0kxa8mci4e8m"]
 
 [ext_resource type="PackedScene" uid="uid://calnaumcqgd6k" path="res://stages/world_3/level_3-1.tscn" id="1_bukgd"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_oq3iq"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="11_3oras"]
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="11_lvhf4"]
 [ext_resource type="PackedScene" uid="uid://cgd12vgjptxo6" path="res://objects/jumping_goomba/jumping_goomba.tscn" id="12_mux20"]
+[ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/world_3_1_lava_run_patcher.gd" id="14_dlybl"]
 [ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="14_gunq2"]
 [ext_resource type="Texture2D" uid="uid://ky8q0s462usu" path="res://objects/jumping_goomba/textures/jumping_goomba.png" id="15_bvfb6"]
 [ext_resource type="PackedScene" uid="uid://df06nfgxm0bjd" path="res://engine/objects/enemies/hammer_bros/beetroot_bro.tscn" id="19_w0mql"]
@@ -156,6 +157,14 @@ jump_to_scene = "res://stages/world_3/expert_map_3.tscn"
 [node name="World" parent="HUD" index="2"]
 text = "WORLD
 *3-1  "
+
+[node name="World8Warp" parent="HUD" index="3"]
+change_scene = "res://stages/extra/climbing_minigame/climbing_lava_run.tscn"
+save_to_profile_as_current_world = false
+circle_transition_center_on_player = true
+
+[node name="Label" parent="HUD/World8Warp" index="0"]
+text = "YOU HAVE FOUND A SECRET WAY TO HELL!!!"
 
 [node name="KoopaGreen" parent="Objects" index="6"]
 position = Vector2(5936, 576)
@@ -369,7 +378,12 @@ position = Vector2(8096, 320)
 position = Vector2(3712, 320)
 
 [node name="PipeIn" parent="." index="14"]
-position = Vector2(4258, 698)
+position = Vector2(3792, 384)
+
+[node name="Node" type="Node" parent="PipeIn" index="5"]
+script = ExtResource("14_dlybl")
+climbing_set_difficulty = 4
+climbing_after_scene = "res://stages/world_3/lava_end_cutscene_3.tscn"
 
 [node name="KoopaParatroopaBlue" parent="." index="22" instance=ExtResource("10_hqkoi")]
 position = Vector2(1424, 336)
@@ -503,3 +517,5 @@ position = Vector2(320, 1328)
 
 [node name="BeetrootBro2" parent="." index="53" instance=ExtResource("19_w0mql")]
 position = Vector2(368, 1072)
+
+[connection signal="warp_started" from="PipeIn" to="PipeIn/Node" method="hello"]
