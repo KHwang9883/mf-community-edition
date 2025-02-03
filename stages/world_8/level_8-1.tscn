@@ -33,22 +33,6 @@
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="29_uffad"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="30_6qlvu"]
 
-[sub_resource type="Resource" id="Resource_84omh"]
-script = ExtResource("16_1537t")
-creation_fallback_node = ExtResource("14_tctif")
-creation_nodepack = ExtResource("15_8bcxa")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_cxvdw"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_k7fsd"]
 atlas = ExtResource("27_0mk14")
 region = Rect2(0, 0, 80, 81)
@@ -134,6 +118,22 @@ animations = [{
 "speed": 33.0
 }]
 
+[sub_resource type="Resource" id="Resource_84omh"]
+script = ExtResource("16_1537t")
+creation_fallback_node = ExtResource("14_tctif")
+creation_nodepack = ExtResource("15_8bcxa")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_cxvdw"]
+
 [sub_resource type="Gradient" id="Gradient_675bo"]
 offsets = PackedFloat32Array(0.125, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -207,6 +207,32 @@ texture = ExtResource("14_d3fmb")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, -16, 1023, 512)
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="BowserPortrait6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+z_index = -15
+position = Vector2(640, 32)
+texture = ExtResource("26_cgk17")
+centered = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer2/BowserPortrait6"]
+sprite_frames = SubResource("SpriteFrames_0ta0o")
+autoplay = "default"
+centered = false
+
+[node name="BowserPortrait7" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+z_index = -15
+position = Vector2(1648, 32)
+texture = ExtResource("26_cgk17")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer2/BowserPortrait7"]
+sprite_frames = SubResource("SpriteFrames_0ta0o")
+autoplay = "default"
+centered = false
+metadata/_edit_lock_ = true
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -632,36 +658,12 @@ offset_bottom = 256.0
 [node name="FinishLine" parent="." instance=ExtResource("25_kxxtw")]
 position = Vector2(6976, 320)
 
-[node name="BowserPortrait6" type="Sprite2D" parent="."]
-z_index = -15
-position = Vector2(640, 32)
-texture = ExtResource("26_cgk17")
-centered = false
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BowserPortrait6"]
-sprite_frames = SubResource("SpriteFrames_0ta0o")
-autoplay = "default"
-centered = false
-
-[node name="BowserPortrait7" type="Sprite2D" parent="."]
-z_index = -15
-position = Vector2(1648, 32)
-texture = ExtResource("26_cgk17")
-centered = false
-metadata/_edit_lock_ = true
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BowserPortrait7"]
-sprite_frames = SubResource("SpriteFrames_0ta0o")
-autoplay = "default"
-centered = false
-metadata/_edit_lock_ = true
-
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -20
 script = ExtResource("28_cxqtk")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-z_index = 40
+z_index = 1
 position = Vector2(13585.6, -16.2063)
 rotation = 1.5708
 scale = Vector2(1.14509, 13588.6)

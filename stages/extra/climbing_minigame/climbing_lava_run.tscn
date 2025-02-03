@@ -1,6 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://cybsx5nq075w1"]
+[gd_scene load_steps=39 format=3 uid="uid://cybsx5nq075w1"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_k26us"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_m0bua"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_n4tw3"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_jpj86"]
 [ext_resource type="AudioStream" uid="uid://dwhsl2atuo53s" path="res://music/climbing_minigame/2.11_Echidnas_Backdown.ogg" id="4_00uoh"]
@@ -15,10 +16,14 @@
 [ext_resource type="PackedScene" uid="uid://bd71lcoapyqa7" path="res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn" id="14_sbwe8"]
 [ext_resource type="Texture2D" uid="uid://dmwfhcgla7av" path="res://gfx/backgrounds/BGCastleVertical.png" id="15_04y6r"]
 [ext_resource type="PackedScene" uid="uid://bxaj6iub5wrps" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn" id="15_vgukt"]
+[ext_resource type="Texture2D" uid="uid://duyieyqodtxa8" path="res://engine/objects/bosses/bowser/texture/bowser_hammer_pre.png" id="16_pmfeq"]
 [ext_resource type="PackedScene" uid="uid://fq70crcmppwi" path="res://stages/extra/climbing_minigame/objects/fish_bones/fish_bones.tscn" id="16_wrk3g"]
+[ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="17_ctd05"]
+[ext_resource type="Texture2D" uid="uid://nwyeqno7oote" path="res://engine/tilesets/castle/gray_platform_tile.png" id="18_gt44m"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="19_s0br3"]
 [ext_resource type="Texture2D" uid="uid://br752og2ucdxx" path="res://stages/extra/climbing_minigame/textures/goodluck.png" id="19_ttl1q"]
 [ext_resource type="Texture2D" uid="uid://jhd21joawail" path="res://stages/extra/climbing_minigame/textures/strelochka.png" id="20_jm3op"]
+[ext_resource type="PackedScene" uid="uid://df5i2eol1nrof" path="res://engine/objects/enemies/volcano/volcano.tscn" id="21_g0brm"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xm6v6"]
 blend_mode = 1
@@ -51,12 +56,61 @@ metadata/_snap_enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o311q"]
 size = Vector2(32, 864)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu3vj"]
+atlas = ExtResource("16_pmfeq")
+region = Rect2(0, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emq0y"]
+atlas = ExtResource("16_pmfeq")
+region = Rect2(0, 72, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebd1u"]
+atlas = ExtResource("17_ctd05")
+region = Rect2(0, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60k5e"]
+atlas = ExtResource("17_ctd05")
+region = Rect2(0, 72, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awe1a"]
+atlas = ExtResource("17_ctd05")
+region = Rect2(0, 144, 80, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_timxm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bu3vj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emq0y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebd1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60k5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awe1a")
+}],
+"loop": true,
+"name": &"throw",
+"speed": 25.0
+}]
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3fhm2"]
 normal = Vector2(0, 1)
 
 [node name="ClimbingLavaRun" type="Node2D"]
 script = ExtResource("1_k26us")
 time = -1
+completion_music = ExtResource("2_m0bua")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_n4tw3")]
 script = ExtResource("3_jpj86")
@@ -147,6 +201,32 @@ z_index = 10
 position = Vector2(-112, 384)
 texture = ExtResource("20_jm3op")
 centered = false
+
+[node name="Volcano" parent="MovingGroup" instance=ExtResource("21_g0brm")]
+position = Vector2(96, 608)
+volcano_ball_amount = 8
+volcano_ball_fire_interval = 0.1
+
+[node name="Volcano2" parent="MovingGroup" instance=ExtResource("21_g0brm")]
+position = Vector2(544, 608)
+volcano_ball_amount = 8
+volcano_ball_fire_interval = 0.1
+
+[node name="Bowser" type="AnimatedSprite2D" parent="MovingGroup"]
+position = Vector2(688, 240)
+sprite_frames = SubResource("SpriteFrames_timxm")
+autoplay = "default"
+flip_h = true
+
+[node name="GrayPlatformTile" type="Sprite2D" parent="MovingGroup/Bowser"]
+texture_repeat = 2
+position = Vector2(27, 44)
+texture = ExtResource("18_gt44m")
+region_enabled = true
+region_rect = Rect2(0, 0, 96, 16)
+
+[node name="PosAttack" type="Marker2D" parent="MovingGroup/Bowser"]
+position = Vector2(-15, 5)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("12_3spaf")

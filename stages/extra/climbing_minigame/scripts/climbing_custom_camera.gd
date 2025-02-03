@@ -11,6 +11,7 @@ var rand_offset: int = 60
 var flower_counter: int = 10
 var fish_preparing: bool = false
 var last_player_pos: Vector2
+var goomba_counter: int = 7
 
 var _transition_started: bool = false
 
@@ -27,6 +28,9 @@ const MARIO = preload("res://stages/extra/climbing_minigame/objects/mario.tscn")
 const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/platform_path_cloud.tscn")
 const BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_launcher_structure.tscn")
 const SND_BOWSER_LAUGH = preload("res://music/climbing_minigame/snd_bowser_laugh.ogg")
+const LAKITU = preload("res://engine/objects/enemies/lakitus/lakitu.tscn")
+const GOOMBA = preload("res://engine/objects/enemies/goombas/goomba.tscn")
+const EXPERT_BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/expert_bullet_launcher_structure.tscn")
 
 @onready var platform_path: AnimatableBody2D = $"../../PlatformPath"
 @onready var platform_path_2: AnimatableBody2D = $"../../PlatformPath2"
@@ -34,6 +38,17 @@ const SND_BOWSER_LAUGH = preload("res://music/climbing_minigame/snd_bowser_laugh
 @onready var platform_path_4: AnimatableBody2D = $"../../PlatformPath4"
 @onready var jumping_cheeps_generator: Node = $"../../JumpingCheepsGenerator"
 @onready var strelochka: Sprite2D = $"../../MovingGroup/Strelochka"
+
+@onready var volcano: Node2D = $"../Volcano"
+@onready var volcano_2: Node2D = $"../Volcano2"
+
+@onready var bowser: AnimatedSprite2D = $"../Bowser"
+var projectile_inst: InstanceNode2D = preload("res://engine/objects/bosses/bowser/attacks/prefabs/hammer.tres")
+var throw_sound: AudioStream = preload("res://engine/objects/projectiles/sounds/throw.wav")
+var hammer_amount: int = 8
+var hammer_interval: float = 0.15
+var hammer_speed_min := Vector2(70, -650)
+var hammer_speed_max := Vector2(500, -250)
 
 @onready var mariomarker: Sprite2D = $"../../HUD/Mariomarker"
 @onready var mariomarker_init_pos: float = mariomarker.global_position.y
@@ -98,9 +113,15 @@ func _ready() -> void:
 	get_tree().create_timer(15, false).timeout.connect(big_fish_create)
 
 	if difficulty > 0:
-		get_tree().create_timer(25, false).timeout.connect(bullet_create)
+		get_tree().create_timer(25 if difficulty < 4 else 18, false).timeout.connect(bullet_create)
 	if difficulty > 1:
 		get_tree().create_timer(25, false).timeout.connect(stihl_create)
+	if difficulty > 2:
+		get_tree().create_timer(28, false).timeout.connect(volcano_up)
+		get_tree().create_timer(23, false).timeout.connect(bullet_create.bind(true))
+	if difficulty > 3:
+		get_tree().create_timer(12, false).timeout.connect(lakitu)
+		
 
 	await get_tree().create_timer(7.67, false, false, true).timeout
 	moving = true
@@ -111,7 +132,7 @@ func _ready() -> void:
 	can_get_faster = true
 
 	await get_tree().create_timer(0.4, false, false, true).timeout
-	Audio.play_1d_sound(preload("res://music/climbing_minigame/snd_bowser_laugh.ogg"))
+	bowser_attack()
 	await get_tree().create_timer(1.5, false, false, false).timeout
 	jumping_cheeps_generator.enabled = true
 
@@ -153,6 +174,8 @@ func _physics_process(_delta: float) -> void:
 
 	if moving:
 		moving_group.global_position.y -= 1 * delta
+		#if difficulty == 4:
+		#	moving_group.global_position.y -= 1 * delta
 
 		if last_player_pos.y < moving_group.global_position.y + 112 && can_get_faster:
 			moving_group.global_position.y -= 2 * delta
@@ -230,6 +253,14 @@ func create_platform() -> void:
 		floweri.force_powerup_state = true
 		Scenes.current_scene.add_child(floweri)
 		flower_counter = 10
+	
+	# goomba spawn for expert mode
+	goomba_counter -= 1
+	if goomba_counter <= 1 && difficulty > 3:
+		var goombai = GOOMBA.instantiate()
+		goombai.global_position = plati.global_position - Vector2(48, 16)
+		Scenes.current_scene.add_child(goombai)
+		goomba_counter = 6
 
 
 #func play_bg_sound() -> void:
@@ -282,14 +313,72 @@ func stihl_create() -> void:
 	stihl.reset_physics_interpolation()
 
 
-func bullet_create() -> void:
-	get_tree().create_timer(10, false).timeout.connect(bullet_create)
+func bullet_create(expert: bool = false) -> void:
+	get_tree().create_timer(10, false).timeout.connect(bullet_create.bind(expert))
 
-	var bul = BULLET_LAUNCHER_STRUCTURE.instantiate()
+	var bul = BULLET_LAUNCHER_STRUCTURE.instantiate() if !expert else EXPERT_BULLET_LAUNCHER_STRUCTURE.instantiate()
 	Scenes.current_scene.add_child(bul)
 	bul.global_position = Vector2(16, global_position.y - 480 - 32)
 	bul.reset_physics_interpolation()
 
+
+func volcano_up() -> void:
+	get_tree().create_timer(30, false).timeout.connect(volcano_up)
+	
+	var tw = create_tween().set_parallel()
+	tw.tween_property(volcano, "position:y", 400, 1.5)
+	tw.tween_property(volcano_2, "position:y", 400, 1.5)
+	tw.chain().tween_interval(1.5)
+	tw.chain().tween_property(volcano, "position:y", 640, 2.5)
+	tw.tween_property(volcano_2, "position:y", 640, 2.5)
+
+
+func lakitu() -> void:
+	get_tree().create_timer(7, false).timeout.connect(lakitu)
+	
+	var lak = LAKITU.instantiate()
+	lak.does_respawn = false
+	lak.pitching_interval_max = 4
+	moving_group.add_child(lak)
+	lak.position += Vector2(666, 64)
+	lak.reset_physics_interpolation()
+	
+
+func bowser_attack() -> void:
+	Audio.play_1d_sound(preload("res://music/climbing_minigame/snd_bowser_laugh.ogg"), false)
+	if difficulty < 3:
+		return
+	get_tree().create_timer(12, false).timeout.connect(bowser_attack)
+	
+	var tween_hammer: Tween = create_tween()
+	tween_hammer.tween_property(bowser, "position:x", 608, 1.5)
+	var pos_hammer = $"../Bowser/PosAttack"
+	for i in hammer_amount:
+		tween_hammer.tween_callback(
+			func() -> void:
+				if !projectile_inst: return
+				if bowser.animation != "throw":
+					bowser.play("throw")
+				
+				Audio.play_sound(throw_sound, bowser, false)
+				NodeCreator.prepare_ins_2d(projectile_inst, bowser).create_2d().call_method(
+					func(hm: Node2D) -> void:
+						hm.global_position = pos_hammer.global_position
+						if hm is Projectile:
+							hm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
+							hm.vel_set(
+								Vector2(
+									randf_range(hammer_speed_min.x, hammer_speed_max.x) * -1,
+									randf_range(hammer_speed_min.y, hammer_speed_max.y)
+								)
+							)
+				)
+		).set_delay(0.05)
+	tween_hammer.tween_callback(
+		func() -> void:
+			bowser.play("default")
+	)
+	tween_hammer.tween_property(bowser, "position:x", 688, 1.5)
 
 #func podo_create_advanced_sequence() -> void:
 	#get_tree().create_timer(30, false).timeout.connect(podo_create_advanced_sequence)
