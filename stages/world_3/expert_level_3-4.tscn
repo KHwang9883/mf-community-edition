@@ -1,11 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://bdfmc8ctxsfjl"]
+[gd_scene load_steps=13 format=3 uid="uid://bdfmc8ctxsfjl"]
 
 [ext_resource type="PackedScene" uid="uid://bwyuvtyce0so0" path="res://stages/world_3/level_3-4.tscn" id="1_onc78"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_bt1pj"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_vxcu3"]
-[ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/bowser_attack_rotation.gd" id="3_j60bl"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_flame.gd" id="3_bv7a1"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_wupb8"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_lklr4"]
+[ext_resource type="PackedScene" uid="uid://dxgs3gdej852p" path="res://engine/objects/bosses/bowser/projectile/flame_following.tscn" id="4_u72j2"]
+[ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="7_bmu1i"]
+[ext_resource type="PackedScene" uid="uid://8iaacf404in1" path="res://stages/extra/world_of_stupidity/chmurka_debil/stupidity_cloud_super_hidden.tscn" id="8_mdrqk"]
+
+[sub_resource type="Resource" id="Resource_m5k67"]
+script = ExtResource("4_lklr4")
+creation_nodepack = ExtResource("4_u72j2")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_jr80y"]
 resource_local_to_scene = true
@@ -25,13 +41,47 @@ custom_vars = {
 }
 custom_script = ExtResource("3_wupb8")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l01dt"]
+size = Vector2(32, 32)
+
 [node name="Level3-4" instance=ExtResource("1_onc78")]
 jump_to_scene = "res://stages/world_3/expert_end_cutscene_3.tscn"
 
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("2_bt1pj")]
 
+[node name="Bowser" parent="." index="12"]
+status_interval = Array[float]([2.0, 3.0])
+status = Array[StringName]([&"flamefast", &"rotation"])
+
 [node name="attack_rotation" type="Node" parent="Bowser" index="12"]
-script = ExtResource("3_j60bl")
+script = ExtResource("3_bv7a1")
+projectile_inst = SubResource("Resource_m5k67")
+flame_speed_x = 300.0
+multiple_flames = [0]
 
 [node name="BowserFakeReveal" parent="LavaBowser" index="17"]
 creation = SubResource("Resource_jr80y")
+
+[node name="MessageBlock" parent="." index="37" instance=ExtResource("7_bmu1i")]
+position = Vector2(16, 272)
+message = "In this hellish world, you cannot have peace by going to this narrow space."
+initially_visible_and_solid = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MessageBlock" index="3"]
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_l01dt")
+one_way_collision = true
+
+[node name="StupidityCloudHidden" parent="." index="38" instance=ExtResource("8_mdrqk")]
+position = Vector2(-16, 256)
+trigger_radius = 0.0
+precise_radius_area = NodePath("Area2D2")
+
+[node name="Area2D2" type="Area2D" parent="StupidityCloudHidden" index="1"]
+collision_layer = 0
+collision_mask = 0
+input_pickable = false
+monitoring = false
+monitorable = false
+
+[connection signal="message_hidden" from="MessageBlock" to="StupidityCloudHidden" method="trigger"]
