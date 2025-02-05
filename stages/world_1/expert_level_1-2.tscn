@@ -1,7 +1,6 @@
-[gd_scene load_steps=49 format=3 uid="uid://6ou70vxm0of6"]
+[gd_scene load_steps=51 format=3 uid="uid://6ou70vxm0of6"]
 
 [ext_resource type="PackedScene" uid="uid://bgdaesvf0ofqu" path="res://stages/world_1/level_1-2.tscn" id="1_6g7en"]
-[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_xnc0u"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="3_k72ck"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="3_kqvsa"]
 [ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/world_4_warp.gd" id="3_x0xhv"]
@@ -9,9 +8,11 @@
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="5_626js"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="6_ydekj"]
 [ext_resource type="PackedScene" uid="uid://12ak5pa7cf8u" path="res://engine/objects/powerups/super_star/super_star.tscn" id="7_7kiqw"]
+[ext_resource type="PackedScene" uid="uid://brkhmn6vdf25a" path="res://engine/objects/bumping_blocks/question_block/templates/Poison Mushroom Question Block.tscn" id="8_7phjn"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_33hko"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="8_ia2hh"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="9_gk61t"]
+[ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="9_vruuk"]
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="10_74hyw"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="11_ly1k3"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="14_7ky5d"]
@@ -355,6 +356,20 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_i4owq"]
+resource_local_to_scene = true
+script = ExtResource("5_626js")
+creation_nodepack = ExtResource("9_vruuk")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [sub_resource type="Resource" id="Resource_qk3oe"]
 resource_local_to_scene = true
 script = ExtResource("5_626js")
@@ -438,7 +453,6 @@ fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
 
 [node name="Level1-2" instance=ExtResource("1_6g7en")]
-completion_music = ExtResource("2_xnc0u")
 jump_to_scene = "res://stages/world_1/expert_map_1.tscn"
 
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("3_k72ck")]
@@ -581,126 +595,132 @@ result = SubResource("Resource_mtgmt")
 result = SubResource("Resource_ot5i4")
 
 [node name="QuestionBlock15" parent="." index="63"]
+position = Vector2(-880, 1344)
 result = SubResource("Resource_ilhqq")
 
-[node name="Goomba" parent="." index="64"]
+[node name="QuestionBlockPoisonous" parent="." index="64" instance=ExtResource("8_7phjn")]
+position = Vector2(-656, 1232)
+result = SubResource("Resource_i4owq")
+initially_visible_and_solid = false
+
+[node name="Goomba" parent="." index="65"]
 position = Vector2(624, 1672)
 
-[node name="Goomba2" parent="." index="65"]
+[node name="Goomba2" parent="." index="66"]
 position = Vector2(568, 1584)
 
-[node name="Goomba3" parent="." index="66"]
+[node name="Goomba3" parent="." index="67"]
 position = Vector2(528, 1576)
 
-[node name="Goomba4" parent="." index="67"]
+[node name="Goomba4" parent="." index="68"]
 position = Vector2(751, 1704)
 
-[node name="QuestionBlockStar" parent="." index="104"]
+[node name="QuestionBlockStar" parent="." index="105"]
 position = Vector2(1632, 1520)
 result = null
 
-[node name="QuestionBlockStar2" parent="." index="105"]
+[node name="QuestionBlockStar2" parent="." index="106"]
 result = SubResource("Resource_qk3oe")
 
-[node name="PipeIn4" parent="." index="107"]
+[node name="PipeIn4" parent="." index="108"]
 position = Vector2(4488, 1616)
 
-[node name="PipeBg2" parent="." index="112"]
+[node name="PipeBg2" parent="." index="113"]
 script = ExtResource("8_33hko")
 medium = true
 
-[node name="QuestionBlockLife" parent="." index="129"]
+[node name="QuestionBlockLife" parent="." index="130"]
 position = Vector2(5456, 1232)
 result = SubResource("Resource_qsmsj")
 
-[node name="QuestionBlock21" parent="." index="136"]
+[node name="QuestionBlock21" parent="." index="137"]
 result = SubResource("Resource_w8t2w")
 
-[node name="QuestionBlock22" parent="." index="137"]
+[node name="QuestionBlock22" parent="." index="138"]
 result = SubResource("Resource_k7f7j")
 
-[node name="QuestionBlock26" parent="." index="138"]
+[node name="QuestionBlock26" parent="." index="139"]
 result = SubResource("Resource_obre3")
 
-[node name="KoopaRed3" parent="." index="140" instance=ExtResource("9_gk61t")]
+[node name="KoopaRed3" parent="." index="141" instance=ExtResource("9_gk61t")]
 position = Vector2(6192, 1360)
 
-[node name="KoopaRed4" parent="." index="141" instance=ExtResource("9_gk61t")]
+[node name="KoopaRed4" parent="." index="142" instance=ExtResource("9_gk61t")]
 position = Vector2(6320, 1360)
 
-[node name="KoopaRed5" parent="." index="142" instance=ExtResource("9_gk61t")]
+[node name="KoopaRed5" parent="." index="143" instance=ExtResource("9_gk61t")]
 position = Vector2(6384, 1360)
 
-[node name="Sign" parent="." index="150"]
+[node name="Sign" parent="." index="151"]
 position = Vector2(2296, 1536)
 
-[node name="KoopaGreen3" parent="." index="151" instance=ExtResource("10_74hyw")]
+[node name="KoopaGreen3" parent="." index="152" instance=ExtResource("10_74hyw")]
 position = Vector2(448, 1104)
 
-[node name="KoopaGreen4" parent="." index="152" instance=ExtResource("10_74hyw")]
+[node name="KoopaGreen4" parent="." index="153" instance=ExtResource("10_74hyw")]
 position = Vector2(656, 1360)
 
-[node name="KoopaGreen5" parent="." index="153" instance=ExtResource("10_74hyw")]
+[node name="KoopaGreen5" parent="." index="154" instance=ExtResource("10_74hyw")]
 position = Vector2(720, 1360)
 
-[node name="SpinyRed" parent="." index="154" instance=ExtResource("11_ly1k3")]
+[node name="SpinyRed" parent="." index="155" instance=ExtResource("11_ly1k3")]
 position = Vector2(592, 1232)
 
-[node name="SpinyRed2" parent="." index="155" instance=ExtResource("11_ly1k3")]
+[node name="SpinyRed2" parent="." index="156" instance=ExtResource("11_ly1k3")]
 position = Vector2(2576, 1360)
 
-[node name="SpinyRed3" parent="." index="156" instance=ExtResource("11_ly1k3")]
+[node name="SpinyRed3" parent="." index="157" instance=ExtResource("11_ly1k3")]
 position = Vector2(3536, 1360)
 
-[node name="SpinyRed4" parent="." index="157" instance=ExtResource("11_ly1k3")]
+[node name="SpinyRed4" parent="." index="158" instance=ExtResource("11_ly1k3")]
 position = Vector2(4208, 1136)
 
-[node name="Lava" parent="." index="158" instance=ExtResource("14_7ky5d")]
+[node name="Lava" parent="." index="159" instance=ExtResource("14_7ky5d")]
 offset_left = 3552.0
 offset_top = 1408.0
 offset_right = 3616.0
 offset_bottom = 1472.0
 
-[node name="Lava2" parent="." index="159" instance=ExtResource("14_7ky5d")]
+[node name="Lava2" parent="." index="160" instance=ExtResource("14_7ky5d")]
 offset_left = 3680.0
 offset_top = 1408.0
 offset_right = 3744.0
 offset_bottom = 1472.0
 
-[node name="Lava3" parent="." index="160" instance=ExtResource("14_7ky5d")]
+[node name="Lava3" parent="." index="161" instance=ExtResource("14_7ky5d")]
 offset_left = 3808.0
 offset_top = 1408.0
 offset_right = 4032.0
 offset_bottom = 1472.0
 
-[node name="Lava4" parent="." index="161" instance=ExtResource("14_7ky5d")]
+[node name="Lava4" parent="." index="162" instance=ExtResource("14_7ky5d")]
 offset_left = 5088.0
 offset_top = 1408.0
 offset_right = 5280.0
 offset_bottom = 1472.0
 
-[node name="Podoboo" parent="." index="162" instance=ExtResource("15_wk7ho")]
+[node name="Podoboo" parent="." index="163" instance=ExtResource("15_wk7ho")]
 position = Vector2(3904, 1424)
 interval = 1.0
 jumping_height = 320.0
 
-[node name="Podoboo2" parent="." index="163" instance=ExtResource("15_wk7ho")]
+[node name="Podoboo2" parent="." index="164" instance=ExtResource("15_wk7ho")]
 position = Vector2(5184, 1424)
 interval = 1.0
 jumping_height = 320.0
 
-[node name="Lava5" parent="." index="164" instance=ExtResource("14_7ky5d")]
+[node name="Lava5" parent="." index="165" instance=ExtResource("14_7ky5d")]
 offset_left = 5696.0
 offset_top = 1408.0
 offset_right = 5984.0
 offset_bottom = 1472.0
 
-[node name="Podoboo3" parent="." index="165" instance=ExtResource("15_wk7ho")]
+[node name="Podoboo3" parent="." index="166" instance=ExtResource("15_wk7ho")]
 position = Vector2(5792, 1424)
 interval = 1.0
 jumping_height = 320.0
 
-[node name="Node2D" type="Node2D" parent="." index="166"]
+[node name="Node2D" type="Node2D" parent="." index="167"]
 position = Vector2(3651.12, 891)
 script = ExtResource("8_33hko")
 
