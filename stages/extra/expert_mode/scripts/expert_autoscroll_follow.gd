@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 	super(delta)
 	if speed < -1 && !notified:
 		notified = true
+		things_respawned.emit()
 		player_camera_2d.enable_left_border_death = false
 		player_camera_2d.enable_right_border_death = true
 		for i in Scenes.current_scene.get_children():

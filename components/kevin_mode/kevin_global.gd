@@ -23,10 +23,14 @@ func patch_mario() -> void:
 	if !OS.has_feature("template") && Input.is_action_pressed("a_delete"):
 		activated = true
 	if Scenes.current_scene.name == "SaveGameRoom": return
-	if is_instance_valid(Thunder._current_player) && activated:
-		Thunder._current_player.death_check_for_lives = false
-		Thunder._current_player.death_wait_time = 9999999
-		Thunder._current_player.died.connect(loludied)
+	var fast_respawn: bool = SettingsManager.get_tweak("fast_respawn", false)
+	var player: Player = Thunder._current_player
+	
+	if player && activated:
+		player.death_check_for_lives = false
+		if player.death_stop_music && !fast_respawn:
+			player.death_wait_time = 9999999
+			player.died.connect(loludied)
 
 func loludied() -> void:
 	Data.values.lives -= 1

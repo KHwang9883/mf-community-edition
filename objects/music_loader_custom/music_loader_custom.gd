@@ -34,8 +34,10 @@ func _ready():
 	if _level is Level && ("res://stages/world_" in _level.jump_to_scene || "res://stages/cutscenes/ending" in _level.jump_to_scene):
 		(func():
 			var pl = Thunder._current_player
-			while !is_instance_valid(pl):
+			var _i: int = 0
+			while !is_instance_valid(pl) && _i < 200:
 				await get_tree().physics_frame
+				_i += 1
 			pl.damaged.connect(func():
 				ProfileManager.current_profile.data.damaged = true
 			)
@@ -130,7 +132,7 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 func _fade_in_tweak(player, ind: int) -> void:
 	if !SettingsManager.get_tweak("bgm_fade_in_bug_emulation", false):
 		return
-	await get_tree().create_timer(0.017, true, false, true).timeout
+	await get_tree().create_timer(0.02, true, false, true).timeout
 	if ind == 0 && !ignore_fade_in_tweak && is_instance_valid(player):
 		player.volume_db = -59
 		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
