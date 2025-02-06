@@ -1,7 +1,6 @@
 [gd_scene load_steps=70 format=4 uid="uid://c8eibnikkrh1r"]
 
 [ext_resource type="PackedScene" uid="uid://denh5x0fbof2s" path="res://stages/world_4/level_4-2.tscn" id="1_i6pwy"]
-[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_62165"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="3_clnq5"]
 [ext_resource type="AudioStream" uid="uid://rf7ervcy1mpc" path="res://music/smw-athletic-drums.ogg" id="3_obt31"]
 [ext_resource type="AudioStream" uid="uid://4qjaoecgim3m" path="res://music/smw-athletic.ogg" id="4_1gre3"]
@@ -54,6 +53,12 @@ stream_0/stream = ExtResource("3_obt31")
 stream_0/volume = 0.0
 stream_1/stream = ExtResource("4_1gre3")
 stream_1/volume = 0.0
+
+[sub_resource type="Curve2D" id="Curve2D_tckn1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 320, 256, -189, -1, 189, 1, 1296, 256, -180, 0, 180, 0, 2000, -160, -38, 0, 38, 0, 2256, -160, -46, 0, 46, 0, 2416, -256, -63, -1, 63, 1, 3584, -256, -87, 1, 87, -1, 4096, -416, -70, 1, 70, -1, 4960, -416, -72, 1, 72, -1, 5280, -720, 0, 0, 0, 0, 9712, -720)
+}
+point_count = 10
 
 [sub_resource type="Resource" id="Resource_ry5t8"]
 resource_local_to_scene = true
@@ -713,7 +718,6 @@ pattern_0 = SubResource("TileMapPattern_16k21")
 size = Vector2(64, 144)
 
 [node name="Level4-2" instance=ExtResource("1_i6pwy")]
-completion_music = ExtResource("2_62165")
 jump_to_scene = "res://stages/world_4/expert_map_4.tscn"
 
 [node name="MusicLoader" parent="." index="0"]
@@ -722,14 +726,15 @@ music = Array[Resource]([ExtResource("5_kqtka")])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("6_bj6vk")]
 
+[node name="Path2D6" parent="." index="2"]
+curve = SubResource("Curve2D_tckn1")
+
 [node name="PathFollow2D" parent="Path2D6" index="0"]
+position = Vector2(320, 256)
 rotates = false
 cubic_interp = false
 script = ExtResource("6_oaryf")
 speed = 100.0
-
-[node name="PlayerCamera2D" parent="Path2D6/PathFollow2D" index="0"]
-enable_right_border_death = false
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer" index="2"]
 offset_top = -976.0
