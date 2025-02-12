@@ -21,9 +21,9 @@ func _physics_process(delta: float) -> void:
 		lava.position.y += delta * lava_speed
 		lava.position.y = clampf(lava.position.y, -480, 0)
 	
-	if platform_path_gray.progress > 332 + 416 && _sound_played == 0:
+	if platform_path_gray.progress > 332 + 224 && _sound_played == 0:
 		_sound_play()
-	elif platform_path_gray.progress > 757 + 416 && _sound_played == 1:
+	elif platform_path_gray.progress > 757 + 224 && _sound_played == 1:
 		_sound_play()
 
 

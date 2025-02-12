@@ -1,12 +1,14 @@
-[gd_scene load_steps=34 format=4 uid="uid://b2qn7ndbgkdnm"]
+[gd_scene load_steps=36 format=4 uid="uid://b2qn7ndbgkdnm"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_t1txt"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_glcsw"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_lghic"]
 [ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="5_rvno6"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="6_l8yls"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_62v1w"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_qqduy"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_cvob4"]
+[ext_resource type="PackedScene" uid="uid://d1owsfek6gp77" path="res://stages/world_4/scripts/emalpka_hud/emalpka_task_control.tscn" id="10_1y4as"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_t7ola"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="12_j0nor"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="14_7k1tp"]
@@ -75,6 +77,7 @@ custom_vars = {}
 [node name="EmalpkaMomento" type="Node2D"]
 script = ExtResource("1_t1txt")
 time = 150
+completion_music = ExtResource("2_glcsw")
 jump_to_scene = "res://stages/world_6/map_6.tscn"
 
 [node name="MusicLoader" type="Node" parent="."]
@@ -106,6 +109,8 @@ tile_map_data = PackedByteArray("AAAKAA0AAgAAAAAACAAPAA4AAgAAAAAACwACAA4AAgAAAAA
 tile_set = ExtResource("9_cvob4")
 
 [node name="HUD" parent="." instance=ExtResource("10_t7ola")]
+
+[node name="TaskControl" parent="HUD" instance=ExtResource("10_1y4as")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

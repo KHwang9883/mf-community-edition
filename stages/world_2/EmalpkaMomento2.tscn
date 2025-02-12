@@ -1,6 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://41pe2tixm5n8"]
+[gd_scene load_steps=30 format=3 uid="uid://41pe2tixm5n8"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_y8slg"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_dqq54"]
 [ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="3_jldek"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_miqs7"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_2ntyi"]
@@ -10,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_e786u"]
 [ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="9_u3xkg"]
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="10_b1jsb"]
+[ext_resource type="PackedScene" uid="uid://d1owsfek6gp77" path="res://stages/world_4/scripts/emalpka_hud/emalpka_task_control.tscn" id="10_beijl"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="11_dtfbu"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_kuweo"]
 [ext_resource type="PackedScene" uid="uid://dbpihjuw0gc01" path="res://engine/objects/bumping_blocks/question_block/templates/Beetroot Question Block.tscn" id="13_ioru6"]
@@ -52,6 +54,7 @@ size = Vector2(32, 224)
 [node name="EmalpkaMomento" type="Node2D"]
 script = ExtResource("1_y8slg")
 time = 150
+completion_music = ExtResource("2_dqq54")
 jump_to_scene = "res://stages/world_2/map_2.tscn"
 
 [node name="MusicLoader" type="Node" parent="."]
@@ -81,6 +84,8 @@ layer_1/tile_data = PackedInt32Array(851978, 2, 524288, 786448, 2, 458752, 78644
 metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("8_e786u")]
+
+[node name="TaskControl" parent="HUD" instance=ExtResource("10_beijl")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -179,6 +184,7 @@ script = ExtResource("12_kuweo")
 [node name="GiantClouds3" type="Sprite2D" parent="Node2D"]
 position = Vector2(560, 200)
 texture = ExtResource("24_rok6q")
+metadata/_edit_lock_ = true
 
 [node name="Sceneria Drzowatne" type="Sprite2D" parent="Node2D"]
 modulate = Color(1, 1, 1, 0.607843)

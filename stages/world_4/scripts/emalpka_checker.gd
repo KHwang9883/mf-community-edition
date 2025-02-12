@@ -1,15 +1,18 @@
 extends Node
 
 @export var enemies: Array[NodePath]
+@export_node_path("Control") var task_control_path: NodePath = ^"../HUD/TaskControl"
 
 @onready var static_body_2d: StaticBody2D = $"../StaticBody2D"
+#@onready var task_control: Control = get_node_or_null(task_control_path)
 
 var has_killed_all: bool
 
+
 func _physics_process(delta: float) -> void:
 	var has_enemies: bool = false
-	for i in enemies:
-		if is_instance_valid(get_node_or_null(i)):
+	for i in len(enemies):
+		if is_instance_valid(get_node_or_null(enemies[i])):
 			has_enemies = true
 	
 	if !has_enemies && !has_killed_all:
