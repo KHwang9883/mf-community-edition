@@ -1,6 +1,7 @@
-[gd_scene load_steps=40 format=3 uid="uid://egtiqcof5fuw"]
+[gd_scene load_steps=42 format=3 uid="uid://egtiqcof5fuw"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_finbd"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_bsoqt"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_fxted"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_git66"]
 [ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="4_yxh54"]
@@ -10,6 +11,7 @@
 [ext_resource type="Script" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="10_j2fau"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_jktvd"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_p6nxv"]
+[ext_resource type="PackedScene" uid="uid://d1owsfek6gp77" path="res://stages/world_4/scripts/emalpka_hud/emalpka_task_control.tscn" id="10_rolyb"]
 [ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="11_letbg"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_2bfv4"]
 [ext_resource type="PackedScene" uid="uid://dbpihjuw0gc01" path="res://engine/objects/bumping_blocks/question_block/templates/Beetroot Question Block.tscn" id="13_m1wxm"]
@@ -146,6 +148,7 @@ size = Vector2(32, 224)
 [node name="EmalpkaMomento" type="Node2D"]
 script = ExtResource("1_finbd")
 time = 150
+completion_music = ExtResource("2_bsoqt")
 jump_to_scene = "res://stages/world_4/map_4.tscn"
 
 [node name="MusicLoader" type="Node" parent="."]
@@ -175,6 +178,8 @@ layer_1/tile_data = PackedInt32Array(851978, 2, 524288, 917520, 2, 589824)
 metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("10_jktvd")]
+
+[node name="TaskControl" parent="HUD" instance=ExtResource("10_rolyb")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
