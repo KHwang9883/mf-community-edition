@@ -60,15 +60,16 @@ var bg_sounds = []
 
 func _ready() -> void:
 	super()
-	#if CharacterManager.get_character_name() == "Luigi":
-	#	mariomarker.texture = preload("res://stages/extra/climbing_minigame/textures/luigimarker.png")
+	
+	## Subtract from this to skip intro if onetime blocks are false
+	var subtimer: float = 0.0 if Data.values.onetime_blocks else 6.8
 
-	get_tree().create_timer(20, false).timeout.connect(podo_create)
+	get_tree().create_timer(20 - subtimer, false).timeout.connect(podo_create)
 	
 	Console.executed.connect(func(command_name, args):
 		if command_name == "finish" && !TransitionManager.current_transition:
 			start_transition()
-	)
+	, CONNECT_ONE_SHOT)
 
 	#get_tree().create_timer(40, false).timeout.connect(func():
 		#roto_create()
@@ -81,13 +82,14 @@ func _ready() -> void:
 	y_counter = moving_group.global_position.y
 
 	var _voices = CharacterManager.get_voice_line("oh_no")
-	Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)])
+	if Data.values.onetime_blocks:
+		Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)])
 
-	var tween = goodluck.create_tween().set_trans(Tween.TRANS_SINE)
-	tween.tween_property(goodluck, "position:x", 256, 1).set_ease(Tween.EASE_OUT)
-	tween.tween_property(goodluck, "position:x", 384, 3).set_trans(Tween.TRANS_LINEAR)
-	tween.tween_property(goodluck, "position:x", 816, 1).set_ease(Tween.EASE_IN)
-	tween.tween_callback(goodluck.queue_free)
+		var tween = goodluck.create_tween().set_trans(Tween.TRANS_SINE)
+		tween.tween_property(goodluck, "position:x", 256, 1).set_ease(Tween.EASE_OUT)
+		tween.tween_property(goodluck, "position:x", 384, 3).set_trans(Tween.TRANS_LINEAR)
+		tween.tween_property(goodluck, "position:x", 816, 1).set_ease(Tween.EASE_IN)
+		tween.tween_callback(goodluck.queue_free)
 
 	var tw = strelochka.create_tween().set_loops().set_trans(Tween.TRANS_SINE)
 	tw.tween_property(strelochka, "modulate:a", 0.0, 0.5).set_ease(Tween.EASE_IN)
@@ -103,27 +105,46 @@ func _ready() -> void:
 
 	if 'lavarun_difficulty' in Data.values:
 		difficulty = Data.values['lavarun_difficulty']
+	elif 'lavarun_difficulty' in Data.technical_values:
+		difficulty = Data.technical_values['lavarun_difficulty']
+		Data.values['lavarun_difficulty'] = difficulty
+		Data.technical_values.erase('lavarun_difficulty')
+	
 	if 'lavarun_after' in Data.values:
 		final_cutscene = Data.values['lavarun_after']
+	elif 'lavarun_after' in Data.technical_values:
+		final_cutscene = Data.technical_values['lavarun_after']
+		Data.technical_values.erase('lavarun_after')
 
 	await Scenes.current_scene.stage_ready
 
 	Thunder._current_player.died_with_body.connect(death_sequence)
+	if KevinGlobal.activated || (Data.values.lives == 0 && Thunder._current_player.death_check_for_lives):
+		Thunder._current_player.death_stop_music = true
+	
+	if Data.values.onetime_blocks && difficulty >= 4 && KevinGlobal.activated:
+		var kevinlabel: Label = $"../../LabelKevin"
+		kevinlabel.show()
+		var twwt = kevinlabel.create_tween().set_trans(Tween.TRANS_SINE)
+		twwt.tween_property(kevinlabel, "position:y", 448.0, 0.5).set_ease(Tween.EASE_OUT)
+		twwt.tween_interval(5.0)
+		twwt.tween_property(kevinlabel, "modulate:a", 0.0, 1.0)
+		twwt.tween_callback(kevinlabel.queue_free)
 
-	get_tree().create_timer(15, false).timeout.connect(big_fish_create)
+	get_tree().create_timer(15 - subtimer, false).timeout.connect(big_fish_create)
 
 	if difficulty > 0:
-		get_tree().create_timer(25 if difficulty < 4 else 18, false).timeout.connect(bullet_create)
+		get_tree().create_timer(25 - subtimer if difficulty < 4 else 18 - subtimer, false).timeout.connect(bullet_create)
 	if difficulty > 1:
-		get_tree().create_timer(25, false).timeout.connect(stihl_create)
+		get_tree().create_timer(25 - subtimer, false).timeout.connect(stihl_create)
 	if difficulty > 2:
-		get_tree().create_timer(28, false).timeout.connect(volcano_up)
-		get_tree().create_timer(23, false).timeout.connect(bullet_create.bind(true))
+		get_tree().create_timer(28 - subtimer, false).timeout.connect(volcano_up)
+		get_tree().create_timer(23 - subtimer, false).timeout.connect(bullet_create.bind(true))
 	if difficulty > 3:
-		get_tree().create_timer(12, false).timeout.connect(lakitu)
+		get_tree().create_timer(12 - subtimer, false).timeout.connect(lakitu)
 		
 
-	await get_tree().create_timer(7.67, false, false, true).timeout
+	await get_tree().create_timer(7.67 - subtimer, false, false, true).timeout
 	moving = true
 	if Audio._music_channels.get(1):
 		Audio._music_channels[1].process_mode = Node.PROCESS_MODE_ALWAYS
@@ -187,7 +208,10 @@ func _physics_process(_delta: float) -> void:
 
 	mariomarker.position.y = mariomarker_init_pos + (moving_group.global_position.y / 8 / (difficulty + 1))
 	if mariomarker.global_position.y < 96:
-		start_transition()
+		if player:
+			start_transition()
+		else:
+			mariomarker.global_position.y = 95
 
 	#Data.values['miles'] = int(abs(moving_group.global_position.y))
 #
@@ -197,13 +221,23 @@ func _physics_process(_delta: float) -> void:
 
 func death_sequence(body: Node2D) -> void:
 	await get_tree().physics_frame
-	if Data.values.lives == 0:
-		body.wait_time = 3.0
+	if KevinGlobal.activated:
+		Thunder.reset_player_state()
+		_kevin_touch()
 		return
-	Data.values.lives -= 1
+		
+	if Data.values.lives == 0:
+		body.wait_time = 2.5
+		Data.technical_values['lavarun_difficulty'] = difficulty
+	
+		if 'lavarun_after' in Data.values:
+			Data.technical_values['lavarun_after'] = Data.values['lavarun_after']
+		return
 	await get_tree().create_timer(2.0, false).timeout
 	Thunder.reset_player_state()
 	var new_player = MARIO.instantiate()
+	if Data.values.lives == 0:
+		new_player.death_stop_music = true
 	#new_player.suit = null
 	var new_plat = PLATFORM_PATH_CLOUD.instantiate()
 	new_player.position = moving_group.position + Vector2(320, 160)
@@ -218,6 +252,7 @@ func death_sequence(body: Node2D) -> void:
 	tw2.tween_callback(body.queue_free)
 	Thunder._current_player.invincible.call_deferred(3)
 	Thunder._current_player.died_with_body.connect(death_sequence, CONNECT_DEFERRED)
+	Data.values.lives -= 1
 
 
 func create_platform() -> void:
@@ -252,7 +287,10 @@ func create_platform() -> void:
 		floweri.appear_distance = 0
 		floweri.force_powerup_state = true
 		Scenes.current_scene.add_child(floweri)
-		flower_counter = 10
+		match difficulty:
+			3: flower_counter = 12
+			4: flower_counter = 18
+			_: flower_counter = 10
 	
 	# goomba spawn for expert mode
 	goomba_counter -= 1
@@ -448,3 +486,11 @@ func start_transition() -> void:
 			)
 	else:
 		printerr("[Level] Jump to scene is not defined in the level.")
+
+
+func _kevin_touch() -> void:
+	KevinGlobal.loludied()
+
+
+#func _exit_tree() -> void:
+#	Thunder._disconnect(KevinGlobal.touched_kevin, _kevin_touch)

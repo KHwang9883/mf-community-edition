@@ -2,6 +2,8 @@ extends Node
 
 const KEVIN_SCENE = preload("res://objects/chorniy_mario/chorniy_mario.tscn")
 
+signal touched_kevin
+
 var activated: bool = false
 var _current_kevin: Area2D
 var wait_time: float
