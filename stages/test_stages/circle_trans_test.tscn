@@ -1,0 +1,166 @@
+[gd_scene load_steps=18 format=4 uid="uid://bykpsfhniyc13"]
+
+[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_niwmw"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_8h2lp"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_v1oh5"]
+[ext_resource type="Script" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_p4101"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_cahna"]
+[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="6_4rfmp"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_kss8b"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ka8b1"]
+[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="9_bp1is"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_ep8hu"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_dqwm0"]
+[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="12_aqawt"]
+[ext_resource type="Script" path="res://stages/test_stages/test_scripts/node.gd" id="13_0nwmd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cnio6"]
+texture = ExtResource("10_ep8hu")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_mtgak"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_cnio6")
+
+[sub_resource type="Gradient" id="Gradient_11p8q"]
+colors = PackedColorArray(1, 1, 1, 1, 0.247059, 0.490196, 0.796078, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gajld"]
+gradient = SubResource("Gradient_11p8q")
+width = 640
+height = 480
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[node name="CircleTransTest" type="Node2D"]
+script = ExtResource("1_niwmw")
+completion_music = ExtResource("2_8h2lp")
+
+[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_v1oh5")]
+script = ExtResource("4_p4101")
+
+[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_cahna")]
+position = Vector2(192, 400)
+collision_mask = 16
+slide_on_ceiling = false
+floor_max_angle = 0.837758
+floor_snap_length = 12.0
+platform_on_leave = 2
+script = ExtResource("6_4rfmp")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_kss8b")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_ka8b1")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 11008.0
+offset_bottom = 480.0
+script = ExtResource("9_bp1is")
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAvAA0AAAAAAAAAAAAwAA0AAAAAAAAAAAAxAA0AAAAAAAAAAAAyAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_mtgak")
+metadata/_edit_lock_ = true
+
+[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_dqwm0")]
+script = ExtResource("12_aqawt")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+texture = SubResource("GradientTexture2D_gajld")
+centered = false
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="TransTestLayer" type="CanvasLayer" parent="."]
+script = ExtResource("13_0nwmd")
+
+[node name="Control" type="Control" parent="TransTestLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TransTestLayer/Control"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 69.0
+offset_right = 173.0
+offset_bottom = 240.0
+theme_override_constants/separation = 1
+
+[node name="JumpButton" type="Button" parent="TransTestLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "jump"
+
+[node name="OnPlayerAfterMid" type="CheckButton" parent="TransTestLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Open circle behavior (start)"
+text = "Open on mario"
+
+[node name="IsWithPause" type="CheckButton" parent="TransTestLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Do middle pause"
+text = "With pause"
+
+[node name="HowToCloseCircle" type="OptionButton" parent="TransTestLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Close circle behavior (end)"
+selected = 0
+item_count = 4
+popup/item_0/text = "Unspecified"
+popup/item_0/id = 0
+popup/item_1/text = "Marker on Mario"
+popup/item_1/id = 1
+popup/item_2/text = "Center on Mario"
+popup/item_2/id = 2
+popup/item_3/text = "Screen Center"
+popup/item_3/id = 3
+
+[node name="JumpToWhere" type="OptionButton" parent="TransTestLayer/Control/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "What to do on middle"
+selected = 0
+item_count = 4
+popup/item_0/text = "Reload scene"
+popup/item_0/id = 0
+popup/item_1/text = "To save room"
+popup/item_1/id = 1
+popup/item_2/text = "To main menu"
+popup/item_2/id = 2
+popup/item_3/text = "Test scene"
+popup/item_3/id = 3
+
+[node name="GoBack" type="Button" parent="TransTestLayer/Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = -17.0
+grow_vertical = 0
+tooltip_text = "Go back"
+text = "<"
+
+[connection signal="pressed" from="TransTestLayer/Control/VBoxContainer/JumpButton" to="TransTestLayer" method="_on_button_pressed"]
+[connection signal="toggled" from="TransTestLayer/Control/VBoxContainer/OnPlayerAfterMid" to="TransTestLayer" method="_on_check_button_2_toggled"]
+[connection signal="toggled" from="TransTestLayer/Control/VBoxContainer/IsWithPause" to="TransTestLayer" method="_on_check_button_3_toggled"]
+[connection signal="item_selected" from="TransTestLayer/Control/VBoxContainer/HowToCloseCircle" to="TransTestLayer" method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="TransTestLayer/Control/VBoxContainer/JumpToWhere" to="TransTestLayer" method="_on_set_scene_item_selected"]
+[connection signal="pressed" from="TransTestLayer/Control/GoBack" to="TransTestLayer" method="_on_button_2_pressed"]
