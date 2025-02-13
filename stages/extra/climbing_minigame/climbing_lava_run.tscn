@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cybsx5nq075w1"]
+[gd_scene load_steps=42 format=3 uid="uid://cybsx5nq075w1"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_k26us"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_m0bua"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dwhsl2atuo53s" path="res://music/climbing_minigame/2.11_Echidnas_Backdown.ogg" id="4_00uoh"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_gnbr6"]
 [ext_resource type="PackedScene" uid="uid://bodwa5aeyxbn3" path="res://stages/extra/climbing_minigame/objects/mario.tscn" id="6_1ddga"]
+[ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_music_custom_script.gd" id="7_gy8dc"]
 [ext_resource type="Texture2D" uid="uid://c3lq87gv2rowf" path="res://stages/extra/climbing_minigame/textures/marioline.png" id="8_qtcu2"]
 [ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_custom_camera.gd" id="9_mwl4c"]
 [ext_resource type="Script" path="res://stages/extra/climbing_minigame/scripts/climbing_head.gd" id="10_qcp1f"]
@@ -22,8 +23,10 @@
 [ext_resource type="Texture2D" uid="uid://nwyeqno7oote" path="res://engine/tilesets/castle/gray_platform_tile.png" id="18_gt44m"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="19_s0br3"]
 [ext_resource type="Texture2D" uid="uid://br752og2ucdxx" path="res://stages/extra/climbing_minigame/textures/goodluck.png" id="19_ttl1q"]
+[ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="20_01ru3"]
 [ext_resource type="Texture2D" uid="uid://jhd21joawail" path="res://stages/extra/climbing_minigame/textures/strelochka.png" id="20_jm3op"]
 [ext_resource type="PackedScene" uid="uid://df5i2eol1nrof" path="res://engine/objects/enemies/volcano/volcano.tscn" id="21_g0brm"]
+[ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="25_byd1p"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xm6v6"]
 blend_mode = 1
@@ -110,6 +113,7 @@ normal = Vector2(0, 1)
 [node name="ClimbingLavaRun" type="Node2D"]
 script = ExtResource("1_k26us")
 time = -1
+enable_restart_in_pause = false
 completion_music = ExtResource("2_m0bua")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_n4tw3")]
@@ -132,6 +136,8 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_00uoh")])
 can_pause = true
+start_from_sec = Array[float]([0.0])
+custom_script = ExtResource("7_gy8dc")
 
 [node name="Mario2" parent="." instance=ExtResource("6_1ddga")]
 
@@ -228,6 +234,15 @@ region_rect = Rect2(0, 0, 96, 16)
 [node name="PosAttack" type="Marker2D" parent="MovingGroup/Bowser"]
 position = Vector2(-15, 5)
 
+[node name="Spike" parent="MovingGroup/Bowser" instance=ExtResource("20_01ru3")]
+visible = false
+position = Vector2(0, 32)
+
+[node name="Spike2" parent="MovingGroup/Bowser" instance=ExtResource("20_01ru3")]
+visible = false
+position = Vector2(20, 12)
+rotation = -0.869174
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("12_3spaf")
 format = 2
@@ -292,3 +307,20 @@ speed_max = Vector2(-150, -400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
 position = Vector2(0, 480)
 shape = SubResource("WorldBoundaryShape2D_3fhm2")
+
+[node name="LabelKevin" type="Label" parent="."]
+visible = false
+z_index = 80
+offset_top = 480.0
+offset_right = 192.0
+offset_bottom = 512.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("25_byd1p")
+theme_override_font_sizes/font_size = 11
+text = "you really don't want
+to do this with kevin..."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true

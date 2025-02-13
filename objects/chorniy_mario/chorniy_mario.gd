@@ -134,6 +134,7 @@ func _physics_process(delta: float) -> void:
 		
 		if overlaps_body(mario) && !mario.warp && warp_invinc_timer <= 0 && !cutscene:
 			mario.die()
+			KevinGlobal.touched_kevin.emit()
 			kevin_podokh()
 	)
 	

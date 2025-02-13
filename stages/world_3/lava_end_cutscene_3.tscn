@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://h5bk363h82qi"]
+[gd_scene load_steps=18 format=3 uid="uid://h5bk363h82qi"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_5n00a"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="2_6ma20"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="12_1h621"]
 [ext_resource type="Script" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="13_obxbc"]
 [ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/world_3-1_fixer.gd" id="14_qbfit"]
+[ext_resource type="Texture2D" uid="uid://cnkotj5u0xogf" path="res://stages/extra/click_bonus_game/textures/congratulations.png" id="16_vq14o"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_victr"]
 normal = Vector2(0, 1)
@@ -272,5 +273,10 @@ script = ExtResource("13_obxbc")
 
 [node name="Node2" type="Node" parent="."]
 script = ExtResource("14_qbfit")
+
+[node name="Congratulations" type="Sprite2D" parent="Node2"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(320, 240)
+texture = ExtResource("16_vq14o")
 
 [connection signal="stage_ready" from="." to="SecretUnlocker" method="unlock_secret"]
