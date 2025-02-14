@@ -1,0 +1,176 @@
+[gd_scene load_steps=9 format=3 uid="uid://ccocwhjh7r450"]
+
+[ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="1_wes73"]
+[ext_resource type="Script" path="res://objects/bullet_launcher_timer/bullet_launcher_timer.gd" id="2_2gcvg"]
+[ext_resource type="Texture2D" uid="uid://dty2xl6fmute3" path="res://objects/bullet_launcher_timer/textures/launcher-border.png" id="2_pdcyk"]
+[ext_resource type="Texture2D" uid="uid://det4xc1gdaj47" path="res://objects/bullet_launcher_timer/textures/launcher-timer-mask.png" id="3_xsd5x"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_spq7i"]
+blend_mode = 3
+
+[sub_resource type="Animation" id="Animation_dti3q"]
+resource_name = "border"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/Left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2997, 1.2321, 1.9995),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(16, 1), Vector2(16, 1), Vector2(-32, 1), Vector2(16, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasGroup/Left:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2997, 1.1322, 1.2321),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasGroup/Right:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.23333, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-16, 1), Vector2(-16, 1), Vector2(32, 1), Vector2(-16, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasGroup/Right:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.13333, 1.23333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.998),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_launch_bullet"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_3r1c6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/Left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-32, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasGroup/Left:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasGroup/Right:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasGroup/Right:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1fkb1"]
+_data = {
+"RESET": SubResource("Animation_3r1c6"),
+"border": SubResource("Animation_dti3q")
+}
+
+[node name="BulletLauncherTimer" instance=ExtResource("1_wes73")]
+script = ExtResource("2_2gcvg")
+shoot_interval_modifier = 1.0
+shoot_interval_offset = 0.0
+stop_shooting_radius = 0.0
+first_shooting_delay = 1e+07
+shooting_delay_min = 1e+07
+shooting_delay_max = 1e+07
+
+[node name="CollisionShape2D" parent="." index="0"]
+metadata/_edit_lock_ = true
+
+[node name="PosBullet" parent="Launcher" index="0"]
+metadata/_edit_lock_ = true
+
+[node name="CanvasGroup" type="CanvasGroup" parent="." index="2"]
+
+[node name="Left" type="Sprite2D" parent="CanvasGroup" index="0"]
+position = Vector2(-32, 1)
+texture = ExtResource("2_pdcyk")
+
+[node name="Right" type="Sprite2D" parent="CanvasGroup" index="1"]
+position = Vector2(-16, 1)
+texture = ExtResource("2_pdcyk")
+flip_h = true
+
+[node name="LauncherTimer" type="Sprite2D" parent="CanvasGroup" index="2"]
+material = SubResource("CanvasItemMaterial_spq7i")
+texture = ExtResource("3_xsd5x")
+metadata/_edit_lock_ = true
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="3"]
+metadata/_edit_lock_ = true
+
+[node name="Interval" parent="." index="4"]
+process_mode = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_1fkb1")
+}
+autoplay = "border"
