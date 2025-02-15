@@ -7,7 +7,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if _has_started:
 		return
 	if !!prog.profile.get("saved_profile_data").get("mario_forever_expert"):
-		progress_skipper.mario_forever_advance()
+		progress_skipper.mario_forever_advance(true)
 		
 	super(mouse_input)
 	
