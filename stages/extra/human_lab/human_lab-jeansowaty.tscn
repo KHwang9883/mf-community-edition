@@ -1,12 +1,14 @@
-[gd_scene load_steps=164 format=4 uid="uid://cmj6qfke5y3hx"]
+[gd_scene load_steps=166 format=4 uid="uid://cmj6qfke5y3hx"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yynw0"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_hxm3b"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_qujh4"]
 [ext_resource type="Script" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ho1ua"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_7njjp"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_a7012"]
 [ext_resource type="AudioStream" uid="uid://c54m13b157yo7" path="res://engine/scenes/credits/music/credits.mod" id="4_ndnur"]
 [ext_resource type="Script" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_l0rrj"]
+[ext_resource type="Script" path="res://stages/extra/human_lab/scripts/jeans_continue_humanlab.gd" id="7_5shsc"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_hgcng"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_o5oyq"]
 [ext_resource type="Script" path="res://engine/components/cam_area/detection_area.gd" id="10_ah2ff"]
@@ -712,6 +714,7 @@ animations = [{
 [node name="HumanLab-jeansowaty" type="Node2D"]
 script = ExtResource("1_yynw0")
 time = -1
+completion_music = ExtResource("2_hxm3b")
 jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
 completion_center_on_player_after_transition = true
 
@@ -734,6 +737,9 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_ndnur")])
+
+[node name="Node" type="Node" parent="MusicLoader"]
+script = ExtResource("7_5shsc")
 
 [node name="Mario" parent="." instance=ExtResource("4_7njjp")]
 position = Vector2(80, 400)

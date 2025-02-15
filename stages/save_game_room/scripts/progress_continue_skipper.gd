@@ -21,10 +21,13 @@ func set_regular_edition() -> void:
 	skip_continue_save()
 
 
-func mario_forever_advance() -> void:
+func mario_forever_advance(is_from_save: bool = false) -> void:
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
 	SettingsManager.set_tweak("harder_level_design", true)
 	SettingsManager.set_tweak("minigames_in_main_worlds", true)
+	if !is_from_save:
+		Data.technical_values.remaining_continues = 3
+	CharacterManager.forced_character = "Mario"
 	#SettingsManager.set_tweak("bowser_stomping", true)
 	#SettingsManager.set_tweak("better_springboards", false)
