@@ -31,7 +31,10 @@ func suspended_game_logic() -> void:
 		ProfileManager.current_profile.data.advanced_edition = true
 	
 	if profile.get(&"saved_player_state"):
-		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(CharacterManager.get_suit(profile.saved_player_state))
+		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(CharacterManager.get_suit(
+			profile.saved_player_state,
+			"Mario" if !!profile.get("saved_profile_data").get("mario_forever_expert") else ""
+		))
 		state_preview.sprite_frames = suit_frames
 		state_preview.play(&"walk")
 		if profile.saved_profile_data.get(&"kevin_mode_enabled"):

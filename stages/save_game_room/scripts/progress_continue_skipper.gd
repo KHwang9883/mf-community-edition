@@ -29,5 +29,8 @@ func mario_forever_advance(is_from_save: bool = false) -> void:
 	if !is_from_save:
 		Data.technical_values.remaining_continues = 3
 	CharacterManager.forced_character = "Mario"
+	var pl = Thunder._current_player
+	if pl && pl is Player:
+		pl.change_suit(CharacterManager.get_suit(Thunder._current_player_state.name, "Mario"), false, true)
 	#SettingsManager.set_tweak("bowser_stomping", true)
 	#SettingsManager.set_tweak("better_springboards", false)
