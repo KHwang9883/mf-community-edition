@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce40twtgpwpra"]
+
+[ext_resource type="Script" path="res://engine/objects/fluid/lava_area.gd" id="1_770v7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sjij6"]
+width = 32
+height = 32
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_mubo6")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68onr"]
+size = Vector2(32, 64)
+
+[node name="Sprite2D" type="Sprite2D"]
+process_mode = 1
+use_parent_material = true
+texture = SubResource("NoiseTexture2D_sjij6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 640.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
+visible = false
+collision_layer = 128
+collision_mask = 7
+script = ExtResource("1_770v7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_68onr")
