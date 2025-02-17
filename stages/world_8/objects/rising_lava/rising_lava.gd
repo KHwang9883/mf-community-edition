@@ -6,7 +6,6 @@ extends Node2D
 @onready var timer: Timer = $Timer # Timer
 @onready var static_body_2d = $"../ParallaxBackground/ParallaxLayer/StaticBody2D"
 @onready var sound: AudioStreamPlayer2D = $Lava/SoundRising
-@onready var sound_accel: AudioStreamPlayer2D = $Lava/SoundAccel
 
 var rising_step: int
 var started_rising: bool
@@ -77,7 +76,6 @@ func _start_rising() -> void:
 
 func _accelerate() -> void:
 	create_tween().tween_property(self, "lava_speed", lava_speed - 37.5, 1)
-	#sound_accel.play()
 	lava_hud_animation.play("warning_accelerated")
 
 
