@@ -1,5 +1,9 @@
 extends Node2D
 
+const PODOBOO = preload("res://engine/objects/enemies/podoboo/podoboo.tscn")
+const SHOOT = preload("res://engine/objects/projectiles/sounds/shoot.wav")
+const BOWSER_FLAME = preload("res://engine/objects/bosses/bowser/sounds/bowser_flame.wav")
+
 @onready var lava_top_hud = $"../HUD/LavaTopHUD"
 @onready var lava_hud = $"../HUD/LavaHUD"
 #@onready var lava_hud_animation: AnimationPlayer = $"../HUD/LavaHUD/Animation"
@@ -10,6 +14,9 @@ extends Node2D
 @onready var lava_top: Node2D = $LavaTop
 @onready var light_effect_lava: Node2D = $LightEffectLava
 @onready var marker_2d: Marker2D = $Marker2D
+@onready var podoboos: Node2D = $"../Podoboos"
+@onready var podoboos_mark: Marker2D = $"../Podoboos/Marker2D"
+@onready var podoboos_arr: Array
 
 var lava_arr_top: Array[Node2D]
 var lava_arr_bottom: Array[Node2D]
@@ -22,9 +29,11 @@ var player: Player
 var s_timer: float
 var s_freq: float
 var slowdown_tw: Tween
+var next_podoboo: int
 
 func _ready():
 	player = Thunder._current_player
+	podoboos_arr = podoboos.get_children()
 	
 	var lava_base = lava_bowser.get_child(0)
 	lava_arr_bottom.resize(22)
@@ -55,7 +64,7 @@ func _ready():
 	light_effect_lava.queue_free()
 	
 	var tw = create_tween()
-	tw.tween_property(self, "s_freq", 96, 2.0)
+	tw.tween_property(self, "s_freq", 96, 4.0)
 	tw.tween_property(self, "lava_speed", -50, 0.5)
 	#timer.timeout.connect(func():
 		#_start_rising()
@@ -82,6 +91,32 @@ func _physics_process(delta):
 				slowdown_tw.tween_property(self, "lava_speed", -50, 3.0)
 				slowdown_tw.tween_callback(print.bind("Rising complete"))
 				#_accelerate()
+			1 when marker_2d.global_position.y < podoboos_mark.global_position.y:
+				rising_step = 2
+				next_podoboo = 1
+				Audio.play_1d_sound(BOWSER_FLAME, false)
+				var tw = create_tween().set_loops()
+				tw.tween_property($PointLight2D, "energy", 2.4, 0.5)
+				tw.tween_property($PointLight2D, "energy", 1.2, 0.5)
+				var tw2 = create_tween().set_loops()
+				tw2.tween_property($PointLight2D2, "energy", 2.4, 0.5)
+				tw2.tween_property($PointLight2D2, "energy", 1.2, 0.5)
+			2 when marker_2d.global_position.y < podoboos_arr[next_podoboo].global_position.y:
+				var _marker: Vector2 = podoboos_arr[next_podoboo].global_position
+				next_podoboo += 1
+				var _podo = PODOBOO.instantiate()
+				_podo.one_shot = true
+				var _tindex: int = round( (_marker.x - 16) / 32.0 )
+				var podo_y = lava_arr_bottom[_tindex].global_position.y
+				_podo.position = Vector2(_marker.x, podo_y)
+				_podo.jumping_height = 232
+				_podo.interval = 0
+				_podo.jumping = true
+				_podo._on_jump()
+				_podo.reset_physics_interpolation()
+				Scenes.current_scene.add_child(_podo)
+				Audio.play_sound(SHOOT, _podo, false)
+				
 			#1 when player.global_position.y < -4544:
 				#rising_step = 2
 				#_accelerate()
