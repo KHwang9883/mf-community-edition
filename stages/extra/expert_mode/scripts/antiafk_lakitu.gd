@@ -15,6 +15,11 @@ var tw: Tween
 
 @onready var label: Label = $Label
 
+func _ready() -> void:
+	SettingsManager.set_tweak("stomping_combo", false)
+	SettingsManager.set_tweak("harder_level_design", true)
+	SettingsManager.set_tweak("minigames_in_main_worlds", true)
+
 func _physics_process(delta: float) -> void:
 	var player = Thunder._current_player
 	if !player || player.no_movement || player.completed || player.warp != player.Warp.NONE: return
