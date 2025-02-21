@@ -5,6 +5,28 @@ func _ready() -> void:
 	death_music_override = _fal[randi_range(0, len(_fal) - 1)]
 	super()
 
+
+func hurt(tags: Dictionary = {}) -> void:
+	if !suit || debug_god || is_hurting:
+		return
+	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
+		return
+	if warp != Warp.NONE: return
+	is_hurting = true
+
+	if suit.gets_hurt_to:
+		if ProfileManager.current_profile.data.get("mario_forever_expert"):
+			change_suit(CharacterManager.get_suit("small", "Mario"), false, false)
+		else:
+			change_suit(suit.gets_hurt_to)
+		invincible.call_deferred(tags.get(&"hurt_duration", 2))
+		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch, ignore_pause = true})
+	else:
+		die(tags)
+
+	damaged.emit()
+
+
 func die(tags: Dictionary = {}) -> void:
 	if warp != Warp.NONE: return
 	if debug_god: return

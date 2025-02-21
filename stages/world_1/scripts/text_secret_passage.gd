@@ -7,6 +7,7 @@ extends CanvasItem
 @export var fade_on_end := false
 @export_file("*.tscn", "*.scn") var change_scene: String
 @export_file("*.tscn", "*.scn") var remade_level_tweak_scene: String
+@export var skip_suspended_profile_save: bool = true
 @export var save_to_profile_as_current_world: bool = false
 @export var circle_transition_center_on_player: bool = false
 
@@ -46,7 +47,7 @@ func trigger_transition() -> void:
 			ProfileManager.current_profile.data.current_world = goto_scene
 			ProfileManager.save_current_profile()
 		else:
-			Data.values.skip_progress_continue = true
+			Data.values.skip_progress_continue = skip_suspended_profile_save
 		
 		if Data.values.get("map_force_selected_marker"):
 			Data.values.map_force_go_next = true

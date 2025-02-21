@@ -16,9 +16,11 @@ var tw: Tween
 @onready var label: Label = $Label
 
 func _ready() -> void:
-	SettingsManager.set_tweak("stomping_combo", false)
-	SettingsManager.set_tweak("harder_level_design", true)
-	SettingsManager.set_tweak("minigames_in_main_worlds", true)
+	if !ProfileManager.current_profile.data.get("mario_forever_expert"):
+		SettingsManager.set_tweak("stomping_combo", false)
+		SettingsManager.set_tweak("harder_level_design", true)
+		SettingsManager.set_tweak("minigames_in_main_worlds", true)
+		ProfileManager.current_profile.data["mario_forever_expert"] = true
 
 func _physics_process(delta: float) -> void:
 	var player = Thunder._current_player

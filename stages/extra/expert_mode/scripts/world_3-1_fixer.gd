@@ -8,10 +8,15 @@ func _ready() -> void:
 		ProfileManager.current_profile.complete_level(path)
 		ProfileManager.save_current_profile()
 	
+	Scenes.custom_scenes.game_over.custom_resume_scene = ""
 	
 	await get_tree().create_timer(0.6, false).timeout
+	var toadd: int = 0
+	if Data.values.lives > 4:
+		toadd = Data.values.lives - 4
 	if "lavarun_lives" in Data.technical_values:
 		Data.values.lives = Data.technical_values.lavarun_lives
+		Data.values.lives += toadd
 		Data.technical_values.erase("lavarun_lives")
 	Audio.play_1d_sound(APPLEUSE, true, { ignore_pause = true })
 
