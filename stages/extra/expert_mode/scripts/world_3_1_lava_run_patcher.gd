@@ -11,3 +11,4 @@ func hello() -> void:
 			Data.values.lives = 4
 	Data.values['lavarun_difficulty'] = climbing_set_difficulty
 	Data.values['lavarun_after'] = climbing_after_scene
+	Scenes.custom_scenes.game_over.custom_resume_scene = Scenes.current_scene.scene_file_path

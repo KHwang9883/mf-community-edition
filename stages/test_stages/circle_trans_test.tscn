@@ -1,17 +1,13 @@
-[gd_scene load_steps=18 format=4 uid="uid://bykpsfhniyc13"]
+[gd_scene load_steps=14 format=4 uid="uid://bykpsfhniyc13"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_niwmw"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_8h2lp"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_v1oh5"]
-[ext_resource type="Script" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_p4101"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_cahna"]
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="6_4rfmp"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_kss8b"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ka8b1"]
-[ext_resource type="Script" path="res://engine/components/cam_area/cam_area.gd" id="9_bp1is"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_ep8hu"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_dqwm0"]
-[ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="12_aqawt"]
 [ext_resource type="Script" path="res://stages/test_stages/test_scripts/node.gd" id="13_0nwmd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cnio6"]
@@ -40,31 +36,19 @@ fill_to = Vector2(0, 0)
 script = ExtResource("1_niwmw")
 completion_music = ExtResource("2_8h2lp")
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_v1oh5")]
-script = ExtResource("4_p4101")
+[node name="MusicLoader" parent="." instance=ExtResource("3_v1oh5")]
 
-[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_cahna")]
+[node name="Player" parent="." instance=ExtResource("5_cahna")]
 position = Vector2(192, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 12.0
-platform_on_leave = 2
-script = ExtResource("6_4rfmp")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("7_kss8b")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_ka8b1")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("8_ka8b1")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("9_bp1is")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -72,8 +56,7 @@ tile_map_data = PackedByteArray("AAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAA
 tile_set = SubResource("TileSet_mtgak")
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_dqwm0")]
-script = ExtResource("12_aqawt")
+[node name="HUD" parent="." instance=ExtResource("11_dqwm0")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

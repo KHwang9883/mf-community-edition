@@ -80,6 +80,31 @@ func show_achievement(text: String, title: String, emit_sound: bool) -> void:
 	label.size.x = 192
 	label.position.y = marker_2d.position.y + label.size.y + 8
 	label.modulate.a = 1.0
+	label.modulate.g = 1.0
+	label.modulate.b = 1.0
+	label.text = "%s
+%s" % [title, text]
+	var tw = create_tween().set_parallel()
+	tw.tween_property(label, "position:y", marker_2d.position.y, 0.8)
+	tw.tween_property(label, "modulate:a", marker_2d.modulate.a, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	await get_tree().create_timer(5.0, true, false, true).timeout
+	if len(toast_queue) == 0:
+		tw = create_tween()
+		tw.tween_property(label, "modulate:a", 0.0, 2.0)
+	
+	_is_free = true
+
+
+func show_failure(text: String, title: String = "achievement failed") -> void:
+	if is_console_enabled() || !SettingsManager.get_tweak("failure_notification", false):
+		return
+	_is_free = false
+	label.text = ""
+	label.size.x = 192
+	label.position.y = marker_2d.position.y + label.size.y + 8
+	label.modulate.a = 1.0
+	label.modulate.g = 0.4
+	label.modulate.b = 0.333
 	label.text = "%s
 %s" % [title, text]
 	var tw = create_tween().set_parallel()
@@ -96,7 +121,7 @@ func show_achievement(text: String, title: String, emit_sound: bool) -> void:
 func load_secrets() -> void:
 	var data: Dictionary = SettingsManager.load_data(secrets_path, "Achievements")
 	if data.is_empty():
-		print("A delaye, a dela. A delayed gamne, a delayepb. Bad Game Design.")
+		print("[Secrets Manager] No achievements found.")
 		return
 	
 	secrets = data

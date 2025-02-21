@@ -39,9 +39,13 @@ func _ready():
 				await get_tree().physics_frame
 				_i += 1
 			pl.damaged.connect(func():
+				if ProfileManager.current_profile.data.get("damaged", false):
+					SecretsManager.show_failure("no hit run is now invalid!", "achievement failed")
 				ProfileManager.current_profile.data.damaged = true
 			)
 			pl.died.connect(func():
+				if ProfileManager.current_profile.data.get("died", false):
+					SecretsManager.show_failure("no deaths run is now invalid!", "achievement failed")
 				ProfileManager.current_profile.data.died = true
 			)
 		).call_deferred()
