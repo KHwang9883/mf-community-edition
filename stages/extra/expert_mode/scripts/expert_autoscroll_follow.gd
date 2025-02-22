@@ -9,14 +9,33 @@ var notified = false
 @onready var node_no_checkpoint: Node2D = %NodeNoCheckpoint
 @onready var no_cp: bool = Data.values.checkpoint == -1
 @onready var player_camera_2d: Camera2D = $PlayerCamera2D
+@onready var right_area: Area2D = $RightArea
+@onready var left_area: Area2D = $LeftArea
 
+var r_area_in: bool
+var l_area_in: bool
+var area_timer: float
 
 func _ready() -> void:
 	scroll_stopped.connect(func() -> void:
 		set_speed(100)
 	)
+	right_area.player_enter.connect(set.bind("r_area_in", true))
+	right_area.player_exit.connect(set.bind("r_area_in", false))
+	left_area.player_enter.connect(set.bind("l_area_in", true))
+	left_area.player_exit.connect(set.bind("l_area_in", false))
 
 func _physics_process(delta: float) -> void:
+	if r_area_in && !notified && speed > 1:
+		progress += 15 * delta + minf(area_timer, 50.0)
+		area_timer += delta * 12.5
+	elif l_area_in && notified && speed < -1:
+		progress -= 15 * delta + minf(area_timer, 125.0)
+		player_camera_2d.border_push_offset = 10
+		area_timer += delta * 12
+	else:
+		area_timer = 0
+	
 	super(delta)
 	if speed < -1 && !notified:
 		notified = true

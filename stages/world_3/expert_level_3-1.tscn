@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c0kxa8mci4e8m"]
+[gd_scene load_steps=33 format=3 uid="uid://c0kxa8mci4e8m"]
 
 [ext_resource type="PackedScene" uid="uid://calnaumcqgd6k" path="res://stages/world_3/level_3-1.tscn" id="1_bukgd"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_oq3iq"]
@@ -20,6 +20,37 @@
 [ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="14_gunq2"]
 [ext_resource type="Texture2D" uid="uid://ky8q0s462usu" path="res://objects/jumping_goomba/textures/jumping_goomba.png" id="15_bvfb6"]
 [ext_resource type="PackedScene" uid="uid://df06nfgxm0bjd" path="res://engine/objects/enemies/hammer_bros/beetroot_bro.tscn" id="19_w0mql"]
+[ext_resource type="PackedScene" uid="uid://brkhmn6vdf25a" path="res://engine/objects/bumping_blocks/question_block/templates/Poison Mushroom Question Block.tscn" id="21_q4ke2"]
+[ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="22_w203o"]
+
+[sub_resource type="Resource" id="Resource_v0ad7"]
+resource_local_to_scene = true
+script = ExtResource("4_ixbgt")
+creation_fallback_node = ExtResource("5_104ha")
+creation_nodepack = ExtResource("6_e3d5s")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_74tyf"]
+resource_local_to_scene = true
+script = ExtResource("4_ixbgt")
+creation_nodepack = ExtResource("7_r6jid")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_hjger"]
 resource_local_to_scene = true
@@ -77,21 +108,6 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_v0ad7"]
-resource_local_to_scene = true
-script = ExtResource("4_ixbgt")
-creation_fallback_node = ExtResource("5_104ha")
-creation_nodepack = ExtResource("6_e3d5s")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
 [sub_resource type="Resource" id="Resource_61twv"]
 resource_local_to_scene = true
 script = ExtResource("4_ixbgt")
@@ -135,10 +151,10 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_74tyf"]
+[sub_resource type="Resource" id="Resource_wgb1g"]
 resource_local_to_scene = true
 script = ExtResource("4_ixbgt")
-creation_nodepack = ExtResource("7_r6jid")
+creation_nodepack = ExtResource("22_w203o")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -280,13 +296,13 @@ position = Vector2(3216, 1456)
 position = Vector2(6432, 288)
 
 [node name="Brick56" parent="Objects" index="89"]
-position = Vector2(8000, 706)
+position = Vector2(2800, 48)
+result_counter_value = 1.0
+result = SubResource("Resource_v0ad7")
 
 [node name="Brick57" parent="Objects" index="90"]
-position = Vector2(7968, 706)
-
-[node name="Brick58" parent="Objects" index="91"]
-position = Vector2(7936, 706)
+result_counter_value = 1.0
+result = SubResource("Resource_74tyf")
 
 [node name="QuestionBlock" parent="Objects" index="101"]
 result = SubResource("Resource_hjger")
@@ -354,20 +370,16 @@ position = Vector2(336, 944)
 [node name="Coin46" parent="Objects" index="156" instance=ExtResource("3_o4psc")]
 position = Vector2(368, 944)
 
-[node name="Coin34" parent="Objects" index="162"]
-position = Vector2(7971, 672)
-
-[node name="Coin35" parent="Objects" index="163"]
-position = Vector2(7939, 672)
-
 [node name="QuestionBlockLife" parent="Objects" index="169"]
+position = Vector2(3504, 240)
 result = SubResource("Resource_a43cp")
 
 [node name="QuestionBlockLife2" parent="Objects" index="170"]
+position = Vector2(3472, 240)
 result = SubResource("Resource_fgmm3")
 
 [node name="QuestionBlockLife3" parent="Objects" index="171"]
-result = SubResource("Resource_74tyf")
+result = SubResource("Resource_wgb1g")
 
 [node name="PiranhaPink" parent="Objects" index="173" instance=ExtResource("10_n60xp")]
 position = Vector2(7456, 320)
@@ -518,5 +530,15 @@ position = Vector2(320, 1328)
 
 [node name="BeetrootBro2" parent="." index="53" instance=ExtResource("19_w0mql")]
 position = Vector2(368, 1072)
+
+[node name="QuestionBlockPoisonous" parent="." index="54" instance=ExtResource("21_q4ke2")]
+position = Vector2(3024, 16)
+result = SubResource("Resource_wgb1g")
+exists_once = true
+
+[node name="QuestionBlockPoisonous2" parent="." index="55" instance=ExtResource("21_q4ke2")]
+position = Vector2(3056, 16)
+result = SubResource("Resource_wgb1g")
+exists_once = true
 
 [connection signal="warp_started" from="PipeIn" to="PipeIn/Node" method="hello"]
