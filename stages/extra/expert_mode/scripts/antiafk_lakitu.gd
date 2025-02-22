@@ -27,7 +27,10 @@ func _physics_process(delta: float) -> void:
 	if !player || player.no_movement || player.completed || player.warp != player.Warp.NONE: return
 	timer += delta
 	
-	if (abs(player.speed.x) > 50 || abs(player.speed.y) > 50) && (player.left_right != 0 || player.up_down != 0):
+	if (
+		(abs(player.speed.x) > 50 || abs(player.speed.y) > 50) &&
+		(player.left_right != 0 || player.up_down != 0)
+	) || player.jumped || player.attacked:
 		timer = 0
 		timer_2 = call_every
 		if warned != 0:
