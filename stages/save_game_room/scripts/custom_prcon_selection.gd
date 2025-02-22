@@ -1,15 +1,46 @@
 extends "res://engine/components/progress_continue/scripts/continue_sel.gd"
 
+const message_warning_from_save: String = """warning!
+
+one or more console commands, or a console tweak, have been activated in this save. this affected your save data, and you will not be able to get achievements in this save until it is reset.
+try confirming once again to proceed."""
+
+@export var really_yes: bool = false
+
 @onready var progress_skipper: Node = Scenes.current_scene.get_node("Node")
+@onready var message_block_2: AnimatableBody2D = Scenes.current_scene.get_node("MessageBlock2")
+@onready var progress_continue: Control = $"../.."
+@onready var texture_rect: TextureRect = $"../../../TextureRect"
 
 
 func _handle_select(mouse_input: bool = false) -> void:
 	if _has_started:
 		return
+	if !really_yes && (SecretsManager.is_console_enabled() || !!prog.profile.get("saved_profile_data").get("executed")):
+		message_block_2.message_hidden.connect(_on_message_hidden, CONNECT_ONE_SHOT)
+		texture_rect.visible = true
+		progress_continue.visible = false
+		progress_continue.v_box_container.focused = false
+		if !!prog.profile.get("saved_profile_data").get("executed"):
+			message_block_2.message = message_warning_from_save
+		message_block_2.show_message()
+		return
 	if !!prog.profile.get("saved_profile_data").get("mario_forever_expert"):
 		progress_skipper.mario_forever_advance(true)
-		
+	
 	super(mouse_input)
 	
 	KevinGlobal.activated = !!prog.profile.get("saved_profile_data").get("kevin_mode_enabled")
+	
+	if SecretsManager.is_console_enabled():
+		ProfileManager.current_profile.data.executed = true
+
+
+func _on_message_hidden() -> void:
+	texture_rect.visible = false
+	progress_continue.visible = true
+	really_yes = true
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	progress_continue.v_box_container.focused = true
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=206 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=208 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -151,6 +151,12 @@
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ihry0"]
 load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
+
+[sub_resource type="Gradient" id="Gradient_akj06"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vhp0j"]
+gradient = SubResource("Gradient_akj06")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e5uii"]
 size = Vector2(64, 96)
@@ -1001,6 +1007,7 @@ pipe_out = NodePath("../../PipeOut")
 
 [node name="TextureRect" parent="CanvasLayer2/ProgressContinue/VBoxContainer" index="0"]
 script = ExtResource("11_t2ent")
+really_yes = false
 
 [node name="CursedPreview" type="AnimatedSprite2D" parent="CanvasLayer2/ProgressContinue"]
 visible = false
@@ -1018,6 +1025,16 @@ amount = 24
 process_material = ExtResource("16_k1i2r")
 texture = SubResource("CompressedTexture2D_ihry0")
 lifetime = 0.5
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2"]
+visible = false
+modulate = Color(1, 1, 1, 0.780392)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_vhp0j")
 
 [node name="CamArea" parent="." instance=ExtResource("6_vufed")]
 offset_right = 640.0
