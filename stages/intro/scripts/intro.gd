@@ -12,6 +12,11 @@ var loading_init: bool = false
 func _ready() -> void:
 	SettingsManager.enable_shortcut_scene_change_keys = false
 	print("[Startup] Preparing to compile shaders...")
+	if "--no-shader-precompile" in OS.get_cmdline_user_args():
+		print("[Startup] Found a flag in cmdline arguments, skipping compilation.")
+		loading_init = true
+		return
+		
 	await get_tree().create_timer(0.6, false, true, false).timeout
 	print("[Startup] Compiling shaders...")
 	var cacher = SHADER_CACHER.instantiate()
