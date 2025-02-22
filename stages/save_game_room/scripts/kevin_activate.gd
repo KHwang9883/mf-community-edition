@@ -10,6 +10,7 @@ var progress = 0
 @onready var node_2d = $"../Node2D"
 #@onready var music_overlay = $"../../MusicOverlay"
 @onready var node_2d_2 = $"../Node2D2"
+@onready var kevin_control: Control = $"../../CanvasLayer2/KevinControl"
 
 const SECRET_CODE_TYPE = preload("res://sfx/secret_code_type.ogg")
 const KEVIN_ACTIVATED = preload("res://sfx/kevin_activated.ogg")
@@ -55,6 +56,8 @@ func _physics_process(_delta: float) -> void:
 		music_loader.index = 1
 		node_2d.visible = true
 		node_2d_2.visible = true
+		if !SecretsManager.has_secret("hint_guy_encountered"):
+			kevin_control.toggle()
 		SecretsManager.set_secret("hint_guy_encountered", true, true, false)
 		#music_overlay.displaying_mode = music_overlay.DisplayingMode.TYPER
 		#music_overlay.play(1)
