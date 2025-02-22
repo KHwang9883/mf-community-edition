@@ -27,6 +27,7 @@ const BIG_FISH_BONES = preload("res://stages/extra/climbing_minigame/objects/big
 const MARIO = preload("res://stages/extra/climbing_minigame/objects/mario.tscn")
 const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/platform_path_cloud.tscn")
 const BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_launcher_structure.tscn")
+const BULLET_FIRE_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_fire_launcher_structure.tscn")
 const SND_BOWSER_LAUGH = preload("res://music/climbing_minigame/snd_bowser_laugh.ogg")
 const LAKITU = preload("res://engine/objects/enemies/lakitus/lakitu.tscn")
 const GOOMBA = preload("res://engine/objects/enemies/goombas/goomba.tscn")
@@ -318,11 +319,17 @@ func podo_create() -> void:
 	var podo1 = podoboo.instantiate()
 	podo1.position = Vector2(128, 448-16)
 	podo1.one_shot = true
+	podo1.interval = 0
+	podo1.jumping = true
+	podo1._on_jump()
 	moving_group.add_child(podo1)
 
 	var podo2 = podoboo.instantiate()
 	podo2.position = Vector2(512, 448-16)
 	podo2.one_shot = true
+	podo2.interval = 0
+	podo2.jumping = true
+	podo2._on_jump()
 	moving_group.add_child(podo2)
 
 
@@ -353,8 +360,14 @@ func stihl_create() -> void:
 
 func bullet_create(expert: bool = false) -> void:
 	get_tree().create_timer(10, false).timeout.connect(bullet_create.bind(expert))
-
-	var bul = BULLET_LAUNCHER_STRUCTURE.instantiate() if !expert else EXPERT_BULLET_LAUNCHER_STRUCTURE.instantiate()
+	
+	var bul
+	if expert:
+		bul = EXPERT_BULLET_LAUNCHER_STRUCTURE.instantiate()
+	elif ProfileManager.current_profile.data.get("mario_forever_expert"):
+		bul = BULLET_FIRE_LAUNCHER_STRUCTURE.instantiate()
+	else:
+		bul = BULLET_LAUNCHER_STRUCTURE.instantiate()
 	Scenes.current_scene.add_child(bul)
 	bul.global_position = Vector2(16, global_position.y - 480 - 32)
 	bul.reset_physics_interpolation()
