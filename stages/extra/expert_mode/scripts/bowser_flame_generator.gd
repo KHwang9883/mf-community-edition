@@ -31,7 +31,7 @@ func _on_timer_timeout() -> void:
 		return
 	
 	if !projectile_inst: return
-	var pos_flame: float = cam_center.x + 352
+	var pos_flame: float = cam_center.x + 364
 	#pos_flame.position.x = pos_flame_x * bowser.facing
 	for i in max(1, len(multiple_flames)):
 		NodeCreator.prepare_ins_2d(projectile_inst, self).create_2d().call_method(

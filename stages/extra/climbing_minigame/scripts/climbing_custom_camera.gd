@@ -14,6 +14,7 @@ var last_player_pos: Vector2
 var goomba_counter: int = 7
 
 var _transition_started: bool = false
+var _finish_command_started: bool
 
 const platform = preload("res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn")
 const skulltroopa = preload("res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.tscn")
@@ -68,8 +69,8 @@ func _ready() -> void:
 	get_tree().create_timer(20 - subtimer, false).timeout.connect(podo_create)
 	
 	Console.executed.connect(func(command_name, args):
-		if command_name == "finish" && !TransitionManager.current_transition:
-			start_transition()
+		if command_name == "finish":
+			_finish_command_started = true
 	, CONNECT_ONE_SHOT)
 
 	#get_tree().create_timer(40, false).timeout.connect(func():
@@ -178,6 +179,9 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
+	
+	if _finish_command_started && !TransitionManager.current_transition:
+		start_transition()
 
 	player = Thunder._current_player
 	if player && player.is_on_floor() && !moving:

@@ -1,0 +1,271 @@
+[gd_scene load_steps=26 format=3 uid="uid://dgpie4fdcjrnx"]
+
+[ext_resource type="Script" path="res://stages/extra/expert_mode/scripts/goomba_party_expert.gd" id="1_5bnwl"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_qyo2b"]
+[ext_resource type="AudioStream" uid="uid://c0my5mvbviwhg" path="res://stages/extra/expert_mode/peachtitle.ogg" id="3_yomkb"]
+[ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://gfx/misc/castle_big.png" id="4_qw1c7"]
+[ext_resource type="Texture2D" uid="uid://dydqbjxrnmy8p" path="res://stages/extra/lost_map/gfx/lostmap_title_mario.png" id="5_ifblm"]
+[ext_resource type="Script" path="res://stages/extra/click_bonus_game/scripts/text_find_yellow_stars.gd" id="6_681fn"]
+[ext_resource type="Texture2D" uid="uid://pep4th3s3ua8" path="res://gfx/texts/press_enter_to_begin.png" id="7_albri"]
+[ext_resource type="Texture2D" uid="uid://bp2rfaqv2mwvr" path="res://stages/extra/click_bonus_game/textures/counter.png" id="8_uwgl3"]
+[ext_resource type="Texture2D" uid="uid://0riss0l4eu14" path="res://gfx/texts/toad_logo.png" id="9_8omgk"]
+[ext_resource type="Texture2D" uid="uid://ooahkkmluqw8" path="res://gfx/texts/super_mario.png" id="10_v31qk"]
+[ext_resource type="Texture2D" uid="uid://b6i0laheaghh6" path="res://gfx/fancy_graphics/sparkle_giant.png" id="11_335li"]
+[ext_resource type="Texture2D" uid="uid://cw83ugt64lqqh" path="res://gfx/texts/super_mario_2.png" id="11_sxr0b"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_sl7sw"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="13_71yrv"]
+[ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="14_uhha6"]
+[ext_resource type="VideoStream" path="res://stages/extra/expert_mode/outwantitnow.ogv" id="16_3osou"]
+
+[sub_resource type="Gradient" id="Gradient_hwhno"]
+colors = PackedColorArray(0, 0.152941, 0.811765, 1, 0, 0.654902, 0.937255, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gw52y"]
+gradient = SubResource("Gradient_hwhno")
+width = 489
+
+[sub_resource type="Gradient" id="Gradient_3ocgp"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r10rk"]
+gradient = SubResource("Gradient_3ocgp")
+width = 96
+height = 576
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5bvc"]
+atlas = ExtResource("8_uwgl3")
+region = Rect2(24, 0, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8ktq"]
+atlas = ExtResource("8_uwgl3")
+region = Rect2(0, 0, 24, 32)
+
+[sub_resource type="Gradient" id="Gradient_yr2b2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xnb34"]
+gradient = SubResource("Gradient_yr2b2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bgo6w"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(172, 40, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.08
+scale_max = 0.08
+color_ramp = SubResource("GradientTexture1D_xnb34")
+
+[node name="LostMapTitle" type="Node2D"]
+script = ExtResource("1_5bnwl")
+goto_scene = "res://stages/world_1/expert_map_1.tscn"
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_qyo2b")]
+music = Array[Resource]([ExtResource("3_yomkb")])
+volume_db = Array[float]([-2.0])
+start_from_sec = Array[float]([0.0])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -112
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_gw52y")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(0, 576)
+autoscroll = Vector2(0, 24)
+
+[node name="CastleBig3" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(-16, 400)
+texture = ExtResource("4_qw1c7")
+
+[node name="CastleBig2" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(-16, 208)
+texture = ExtResource("4_qw1c7")
+
+[node name="CastleBig" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(-16, 96)
+texture = ExtResource("4_qw1c7")
+region_enabled = true
+region_rect = Rect2(0, 160, 315, 192)
+
+[node name="CastleBig4" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(672, 400)
+texture = ExtResource("4_qw1c7")
+
+[node name="CastleBig5" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(672, 208)
+texture = ExtResource("4_qw1c7")
+
+[node name="CastleBig6" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(672, 96)
+texture = ExtResource("4_qw1c7")
+region_enabled = true
+region_rect = Rect2(0, 160, 315, 192)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = SubResource("GradientTexture2D_r10rk")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(544, 0)
+texture = SubResource("GradientTexture2D_r10rk")
+centered = false
+flip_h = true
+
+[node name="LostmapTitleMario" type="Sprite2D" parent="."]
+position = Vector2(320, 339)
+texture = ExtResource("5_ifblm")
+
+[node name="Label" type="RichTextLabel" parent="."]
+offset_left = 53.0
+offset_top = 211.0
+offset_right = 193.0
+offset_bottom = 272.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/italics_font_size = 10
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center][i]
+WELL WOULD YOU
+LOOK AT THAT!
+GORGEUS!"
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+visible = false
+offset_top = 352.0
+offset_right = 640.0
+offset_bottom = 405.0
+mouse_filter = 2
+alignment = 1
+script = ExtResource("6_681fn")
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("7_albri")
+stretch_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = -6
+
+[node name="Value1" type="TextureRect" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_m5bvc")
+
+[node name="Value2" type="TextureRect" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_l8ktq")
+
+[node name="Timer" type="Timer" parent="HBoxContainer"]
+wait_time = 0.35
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 640.0
+offset_bottom = 176.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.482353, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("14_uhha6")
+theme_override_font_sizes/font_size = 48
+text = "coming
+%d"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control"]
+offset_left = 80.0
+offset_top = 224.0
+offset_right = 560.0
+offset_bottom = 480.0
+stream = ExtResource("16_3osou")
+bus = &"Sound"
+
+[node name="ToadLogo" type="Sprite2D" parent="."]
+position = Vector2(480, 432)
+texture = ExtResource("9_8omgk")
+centered = false
+
+[node name="SuperMario" type="Sprite2D" parent="."]
+position = Vector2(-32, -336)
+texture = ExtResource("10_v31qk")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="SuperMario"]
+process_material = SubResource("ParticleProcessMaterial_bgo6w")
+texture = ExtResource("11_335li")
+lifetime = 0.5
+visibility_rect = Rect2(-250, -100, 500, 200)
+local_coords = true
+
+[node name="SuperMario2" type="Sprite2D" parent="."]
+position = Vector2(1120, -496)
+texture = ExtResource("11_sxr0b")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="SuperMario2"]
+process_material = SubResource("ParticleProcessMaterial_bgo6w")
+texture = ExtResource("11_335li")
+lifetime = 0.5
+visibility_rect = Rect2(-250, -100, 500, 200)
+local_coords = true
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("12_sl7sw")
+
+[node name="GiantClouds" type="Sprite2D" parent="Node2D"]
+position = Vector2(544, 304)
+texture = ExtResource("13_71yrv")
+metadata/_edit_lock_ = true
+
+[node name="Pause" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 128.0
+offset_top = 430.0
+offset_right = 512.0
+offset_bottom = 471.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0.443137, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("14_uhha6")
+theme_override_font_sizes/font_size = 16
+text = "no need to pause!
+let's play the game!"
+horizontal_alignment = 1
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(304, 80)
+
+[node name="Marker2D2" type="Marker2D" parent="."]
+position = Vector2(304, 170)
+
+[connection signal="timeout" from="HBoxContainer/Timer" to="." method="_on_timer_timeout"]
