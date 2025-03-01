@@ -78,3 +78,8 @@ func _update_string() -> void:
 	if skin_sel_index >= skin_list.size():
 		skin_sel_index = 0
 	print(SkinsManager.current_skin, SettingsManager.settings.skin)
+
+
+func _handle_right_click() -> void:
+	if focused && tweak_description:
+		$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)

@@ -29,6 +29,12 @@ func _ready() -> void:
 			label_2.visible = true
 	)
 	tweaks.connect(&"_show_desc", show_description)
+	SettingsManager.mouse_pressed.connect(func(index: int):
+		if box.scale.x < 0.5: return
+		if index == MOUSE_BUTTON_LEFT && activated:
+			hide_message()
+			activated = false
+	)
 
 
 func _set_invis() -> void:

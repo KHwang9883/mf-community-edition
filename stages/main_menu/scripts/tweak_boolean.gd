@@ -67,3 +67,7 @@ func _handle_toggle(to_set: bool) -> bool:
 		toggle.texture.region.position.y = 0 if to_set else 16
 		return true
 	return false
+
+func _handle_right_click() -> void:
+	if focused && tweak_description:
+		$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
