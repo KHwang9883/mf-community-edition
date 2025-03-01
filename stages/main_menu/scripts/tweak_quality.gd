@@ -69,3 +69,7 @@ func _toggled_option(old_val, new_val) -> void:
 func _update_string() -> void:
 	value.text = STRING[SettingsManager.settings.quality]
 	
+
+func _handle_right_click() -> void:
+	if focused && tweak_description:
+		$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
