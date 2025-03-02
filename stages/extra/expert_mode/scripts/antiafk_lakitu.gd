@@ -130,6 +130,7 @@ func _cancel_stopwatch() -> void:
 		stopwatch_tw.kill()
 		stopwatch_tw = null
 	for i in get_tree().get_nodes_in_group(&"end_level_sequence"):
+		if !i.get(&"_center"): continue
 		var vis = Thunder.get_child_by_class_name(i._center, "VisibleOnScreenNotifier2D") as VisibleOnScreenNotifier2D
 		if vis: vis.show()
 		if vis && vis.enable_node_path == vis.get_path_to(i._center):
