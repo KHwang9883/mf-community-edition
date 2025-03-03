@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://bykpsfhniyc13"]
+[gd_scene load_steps=29 format=4 uid="uid://bykpsfhniyc13"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_niwmw"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_8h2lp"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="15_1kv1w"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="16_12i8m"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="17_48n5x"]
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="19_m3fr6"]
+[ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="20_7lue1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cnio6"]
 texture = ExtResource("10_ep8hu")
@@ -120,7 +122,7 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAvAA0AAAAAAAAAAAAwAA0AAAAAAAAAAAAxAA0AAAAAAAAAAAAyAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAOAAQAAAAAAAAAAAAPAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAARAAQAAAAAAAAAAAARAAMAAAAAAAAAAAALAAIAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAARAAEAAAAAAAAAAAARAAIAAAAAAAAAAAAMAAsAAAAAAAAAAAAMAAwAAAAAAAAAAAASAAsAAAAAAAAAAAASAAwAAAAAAAAAAAAaAAIAAAAAAAAAAAAaAAMAAAAAAAAAAAAaAAQAAAAAAAAAAAAbAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAdAAQAAAAAAAAAAAAeAAQAAAAAAAAAAAAfAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAhAAQAAAAAAAAAAAAiAAQAAAAAAAAAAAAiAAMAAAAAAAAAAAAiAAIAAAAAAAAAAAAiAAEAAAAAAAAAAAAhAAEAAAAAAAAAAAAgAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAdAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAbAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAkAAsAAAAAAAAAAAAkAAwAAAAAAAAAAAAyAAsAAAAAAAAAAAAyAAwAAAAAAAAAAAAzAAwAAAAAAAAAAAA0AAwAAAAAAAAAAAA1AAwAAAAAAAAAAAA2AAwAAAAAAAAAAAA3AAwAAAAAAAAAAAA4AAwAAAAAAAAAAAA5AAwAAAAAAAAAAAA6AAwAAAAAAAAAAAA7AAwAAAAAAAAAAAA8AAwAAAAAAAAAAAA9AAwAAAAAAAAAAAA+AAwAAAAAAAAAAAA/AAwAAAAAAAAAAABAAAwAAAAAAAAAAABBAAwAAAAAAAAAAABCAAwAAAAAAAAAAABDAAwAAAAAAAAAAABEAAwAAAAAAAAAAABFAAwAAAAAAAAAAABGAAwAAAAAAAAAAABDAAIAAAAAAAAAAABEAAIAAAAAAAAAAABFAAIAAAAAAAAAAABGAAIAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAvAA0AAAAAAAAAAAAwAA0AAAAAAAAAAAAxAA0AAAAAAAAAAAAyAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAOAAQAAAAAAAAAAAAPAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAARAAQAAAAAAAAAAAARAAMAAAAAAAAAAAALAAIAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAARAAEAAAAAAAAAAAARAAIAAAAAAAAAAAAMAAsAAAAAAAAAAAAMAAwAAAAAAAAAAAASAAsAAAAAAAAAAAASAAwAAAAAAAAAAAAaAAIAAAAAAAAAAAAaAAMAAAAAAAAAAAAaAAQAAAAAAAAAAAAbAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAdAAQAAAAAAAAAAAAeAAQAAAAAAAAAAAAfAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAhAAQAAAAAAAAAAAAiAAQAAAAAAAAAAAAiAAMAAAAAAAAAAAAiAAIAAAAAAAAAAAAiAAEAAAAAAAAAAAAhAAEAAAAAAAAAAAAgAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAdAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAbAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAkAAsAAAAAAAAAAAAkAAwAAAAAAAAAAAAyAAsAAAAAAAAAAAAyAAwAAAAAAAAAAAAzAAwAAAAAAAAAAAA0AAwAAAAAAAAAAAA1AAwAAAAAAAAAAAA2AAwAAAAAAAAAAAA3AAwAAAAAAAAAAAA4AAwAAAAAAAAAAAA5AAwAAAAAAAAAAAA6AAwAAAAAAAAAAAA7AAwAAAAAAAAAAAA8AAwAAAAAAAAAAAA9AAwAAAAAAAAAAAA+AAwAAAAAAAAAAAA/AAwAAAAAAAAAAABAAAwAAAAAAAAAAABBAAwAAAAAAAAAAABCAAwAAAAAAAAAAABDAAwAAAAAAAAAAABEAAwAAAAAAAAAAABFAAwAAAAAAAAAAABGAAwAAAAAAAAAAABDAAIAAAAAAAAAAABEAAIAAAAAAAAAAABFAAIAAAAAAAAAAABGAAIAAAAAAAAAAAA4AAUAAAAAAAAAAAA5AAUAAAAAAAAAAAA6AAUAAAAAAAAAAAA7AAUAAAAAAAAAAAA8AAUAAAAAAAAAAAA9AAUAAAAAAAAAAAA+AAUAAAAAAAAAAAA/AAUAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_mtgak")
 metadata/_edit_lock_ = true
 
@@ -301,6 +303,150 @@ position = Vector2(1456, 224)
 
 [node name="KoopaParatroopaGreen5" parent="." instance=ExtResource("17_48n5x")]
 position = Vector2(1552, 256)
+
+[node name="Brick" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1808, 208)
+
+[node name="Brick2" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1840, 208)
+
+[node name="Brick3" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1872, 208)
+
+[node name="Brick4" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1904, 208)
+
+[node name="Brick5" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1936, 208)
+
+[node name="Brick6" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1808, 240)
+
+[node name="Brick7" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1840, 240)
+
+[node name="Brick8" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1872, 240)
+
+[node name="Brick9" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1904, 240)
+
+[node name="Brick10" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1936, 240)
+
+[node name="Brick11" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1808, 272)
+
+[node name="Brick12" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1840, 272)
+
+[node name="Brick13" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1872, 272)
+
+[node name="Brick14" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1904, 272)
+
+[node name="Brick15" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1936, 272)
+
+[node name="Brick16" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1808, 304)
+
+[node name="Brick17" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1840, 304)
+
+[node name="Brick18" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1872, 304)
+
+[node name="Brick19" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1904, 304)
+
+[node name="Brick20" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1936, 304)
+
+[node name="Brick21" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1808, 336)
+
+[node name="Brick22" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1840, 336)
+
+[node name="Brick23" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1872, 336)
+
+[node name="Brick24" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1904, 336)
+
+[node name="Brick25" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1936, 336)
+
+[node name="Brick26" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1808, 368)
+
+[node name="Brick27" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1840, 368)
+
+[node name="Brick28" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1872, 368)
+
+[node name="Brick29" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1904, 368)
+
+[node name="Brick30" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1936, 368)
+
+[node name="Brick31" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1968, 208)
+
+[node name="Brick32" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2000, 208)
+
+[node name="Brick33" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2032, 208)
+
+[node name="Brick34" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1968, 240)
+
+[node name="Brick35" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2000, 240)
+
+[node name="Brick36" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2032, 240)
+
+[node name="Brick37" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1968, 272)
+
+[node name="Brick38" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2000, 272)
+
+[node name="Brick39" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2032, 272)
+
+[node name="Brick40" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1968, 304)
+
+[node name="Brick42" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2032, 304)
+
+[node name="Brick43" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1968, 336)
+
+[node name="Brick44" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2000, 336)
+
+[node name="Brick45" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2032, 336)
+
+[node name="Brick46" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(1968, 368)
+
+[node name="Brick47" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2000, 368)
+
+[node name="Brick48" parent="." instance=ExtResource("19_m3fr6")]
+position = Vector2(2032, 368)
+
+[node name="Brick49" parent="." instance=ExtResource("20_7lue1")]
+position = Vector2(2000, 304)
 
 [connection signal="pressed" from="TransTestLayer/Control/VBoxContainer/JumpButton" to="TransTestLayer" method="_on_button_pressed"]
 [connection signal="toggled" from="TransTestLayer/Control/VBoxContainer/OnPlayerAfterMid" to="TransTestLayer" method="_on_check_button_2_toggled"]

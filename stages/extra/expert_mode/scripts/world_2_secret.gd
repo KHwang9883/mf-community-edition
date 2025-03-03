@@ -18,6 +18,8 @@ func _ready() -> void:
 	expl.hide()
 	if SecretsManager.is_console_enabled():
 		cam_area.queue_free()
+		platform_path_gray.position.y += 64
+		platform_path_gray.process_mode = Node.PROCESS_MODE_INHERIT
 	else:
 		cam_area.view_section_changed.connect(activate, CONNECT_ONE_SHOT)
 
