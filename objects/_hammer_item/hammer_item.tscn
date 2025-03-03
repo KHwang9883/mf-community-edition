@@ -46,11 +46,6 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 sprite_frames = SubResource("SpriteFrames_k13np")
 autoplay = "default"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-self_modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-64, -64, 128, 128)
-metadata/_edit_lock_ = true
-
 [node name="Attack" type="ShapeCast2D" parent="."]
 visible = false
 enabled = false
@@ -67,5 +62,8 @@ trigger_enemy_failed_signal = false
 special_tags = Array[StringName]([&"no_score"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-64, -64, 128, 128)
+
 [connection signal="killed" from="Attack" to="." method="_on_attack_killed"]
