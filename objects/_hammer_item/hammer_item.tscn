@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4xnbm7qagbhi"]
+
+[ext_resource type="Script" path="res://objects/_hammer_item/hammer_item.gd" id="1_roexw"]
+[ext_resource type="Texture2D" uid="uid://bannp8iggxrgg" path="res://objects/_hammer_item/texture.png" id="2_g2t23"]
+[ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="3_esnqq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aecgo"]
+size = Vector2(31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xqcc"]
+atlas = ExtResource("2_g2t23")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k13np"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xqcc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gci12"]
+size = Vector2(32, 32)
+
+[node name="HammerItem" type="CharacterBody2D"]
+script = ExtResource("1_roexw")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_aecgo")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_aecgo")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k13np")
+autoplay = "default"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-64, -64, 128, 128)
+metadata/_edit_lock_ = true
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+enabled = false
+shape = SubResource("RectangleShape2D_gci12")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("3_esnqq")
+killer_type = &"starman"
+killing_detection_scale = 2.0
+trigger_enemy_failed_signal = false
+special_tags = Array[StringName]([&"no_score"])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
+[connection signal="killed" from="Attack" to="." method="_on_attack_killed"]

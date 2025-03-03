@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 				i._center.process_mode = Node.PROCESS_MODE_DISABLED
 				if i._center.has_node(^"Body"):
 					i._center.get_node(^"Body").process_mode = Node.PROCESS_MODE_ALWAYS
-				if i._center.turn_sprite && is_instance_valid(i._center.sprite_node):
+				if i._center.get("turn_sprite") && is_instance_valid(i._center.get("sprite_node")):
 					i._center.sprite_node.flip_h = i._center.speed.x < 0
 			
 			if !stopwatch_tw:

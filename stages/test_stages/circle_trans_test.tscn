@@ -1,14 +1,23 @@
-[gd_scene load_steps=14 format=4 uid="uid://bykpsfhniyc13"]
+[gd_scene load_steps=27 format=4 uid="uid://bykpsfhniyc13"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_niwmw"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_8h2lp"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_v1oh5"]
+[ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="4_ef0bj"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_cahna"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="7_kss8b"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ka8b1"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_ep8hu"]
+[ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="10_u8ipb"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_dqwm0"]
+[ext_resource type="PackedScene" uid="uid://c4xnbm7qagbhi" path="res://objects/_hammer_item/hammer_item.tscn" id="11_jdj7p"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="12_oylde"]
 [ext_resource type="Script" path="res://stages/test_stages/test_scripts/node.gd" id="13_0nwmd"]
+[ext_resource type="PackedScene" uid="uid://dpikli783lsya" path="res://objects/_screen_clear_item/atom_star.tscn" id="13_ntffc"]
+[ext_resource type="PackedScene" uid="uid://bcfuvl6xnny7k" path="res://objects/_clock_item/clock.tscn" id="14_pxvj3"]
+[ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="15_1kv1w"]
+[ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="16_12i8m"]
+[ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="17_48n5x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cnio6"]
 texture = ExtResource("10_ep8hu")
@@ -32,11 +41,70 @@ height = 480
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
 
+[sub_resource type="Resource" id="Resource_ocy6o"]
+resource_local_to_scene = true
+script = ExtResource("12_oylde")
+creation_nodepack = ExtResource("11_jdj7p")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_a2vq6"]
+resource_local_to_scene = true
+script = ExtResource("12_oylde")
+creation_nodepack = ExtResource("13_ntffc")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_xvmjo"]
+resource_local_to_scene = true
+script = ExtResource("12_oylde")
+creation_nodepack = ExtResource("14_pxvj3")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_x7nen"]
+resource_local_to_scene = true
+script = ExtResource("12_oylde")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="CircleTransTest" type="Node2D"]
 script = ExtResource("1_niwmw")
 completion_music = ExtResource("2_8h2lp")
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_v1oh5")]
+
+[node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("4_ef0bj")]
+is_expert_mode = false
+antiafk_enabled = false
 
 [node name="Player" parent="." instance=ExtResource("5_cahna")]
 position = Vector2(192, 400)
@@ -52,7 +120,7 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAvAA0AAAAAAAAAAAAwAA0AAAAAAAAAAAAxAA0AAAAAAAAAAAAyAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAvAA0AAAAAAAAAAAAwAA0AAAAAAAAAAAAxAA0AAAAAAAAAAAAyAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAOAAQAAAAAAAAAAAAPAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAARAAQAAAAAAAAAAAARAAMAAAAAAAAAAAALAAIAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAARAAEAAAAAAAAAAAARAAIAAAAAAAAAAAAMAAsAAAAAAAAAAAAMAAwAAAAAAAAAAAASAAsAAAAAAAAAAAASAAwAAAAAAAAAAAAaAAIAAAAAAAAAAAAaAAMAAAAAAAAAAAAaAAQAAAAAAAAAAAAbAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAdAAQAAAAAAAAAAAAeAAQAAAAAAAAAAAAfAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAhAAQAAAAAAAAAAAAiAAQAAAAAAAAAAAAiAAMAAAAAAAAAAAAiAAIAAAAAAAAAAAAiAAEAAAAAAAAAAAAhAAEAAAAAAAAAAAAgAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAdAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAbAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAkAAsAAAAAAAAAAAAkAAwAAAAAAAAAAAAyAAsAAAAAAAAAAAAyAAwAAAAAAAAAAAAzAAwAAAAAAAAAAAA0AAwAAAAAAAAAAAA1AAwAAAAAAAAAAAA2AAwAAAAAAAAAAAA3AAwAAAAAAAAAAAA4AAwAAAAAAAAAAAA5AAwAAAAAAAAAAAA6AAwAAAAAAAAAAAA7AAwAAAAAAAAAAAA8AAwAAAAAAAAAAAA9AAwAAAAAAAAAAAA+AAwAAAAAAAAAAAA/AAwAAAAAAAAAAABAAAwAAAAAAAAAAABBAAwAAAAAAAAAAABCAAwAAAAAAAAAAABDAAwAAAAAAAAAAABEAAwAAAAAAAAAAABFAAwAAAAAAAAAAABGAAwAAAAAAAAAAABDAAIAAAAAAAAAAABEAAIAAAAAAAAAAABFAAIAAAAAAAAAAABGAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_mtgak")
 metadata/_edit_lock_ = true
 
@@ -145,6 +213,94 @@ offset_bottom = -17.0
 grow_vertical = 0
 tooltip_text = "Go back"
 text = "<"
+
+[node name="QuestionBlock" parent="." instance=ExtResource("10_u8ipb")]
+position = Vector2(1040, 272)
+result = SubResource("Resource_ocy6o")
+
+[node name="QuestionBlock2" parent="." instance=ExtResource("10_u8ipb")]
+position = Vector2(304, 272)
+result = SubResource("Resource_a2vq6")
+
+[node name="QuestionBlock3" parent="." instance=ExtResource("10_u8ipb")]
+position = Vector2(720, 272)
+result = SubResource("Resource_xvmjo")
+
+[node name="QuestionBlock4" parent="." instance=ExtResource("10_u8ipb")]
+position = Vector2(1680, 208)
+result = SubResource("Resource_x7nen")
+
+[node name="KoopaGreen" parent="." instance=ExtResource("15_1kv1w")]
+position = Vector2(976, 400)
+
+[node name="KoopaGreen2" parent="." instance=ExtResource("15_1kv1w")]
+position = Vector2(1040, 400)
+
+[node name="SpinyRed" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(448, 400)
+
+[node name="SpinyRed12" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(592, 336)
+
+[node name="SpinyRed2" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(416, 112)
+
+[node name="SpinyRed3" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(464, 112)
+
+[node name="SpinyRed4" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(512, 112)
+
+[node name="SpinyRed5" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(880, 112)
+
+[node name="SpinyRed10" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(496, 400)
+
+[node name="SpinyRed11" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(544, 400)
+
+[node name="SpinyRed6" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(928, 112)
+
+[node name="SpinyRed7" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(976, 112)
+
+[node name="SpinyRed8" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(1024, 112)
+
+[node name="SpinyRed9" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(1072, 112)
+
+[node name="SpinyRed13" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(1328, 400)
+
+[node name="SpinyRed14" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(1376, 400)
+
+[node name="SpinyRed15" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(1424, 400)
+
+[node name="SpinyRed16" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(1472, 400)
+
+[node name="SpinyRed17" parent="." instance=ExtResource("16_12i8m")]
+position = Vector2(1520, 400)
+
+[node name="KoopaParatroopaGreen" parent="." instance=ExtResource("17_48n5x")]
+position = Vector2(224, 144)
+
+[node name="KoopaParatroopaGreen2" parent="." instance=ExtResource("17_48n5x")]
+position = Vector2(784, 192)
+
+[node name="KoopaParatroopaGreen3" parent="." instance=ExtResource("17_48n5x")]
+position = Vector2(1360, 256)
+
+[node name="KoopaParatroopaGreen4" parent="." instance=ExtResource("17_48n5x")]
+position = Vector2(1456, 224)
+
+[node name="KoopaParatroopaGreen5" parent="." instance=ExtResource("17_48n5x")]
+position = Vector2(1552, 256)
 
 [connection signal="pressed" from="TransTestLayer/Control/VBoxContainer/JumpButton" to="TransTestLayer" method="_on_button_pressed"]
 [connection signal="toggled" from="TransTestLayer/Control/VBoxContainer/OnPlayerAfterMid" to="TransTestLayer" method="_on_check_button_2_toggled"]
