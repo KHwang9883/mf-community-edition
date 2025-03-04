@@ -6,6 +6,7 @@ var active: bool = false
 @onready var color_rect = $Node2D/ColorRect
 
 const LOLUDIED_SONG = preload("res://objects/chorniy_mario/loludied-song.ogg")
+const LOLUDIED_EASTER = preload("res://objects/chorniy_mario/pop'n'drop - game over.s3m")
 
 var target_scale = 2
 var _current_timer
@@ -33,7 +34,8 @@ func activate(wait_time: float) -> void:
 func music() -> void:
 	await get_tree().create_timer(0.3, true).timeout
 	if !active: return
-	Audio.play_music(LOLUDIED_SONG, 1, {ignore_pause = true})
+	Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
+		1, {ignore_pause = true})
 
 func deactivate() -> void:
 	active = false
