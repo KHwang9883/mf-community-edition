@@ -32,14 +32,14 @@ func _on_mario_died() -> void:
 	var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "modulate:a", 1.0, 0.5)
 
-	score.text = str(Data.values.score)
+	score.text = Thunder.Math.add_delimiter(str(int(Data.values.score)))
 	if !"godlikes" in Data.values:
 		Data.values.godlikes = 0
-	godlikes.text = str(Data.values.godlikes)
+	godlikes.text = str(int(Data.values.godlikes))
 
 	var secs: int = int(Data.values.lasted)
 	print("Game ended with time: ", secs)
-	var mins: int = floor(secs / 60)
+	var mins: int = floori(secs / 60.0)
 	secs -= mins * 60
 
 	lasted.text = lasted_template % [mins, secs]

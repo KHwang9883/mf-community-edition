@@ -1,15 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7eavmhombhly"]
+[gd_scene load_steps=14 format=3 uid="uid://b7eavmhombhly"]
 
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="1_85d7i"]
 [ext_resource type="Script" uid="uid://g8tj3cv6jydk" path="res://stages/extra/minix/scripts/minix_leaderboard_loading_text.gd" id="2_pfn1e"]
 [ext_resource type="Script" uid="uid://24nju0fwsr3c" path="res://stages/extra/minix/scripts/minix_lb_menu_controller.gd" id="3_8igr3"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="4_4o22c"]
+[ext_resource type="Script" uid="uid://co41by6vu8vhp" path="res://stages/extra/minix/scripts/minix_lb_page_sel.gd" id="4_yhyn1"]
+[ext_resource type="Texture2D" uid="uid://dsm61fa5o41sa" path="res://stages/extra/minix/textures/hiscore_button_bg_ninepatch_2.png" id="5_djb0d"]
 [ext_resource type="Script" uid="uid://by27uqu8kimxv" path="res://stages/extra/minix/scripts/minix_lb_back.gd" id="5_o0rjb"]
 [ext_resource type="Texture2D" uid="uid://f8uqwsggii0k" path="res://stages/extra/minix/textures/hiscore_button_bg_ninepatch.png" id="6_hytpw"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="6_omaws"]
 [ext_resource type="Script" uid="uid://dsk58sf1jip6x" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="7_3hbi8"]
 [ext_resource type="Script" uid="uid://ghg6i1a1dp6d" path="res://stages/extra/minix/scripts/minix_leaderboard_map_selector.gd" id="7_odyxk"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="7_qtv61"]
+[ext_resource type="Script" uid="uid://b818goauw303j" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="8_djb0d"]
 
 [node name="Control" type="Control"]
 process_mode = 3
@@ -47,6 +50,35 @@ focused = false
 trigger_selection_immediately = false
 prev_screen_node_path = NodePath("../Control")
 
+[node name="PrevPage" type="Label" parent="MenuItemsController"]
+visible = false
+offset_top = 4.0
+offset_right = 512.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(0.627451, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.341176, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_85d7i")
+theme_override_font_sizes/font_size = 12
+text = "go to the previous page (%d of %d)"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("4_yhyn1")
+
+[node name="NinePatch" type="NinePatchRect" parent="MenuItemsController/PrevPage"]
+show_behind_parent = true
+clip_contents = true
+offset_right = 512.0
+offset_bottom = 28.0
+size_flags_vertical = 3
+texture = ExtResource("5_djb0d")
+region_rect = Rect2(0, 0, 35, 30)
+patch_margin_left = 17
+patch_margin_top = 14
+patch_margin_right = 17
+patch_margin_bottom = 14
+
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
@@ -54,19 +86,27 @@ offset_bottom = 40.0
 script = ExtResource("5_o0rjb")
 
 [node name="Selector" type="AnimatedSprite2D" parent="."]
+physics_interpolation_mode = 1
 script = ExtResource("4_4o22c")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="Camera2D" type="Camera2D" parent="Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+sprite_frames = ExtResource("6_omaws")
+script = ExtResource("7_qtv61")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 640
 limit_bottom = 636
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
-sprite_frames = ExtResource("6_omaws")
-script = ExtResource("7_qtv61")
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
+editor_draw_screen = false
+script = ExtResource("8_djb0d")
+menu_controller_path = NodePath("../MenuItemsController")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
@@ -141,3 +181,4 @@ script = ExtResource("7_3hbi8")
 left_side = false
 
 [connection signal="selected" from="MenuItemsController" to="Selector" method="handle_selection"]
+[connection signal="selected" from="MenuItemsController" to="Camera2D" method="handle_selection"]

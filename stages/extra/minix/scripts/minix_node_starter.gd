@@ -85,6 +85,10 @@ func start_game() -> void:
 	
 	control.map_id = map_id + 1
 	control._update_map.call_deferred(true)
+	for i in len(map_paths):
+		if i != map_id:
+			map_paths[i].queue_free()
+		
 	(func():
 		game_started.emit()
 	).call_deferred()

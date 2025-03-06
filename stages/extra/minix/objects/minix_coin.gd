@@ -12,9 +12,10 @@ func _on_body_entered(body: Node2D) -> void:
 func collect() -> void:
 	Thunder.add_score(200)
 	
-	NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:
-		eff.explode()
-	).create_2d().bind_global_transform()
+	if SettingsManager.get_quality() != SettingsManager.QUALITY.MIN:
+		NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:
+			eff.explode()
+		).create_2d().bind_global_transform()
 	
 	Audio.play_sound(sound, self, false)
 	parent.queue_free()

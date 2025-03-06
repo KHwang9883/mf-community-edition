@@ -57,4 +57,5 @@ func _update_map(load_records: bool = false) -> void:
 	lb.map_load_name = map_names[map_id]
 	
 	if !load_records:
+		lb.page = 1
 		lb._load_records()
