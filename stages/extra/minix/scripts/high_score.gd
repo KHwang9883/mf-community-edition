@@ -13,7 +13,7 @@ func _on_map_changed_to(map_id: int = 0) -> void:
 	if !has_loaded: return
 	var minix_name: String = "minix_" + starter.current_map.map_name
 	if minix_name in minix_score_loader.score_values:
-		text = str(minix_score_loader.score_values[minix_name][value])
+		text = Thunder.Math.add_delimiter(str(int(minix_score_loader.score_values[minix_name][value])))
 	else:
 		text = "0"
 

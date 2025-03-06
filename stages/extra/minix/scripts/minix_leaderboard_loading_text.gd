@@ -15,6 +15,7 @@ func _physics_process(_delta: float) -> void:
 	elif lb.has_error:
 		text = "failed to load the leaderboard!\nplease check your internet connection."
 	selector.visible = lb.has_results
+	visible = !lb.has_results
 	menu_items_controller.control_forward = "ui_down" if lb.has_results else "ui_text_delete_all_to_right"
 	menu_items_controller.control_backward = "ui_up" if lb.has_results else "ui_text_delete_all_to_right"
 	start.visible = lb.has_results || lb.has_error
