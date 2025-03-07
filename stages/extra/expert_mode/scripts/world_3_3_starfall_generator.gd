@@ -2,6 +2,8 @@ extends Node2D
 
 const DAMAGING_STAR = preload("res://stages/extra/expert_mode/objects/damaging_star/damaging_star.tscn")
 
+signal completed_with_star_rain
+
 @export var active_min_pos: float = 350
 @export var active_max_pos: float = 8384
 @export var spawn_delay: float = 0.6
@@ -20,10 +22,14 @@ func _ready() -> void:
 	if KevinGlobal.activated || true:
 		question_block_star.bumped.connect(func():
 			spawn_delay = 0.3
-			tw = null
+			if tw:
+				tw.kill()
 			setup_tween()
+			Thunder._connect(Scenes.current_scene.level_completed, _on_level_completed, CONNECT_ONE_SHOT)
 		)
 
+func _on_level_completed() -> void:
+	completed_with_star_rain.emit()
 
 func setup_tween() -> void:
 	tw = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS).set_loops()
@@ -34,7 +40,10 @@ func setup_tween() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if is_instance_valid(player):
+		if player.completed && tw:
+			return tw.kill()
 		pl_pos = player.global_position
+	
 	var cannot_run: bool = pl_pos.x < active_min_pos || pl_pos.x > active_max_pos
 	if !tw: return
 	if cannot_run:

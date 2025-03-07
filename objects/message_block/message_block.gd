@@ -7,6 +7,7 @@ extends StaticBumpingBlock
 const MESSAGE_BLOCK = preload("res://objects/message_block/message_block.wav")
 
 var activated: bool = false
+var _prev_pause_bool: bool
 
 @onready var box: Node2D = $CanvasLayer/Box
 @onready var text: Label = $CanvasLayer/Box/Texture/Text
@@ -45,11 +46,11 @@ func show_message() -> void:
 	Audio.play_1d_sound(MESSAGE_BLOCK, true, {ignore_pause = true})
 	get_tree().paused = true
 	
-	#box.reparent(GlobalViewport.vp)
-	#box = GlobalViewport.vp.get_node(^"Box")
-	#box.position = Thunder._current_camera.get_screen_center_position()
-	box.position = Vector2(320, 240) #как же похуй...
-	reset_physics_interpolation()
+	_prev_pause_bool = Scenes.current_scene.get(&"disable_pause_menu")
+	Scenes.current_scene.set(&"disable_pause_menu", true)
+	
+	box.position = get_viewport_rect().get_center()
+	box.reset_physics_interpolation()
 	
 	var tw = get_tree().create_tween().bind_node(box).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(box, ^"scale", Vector2.ONE, 0.5)
@@ -71,4 +72,5 @@ func hide_message() -> void:
 		process_mode = Node.PROCESS_MODE_INHERIT
 		get_tree().paused = false
 		activated = false
+		Scenes.current_scene.set(&"disable_pause_menu", _prev_pause_bool)
 	)

@@ -3,6 +3,11 @@ extends GravityBody2D
 const ADD_EFFECT = preload("res://materials/add_effect.tres")
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+func _ready() -> void:
+	Thunder._connect(collided_ceiling, turn_y, CONNECT_DEFERRED)
+	Thunder._connect(collided_floor, turn_y, CONNECT_DEFERRED)
+	Thunder._connect(collided_wall, turn_x, CONNECT_DEFERRED)
+
 func _physics_process(delta: float) -> void:
 	motion_process(delta)
 	
