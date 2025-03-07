@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bvucqvgiu82r2"]
+[gd_scene load_steps=42 format=3 uid="uid://bvucqvgiu82r2"]
 
 [ext_resource type="PackedScene" uid="uid://bwr844qulxx0m" path="res://stages/world_3/level_3-3.tscn" id="1_al1me"]
 [ext_resource type="AudioStream" uid="uid://sde1k277yxks" path="res://music/smw2-underground.ogg" id="2_1gae8"]
@@ -8,11 +8,32 @@
 [ext_resource type="Script" uid="uid://bpk2hgvmc1f4q" path="res://stages/extra/expert_mode/scripts/world_3_3_starfall_generator.gd" id="4_vkxfi"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="4_wgx1y"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="4_xu06v"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_30bjn"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="5_ncvxr"]
 [ext_resource type="PackedScene" uid="uid://dgcgfl28trox0" path="res://engine/objects/springboard/springboard.tscn" id="6_d0c6s"]
+[ext_resource type="PackedScene" uid="uid://dym6dmtca3rhi" path="res://objects/message_block/message_block_choicer.tscn" id="6_fhsuf"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="8_uurei"]
+[ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="10_klsh7"]
 [ext_resource type="PackedScene" uid="uid://cv4oxp3hprpfk" path="res://engine/objects/enemies/piranha_plants/piranha_long_pink.tscn" id="11_c03tm"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="12_hsjwe"]
+[ext_resource type="PackedScene" uid="uid://cdl5f86x0haop" path="res://engine/objects/bumping_blocks/question_block/templates/Green Lui Question Block.tscn" id="15_hutiw"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="16_30bjn"]
+[ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="17_fhsuf"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="19_fhsuf"]
+[ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="21_ctsxo"]
+
+[sub_resource type="Resource" id="Resource_ctsxo"]
+script = ExtResource("4_xu06v")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+metadata/_custom_type_script = "uid://chvjy6okoognf"
 
 [sub_resource type="Resource" id="Resource_bjwu0"]
 resource_local_to_scene = true
@@ -266,6 +287,21 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_er82l"]
+resource_local_to_scene = true
+script = ExtResource("4_xu06v")
+creation_fallback_node = ExtResource("16_30bjn")
+creation_nodepack = ExtResource("17_fhsuf")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="Level3-1" instance=ExtResource("1_al1me")]
 jump_to_scene = "res://stages/world_3/expert_map_3.tscn"
 
@@ -275,11 +311,34 @@ music = Array[Resource]([ExtResource("3_js5yg")])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("4_wgx1y")]
 
+[node name="SecretUnlocker" parent="." index="1"]
+secrets = Array[String](["all toad houses found", "expert 3-3 with high star drop rate"])
+
+[node name="SecretUnlockerOther" parent="." index="2" instance=ExtResource("5_30bjn")]
+secrets = Array[String](["all otherworld levels found"])
+progress_by_id = "3-3"
+progress_to = 5
+
+[node name="MessageBlockChoicer" parent="SecretUnlockerOther" index="0" instance=ExtResource("6_fhsuf")]
+position = Vector2(-48, 16)
+message = "You have found a secret way to this level's weird twin!
+Would you like to go in?"
+
 [node name="World" parent="HUD" index="2"]
 text = "WORLD
 *3-3  "
 
-[node name="Node2D" parent="." index="10"]
+[node name="World8Warp" parent="HUD" index="3"]
+change_scene = "res://stages/world_3/expert_level_other_3-3.tscn"
+skip_suspended_profile_save = false
+circle_transition_center_on_player = true
+
+[node name="Label" parent="HUD/World8Warp" index="0"]
+offset_left = -320.0
+offset_right = 320.0
+text = "YOU HAVE FOUND A SECRET PASSAGE TO OTHERWORLD 3 - 3!!!"
+
+[node name="Node2D" parent="." index="11"]
 script = ExtResource("4_vkxfi")
 active_min_pos = 350.0
 active_max_pos = 8384.0
@@ -299,6 +358,11 @@ position = Vector2(6848, 704)
 [node name="PiranhaGreen6" parent="Objects" index="9"]
 position = Vector2(7112, 728)
 
+[node name="Brick17" parent="Objects" index="16"]
+position = Vector2(7616, 576)
+result_counter_value = 1.0
+result = SubResource("Resource_ctsxo")
+
 [node name="QuestionBlockStar" parent="Objects" index="29"]
 result = SubResource("Resource_bjwu0")
 
@@ -307,6 +371,9 @@ position = Vector2(5840, 336)
 
 [node name="SpinyRed5" parent="Objects" index="35" instance=ExtResource("8_uurei")]
 position = Vector2(5776, 336)
+
+[node name="Brick" parent="Objects" index="36" instance=ExtResource("10_klsh7")]
+position = Vector2(7632, 304)
 
 [node name="QuestionBlock" parent="CoinChecker" index="15"]
 result = SubResource("Resource_730cb")
@@ -359,53 +426,69 @@ result = SubResource("Resource_m63cs")
 [node name="QuestionBlock17" parent="CoinChecker" index="31"]
 result = SubResource("Resource_x8hg5")
 
-[node name="Springboard" parent="." index="21" instance=ExtResource("6_d0c6s")]
+[node name="Springboard" parent="." index="22" instance=ExtResource("6_d0c6s")]
 position = Vector2(5040, 272)
 
-[node name="Springboard2" parent="." index="22" instance=ExtResource("6_d0c6s")]
+[node name="Springboard2" parent="." index="23" instance=ExtResource("6_d0c6s")]
 position = Vector2(5072, 272)
 
-[node name="Springboard3" parent="." index="23" instance=ExtResource("6_d0c6s")]
+[node name="Springboard3" parent="." index="24" instance=ExtResource("6_d0c6s")]
 position = Vector2(1360, 368)
 
-[node name="Springboard4" parent="." index="24" instance=ExtResource("6_d0c6s")]
+[node name="Springboard4" parent="." index="25" instance=ExtResource("6_d0c6s")]
 position = Vector2(1392, 368)
 
-[node name="Springboard5" parent="." index="25" instance=ExtResource("6_d0c6s")]
+[node name="Springboard5" parent="." index="26" instance=ExtResource("6_d0c6s")]
 position = Vector2(1424, 368)
 
-[node name="Springboard6" parent="." index="26" instance=ExtResource("6_d0c6s")]
+[node name="Springboard6" parent="." index="27" instance=ExtResource("6_d0c6s")]
 position = Vector2(1456, 368)
 
-[node name="Springboard7" parent="." index="27" instance=ExtResource("6_d0c6s")]
+[node name="Springboard7" parent="." index="28" instance=ExtResource("6_d0c6s")]
 position = Vector2(1488, 368)
 
-[node name="Springboard8" parent="." index="28" instance=ExtResource("6_d0c6s")]
+[node name="Springboard8" parent="." index="29" instance=ExtResource("6_d0c6s")]
 position = Vector2(1520, 368)
 
-[node name="Springboard9" parent="." index="29" instance=ExtResource("6_d0c6s")]
+[node name="Springboard9" parent="." index="30" instance=ExtResource("6_d0c6s")]
 position = Vector2(1552, 368)
 
-[node name="Springboard10" parent="." index="30" instance=ExtResource("6_d0c6s")]
+[node name="Springboard10" parent="." index="31" instance=ExtResource("6_d0c6s")]
 position = Vector2(2128, 368)
 
-[node name="Springboard11" parent="." index="31" instance=ExtResource("6_d0c6s")]
+[node name="Springboard11" parent="." index="32" instance=ExtResource("6_d0c6s")]
 position = Vector2(2160, 368)
 
-[node name="Springboard12" parent="." index="32" instance=ExtResource("6_d0c6s")]
+[node name="Springboard12" parent="." index="33" instance=ExtResource("6_d0c6s")]
 position = Vector2(2192, 368)
 
-[node name="Springboard13" parent="." index="33" instance=ExtResource("6_d0c6s")]
+[node name="Springboard13" parent="." index="34" instance=ExtResource("6_d0c6s")]
 position = Vector2(3024, 368)
 
-[node name="Springboard14" parent="." index="34" instance=ExtResource("6_d0c6s")]
+[node name="Springboard14" parent="." index="35" instance=ExtResource("6_d0c6s")]
 position = Vector2(3120, 368)
 
-[node name="Springboard15" parent="." index="35" instance=ExtResource("6_d0c6s")]
+[node name="Springboard15" parent="." index="36" instance=ExtResource("6_d0c6s")]
 position = Vector2(3248, 304)
 
-[node name="PiranhaPink" parent="." index="36" instance=ExtResource("11_c03tm")]
+[node name="PiranhaPink" parent="." index="37" instance=ExtResource("11_c03tm")]
 position = Vector2(7104, 240)
 
-[node name="PiranhaPink2" parent="." index="37" instance=ExtResource("12_hsjwe")]
+[node name="PiranhaPink2" parent="." index="38" instance=ExtResource("12_hsjwe")]
 position = Vector2(6688, 352)
+
+[node name="QuestionBlockGreenLui" parent="." index="39" instance=ExtResource("15_hutiw")]
+position = Vector2(4368, 208)
+result = SubResource("Resource_er82l")
+
+[node name="PipeIn" parent="." index="40" instance=ExtResource("19_fhsuf")]
+position = Vector2(7104, 336)
+script = ExtResource("21_ctsxo")
+choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
+warp_to_scene = "res://stages/world_3/expert_level_other_3-3.tscn"
+use_circle_transition = true
+circle_closing_speed = 0.09
+circle_opening_speed = 0.09
+
+[connection signal="completed_with_star_rain" from="Node2D" to="SecretUnlocker" method="unlock_secret" binds= [1]]
+[connection signal="tried_to_enter" from="PipeIn" to="SecretUnlockerOther" method="progress_secret"]

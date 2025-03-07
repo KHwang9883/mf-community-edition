@@ -4,7 +4,6 @@ extends Marker2D
 @export_group("Projectile")
 @export var projectile_inst: InstanceNode2D
 @export var flame_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_flame.wav")
-@export var flame_delay: float = 0.88
 @export var flame_speed_x: float = 200
 @export var base_pos_y: float = 256
 ## Insert number values to the array for multiple flames, numbers being offsets by Y, multiplied by 32
