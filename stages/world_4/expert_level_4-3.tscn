@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://b1l36ya0rh5te"]
+[gd_scene load_steps=55 format=3 uid="uid://b1l36ya0rh5te"]
 
 [ext_resource type="PackedScene" uid="uid://bp0ypvgchea7b" path="res://stages/world_4/level_4-3.tscn" id="1_cg7my"]
 [ext_resource type="AudioStream" uid="uid://bo8m5yubry1e7" path="res://music/extra/expert_mode/cyn-etic.xm" id="3_0wb8e"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://j4f2gd3x20bj" path="res://engine/objects/enemies/lakitus/lakitu.tscn" id="11_djq3j"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="13_froq6"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="14_3sdkm"]
+[ext_resource type="PackedScene" uid="uid://bcfuvl6xnny7k" path="res://objects/_clock_item/clock.tscn" id="14_deo4h"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="15_8jvre"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="15_q803u"]
 [ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="16_klh2v"]
@@ -31,6 +32,10 @@
 [ext_resource type="PackedScene" uid="uid://c5ckuqfrnnltw" path="res://engine/objects/enemies/piranha_plants/piranha_long_green.tscn" id="25_r4fc8"]
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="25_vpvum"]
 [ext_resource type="PackedScene" uid="uid://cv4oxp3hprpfk" path="res://engine/objects/enemies/piranha_plants/piranha_long_pink.tscn" id="26_uqtui"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypc8n"]
+atlas = ExtResource("3_v7k8g")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0luia"]
 particle_flag_disable_z = true
@@ -43,9 +48,9 @@ initial_velocity_min = 525.0
 initial_velocity_max = 562.5
 gravity = Vector3(0, 0, 0)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ypc8n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iiquc"]
 atlas = ExtResource("3_v7k8g")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3n8rj"]
 particle_flag_disable_z = true
@@ -57,10 +62,6 @@ spread = 0.0
 initial_velocity_min = 900.0
 initial_velocity_max = 950.0
 gravity = Vector3(0, 0, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iiquc"]
-atlas = ExtResource("3_v7k8g")
-region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="Resource" id="Resource_lxgo0"]
 resource_local_to_scene = true
@@ -230,6 +231,20 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_kyp3f"]
+script = ExtResource("4_heshq")
+creation_nodepack = ExtResource("14_deo4h")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+metadata/_custom_type_script = "uid://chvjy6okoognf"
+
 [sub_resource type="Resource" id="Resource_xvpfm"]
 resource_local_to_scene = true
 script = ExtResource("4_heshq")
@@ -274,6 +289,34 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_tcunn"]
+resource_local_to_scene = true
+script = ExtResource("4_heshq")
+creation_nodepack = ExtResource("10_e4h6i")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_deo4h"]
+resource_local_to_scene = true
+script = ExtResource("4_heshq")
+creation_nodepack = ExtResource("10_e4h6i")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="Level4-3" instance=ExtResource("1_cg7my")]
 jump_to_scene = "res://stages/world_4/expert_map_4.tscn"
 
@@ -302,19 +345,19 @@ text = "WORLD
 [node name="GPUParticles2D" type="GPUParticles2D" parent="HUD" index="5"]
 self_modulate = Color(1, 1, 1, 0.796078)
 position = Vector2(320, -12)
-process_material = SubResource("ParticleProcessMaterial_0luia")
 texture = SubResource("AtlasTexture_ypc8n")
 lifetime = 1.33
 preprocess = 0.5
+process_material = SubResource("ParticleProcessMaterial_0luia")
 script = ExtResource("4_b13t0")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="HUD" index="6"]
 self_modulate = Color(1, 1, 1, 0.784314)
 position = Vector2(384, -28)
 amount = 5
-process_material = SubResource("ParticleProcessMaterial_3n8rj")
 texture = SubResource("AtlasTexture_iiquc")
 lifetime = 0.85
+process_material = SubResource("ParticleProcessMaterial_3n8rj")
 script = ExtResource("4_b13t0")
 
 [node name="PlatformPath" parent="." index="10" instance=ExtResource("15_8jvre")]
@@ -403,6 +446,7 @@ position = Vector2(3312, 1040)
 
 [node name="Brick56" parent="Objects" index="24" instance=ExtResource("11_d071i")]
 position = Vector2(3312, 1072)
+result = SubResource("Resource_kyp3f")
 
 [node name="Brick28" parent="Objects" index="38"]
 result_counter_value = 1.0
@@ -561,11 +605,11 @@ position = Vector2(9056, 128)
 
 [node name="QuestionBlockPoisonous" parent="Objects" index="135" instance=ExtResource("24_kkbcr")]
 position = Vector2(7088, 80)
-result = SubResource("Resource_m0wga")
+result = SubResource("Resource_tcunn")
 
 [node name="QuestionBlockPoisonous2" parent="Objects" index="136" instance=ExtResource("24_kkbcr")]
 position = Vector2(9584, 368)
-result = SubResource("Resource_m0wga")
+result = SubResource("Resource_deo4h")
 
 [node name="Brick61" parent="Objects" index="137" instance=ExtResource("25_vpvum")]
 position = Vector2(9520, 112)

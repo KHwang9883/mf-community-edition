@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		for i in to_bump:
 			if is_instance_valid(i):
-				i.got_bumped.call_deferred(self)
+				i.got_bumped.call_deferred(false)
 		return
 	
 	if go_on && body.scale.y < 1.0:

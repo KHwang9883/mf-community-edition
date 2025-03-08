@@ -6,7 +6,7 @@ extends StaticBumpingBlock
 @onready var anim: AnimatedSprite2D = $Sprites/AnimatedSprite2D/Anim
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered: return
 	bump(true)
 

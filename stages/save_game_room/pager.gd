@@ -6,8 +6,9 @@ func _physics_process(delta):
 	_animated_sprite_2d.animation = &"empty" if !active else &"default"
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered: return
-	if !by is Player: return
-	if by.warp != Player.Warp.NONE: return
+	if !by_player: return
+	var pl := Thunder._current_player
+	if pl && pl.warp != Player.Warp.NONE: return
 	bump(false)
