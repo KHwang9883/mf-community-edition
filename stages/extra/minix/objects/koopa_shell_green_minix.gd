@@ -140,7 +140,7 @@ func _on_collided_wall() -> void:
 		var j: KinematicCollision2D = get_slide_collision(i)
 		if j.get_collider() is StaticBumpingBlock:
 			if j.get_collider().has_method(&"got_bumped"):
-				j.get_collider().got_bumped.call_deferred(self)
+				j.get_collider().got_bumped.call_deferred(false)
 			elif j.get_collider().has_method(&"bricks_break"):
 				j.get_collider().bricks_break.call_deferred()
 	turn_x()

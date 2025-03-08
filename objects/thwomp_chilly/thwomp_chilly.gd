@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 				for i in get_slide_collision_count():
 					var collider = get_slide_collision(i).get_collider()
 					if collider is StaticBumpingBlock && collider.has_method(&"got_bumped"):
-						collider.got_bumped(self)
+						collider.got_bumped(false)
 						if collider.has_method(&"bricks_break"):
 							bricks = true
 				# Non-stop for the thwomp who broke the bricks
@@ -81,12 +81,12 @@ func _physics_process(delta: float) -> void:
 				if left_explosion.is_colliding():
 					var collider = left_explosion.get_collider()
 					if is_instance_valid(collider) && collider.has_method(&"got_bumped"):
-						collider.got_bumped(self)
+						collider.got_bumped(false)
 						col = true
 				if right_explosion.is_colliding():
 					var collider = right_explosion.get_collider()
 					if is_instance_valid(collider) && collider.has_method(&"got_bumped"):
-						collider.got_bumped(self)
+						collider.got_bumped(false)
 						col = true
 				if col:
 					_step = 2

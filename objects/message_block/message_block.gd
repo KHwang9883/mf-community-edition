@@ -15,7 +15,7 @@ var _prev_pause_bool: bool
 signal message_shown
 signal message_hidden
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered: return
 	if activated: return
 	bump(false)

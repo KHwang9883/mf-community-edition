@@ -43,7 +43,7 @@ func bricks_break() -> void:
 		var collider = j.get_collider()
 		if collider is StaticBumpingBlock:
 			if collider.has_method(&"got_bumped"):
-				collider.got_bumped.call_deferred(self)
+				collider.got_bumped.call_deferred(false)
 			elif collider.has_method(&"bricks_break"):
 				collider.bricks_break.call_deferred()
 	var speeds = [Vector2(2, -8), Vector2(4, -7), Vector2(-2, -8), Vector2(-4, -7)]
