@@ -1,7 +1,6 @@
 extends PlayerCamera2D
 
 @export_file("*.tscn", "*.scn") var final_cutscene: String
-
 @export var difficulty = 0
 
 var moving: bool = false
@@ -12,6 +11,7 @@ var flower_counter: int = 10
 var fish_preparing: bool = false
 var last_player_pos: Vector2
 var goomba_counter: int = 7
+var use_sequence_table: bool = false
 
 var _transition_started: bool = false
 var _finish_command_started: bool
@@ -60,13 +60,22 @@ var hammer_speed_max := Vector2(500, -250)
 
 var bg_sounds = []
 
+const SEQ_TABLE_EXP := {
+	&"bowser_attack":     2.5,
+	&"bullet_exp_create": 1.5,
+	&"podo_create":   3.0,
+	&"volcano_up":    4.0,
+	&"big_fish_create": 1.0,
+	&"bullet_create": 3.5,
+	&"stihl_create":  4.5,
+}
+var seq_tw: Tween
+
 func _ready() -> void:
 	super()
 	
 	## Subtract from this to skip intro if onetime blocks are false
 	var subtimer: float = 0.0 if Data.values.onetime_blocks else 6.8
-
-	get_tree().create_timer(20 - subtimer, false).timeout.connect(podo_create)
 	
 	Console.executed.connect(func(command_name, args):
 		if command_name == "finish":
@@ -133,18 +142,20 @@ func _ready() -> void:
 		twwt.tween_property(kevinlabel, "modulate:a", 0.0, 1.0)
 		twwt.tween_callback(kevinlabel.queue_free)
 
-	get_tree().create_timer(15 - subtimer, false).timeout.connect(big_fish_create)
+	use_sequence_table = difficulty == 4
 
-	if difficulty > 0:
-		get_tree().create_timer(25 - subtimer if difficulty < 4 else 18 - subtimer, false).timeout.connect(bullet_create)
-	if difficulty > 1:
-		get_tree().create_timer(25 - subtimer, false).timeout.connect(stihl_create)
-	if difficulty > 2:
-		get_tree().create_timer(28 - subtimer, false).timeout.connect(volcano_up)
-		get_tree().create_timer(23 - subtimer, false).timeout.connect(bullet_create.bind(true))
+	if !use_sequence_table:
+		get_tree().create_timer(15 - subtimer, false).timeout.connect(big_fish_create)
+		get_tree().create_timer(20 - subtimer, false).timeout.connect(podo_create)
+		if difficulty > 0:
+			get_tree().create_timer(25 - subtimer if difficulty < 4 else 18 - subtimer, false).timeout.connect(bullet_create)
+		if difficulty > 1:
+			get_tree().create_timer(25 - subtimer, false).timeout.connect(stihl_create)
+		if difficulty > 2:
+			get_tree().create_timer(28 - subtimer, false).timeout.connect(volcano_up)
+			get_tree().create_timer(23 - subtimer, false).timeout.connect(bullet_create.bind(true))
 	if difficulty > 3:
 		get_tree().create_timer(12 - subtimer, false).timeout.connect(lakitu)
-		
 
 	await get_tree().create_timer(7.67 - subtimer, false, false, true).timeout
 	moving = true
@@ -155,7 +166,14 @@ func _ready() -> void:
 	can_get_faster = true
 
 	await get_tree().create_timer(0.4, false, false, true).timeout
-	bowser_attack()
+	if use_sequence_table:
+		seq_tw = create_tween().set_loops()
+		for i in SEQ_TABLE_EXP.keys():
+			seq_tw.tween_callback(_debug_print.bind(i))
+			seq_tw.tween_callback(Callable(self, i))
+			seq_tw.tween_interval(SEQ_TABLE_EXP[i])
+	else:
+		bowser_attack()
 	await get_tree().create_timer(1.5, false, false, false).timeout
 	jumping_cheeps_generator.enabled = true
 
@@ -263,7 +281,9 @@ func death_sequence(body: Node2D) -> void:
 func create_platform() -> void:
 	# platform spawn
 	var plati = platform.instantiate()
-	plati.global_position = moving_group.global_position + Vector2(randi_range(200, 440), -50)
+	var _normal_pos := moving_group.global_position + Vector2(randi_range(200, 440), -50)
+	var _difficult_pos := moving_group.global_position + Vector2(randi_range(150, 500), -50)
+	plati.global_position = _normal_pos if difficulty < 2 else _difficult_pos
 	Scenes.current_scene.add_child(plati)
 
 	rand_offset = randi_range(100, 180)
@@ -318,7 +338,7 @@ func create_platform() -> void:
 
 
 func podo_create() -> void:
-	get_tree().create_timer(6, false).timeout.connect(podo_create)
+	if !use_sequence_table: get_tree().create_timer(6, false).timeout.connect(podo_create)
 
 	var podo1 = podoboo.instantiate()
 	podo1.position = Vector2(128, 448-16)
@@ -338,7 +358,7 @@ func podo_create() -> void:
 
 
 func big_fish_create() -> void:
-	get_tree().create_timer(15, false).timeout.connect(big_fish_create)
+	if !use_sequence_table: get_tree().create_timer(15, false).timeout.connect(big_fish_create)
 	strelochka.position = Vector2(last_player_pos.x, 384)
 	strelochka.reset_physics_interpolation()
 	fish_preparing = true
@@ -354,16 +374,19 @@ func big_fish_create() -> void:
 
 
 func stihl_create() -> void:
-	get_tree().create_timer(20, false).timeout.connect(stihl_create)
+	if !use_sequence_table: get_tree().create_timer(20, false).timeout.connect(stihl_create)
 
 	var stihl = STIHL.instantiate()
 	moving_group.add_child(stihl)
-	stihl.global_position = global_position + Vector2(randi_range(-320, 320), 480)
+	stihl.global_position = global_position + Vector2(randi_range(-96, 480), 480)
 	stihl.reset_physics_interpolation()
+	var _tw = stihl.create_tween()
+	_tw.tween_interval(8.0)
+	_tw.tween_callback(stihl.queue_free)
 
 
 func bullet_create(expert: bool = false) -> void:
-	get_tree().create_timer(10, false).timeout.connect(bullet_create.bind(expert))
+	if !use_sequence_table: get_tree().create_timer(10, false).timeout.connect(bullet_create.bind(expert))
 	
 	var bul
 	if expert:
@@ -377,8 +400,12 @@ func bullet_create(expert: bool = false) -> void:
 	bul.reset_physics_interpolation()
 
 
+func bullet_exp_create() -> void:
+	bullet_create(true)
+
+
 func volcano_up() -> void:
-	get_tree().create_timer(30, false).timeout.connect(volcano_up)
+	if !use_sequence_table: get_tree().create_timer(30, false).timeout.connect(volcano_up)
 	
 	var tw = create_tween().set_parallel()
 	tw.tween_property(volcano, "position:y", 400, 1.5)
@@ -403,7 +430,7 @@ func bowser_attack() -> void:
 	Audio.play_1d_sound(preload("res://music/climbing_minigame/snd_bowser_laugh.ogg"), false)
 	if difficulty < 3:
 		return
-	get_tree().create_timer(12, false).timeout.connect(bowser_attack)
+	if !use_sequence_table: get_tree().create_timer(12, false).timeout.connect(bowser_attack)
 	
 	var tween_hammer: Tween = create_tween()
 	tween_hammer.tween_property(bowser, "position:x", 608, 1.5)
@@ -508,6 +535,10 @@ func start_transition() -> void:
 func _kevin_touch() -> void:
 	KevinGlobal.loludied()
 
+
+func _debug_print(_args) -> void:
+	if OS.has_feature("template"): return
+	print(_args)
 
 #func _exit_tree() -> void:
 #	Thunder._disconnect(KevinGlobal.touched_kevin, _kevin_touch)
