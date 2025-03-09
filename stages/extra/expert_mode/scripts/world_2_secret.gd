@@ -32,6 +32,8 @@ func activate() -> void:
 	music_loader.pause_music()
 	Thunder._current_hud.hide()
 	Data.values.time += 16
+	if Thunder._current_player:
+		Thunder._current_player.ignore_input = true
 	await get_tree().create_timer(1.0, false, false).timeout
 	camera_area.view_section_changed.connect(func() -> void:
 		Audio.stop_all_sounds()
@@ -46,6 +48,8 @@ func activate() -> void:
 	Audio.play_sound(preload("res://sfx/explode.wav"), marker_2d, false)
 	if Thunder._current_player:
 		Thunder._current_player.jump(37*50)
+		Thunder._current_player.ignore_input = false
+		
 	expl.play(&"explode")
 	expl.show()
 	platform_path_gray.show()

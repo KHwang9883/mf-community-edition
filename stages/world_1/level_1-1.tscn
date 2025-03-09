@@ -1,6 +1,7 @@
-[gd_scene load_steps=134 format=4 uid="uid://dtfhvfw317yu"]
+[gd_scene load_steps=135 format=4 uid="uid://dtfhvfw317yu"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_gyuum"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_gwd6l"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="3_12ohb"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_lqacd"]
 [ext_resource type="AudioStream" uid="uid://dwcak56md3who" path="res://music/smw-underground.ogg" id="4_a7s12"]
@@ -1226,6 +1227,7 @@ size = Vector2(5696, 800)
 
 [node name="Level1-1" type="Node2D"]
 script = ExtResource("1_gyuum")
+completion_music = ExtResource("2_gwd6l")
 jump_to_scene = "res://stages/world_1/map_1.tscn"
 
 [node name="MusicLoader" type="Node" parent="."]
@@ -1767,6 +1769,9 @@ warping_sound = ExtResource("13_84jf2")
 [node name="Node" type="Node" parent="PipeInSecret"]
 script = ExtResource("13_qqeqx")
 
+[node name="PipeOut4" parent="." instance=ExtResource("27_gwisc")]
+position = Vector2(6496, 432)
+
 [node name="Brick" parent="." instance=ExtResource("12_bjy4e")]
 position = Vector2(464, 304)
 
@@ -2257,9 +2262,6 @@ position = Vector2(6560, 320)
 [node name="FinishLine" parent="." instance=ExtResource("31_4kbrm")]
 position = Vector2(7040, 416)
 
-[node name="PipeOut4" parent="." instance=ExtResource("27_gwisc")]
-position = Vector2(6496, 432)
-
 [node name="LifeSpawns" type="Node2D" parent="."]
 
 [node name="Marker2D" type="Marker2D" parent="LifeSpawns"]
@@ -2310,6 +2312,6 @@ metadata/_edit_lock_ = true
 [node name="CoinBonusLevel" parent="." instance=ExtResource("72_5a447")]
 position = Vector2(320, 1088)
 
+[connection signal="warp_ended" from="PipeInSecret" to="PipeInSecret" method="queue_free"]
 [connection signal="warp_started" from="PipeInSecret" to="SecretUnlocker" method="unlock_secret"]
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="progress_secret" binds= [1]]
-[connection signal="warp_ended" from="PipeOut4" to="PipeInSecret" method="queue_free"]

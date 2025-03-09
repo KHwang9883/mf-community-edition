@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://cg1joxja7s50n"]
+[gd_scene load_steps=61 format=3 uid="uid://cg1joxja7s50n"]
 
 [ext_resource type="PackedScene" uid="uid://brtc0tw8taj68" path="res://stages/world_2/level_2-5.tscn" id="1_k11wj"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_3fdkw"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="8_nkte3"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="8_y064d"]
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="9_75uwc"]
+[ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="10_nmb52"]
 [ext_resource type="Script" uid="uid://cegxr45ywjae2" path="res://stages/extra/expert_mode/scripts/bowser_fake_reveal_w2.gd" id="12_c4cq6"]
 [ext_resource type="Texture2D" uid="uid://dwgb38fjcwjhp" path="res://engine/objects/enemies/koopas/textures/shell_red.png" id="16_wq6cu"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="19_esain"]
@@ -429,7 +430,7 @@ jump_to_scene = "res://stages/world_2/expert_end_cutscene_2.tscn"
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("2_tj7dm")]
 
 [node name="Mario" parent="." index="1"]
-position = Vector2(256, 336)
+position = Vector2(224, 336)
 
 [node name="BowserTrigger" parent="." index="3" node_paths=PackedStringArray("trigger_bowser_2")]
 script = ExtResource("2_ptdga")
@@ -444,6 +445,9 @@ layer_0/tile_data = PackedInt32Array(851970, 131076, 1, 1114111, 131072, 0, 1048
 [node name="World" parent="HUD" index="2"]
 text = "WORLD
 *2-5  "
+
+[node name="BgCastle2" parent="ParallaxBackground/ParallaxLayer" index="0"]
+metadata/_edit_lock_ = true
 
 [node name="QuestionBlockFireFlower3" parent="Objects" index="1"]
 result = SubResource("Resource_m3d8w")
@@ -474,34 +478,56 @@ y_offset = 44
 [node name="Goomba" parent="." index="17"]
 position = Vector2(1728, 608)
 
-[node name="Goomba4" parent="." index="28"]
+[node name="Goomba16" parent="." index="19" instance=ExtResource("10_nmb52")]
+position = Vector2(2544, 48)
+
+[node name="Goomba17" parent="." index="20" instance=ExtResource("10_nmb52")]
+position = Vector2(2480, 48)
+
+[node name="Goomba18" parent="." index="21" instance=ExtResource("10_nmb52")]
+position = Vector2(2416, 48)
+
+[node name="Goomba4" parent="." index="31"]
 position = Vector2(1344, 560)
 
-[node name="SpinyRed" parent="RotoCenter" index="2" instance=ExtResource("6_83w51")]
-position = Vector2(-128, 128)
+[node name="Thwomp15" parent="." index="32" instance=ExtResource("9_75uwc")]
+position = Vector2(6848, 256)
+trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="SpinyRed2" parent="RotoCenter" index="3" instance=ExtResource("6_83w51")]
-position = Vector2(-64, 128)
+[node name="SpinyRed" parent="." index="34" instance=ExtResource("6_83w51")]
+position = Vector2(912, 336)
 
-[node name="SpinyRed3" parent="RotoCenter" index="4" instance=ExtResource("6_83w51")]
-position = Vector2(0, 128)
+[node name="SpinyRed2" parent="." index="35" instance=ExtResource("6_83w51")]
+position = Vector2(976, 336)
 
-[node name="SpinyRed4" parent="RotoCenter" index="5" instance=ExtResource("6_83w51")]
-position = Vector2(4640, 128)
+[node name="SpinyRed3" parent="." index="36" instance=ExtResource("6_83w51")]
+position = Vector2(1040, 336)
 
-[node name="SpinyRed8" parent="RotoCenter" index="6" instance=ExtResource("6_83w51")]
-position = Vector2(6048, -32)
+[node name="SpinyRed9" parent="." index="37" instance=ExtResource("6_83w51")]
+position = Vector2(1904, 48)
 
-[node name="SpinyRed5" parent="RotoCenter" index="7" instance=ExtResource("6_83w51")]
-position = Vector2(4704, 128)
+[node name="SpinyRed10" parent="." index="38" instance=ExtResource("6_83w51")]
+position = Vector2(1968, 48)
 
-[node name="SpinyRed6" parent="RotoCenter" index="8" instance=ExtResource("6_83w51")]
-position = Vector2(4768, 128)
+[node name="SpinyRed11" parent="." index="39" instance=ExtResource("6_83w51")]
+position = Vector2(2032, 48)
 
-[node name="SpinyRed7" parent="RotoCenter" index="9" instance=ExtResource("6_83w51")]
-position = Vector2(4832, 128)
+[node name="SpinyRed4" parent="." index="40" instance=ExtResource("6_83w51")]
+position = Vector2(5680, 336)
 
-[node name="RotoCenter18" parent="." index="33" instance=ExtResource("7_xft44")]
+[node name="SpinyRed8" parent="." index="41" instance=ExtResource("6_83w51")]
+position = Vector2(7088, 176)
+
+[node name="SpinyRed5" parent="." index="42" instance=ExtResource("6_83w51")]
+position = Vector2(5744, 336)
+
+[node name="SpinyRed6" parent="." index="43" instance=ExtResource("6_83w51")]
+position = Vector2(5808, 336)
+
+[node name="SpinyRed7" parent="." index="44" instance=ExtResource("6_83w51")]
+position = Vector2(5872, 336)
+
+[node name="RotoCenter18" parent="." index="48" instance=ExtResource("7_xft44")]
 position = Vector2(1360, 432)
 
 [node name="RotoRed" parent="RotoCenter18" index="1" instance=ExtResource("8_nkte3")]
@@ -510,7 +536,7 @@ position = Vector2(-150, 0)
 phase = 180.0
 frequency = -50.0
 
-[node name="RotoCenter17" parent="." index="34" instance=ExtResource("7_xft44")]
+[node name="RotoCenter17" parent="." index="49" instance=ExtResource("7_xft44")]
 position = Vector2(816, 240)
 
 [node name="RotoRed" parent="RotoCenter17" index="1" instance=ExtResource("8_nkte3")]
@@ -524,7 +550,7 @@ frequency = -50.0
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 
-[node name="RotoCenter19" parent="." index="36" instance=ExtResource("7_xft44")]
+[node name="RotoCenter19" parent="." index="51" instance=ExtResource("7_xft44")]
 position = Vector2(2768, 368)
 
 [node name="RotoRed" parent="RotoCenter19" index="1" instance=ExtResource("8_nkte3")]
@@ -562,10 +588,10 @@ amplitude = Vector2(180, 180)
 position = Vector2(0, 180)
 amplitude = Vector2(180, 180)
 
-[node name="Coin3" parent="." index="62" instance=ExtResource("5_jxdww")]
+[node name="Coin3" parent="." index="77" instance=ExtResource("5_jxdww")]
 position = Vector2(7888, 208)
 
-[node name="Coin4" parent="." index="63" instance=ExtResource("5_jxdww")]
+[node name="Coin4" parent="." index="78" instance=ExtResource("5_jxdww")]
 position = Vector2(7888, 176)
 
 [node name="Sprite2D" parent="Node2D" index="0"]
@@ -583,68 +609,68 @@ creation = SubResource("Resource_k7rga")
 visible = false
 sprite_frames = SubResource("SpriteFrames_rosfx")
 
-[node name="Thwomp" parent="." index="74" instance=ExtResource("9_75uwc")]
+[node name="Thwomp" parent="." index="89" instance=ExtResource("9_75uwc")]
 position = Vector2(384, 96)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp2" parent="." index="75" instance=ExtResource("9_75uwc")]
+[node name="Thwomp2" parent="." index="90" instance=ExtResource("9_75uwc")]
 position = Vector2(1440, 96)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp3" parent="." index="76" instance=ExtResource("9_75uwc")]
+[node name="Thwomp3" parent="." index="91" instance=ExtResource("9_75uwc")]
 position = Vector2(1568, 96)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp4" parent="." index="77" instance=ExtResource("9_75uwc")]
+[node name="Thwomp4" parent="." index="92" instance=ExtResource("9_75uwc")]
 position = Vector2(4088, 64)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp5" parent="." index="78" instance=ExtResource("9_75uwc")]
+[node name="Thwomp5" parent="." index="93" instance=ExtResource("9_75uwc")]
 position = Vector2(4512, 64)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp6" parent="." index="79" instance=ExtResource("9_75uwc")]
-position = Vector2(4832, -48)
+[node name="Thwomp6" parent="." index="94" instance=ExtResource("9_75uwc")]
+position = Vector2(4832, -28)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp7" parent="." index="80" instance=ExtResource("9_75uwc")]
-position = Vector2(4992, -48)
+[node name="Thwomp7" parent="." index="95" instance=ExtResource("9_75uwc")]
+position = Vector2(4992, -28)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp8" parent="." index="81" instance=ExtResource("9_75uwc")]
-position = Vector2(5152, -48)
+[node name="Thwomp8" parent="." index="96" instance=ExtResource("9_75uwc")]
+position = Vector2(5152, -28)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp9" parent="." index="82" instance=ExtResource("9_75uwc")]
-position = Vector2(5312, -48)
+[node name="Thwomp9" parent="." index="97" instance=ExtResource("9_75uwc")]
+position = Vector2(5312, -28)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp10" parent="." index="83" instance=ExtResource("9_75uwc")]
-position = Vector2(5456, -48)
+[node name="Thwomp10" parent="." index="98" instance=ExtResource("9_75uwc")]
+position = Vector2(5456, -28)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp11" parent="." index="84" instance=ExtResource("9_75uwc")]
-position = Vector2(5568, -48)
+[node name="Thwomp11" parent="." index="99" instance=ExtResource("9_75uwc")]
+position = Vector2(5568, -28)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp12" parent="." index="85" instance=ExtResource("9_75uwc")]
+[node name="Thwomp12" parent="." index="100" instance=ExtResource("9_75uwc")]
 position = Vector2(6112, 32)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp13" parent="." index="86" instance=ExtResource("9_75uwc")]
+[node name="Thwomp13" parent="." index="101" instance=ExtResource("9_75uwc")]
 position = Vector2(7936, 32)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="Thwomp14" parent="." index="87" instance=ExtResource("9_75uwc")]
+[node name="Thwomp14" parent="." index="102" instance=ExtResource("9_75uwc")]
 position = Vector2(8096, 32)
 trigger_area = Rect2(-80, -240, 160, 720)
 
-[node name="CamArea" parent="." index="88" instance=ExtResource("19_esain")]
+[node name="CamArea" parent="." index="103" instance=ExtResource("19_esain")]
 offset_left = -576.0
 offset_top = 480.0
 offset_bottom = 960.0
 
-[node name="secret" type="Node2D" parent="." index="89"]
+[node name="secret" type="Node2D" parent="." index="104"]
 script = ExtResource("20_4qjd5")
 
 [node name="CastleGround" type="Sprite2D" parent="secret" index="0"]
@@ -725,7 +751,7 @@ autoplay = "RESET"
 [node name="Marker2D" type="Marker2D" parent="secret" index="11"]
 position = Vector2(-256, 720)
 
-[node name="Marker2D" type="Marker2D" parent="." index="90"]
+[node name="Marker2D" type="Marker2D" parent="." index="105"]
 position = Vector2(7760, 272)
 script = ExtResource("26_5k7ds")
 stop_trigger_pos_x = 8320.0

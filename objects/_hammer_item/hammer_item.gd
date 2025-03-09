@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	at_top = floori(time_remaining * 100) % 40 > 20
 	
 	if at_top:
-		global_position = pl.head.global_position - Vector2(0, 14)
+		global_position = pl.head.global_position - Vector2(0, 12)
 		sprite.rotation_degrees = 0
 	else:
 		global_position = pl.global_position + Vector2(24, 0) * pl.direction
