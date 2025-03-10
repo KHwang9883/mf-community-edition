@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 			if !stopwatch_tw:
 				stopwatch_tw = create_tween().set_loops()
 				stopwatch_tw.tween_interval(max(0.2, 0.55 * Engine.time_scale))
-				stopwatch_tw.tween_callback(Audio.play_1d_sound.bind(STOPWATCH, false, {"volume": 5}))
+				stopwatch_tw.tween_callback(Audio.play_1d_sound.bind(STOPWATCH, false, {"volume": 3}))
 		
 		Data.values.stopwatch -= delta
 		if !player: Data.values.stopwatch = 0

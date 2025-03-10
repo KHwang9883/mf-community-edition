@@ -96,7 +96,7 @@ func _init_godlike() -> void:
 	
 	while godlike_count > 0:
 		await get_tree().create_timer(0.02, false).timeout
-		Data.values.score += 100
+		Data.add_score(100)
 		godlike_count -= 100
 		if godlike_count <= 100:
 			godlike_bool = false

@@ -21,4 +21,5 @@ func _physics_process(delta: float) -> void:
 	
 	if player.reached && player.current_marker == self && !activated:
 		activated = true
+		SecretsManager.set_secret("treasure level found", true, true, false)
 		Audio.play_1d_sound(preload("res://stages/world_6/scripts/newpath.ogg"))

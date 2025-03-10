@@ -19,7 +19,7 @@ func collect() -> void:
 		return
 	if score > 0:
 		ScoreText.new(str(score), self)
-		Data.values.score += score
+		Data.add_score(score)
 	
 	vis.queue_free()
 	is_equipped = true

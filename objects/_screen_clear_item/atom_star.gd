@@ -5,7 +5,7 @@ extends Powerup
 func collect() -> void:
 	if score > 0:
 		ScoreText.new(str(score), self)
-		Data.values.score += score
+		Data.add_score(score)
 	
 	var worked: bool
 	for i in get_tree().get_nodes_in_group(&"end_level_sequence"):

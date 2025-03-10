@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bvucqvgiu82r2"]
+[gd_scene load_steps=46 format=3 uid="uid://bvucqvgiu82r2"]
 
 [ext_resource type="PackedScene" uid="uid://bwr844qulxx0m" path="res://stages/world_3/level_3-3.tscn" id="1_al1me"]
 [ext_resource type="AudioStream" uid="uid://sde1k277yxks" path="res://music/smw2-underground.ogg" id="2_1gae8"]
@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="17_fhsuf"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="19_fhsuf"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="21_ctsxo"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="22_gc332"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="23_llauh"]
 
 [sub_resource type="Resource" id="Resource_ctsxo"]
 script = ExtResource("4_xu06v")
@@ -302,6 +304,18 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Gradient" id="Gradient_ha2mt"]
+offsets = PackedFloat32Array(0.536585, 1)
+colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d6oxt"]
+gradient = SubResource("Gradient_ha2mt")
+fill = 1
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.857143, 0.642857)
+metadata/_snap_count = 14
+metadata/_snap_enabled = true
+
 [node name="Level3-1" instance=ExtResource("1_al1me")]
 jump_to_scene = "res://stages/world_3/expert_map_3.tscn"
 
@@ -317,7 +331,7 @@ secrets = Array[String](["all toad houses found", "expert 3-3 with high star dro
 [node name="SecretUnlockerOther" parent="." index="2" instance=ExtResource("5_30bjn")]
 secrets = Array[String](["all otherworld levels found"])
 progress_by_id = "3-3"
-progress_to = 5
+progress_to = 7
 
 [node name="MessageBlockChoicer" parent="SecretUnlockerOther" index="0" instance=ExtResource("6_fhsuf")]
 position = Vector2(-48, 16)
@@ -489,6 +503,26 @@ warp_to_scene = "res://stages/world_3/expert_level_other_3-3.tscn"
 use_circle_transition = true
 circle_closing_speed = 0.09
 circle_opening_speed = 0.09
+
+[node name="PointLight2D22" type="PointLight2D" parent="PipeIn" index="5"]
+position = Vector2(0, -16)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_d6oxt")
+script = ExtResource("22_gc332")
+medium = true
+
+[node name="CloudLightEffect" type="Sprite2D" parent="PipeIn" index="6"]
+visible = false
+modulate = Color(1, 1, 1, 0.627451)
+position = Vector2(-32, -16)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_llauh")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 64)
+script = ExtResource("22_gc332")
+maximum = false
+minimum = true
 
 [connection signal="completed_with_star_rain" from="Node2D" to="SecretUnlocker" method="unlock_secret" binds= [1]]
 [connection signal="tried_to_enter" from="PipeIn" to="SecretUnlockerOther" method="progress_secret"]

@@ -5,7 +5,7 @@ extends Powerup
 func collect() -> void:
 	if score > 0:
 		ScoreText.new(str(score), self)
-		Data.values.score += score
+		Data.add_score(score)
 	
 	Data.values.stopwatch = active_for_sec
 
