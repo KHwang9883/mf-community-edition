@@ -46,6 +46,6 @@ func _toggled_option(old_val, new_val) -> void:
 
 func _update_string() -> void:
 	var mus_from_map: int = starter.current_music_from_map
-	var the_text: String = starter.map_names[mus_from_map] if mus_from_map != -1 else "default"
+	var the_text: String = starter.map_names[mus_from_map] if mus_from_map != -1 else "* default *"
 	label.text = value_template % the_text
 	

@@ -10,7 +10,7 @@ extends Node
 
 func _ready() -> void:
 	print("Script ready")
-	Data.reset_all_values()
+	#Data.reset_all_values()
 
 
 func _on_game_started() -> void:

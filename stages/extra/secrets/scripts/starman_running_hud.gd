@@ -42,10 +42,10 @@ func _on_mario_starman_attacked() -> void:
 func time_countdown(_first_time: bool = true) -> void:
 	if Data.values.time > 110:
 		Data.values.time -= 100
-		Data.values.score += 1000
+		Data.add_score(1000)
 	if Data.values.time > 1100:
 		Data.values.time -= 1000
-		Data.values.score += 10000
+		Data.add_score(10000)
 	super(_first_time)
 	if Data.values.time < 0.0:
 		Data.values.time = 0

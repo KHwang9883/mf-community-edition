@@ -22,11 +22,11 @@ func _ready() -> void:
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
 	
-	Scenes.current_scene.stage_ready.connect(func():
-		if "minix_continue" in Data.values:
-			return
-		minix_controls.focused = true
-	, CONNECT_ONE_SHOT)
+	#Scenes.current_scene.stage_ready.connect(func():
+		#if "minix_continue" in Data.values:
+			#return
+		#
+	#, CONNECT_ONE_SHOT)
 	
 	for i in maps.get_children():
 		if !i is MinixMap:
@@ -52,6 +52,7 @@ func _ready() -> void:
 		if "map_id" in Data.values:
 			map_id = Data.values.map_id
 		_on_map_changed_to(map_id)
+		minix_controls.set_deferred("focused", true)
 
 
 func _on_map_changed_to(_id: int) -> void:
@@ -86,7 +87,7 @@ func start_game() -> void:
 	control.map_id = map_id + 1
 	control._update_map.call_deferred(true)
 	for i in len(map_paths):
-		if i != map_id:
+		if i != map_id && i != current_music_from_map:
 			map_paths[i].queue_free()
 		
 	(func():
