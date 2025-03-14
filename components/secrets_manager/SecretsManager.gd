@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+const OLD_USER_PATH = "Redot/app_userdata/Mario Forever- Community Edition"
 const secrets_path = "user://achievements.thss"
 const SECRET_NOTIFICATION = preload("res://components/secrets_manager/achievement.wav")
 
@@ -14,6 +15,45 @@ var _has_cheated: bool = false
 @onready var ninepatch: NinePatchRect = $Map/Title
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var vignette: Sprite2D = $Vignette
+
+func _init() -> void:
+	var new_save_path = OS.get_user_data_dir().path_join("saves")
+	if DirAccess.dir_exists_absolute(new_save_path):
+		return
+	
+	var old_path = OS.get_data_dir().path_join(OLD_USER_PATH)
+	if !DirAccess.dir_exists_absolute(old_path): return
+	var errored: PackedStringArray
+	var _err = DirAccess.make_dir_recursive_absolute(new_save_path)
+	if _err: errored.append("Failed to create saves folder: " + error_string(_err))
+	
+	# Transferring configuration and save files from versions 1.0 and 1.1 of the game
+	
+	# profile files
+	for file in DirAccess.get_files_at(old_path.path_join("saves")):
+		if file.get_extension() == ProfileManager.SAVE_FILE_EX.trim_prefix("."):
+			var err = DirAccess.copy_absolute(
+				old_path.path_join("saves").path_join(file),
+				new_save_path.path_join(file)
+			)
+			if err: errored.append("Save %s failed to copy: %s" % [file, error_string(err)])
+	if len(errored) > 5: errored.resize(5)
+	# thss files, main configs
+	for file in DirAccess.get_files_at(old_path):
+		if file.get_extension() == "thss":
+			var err = DirAccess.copy_absolute(
+				old_path.path_join(file),
+				OS.get_user_data_dir().path_join(file)
+			)
+			if err: errored.append("Config %s failed to copy: %s" % [file, error_string(err)])
+	print("Notice: The save data has been transferred over from old user directory")
+	if !errored.is_empty():
+		if len(errored) > 8:
+			errored.resize(8)
+			errored.append("<truncated>")
+		OS.alert("Error while transferring saves from old version:
+" + "
+".join(errored))
 
 func _ready() -> void:
 	load_secrets()
