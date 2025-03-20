@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=62 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -17,6 +17,9 @@
 [ext_resource type="Script" uid="uid://dr6gtqawbcqp4" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="15_lbl8e"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="16_4e6sj"]
+[ext_resource type="Script" uid="uid://bdqxaq7js0oba" path="res://stages/main_menu/objects/character_editor/skin_open_dir.gd" id="16_h1dcq"]
+[ext_resource type="Script" uid="uid://de4be3ee7d540" path="res://stages/main_menu/objects/character_editor/skin_suit_category_sel.gd" id="16_ydww0"]
+[ext_resource type="Script" uid="uid://cdyk1jdfesswl" path="res://stages/main_menu/objects/character_editor/skin_suit_boolean.gd" id="17_vcqe5"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="17_xjt7h"]
 [ext_resource type="Script" uid="uid://c8d27o4ux3qle" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="18_kemdi"]
 [ext_resource type="Script" uid="uid://bbtnv4o1bvrj8" path="res://stages/main_menu/objects/activator.gd" id="20_noqp5"]
@@ -84,6 +87,11 @@ atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lkbxe"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxo6u"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
@@ -188,6 +196,11 @@ atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sffp6"]
+resource_local_to_scene = true
+atlas = ExtResource("5_fjyvq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1dcq"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
@@ -497,6 +510,42 @@ text = "-->"
 uppercase = true
 script = ExtResource("5_dhfy0")
 left_side = false
+
+[node name="QuickSkinSettingsButton" type="HBoxContainer" parent="Tweaks"]
+layout_mode = 2
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../QuickSkinSettings")
+menu_selector_path = NodePath("../../Selector5")
+reset_to = 5
+show_desc_bool = true
+
+[node name="Label" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "quick skin settings"
+uppercase = true
+
+[node name="Value" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
 
 [node name="HBoxContainer25" type="HBoxContainer" parent="Tweaks"]
 layout_mode = 2
@@ -1047,6 +1096,48 @@ texture = SubResource("AtlasTexture_lkbxe")
 stretch_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="Gameplay/HBoxContainer7/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="Gameplay"]
+layout_mode = 2
+script = ExtResource("3_pxu1a")
+tweak_name = "super_jump_bug"
+tweak_description = "(from original mario forever)
+if grounded, stomping on enemies will not immediately make the player bounce off, but instead will \"store\" the resulting bounce speed until stepped off the ground. this speed can be significantly increased by prematurely holding down the jump button, making an enourmous jump upwards.
+
+notice: any unintended behavior of the game derived from this bug simulation is not supported, use at your own risk."
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="Gameplay/HBoxContainer8"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "super jump bug (not recommended)"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="Gameplay/HBoxContainer8"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_mxo6u")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Gameplay/HBoxContainer8/Toggle"]
 modulate = Color(0, 0, 0, 0.462745)
 z_index = -1
 layout_mode = 2
@@ -2164,6 +2255,378 @@ theme_override_font_sizes/font_size = 12
 text = "go back"
 uppercase = true
 
+[node name="QuickSkinSettings" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 2168.0
+offset_top = 22.0
+offset_right = 2624.0
+offset_bottom = 454.0
+theme_override_constants/separation = 14
+script = ExtResource("1_e1b0h")
+focused = false
+prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator2" type="HSeparator" parent="QuickSkinSettings"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HSeparator2"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "QUICK SKIN SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator3" type="HSeparator" parent="QuickSkinSettings"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="HBoxContainer23" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("16_h1dcq")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer23"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "open skin directory"
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer23"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
+[node name="HBoxContainer21" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("16_ydww0")
+powerup_name = "global"
+move_to_path = NodePath("../../QuickSkinSettings2")
+menu_selector_path = NodePath("../../Selector6")
+show_desc_bool = true
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer21"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "global"
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer21"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
+[node name="HSeparator5" type="HSeparator" parent="QuickSkinSettings"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HSeparator5"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "select a category"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator4" type="HSeparator" parent="QuickSkinSettings"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="HBoxContainer22" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("16_ydww0")
+powerup_name = "beetroot"
+move_to_path = NodePath("../../QuickSkinSettings2")
+menu_selector_path = NodePath("../../Selector6")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer22"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "beetroot suit"
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer22"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
+[node name="HBoxContainer24" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("16_ydww0")
+powerup_name = "fireball"
+move_to_path = NodePath("../../QuickSkinSettings2")
+menu_selector_path = NodePath("../../Selector6")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer24"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "fire suit"
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer24"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
+[node name="Exit" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+size_flags_vertical = 10
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../Tweaks")
+menu_selector_path = NodePath("../../Selector")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/Exit"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "save and go back"
+uppercase = true
+
+[node name="QuickSkinSettings2" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 2664.0
+offset_top = 22.0
+offset_right = 3120.0
+offset_bottom = 454.0
+theme_override_constants/separation = 14
+script = ExtResource("1_e1b0h")
+focused = false
+prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator2" type="HSeparator" parent="QuickSkinSettings2"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="QuickSkinSettings2/HSeparator2"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "%s suit skin settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator3" type="HSeparator" parent="QuickSkinSettings2"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="HBoxContainer21" type="HBoxContainer" parent="QuickSkinSettings2"]
+layout_mode = 2
+script = ExtResource("17_vcqe5")
+tweak_name = "look_up_animation"
+tweak_description = "adds a \"look_up\" animation
+
+triggered when pressing up moving key"
+
+[node name="Label" type="Label" parent="QuickSkinSettings2/HBoxContainer21"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "look up animation"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="QuickSkinSettings2/HBoxContainer21"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_h1dcq")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="QuickSkinSettings2/HBoxContainer21/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HBoxContainer22" type="HBoxContainer" parent="QuickSkinSettings2"]
+layout_mode = 2
+script = ExtResource("17_vcqe5")
+tweak_name = "attack_air_animation"
+tweak_description = "adds a \"attack_air\" animation
+
+projectile-launching suits: triggered when a projectile is created mid-air"
+
+[node name="Label" type="Label" parent="QuickSkinSettings2/HBoxContainer22"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "attack air animation"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="QuickSkinSettings2/HBoxContainer22"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_h1dcq")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="QuickSkinSettings2/HBoxContainer22/Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_lobhh")
+stretch_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="QuickSkinSettings2"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Exit" type="HBoxContainer" parent="QuickSkinSettings2"]
+layout_mode = 2
+size_flags_vertical = 10
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../QuickSkinSettings")
+menu_selector_path = NodePath("../../Selector5")
+
+[node name="Label" type="Label" parent="QuickSkinSettings2/Exit"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "go back"
+uppercase = true
+
 [node name="HBoxContainer13" type="HBoxContainer" parent="."]
 process_mode = 4
 visible = false
@@ -2251,6 +2714,26 @@ position_padding = 20
 sprite_frames = ExtResource("16_4e6sj")
 script = ExtResource("17_xjt7h")
 
+[node name="Selector5" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("15_lbl8e")
+smooth_speed = 0.4
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector5"]
+sprite_frames = ExtResource("16_4e6sj")
+script = ExtResource("17_xjt7h")
+
+[node name="Selector6" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("15_lbl8e")
+smooth_speed = 0.4
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector6"]
+sprite_frames = ExtResource("16_4e6sj")
+script = ExtResource("17_xjt7h")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 process_callback = 0
@@ -2276,3 +2759,7 @@ script = ExtResource("20_noqp5")
 [connection signal="selected" from="Aesthetic" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="Presets" to="Selector4" method="handle_selection"]
 [connection signal="selected" from="Presets" to="Camera2D" method="handle_selection"]
+[connection signal="selected" from="QuickSkinSettings" to="Selector5" method="handle_selection"]
+[connection signal="selected" from="QuickSkinSettings" to="Camera2D" method="handle_selection"]
+[connection signal="selected" from="QuickSkinSettings2" to="Selector6" method="handle_selection"]
+[connection signal="selected" from="QuickSkinSettings2" to="Camera2D" method="handle_selection"]

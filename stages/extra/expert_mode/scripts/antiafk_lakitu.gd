@@ -133,7 +133,7 @@ func _cancel_stopwatch() -> void:
 		if !i.get(&"_center"): continue
 		var vis = Thunder.get_child_by_class_name(i._center, "VisibleOnScreenNotifier2D") as VisibleOnScreenNotifier2D
 		if vis: vis.show()
-		if vis && vis.enable_node_path == vis.get_path_to(i._center):
+		if vis && "enable_node_path" in vis && vis.enable_node_path == vis.get_path_to(i._center):
 			if vis.is_on_screen():
 				i._center.process_mode = Node.PROCESS_MODE_INHERIT
 		else:

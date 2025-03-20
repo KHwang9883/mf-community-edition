@@ -40,3 +40,4 @@ func _handle_select(mouse_input: bool = false) -> void:
 	camera_2d.menu_controller = move_to
 	camera_2d.selector = selector_to
 	camera_2d.update_limit()
+	camera_2d.reset_physics_interpolation()

@@ -5,8 +5,15 @@ extends "res://engine/objects/warps/pipe_in.gd"
 const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
 const message_warning_from_save: String = """warning!
 
-one or more console commands, or a console tweak, have been activated in this save. this affected your save data, and you will not be able to get achievements in this save until it is reset.
+one or more console cheat commands have been activated in this save. this has affected your save data, and you will not be able to get achievements in this save until it is reset.
 try warping once again to proceed."""
+const message_warning_forced_save: String = """warning!
+
+one or more console cheat commands or a console tweak has been activated. the "cv_forcesave" command has been activated in this session, which will make this save permanently ineligible for achievements until it is reset.
+try warping once again to proceed.
+if you think that this is a mistake, please restart the game.
+
+"""
 
 @export
 var profile_name: String
@@ -55,6 +62,10 @@ func _ready() -> void:
 	kevin_activation_label.deactivated.connect(func():
 		is_blocked = false
 	)
+	Console.executed.connect(func(cmd: String, args: Array):
+		if cmd == "cv_forcesave":
+			cheat_warned = false
+	)
 	_tweak = SettingsManager.get_tweak("load_save_from_world_start", false)
 	
 	_update_save()
@@ -96,7 +107,19 @@ func _physics_process(delta: float) -> void:
 	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
 		player.up_down = 0
 		if !cheat_warned && (console_enabled || save_is_cheated):
-			message_block_2.message = message_warning_from_save if save_is_cheated else message_warning
+			message_block_2.message = (
+				message_warning_from_save if save_is_cheated \
+				else message_warning if !Console.cv.can_save_with_console \
+				else message_warning_forced_save
+			)
+			if save_is_cheated:
+				var addition: String = ""
+				if Console.cv.can_save_with_console:
+					addition = "\nthe game will continue saving to this save file."
+				else:
+					addition = '
+the game will not save anything to this save file. use the "cv_forcesave" command to allow saving for this session.\n\n'
+				message_block_2.message += addition
 			message_block_2.show_message()
 			cheat_warned = true
 		else:
