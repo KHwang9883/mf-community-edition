@@ -3,6 +3,7 @@ extends CanvasLayer
 const OLD_USER_PATH = "Redot/app_userdata/Mario Forever- Community Edition"
 const secrets_path = "user://achievements.thss"
 const SECRET_NOTIFICATION = preload("res://components/secrets_manager/achievement.wav")
+const NOTIFICATION = preload("res://components/secrets_manager/notification.tscn")
 
 var secrets: Dictionary = {}
 var toast_queue: Array[Array] = []
@@ -67,6 +68,9 @@ func _ready() -> void:
 	)
 	await get_tree().physics_frame
 	vignette.visible = SettingsManager.get_tweak(&"vignette", false)
+	
+	# Notifications
+	Thunder._connect(SkinsManager.skins_loaded, _on_skins_reloaded)
 
 
 func _physics_process(delta: float) -> void:
@@ -156,6 +160,34 @@ func show_failure(text: String, title: String = "achievement failed") -> void:
 		tw.tween_property(label, "modulate:a", 0.0, 2.0)
 	
 	_is_free = true
+
+
+func notify(text: String, outline_color: Color = Color(0.505, 1, 0.34)) -> void:
+	var notif = NOTIFICATION.instantiate()
+	var panel_c: PanelContainer = notif.get_child(0)
+	var styleb: StyleBoxFlat = panel_c.get_theme_stylebox(&"panel").duplicate()
+	styleb.border_color = outline_color
+	panel_c.add_theme_stylebox_override(&"panel", styleb)
+	notif.get_child(0).get_child(0).get_child(0).text = text
+	%NotificationBox.add_child(notif)
+	notif.modulate.a = 0.0
+	var __tw = notif.create_tween()
+	__tw.tween_property(notif, "modulate:a", 1.0, 0.3)
+	__tw.tween_interval(3.0)
+	__tw.tween_property(notif, "modulate:a", 0.0, 1.0)
+	__tw.tween_callback(notif.queue_free)
+
+func notify_error(text: String) -> void:
+	text = "Error: " + text
+	notify(text, Color.FIREBRICK)
+	
+func notify_warn(text: String) -> void:
+	text = "Warning: " + text
+	notify(text, Color.YELLOW)
+
+
+func _on_skins_reloaded() -> void:
+	notify("Skins reloaded!")
 
 
 func load_secrets() -> void:

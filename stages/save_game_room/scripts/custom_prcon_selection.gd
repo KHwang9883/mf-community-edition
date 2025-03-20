@@ -2,8 +2,8 @@ extends "res://engine/components/progress_continue/scripts/continue_sel.gd"
 
 const message_warning_from_save: String = """warning!
 
-one or more console commands, or a console tweak, have been activated in this save. this affected your save data, and you will not be able to get achievements in this save until it is reset.
-try confirming once again to proceed."""
+one or more console commands has been activated in this save. this has affected your save data, and you will not be able to get achievements in this save until it is reset.
+confirm once again to proceed."""
 
 @export var really_yes: bool = false
 
@@ -23,6 +23,10 @@ func _handle_select(mouse_input: bool = false) -> void:
 		progress_continue.v_box_container.focused = false
 		if !!prog.profile.get("saved_profile_data").get("executed"):
 			message_block_2.message = message_warning_from_save
+			if Console.cv.can_save_suspended_with_console:
+				message_block_2.message += "\nthe game will continue saving to this saved progress file."
+			else:
+				message_block_2.message += '\nthe game will not override this saved progress file. Use the "cv_forcesave_suspended" command to allow overriding.'
 		message_block_2.show_message()
 		return
 	if !!prog.profile.get("saved_profile_data").get("mario_forever_expert"):

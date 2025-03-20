@@ -1,0 +1,123 @@
+[gd_scene load_steps=13 format=3 uid="uid://chcn7b5ic24df"]
+
+[ext_resource type="PackedScene" uid="uid://hqhtm2y4woh0" path="res://engine/objects/enemies/spinies/spiny_egg_red.tscn" id="1_k3nv6"]
+[ext_resource type="Script" uid="uid://dxmvdqhpr682w" path="res://objects/roto_enemies/roto_spiny_red_egg.gd" id="2_c8dxp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_2bdrp"]
+[ext_resource type="PackedScene" uid="uid://cd67ta53gnplr" path="res://engine/objects/enemies/spinies/spiny_red_no_combo.tscn" id="3_c8dxp"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_fumju"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_3bwup"]
+[ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="6_7s61n"]
+
+[sub_resource type="Resource" id="Resource_2bdrp"]
+script = ExtResource("5_3bwup")
+creation_nodepack = ExtResource("3_c8dxp")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_elnbo"]
+resource_local_to_scene = true
+script = ExtResource("5_3bwup")
+creation_nodepack = ExtResource("3_2bdrp")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 2
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Killed"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("4_fumju")
+
+[sub_resource type="Animation" id="Animation_2bdrp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:amplitude")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_c8dxp"]
+resource_name = "new_animation"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:amplitude")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(200, 200)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0.588235), 1.0, Color(0, 0, 0, 0.588235), 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fumju"]
+_data = {
+&"RESET": SubResource("Animation_2bdrp"),
+&"new_animation": SubResource("Animation_c8dxp")
+}
+
+[node name="SpinyRedEgg" instance=ExtResource("1_k3nv6")]
+script = ExtResource("2_c8dxp")
+spiny_creation = SubResource("Resource_2bdrp")
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_creation = SubResource("Resource_elnbo")
+killing_can_combo = false
+
+[node name="RotoCenter" type="Node2D" parent="." index="5" groups=["#roto_center"]]
+
+[node name="RotoRed" parent="RotoCenter" index="0" instance=ExtResource("6_7s61n")]
+amplitude = Vector2(0, 0)
+frequency = -50.0
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RotoCenter/RotoRed" index="3"]
+callback_mode_process = 0
+libraries = {
+&"": SubResource("AnimationLibrary_fumju")
+}
+autoplay = "new_animation"
