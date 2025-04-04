@@ -1,0 +1,215 @@
+[gd_scene load_steps=13 format=4 uid="uid://ceq88y2j8v35k"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uqiub"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_lkjxl"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_gdo2n"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_crn4t"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_q5hxs"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_qw1ap"]
+[ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="10_ajvlt"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_clihp"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_k11go"]
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="13_wacj1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dufqw"]
+texture = ExtResource("10_clihp")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_xf7at"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_dufqw")
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_uqiub")
+time = -1
+completion_music = ExtResource("2_lkjxl")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" parent="." instance=ExtResource("3_gdo2n")]
+
+[node name="Player" parent="." instance=ExtResource("5_crn4t")]
+position = Vector2(80, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_q5hxs")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("8_qw1ap")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAPAAkAAAAAAAAAAAARAAYAAAAAAAAAAAASAAYAAAAAAAAAAAAYAAsAAAAAAAAAAAAZAAsAAAAAAAAAAAAaAAsAAAAAAAAAAAAGAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAEAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAIAAQAAAAAAAAAAAAJAAQAAAAAAAAAAAAHAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAJAAIAAAAAAAAAAAAKAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAALAAIAAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAoAAYAAAAAAAAAAAAoAAUAAAAAAAAAAAAoAAQAAAAAAAAAAAAoAAMAAAAAAAAAAAAoAAIAAAAAAAAAAAAoAAEAAAAAAAAAAAAoAAAAAAAAAAAAAAAoAP//AAAAAAAAAAAoAP7/AAAAAAAAAAAnAAYAAAAAAAAAAAAmAAYAAAAAAAAAAAAlAAYAAAAAAAAAAAAkAAYAAAAAAAAAAAAoAAgAAAAAAAAAAAAnAAgAAAAAAAAAAAAmAAgAAAAAAAAAAAAkAAUAAAAAAAAAAAAkAAQAAAAAAAAAAAAkAAMAAAAAAAAAAAAkAAIAAAAAAAAAAAAkAAEAAAAAAAAAAAAkAAAAAAAAAAAAAAAkAP//AAAAAAAAAAAkAP7/AAAAAAAAAAAlAP7/AAAAAAAAAAAmAP7/AAAAAAAAAAAmAP//AAAAAAAAAAAnAP//AAAAAAAAAAAnAAAAAAAAAAAAAAAnAAEAAAAAAAAAAAAnAAIAAAAAAAAAAAAnAAMAAAAAAAAAAAAnAAQAAAAAAAAAAAAnAAUAAAAAAAAAAAAmAAUAAAAAAAAAAAAlAAQAAAAAAAAAAAAlAAMAAAAAAAAAAAAlAAIAAAAAAAAAAAAlAAEAAAAAAAAAAAAlAAAAAAAAAAAAAAAmAAAAAAAAAAAAAAAmAAEAAAAAAAAAAAAmAAIAAAAAAAAAAAAlAAUAAAAAAAAAAAAmAAQAAAAAAAAAAAAmAAMAAAAAAAAAAAAlAP//AAAAAAAAAAAnAP7/AAAAAAAAAAAlAAgAAAAAAAAAAAArAAQAAAAAAAAAAAAsAAQAAAAAAAAAAAAtAAQAAAAAAAAAAAAuAAQAAAAAAAAAAAAvAAQAAAAAAAAAAAAeAAoAAAAAAAAAAAAfAAsAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_xf7at")
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("11_k11go")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="Brick" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(560, 272)
+
+[node name="Brick2" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(592, 272)
+
+[node name="Brick3" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(624, 272)
+
+[node name="Brick14" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(688, 336)
+
+[node name="Brick15" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(720, 336)
+
+[node name="Brick16" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(752, 336)
+
+[node name="Brick17" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(688, 304)
+
+[node name="Brick18" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(720, 304)
+
+[node name="Brick19" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(752, 304)
+
+[node name="Brick20" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(688, 272)
+
+[node name="Brick21" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(720, 272)
+
+[node name="Brick22" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(752, 272)
+
+[node name="Brick23" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(688, 240)
+
+[node name="Brick24" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(720, 240)
+
+[node name="Brick25" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(752, 240)
+
+[node name="Brick26" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(688, 208)
+
+[node name="Brick27" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(720, 208)
+
+[node name="Brick28" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(752, 208)
+
+[node name="Brick29" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(688, 176)
+
+[node name="Brick30" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(720, 176)
+
+[node name="Brick31" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(752, 176)
+
+[node name="Brick32" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(784, 304)
+
+[node name="Brick33" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(816, 304)
+
+[node name="Brick34" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(848, 304)
+
+[node name="Brick35" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(784, 272)
+
+[node name="Brick36" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(816, 272)
+
+[node name="Brick37" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(848, 272)
+
+[node name="Brick38" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(784, 240)
+
+[node name="Brick39" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(816, 240)
+
+[node name="Brick40" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(848, 240)
+
+[node name="Brick41" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(784, 208)
+
+[node name="Brick42" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(816, 208)
+
+[node name="Brick43" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(848, 208)
+
+[node name="Brick44" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(784, 176)
+
+[node name="Brick45" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(816, 176)
+
+[node name="Brick46" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(848, 176)
+
+[node name="Brick47" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(784, 144)
+
+[node name="Brick48" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(816, 144)
+
+[node name="Brick49" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(848, 144)
+
+[node name="Brick50" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(688, 144)
+
+[node name="Brick51" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(720, 144)
+
+[node name="Brick52" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(752, 144)
+
+[node name="Brick4" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(528, 144)
+
+[node name="Brick5" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(560, 144)
+
+[node name="Brick6" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(592, 144)
+
+[node name="Brick7" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(624, 144)
+
+[node name="Brick8" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(400, 240)
+
+[node name="Brick9" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(432, 240)
+
+[node name="Brick10" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(432, 368)
+
+[node name="Brick11" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(464, 368)
+
+[node name="Brick12" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(400, 336)
+
+[node name="Brick13" parent="." instance=ExtResource("13_wacj1")]
+position = Vector2(400, 368)
+
+[node name="Brick53" parent="." instance=ExtResource("10_ajvlt")]
+position = Vector2(1008, 304)

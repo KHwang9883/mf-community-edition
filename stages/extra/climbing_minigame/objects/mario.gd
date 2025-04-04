@@ -6,7 +6,7 @@ func _ready() -> void:
 	super()
 
 
-func hurt(tags: Dictionary = {}) -> void:
+func hurt(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> void:
 	if !suit || debug_god || is_hurting:
 		return
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
@@ -27,7 +27,7 @@ func hurt(tags: Dictionary = {}) -> void:
 	damaged.emit()
 
 
-func die(tags: Dictionary = {}) -> void:
+func die(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> void:
 	if warp != Warp.NONE: return
 	if debug_god: return
 	if is_dying: return
