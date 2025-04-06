@@ -23,8 +23,8 @@ func _physics_process(delta: float) -> void:
 			trail_timer -= 50 * delta
 		if trail_timer <= 0.0:
 			trail_timer = 1.0
-			Effect.trail.call_deferred(
-				sprite, 
+			Effect.trail(
+				sprite,
 				sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame),
 				sprite.position,
 				sprite.flip_h,

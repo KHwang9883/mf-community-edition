@@ -1,10 +1,13 @@
 extends Node
 
+@export var custom_go_resume_scene: String
 @onready var timer: Timer = $Timer #Timer
 @onready var bowser = $"../Bowser"
 
 var trail_timer: float
 
+func _ready() -> void:
+	Scenes.custom_scenes.game_over.custom_resume_scene = custom_go_resume_scene
 
 func _physics_process(delta: float) -> void:
 	# Trail effect
@@ -14,8 +17,8 @@ func _physics_process(delta: float) -> void:
 		trail_timer = 1.5
 		if bowser.tween_hurt && bowser.tween_hurt.is_running():
 			return
-		Effect.trail.call_deferred(
-			bowser, 
+		Effect.trail(
+			bowser,
 			bowser.sprite.sprite_frames.get_frame_texture(bowser.sprite.animation, bowser.sprite.frame),
 			bowser.sprite.position,
 			bowser.sprite.flip_h,
@@ -37,3 +40,7 @@ func has_hit(hp: int) -> void:
 func add_life() -> void:
 	Thunder.add_lives(1)
 	Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"))
+
+
+func _on_level_completed() -> void:
+	Scenes.custom_scenes.game_over.custom_resume_scene = ""
