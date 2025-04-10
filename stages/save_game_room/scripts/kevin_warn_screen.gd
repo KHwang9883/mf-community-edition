@@ -29,6 +29,7 @@ func toggle(force_close: bool = false) -> void:
 	$'..'.offset = Vector2.ZERO
 
 	if opened:
+		Scenes.custom_scenes.pause._no_unpause = true
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
 		SettingsManager.show_mouse()

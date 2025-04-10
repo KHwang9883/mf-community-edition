@@ -1,4 +1,4 @@
-[gd_scene load_steps=229 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=231 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" uid="uid://db8widi15epm" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -919,12 +919,28 @@ pattern_0 = SubResource("TileMapPattern_16k21")
 
 [sub_resource type="Gradient" id="Gradient_i8s11"]
 interpolation_mode = 2
-offsets = PackedFloat32Array(0.0633484, 1)
+offsets = PackedFloat32Array(0.0625, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.380392)
+metadata/_snap_enabled = true
+metadata/_snap_count = 16
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_01e6n"]
 gradient = SubResource("Gradient_i8s11")
 width = 32
+
+[sub_resource type="Gradient" id="Gradient_wibcd"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.9375)
+colors = PackedColorArray(1, 1, 1, 0.380392, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 16
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u71j8"]
+gradient = SubResource("Gradient_wibcd")
+fill = 2
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3yayh"]
 atlas = ExtResource("44_x7w6x")
@@ -1050,7 +1066,7 @@ size = Vector2(64, 32)
 
 [sub_resource type="Curve2D" id="Curve2D_odgsj"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -464, -592, 0, 0, 0, 0, -768, -592)
+"points": PackedVector2Array(0, 0, 0, 0, -400, -592, 0, 0, 0, 0, -768, -592)
 }
 point_count = 2
 
@@ -1494,6 +1510,13 @@ offset_top = -992.0
 offset_right = 1280.0
 offset_bottom = -512.0
 smooth_transition = true
+
+[node name="Control" type="Control" parent="CamAreaNewSecrets3"]
+anchors_preset = 0
+offset_top = -80.0
+offset_right = 640.0
+offset_bottom = 480.0
+script = ExtResource("16_h7rg8")
 
 [node name="CamAreaNewSecrets8" parent="." instance=ExtResource("6_vufed")]
 offset_left = 640.0
@@ -2123,6 +2146,11 @@ position = Vector2(960, -832)
 scale = Vector2(1, 3.33333)
 texture = SubResource("GradientTexture1D_01e6n")
 region_enabled = true
+region_rect = Rect2(0, 0, 64, 96)
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D4"]
+position = Vector2(960, -1024)
+texture = SubResource("GradientTexture2D_u71j8")
 region_rect = Rect2(0, 0, 64, 96)
 
 [node name="FancyBush" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D4"]
@@ -3093,20 +3121,6 @@ offset_left = 352.0
 offset_top = 144.0
 offset_right = 480.0
 offset_bottom = 176.0
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
-text = "SELECT A SAVE"
-horizontal_alignment = 1
-uppercase = true
-script = ExtResource("24_ijk3p")
-
-[node name="Label13" type="Label" parent="Objects"]
-offset_left = 928.0
-offset_top = -448.0
-offset_right = 1056.0
-offset_bottom = -425.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
@@ -4592,7 +4606,7 @@ uppercase = true
 curve = SubResource("Curve2D_odgsj")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Objects/KevinHint"]
-position = Vector2(-464, -592)
+position = Vector2(-400, -592)
 rotates = false
 cubic_interp = false
 loop = false
@@ -4682,6 +4696,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 script = ExtResource("77_s7vb4")
+
+[node name="KevinLabelFake" type="Label" parent="KevinLayer"]
+visible = false
+offset_left = 64.0
+offset_top = 416.0
+offset_right = 576.0
+offset_bottom = 464.0
+theme_override_colors/font_color = Color(1, 0.435294, 0.34902, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("57_likrm")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Sign" type="Sprite2D" parent="."]
 z_index = -1

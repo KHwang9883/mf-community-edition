@@ -10,6 +10,7 @@ var b: float
 
 @onready var init_pos: Vector2 = position
 @onready var click_on_me: Sprite2D = $ClickOnMe
+@onready var star_effect: Sprite2D = $StarEffect
 
 func _ready() -> void:
 	if !"bonus_game" in Data.values || !Data.values.bonus_game || !SettingsManager.get_tweak("minigames_in_main_worlds", true):
@@ -21,7 +22,13 @@ func _ready() -> void:
 		Data.values.bonus_game = false
 	, CONNECT_ONE_SHOT)
 	modulate.a = 0.0
-	create_tween().tween_property(self, "modulate:a", 1.0, 1.0)
+	create_tween().tween_property(self, "modulate:a", 1.0, 1.4)
+	star_effect.visible = true
+	star_effect.amplitude = 75 * Vector2.ONE
+	for i in range(1, 10):
+		var _star_eff = star_effect.duplicate()
+		_star_eff.phase = i * 36
+		add_child(_star_eff)
 
 
 func _physics_process(delta: float) -> void:

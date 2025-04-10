@@ -28,6 +28,9 @@ func mario_forever_advance(is_from_save: bool = false) -> void:
 	SettingsManager.set_tweak("minigames_in_main_worlds", true)
 	if !is_from_save:
 		Data.technical_values.remaining_continues = 3
+		ProjectSettings.set_setting(
+			"application/thunder_settings/player/gameover_continues", 3
+		)
 	CharacterManager.forced_character = "Mario"
 	var pl = Thunder._current_player
 	if pl && pl is Player:
