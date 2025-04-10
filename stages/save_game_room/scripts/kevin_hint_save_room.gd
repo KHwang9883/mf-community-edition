@@ -3,9 +3,19 @@ extends PathFollow2D
 var active: bool = false
 var speed: float = 0.0
 var blocked: bool = false
+var is_fading: bool
 
 @onready var cursed_preview: AnimatedSprite2D = $CursedPreview
 @onready var sign_giant: Sprite2D = $"../../SignKevin"
+@onready var max_progress: float = (
+	func() -> float:
+		var max_length: float
+		var current: float = progress_ratio
+		progress_ratio = 1.0
+		max_length = progress
+		progress_ratio = current
+		return max_length
+).call()
 
 func _ready() -> void:
 	visible = false
@@ -14,6 +24,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	progress += speed * delta
+	if progress > max_progress - 48 && !is_fading:
+		is_fading = true
+		var tw = create_tween()
+		tw.tween_property(cursed_preview, "modulate:a", 0.0, 0.14)
 	if progress_ratio >= 1.0:
 		visible = false
 		speed = 0

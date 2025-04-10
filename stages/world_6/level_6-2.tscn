@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://ccda65mgll40l"]
+[gd_scene load_steps=86 format=4 uid="uid://ccda65mgll40l"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_80rbc"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_1xa62"]
@@ -50,9 +50,13 @@
 [ext_resource type="PackedScene" uid="uid://b6isdtytr03lm" path="res://stages/world_6/objects/grass_platform/small_grass_platform_path.tscn" id="37_ypima"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="38_q26iw"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="44_r1hn1"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="46_r1t4c"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="47_gyisi"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="48_re8ft"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="49_f1aw7"]
 [ext_resource type="PackedScene" uid="uid://cdqd6h1rowlgk" path="res://objects/coin_bonus_level/coin_bonus_level.tscn" id="50_6sd0w"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="52_afpkf"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="57_gyisi"]
 
 [sub_resource type="Gradient" id="Gradient_igxpo"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -263,6 +267,19 @@ script = ExtResource("27_do0jx")
 creation_nodepack = ExtResource("33_t4cuq")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_i5haj"]
+script = ExtResource("48_re8ft")
+creation_nodepack = ExtResource("47_gyisi")
+trans_offset = Vector2(0, -28)
+trans_inheritances = 6
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0
@@ -1070,9 +1087,37 @@ position = Vector2(240, -3312)
 
 [node name="PiranhaPink" parent="." instance=ExtResource("34_virum")]
 position = Vector2(384, -3392)
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("46_r1t4c"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.18",
+"projectile_offscreen_time": 0.75,
+"projectile_remove_from_top": true,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
 
 [node name="PiranhaPink2" parent="." instance=ExtResource("34_virum")]
 position = Vector2(1568, -3360)
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("46_r1t4c"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.18",
+"projectile_offscreen_time": 0.75,
+"projectile_remove_from_top": true,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
 
 [node name="KoopaParatroopaGreen12" parent="." instance=ExtResource("12_5t7d8")]
 position = Vector2(528, -3456)
@@ -1381,9 +1426,37 @@ hammer_bros_jumping_type = 1
 
 [node name="PiranhaPink3" parent="." instance=ExtResource("34_virum")]
 position = Vector2(2304, -2944)
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("46_r1t4c"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.18",
+"projectile_offscreen_time": 0.75,
+"projectile_remove_from_top": true,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
 
 [node name="PiranhaPink4" parent="." instance=ExtResource("34_virum")]
 position = Vector2(2592, -3104)
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("46_r1t4c"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.18",
+"projectile_offscreen_time": 0.75,
+"projectile_remove_from_top": true,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
 
 [node name="AudioAreaCave" parent="." instance=ExtResource("44_r1hn1")]
 position = Vector2(-112, -2096)
@@ -1452,10 +1525,9 @@ position = Vector2(144, -3136)
 
 [node name="HarderDesignNode" parent="." instance=ExtResource("52_afpkf")]
 
-[node name="TileMap" type="TileMap" parent="HarderDesignNode"]
+[node name="Layer0" type="TileMapLayer" parent="HarderDesignNode"]
+tile_map_data = PackedByteArray("AABXAML/AQAAAAAAAABXAMP/AQAAAAAAAQBXAMT/AQAAAAAAAABXAMX/AQAAAAAAAQBXAMb/AQAAAAAAAABXAMf/AQAAAAAAAQBXAMj/AQAAAAAAAABRALz/AQAAAAAAAAA=")
 tile_set = ExtResource("7_62g2a")
-format = 2
-layer_0/tile_data = PackedInt32Array(-4063145, 1, 0, -3997609, 1, 65536, -3932073, 1, 0, -3866537, 1, 65536, -3801001, 1, 0, -3735465, 1, 65536, -3669929, 1, 0, -4456367, 1, 0)
 
 [node name="QuestionBlock9" parent="HarderDesignNode" instance=ExtResource("28_pjyqt")]
 position = Vector2(1616, -3024)
@@ -1469,13 +1541,12 @@ offset_right = 2784.0
 offset_bottom = -1760.0
 
 [node name="EasierDesignNode" parent="." instance=ExtResource("52_afpkf")]
-modulate = Color(0.541176, 0.529412, 1, 1)
+modulate = Color(1, 1, 1, 1)
 inverted = true
 
-[node name="TileMap" type="TileMap" parent="EasierDesignNode"]
+[node name="Layer0" type="TileMapLayer" parent="EasierDesignNode"]
+tile_map_data = PackedByteArray("AABWAMD/AQAAAAAAAQBOALv/AQAAAAAAAABSAL3/AQAAAAAAAAAvAKH/AQAAAAAAAQAwAKH/AQAAAAAAAAA=")
 tile_set = ExtResource("7_62g2a")
-format = 2
-layer_0/tile_data = PackedInt32Array(-4194218, 1, 65536, -4521906, 1, 65536, -4390830, 1, 65536, -6225873, 1, 65536, -6225872, 1, 65536)
 
 [node name="ColorRect" type="ColorRect" parent="EasierDesignNode"]
 z_index = 2
@@ -1494,3 +1565,71 @@ offset_right = 2784.0
 offset_bottom = -1984.0
 size_flags_vertical = 3
 color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D1" type="Sprite2D" parent="EasierDesignNode"]
+visible = false
+z_index = -20
+position = Vector2(549, -2112)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("57_gyisi")
+
+[node name="Sprite2D2" type="Sprite2D" parent="EasierDesignNode"]
+visible = false
+z_index = -20
+position = Vector2(1152, -2238)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("57_gyisi")
+
+[node name="Sprite2D3" type="Sprite2D" parent="EasierDesignNode"]
+visible = false
+z_index = -20
+position = Vector2(1088, -3134)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("57_gyisi")
+
+[node name="Sprite2D4" type="Sprite2D" parent="EasierDesignNode"]
+visible = false
+z_index = -20
+position = Vector2(1473, -3169)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("57_gyisi")
+
+[node name="Sprite2D5" type="Sprite2D" parent="EasierDesignNode"]
+visible = false
+z_index = -20
+position = Vector2(2688, -3362)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("57_gyisi")
+
+[node name="Sprite2D6" type="Sprite2D" parent="EasierDesignNode"]
+visible = false
+z_index = -20
+position = Vector2(2880, -2337)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("57_gyisi")
+
+[node name="Sprite2D7" type="Sprite2D" parent="EasierDesignNode"]
+visible = false
+z_index = -20
+position = Vector2(480, -2945)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("57_gyisi")
+
+[connection signal="warp_ended" from="PipeIn3" to="EasierDesignNode/Sprite2D7" method="show"]
+[connection signal="warp_ended" from="PipeIn14" to="EasierDesignNode/Sprite2D6" method="show"]
+[connection signal="warp_ended" from="PipeIn15" to="EasierDesignNode/Sprite2D5" method="show"]
+[connection signal="warp_ended" from="PipeIn16" to="EasierDesignNode/Sprite2D4" method="show"]
+[connection signal="warp_ended" from="PipeIn20" to="EasierDesignNode/Sprite2D4" method="show"]
+[connection signal="warp_ended" from="PipeIn4" to="EasierDesignNode/Sprite2D7" method="show"]
+[connection signal="warp_ended" from="PipeIn18" to="EasierDesignNode/Sprite2D2" method="show"]
+[connection signal="warp_ended" from="PipeIn19" to="EasierDesignNode/Sprite2D4" method="show"]
+[connection signal="warp_ended" from="PipeIn17" to="EasierDesignNode/Sprite2D4" method="show"]
+[connection signal="warp_ended" from="PipeIn22" to="EasierDesignNode/Sprite2D2" method="show"]
+[connection signal="warp_ended" from="PipeIn23" to="EasierDesignNode/Sprite2D3" method="show"]
+[connection signal="warp_ended" from="PipeIn10" to="EasierDesignNode/Sprite2D3" method="show"]
+[connection signal="warp_ended" from="PipeIn12" to="EasierDesignNode/Sprite2D4" method="show"]
+[connection signal="warp_ended" from="PipeIn13" to="EasierDesignNode/Sprite2D6" method="show"]
+[connection signal="warp_ended" from="PipeIn11" to="EasierDesignNode/Sprite2D7" method="show"]
+[connection signal="warp_ended" from="PipeIn8" to="EasierDesignNode/Sprite2D1" method="show"]
+[connection signal="warp_ended" from="PipeIn28" to="EasierDesignNode/Sprite2D3" method="show"]
+[connection signal="warp_ended" from="PipeIn25" to="EasierDesignNode/Sprite2D4" method="show"]

@@ -21,6 +21,9 @@ func activate() -> void:
 	
 	var flying = STAR_FLYING.instantiate()
 	flying.angle = randf_range(0, 360)
+	var _rng_angle: bool = bool(randi_range(0, 1))
+	if _rng_angle:
+		flying.angle_rotate_speed *= -1
 	Scenes.current_scene.add_child(flying)
 	flying.global_transform = global_transform
 	flying.reset_physics_interpolation()

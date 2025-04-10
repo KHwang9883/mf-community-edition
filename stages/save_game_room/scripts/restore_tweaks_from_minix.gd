@@ -3,6 +3,9 @@ extends Node
 func _ready() -> void:
 	SettingsManager.load_tweaks()
 	CharacterManager.forced_character = ""
+	ProjectSettings.set_setting(
+		"application/thunder_settings/player/gameover_continues", -1
+	)
 	Data.technical_values.remaining_continues = -1
 	Scenes.custom_scenes.game_over.custom_resume_scene = ""
 	

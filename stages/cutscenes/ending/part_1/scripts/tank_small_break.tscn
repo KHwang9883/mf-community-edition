@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://teyt07r78cnj"]
+[gd_scene load_steps=8 format=3 uid="uid://teyt07r78cnj"]
 
 [ext_resource type="Script" uid="uid://kkp23qidkrus" path="res://stages/cutscenes/ending/part_1/scripts/tank_small_break.gd" id="1_3k87l"]
 [ext_resource type="Texture2D" uid="uid://di4jyfsfqvmev" path="res://stages/cutscenes/ending/part_1/gfx/damaged_tile.png" id="2_vhlwc"]
 [ext_resource type="Texture2D" uid="uid://bmxdbkmexlkdi" path="res://tilesets/tanks/gfx/original_tank_tileset.png" id="3_nrm0e"]
+[ext_resource type="Texture2D" uid="uid://b4re4nx2rfcij" path="res://stages/cutscenes/ending/part_1/gfx/damaged_tile_left.png" id="4_rn5vl"]
+[ext_resource type="Texture2D" uid="uid://chq6ovb8fe1ai" path="res://stages/cutscenes/ending/part_1/gfx/damaged_tile_right.png" id="5_cgb7a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_83eg6"]
 atlas = ExtResource("3_nrm0e")
@@ -25,6 +27,22 @@ animations = [{
 "loop": false,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_rn5vl")
+}],
+"loop": false,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_cgb7a")
+}],
+"loop": false,
+"name": &"right",
+"speed": 5.0
 }]
 
 [node name="TankSmallBreak" type="Node2D"]
@@ -33,6 +51,7 @@ metadata/_edit_group_ = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5xs0i")
+animation = &"broken"
 autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenNotifier2D" parent="."]

@@ -6,6 +6,7 @@ const JUMP = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 const EXPLOSION_TANK = preload("res://stages/cutscenes/ending/part_1/scripts/explosion_tank.tscn")
 const KUFON = preload("res://stages/cutscenes/ending/part_1/scripts/kufon.tscn")
 const DAMAGED_TILE = preload("res://stages/cutscenes/ending/part_1/scripts/damaged_tile.tscn")
+const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
 @onready var camera_2d: PlayerCamera2D = $Path2D/PathFollow2D/Camera2D
 @onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
@@ -83,7 +84,12 @@ func _physics_process(delta):
 			svo.gravity_scale = 0.5
 			svo.get_node("Sprite2D/cover").visible = false
 			await get_tree().physics_frame
-			svo.collided_floor.connect(svo.get_node("AudioStreamPlayer2D").play, CONNECT_ONE_SHOT)
+			svo.collided_floor.connect(func() -> void:
+				svo.get_node("AudioStreamPlayer2D").play()
+				var _expl = explosion_effect.instantiate()
+				_expl.position.y = 48
+				svo.add_child(_expl)
+			, CONNECT_ONE_SHOT)
 		
 		if camera_2d.get_screen_center_position().x < -7000:
 			counter = -1.0
