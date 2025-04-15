@@ -1,14 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvigdw7nldify"]
+[gd_scene load_steps=9 format=3 uid="uid://cvigdw7nldify"]
 
 [ext_resource type="Script" uid="uid://mmr6jpi68elh" path="res://stages/extra/expert_mode/scripts/antiafk_lakitu.gd" id="1_lrc0a"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="2_yo84f"]
+[ext_resource type="Texture2D" uid="uid://c5yc2yn0wj6lc" path="res://objects/antiafk_expert_mode/textures/item_stock.png" id="3_kd0ut"]
+[ext_resource type="Material" uid="uid://wv2x2acu2faj" path="res://objects/antiafk_expert_mode/shaders/item_atom_material.tres" id="4_mc6jk"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="4_mo0ls"]
+[ext_resource type="Script" uid="uid://dcggspfuglyvd" path="res://objects/antiafk_expert_mode/item_scripts/item_atom.gd" id="5_jchqb"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jchqb"]
+width = 16
+height = 16
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_mubo6")
 
 [node name="AntiafkExpertMode" type="CanvasLayer"]
 script = ExtResource("1_lrc0a")
 
 [node name="Label" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -24,3 +38,53 @@ theme_override_font_sizes/font_size = 14
 text = "camping player detected"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemStock" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = -80.0
+offset_top = 56.0
+offset_right = -48.0
+offset_bottom = 88.0
+texture = ExtResource("3_kd0ut")
+stretch_mode = 3
+
+[node name="atom" type="TextureRect" parent="Control/ItemStock"]
+visible = false
+show_behind_parent = true
+material = ExtResource("4_mc6jk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_jchqb")
+stretch_mode = 3
+script = ExtResource("5_jchqb")
+
+[node name="Label" type="Label" parent="Control/ItemStock"]
+visible = false
+modulate = Color(1, 1, 1, 0.501961)
+layout_mode = 0
+offset_left = 36.0
+offset_top = -1.0
+offset_right = 544.0
+offset_bottom = 35.0
+theme_override_fonts/font = ExtResource("4_mo0ls")
+text = "press %s
+to use item"
+vertical_alignment = 1
+clip_text = true
+uppercase = true
