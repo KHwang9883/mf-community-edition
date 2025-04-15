@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://k1rvr1tngf05"]
+[gd_scene load_steps=41 format=3 uid="uid://k1rvr1tngf05"]
 
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_k1t4f"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_g6pib"]
@@ -36,6 +36,7 @@
 [ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="33_tou4q"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="34_5dcqm"]
 [ext_resource type="PackedScene" uid="uid://r6db0501lsxu" path="res://objects/bonus_level_map_button/bonus_level_click_on_me.tscn" id="35_02uru"]
+[ext_resource type="Script" uid="uid://b8puhalomggbj" path="res://engine/scenes/map/scripts/map_swim_area.gd" id="37_1xomx"]
 
 [sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_1xomx"]
 fade_time = 0.0
@@ -48,6 +49,9 @@ shader = ExtResource("14_n4qvy")
 shader_parameter/hue = 0.183
 shader_parameter/saturation = 0.0
 shader_parameter/value = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mn0p"]
+size = Vector2(237, 53)
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_k1t4f")
@@ -245,7 +249,8 @@ show_behind_parent = true
 z_as_relative = false
 position = Vector2(618, 286)
 script = ExtResource("28_1nqs0")
-level = "res://stages/extra/world_10_syzx/level_10-2.tscn"
+level = "res://stages/extra/world_10_syzx/level_to_10-2.tscn"
+level_override_save = "res://stages/extra/world_10_syzx/level_10-2.tscn"
 
 [node name="MapPlayerMarker14" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
@@ -288,7 +293,8 @@ show_behind_parent = true
 z_as_relative = false
 position = Vector2(980, 356)
 script = ExtResource("28_1nqs0")
-level = "res://stages/extra/world_10_syzx/level_10-3.tscn"
+level = "res://stages/extra/world_10_syzx/level_to_10-3.tscn"
+level_override_save = "res://stages/extra/world_10_syzx/level_10-3.tscn"
 
 [node name="MapPlayerMarker5" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
@@ -369,7 +375,7 @@ texture = ExtResource("30_ah4yt")
 script = ExtResource("31_xr2dg")
 
 [node name="Sun" type="Sprite2D" parent="Node2D"]
-position = Vector2(112, 112)
+position = Vector2(784, 96)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("32_1n7yy")
 script = ExtResource("33_tou4q")
@@ -426,3 +432,10 @@ position = Vector2(304, 128)
 [node name="BonusLevelClickOnMe" parent="." instance=ExtResource("35_02uru")]
 position = Vector2(-96, 352)
 bonus_level_path = "res://stages/extra/click_bonus_game/maps/bonus_level-1.tscn"
+
+[node name="SwimArea" type="Area2D" parent="."]
+script = ExtResource("37_1xomx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwimArea"]
+position = Vector2(779, 358)
+shape = SubResource("RectangleShape2D_0mn0p")
