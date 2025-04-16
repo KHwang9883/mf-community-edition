@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://7p86qw2ptq4o"]
+
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_jv4o3"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_8pdmq"]
+[ext_resource type="Texture2D" uid="uid://bincxpssxusj5" path="res://tilesets/underground/gfx/blue_platform.png" id="3_ifdyk"]
+
+[node name="PlatformPath" type="PathFollow2D"]
+rotates = false
+cubic_interp = false
+loop = false
+script = ExtResource("1_jv4o3")
+sprite = NodePath("Block/Sprite2D")
+
+[node name="Block" type="AnimatableBody2D" parent="."]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("2_8pdmq")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
+visible = false
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 18, -48, 18)
+one_way_collision = true
+
+[node name="Surface" type="Area2D" parent="Block"]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
+visible = false
+modulate = Color(0.921569, 0, 0.647059, 1)
+polygon = PackedVector2Array(-48, -1, 48, -1, 48, 0, -48, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Block"]
+physics_interpolation_mode = 2
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(0, 16)
+texture = ExtResource("3_ifdyk")
+region_enabled = true
+region_rect = Rect2(0, 0, 96, 32)
