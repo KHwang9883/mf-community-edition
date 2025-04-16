@@ -1,0 +1,119 @@
+[gd_scene load_steps=15 format=3 uid="uid://bvhh1m1qt4oq6"]
+
+[ext_resource type="Script" uid="uid://du4twfdbhmqvw" path="res://stages/extra/world_10_syzx/objects/cheep_blue_jumping.gd" id="1_lr6sx"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_oey77"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_ms6ly"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_341r5"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_px1lu"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_8c7qg"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_4wmrt"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_5vy57"]
+[ext_resource type="Texture2D" uid="uid://0e2teiyyxcty" path="res://engine/objects/enemies/cheeps/textures/cheep_blue.png" id="8_lr6sx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_0wfa5"]
+resource_local_to_scene = true
+script = ExtResource("5_px1lu")
+creation_nodepack = ExtResource("3_ms6ly")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("4_341r5")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vy57"]
+atlas = ExtResource("8_lr6sx")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wuq4"]
+atlas = ExtResource("8_lr6sx")
+region = Rect2(0, 32, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ihgwm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vy57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wuq4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="CheepRedJumping" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("1_lr6sx")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(0, 0)
+gravity_scale = 0.2
+metadata/_edit_pinned_properties_ = [&"sprite", &"look_at_player", &"speed"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_8v3i3")
+disabled = true
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_8v3i3")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_oey77")
+stomping_creation = SubResource("Resource_0wfa5")
+stomping_scores = 100
+stomping_sound = ExtResource("6_8c7qg")
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_0wfa5")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_4wmrt")
+killing_sound_failed = ExtResource("8_5vy57")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ihgwm")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(3.8147e-06, 3.8147e-06)
+scale = Vector2(10, 10)
+metadata/_edit_lock_ = true
+
+[connection signal="collided_ceiling" from="." to="." method="turn_y"]
+[connection signal="collided_floor" from="." to="." method="turn_y"]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]
