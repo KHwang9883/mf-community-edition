@@ -1,10 +1,12 @@
-[gd_scene load_steps=74 format=4 uid="uid://b6emis2v2qgkl"]
+[gd_scene load_steps=79 format=4 uid="uid://b6emis2v2qgkl"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yfh5y"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_0o523"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_23sp0"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_4vv7p"]
 [ext_resource type="AudioStream" uid="uid://cpxdgasfv8gt8" path="res://music/extra/world_10_syzx/world10_3.ogg" id="5_g3p1r"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_h1qpr"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_oom7b"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_7flwj"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_aha2q"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_6n2kh"]
@@ -44,6 +46,7 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="43_0xn7t"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://gfx/misc/castle_big.png" id="44_k7cly"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="45_k7cly"]
+[ext_resource type="Texture2D" uid="uid://cube175uuy8i6" path="res://engine/objects/core/finish_line/textures/finishline.png" id="45_oom7b"]
 [ext_resource type="Texture2D" uid="uid://ub283slvxgxe" path="res://tilesets/underground/gfx/pipe_bg.png" id="46_qicgc"]
 [ext_resource type="PackedScene" uid="uid://7p86qw2ptq4o" path="res://stages/extra/world_10_syzx/platform_path_blue.tscn" id="46_v05yg"]
 [ext_resource type="Material" uid="uid://bfnyr7gfug8qw" path="res://materials/bubble_canvas_item.tres" id="47_eppgs"]
@@ -179,6 +182,14 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_xn8yd"]
+atlas = ExtResource("45_oom7b")
+region = Rect2(160, 256, 95, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4tfq"]
+atlas = ExtResource("45_oom7b")
+region = Rect2(224, 16, 31, 32)
+
 [sub_resource type="Curve2D" id="Curve2D_v05yg"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 9456, 352, 0, 0, 0, 0, 15152, 352)
@@ -229,7 +240,26 @@ jump_to_scene = "uid://k1rvr1tngf05"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_23sp0")]
+script = ExtResource("4_4vv7p")
+tweaked_completion_music = ExtResource("5_oom7b")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_g3p1r")])
+volume_db = Array[float]([0.0])
+start_from_sec = Array[float]([0.0])
 
 [node name="Player" parent="." instance=ExtResource("5_h1qpr")]
 position = Vector2(160, -80)
@@ -618,6 +648,16 @@ position = Vector2(14608, 80)
 
 [node name="FinishLine" parent="." instance=ExtResource("43_0xn7t")]
 position = Vector2(15552, 416)
+
+[node name="Finishline2" type="Sprite2D" parent="FinishLine"]
+z_index = -10
+position = Vector2(208, 16)
+texture = SubResource("AtlasTexture_xn8yd")
+
+[node name="Finishline3" type="Sprite2D" parent="FinishLine"]
+z_index = -10
+position = Vector2(16, 0)
+texture = SubResource("AtlasTexture_j4tfq")
 
 [node name="CastleBig" type="Sprite2D" parent="."]
 position = Vector2(15968, 240)

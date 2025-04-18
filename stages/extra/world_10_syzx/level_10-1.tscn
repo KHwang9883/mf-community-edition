@@ -1,10 +1,13 @@
-[gd_scene load_steps=57 format=4 uid="uid://bxaqlmmn6klq5"]
+[gd_scene load_steps=66 format=4 uid="uid://bxaqlmmn6klq5"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_cg4bv"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ikawb"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_27i45"]
 [ext_resource type="AudioStream" uid="uid://c4t3arqqu1q4h" path="res://music/extra/world_10_syzx/snow_mountains.ogg" id="4_7vnbi"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_jrk18"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_hce01"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_m2qyb"]
+[ext_resource type="Script" uid="uid://pnegwh5bhy7i" path="res://objects/music_loader_custom/music_pitch_changer.gd" id="7_hce01"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_nbio6"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_knifn"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="9_7qldb"]
@@ -38,14 +41,19 @@
 [ext_resource type="Material" uid="uid://dpwcqva66u2sf" path="res://materials/grayscale.tres" id="36_pnfqd"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="37_drykp"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="38_i67mi"]
+[ext_resource type="Material" uid="uid://blelf8euspg4e" path="res://materials/grayscale_offset_0-5.tres" id="39_0d1s1"]
 [ext_resource type="Texture2D" uid="uid://kyo628mcr125" path="res://tilesets/snowland_red/gfx/hill_snow.png" id="39_drykp"]
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="40_i67mi"]
+[ext_resource type="Texture2D" uid="uid://dg7gl1uf4g1vm" path="res://gfx/fancy_graphics/bighill-pattern1.png" id="40_xd8cj"]
+[ext_resource type="Texture2D" uid="uid://mbb0uuc62c1i" path="res://gfx/fancy_graphics/smallhill.png" id="41_jrk18"]
+[ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="42_hce01"]
+[ext_resource type="Texture2D" uid="uid://kkfgaemgs2xm" path="res://gfx/fancy_graphics/bighill-pattern.png" id="43_0v0go"]
 
-[sub_resource type="Gradient" id="Gradient_yoleo"]
+[sub_resource type="Gradient" id="Gradient_hce01"]
 colors = PackedColorArray(0.752941, 0.752941, 0.752941, 1, 0.972549, 0.972549, 0.972549, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_6bm45"]
-gradient = SubResource("Gradient_yoleo")
+gradient = SubResource("Gradient_hce01")
 width = 640
 height = 480
 fill_to = Vector2(0, 1)
@@ -205,6 +213,20 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Resource" id="Resource_jk2hj"]
+resource_local_to_scene = true
+script = ExtResource("16_gd1d3")
+creation_nodepack = ExtResource("18_knifn")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_cg4bv")
 completion_music = ExtResource("2_ikawb")
@@ -212,10 +234,32 @@ jump_to_scene = "uid://k1rvr1tngf05"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_27i45")]
+script = ExtResource("4_jrk18")
+tweaked_completion_music = ExtResource("5_hce01")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_7vnbi")])
+volume_db = Array[float]([0.0])
+start_from_sec = Array[float]([0.0])
+
+[node name="MusicPitchChanger" type="Node" parent="MusicLoader"]
+script = ExtResource("7_hce01")
 
 [node name="Player" parent="." instance=ExtResource("5_m2qyb")]
-position = Vector2(80, 400)
+position = Vector2(112, 400)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
@@ -234,7 +278,7 @@ metadata/_edit_lock_ = true
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
 z_index = -20
-tile_map_data = PackedByteArray("AAABAAwAAgAAAAAAEAARAAwAAgAAAAAAEgAQAAwAAgAAAAAAEgAPAAwAAgAAAAAAEgAOAAwAAgAAAAAAEgANAAwAAgAAAAAAEgALAAwAAgAAAAAADQAWAA8AAgAAAAAADQAgAAcAAgAAAAAAEQCxAAwAAgAAAAAAEACxAAUAAgAAAAAAEwCMAAUAAgAAAAAAEwBtAAUAAgAAAAAAEwBQAAYAAgAAAAAAEwAzAAYAAgAAAAAAEwA4AAwAAgAAAAAAEABMAAwAAgAAAAAAEABqAAwAAgAAAAAAEgBpAAwAAgAAAAAAEgBoAAwAAgAAAAAAEgArAAwAAgAAAAAAEgAqAAwAAgAAAAAAEgApAAwAAgAAAAAAEgARAAUAAgAAAAAAEwAxAAwAAgAAAAAADQApAA4AAgAAAAAADQBGAA8AAgAAAAAADQBBABEAAgAAAAAADQBTAA4AAgAAAAAADQBpAA4AAgAAAAAADQBsAA8AAgAAAAAADQB1ABAAAgAAAAAADQCMAA8AAgAAAAAADQCSAA4AAgAAAAAADQCkAA8AAgAAAAAADQDQAA4AAgAAAAAADQDJAAwAAgAAAAAAEQDYAAwAAgAAAAAAEQDVAAwAAgAAAAAAEgDUAAwAAgAAAAAAEgDTAAwAAgAAAAAAEgDSAAwAAgAAAAAAEgD4AAUAAgAAAAAAEwDSAAUAAgAAAAAAEwBmAQwAAgAAAAAAEABUAQwAAgAAAAAAEgBVAQwAAgAAAAAAEgBWAQwAAgAAAAAAEgBXAQwAAgAAAAAAEgBPAQwAAgAAAAAAEABRAQwAAgAAAAAAEQAAACEAAgAAAAAAEwAJAC0AAgAAAAAADQAOACwAAgAAAAAADQARACoAAgAAAAAAEQADACoAAgAAAAAAEAC4ABAAAgAAAAAADQAQAQUAAgAAAAAAEwAxAQUAAgAAAAAAEwDwAAwAAgAAAAAAEADzAA4AAgAAAAAADQBsAQwAAgAAAAAADQA=")
+tile_map_data = PackedByteArray("AAABAAwAAgAAAAAAEAARAAwAAgAAAAAAEgAQAAwAAgAAAAAAEgAPAAwAAgAAAAAAEgAOAAwAAgAAAAAAEgANAAwAAgAAAAAAEgALAAwAAgAAAAAADQAWAA8AAgAAAAAADQAgAAcAAgAAAAAAEQCxAAwAAgAAAAAAEACxAAUAAgAAAAAAEwCMAAUAAgAAAAAAEwBtAAUAAgAAAAAAEwBQAAYAAgAAAAAAEwAzAAYAAgAAAAAAEwA4AAwAAgAAAAAAEABMAAwAAgAAAAAAEABqAAwAAgAAAAAAEgBpAAwAAgAAAAAAEgBoAAwAAgAAAAAAEgArAAwAAgAAAAAAEgAqAAwAAgAAAAAAEgApAAwAAgAAAAAAEgARAAUAAgAAAAAAEwAxAAwAAgAAAAAADQApAA4AAgAAAAAADQBGAA8AAgAAAAAADQBBABEAAgAAAAAADQBTAA4AAgAAAAAADQBpAA4AAgAAAAAADQBsAA8AAgAAAAAADQB1ABAAAgAAAAAADQCMAA8AAgAAAAAADQCSAA4AAgAAAAAADQCkAA8AAgAAAAAADQDQAA4AAgAAAAAADQDJAAwAAgAAAAAAEQDYAAwAAgAAAAAAEQDVAAwAAgAAAAAAEgDUAAwAAgAAAAAAEgDTAAwAAgAAAAAAEgDSAAwAAgAAAAAAEgD4AAUAAgAAAAAAEwDSAAUAAgAAAAAAEwBmAQwAAgAAAAAAEABUAQwAAgAAAAAAEgBVAQwAAgAAAAAAEgBWAQwAAgAAAAAAEgBXAQwAAgAAAAAAEgBPAQwAAgAAAAAAEABRAQwAAgAAAAAAEQAAACEAAgAAAAAAEwAJAC0AAgAAAAAADQAOACwAAgAAAAAADQARACoAAgAAAAAAEQADACoAAgAAAAAAEAC4ABAAAgAAAAAADQAQAQUAAgAAAAAAEwAxAQUAAgAAAAAAEwDwAAwAAgAAAAAAEADzAA4AAgAAAAAADQBsAQwAAgAAAAAADQAYAA0AAwAAAAEAAAAZAA0AAwABAAEAAAA7AA0AAwAAAAEAAAA8AA0AAwABAAEAAAA=")
 tile_set = ExtResource("10_i5g1d")
 metadata/_edit_lock_ = true
 
@@ -748,14 +792,12 @@ initially_visible_and_solid = false
 
 [node name="QuestionBlock6" parent="." instance=ExtResource("34_1bjme")]
 position = Vector2(112, 1152)
-result = SubResource("Resource_a0fnu")
+result = SubResource("Resource_jk2hj")
 
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -50
 material = ExtResource("36_pnfqd")
 script = ExtResource("37_drykp")
-metadata/_edit_lock_ = true
-metadata/_edit_group_ = true
 
 [node name="GiantClouds" type="Sprite2D" parent="Node2D"]
 use_parent_material = true
@@ -820,6 +862,261 @@ z_index = 25
 use_parent_material = true
 position = Vector2(256, 1200)
 texture = ExtResource("38_i67mi")
+
+[node name="Node2D" type="Node2D" parent="Node2D"]
+material = ExtResource("39_0d1s1")
+
+[node name="Bighill" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -50
+use_parent_material = true
+position = Vector2(2560, 304)
+texture = ExtResource("40_xd8cj")
+
+[node name="Bighill8" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(192, 464)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill11" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(640, 368)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill12" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(800, 256)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill9" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(1328, 400)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill18" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(3024, 288)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill21" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(4240, 240)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill22" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(4640, 384)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill23" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(5920, 272)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill24" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(6496, 240)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill29" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(8864, 432)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill33" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.509804)
+z_index = -50
+use_parent_material = true
+position = Vector2(9920, 256)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill37" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.509804)
+z_index = -50
+use_parent_material = true
+position = Vector2(11776, 480)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill34" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.596078)
+z_index = -50
+use_parent_material = true
+position = Vector2(9760, 368)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill20" type="Sprite2D" parent="Node2D/Node2D"]
+z_index = -50
+use_parent_material = true
+position = Vector2(2912, 368)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill19" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(2368, 448)
+texture = ExtResource("41_jrk18")
+
+[node name="Bighill10" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(1856, 320)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill14" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(3664, 352)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill15" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.768627)
+z_index = -50
+use_parent_material = true
+position = Vector2(4048, 208)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill16" type="Sprite2D" parent="Node2D/Node2D"]
+z_index = -50
+use_parent_material = true
+position = Vector2(4304, 320)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill17" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(5600, 400)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill25" type="Sprite2D" parent="Node2D/Node2D"]
+z_index = -50
+use_parent_material = true
+position = Vector2(6352, 272)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill26" type="Sprite2D" parent="Node2D/Node2D"]
+z_index = -50
+use_parent_material = true
+position = Vector2(6576, 352)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill27" type="Sprite2D" parent="Node2D/Node2D"]
+z_index = -50
+use_parent_material = true
+position = Vector2(7984, 432)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill28" type="Sprite2D" parent="Node2D/Node2D"]
+z_index = -50
+use_parent_material = true
+position = Vector2(8176, 288)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill30" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.737255)
+z_index = -50
+use_parent_material = true
+position = Vector2(10192, 256)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill31" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.737255)
+z_index = -50
+use_parent_material = true
+position = Vector2(10432, 368)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill32" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.737255)
+z_index = -50
+use_parent_material = true
+position = Vector2(10432, 176)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill35" type="Sprite2D" parent="Node2D/Node2D"]
+z_index = -50
+use_parent_material = true
+position = Vector2(10592, 416)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill36" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.486275)
+z_index = -50
+use_parent_material = true
+position = Vector2(11968, 256)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill13" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.776471)
+z_index = -50
+use_parent_material = true
+position = Vector2(992, 256)
+texture = ExtResource("42_hce01")
+
+[node name="Bighill2" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -50
+use_parent_material = true
+position = Vector2(3344, 288)
+texture = ExtResource("40_xd8cj")
+
+[node name="Bighill3" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -50
+use_parent_material = true
+position = Vector2(5312, 320)
+texture = ExtResource("40_xd8cj")
+
+[node name="Bighill4" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -50
+use_parent_material = true
+position = Vector2(7616, 320)
+texture = ExtResource("40_xd8cj")
+
+[node name="Bighill5" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -50
+use_parent_material = true
+position = Vector2(9232, 256)
+texture = ExtResource("40_xd8cj")
+
+[node name="Bighill6" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -50
+use_parent_material = true
+position = Vector2(11216, 368)
+texture = ExtResource("40_xd8cj")
+
+[node name="Bighill7" type="Sprite2D" parent="Node2D/Node2D"]
+modulate = Color(1, 1, 1, 0.501961)
+z_index = -50
+use_parent_material = true
+position = Vector2(11440, 304)
+texture = ExtResource("43_0v0go")
 
 [node name="HillSnow" type="Sprite2D" parent="."]
 z_index = -10

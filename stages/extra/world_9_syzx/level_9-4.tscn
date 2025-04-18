@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=4 uid="uid://bbvem6ftvskch"]
+[gd_scene load_steps=59 format=4 uid="uid://bbvem6ftvskch"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_spmyb"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i03uk"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_e8dkr"]
 [ext_resource type="Script" uid="uid://b5o8y7a4ji17g" path="res://stages/extra/world_9_syzx/music_mixed_tweak.gd" id="8_e7sdu"]
 [ext_resource type="PackedScene" uid="uid://0s1sj8ke5lyv" path="res://engine/objects/platform/platform_path_tank_floor.tscn" id="8_g4oa6"]
+[ext_resource type="Script" uid="uid://pnegwh5bhy7i" path="res://objects/music_loader_custom/music_pitch_changer.gd" id="10_j52a0"]
 [ext_resource type="TileSet" uid="uid://c40wyx3trs5d2" path="res://tilesets/tanks/tank_tileset.tres" id="10_mwhbg"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_nvo0c"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_41qxf"]
@@ -179,6 +180,15 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_7cuuq"), ExtResource("5_r3vry")])
 play_immediately = false
+
+[node name="MusicPitchChanger" type="Node" parent="MusicLoader"]
+script = ExtResource("10_j52a0")
+only_for_soundtrack_var = Array[bool]([false, true, true, false])
+
+[node name="MusicPitchChanger2" type="Node" parent="MusicLoader"]
+script = ExtResource("10_j52a0")
+affect_indexies = Array[bool]([false, true])
+only_for_soundtrack_var = Array[bool]([true, false, false, false])
 
 [node name="Node" type="Node" parent="MusicLoader"]
 script = ExtResource("8_e7sdu")

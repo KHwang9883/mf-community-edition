@@ -1,12 +1,14 @@
-[gd_scene load_steps=231 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=234 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" uid="uid://db8widi15epm" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_e17d3"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_jjm06"]
 [ext_resource type="AudioStream" uid="uid://c1va567cln81n" path="res://engine/scenes/save_game_room/music/save_game_room.it" id="3_5sf1o"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_5mqnl"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_gl3qo"]
 [ext_resource type="AudioStream" uid="uid://dsmylka0343rg" path="res://music/extra/kav-humn.xm" id="4_gpuj8"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_0dr2l"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="5_1d41w"]
 [ext_resource type="PackedScene" uid="uid://cl58fmmyu8xha" path="res://engine/components/progress_continue/progress_continue_screen.tscn" id="6_drrs7"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_vufed"]
@@ -125,6 +127,7 @@
 [ext_resource type="Script" uid="uid://bicgaydd06rdb" path="res://stages/save_game_room/scripts/secrets_block.gd" id="84_vgarn"]
 [ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/hard_block_only.png" id="85_esg68"]
 [ext_resource type="Script" uid="uid://bekliuivb6ug1" path="res://engine/scenes/save_game_room/scripts/item_shop_label.gd" id="88_ctl7w"]
+[ext_resource type="PackedScene" uid="uid://bvyleahhjj28k" path="res://engine/objects/powerups/frog_suit/frog_suit.tscn" id="89_u71j8"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="90_jteik"]
 [ext_resource type="Script" uid="uid://bafyspq54jjjv" path="res://stages/save_game_room/scripts/koopa_liberation_deco.gd" id="91_1t1pg"]
 [ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="91_tvxxs"]
@@ -1108,6 +1111,23 @@ falling_below_warp_to = NodePath("PipeOut")
 metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_jjm06")]
+script = ExtResource("4_5mqnl")
+tweaked_completion_music = ExtResource("5_0dr2l")
+ignore_fade_in_tweak = true
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("3_5sf1o"), ExtResource("4_gpuj8")])
 volume_db = Array[float]([0.0])
 
@@ -2711,9 +2731,9 @@ script = ExtResource("41_03xon")
 callback_only = true
 
 [node name="Label3" type="Label" parent="ScriptedEvents/AllAchievements"]
-offset_left = -64.0
+offset_left = -96.0
 offset_top = -112.0
-offset_right = 64.0
+offset_right = 32.0
 offset_bottom = -89.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
@@ -2723,7 +2743,7 @@ text = "COSTS 2 LIVES"
 horizontal_alignment = 1
 
 [node name="BoomerangFlower" parent="ScriptedEvents/AllAchievements" instance=ExtResource("61_cu44g")]
-position = Vector2(0, -48)
+position = Vector2(-32, -48)
 force_powerup_state = true
 score = 0
 supply_behavior = true
@@ -2733,7 +2753,39 @@ supply_modify_lives = -2
 position = Vector2(-192, -16)
 
 [node name="PlatformPath2" parent="ScriptedEvents/AllAchievements" instance=ExtResource("63_qpnqr")]
-position = Vector2(0, -32)
+position = Vector2(-32, -32)
+
+[node name="AllAchievements2" type="StaticBody2D" parent="ScriptedEvents"]
+position = Vector2(1008, 128)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("41_03xon")
+callback_only = true
+
+[node name="Label3" type="Label" parent="ScriptedEvents/AllAchievements2"]
+offset_left = 32.0
+offset_top = -112.0
+offset_right = 160.0
+offset_bottom = -89.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "COSTS 2 LIVES"
+horizontal_alignment = 1
+
+[node name="FrogSuit" parent="ScriptedEvents/AllAchievements2" instance=ExtResource("89_u71j8")]
+position = Vector2(96, -48)
+force_powerup_state = true
+score = 0
+supply_behavior = true
+supply_modify_lives = -2
+
+[node name="PlatformPath" parent="ScriptedEvents/AllAchievements2" instance=ExtResource("63_qpnqr")]
+position = Vector2(-192, -16)
+
+[node name="PlatformPath3" parent="ScriptedEvents/AllAchievements2" instance=ExtResource("63_qpnqr")]
+position = Vector2(96, -32)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -5048,6 +5100,7 @@ position = Vector2(160, -1136)
 [connection signal="warp_started" from="Objects/Node2D3/PipeIn" to="KevinLayer/KevinActivationLabel" method="kevin_reset"]
 [connection signal="all_achievements_done" from="Objects/text blah blah" to="ScriptedEvents/AllAchievements" method="activate"]
 [connection signal="all_achievements_done" from="Objects/text blah blah" to="Objects/KevinHint/PathFollow2D" method="activate"]
+[connection signal="all_achievements_done" from="Objects/text blah blah2" to="ScriptedEvents/AllAchievements2" method="activate"]
 [connection signal="block_triggered" from="Objects/ConsoleBlock" to="Objects/Node2D3/PipeIn" method="queue_free"]
 [connection signal="warp_started" from="PipeIn2" to="PipeIn2/Node" method="trigger"]
 [connection signal="player_enter" from="AreaExtra TRUE" to="CamAreaNewSecrets" method="set_deferred" binds= [&"smooth_transition", true]]
