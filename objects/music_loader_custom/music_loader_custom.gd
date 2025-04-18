@@ -1,5 +1,7 @@
 extends "res://engine/objects/core/music_loader/music_loader.gd"
 
+const MUSIC_PITCH_CHANGER = preload("res://objects/music_loader_custom/music_pitch_changer.tscn")
+
 @export_category("Tweaks")
 @export var tweaked_completion_music: Resource = preload("res://music/complete_tweaked.ogg")
 @export var ignore_fade_in_tweak: bool = false
@@ -49,6 +51,10 @@ func _ready():
 				ProfileManager.current_profile.data.died = true
 			)
 		).call_deferred()
+	
+	if SettingsManager.get_tweak("pitch_music_everywhere", false) && !has_node("MusicPitchChanger"):
+		var _pitch_changer = MUSIC_PITCH_CHANGER.instantiate()
+		add_child(_pitch_changer, true)
 	
 	
 	# Soundtrack Stuff

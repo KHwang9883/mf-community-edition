@@ -11,7 +11,7 @@ func _ready() -> void:
 	_suit_pause_tweak = false
 
 
-func hurt(tags: Dictionary = {}) -> void:
+func hurt(tags: Dictionary = {}, callable = null) -> void:
 	if !suit:
 		return
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
@@ -31,7 +31,7 @@ func hurt(tags: Dictionary = {}) -> void:
 	damaged.emit()
 
 
-func die(tags: Dictionary = {}) -> void:
+func die(tags: Dictionary = {}, callable = null) -> void:
 	if warp != Warp.NONE: return
 	if debug_god: return
 	if is_dying: return

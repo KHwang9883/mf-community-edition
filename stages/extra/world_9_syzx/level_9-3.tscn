@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://bfyla0aynqum2"]
+[gd_scene load_steps=75 format=4 uid="uid://bfyla0aynqum2"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_alfld"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_npv5p"]
@@ -7,11 +7,12 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_dmqcj"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_td102"]
 [ext_resource type="AudioStream" uid="uid://c5khvmh458ujd" path="res://stages/extra/secrets/music/BasicInstinct.mod" id="4_we8l2"]
-[ext_resource type="AudioStream" uid="uid://cnhd12uyiagxr" path="res://music/extra/world_9_syzx/!kazan-f.ogg" id="6_qgvxx"]
+[ext_resource type="AudioStream" uid="uid://b4j4xbu6hjahu" path="res://music/extra/world_9_syzx/!kazan-f.ogg" id="6_qgvxx"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="6_xhudd"]
 [ext_resource type="Script" uid="uid://b5o8y7a4ji17g" path="res://stages/extra/world_9_syzx/music_mixed_tweak.gd" id="7_8360t"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_s518n"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_jr88s"]
+[ext_resource type="Script" uid="uid://pnegwh5bhy7i" path="res://objects/music_loader_custom/music_pitch_changer.gd" id="9_k4ebr"]
 [ext_resource type="Texture2D" uid="uid://diufcy5iwqm3f" path="res://tilesets/volcano/gfx/hardblock.png" id="10_e7bck"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_m4khn"]
 [ext_resource type="Texture2D" uid="uid://ci168f4ljtq6a" path="res://tilesets/overworld_red/gfx/overworld_tileset.png" id="11_n7nyr"]
@@ -349,6 +350,15 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_we8l2"), ExtResource("6_qgvxx")])
 play_immediately = false
+
+[node name="MusicPitchChanger" type="Node" parent="MusicLoader"]
+script = ExtResource("9_k4ebr")
+only_for_soundtrack_var = Array[bool]([false, true, true, false])
+
+[node name="MusicPitchChanger2" type="Node" parent="MusicLoader"]
+script = ExtResource("9_k4ebr")
+affect_indexies = Array[bool]([false, true])
+only_for_soundtrack_var = Array[bool]([true, false, false, false])
 
 [node name="Node" type="Node" parent="MusicLoader"]
 script = ExtResource("7_8360t")
@@ -856,9 +866,10 @@ jumping_height = 320.0
 
 [node name="PodobooVolcanoLauncher" parent="." instance=ExtResource("41_swm7n")]
 position = Vector2(2912, 464)
+launch_initial_delay = 0.2
 podoboo_jumping_height = 288
-podoboo_min_speed = -200
-podoboo_max_speed = 200
+podoboo_min_speed = -4
+podoboo_max_speed = 4
 
 [node name="SpikeballBro" parent="." instance=ExtResource("43_g3vss")]
 position = Vector2(2384, 368)
