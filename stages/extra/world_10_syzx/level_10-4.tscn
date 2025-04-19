@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=4 uid="uid://rshcgbjp1qe8"]
+[gd_scene load_steps=65 format=4 uid="uid://rshcgbjp1qe8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_xk0re"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_4vmq4"]
@@ -12,7 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_pkvxp"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_eevrf"]
 [ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://gfx/backgrounds/BGCastle.png" id="12_ur24r"]
+[ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="13_813qj"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="13_xgbyu"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="14_c3vwe"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="14_cf43w"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="15_6m2if"]
 [ext_resource type="PackedScene" uid="uid://c4h7mvbgsj5si" path="res://engine/objects/enemies/falling_blocks/templates/Falling Stone Brick.tscn" id="16_ck1nr"]
@@ -41,6 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="39_hgfan"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="40_xisy4"]
 [ext_resource type="AudioStream" uid="uid://bqaoxvoxb63up" path="res://music/extra/world_10_syzx/10-battle.ogg" id="41_xisy4"]
+[ext_resource type="PackedScene" uid="uid://dxlk30t7xjimp" path="res://engine/objects/bosses/bowser/bowser_hud.tscn" id="42_v1t1j"]
 
 [sub_resource type="Gradient" id="Gradient_ppdw2"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.564706)
@@ -48,6 +51,20 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.564706)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_hb20x"]
 gradient = SubResource("Gradient_ppdw2")
 width = 512
+
+[sub_resource type="Resource" id="Resource_ehqti"]
+resource_local_to_scene = true
+script = ExtResource("26_ck1nr")
+creation_nodepack = ExtResource("14_c3vwe")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Gradient" id="Gradient_k5ryj"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -64,7 +81,7 @@ gradient = SubResource("Gradient_pxhwg")
 width = 112
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ey3w8"]
-size = Vector2(12298, 1088)
+size = Vector2(16138, 1088)
 
 [sub_resource type="Curve2D" id="Curve2D_xgbyu"]
 _data = {
@@ -173,9 +190,24 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="Resource" id="Resource_63van"]
+resource_local_to_scene = true
+script = ExtResource("26_ck1nr")
+creation_fallback_node = ExtResource("24_cf43w")
+creation_nodepack = ExtResource("25_6m2if")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_xk0re")
-time = 480
+time = 600
 completion_music = ExtResource("2_4vmq4")
 completion_write_save = false
 jump_to_scene = "res://stages/world_3/end_cutscene_3.tscn"
@@ -187,7 +219,7 @@ boss_music_var_1 = ExtResource("4_akxsw")
 music = Array[Resource]([ExtResource("5_ypm5a")])
 
 [node name="Mario" parent="." instance=ExtResource("6_cj3at")]
-position = Vector2(272, 336)
+position = Vector2(192, 336)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
@@ -257,12 +289,16 @@ texture = SubResource("GradientTexture1D_hb20x")
 flip_h = true
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_left = 1248.0
-offset_top = -32.0
-offset_right = 13424.0
-offset_bottom = 480.0
+offset_left = 1152.0
+offset_top = -16.0
+offset_right = 13328.0
+offset_bottom = 496.0
 color = Color(0, 0, 0, 0.564706)
 metadata/_edit_lock_ = true
+
+[node name="QuestionBlock" parent="CanvasLayer" instance=ExtResource("13_813qj")]
+position = Vector2(400, 240)
+result = SubResource("Resource_ehqti")
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("13_xgbyu")
@@ -294,8 +330,7 @@ metadata/_edit_lock_ = true
 [node name="AudioAreaCave" parent="." instance=ExtResource("15_6m2if")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
-visible = false
-position = Vector2(6139, 32)
+position = Vector2(8059, 32)
 shape = SubResource("RectangleShape2D_ey3w8")
 
 [node name="Checkpoint" parent="." instance=ExtResource("21_cj3at")]
@@ -747,6 +782,11 @@ result = SubResource("Resource_1bnlh")
 [node name="QuestionBlockLife" parent="Bonuses" instance=ExtResource("27_r8djj")]
 position = Vector2(6640, 176)
 result = SubResource("Resource_ilevp")
+initially_visible_and_solid = false
+
+[node name="QuestionBlockLife2" parent="Bonuses" instance=ExtResource("27_r8djj")]
+position = Vector2(9328, 208)
+result = SubResource("Resource_ilevp")
 
 [node name="QuestionBlockFireFlower2" parent="Bonuses" instance=ExtResource("23_xgbyu")]
 position = Vector2(14320, 240)
@@ -797,6 +837,12 @@ sprite_frames = SubResource("SpriteFrames_c3vwe")
 
 [node name="Bowser" parent="." instance=ExtResource("37_dydml")]
 position = Vector2(15312, 256)
+health = 10
+status_interval = Array[float]([1.0, 0.5, 0.5, 0.5])
+status = Array[StringName]([&"flame", &"flame", &"flame", &"multiflames"])
+jumping_chance = 0.25
+jumping_speed = 195.0
+speed = Vector2(190, 0)
 
 [node name="GrayPlatformBg" type="Sprite2D" parent="."]
 z_index = -1
@@ -815,8 +861,15 @@ position = Vector2(14896, 48)
 [node name="BowserEdge2" parent="." instance=ExtResource("39_hgfan")]
 position = Vector2(15408, 48)
 
-[node name="BowserTrigger" parent="." instance=ExtResource("40_xisy4")]
+[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("40_xisy4")]
 position = Vector2(14608, 192)
 curve = SubResource("Curve2D_d8y3p")
 trigger_area = Rect2(0, 0, 32, 960)
+trigger_bowser = NodePath("../Bowser")
 boss_music = ExtResource("41_xisy4")
+
+[node name="BowserHUD" parent="." instance=ExtResource("42_v1t1j")]
+
+[node name="QuestionBlockFireFlower" parent="." instance=ExtResource("23_xgbyu")]
+position = Vector2(368, 240)
+result = SubResource("Resource_63van")
