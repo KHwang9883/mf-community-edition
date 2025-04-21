@@ -18,4 +18,6 @@ func _ready() -> void:
 		queue_free()
 		return
 	
+	show()
 	tweak_enabled.emit()
+	reset_physics_interpolation()
