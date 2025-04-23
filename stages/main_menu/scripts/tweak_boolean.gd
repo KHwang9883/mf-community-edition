@@ -1,8 +1,15 @@
+@tool
 extends MenuSelection
 
 @export var tweak_name: String
 @export var default_value: bool
 @export var lock_behind_story_mode: bool = false
+@export_multiline var tweak_title: String:
+	set(to):
+		if !to: return
+		tweak_title = to
+		if !has_node("Label"): return
+		$Label.text = tweak_title
 @export_multiline var tweak_description: String
 
 var toggle_off = preload("res://sfx/tweak_off.mp3")
@@ -11,6 +18,8 @@ var toggle_off = preload("res://sfx/tweak_off.mp3")
 var is_blocked: bool
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	toggle.texture.region.position.y = 0 if tweak else 16
 	
@@ -42,6 +51,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint(): return
 	super(delta)
 	if !focused || !get_parent().focused: return
 	

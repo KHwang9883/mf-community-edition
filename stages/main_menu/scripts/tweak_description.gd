@@ -16,6 +16,7 @@ signal message_hidden
 @onready var color_rect: ColorRect = $ColorRect
 
 func _ready() -> void:
+	reset_physics_interpolation()
 	box.scale = Vector2.ZERO
 	label_2.visible = false
 	tweaks.add_user_signal("_tweak_desc")

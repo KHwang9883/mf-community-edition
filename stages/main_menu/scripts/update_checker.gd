@@ -18,7 +18,7 @@ const COIN = preload("res://sfx/clear.wav")
 @onready var update_found: Label = $"../UpdateFound"
 @onready var update_checking: Label = $"../UpdateChecking"
 @onready var http_request: HTTPRequest = $"../HTTPRequest"
-@onready var main_menu_controls: MenuItemsController = $"../MainMenuControls"
+@onready var main_menu_controls: MenuItemsController = $"../../Menu/MainMenuControls"
 
 var has_update: bool
 var checking_tween: Tween

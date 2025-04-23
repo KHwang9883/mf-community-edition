@@ -57,6 +57,7 @@ func transition() -> void:
 		)
 
 		await TransitionManager.transition_middle
+		TransitionManager.current_transition.queue_free()
 		Scenes.goto_scene(mainmenu)
 	else:
 		Scenes.goto_scene(mainmenu)
