@@ -26,4 +26,7 @@ func _on_order_changed() -> void:
 	print(_idx)
 	if !_channel_id in Audio._music_channels: return
 	
+	if Audio._music_channels[_channel_id].stream is AudioStreamMPT:
+		Audio._music_channels[_channel_id].pitch_scale = 1.0 - (pitch_scale - 1.0)
+		return
 	Audio._music_channels[_channel_id].pitch_scale = pitch_scale

@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://cvr48m6x7dx4d"]
+
+[ext_resource type="Script" uid="uid://cfhfudxaq2wbu" path="res://stages/main_menu/scripts/tweak_boolean.gd" id="1_8lphb"]
+[ext_resource type="AudioStream" uid="uid://b1xmpmuvfvqef" path="res://sfx/tweak_on.mp3" id="2_1bopa"]
+[ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="3_2d3i5"]
+[ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="4_1f5cu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfp0i"]
+resource_local_to_scene = true
+atlas = ExtResource("4_1f5cu")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0saj"]
+atlas = ExtResource("4_1f5cu")
+region = Rect2(0, 16, 16, 16)
+
+[node name="HBoxTweakBool" type="HBoxContainer"]
+script = ExtResource("1_8lphb")
+tweak_title = "tweak title"
+selected_sound = ExtResource("2_1bopa")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_2d3i5")
+theme_override_font_sizes/font_size = 12
+text = "tweak title"
+uppercase = true
+
+[node name="Toggle" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_qfp0i")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Toggle"]
+modulate = Color(0, 0, 0, 0.462745)
+z_index = -1
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 19.0
+size_flags_horizontal = 10
+texture = SubResource("AtlasTexture_c0saj")
+stretch_mode = 2

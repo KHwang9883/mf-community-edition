@@ -6,10 +6,25 @@ extends Camera2D
 const FADEOUT = preload("res://engine/components/ui/_sounds/fadeout.wav")
 
 func _ready() -> void:
+	if Data.technical_values.get("_skip_menu_transition", false):
+		Data.technical_values.erase("_skip_menu_transition")
+		await get_tree().physics_frame
+		music_loader.play_buffered()
+		main_menu_controls.focused = true
+		return
+	
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if !_crossfade:
-		music_loader.play_buffered.call_deferred()
-		main_menu_controls.focused = true
+		TransitionManager.accept_transition(
+			preload("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+				.instantiate()
+				.with_speeds(999.0, -0.02)
+		)
+		if TransitionManager.current_transition:
+			Audio.play_1d_sound(FADEOUT)
+			await get_tree().create_timer(1.0, false, false).timeout
+			music_loader.play_buffered.call_deferred()
+			main_menu_controls.focused = true
 		return
 	
 	Audio.play_1d_sound(FADEOUT)

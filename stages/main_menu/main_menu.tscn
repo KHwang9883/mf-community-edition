@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=45 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" uid="uid://dukosa3hw8lff" path="res://stages/save_game_room/scripts/restore_tweaks_from_minix.gd" id="1_0nl34"]
 [ext_resource type="Script" uid="uid://d2esh46nc5aqc" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
@@ -36,7 +36,6 @@
 [ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="25_vf7gm"]
 [ext_resource type="Script" uid="uid://bh2tgtr0bnas1" path="res://stages/main_menu/scripts/appearing_modulate.gd" id="26_dffd6"]
 [ext_resource type="Texture2D" uid="uid://c8se8kv5eegh6" path="res://stages/main_menu/textures/menu_mushrooms.png" id="26_w72sm"]
-[ext_resource type="Texture2D" uid="uid://bm2gcqw3x3yev" path="res://gfx/texts/Meteo_Dream.png" id="28_e0l4s"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="30_ccf2u"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="31_uoq2x"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="33_axkr8"]
@@ -92,6 +91,11 @@ script = ExtResource("1_0nl34")
 [node name="NotificationEmitter" type="Node" parent="."]
 script = ExtResource("2_pto04")
 
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2(320, 240)
+position_smoothing_speed = 20.0
+script = ExtResource("1_tc10h")
+
 [node name="Window" type="Window" parent="."]
 disable_3d = true
 title = "Character Editor"
@@ -102,10 +106,157 @@ min_size = Vector2i(250, 175)
 
 [node name="CharacterEditor" parent="Window" instance=ExtResource("36_jplg2")]
 
-[node name="Camera" type="Camera2D" parent="."]
-offset = Vector2(320, 240)
-position_smoothing_speed = 20.0
-script = ExtResource("1_tc10h")
+[node name="General" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Node2D" type="Node2D" parent="General"]
+script = ExtResource("5_7ehwd")
+
+[node name="Sprite2D" type="Sprite2D" parent="General/Node2D"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_bxy1n")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="GiantCloud" type="Sprite2D" parent="General/Node2D"]
+position = Vector2(272, 244)
+texture = ExtResource("6_bcnpq")
+
+[node name="Lostmapamirite" type="Sprite2D" parent="General/Node2D"]
+position = Vector2(320, 159)
+texture = ExtResource("8_lf3os")
+
+[node name="Pinwheel" type="Sprite2D" parent="General/Node2D"]
+position = Vector2(320, 176)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("7_3rsq0")
+script = ExtResource("9_523b3")
+
+[node name="SparkleSmall2" type="Sprite2D" parent="General/Node2D"]
+z_index = 1
+position = Vector2(416, 64)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("11_ftu6s")
+
+[node name="SparkleSmall7" type="Sprite2D" parent="General/Node2D"]
+z_index = 1
+position = Vector2(437, 80)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_ftu6s")
+
+[node name="SparkleSmall3" type="Sprite2D" parent="General/Node2D"]
+z_index = 1
+position = Vector2(460, 93)
+texture = ExtResource("11_ftu6s")
+
+[node name="SparkleSmall4" type="Sprite2D" parent="General/Node2D"]
+z_index = 1
+position = Vector2(340, 95)
+texture = ExtResource("11_ftu6s")
+
+[node name="SparkleSmall5" type="Sprite2D" parent="General/Node2D"]
+z_index = 1
+position = Vector2(227, 173)
+texture = ExtResource("11_ftu6s")
+
+[node name="SparkleSmall6" type="Sprite2D" parent="General/Node2D"]
+z_index = 1
+position = Vector2(457, 204)
+texture = ExtResource("11_ftu6s")
+
+[node name="SparkleLarge" type="Sprite2D" parent="General/Node2D"]
+z_index = 1
+position = Vector2(144, 86)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("12_0jhqv")
+
+[node name="Node2D2" type="Node2D" parent="General"]
+visible = false
+script = ExtResource("5_7ehwd")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Bg" type="Sprite2D" parent="General/Node2D2"]
+position = Vector2(320, 240)
+texture = ExtResource("8_p8t78")
+region_enabled = true
+region_rect = Rect2(240, 0, 640, 480)
+
+[node name="Sprite2D" type="Sprite2D" parent="General"]
+position = Vector2(320, 240)
+texture = ExtResource("5_im5uv")
+
+[node name="Previews" type="AnimatedSprite2D" parent="General"]
+position = Vector2(105, 315)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_h67v5")
+script = ExtResource("20_cmmgj")
+
+[node name="Node2D3" type="Node2D" parent="General"]
+script = ExtResource("26_dffd6")
+no_appear_on_min_quality = true
+
+[node name="MenuMushrooms" type="Sprite2D" parent="General/Node2D3"]
+position = Vector2(570, 257)
+texture = ExtResource("26_w72sm")
+script = ExtResource("5_7ehwd")
+
+[node name="UpdateFound" type="Label" parent="General"]
+visible = false
+layout_mode = 0
+offset_top = 381.0
+offset_right = 219.0
+offset_bottom = 469.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("33_axkr8")
+theme_override_font_sizes/font_size = 18
+text = "new update found!
+press %s
+to open in browser"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+uppercase = true
+script = ExtResource("34_0xv1c")
+action = "ui_select"
+
+[node name="UpdateChecking" type="Label" parent="General"]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+layout_mode = 0
+offset_top = 384.0
+offset_right = 219.0
+offset_bottom = 472.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("33_axkr8")
+theme_override_font_sizes/font_size = 15
+text = "checking for
+updates..."
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+uppercase = true
+
+[node name="UpdateChecker" type="Node" parent="General"]
+script = ExtResource("14_c2yvg")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="General"]
+timeout = 8.0
 
 [node name="Menu" type="Control" parent="."]
 physics_interpolation_mode = 1
@@ -116,6 +267,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("26_dffd6")
+appearing_duration_sec = 1.0
+no_appear_on_min_quality = true
 
 [node name="MusicLoader" parent="Menu" instance=ExtResource("1_xf83d")]
 script = ExtResource("2_c40jm")
@@ -140,145 +294,29 @@ channel_id = 0
 play_immediately = false
 volume_db = Array[float]([-2.0])
 
-[node name="Node2D" type="Node2D" parent="Menu"]
-script = ExtResource("5_7ehwd")
-
-[node name="Sprite2D" type="Sprite2D" parent="Menu/Node2D"]
-position = Vector2(640, 0)
-rotation = 1.5708
-scale = Vector2(1, 640)
-texture = SubResource("GradientTexture1D_bxy1n")
-centered = false
-metadata/_edit_lock_ = true
-
-[node name="GiantCloud" type="Sprite2D" parent="Menu/Node2D"]
-position = Vector2(272, 244)
-texture = ExtResource("6_bcnpq")
-
-[node name="Lostmapamirite" type="Sprite2D" parent="Menu/Node2D"]
-position = Vector2(320, 159)
-texture = ExtResource("8_lf3os")
-
-[node name="Pinwheel" type="Sprite2D" parent="Menu/Node2D"]
-position = Vector2(320, 176)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("7_3rsq0")
-script = ExtResource("9_523b3")
-
-[node name="SparkleSmall2" type="Sprite2D" parent="Menu/Node2D"]
-z_index = 1
-position = Vector2(416, 64)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("11_ftu6s")
-
-[node name="SparkleSmall7" type="Sprite2D" parent="Menu/Node2D"]
-z_index = 1
-position = Vector2(437, 80)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("11_ftu6s")
-
-[node name="SparkleSmall3" type="Sprite2D" parent="Menu/Node2D"]
-z_index = 1
-position = Vector2(460, 93)
-texture = ExtResource("11_ftu6s")
-
-[node name="SparkleSmall4" type="Sprite2D" parent="Menu/Node2D"]
-z_index = 1
-position = Vector2(340, 95)
-texture = ExtResource("11_ftu6s")
-
-[node name="SparkleSmall5" type="Sprite2D" parent="Menu/Node2D"]
-z_index = 1
-position = Vector2(227, 173)
-texture = ExtResource("11_ftu6s")
-
-[node name="SparkleSmall6" type="Sprite2D" parent="Menu/Node2D"]
-z_index = 1
-position = Vector2(457, 204)
-texture = ExtResource("11_ftu6s")
-
-[node name="SparkleLarge" type="Sprite2D" parent="Menu/Node2D"]
-z_index = 1
-position = Vector2(144, 86)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("12_0jhqv")
-
-[node name="Node2D2" type="Node2D" parent="Menu"]
-visible = false
-script = ExtResource("5_7ehwd")
-maximum = false
-medium = true
-minimum = true
-
-[node name="Bg" type="Sprite2D" parent="Menu/Node2D2"]
-position = Vector2(320, 240)
-texture = ExtResource("8_p8t78")
-region_enabled = true
-region_rect = Rect2(240, 0, 640, 480)
-
-[node name="Sprite2D" type="Sprite2D" parent="Menu"]
-position = Vector2(320, 240)
-texture = ExtResource("5_im5uv")
-
 [node name="Menuitemsbg" type="Sprite2D" parent="Menu"]
 modulate = Color(1, 1, 1, 0.745098)
 position = Vector2(320.5, 384)
 scale = Vector2(0.862205, 1)
 texture = ExtResource("6_umesd")
 
-[node name="Previews" type="AnimatedSprite2D" parent="Menu"]
-position = Vector2(105, 315)
-scale = Vector2(0.8, 0.8)
-sprite_frames = SubResource("SpriteFrames_h67v5")
-script = ExtResource("20_cmmgj")
-
-[node name="Node2D3" type="Node2D" parent="Menu"]
-script = ExtResource("26_dffd6")
-
-[node name="MenuMushrooms" type="Sprite2D" parent="Menu/Node2D3"]
-position = Vector2(570, 257)
-texture = ExtResource("26_w72sm")
-script = ExtResource("5_7ehwd")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Menu"]
-texture_filter = 2
-position = Vector2(528, 464)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("28_e0l4s")
-script = ExtResource("5_7ehwd")
-maximum = false
-medium = true
-minimum = true
-
 [node name="MainMenuControls" parent="Menu" instance=ExtResource("5_xxfig")]
-layout_mode = 0
-offset_left = 237.0
-offset_top = 304.0
-offset_right = 402.0
-offset_bottom = 480.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.499
+anchor_top = 1.0
+anchor_right = 0.499
+anchor_bottom = 1.0
+offset_left = -82.36
+offset_top = -176.0
+offset_right = 82.64
+offset_bottom = 0.0
 theme_override_constants/separation = 1
 focused = false
 
 [node name="Node" type="Node" parent="Menu"]
 script = ExtResource("25_vf7gm")
 menu_items_controller_path = NodePath("../MainMenuControls")
-
-[node name="Mfcommunityedition" type="Sprite2D" parent="Menu"]
-visible = false
-position = Vector2(334, 147)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("6_c8xg0")
-script = ExtResource("5_7ehwd")
-maximum = false
-medium = true
-minimum = true
-
-[node name="MfcommunityeditionNew" type="Sprite2D" parent="Menu"]
-position = Vector2(319.538, 155.25)
-scale = Vector2(0.77649, 0.77649)
-texture = ExtResource("17_42nv8")
-script = ExtResource("5_7ehwd")
-metadata/_edit_lock_ = true
 
 [node name="Selector" type="Node2D" parent="Menu"]
 script = ExtResource("5_i43cl")
@@ -289,57 +327,22 @@ position_padding = 20
 sprite_frames = ExtResource("30_ccf2u")
 script = ExtResource("31_uoq2x")
 
-[node name="UpdateFound" type="Label" parent="Menu"]
+[node name="Mfcommunityedition" type="Sprite2D" parent="."]
 visible = false
-layout_mode = 0
-offset_top = 381.0
-offset_right = 219.0
-offset_bottom = 469.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("33_axkr8")
-theme_override_font_sizes/font_size = 18
-text = "new update found!
-press %s
-to open in browser"
-horizontal_alignment = 1
-vertical_alignment = 2
-autowrap_mode = 3
-uppercase = true
-script = ExtResource("34_0xv1c")
-action = "ui_select"
+position = Vector2(334, 147)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_c8xg0")
+script = ExtResource("5_7ehwd")
+maximum = false
+medium = true
+minimum = true
 
-[node name="UpdateChecking" type="Label" parent="Menu"]
-visible = false
-modulate = Color(1, 1, 1, 0.784314)
-layout_mode = 0
-offset_top = 384.0
-offset_right = 219.0
-offset_bottom = 472.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
-theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("33_axkr8")
-theme_override_font_sizes/font_size = 15
-text = "checking for
-updates..."
-horizontal_alignment = 1
-vertical_alignment = 2
-autowrap_mode = 3
-uppercase = true
-
-[node name="UpdateChecker" type="Node" parent="Menu"]
-script = ExtResource("14_c2yvg")
-
-[node name="HTTPRequest" type="HTTPRequest" parent="Menu"]
-timeout = 8.0
+[node name="MfcommunityeditionNew" type="Sprite2D" parent="."]
+position = Vector2(319.538, 155.25)
+scale = Vector2(0.77649, 0.77649)
+texture = ExtResource("17_42nv8")
+script = ExtResource("5_7ehwd")
+metadata/_edit_lock_ = true
 
 [node name="Settings" parent="." instance=ExtResource("6_qa4mj")]
 physics_interpolation_mode = 0
@@ -361,11 +364,18 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="Version" type="Label" parent="."]
-layout_mode = 0
-offset_left = 416.0
-offset_top = 6.0
-offset_right = 632.0
-offset_bottom = 94.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -222.0
+offset_top = -94.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
 theme_override_constants/line_spacing = 4
@@ -374,8 +384,10 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("15_4dur6")
 theme_override_font_sizes/font_size = 12
-text = "version 1.2-beta"
+text = "version 2.0-beta
+by meteo dream"
 horizontal_alignment = 2
+vertical_alignment = 2
 uppercase = true
 
 [connection signal="close_requested" from="Window" to="Window" method="hide"]
