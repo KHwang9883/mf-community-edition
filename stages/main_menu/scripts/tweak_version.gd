@@ -25,6 +25,13 @@ func _handle_select(mouse_input: bool = false) -> void:
 	return
 
 
+func _handle_focused(focus) -> void:
+	super(focus)
+	if !focus: return
+	if tweak_description:
+		$"../..".emit_signal(&"_tweak_desc", get_parent())
+
+
 func _physics_process(delta: float) -> void:
 	#  as in version
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
@@ -42,14 +49,15 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_right"):
 		SettingsManager.set_tweak(tweak_name, clamp(tweak + 1, 0, 3))
 		_toggled_option(tweak)
-		
 	if Input.is_action_just_pressed("ui_left"):
 		SettingsManager.set_tweak(tweak_name, clamp(tweak - 1, 0, 3))
 		_toggled_option(tweak)
+	elif Input.is_action_just_pressed(&"ui_select"):
+		if tweak_description:
+			$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
 
 
 func _toggled_option(old_value: Variant) -> void:
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	if old_value != tweak:
 		Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
-		
