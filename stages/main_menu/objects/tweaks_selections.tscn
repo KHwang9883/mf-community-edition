@@ -1,13 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=27 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="2_5xeuf"]
 [ext_resource type="Script" uid="uid://dqnaft0y72ftg" path="res://stages/main_menu/scripts/tweak_version.gd" id="2_eijug"]
 [ext_resource type="Script" uid="uid://bfxupgvbsriaa" path="res://stages/main_menu/scripts/tweak_skin_editor_enter.gd" id="2_pysyt"]
-[ext_resource type="AudioStream" uid="uid://d3pdff2cvdkxc" path="res://sfx/tweak_off.mp3" id="3_bcwg7"]
 [ext_resource type="AudioStream" uid="uid://b1xmpmuvfvqef" path="res://sfx/tweak_on.mp3" id="3_ltw82"]
-[ext_resource type="Script" uid="uid://cfhfudxaq2wbu" path="res://stages/main_menu/scripts/tweak_boolean.gd" id="3_pxu1a"]
 [ext_resource type="Script" uid="uid://bo1atysord1l" path="res://stages/main_menu/scripts/tweak_exit.gd" id="5_cvfb0"]
 [ext_resource type="Script" uid="uid://dsk58sf1jip6x" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="5_dhfy0"]
 [ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="5_fjyvq"]
@@ -38,11 +36,6 @@ atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h1dcq"]
-resource_local_to_scene = true
-atlas = ExtResource("5_fjyvq")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b6f24"]
 resource_local_to_scene = true
 atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 0, 16, 16)
@@ -652,7 +645,11 @@ theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 layout_mode = 2
 script = ExtResource("2_eijug")
 tweak_name = "bgm_as_in_version"
-selected_sound = ExtResource("3_bcwg7")
+tweak_description = "select which version of mario forever should the soundtrack be based upon.
+
+a \"Mixed\" soundtrack is a mix of these versions, which is generally based on the version period between 2.16 - 4.4, but with a few additions from 7.02.
+
+The following levels are affected: 2-2, 2-3, 4-3, 6-2, 7-2, Hardcore 1-4, Human Laboratory (all levels), the Mario Minix \"Classic\" soundtrack type, all Bowser battles, and some custom levels from the community edition zone."
 
 [node name="Label" type="Label" parent="Aesthetic/HBoxContainerSoundtrack"]
 layout_mode = 2
@@ -725,7 +722,7 @@ left_side = false
 [node name="HBoxContainer9" type="HBoxContainer" parent="Aesthetic"]
 layout_mode = 2
 script = ExtResource("12_4kuwt")
-tweak_description = "this is not a tweak, but rather a quick access to a quality setting from the options screen"
+tweak_description = "this is not a tweak, but rather a quick access to the quality setting from the options screen"
 
 [node name="Label" type="Label" parent="Aesthetic/HBoxContainer9"]
 layout_mode = 2
@@ -1439,55 +1436,6 @@ theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
 text = "go back"
 uppercase = true
-
-[node name="HBoxContainer13" type="HBoxContainer" parent="."]
-process_mode = 4
-visible = false
-layout_mode = 2
-offset_left = 680.0
-offset_top = 348.0
-offset_right = 1136.0
-offset_bottom = 377.0
-script = ExtResource("3_pxu1a")
-tweak_name = "life_every_2_mil_score"
-default_value = true
-tweak_title = "give an extra life
-every 1,000,000 score points"
-tweak_description = "this tweak makes score useful now!"
-selected_sound = ExtResource("3_ltw82")
-
-[node name="Label" type="Label" parent="HBoxContainer13"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
-theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 1
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("2_5xeuf")
-theme_override_font_sizes/font_size = 12
-text = "give an extra life
-every 1,000,000 score points"
-uppercase = true
-
-[node name="Toggle" type="TextureRect" parent="HBoxContainer13"]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_b6f24")
-stretch_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="HBoxContainer13/Toggle"]
-modulate = Color(0, 0, 0, 0.462745)
-z_index = -1
-layout_mode = 2
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 19.0
-offset_bottom = 19.0
-size_flags_horizontal = 10
-texture = SubResource("AtlasTexture_lobhh")
-stretch_mode = 2
 
 [node name="Selector" type="Node2D" parent="."]
 physics_interpolation_mode = 1
