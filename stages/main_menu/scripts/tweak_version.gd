@@ -9,7 +9,7 @@ var STRING: Array = [
 
 @export var tweak_name: String
 @export var default_value: bool
-@export_multiline var tweak_description: String
+@export_multiline var tweak_description_text: String
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 @onready var arrow_l: Label = $HBoxContainer/Value/arrow
@@ -28,7 +28,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 func _handle_focused(focus) -> void:
 	super(focus)
 	if !focus: return
-	if tweak_description:
+	if tweak_description_text:
 		$"../..".emit_signal(&"_tweak_desc", get_parent())
 
 
@@ -53,8 +53,8 @@ func _physics_process(delta: float) -> void:
 		SettingsManager.set_tweak(tweak_name, clamp(tweak - 1, 0, 3))
 		_toggled_option(tweak)
 	elif Input.is_action_just_pressed(&"ui_select"):
-		if tweak_description:
-			$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
+		if tweak_description_text:
+			$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
 
 
 func _toggled_option(old_value: Variant) -> void:

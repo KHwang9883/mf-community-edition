@@ -1,6 +1,6 @@
 extends MenuSelection
 
-@export var preset_names: Array = [
+@export var preset_names_text: Array = [
 	"mixed",
 	"as in version 2.16 / 4.4",
 	"as in version 5.0",
@@ -9,7 +9,7 @@ extends MenuSelection
 
 @export var tweak_name: String
 @export var default_value: bool
-@export_multiline var tweak_description: String
+@export_multiline var tweak_description_text: String
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 @onready var arrow_l: Label = $HBoxContainer/Value/arrow
@@ -28,7 +28,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 func _physics_process(delta: float) -> void:
 	#  as in version
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
-	$HBoxContainer/Value.text = preset_names[tweak]
+	$HBoxContainer/Value.text = preset_names_text[tweak]
 	arrow_r.visible = focused
 	arrow_l.visible = focused
 	

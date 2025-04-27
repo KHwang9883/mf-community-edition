@@ -8,7 +8,7 @@ const STRING := [
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 var value
-@export_multiline var tweak_description: String
+@export_multiline var tweak_description_text: String
 @onready var arrow_l: Label = $HBoxContainer/Value/arrow
 @onready var arrow_r: Label = $HBoxContainer/HBoxContainer/arrow
 
@@ -29,7 +29,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 func _handle_focused(focus) -> void:
 	super(focus)
 	if !focus: return
-	if tweak_description:
+	if tweak_description_text:
 		$"../..".emit_signal(&"_tweak_desc", get_parent())
 
 
@@ -55,8 +55,8 @@ func _physics_process(delta: float) -> void:
 		SettingsManager.settings.quality = clamp(old_value - 1, 0, 2)
 		_toggled_option(old_value, SettingsManager.settings.quality)
 	elif Input.is_action_just_pressed(&"ui_select"):
-		if tweak_description:
-			$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
+		if tweak_description_text:
+			$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
 
 
 func _toggled_option(old_val, new_val) -> void:
@@ -71,5 +71,5 @@ func _update_string() -> void:
 	
 
 func _handle_right_click() -> void:
-	if focused && tweak_description:
-		$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
+	if focused && tweak_description_text:
+		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)

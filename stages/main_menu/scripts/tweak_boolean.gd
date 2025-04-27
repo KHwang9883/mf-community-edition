@@ -4,13 +4,13 @@ extends MenuSelection
 @export var tweak_name: String
 @export var default_value: bool
 @export var lock_behind_story_mode: bool = false
-@export_multiline var tweak_title: String:
+@export_multiline var tweak_title_text: String:
 	set(to):
 		if !to: return
-		tweak_title = to
+		tweak_title_text = to
 		if !has_node("Label"): return
-		$Label.text = tweak_title
-@export_multiline var tweak_description: String
+		$Label.text = tweak_title_text
+@export_multiline var tweak_description_text: String
 
 var toggle_off = preload("res://sfx/tweak_off.mp3")
 @onready var toggle: TextureRect = $Toggle
@@ -29,13 +29,13 @@ func _ready() -> void:
 		if !SecretsManager.is_endgame():
 			lab.text = "??????? (beat story mode to unlock!)"
 			is_blocked = true
-			tweak_description = "this tweak will be available after you complete the story mode!"
+			tweak_description_text = "this tweak will be available after you complete the story mode!"
 
 
 func _handle_focused(focus) -> void:
 	super(focus)
 	if !focus: return
-	if tweak_description:
+	if tweak_description_text:
 		$"../..".emit_signal(&"_tweak_desc", get_parent())
 
 
@@ -64,8 +64,8 @@ func _physics_process(delta: float) -> void:
 		if _set:
 			Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	elif Input.is_action_just_pressed(&"ui_select"):
-		if tweak_description:
-			$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
+		if tweak_description_text:
+			$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
 
 
 func _handle_toggle(to_set: bool) -> bool:
@@ -79,5 +79,5 @@ func _handle_toggle(to_set: bool) -> bool:
 	return false
 
 func _handle_right_click() -> void:
-	if focused && tweak_description:
-		$"../..".emit_signal(&"_show_desc", tweak_description, $Label.text)
+	if focused && tweak_description_text:
+		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
