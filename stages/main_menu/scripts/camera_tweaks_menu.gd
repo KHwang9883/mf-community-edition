@@ -11,3 +11,6 @@ func _ready() -> void:
 func update_limit() -> void:
 	@warning_ignore("narrowing_conversion")
 	limit_bottom = (margin * 2) + menu_controller.size.y
+	position_smoothing_enabled = false
+	reset_smoothing()
+	reset_physics_interpolation()
