@@ -18,5 +18,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	var _dir := SkinsManager.base_dir
 	if !DirAccess.dir_exists_absolute(_dir):
 		DirAccess.make_dir_absolute(_dir)
-	OS.shell_open(_dir)
+	if SkinsManager.current_skin && DirAccess.dir_exists_absolute(_dir.path_join(SkinsManager.current_skin)):
+		OS.shell_open(_dir.path_join(SkinsManager.current_skin))
+	else:
+		OS.shell_open(_dir)
 	
