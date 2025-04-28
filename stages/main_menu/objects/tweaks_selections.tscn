@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=26 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -21,7 +21,6 @@
 [ext_resource type="Script" uid="uid://de4be3ee7d540" path="res://stages/main_menu/objects/character_editor/skin_suit_category_sel.gd" id="16_ydww0"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="17_xjt7h"]
 [ext_resource type="Script" uid="uid://c8d27o4ux3qle" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="18_kemdi"]
-[ext_resource type="PackedScene" uid="uid://dh6j6y7hp537o" path="res://stages/main_menu/objects/character_editor/bool_suit_tweak_selection.tscn" id="19_mxo6u"]
 [ext_resource type="Script" uid="uid://bbtnv4o1bvrj8" path="res://stages/main_menu/objects/activator.gd" id="20_noqp5"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_4hroi"]
@@ -1253,15 +1252,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="HSeparatorSpawn" type="HSeparator" parent="SkinSuitSettings"]
+[node name="HSeparator3" type="HSeparator" parent="SkinSuitSettings"]
 layout_mode = 2
 theme_override_constants/separation = 3
 theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 
-[node name="BoolSuitTweakSelection" parent="SkinSuitSettings" instance=ExtResource("19_mxo6u")]
-layout_mode = 2
-
-[node name="HSeparator4" type="HSeparator" parent="SkinSuitSettings"]
+[node name="HSeparatorSpawnTweaks" type="HSeparator" parent="SkinSuitSettings"]
 layout_mode = 2
 theme_override_constants/separation = 3
 theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
@@ -1375,5 +1371,6 @@ script = ExtResource("20_noqp5")
 [connection signal="selected" from="Presets" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="QuickSkinSettings" to="Selector5" method="handle_selection"]
 [connection signal="selected" from="QuickSkinSettings" to="Camera2D" method="handle_selection"]
+[connection signal="selection_entered" from="QuickSkinSettings/Exit" to="QuickSkinSettings/HSeparatorSpawn/Node" method="_on_exit_selection_entered"]
 [connection signal="selected" from="SkinSuitSettings" to="Selector6" method="handle_selection"]
 [connection signal="selected" from="SkinSuitSettings" to="Camera2D" method="handle_selection"]

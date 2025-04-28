@@ -54,6 +54,7 @@ func _handle_toggle(to_set: bool) -> bool:
 		return false
 	if (to_set && !is_toggled) || (!to_set && is_toggled):
 		is_toggled = to_set
+		_toggled(to_set)
 		toggle.texture.region.position.y = 0 if to_set else 16
 		return true
 	return false
@@ -61,3 +62,7 @@ func _handle_toggle(to_set: bool) -> bool:
 func _handle_right_click() -> void:
 	if focused && tweak_description_text:
 		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
+
+
+func _toggled(to: bool) -> void:
+	pass
