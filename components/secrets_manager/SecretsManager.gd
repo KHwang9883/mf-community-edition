@@ -17,6 +17,8 @@ var _has_cheated: bool = false
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var vignette: Sprite2D = $Vignette
 
+signal secret_set(_name: String)
+
 func _init() -> void:
 	var new_save_path = OS.get_user_data_dir().path_join("saves")
 	if DirAccess.dir_exists_absolute(new_save_path):
@@ -97,6 +99,7 @@ func set_secret(secret: String, value: Variant, save: bool = true, show_toast: b
 	if !secret in secrets && show_toast && SettingsManager.get_tweak("secrets_notification", true):
 		queue_achievement(secret)
 	secrets[secret] = value
+	secret_set.emit(secret)
 	if save: save_secrets()
 
 func has_secret(secret: String) -> bool:
