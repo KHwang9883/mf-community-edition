@@ -65,4 +65,7 @@ func _handle_right_click() -> void:
 
 
 func _toggled(to: bool) -> void:
-	pass
+	var _quick_node = Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
+	var powerup_name = get_parent().get_meta(&"_powerup_name")
+	if !powerup_name: return
+	_quick_node.skin_tweaks[powerup_name][tweak_name] = to

@@ -14,26 +14,39 @@ func _handle_select(mouse_input: bool = false) -> void:
 		if !CharacterManager.suit_tweaks.has(_char):
 			print("Warning: No suit tweaks for char: ", _char)
 		elif CharacterManager.suit_tweaks[_char].has(powerup_name):
-			for i in CharacterManager.suit_tweaks[_char][powerup_name]:
-				if CharacterManager.suit_tweaks[_char][powerup_name][i] is bool:
+			var _quick_node = get_quick_node()
+			# Засовываем скин твики в память, чтоб там ее редачить
+			if !_quick_node.skin_tweaks.has(powerup_name):
+				# Ищем в файле жсон и берем оттуда
+				if SkinsManager.suit_tweaks.has(SkinsManager.current_skin) && SkinsManager.suit_tweaks[SkinsManager.current_skin].has(powerup_name):
+					_quick_node.skin_tweaks[powerup_name] = SkinsManager.suit_tweaks[SkinsManager.current_skin][powerup_name].duplicate(true)
+				# Если в жсоне нет, берем дефолтные
+				else:
+					_quick_node.skin_tweaks[powerup_name] = CharacterManager.suit_tweaks[_char][powerup_name].duplicate(true)
+			# Создаем опции для настройки скин твиков прямо из игры
+			for tweak in CharacterManager.suit_tweaks[_char][powerup_name]:
+				# Булеан, чекмарк
+				if get_tweak_value(tweak) is bool:
 					var _bool_tweak = BOOL_SUIT_TWEAK_SELECTION.instantiate()
-					_bool_tweak.get_node("Label").text = i.replacen("_", " ")
-					_bool_tweak.tweak_name = i
-					_bool_tweak.is_toggled = CharacterManager.suit_tweaks[_char][powerup_name][i]
+					_bool_tweak.get_node("Label").text = tweak.replacen("_", " ")
+					_bool_tweak.tweak_name = tweak
+					_bool_tweak.is_toggled = get_tweak_value(tweak)
 					move_to.add_child(_bool_tweak)
 					Thunder.reorder_on_top_of(_bool_tweak, h_separator_spawn)
-				elif CharacterManager.suit_tweaks[_char][powerup_name][i] is float:
+				# Число, окно со спинбоксом
+				elif get_tweak_value(tweak) is float:
 					var _float_tweak = FLOAT_SUIT_TWEAK_SELECTION.instantiate()
-					_float_tweak.get_node("Label").text = i.replacen("_", " ")
-					_float_tweak.get_node("Label2").text = str(CharacterManager.suit_tweaks[_char][powerup_name][i])
-					_float_tweak.tweak_name = i
+					_float_tweak.get_node("Label").text = tweak.replacen("_", " ")
+					_float_tweak.get_node("Label2").text = str(get_tweak_value(tweak))
+					_float_tweak.tweak_name = tweak
 					move_to.add_child(_float_tweak)
 					Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
-				elif CharacterManager.suit_tweaks[_char][powerup_name][i] is int:
+				# То же
+				elif get_tweak_value(tweak) is int:
 					var _float_tweak = FLOAT_SUIT_TWEAK_SELECTION.instantiate()
-					_float_tweak.get_node("Label").text = i.replacen("_", " ")
-					_float_tweak.get_node("Label2").text = str(CharacterManager.suit_tweaks[_char][powerup_name][i])
-					_float_tweak.tweak_name = i
+					_float_tweak.get_node("Label").text = tweak.replacen("_", " ")
+					_float_tweak.get_node("Label2").text = str(get_tweak_value(tweak))
+					_float_tweak.tweak_name = tweak
 					_float_tweak.get_node("Window/SpinBox").step = 1
 					move_to.add_child(_float_tweak)
 					Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
@@ -55,5 +68,18 @@ func _handle_select(mouse_input: bool = false) -> void:
 		_label.text = _label.get_meta("orig_text", "%s") % powerup_name
 	
 	move_to._update_selectors()
-	move_to.move_selector(0, true)
-	print(move_to.selectors)
+	move_to.move_selector.call_deferred(0, true)
+	await get_tree().physics_frame
+	camera_2d.update_limit()
+	#print(move_to.selectors)
+
+func get_quick_node() -> Node:
+	return Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
+
+func get_tweak_value(tweak) -> Variant:
+	var _quick_node = get_quick_node()
+	if _quick_node.skin_tweaks.has(powerup_name) && _quick_node.skin_tweaks[powerup_name].has(tweak):
+		return _quick_node.skin_tweaks[powerup_name][tweak]
+	if SkinsManager.suit_tweaks.has(SkinsManager.current_skin) && SkinsManager.suit_tweaks[SkinsManager.current_skin].has(powerup_name):
+		return SkinsManager.suit_tweaks[SkinsManager.current_skin][powerup_name][tweak]
+	return CharacterManager.suit_tweaks[CharacterManager.get_character_name()][powerup_name][tweak]

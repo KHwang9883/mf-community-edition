@@ -1,6 +1,7 @@
 extends MenuSelection
 
 @export var tweak_name: String
+@export var tweak_parent_dict_name: String
 @export_multiline var tweak_description_text: String
 
 var is_blocked: bool
@@ -45,10 +46,10 @@ func _handle_right_click() -> void:
 		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
 
 
-func _toggled(to: bool) -> void:
-	pass
-
-
 func _on_button_pressed() -> void:
 	$Label2.text = str(spin_box.value)
 	Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	var _quick_node = Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
+	var powerup_name = get_parent().get_meta(&"_powerup_name")
+	if !powerup_name: return
+	_quick_node.skin_tweaks[powerup_name][tweak_name] = spin_box.value

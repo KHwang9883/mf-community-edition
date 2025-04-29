@@ -16,6 +16,8 @@ var toggle_off = preload("res://sfx/tweak_off.mp3")
 @onready var toggle: TextureRect = $Toggle
 
 var is_blocked: bool
+@onready var _old_tweak_title := tweak_title_text
+@onready var _old_tweak_desc := tweak_description_text
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -24,12 +26,19 @@ func _ready() -> void:
 	toggle.texture.region.position.y = 0 if tweak else 16
 	
 	if lock_behind_story_mode:
+		SecretsManager.secret_set.connect(unlock_blocked_tweak)
 		var lab: Label = $Label as Label
 		lab.add_theme_color_override("font_color", Color.LIGHT_CORAL)
 		if !SecretsManager.is_endgame():
 			lab.text = "??????? (beat story mode to unlock!)"
 			is_blocked = true
 			tweak_description_text = "this tweak will be available after you complete the story mode!"
+
+func unlock_blocked_tweak(_secret: String) -> void:
+	if _secret != "story mode completed": return
+	$Label.text = _old_tweak_title
+	is_blocked = false
+	tweak_description_text = _old_tweak_desc
 
 
 func _handle_focused(focus) -> void:

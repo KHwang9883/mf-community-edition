@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://84pb57gibsne"]
+[gd_scene load_steps=10 format=3 uid="uid://84pb57gibsne"]
 
 [ext_resource type="Script" uid="uid://bhliebohgvayi" path="res://stages/main_menu/objects/character_editor/skin_suit_float.gd" id="1_3plhj"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="2_2ee8w"]
 [ext_resource type="Script" uid="uid://du1c6su8kshw" path="res://stages/main_menu/objects/character_editor/window_prompt.gd" id="3_2ee8w"]
+[ext_resource type="Script" uid="uid://c36ykg6u561s0" path="res://stages/main_menu/objects/character_editor/spin_box.gd" id="4_s3qfx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ee8w"]
+bg_color = Color(0.32, 0.32, 0.32, 1)
+corner_detail = 1
+anti_aliasing = false
 
 [sub_resource type="InputEventAction" id="InputEventAction_3plhj"]
 action = &"ui_accept"
@@ -59,8 +65,11 @@ visible = false
 transient = true
 exclusive = true
 unresizable = true
+popup_window = true
 min_size = Vector2i(50, 50)
+keep_title_visible = true
 script = ExtResource("3_2ee8w")
+init_focus_path = NodePath("SpinBox")
 
 [node name="Panel" type="Panel" parent="Window"]
 anchors_preset = 15
@@ -68,28 +77,34 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ee8w")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Window"]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -31.0
+offset_top = -43.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="Button" type="Button" parent="Window/HBoxContainer"]
+[node name="ButtonOK" type="Button" parent="Window/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 6
+focus_neighbor_right = NodePath("../ButtonCancel")
+focus_next = NodePath("../ButtonCancel")
 shortcut = SubResource("Shortcut_2ee8w")
 text = "OK"
 
-[node name="Button2" type="Button" parent="Window/HBoxContainer"]
+[node name="ButtonCancel" type="Button" parent="Window/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 6
+focus_neighbor_left = NodePath("../ButtonOK")
+focus_previous = NodePath("../ButtonOK")
 shortcut = SubResource("Shortcut_s3qfx")
 text = "Cancel"
 
@@ -99,16 +114,20 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = 29.0
-offset_top = -33.0
+offset_top = -37.0
 offset_right = -29.0
-offset_bottom = -2.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 9999.0
 step = 0.01
 value = 1.0
+update_on_text_changed = true
+custom_arrow_step = 0.1
+select_all_on_focus = true
+script = ExtResource("4_s3qfx")
 
 [connection signal="close_requested" from="Window" to="Window" method="hide"]
-[connection signal="pressed" from="Window/HBoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Window/HBoxContainer/Button" to="Window" method="hide"]
-[connection signal="pressed" from="Window/HBoxContainer/Button2" to="Window" method="hide"]
+[connection signal="pressed" from="Window/HBoxContainer/ButtonOK" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Window/HBoxContainer/ButtonOK" to="Window" method="hide"]
+[connection signal="pressed" from="Window/HBoxContainer/ButtonCancel" to="Window" method="hide"]
