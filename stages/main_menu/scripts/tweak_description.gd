@@ -64,7 +64,7 @@ func show_description(desc: String, title: String) -> void:
 	text.size.y = 0
 	btexture.size.y = text.size.y + 16
 	btexture.position.y = btexture.size.y / -2
-	text.position.y = 0
+	text.position.y = -2
 	text.size.y = 0
 	text.size.y += 16
 	text.reset_physics_interpolation()
