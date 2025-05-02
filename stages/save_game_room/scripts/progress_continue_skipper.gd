@@ -24,6 +24,7 @@ func set_regular_edition() -> void:
 func mario_forever_advance(is_from_save: bool = false) -> void:
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
+	SettingsManager.set_tweak("super_jump_bug", false)
 	SettingsManager.set_tweak("harder_level_design", true)
 	SettingsManager.set_tweak("minigames_in_main_worlds", true)
 	if !is_from_save:
