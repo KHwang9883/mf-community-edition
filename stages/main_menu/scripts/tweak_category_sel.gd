@@ -13,6 +13,9 @@ var _timer: float
 
 signal selection_entered
 
+func _ready() -> void:
+	if valu: valu.modulate.a = 0.0
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if !valu:
@@ -33,13 +36,17 @@ func _handle_select(mouse_input: bool = false) -> void:
 	move_to.reset_physics_interpolation()
 	get_parent().focused = false
 	Scenes.current_scene.get_node("Tweaks/Label2").visible = false
+	var old_selector = camera_2d.selector
 	camera_2d.menu_controller = move_to
 	camera_2d.selector = selector_to
 	camera_2d.update_limit()
 	camera_2d.reset_physics_interpolation()
 	await get_tree().physics_frame
 	
-	get_parent().move_selector(reset_to, true)
+	if reset_to >= 0:
+		get_parent().move_selector(reset_to, true)
+	elif is_instance_valid(old_selector):
+		get_parent().move_selector(old_selector._current_item_index, true)
 	move_to.focused = true
 	get_parent().focused = false
 	if show_desc_bool:

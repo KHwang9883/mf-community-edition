@@ -26,7 +26,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	
 	#var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	_handle_toggle(!is_toggled)
-	if !is_toggled:
+	if is_toggled:
 		super(mouse_input)
 	else:
 		Audio.play_1d_sound(toggle_off, true, { "ignore_pause": true, "bus": "1D Sound" })
@@ -67,5 +67,9 @@ func _handle_right_click() -> void:
 func _toggled(to: bool) -> void:
 	var _quick_node = Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
 	var powerup_name = get_parent().get_meta(&"_powerup_name")
+	var submenu_name = get_parent().get_meta(&"_submenu_name", "")
 	if !powerup_name: return
-	_quick_node.skin_tweaks[powerup_name][tweak_name] = to
+	if submenu_name:
+		_quick_node.skin_tweaks[powerup_name][submenu_name][tweak_name] = to
+	else:
+		_quick_node.skin_tweaks[powerup_name][tweak_name] = to
