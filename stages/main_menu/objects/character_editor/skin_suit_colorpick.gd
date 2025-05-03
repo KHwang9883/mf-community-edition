@@ -7,7 +7,8 @@ var is_blocked: bool
 var is_toggled: bool
 var cooldown: float = 0
 
-@onready var spin_box: SpinBox = $Window/SpinBox
+@onready var color_rect: ColorRect = $ColorRect
+@onready var color_picker: ColorPickerButton = $Window/ColorPickerButton
 
 func _handle_focused(focus) -> void:
 	super(focus)
@@ -21,10 +22,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if cooldown > 0.0: return
 	
 	#var tweak = SettingsManager.get_tweak(tweak_name, default_value)
-	if $Label2.text.is_valid_int():
-		spin_box.value = int($Label2.text)
-	elif $Label2.text.is_valid_float():
-		spin_box.value = float($Label2.text)
+	color_picker.color = color_rect.color
 	cooldown = 0.1
 	$Window.visible = true
 	get_tree().paused = true
@@ -46,13 +44,13 @@ func _handle_right_click() -> void:
 
 
 func _on_button_pressed() -> void:
-	$Label2.text = str(spin_box.value) if spin_box.step != 1 else str(int(spin_box.value))
+	color_rect.color = color_picker.color
 	Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	var _quick_node = Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
 	var powerup_name = get_parent().get_meta(&"_powerup_name")
 	var submenu_name = get_parent().get_meta(&"_submenu_name", "")
 	if !powerup_name: return
 	if submenu_name:
-		_quick_node.skin_tweaks[powerup_name][submenu_name][tweak_name] = spin_box.value
+		_quick_node.skin_tweaks[powerup_name][submenu_name][tweak_name] = color_picker.color.to_html()
 	else:
-		_quick_node.skin_tweaks[powerup_name][tweak_name] = spin_box.value
+		_quick_node.skin_tweaks[powerup_name][tweak_name] = color_picker.color.to_html()

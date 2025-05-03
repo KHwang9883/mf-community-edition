@@ -21,10 +21,9 @@ func _ready() -> void:
 	label_2.visible = false
 	tweaks.add_user_signal("_tweak_desc")
 	tweaks.add_user_signal("_show_desc")
-	tweaks.get_node(^"Tweaks").connect(&"selected", _set_invis.unbind(4))
-	tweaks.get_node(^"Gameplay").connect(&"selected", _set_invis.unbind(4))
-	tweaks.get_node(^"Aesthetic").connect(&"selected", _set_invis.unbind(4))
-	tweaks.get_node(^"Presets").connect(&"selected", _set_invis.unbind(4))
+	for i in tweaks.get_children():
+		if i is MenuItemsController:
+			i.connect(&"selected", _set_invis.unbind(4))
 	tweaks.connect(&"_tweak_desc", func(controller):
 		if controller.focused:
 			label_2.visible = true
@@ -50,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	if box.scale.x < 0.5:
 		return
 	
-	if Input.is_action_just_pressed(&"ui_select") || Input.is_action_just_pressed(&"ui_cancel"):
+	if Input.is_action_just_pressed(&"ui_select") || Input.is_action_just_pressed(&"ui_cancel") || Input.is_action_just_pressed(&"ui_accept"):
 		hide_message()
 		activated = false
 
@@ -74,7 +73,8 @@ func show_description(desc: String, title: String) -> void:
 	Audio.play_1d_sound(MESSAGE_BLOCK)
 	get_tree().paused = true
 	
-	box.position = Vector2(320, 240) #как же похуй...
+	box.position = Vector2(320, 240)
+	box.reset_physics_interpolation()
 	
 	var tw2 = get_tree().create_tween().bind_node(color_rect).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw2.tween_property(color_rect, ^"color:a", 0.5, 0.5)
