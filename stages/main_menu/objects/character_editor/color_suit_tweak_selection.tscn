@@ -1,0 +1,136 @@
+[gd_scene load_steps=10 format=3 uid="uid://c7kis3yfbibxd"]
+
+[ext_resource type="Script" uid="uid://ds3ske4bw7cag" path="res://stages/main_menu/objects/character_editor/skin_suit_colorpick.gd" id="1_fc7ar"]
+[ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="2_7c43a"]
+[ext_resource type="Texture2D" uid="uid://svqo0oo6kew0" path="res://stages/main_menu/objects/character_editor/Transparent.png" id="3_6jc3r"]
+[ext_resource type="Script" uid="uid://du1c6su8kshw" path="res://stages/main_menu/objects/character_editor/window_prompt.gd" id="3_mh41t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ee8w"]
+bg_color = Color(0.32, 0.32, 0.32, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="InputEventAction" id="InputEventAction_3plhj"]
+action = &"ui_accept"
+
+[sub_resource type="Shortcut" id="Shortcut_2ee8w"]
+events = [SubResource("InputEventAction_3plhj")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_2ee8w"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_s3qfx"]
+events = [SubResource("InputEventAction_2ee8w")]
+
+[node name="color_suit_tweak_selection" type="HBoxContainer" groups=["_skin_suit_tweak"]]
+offset_right = 132.0
+offset_bottom = 16.0
+script = ExtResource("1_fc7ar")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_7c43a")
+theme_override_font_sizes/font_size = 12
+text = "tweak name"
+uppercase = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(48, 16)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Texture" type="TextureRect" parent="ColorRect"]
+show_behind_parent = true
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 10
+texture = ExtResource("3_6jc3r")
+expand_mode = 2
+stretch_mode = 1
+
+[node name="Window" type="Window" parent="."]
+process_mode = 3
+disable_3d = true
+title = "Choose a New Color"
+initial_position = 2
+size = Vector2i(500, 240)
+visible = false
+transient = true
+exclusive = true
+unresizable = true
+min_size = Vector2i(50, 50)
+keep_title_visible = true
+script = ExtResource("3_mh41t")
+init_focus_path = NodePath("ColorPickerButton")
+
+[node name="Panel" type="Panel" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ee8w")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="ButtonOK" type="Button" parent="Window/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+focus_neighbor_top = NodePath("../../ColorPickerButton")
+focus_neighbor_right = NodePath("../ButtonCancel")
+focus_next = NodePath("../ButtonCancel")
+focus_previous = NodePath("../../ColorPickerButton")
+shortcut = SubResource("Shortcut_2ee8w")
+text = "OK"
+
+[node name="ButtonCancel" type="Button" parent="Window/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+focus_neighbor_left = NodePath("../ButtonOK")
+focus_neighbor_top = NodePath("../../ColorPickerButton")
+focus_next = NodePath("../../ColorPickerButton")
+focus_previous = NodePath("../ButtonOK")
+shortcut = SubResource("Shortcut_s3qfx")
+text = "Cancel"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Window"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 122.0
+offset_top = -57.0
+offset_right = -122.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_bottom = NodePath("../HBoxContainer/ButtonOK")
+focus_next = NodePath("../HBoxContainer/ButtonOK")
+focus_previous = NodePath("../HBoxContainer/ButtonCancel")
+
+[connection signal="close_requested" from="Window" to="Window" method="hide"]
+[connection signal="pressed" from="Window/HBoxContainer/ButtonOK" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Window/HBoxContainer/ButtonOK" to="Window" method="hide"]
+[connection signal="pressed" from="Window/HBoxContainer/ButtonCancel" to="Window" method="hide"]

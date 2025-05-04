@@ -73,7 +73,9 @@ func _update_string() -> void:
 		value.text = "none"
 	
 	skin_list = [""]
-	skin_list.append_array(SkinsManager.custom_sprite_frames.keys())
+	var skin_keys = SkinsManager.custom_sprite_frames.keys().duplicate()
+	if skin_keys.has("none"): skin_keys.erase("none")
+	skin_list.append_array(skin_keys)
 	var findings := clampi(int(skin_list.find(SettingsManager.settings.skin)), 0, 99)
 	skin_sel_index = findings
 	if skin_sel_index >= skin_list.size():
