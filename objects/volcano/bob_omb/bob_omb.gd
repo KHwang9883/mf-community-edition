@@ -80,6 +80,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if !body is Player || !ignited: return
 	if body.warp > Player.Warp.NONE || enemy_attacked.get_stomping_delayer(): return
 	Audio.play_sound(kicked_sound, self)
+	body.ground_kicked.emit()
 	
 	enemy_attacked.stomping_delay()
 	update_dir()
