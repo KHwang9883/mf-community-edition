@@ -1,0 +1,164 @@
+[gd_scene load_steps=20 format=3 uid="uid://bwn1ss5d5sn4q"]
+
+[ext_resource type="Script" uid="uid://bceup212k26pi" path="res://objects/big_bertha/big_bertha.gd" id="1_bx4a3"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_nc5u4"]
+[ext_resource type="PackedScene" uid="uid://crb6il0egqmi8" path="res://objects/big_bertha/bertha_killed.tscn" id="3_bx4a3"]
+[ext_resource type="Script" uid="uid://b27maclqk3hkb" path="res://objects/big_bertha/big_bertha_killed.gd" id="4_bh5qr"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_0kj0g"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_eb833"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_d6rtk"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="9_bx4a3"]
+[ext_resource type="Texture2D" uid="uid://duv62a343dshh" path="res://objects/big_bertha/texture.png" id="9_hs4lm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ep536"]
+size = Vector2(36, 48)
+
+[sub_resource type="Resource" id="Resource_3hahy"]
+resource_local_to_scene = true
+script = ExtResource("5_0kj0g")
+creation_nodepack = ExtResource("3_bx4a3")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("4_bh5qr")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcham"]
+atlas = ExtResource("9_hs4lm")
+region = Rect2(0, 0, 47, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wd5ft"]
+atlas = ExtResource("9_hs4lm")
+region = Rect2(47, 0, 47, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8jpr"]
+atlas = ExtResource("9_hs4lm")
+region = Rect2(0, 128, 47, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uopvj"]
+atlas = ExtResource("9_hs4lm")
+region = Rect2(0, 64, 47, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hx48k"]
+atlas = ExtResource("9_hs4lm")
+region = Rect2(47, 64, 47, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aiyf6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcham")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wd5ft")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8jpr")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uopvj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hx48k")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nc5u4"]
+size = Vector2(20, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqom2"]
+size = Vector2(192, 128)
+
+[node name="BigBertha" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_bx4a3")
+sprite = NodePath("Sprite")
+collision = false
+correct_collision = false
+metadata/_custom_type_script = "uid://co5dvlw7m0osv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ep536")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_ep536")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_nc5u4")
+stomping_enabled = false
+stomping_hurtable = false
+stomping_standard = Vector2(0, 0)
+stomping_creation = SubResource("Resource_3hahy")
+stomping_scores = 100
+stomping_sound = ExtResource("6_eb833")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_3hahy")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_d6rtk")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_aiyf6")
+autoplay = "default"
+
+[node name="KillArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea"]
+shape = SubResource("RectangleShape2D_nc5u4")
+
+[node name="Trigger" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+monitorable = false
+script = ExtResource("9_bx4a3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_mqom2")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_animation" binds= [&"jump"]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="player_enter" from="Trigger" to="." method="_on_trigger_player_enter"]
+[connection signal="player_exit" from="Trigger" to="." method="_on_trigger_player_exit"]
