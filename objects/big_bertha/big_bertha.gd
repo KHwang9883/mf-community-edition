@@ -82,7 +82,7 @@ func _process_states(delta, cam_center) -> float:
 				_process_states(delta, cam_center)
 		1:
 			if position.x < cam_center.x + 128 || has_eaten:
-				speed.x = move_toward(speed.x, 400 * pl_speed, delta * 1250)
+				speed.x = move_toward(speed.x, 400 * pl_speed, delta * 1250 * pl_speed)
 			else:
 				state = 0
 				_process_states(delta, cam_center)
@@ -95,3 +95,7 @@ func _on_trigger_player_enter() -> void:
 
 func _on_trigger_player_exit() -> void:
 	can_eat = false
+
+
+func set_as_leaving() -> void:
+	has_eaten = true
