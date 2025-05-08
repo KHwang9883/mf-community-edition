@@ -108,8 +108,8 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 	# Combo
 	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
 		var status_node = Scenes.current_scene.get_node("CanvasLayer/Status")
-		if !combo.get_combo() <= 0:
-			target_enemy_attacked.sound_pitch = 1 + min(combo.get_combo(), 7) * 0.135
+		if combo.get_combo() > 0:
+			target_enemy_attacked.sound_pitch = combo.get_pitch()
 		target_enemy_attacked.set_meta(&"attacker_speed", speed)
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
 		Thunder._current_camera.shock(0.08, Vector2.ONE * 3)
