@@ -1,9 +1,7 @@
-[gd_scene load_steps=72 format=4 uid="uid://c8eibnikkrh1r"]
+[gd_scene load_steps=69 format=4 uid="uid://c8eibnikkrh1r"]
 
 [ext_resource type="PackedScene" uid="uid://denh5x0fbof2s" path="res://stages/world_4/level_4-2.tscn" id="1_i6pwy"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="3_clnq5"]
-[ext_resource type="AudioStream" uid="uid://rf7ervcy1mpc" path="res://music/smw-athletic-drums.ogg" id="3_obt31"]
-[ext_resource type="AudioStream" uid="uid://4qjaoecgim3m" path="res://music/smw-athletic.ogg" id="4_1gre3"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="4_3f51l"]
 [ext_resource type="AudioStream" uid="uid://cd00jvhxl1uyf" path="res://music/extra/expert_mode/strobo_-_no_future.mod" id="5_kqtka"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="5_vi4m4"]
@@ -48,18 +46,11 @@
 [ext_resource type="Texture2D" uid="uid://bj33k7j0mswhb" path="res://tilesets/skyland/gfx/rockland.png" id="39_mek8g"]
 [ext_resource type="Script" uid="uid://80j6k8i6dr13" path="res://stages/extra/secrets/scripts/goompa_party_killer.gd" id="46_thhyf"]
 
-[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_upymj"]
-stream_count = 2
-stream_0/stream = ExtResource("3_obt31")
-stream_0/volume = 0.0
-stream_1/stream = ExtResource("4_1gre3")
-stream_1/volume = 0.0
-
 [sub_resource type="Curve2D" id="Curve2D_tckn1"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 320, 256, -189, -1, 189, 1, 1296, 256, -180, 0, 180, 0, 2000, -160, -38, 0, 38, 0, 2256, -160, -46, 0, 46, 0, 2416, -256, -63, -1, 63, 1, 3584, -256, -87, 1, 87, -1, 4096, -416, -70, 1, 70, -1, 4960, -416, -72, 1, 72, -1, 5280, -720, 0, 0, 0, 0, 9712, -720)
+"points": PackedVector2Array(0, 0, 0, 0, 320, 256, -189, -1, 189, 1, 1296, 256, -180, 0, 180, 0, 2000, -160, -38, 0, 38, 0, 2256, -160, -46, 0, 46, 0, 2416, -256, -63, -1, 63, 1, 3584, -256, -87, 1, 87, -1, 4096, -416, -70, 1, 70, -1, 4960, -416, -72, 1, 72, -1, 5280, -720, 0, 0, 0, 0, 9600, -720, -0.232568, 64.1888, 0.232568, -64.1888, 9664, -784)
 }
-point_count = 10
+point_count = 11
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dql67"]
 size = Vector2(16, 672)
@@ -726,7 +717,6 @@ time = 440
 jump_to_scene = "res://stages/world_4/expert_map_4.tscn"
 
 [node name="MusicLoader" parent="." index="0"]
-music_var_1 = Array[Resource]([SubResource("AudioStreamSynchronized_upymj")])
 music = Array[Resource]([ExtResource("5_kqtka")])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("6_bj6vk")]
@@ -757,6 +747,10 @@ script = ExtResource("7_rt17w")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D6/PathFollow2D/LeftArea" index="0"]
 position = Vector2(-312, -112)
 shape = SubResource("RectangleShape2D_dql67")
+
+[node name="World" parent="HUD" index="2"]
+text = "WORLD
+*4-2  "
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer" index="2"]
 offset_top = -976.0
@@ -791,7 +785,7 @@ initially_visible_and_solid = false
 result = SubResource("Resource_s2kl5")
 
 [node name="QuestionBlockBeetroot2" parent="." index="73" instance=ExtResource("13_y1tyh")]
-position = Vector2(9728, -720)
+position = Vector2(9712, -720)
 result = SubResource("Resource_5xypn")
 
 [node name="SpinyRed8" parent="." index="75" instance=ExtResource("12_jtht6")]
@@ -858,6 +852,7 @@ region_rect = Rect2(160, 0, 95, 288)
 [node name="Finishline2" type="Sprite2D" parent="FinishLine" index="1"]
 position = Vector2(400, -16)
 texture = SubResource("AtlasTexture_ghl7i")
+flip_h = true
 
 [node name="CompletionArea" parent="FinishLine" index="2"]
 visible = true
@@ -893,7 +888,11 @@ metadata/_edit_lock_ = true
 result = SubResource("Resource_u1pr4")
 
 [node name="HarderDesignNode" parent="." index="137"]
-visible = false
+process_mode = 4
+script = null
+
+[node name="TileMap" parent="HarderDesignNode" index="0"]
+layer_0/enabled = false
 
 [node name="PlatformPathCloud" parent="HarderDesignNode" index="1"]
 position = Vector2(752, 624)
