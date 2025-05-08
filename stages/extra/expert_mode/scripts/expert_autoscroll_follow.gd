@@ -11,6 +11,7 @@ var notified = false
 @onready var player_camera_2d: Camera2D = $PlayerCamera2D
 @onready var right_area: Area2D = $RightArea
 @onready var left_area: Area2D = $LeftArea
+@onready var platform_path_cloud_2: PathFollow2D = $"../../PlatformPathCloud2"
 
 var r_area_in: bool
 var l_area_in: bool
@@ -44,15 +45,19 @@ func _physics_process(delta: float) -> void:
 		player_camera_2d.enable_right_border_death = true
 		for i in Scenes.current_scene.get_children():
 			if i is GravityBody2D && is_instance_valid(i) && !i is Player:
+				if i is Powerup: continue
 				i.queue_free.call_deferred()
 		
 		node_extra_enemies.process_mode = Node.PROCESS_MODE_INHERIT
 		node_extra_enemies.visible = true
 		node_extra_enemies.position.y = 0
-		#if no_cp:
+		
 		node_no_checkpoint.process_mode = Node.PROCESS_MODE_INHERIT
 		node_no_checkpoint.visible = true
 		node_no_checkpoint.position.y = 0
+		
+		if is_instance_valid(platform_path_cloud_2):
+			platform_path_cloud_2.queue_free()
 	
 		get_tree().create_timer(0.5, false).timeout.connect(func():
 			finish_line.position.y = 416
