@@ -19,7 +19,7 @@ func _on_quick_skin_settings_button_selection_entered() -> void:
 			var _cat_suit_sel = CATEGORY_SUIT_SELECTION.instantiate()
 			_cat_suit_sel.powerup_name = _arr[i]
 			_cat_suit_sel.get_node("Label").text = "%s suit" % [_arr[i].replacen("_", " ")]
-			_cat_suit_sel.reset_to = _arr.size() - i + 1
+			_cat_suit_sel.reset_to = _arr.size() - i + 2
 			par.add_sibling(_cat_suit_sel)
 	elif SkinsManager.current_skin.is_empty():
 		var _cat_suit_sel = SKIN_SETTINGS_GLOBAL.instantiate()

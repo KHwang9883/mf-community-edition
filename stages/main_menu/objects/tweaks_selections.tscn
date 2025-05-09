@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=28 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://cvr48m6x7dx4d" path="res://stages/main_menu/objects/tweak_boolean.tscn" id="15_mxo6u"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="16_4e6sj"]
 [ext_resource type="Script" uid="uid://bdqxaq7js0oba" path="res://stages/main_menu/objects/character_editor/skin_open_dir.gd" id="16_h1dcq"]
+[ext_resource type="Script" uid="uid://cecpxvhq2gb6v" path="res://stages/main_menu/objects/character_editor/skin_check_errors.gd" id="16_mxo6u"]
 [ext_resource type="PackedScene" uid="uid://sxusog88yo0m" path="res://stages/main_menu/objects/character_editor/skin_settings_global.tscn" id="17_vcqe5"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="17_xjt7h"]
 [ext_resource type="Script" uid="uid://c8d27o4ux3qle" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="18_kemdi"]
@@ -393,6 +394,8 @@ tweak_description_text = "gives an ability to toggle a debug console with f1 key
 
 caution: be extremely careful with console commands, as they are not intended for an average player! do not report any bugs encountered while using the console.
 use at your own risk!
+
+the console is useful for testing skins: in save room, entering \"reloadskins\" and resetting the suit with \"power\" command is a quick way to test how you have set up your skin.
 
 note: enabling this tweak will disable achievement progression!
 to restore minix entry & achievements if still disabled, please, restart the game."
@@ -1180,6 +1183,37 @@ theme_override_font_sizes/font_size = 13
 text = "press enter"
 uppercase = true
 
+[node name="HBoxContainer25" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("16_mxo6u")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer25"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "check for errors"
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer25"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
 [node name="HSeparator5" type="HSeparator" parent="QuickSkinSettings"]
 layout_mode = 2
 theme_override_constants/separation = 3
@@ -1214,6 +1248,7 @@ script = ExtResource("15_h1dcq")
 
 [node name="SkinSettingsGlobal" parent="QuickSkinSettings" instance=ExtResource("17_vcqe5")]
 layout_mode = 2
+reset_to = 3
 
 [node name="Exit" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
