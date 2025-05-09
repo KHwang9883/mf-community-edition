@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=4 uid="uid://cyrb75hal2g57"]
+[gd_scene load_steps=68 format=4 uid="uid://cyrb75hal2g57"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_tuw10"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_w8w6h"]
@@ -48,6 +48,10 @@
 [ext_resource type="Script" uid="uid://b0n8hgbn2jnir" path="res://stages/world_6/scripts/coin_check.gd" id="45_b2t14"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="46_xywia"]
 [ext_resource type="PackedScene" uid="uid://dj6qo023h0cmx" path="res://engine/objects/items/grabbable_brick/grabbable_brick.tscn" id="48_xrxkk"]
+[ext_resource type="Texture2D" uid="uid://7vn6q8ngblok" path="res://gfx/sign/sign_hardcore_unlocked.png" id="49_0atib"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="50_xo4q5"]
+[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="51_h8tjd"]
+[ext_resource type="Texture2D" uid="uid://q8l5ujr14min" path="res://gfx/sign/sign_leg.png" id="52_bs1bv"]
 
 [sub_resource type="Gradient" id="Gradient_ms64b"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -948,10 +952,75 @@ tile_map_data = PackedByteArray("AAAqAQ0AAwAAAAAAAAAqAQ4AAwAAAAEAAAArAQ0AAwABAAA
 tile_set = ExtResource("11_taemg")
 
 [node name="GrabbableBrick" parent="." instance=ExtResource("48_xrxkk")]
-position = Vector2(272, 400)
+position = Vector2(560, 400)
+
+[node name="GrabbableBrick3" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(560, 368)
 
 [node name="GrabbableBrick2" parent="." instance=ExtResource("48_xrxkk")]
-position = Vector2(336, 400)
+position = Vector2(528, 400)
+
+[node name="Sign2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(408, 250)
+texture = ExtResource("49_0atib")
+
+[node name="LabelMisterEarl2" parent="Sign2" instance=ExtResource("50_xo4q5")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -81.0
+offset_top = -25.0
+offset_right = -83.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 3
+theme_override_font_sizes/font_size = 19
+text = "walk up to blue bricks or stand on them and press %s"
+vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("51_h8tjd")
+action = "m_attack"
+
+[node name="SignLeg15" type="Sprite2D" parent="Sign2"]
+position = Vector2(-36, 56)
+texture = ExtResource("52_bs1bv")
+
+[node name="SignLeg16" type="Sprite2D" parent="Sign2"]
+position = Vector2(28, 56)
+texture = ExtResource("52_bs1bv")
+
+[node name="Sign3" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(408, 330)
+texture = ExtResource("49_0atib")
+
+[node name="LabelMisterEarl2" parent="Sign3" instance=ExtResource("50_xo4q5")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -81.0
+offset_top = -25.0
+offset_right = -83.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 3
+theme_override_font_sizes/font_size = 19
+text = "press %s to throw. hold direction keys for precision"
+vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("51_h8tjd")
+action = "m_attack"
+
+[node name="SignLeg15" type="Sprite2D" parent="Sign3"]
+position = Vector2(-36, 56)
+texture = ExtResource("52_bs1bv")
+
+[node name="SignLeg16" type="Sprite2D" parent="Sign3"]
+position = Vector2(28, 56)
+texture = ExtResource("52_bs1bv")
 
 [connection signal="level_completed" from="." to="CoinCheck" method="check_for_treasure"]
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="progress_secret"]
