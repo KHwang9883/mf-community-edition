@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=4 uid="uid://cyrb75hal2g57"]
+[gd_scene load_steps=73 format=4 uid="uid://cyrb75hal2g57"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_tuw10"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_w8w6h"]
@@ -52,6 +52,9 @@
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="50_xo4q5"]
 [ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="51_h8tjd"]
 [ext_resource type="Texture2D" uid="uid://q8l5ujr14min" path="res://gfx/sign/sign_leg.png" id="52_bs1bv"]
+[ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="53_xo4q5"]
+[ext_resource type="PackedScene" uid="uid://b6gmckc24e87w" path="res://engine/objects/bumping_blocks/question_block/templates/P Switch Question Block.tscn" id="54_bs1bv"]
+[ext_resource type="PackedScene" uid="uid://b61ivtew2u0gb" path="res://engine/objects/p_switch/p_switch.tscn" id="55_taemg"]
 
 [sub_resource type="Gradient" id="Gradient_ms64b"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -212,6 +215,28 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="GDScript" id="GDScript_520xu"]
+script/source = "extends ByNodeScript
+
+func _ready() -> void:
+	node.is_once = true
+"
+
+[sub_resource type="Resource" id="Resource_slwv6"]
+resource_local_to_scene = true
+script = ExtResource("17_xiomh")
+creation_nodepack = ExtResource("55_taemg")
+trans_offset = Vector2(0, 16)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = SubResource("GDScript_520xu")
+
 [node name="Level6-3" type="Node2D"]
 script = ExtResource("1_tuw10")
 completion_music = ExtResource("2_w8w6h")
@@ -271,7 +296,7 @@ tile_map_data = PackedByteArray("AAAEAA8AAAABAAIAAAAEAA4AAAABAAEAAAAEAA0AAAABAAA
 tile_set = ExtResource("11_taemg")
 
 [node name="Layer1" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAANACsAAgAAAAAACAAPACsAAgAAAAAAAwAFAC0AAgAAAAAACQAGAC0AAgAAAAAACQAfAC0AAgAAAAAACQAkACsAAgAAAAAACwAyAC4AAgAAAAAACwA6AC8AAgAAAAAACwAOAAwAAgAAAAAAAwAJAAwAAgAAAAAABQAPAA0AAgAAAAAACAAXAAwAAgAAAAAAAQAeAAwAAgAAAAAAAwAvAAwAAgAAAAAAAwBAAAwAAgAAAAAAAwBBAA4AAgAAAAAACABjABAAAgAAAAAACQB1AA4AAgAAAAAACACWAAwAAgAAAAAACwCUAA4AAgAAAAAACQCoAAwAAgAAAAAAAwCpAAwAAgAAAAAABQC7AAwAAgAAAAAAAwC+AAwAAgAAAAAABQDKAAwAAgAAAAAAAQDQAAwAAgAAAAAAAwDOAA4AAgAAAAAACADdABAAAgAAAAAACQD0ABAAAgAAAAAACQA9AQ8AAgAAAAAACAAjAQ8AAgAAAAAACABMAQ0AAgAAAAAACABNAQwAAgAAAAAAAQBIAQwAAgAAAAAAAQBSAQEAAgAAAAAAAgBKAQMAAgAAAAAAAgBFAQUAAgAAAAAAAgA8AQcAAgAAAAAAAgA4AQUAAgAAAAAAAgAfAQYAAgAAAAAAAgASAQYAAgAAAAAAAgABAQcAAgAAAAAAAgD6AAQAAgAAAAAAAgDtAAMAAgAAAAAAAgDFAAgAAgAAAAAAAgCyAAIAAgAAAAAAAgCpAAYAAgAAAAAAAgCZAAQAAgAAAAAAAgCPAAMAAgAAAAAAAgB+AAUAAgAAAAAAAgB3AAMAAgAAAAAAAgBpAAoAAgAAAAAAAgBiAAMAAgAAAAAAAgBYAAQAAgAAAAAAAgBQAAoAAgAAAAAAAgBDAAIAAgAAAAAAAgA4AAgAAgAAAAAAAgAyAAIAAgAAAAAAAgAtAAgAAgAAAAAAAgAlAAMAAgAAAAAAAgAcAAQAAgAAAAAAAgAaAAkAAgAAAAAAAgAXAAMAAgAAAAAAAgAPAAUAAgAAAAAAAgAKAAYAAgAAAAAAAgACAAMAAgAAAAAAAgCpAA0AAgAAAAAACAC8AA0AAgAAAAAABACaAAwAAgAAAAAAAwA=")
+tile_map_data = PackedByteArray("AAANACsAAgAAAAAACAAPACsAAgAAAAAAAwAFAC0AAgAAAAAACQAGAC0AAgAAAAAACQAfAC0AAgAAAAAACQAkACsAAgAAAAAACwAyAC4AAgAAAAAACwA6AC8AAgAAAAAACwAJAAwAAgAAAAAABQAPAA0AAgAAAAAACAAXAAwAAgAAAAAAAQAeAAwAAgAAAAAAAwAvAAwAAgAAAAAAAwBAAAwAAgAAAAAAAwBBAA4AAgAAAAAACABjABAAAgAAAAAACQB1AA4AAgAAAAAACACWAAwAAgAAAAAACwCUAA4AAgAAAAAACQCoAAwAAgAAAAAAAwCpAAwAAgAAAAAABQC7AAwAAgAAAAAAAwC+AAwAAgAAAAAABQDKAAwAAgAAAAAAAQDQAAwAAgAAAAAAAwDOAA4AAgAAAAAACADdABAAAgAAAAAACQD0ABAAAgAAAAAACQA9AQ8AAgAAAAAACAAjAQ8AAgAAAAAACABMAQ0AAgAAAAAACABNAQwAAgAAAAAAAQBIAQwAAgAAAAAAAQBSAQEAAgAAAAAAAgBKAQMAAgAAAAAAAgBFAQUAAgAAAAAAAgA8AQcAAgAAAAAAAgA4AQUAAgAAAAAAAgAfAQYAAgAAAAAAAgASAQYAAgAAAAAAAgABAQcAAgAAAAAAAgD6AAQAAgAAAAAAAgDtAAMAAgAAAAAAAgDFAAgAAgAAAAAAAgCyAAIAAgAAAAAAAgCpAAYAAgAAAAAAAgCZAAQAAgAAAAAAAgCPAAMAAgAAAAAAAgB+AAUAAgAAAAAAAgB3AAMAAgAAAAAAAgBpAAoAAgAAAAAAAgBiAAMAAgAAAAAAAgBYAAQAAgAAAAAAAgBQAAoAAgAAAAAAAgBDAAIAAgAAAAAAAgA4AAgAAgAAAAAAAgAyAAIAAgAAAAAAAgAtAAgAAgAAAAAAAgAlAAMAAgAAAAAAAgAcAAQAAgAAAAAAAgAaAAkAAgAAAAAAAgAXAAMAAgAAAAAAAgACAAMAAgAAAAAAAgCpAA0AAgAAAAAACAC8AA0AAgAAAAAABACaAAwAAgAAAAAAAwAGAAcAAgAAAAAAAgAPAAQAAgAAAAAAAgADAAwAAgAAAAAAAwA=")
 tile_set = ExtResource("11_taemg")
 
 [node name="HUD" parent="." instance=ExtResource("12_slwv6")]
@@ -552,6 +577,18 @@ position = Vector2(9712, 160)
 
 [node name="SpinyRed" parent="." instance=ExtResource("32_ynt2q")]
 position = Vector2(3408, 208)
+
+[node name="SpinyRed11" parent="." instance=ExtResource("32_ynt2q")]
+position = Vector2(3600, 208)
+
+[node name="SpinyRed12" parent="." instance=ExtResource("32_ynt2q")]
+position = Vector2(3664, 208)
+
+[node name="SpinyRed13" parent="." instance=ExtResource("32_ynt2q")]
+position = Vector2(3728, 208)
+
+[node name="SpinyRed14" parent="." instance=ExtResource("32_ynt2q")]
+position = Vector2(3792, 208)
 
 [node name="SpinyRed2" parent="." instance=ExtResource("32_ynt2q")]
 position = Vector2(3472, 208)
@@ -944,6 +981,24 @@ position = Vector2(4848, 368)
 [node name="Coin49" parent="CoinCheck" instance=ExtResource("19_iu5jv")]
 position = Vector2(4880, 368)
 
+[node name="Coin67" parent="CoinCheck" instance=ExtResource("19_iu5jv")]
+position = Vector2(5008, 368)
+
+[node name="Coin68" parent="CoinCheck" instance=ExtResource("19_iu5jv")]
+position = Vector2(5040, 368)
+
+[node name="Coin69" parent="CoinCheck" instance=ExtResource("19_iu5jv")]
+position = Vector2(5072, 368)
+
+[node name="Coin70" parent="CoinCheck" instance=ExtResource("19_iu5jv")]
+position = Vector2(5104, 368)
+
+[node name="Coin71" parent="CoinCheck" instance=ExtResource("19_iu5jv")]
+position = Vector2(5136, 368)
+
+[node name="Coin72" parent="CoinCheck" instance=ExtResource("19_iu5jv")]
+position = Vector2(5168, 368)
+
 [node name="HarderDesignNode" parent="." instance=ExtResource("46_xywia")]
 inverted = true
 
@@ -956,6 +1011,27 @@ position = Vector2(560, 400)
 
 [node name="GrabbableBrick3" parent="." instance=ExtResource("48_xrxkk")]
 position = Vector2(560, 368)
+
+[node name="GrabbableBrick4" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(752, 304)
+
+[node name="GrabbableBrick5" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(1552, 400)
+
+[node name="GrabbableBrick6" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(1552, 368)
+
+[node name="GrabbableBrick9" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(1168, 400)
+
+[node name="GrabbableBrick10" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(1168, 368)
+
+[node name="GrabbableBrick7" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(3152, 208)
+
+[node name="GrabbableBrick8" parent="." instance=ExtResource("48_xrxkk")]
+position = Vector2(3184, 208)
 
 [node name="GrabbableBrick2" parent="." instance=ExtResource("48_xrxkk")]
 position = Vector2(528, 400)
@@ -1021,6 +1097,22 @@ texture = ExtResource("52_bs1bv")
 [node name="SignLeg16" type="Sprite2D" parent="Sign3"]
 position = Vector2(28, 56)
 texture = ExtResource("52_bs1bv")
+
+[node name="HammerBro3" parent="." instance=ExtResource("33_23x3d")]
+position = Vector2(1024, 400)
+
+[node name="ParaHammerBros" parent="." instance=ExtResource("53_xo4q5")]
+position = Vector2(1744, 288)
+
+[node name="ParaHammerBros2" parent="." instance=ExtResource("53_xo4q5")]
+position = Vector2(1792, 240)
+
+[node name="QuestionBlockPSwitch" parent="." instance=ExtResource("54_bs1bv")]
+position = Vector2(3792, 80)
+result = SubResource("Resource_slwv6")
+
+[node name="SpinyRed15" parent="." instance=ExtResource("32_ynt2q")]
+position = Vector2(1552, 336)
 
 [connection signal="level_completed" from="." to="CoinCheck" method="check_for_treasure"]
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="progress_secret"]

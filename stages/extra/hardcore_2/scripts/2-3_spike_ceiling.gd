@@ -59,5 +59,3 @@ func _on_activation_timeout() -> void:
 		_:
 			return
 	_state += 1
-
-
