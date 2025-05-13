@@ -81,9 +81,13 @@ func _on_http_get_leaderboard(result: int, response_code: int, headers: PackedSt
 
 func setup_records(body: String) -> void:
 	var setup_selector = false
-	var dict = JSON.parse_string(body)
+	var json_out = JSON.parse_string(body)
+	var dict := {} 
 
-	if dict == null:
+	if json_out != null && json_out is Dictionary:
+		dict = json_out
+	else:
+		dict.totalPages = 0
 		dict.records = {}
 	total_pages = dict.totalPages
 
@@ -91,7 +95,7 @@ func setup_records(body: String) -> void:
 	if !menu_controller.get_child(1).visible:
 		setup_selector = true
 
-	if len(dict.records) == 0:
+	if !dict || len(dict.records) == 0:
 		has_results = false
 	else:
 		has_results = true
