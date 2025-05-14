@@ -14,6 +14,7 @@ extends MenuSelection
 
 @onready var minix_controls: MenuItemsController = $".."
 @onready var starter: Node2D = $"../../../Node2D"
+@onready var score_loader: Node = $"../../../../MinixScoreLoader"
 
 const SUBMITTED = preload("res://stages/extra/minix/sfx/submitted.wav")
 
@@ -87,10 +88,16 @@ func _physics_process(delta: float) -> void:
 			"username": line_edit.text,
 			"game": "MINIX"
 		}
-		var headers = ["Content-Type: application/json"]
-		http_request.request_completed.connect(_on_http_submit, CONNECT_ONE_SHOT)
+		var decrypted_score: int = (score_loader.score_encrypted ^ score_loader.encryption_key) - score_loader.encryption_key
+		var is_score_legit: bool = Data.values.score == decrypted_score
 		print(JSON.stringify(data))
-		http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
+		
+		if is_score_legit:
+			var headers = ["Content-Type: application/json"]
+			http_request.request_completed.connect(_on_http_submit, CONNECT_ONE_SHOT)
+			http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
+		else:
+			_submit_fake_record(decrypted_score)
 		submitting = true
 		is_enabled = false
 		line_edit.text = ""
@@ -123,3 +130,19 @@ func _on_line_edit_focus_exited() -> void:
 	minix_controls.focused = true
 	please_type.visible = false
 	has_errored = false
+
+
+func _submit_fake_record(decrypted_score: int) -> void:
+	print("Illegal score detected:
+	Stored score: %d
+	Decrypted score: %d" % [Data.values.score, decrypted_score])
+	await get_tree().create_timer(0.1, true, false, true).timeout
+	submitting = false
+	
+	dufhdiufsfdoi = true
+	enter_to_preview.text = "press enter to continue"
+	enter_to_preview.visible = true
+	Audio.play_1d_sound(SUBMITTED)
+	
+	congrats.visible = true
+	loading.visible = false
