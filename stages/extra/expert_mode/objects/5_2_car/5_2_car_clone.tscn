@@ -1,13 +1,14 @@
-[gd_scene load_steps=27 format=3 uid="uid://db2ok3qly3icb"]
+[gd_scene load_steps=28 format=3 uid="uid://db2ok3qly3icb"]
 
-[ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_0i4ff"]
+[ext_resource type="Script" uid="uid://bpos5juwp20fl" path="res://stages/extra/expert_mode/objects/5_2_car/5_2_car_clone.gd" id="1_0i4ff"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_m4ahw"]
-[ext_resource type="AudioStream" uid="uid://drog8ekki3ljv" path="res://sfx/explode.wav" id="3_hxowb"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="3_m4ahw"]
 [ext_resource type="Texture2D" uid="uid://mp4id2ldm8ef" path="res://gfx/humanlab_house/clone_car.png" id="4_2dj3a"]
 [ext_resource type="Texture2D" uid="uid://fpk3edsind4g" path="res://gfx/humanlab_house/explod3.png" id="5_l6plo"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="6_m4ahw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gxd5b"]
-size = Vector2(96, 16)
+size = Vector2(104, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2qj7"]
 atlas = ExtResource("4_2dj3a")
@@ -159,15 +160,17 @@ animations = [{
 }]
 
 [node name="GeneralMovementBody2D" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 32
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_0i4ff")
 sprite = NodePath("expl")
-speed = Vector2(50, 0)
+speed = Vector2(100, 0)
+collision = false
+correct_collision = false
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_gxd5b")
 
 [node name="Body" type="Area2D" parent="."]
@@ -176,25 +179,28 @@ collision_layer = 2
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-position = Vector2(960, 467)
+position = Vector2(960, 462)
 shape = SubResource("RectangleShape2D_gxd5b")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("2_m4ahw")
 stomping_scores = 100
-stomping_sound = ExtResource("3_hxowb")
+stomping_sound = ExtResource("3_m4ahw")
 killing_enabled = false
 
 [node name="expl" type="AnimatedSprite2D" parent="."]
 z_index = -11
+use_parent_material = true
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_nylqt")
 autoplay = "default"
 speed_scale = 1.2
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.90735e-06, -16)
-scale = Vector2(1.75, 1)
-rect = Rect2(-32, -32, 64, 64)
+scale = Vector2(1, 1)
+rect = Rect2(-56, -16, 112, 48)
+script = ExtResource("6_m4ahw")
 
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="_killnafig"]
