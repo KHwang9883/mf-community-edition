@@ -53,6 +53,8 @@ func _ready() -> void:
 			map_id = Data.values.map_id
 		_on_map_changed_to(map_id)
 		minix_controls.set_deferred("focused", true)
+	
+	SettingsManager.show_mouse()
 
 
 func _on_map_changed_to(_id: int) -> void:
@@ -83,6 +85,7 @@ func start_game() -> void:
 	tw.tween_property(self, "modulate:a", 0.0, 0.5)
 	
 	mario.completed = false
+	SettingsManager.hide_mouse()
 	
 	control.map_id = map_id + 1
 	control._update_map.call_deferred(true)

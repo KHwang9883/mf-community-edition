@@ -56,7 +56,7 @@ func _load_records() -> void:
 	http_request.request_completed.connect(_on_http_get_leaderboard, CONNECT_ONE_SHOT)
 
 	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s&version=%d" % [page, 100, "score", "MINIX", "desc", version]
-	print(map_load_name)
+	#print(map_load_name)
 	if map_load_name != "all maps":
 		params += "&map=" + map_load_name.uri_encode()
 

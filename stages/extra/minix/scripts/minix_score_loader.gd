@@ -1,6 +1,7 @@
 extends Node
 
 const score_path: String = "user://minigames.thss"
+const encryption_key: int = 0xdeadbeef
 
 @export var load_values_on_start: bool = true
 
@@ -14,6 +15,7 @@ var default_score_values: Dictionary = {
 	}
 }
 var score_values: Dictionary = default_score_values.duplicate(true)
+var score_encrypted: int
 
 @onready var node_2d: Node2D = $"../START/Node2D"
 
@@ -28,6 +30,8 @@ func _ready() -> void:
 	Thunder._connect(score_saved, _on_score_loaded)
 	if load_values_on_start:
 		load_score()
+	
+	Thunder._connect(Data.score_added_arg, _on_score_added)
 
 
 func load_score() -> void:
@@ -95,3 +99,10 @@ func _on_score_loaded() -> void:
 	
 	if _achievement_get == map_count:
 		SecretsManager.set_secret("100000 points in minix maps", true, true)
+
+
+func _on_score_added(scr: int) -> void:
+	var score_decrypted = score_encrypted ^ encryption_key
+	score_encrypted = (score_decrypted + scr) ^ encryption_key
+	# enc, dec
+	#prints(score_encrypted, (score_encrypted ^ encryption_key) - encryption_key)
