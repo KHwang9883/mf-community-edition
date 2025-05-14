@@ -1,0 +1,142 @@
+[gd_scene load_steps=16 format=3 uid="uid://0lnlrmtydsfh"]
+
+[ext_resource type="Script" uid="uid://c7wcbmd5pnq1n" path="res://engine/objects/enemies/cheeps/cheep.gd" id="1_vjrbu"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_iowo4"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_vqebw"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_4j7hh"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_7vkyk"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_hl3pi"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_1lljf"]
+[ext_resource type="Texture2D" uid="uid://cqlweayc0murs" path="res://objects/big_bertha/small_cheep_blooper.png" id="8_vjrbu"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="9_xd0cd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_25r2g"]
+
+[sub_resource type="Resource" id="Resource_xoy31"]
+resource_local_to_scene = true
+script = ExtResource("5_7vkyk")
+creation_nodepack = ExtResource("3_vqebw")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0),
+"gravity_scale": 0.25,
+"max_falling_speed": 300.0
+}
+custom_script = ExtResource("4_4j7hh")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0v7g5"]
+size = Vector2(2, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iowo4"]
+atlas = ExtResource("8_vjrbu")
+region = Rect2(0, 0, 25, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqebw"]
+atlas = ExtResource("8_vjrbu")
+region = Rect2(25, 0, 25, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ll20"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iowo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqebw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="BabyBertha" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_vjrbu")
+turn_x_enabled = false
+sprite = NodePath("Sprite")
+speed = Vector2(100, 0)
+collision = false
+metadata/_custom_type_script = "uid://co5dvlw7m0osv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_25r2g")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_25r2g")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_iowo4")
+stomping_creation = SubResource("Resource_xoy31")
+stomping_scores = 100
+stomping_sound = ExtResource("6_hl3pi")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_xoy31")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_1lljf")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
+
+[node name="SwimX" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_0v7g5")
+target_position = Vector2(0, 0)
+max_results = 1
+collision_mask = 128
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="SwimY" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_0v7g5")
+target_position = Vector2(0, 0)
+max_results = 1
+collision_mask = 128
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4ll20")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(3.8147e-06, 3.8147e-06)
+scale = Vector2(2, 2)
+rect = Rect2(-24, -24, 48, 48)
+script = ExtResource("9_xd0cd")
+metadata/_edit_lock_ = true
+
+[node name="Interval" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
+[connection signal="timeout" from="Interval" to="." method="_cheep_swimming"]
