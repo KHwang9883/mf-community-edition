@@ -7,6 +7,8 @@ extends PlayerCamera2D
 @onready var _left_bd_init: bool = enable_left_border_death
 @onready var _right_bd_init: bool = enable_right_border_death
 
+var _tw: Tween
+
 func _ready():
 	super()
 
@@ -83,3 +85,11 @@ func is_retro_scroll() -> bool:
 	if player.completed || player.warp == player.Warp.OUT: return false
 	
 	return true
+
+
+func set_camera_offset_smooth(to: Vector2, duration: float = 1.0) -> void:
+	if SettingsManager.settings.xscroll:
+		to = Vector2.ZERO
+	if _tw: _tw.kill()
+	_tw = create_tween().set_trans(Tween.TRANS_CUBIC)
+	_tw.tween_property(self, "offset", to, duration).set_ease(Tween.EASE_IN_OUT)
