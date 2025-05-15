@@ -11,7 +11,8 @@ func _ready() -> void:
 	mario.collision = false
 	mario.completed = true
 	Audio.stop_all_sounds()
-	Audio.play_1d_sound(mario.suit.physics_config.sound_jump)
+	var _sndfx: AudioStream = mario.suit.physics_config.sound_jump[randi_range(0, len(mario.suit.physics_config.sound_jump) - 1)]
+	Audio.play_1d_sound(_sndfx)
 
 func _physics_process(delta: float) -> void:
 	if mario.speed.y > 0:

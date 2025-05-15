@@ -34,6 +34,7 @@ func activate(wait_time: float) -> void:
 func music() -> void:
 	await get_tree().create_timer(0.3, true).timeout
 	if !active: return
+	@warning_ignore("incompatible_ternary")
 	Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
 		1, {ignore_pause = true})
 
