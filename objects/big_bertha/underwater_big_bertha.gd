@@ -71,7 +71,7 @@ func stop_and_create_baby() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if !area.is_inside_tree() || !is_instance_valid(area.get_parent()): return
 	var body = area.get_parent()
-	print(body)
+	
 	if !body.is_in_group(str(get_instance_id())): return
 	if abs(body.speed.x) > 180: return
 	
