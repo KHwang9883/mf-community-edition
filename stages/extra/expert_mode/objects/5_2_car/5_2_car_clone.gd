@@ -2,6 +2,7 @@ extends GeneralMovementBody2D
 
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 const EXPLODE = preload("res://objects/chorniy_mario/bomb_expl.ogg")
+const GRAYSCALE = preload("res://materials/grayscale.tres")
 
 @export var invincible: bool = false
 @export var active: bool = true
@@ -22,6 +23,7 @@ func _ready() -> void:
 	if invincible:
 		enemy_attacked.stomping_scores = 0
 		visible_on_screen_enabler_2d.screen_exited.connect(_on_screen_exited)
+		sprite_node.material = GRAYSCALE
 
 func _killnafig() -> void:
 	if invincible:
@@ -61,6 +63,7 @@ func explod() -> void:
 	expl.global_position = global_position + Vector2(16, -28)
 	Scenes.current_scene.add_child(expl)
 	expl.play("explode")
+	expl.material = null
 	expl.z_index = 10
 	expl.animation_finished.connect(expl.queue_free, CONNECT_DEFERRED)
 	if visible_on_screen_enabler_2d.is_on_screen():
