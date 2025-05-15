@@ -18,12 +18,9 @@ func _on_body_entered(body: Node2D) -> void:
 	Data.values.bonus_game = true
 	passed = true
 	
-	bonus_level_unlocked.visible = true
-	bonus_level_unlocked.modulate.a = 0.0
 	bonus_level_unlocked.activate()
 	var tw = create_tween().set_parallel()
 	tw.tween_property(sprite_2d, "modulate:a", 0.0, 2.0)
-	tw.tween_property(bonus_level_unlocked, "modulate:a", 1.0, 1.0)
 	tw.tween_property(effect, "modulate:a", 0.0, 1.5)
 	tw.tween_property(effect, "scale", Vector2.ZERO, 2.0)
 	
