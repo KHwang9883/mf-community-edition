@@ -15,6 +15,10 @@ var has_eaten: bool
 @onready var kill_area: Area2D = $KillArea
 @onready var trigger: Area2D = $Trigger
 
+func _ready() -> void:
+	sprite_node.animation = &"default"
+
+
 func _physics_process(delta: float) -> void:
 	if !water_node: return
 	speed.x = clampf(speed.x, -600, 600)

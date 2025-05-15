@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			empty_item_stock()
 	
-	if player && Input.is_action_just_pressed(&"m_extra"):
+	if player && !player.completed && Input.is_action_just_pressed(&"m_extra"):
 		if item_stock.has_node(item):
 			if tw2: tw2.kill()
 			item_need_help = false

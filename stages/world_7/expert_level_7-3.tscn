@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=4 uid="uid://cw40midn653hu"]
+[gd_scene load_steps=80 format=4 uid="uid://cw40midn653hu"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_8k48k"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_snicp"]
@@ -39,8 +39,10 @@
 [ext_resource type="Texture2D" uid="uid://dmv5rev5xia3u" path="res://gfx/backgrounds/clouds_looping.png" id="33_bl8kr"]
 [ext_resource type="Texture2D" uid="uid://mpdkiuduprqj" path="res://gfx/fancy_graphics/clouds_looping_alpha.png" id="34_p0r5g"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="35_ov700"]
+[ext_resource type="Script" uid="uid://cgagvonywqaeh" path="res://stages/world_7/scripts/on_checkpoint_free_parent.gd" id="35_xc6r7"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="36_tdq1o"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="37_3juey"]
+[ext_resource type="Script" uid="uid://cqfpsnshhorig" path="res://objects/big_bertha/leave_bertha_trigger.gd" id="38_fxpj0"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="38_sn7tj"]
 [ext_resource type="PackedScene" uid="uid://bwn1ss5d5sn4q" path="res://objects/big_bertha/big_bertha.tscn" id="39_yavgl"]
 [ext_resource type="PackedScene" uid="uid://cwslkxcjr32h1" path="res://engine/objects/enemies/piranha_plants/piranha_long_red.tscn" id="40_kdipg"]
@@ -231,6 +233,9 @@ size = Vector2(40, 944)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1s4xw"]
 size = Vector2(32, 920)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56683"]
+size = Vector2(32.0005, 880)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5bgj5"]
 size = Vector2(9440, 480)
 
@@ -295,9 +300,6 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 11008, -16, 0, 0, 0, 0, 11008, 512)
 }
 point_count = 2
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_56683"]
-size = Vector2(32.0005, 880)
 
 [node name="Level7-3" type="Node2D"]
 script = ExtResource("1_8k48k")
@@ -782,6 +784,9 @@ only_once = true
 position = Vector2(5520, 76)
 shape = SubResource("RectangleShape2D_1s4xw")
 
+[node name="Node" type="Node" parent="Node2D/Area2D4"]
+script = ExtResource("35_xc6r7")
+
 [node name="Area2D7" type="Area2D" parent="Node2D"]
 script = ExtResource("30_s5gis")
 change_by = 250.0
@@ -790,6 +795,9 @@ only_once = true
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D/Area2D7"]
 position = Vector2(7056, 64)
 shape = SubResource("RectangleShape2D_1s4xw")
+
+[node name="Node" type="Node" parent="Node2D/Area2D7"]
+script = ExtResource("35_xc6r7")
 
 [node name="Area2D5" type="Area2D" parent="Node2D"]
 script = ExtResource("30_s5gis")
@@ -818,9 +826,31 @@ only_once = true
 position = Vector2(11984, 112)
 shape = SubResource("RectangleShape2D_1s4xw")
 
+[node name="Area2D9" type="Area2D" parent="Node2D"]
+position = Vector2(12312.6, 230)
+script = ExtResource("30_s5gis")
+change_by = 500.0
+only_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Area2D9"]
+position = Vector2(631.401, -134)
+shape = SubResource("RectangleShape2D_56683")
+
 [node name="JumpingCheepsGenerator" parent="." instance=ExtResource("31_yqouh")]
 enabled = false
 random_pool = 30
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(12312.6, 230)
+script = ExtResource("32_lejfy")
+only_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(663.423, -134)
+shape = SubResource("RectangleShape2D_56683")
+
+[node name="Node" type="Node" parent="Area2D2"]
+script = ExtResource("38_fxpj0")
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -1153,16 +1183,8 @@ amplitude_changing_speed = 300.0
 phase = 90.0
 frequency = -50.0
 
-[node name="Area2D2" type="Area2D" parent="."]
-position = Vector2(12312.6, 230)
-script = ExtResource("32_lejfy")
-only_once = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(663.423, -134)
-shape = SubResource("RectangleShape2D_56683")
-
 [node name="Line2D" type="Line2D" parent="."]
+visible = false
 points = PackedVector2Array(7824, 224, 10016, 224, 10064, 394, 11968, 394, 12320, 234)
 width = 4.0
 
@@ -1178,8 +1200,8 @@ smooth_enabled = false
 falling_enabled = true
 
 [connection signal="coin_checked_success" from="CoinChecker" to="SecretUnlocker" method="progress_secret"]
+[connection signal="player_enter" from="Area2D2" to="Area2D2/Node" method="make_leaving"]
 [connection signal="player_enter" from="Area2D" to="JumpingCheepsGenerator" method="enable"]
 [connection signal="player_exit" from="Area2D" to="JumpingCheepsGenerator" method="disable"]
-[connection signal="player_enter" from="Area2D2" to="BigBertha" method="set_as_leaving"]
 
 [editable path="Water"]
