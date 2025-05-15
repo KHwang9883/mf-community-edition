@@ -1,17 +1,37 @@
-[gd_scene load_steps=31 format=3 uid="uid://db2ok3qly3icb"]
+[gd_scene load_steps=34 format=3 uid="uid://db2ok3qly3icb"]
 
 [ext_resource type="Script" uid="uid://bpos5juwp20fl" path="res://stages/extra/expert_mode/objects/5_2_car/5_2_car_clone.gd" id="1_0i4ff"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_m4ahw"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="3_m4ahw"]
 [ext_resource type="Texture2D" uid="uid://mp4id2ldm8ef" path="res://gfx/humanlab_house/clone_car.png" id="4_2dj3a"]
-[ext_resource type="Resource" uid="uid://b65xxwxj0x4p5" path="res://engine/objects/enemies/_dead/prefabs/killed_instance.tres" id="4_l6plo"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_wbc3v"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="5_ayg3e"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_cwseu"]
 [ext_resource type="Texture2D" uid="uid://fpk3edsind4g" path="res://gfx/humanlab_house/explod3.png" id="5_l6plo"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_kvxit"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="6_m4ahw"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="6_wbc3v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gxd5b"]
 size = Vector2(104, 16)
+
+[sub_resource type="Resource" id="Resource_iuw61"]
+resource_local_to_scene = true
+script = ExtResource("6_kvxit")
+creation_nodepack = ExtResource("4_wbc3v")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../expl"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("5_cwseu")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2qj7"]
 atlas = ExtResource("4_2dj3a")
@@ -202,7 +222,7 @@ killing_immune = {
 &"shell_forced": false,
 &"starman": false
 }
-killing_creation = ExtResource("4_l6plo")
+killing_creation = SubResource("Resource_iuw61")
 killing_scores = 100
 killing_can_combo = false
 killing_sound_succeeded = ExtResource("5_ayg3e")
@@ -210,7 +230,6 @@ killing_sound_failed = ExtResource("6_wbc3v")
 
 [node name="expl" type="AnimatedSprite2D" parent="."]
 z_index = -11
-use_parent_material = true
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_nylqt")
 autoplay = "default"
