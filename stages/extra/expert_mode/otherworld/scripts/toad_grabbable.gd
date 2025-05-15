@@ -24,7 +24,11 @@ func _ready() -> void:
 		sign_4.queue_free()
 
 func _physics_process(delta: float) -> void:
-	if is_grabbed: return
+	if is_grabbed:
+		var pl: Player = Thunder._current_player
+		if pl:
+			z_index = pl.z_index
+		return
 	super(delta)
 	
 	speed.x = move_toward(speed.x, 0, deceleration * delta)
@@ -48,12 +52,14 @@ func _physics_process(delta: float) -> void:
 			position.y += delta * 50
 		elif timer_enter == 1.5:
 			timer_enter = 100.0
-			Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"))
+			Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/powerup.wav"))
 			life_text_triggered.emit()
 			Data.technical_values.special_otherworld_toad = true
 			if Data.technical_values.remaining_continues != -1:
 				Data.technical_values.remaining_continues += 1
 			print("added a continue, total: %d" % Data.technical_values.remaining_continues)
+	else:
+		z_index = 0
 
 
 func _on_grab_initiated() -> void:
