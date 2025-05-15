@@ -1,7 +1,7 @@
 extends GeneralMovementBody2D
 
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
-const EXPLODE = preload("res://sfx/explode.wav")
+const EXPLODE = preload("res://objects/chorniy_mario/bomb_expl.ogg")
 
 @export var invincible: bool = false
 @export var active: bool = true
@@ -38,6 +38,8 @@ func _physics_process(delta: float) -> void:
 		visible_on_screen_enabler_2d.rect = old_vis_rect
 		
 	super(delta)
+	speed.y = 0
+	position.y = init_pos.y
 	if timer < activate_collision_after_sec:
 		timer += delta
 	elif timer != activate_collision_after_sec * 6:
@@ -79,12 +81,16 @@ func reset_car() -> void:
 func activate() -> void:
 	visible = true
 	active = true
+	if Data.values.get("stopwatch", 0.0) > 0: return
+	if !visible_on_screen_enabler_2d.is_on_screen():
+		reset_car()
 
 
 func passive_deactivate() -> void:
 	passive_deactive = true
 
 func _on_screen_exited() -> void:
+	if Data.values.get("stopwatch", 0.0) > 0: return
 	visible_on_screen_enabler_2d.rect = old_vis_rect
 	reset_car()
 	
