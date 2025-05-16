@@ -39,6 +39,12 @@ func _ready() -> void:
 	else:
 		empty_item_stock()
 		item_stock_help_label.visible = false
+	
+	if ProfileManager.current_profile.data.get("warp_to_save_room"):
+		var lvl: Level = Scenes.current_scene
+		lvl.completion_write_save = false
+		lvl.jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
+	
 	if !is_expert_mode: return
 	
 	if !ProfileManager.current_profile.data.get("mario_forever_expert"):
@@ -116,7 +122,7 @@ func _physics_process(delta: float) -> void:
 	if (
 		(abs(player.speed.x) > 50 || abs(player.speed.y) > 50) &&
 		(player.left_right != 0 || player.up_down != 0)
-	) || player.jumped || player.attacked:
+	) || player.jumped:
 		timer = 0
 		timer_2 = call_every
 		if warned != 0:

@@ -7,6 +7,7 @@ const GRAYSCALE = preload("res://materials/grayscale.tres")
 @export var invincible: bool = false
 @export var active: bool = true
 @export var activate_collision_after_sec: float = 3
+@export var reset_when_offscreen: bool = false
 
 @onready var init_pos := position
 @onready var oldspeed: Vector2 = speed
@@ -24,6 +25,9 @@ func _ready() -> void:
 		enemy_attacked.stomping_scores = 0
 		visible_on_screen_enabler_2d.screen_exited.connect(_on_screen_exited)
 		sprite_node.material = GRAYSCALE
+	elif reset_when_offscreen:
+		visible_on_screen_enabler_2d.screen_exited.connect(reset_when_no_stopwatch)
+		
 
 func _killnafig() -> void:
 	if invincible:
@@ -95,5 +99,10 @@ func passive_deactivate() -> void:
 func _on_screen_exited() -> void:
 	if Data.values.get("stopwatch", 0.0) > 0: return
 	visible_on_screen_enabler_2d.rect = old_vis_rect
+	reset_car()
+	
+
+func reset_when_no_stopwatch() -> void:
+	if Data.values.get("stopwatch", 0.0) > 0: return
 	reset_car()
 	

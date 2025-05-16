@@ -1,4 +1,4 @@
-[gd_scene load_steps=241 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=242 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" uid="uid://db8widi15epm" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -132,6 +132,7 @@
 [ext_resource type="Script" uid="uid://bekliuivb6ug1" path="res://engine/scenes/save_game_room/scripts/item_shop_label.gd" id="88_ctl7w"]
 [ext_resource type="PackedScene" uid="uid://bvyleahhjj28k" path="res://engine/objects/powerups/frog_suit/frog_suit.tscn" id="89_u71j8"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="90_jteik"]
+[ext_resource type="Script" uid="uid://etlhugga6myu" path="res://stages/save_game_room/scripts/pipe_otherworld_selector.gd" id="90_shqf7"]
 [ext_resource type="Script" uid="uid://bafyspq54jjjv" path="res://stages/save_game_room/scripts/koopa_liberation_deco.gd" id="91_1t1pg"]
 [ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="91_tvxxs"]
 [ext_resource type="PackedScene" uid="uid://byadcxgx6k3x8" path="res://objects/revamped_level_warning/revamped_level_warning.tscn" id="92_yiycb"]
@@ -2833,6 +2834,18 @@ offset = Vector2(0, 32)
 
 [node name="PipeSave8" parent="ScriptedEvents" instance=ExtResource("14_lrr3l")]
 position = Vector2(240, -1168)
+script = ExtResource("90_shqf7")
+profile_name = "debug"
+level_count = {
+1: 8
+}
+secret_level_values = ["1-1", "1-2", "2-2", "3-3", "4-3", "5-3", "6-2", "8-3"]
+map_scene_template = ""
+level_scene_template = "res://stages/extra/expert_mode/otherworld/level_{0}.tscn"
+reset_node_path = NodePath("../../CanvasLayer/Reset2")
+force_disable_level_save = false
+set_data_to_profile = ""
+secret_name = "all otherworld levels found"
 use_circle_transition = true
 circle_focus_on_player = false
 metadata/_edit_group_ = true
@@ -2850,6 +2863,7 @@ theme_override_font_sizes/font_size = 21
 text = "OTHERWORLD
 LEVEL %s"
 horizontal_alignment = 1
+vertical_alignment = 1
 uppercase = true
 script = ExtResource("15_pr6di")
 
@@ -3233,6 +3247,8 @@ uppercase = true
 [node name="Reset2" type="Node2D" parent="CanvasLayer"]
 position = Vector2(-96, 6)
 script = ExtResource("54_5dq5r")
+count_world_start_tweak = false
+can_delete_save = false
 
 [node name="Progress" type="TextureProgressBar" parent="CanvasLayer/Reset2"]
 visible = false
@@ -3825,12 +3841,14 @@ shape = SubResource("RectangleShape2D_b4vmn")
 [node name="MessageBlock" parent="." instance=ExtResource("115_nqbov")]
 position = Vector2(16, 608)
 message = "you can only do this challenge on an empty save pipe!"
+box_size = Vector2(0, 0)
 
 [node name="MessageBlockPlaceholder" parent="." instance=ExtResource("115_nqbov")]
 position = Vector2(80, 608)
 message = "this pipe is not connected to anything yet!
 extra content will keep growing with each game update, stay tuned!"
 font_size = 16
+box_size = Vector2(0, 0)
 
 [node name="AnimatedSprite2D" parent="MessageBlockPlaceholder/Sprites" index="1"]
 material = SubResource("ShaderMaterial_p62qk")
@@ -3850,7 +3868,7 @@ if you think that this is a mistake, please restart the game.
 
 "
 font_size = 16
-box_size = Vector2(284, 168)
+box_size = Vector2(0, 0)
 
 [node name="AnimatedSprite2D" parent="MessageBlock2/Sprites" index="1"]
 material = SubResource("ShaderMaterial_jmoju")
@@ -5363,8 +5381,8 @@ position = Vector2(2432, -656)
 [connection signal="body_entered" from="ScriptedEvents/PipeSave7" to="CanvasLayer/Reset" method="_player_enter_centered" unbinds=1]
 [connection signal="body_exited" from="ScriptedEvents/PipeSave7" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
 [connection signal="warp_started" from="ScriptedEvents/PipeSave7" to="Node" method="mario_forever_advance"]
-[connection signal="body_entered" from="ScriptedEvents/PipeSave8" to="CanvasLayer/Reset" method="_player_enter_centered" unbinds=1]
-[connection signal="body_exited" from="ScriptedEvents/PipeSave8" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="player_enter" from="ScriptedEvents/PipeSave8" to="CanvasLayer/Reset2" method="_player_enter_centered"]
+[connection signal="player_exit" from="ScriptedEvents/PipeSave8" to="CanvasLayer/Reset2" method="_on_pipe_save_player_exit"]
 [connection signal="warp_started" from="ScriptedEvents/Hardcore1/PipeIn" to="Node" method="skip_continue_save"]
 [connection signal="warp_started" from="ScriptedEvents/Hardcore2/PipeIn4" to="Node" method="skip_continue_save"]
 [connection signal="collected_changed_suit" from="ScriptedEvents/AllAchievements/BoomerangFlower" to="ScriptedEvents/Node2D3/CloudSecret" method="reset_cloud"]

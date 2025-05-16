@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://di04gixk0cxmi"]
+[gd_scene load_steps=136 format=4 uid="uid://di04gixk0cxmi"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_atyge"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_bprss"]
@@ -18,7 +18,9 @@
 [ext_resource type="PackedScene" uid="uid://ct8p366bkgxl6" path="res://objects/coin_bonus_level/bonus_level_unlocked.tscn" id="15_efq53"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://gfx/backgrounds/underground.png" id="16_qeag8"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="17_d1s44"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="17_mc64r"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="18_mh4kl"]
+[ext_resource type="Script" uid="uid://ck8etkhldnph8" path="res://stages/world_1/scripts/text_secret_passage.gd" id="18_mp46a"]
 [ext_resource type="Texture2D" uid="uid://cnw7t13m2bojq" path="res://tilesets/underground/gfx/underground_lamp.png" id="19_gmu62"]
 [ext_resource type="Script" uid="uid://65nfrv8p6dvi" path="res://gfx/fancy_graphics/scripts/light_pulse.gd" id="20_v86s2"]
 [ext_resource type="PackedScene" uid="uid://53qlewhfad5" path="res://tilesets/overworld_green/scenes/cloud.tscn" id="21_mc64r"]
@@ -631,6 +633,8 @@ progress_to = 8
 position = Vector2(-48, 16)
 message = "You have found a passage to otherworld level 7! Would you like to go in?
 It is now available in the save game room at any time."
+font_size = 22
+box_size = Vector2(320, 128)
 
 [node name="Mario" parent="." instance=ExtResource("9_wy1ei")]
 position = Vector2(96, 400)
@@ -702,6 +706,26 @@ text = "WORLD
 horizontal_alignment = 1
 
 [node name="BonusLevelUnlocked" parent="HUD" instance=ExtResource("15_efq53")]
+
+[node name="Label" type="Label" parent="HUD"]
+offset_top = -20.0
+offset_right = 640.0
+offset_bottom = -5.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("17_mc64r")
+theme_override_font_sizes/font_size = 12
+text = "Why is it so dark? who turned off the lights?"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("18_mp46a")
+tween_to = 224
+action_after_sec = 3.0
+change_scene = "uid://dcgw7ivluvpsx"
+skip_suspended_profile_save = false
+circle_transition_center_on_player = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -2756,10 +2780,8 @@ initially_visible_and_solid = false
 position = Vector2(2848, -2896)
 script = ExtResource("74_mc64r")
 choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
-warp_to_scene = "res://stages/world_3/expert_level_other_3-3.tscn"
 use_circle_transition = true
-circle_closing_speed = 0.09
-circle_opening_speed = 0.09
+circle_closing_speed = 0.07
 
 [node name="PointLight2D22" type="PointLight2D" parent="PipeIn15"]
 position = Vector2(0, -16)
@@ -2767,6 +2789,7 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_gskng")
 script = ExtResource("18_mh4kl")
 medium = true
+metadata/_edit_lock_ = true
 
 [node name="CloudLightEffect" type="Sprite2D" parent="PipeIn15"]
 visible = false
@@ -2780,3 +2803,6 @@ region_rect = Rect2(0, 0, 128, 64)
 script = ExtResource("18_mh4kl")
 maximum = false
 minimum = true
+
+[connection signal="tried_to_enter" from="PipeIn15" to="SecretUnlockerOther" method="progress_secret"]
+[connection signal="warp_started" from="PipeIn15" to="HUD/Label" method="activate"]
