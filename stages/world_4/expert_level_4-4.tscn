@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://okyws7gaik5w"]
+[gd_scene load_steps=33 format=4 uid="uid://okyws7gaik5w"]
 
 [ext_resource type="PackedScene" uid="uid://dr7s8f6ht3s4f" path="res://stages/world_4/level_4-4.tscn" id="1_acjls"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="2_4ursp"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_4k0vp"]
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="4_4sf5c"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_1jxfc"]
+[ext_resource type="PackedScene" uid="uid://c4enqp3bwybyh" path="res://stages/world_8/objects/8-3_platform/8-3_platform_path.tscn" id="6_1hcpg"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_j2xeh"]
 [ext_resource type="Script" uid="uid://hudtgs00uuv3" path="res://stages/extra/click_bonus_game/scripts/star_path_follow.gd" id="7_pqygm"]
 [ext_resource type="PackedScene" uid="uid://cy7wyb2fljl2l" path="res://stages/world_1/objects/1-4_castle_brick_small.tscn" id="8_18r5d"]
@@ -324,10 +325,24 @@ position = Vector2(1248, 1152)
 [node name="RotoCenter4" parent="." index="12"]
 position = Vector2(2832, 992)
 
+[node name="PlatformPath2" parent="." index="14"]
+position = Vector2(1632, 256)
+
+[node name="PlatformPath18" parent="." index="15" instance=ExtResource("6_1hcpg")]
+position = Vector2(1744, 256)
+falling_enabled = true
+
+[node name="PlatformPath19" parent="." index="16" instance=ExtResource("6_1hcpg")]
+position = Vector2(1936, 256)
+falling_enabled = true
+
+[node name="PlatformPath3" parent="." index="17"]
+position = Vector2(2048, 256)
+
 [node name="BowserFakeReveal" parent="LavaBowser" index="17"]
 creation = SubResource("Resource_2e4a4")
 
-[node name="Path2D" type="Path2D" parent="." index="53"]
+[node name="Path2D" type="Path2D" parent="." index="55"]
 curve = SubResource("Curve2D_gefg5")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
@@ -371,7 +386,7 @@ material = ExtResource("11_7121m")
 position = Vector2(180, 0)
 amplitude = Vector2(180, 180)
 
-[node name="Path2D2" type="Path2D" parent="." index="54"]
+[node name="Path2D2" type="Path2D" parent="." index="56"]
 curve = SubResource("Curve2D_omndk")
 
 [node name="PathFollow2D3" type="PathFollow2D" parent="Path2D2" index="0"]
@@ -470,7 +485,28 @@ position = Vector2(0, -150)
 phase = -90.0
 frequency = -50.0
 
-[node name="PathFollow2D5" type="PathFollow2D" parent="Path2D2" index="7"]
+[node name="PathFollow2D15" type="PathFollow2D" parent="Path2D2" index="7"]
+position = Vector2(1840, 272)
+progress = 32.0
+h_offset = -480.0
+v_offset = -32.0
+rotates = false
+cubic_interp = false
+script = ExtResource("7_pqygm")
+speed = 100.0
+
+[node name="StaticBody2D17" parent="Path2D2/PathFollow2D15" index="0" instance=ExtResource("8_18r5d")]
+script = null
+
+[node name="RotoCenter3" parent="Path2D2/PathFollow2D15" index="1" instance=ExtResource("9_eecg2")]
+
+[node name="RotoRed" parent="Path2D2/PathFollow2D15/RotoCenter3" index="1" instance=ExtResource("10_8ymu2")]
+material = ExtResource("11_7121m")
+position = Vector2(0, -150)
+phase = -90.0
+frequency = -50.0
+
+[node name="PathFollow2D5" type="PathFollow2D" parent="Path2D2" index="8"]
 position = Vector2(2448, 208)
 progress = 64.0
 h_offset = 128.0
@@ -483,7 +519,7 @@ speed = 100.0
 [node name="StaticBody2D17" parent="Path2D2/PathFollow2D5" index="0" instance=ExtResource("8_18r5d")]
 script = null
 
-[node name="PathFollow2D9" type="PathFollow2D" parent="Path2D2" index="8"]
+[node name="PathFollow2D9" type="PathFollow2D" parent="Path2D2" index="9"]
 position = Vector2(2704, 208)
 progress = 64.0
 h_offset = 384.0
@@ -496,7 +532,7 @@ speed = 100.0
 [node name="StaticBody2D17" parent="Path2D2/PathFollow2D9" index="0" instance=ExtResource("8_18r5d")]
 script = null
 
-[node name="PathFollow2D13" type="PathFollow2D" parent="Path2D2" index="9"]
+[node name="PathFollow2D13" type="PathFollow2D" parent="Path2D2" index="10"]
 position = Vector2(2960, 208)
 progress = 64.0
 h_offset = 640.0
@@ -509,7 +545,7 @@ speed = 100.0
 [node name="StaticBody2D17" parent="Path2D2/PathFollow2D13" index="0" instance=ExtResource("8_18r5d")]
 script = null
 
-[node name="PathFollow2D7" type="PathFollow2D" parent="Path2D2" index="10"]
+[node name="PathFollow2D7" type="PathFollow2D" parent="Path2D2" index="11"]
 position = Vector2(2576, 336)
 h_offset = 256.0
 rotates = false
@@ -520,7 +556,7 @@ speed = 100.0
 [node name="StaticBody2D17" parent="Path2D2/PathFollow2D7" index="0" instance=ExtResource("8_18r5d")]
 script = null
 
-[node name="PathFollow2D11" type="PathFollow2D" parent="Path2D2" index="11"]
+[node name="PathFollow2D11" type="PathFollow2D" parent="Path2D2" index="12"]
 position = Vector2(2832, 336)
 h_offset = 512.0
 rotates = false
