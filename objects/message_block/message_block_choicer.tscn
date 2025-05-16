@@ -1,9 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dym6dmtca3rhi"]
+[gd_scene load_steps=8 format=3 uid="uid://dym6dmtca3rhi"]
 
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="1_a321h"]
 [ext_resource type="Script" uid="uid://b8bgcxgd7yfvr" path="res://objects/message_block/message_block_choicer.gd" id="2_gsgqq"]
 [ext_resource type="Shader" uid="uid://cnljy5svxs637" path="res://objects/message_block/hsv.gdshader" id="2_h62d5"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="3_yw6ft"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="4_gsgqq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ouvlt"]
+font = ExtResource("3_yw6ft")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0.341176, 1)
+shadow_size = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gsgqq"]
 resource_local_to_scene = true
@@ -14,6 +22,8 @@ shader_parameter/value = 0.0
 
 [node name="MessageBlockChoicer" instance=ExtResource("1_a321h")]
 script = ExtResource("2_gsgqq")
+font_size = 24
+message_label_settings = SubResource("LabelSettings_ouvlt")
 
 [node name="AnimatedSprite2D" parent="Sprites" index="1"]
 material = SubResource("ShaderMaterial_gsgqq")
@@ -48,6 +58,7 @@ autowrap_mode = 3
 
 [node name="Text" parent="CanvasLayer/Box/Texture" index="1"]
 theme_override_constants/outline_size = 8
+uppercase = true
 
 [node name="Text2" parent="CanvasLayer/Box/Texture" index="2"]
 offset_top = 2.0

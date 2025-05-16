@@ -5,6 +5,7 @@ extends Node
 
 func _ready() -> void:
 	Data.score_added.connect(_on_score_added, CONNECT_DEFERRED)
+	_on_score_added.call_deferred()
 
 func _on_score_added() -> void:
 	if Data.values.score < 0:

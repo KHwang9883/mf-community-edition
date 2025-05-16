@@ -3,7 +3,7 @@ extends "res://gfx/fancy_graphics/scripts/plushy_sun.gd"
 var passed: bool
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
-@onready var effect: Sprite2D = $Effect
+@onready var effect: Node2D = $Effect
 @onready var bonus_level_unlocked: Sprite2D = Thunder._current_hud.get_node("BonusLevelUnlocked")
 
 func _ready() -> void:
