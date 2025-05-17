@@ -7,12 +7,17 @@ const game_key: String = "Mario_Forever_Community_Edition_Update"
 
 const url: String = \
 
-"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
+#"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
+
+"https://gist.githubusercontent.com/jue131/eab20a1ed3661d92106f298ba78aedad/raw/beta_mfce_update_check.json"
 
 var url_open: String = "https://gist.github.com/jue131/f7ad31818af19fa91b5175cb67340529"
 
 const SELECT_ENTER = preload("res://engine/components/ui/_sounds/select_enter.wav")
 const COIN = preload("res://sfx/clear.wav")
+
+signal found_update
+
 @onready var version: int = ProjectSettings.get_setting("application/thunder_settings/version", 0)
 
 @onready var update_found: Label = $"../UpdateFound"
@@ -24,7 +29,10 @@ var has_update: bool
 var checking_tween: Tween
 
 func _ready() -> void:
+	push_warning("CHANGE URL ON PUBLIC RELEASE at update_checker.gd")
 	SettingsManager.show_mouse()
+	update_checking.visible = false
+	update_found.visible = false
 	
 	await get_tree().create_timer(0.8, true, false, true).timeout
 	update_checking.visible = true
@@ -50,7 +58,7 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 		update_checking.text = "error!\nplease check your internet connection"
 		return
 	
-	if !dict: return _checking_throw_error()
+	if !dict || !dict is Dictionary: return _checking_throw_error()
 	print(dict)
 	if dict.get("game_name", "") != game_key:
 		return _checking_throw_error()
@@ -67,6 +75,7 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 			if dict.get("open_to", "").begins_with("https://"):
 				url_open = dict.open_to
 			Audio.play_1d_sound(COIN, true, { ignore_pause = true })
+			found_update.emit()
 		else:
 			if checking_tween: checking_tween.kill()
 			update_checking.modulate.a = 0.75
@@ -80,7 +89,7 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 func _checking_throw_error() -> void:
 	if checking_tween: checking_tween.kill()
 	update_checking.modulate.a = 0.9
-	update_checking.text = "error!\nplease check for\na new version\nmanually. join discord\nfor more information"
+	update_checking.text = "error!\nplease check for a new version manually. join discord for more information."
 
 
 func _physics_process(delta: float) -> void:

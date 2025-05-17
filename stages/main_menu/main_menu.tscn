@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=59 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" uid="uid://dukosa3hw8lff" path="res://stages/save_game_room/scripts/restore_tweaks_from_minix.gd" id="1_0nl34"]
 [ext_resource type="Script" uid="uid://d2esh46nc5aqc" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
@@ -41,6 +41,13 @@
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="33_axkr8"]
 [ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="34_0xv1c"]
 [ext_resource type="PackedScene" uid="uid://bmgrwlwl4woll" path="res://stages/main_menu/objects/character_editor/character_editor.tscn" id="36_jplg2"]
+[ext_resource type="Script" uid="uid://b1einw57f1r02" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="42_5mfmq"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="43_qdsgx"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="44_agpdy"]
+[ext_resource type="Texture2D" uid="uid://cb24ytv72ue4t" path="res://engine/scenes/main_menu/textures/restart_cancel.png" id="45_1uype"]
+[ext_resource type="Script" uid="uid://c1indt3rqvneg" path="res://engine/scenes/main_menu/scripts/restart_now_selection.gd" id="46_k3l22"]
+[ext_resource type="Texture2D" uid="uid://ky1pe6qafydf" path="res://engine/scenes/main_menu/textures/restart_now.png" id="47_npgmd"]
+[ext_resource type="Texture2D" uid="uid://dphjpmu2xobjk" path="res://objects/revamped_level_warning/textures/12321.png" id="48_bj1et"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -74,6 +81,70 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_akj06"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7o3d3"]
+gradient = SubResource("Gradient_akj06")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sb5lk"]
+atlas = ExtResource("48_bj1et")
+region = Rect2(0, 0, 320, 36)
+
+[sub_resource type="Animation" id="Animation_5mfmq"]
+resource_name = "fade"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qdsgx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_agpdy"]
+resource_name = "init"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1uype"]
+_data = {
+&"RESET": SubResource("Animation_qdsgx"),
+&"fade": SubResource("Animation_5mfmq"),
+&"init": SubResource("Animation_agpdy")
+}
 
 [node name="MainMenu" type="Control"]
 physics_interpolation_mode = 0
@@ -384,14 +455,124 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("15_4dur6")
 theme_override_font_sizes/font_size = 12
-text = "version 2.0-beta
+text = "version 2.0 (beta)
 by meteo dream"
 horizontal_alignment = 2
 vertical_alignment = 2
 uppercase = true
+
+[node name="UpdateConfirmModal" type="CanvasLayer" parent="."]
+layer = 127
+
+[node name="Control" type="Control" parent="UpdateConfirmModal"]
+physics_interpolation_mode = 1
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("42_5mfmq")
+
+[node name="TextureRect" type="TextureRect" parent="UpdateConfirmModal/Control"]
+modulate = Color(1, 1, 1, 0.529412)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_7o3d3")
+
+[node name="LabelMisterEarl" parent="UpdateConfirmModal/Control" instance=ExtResource("43_qdsgx")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "A new update is available for
+mario forever: community edition!
+
+it is extremely recommended to update,
+as it includes bug fixes, compatibility with
+mario minix leaderboards, and, possibly, new content.
+
+older versions of the game are not supported, but you can
+continue for now and update later."
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UpdateConfirmModal/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -114.0
+offset_right = 128.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 6
+script = ExtResource("44_agpdy")
+focused = false
+prev_screen_node_path = NodePath("TextureRect2")
+
+[node name="TextureRect2" type="TextureRect" parent="UpdateConfirmModal/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("45_1uype")
+stretch_mode = 3
+script = ExtResource("46_k3l22")
+
+[node name="TextureRect" type="TextureRect" parent="UpdateConfirmModal/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("47_npgmd")
+stretch_mode = 3
+script = ExtResource("46_k3l22")
+cancel = false
+
+[node name="Selector" type="Node2D" parent="UpdateConfirmModal/Control"]
+script = ExtResource("5_i43cl")
+smooth_speed = 0.4
+position_padding = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UpdateConfirmModal/Control/Selector"]
+sprite_frames = ExtResource("30_ccf2u")
+script = ExtResource("31_uoq2x")
+
+[node name="GamePaused" type="TextureRect" parent="UpdateConfirmModal/Control"]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 64.0
+offset_right = 320.0
+offset_bottom = 104.0
+grow_horizontal = 2
+texture = SubResource("AtlasTexture_sb5lk")
+stretch_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UpdateConfirmModal/Control"]
+libraries = {
+&"": SubResource("AnimationLibrary_1uype")
+}
+autoplay = "RESET"
 
 [connection signal="close_requested" from="Window" to="Window" method="hide"]
 [connection signal="mouse_entered" from="Window" to="Window/CharacterEditor" method="_on_window_mouse_entered"]
 [connection signal="visibility_changed" from="Window" to="Window/CharacterEditor" method="_on_window_visibility_changed"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Node" method="handle_selection"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]
+[connection signal="selected" from="UpdateConfirmModal/Control/VBoxContainer" to="UpdateConfirmModal/Control/Selector" method="handle_selection"]

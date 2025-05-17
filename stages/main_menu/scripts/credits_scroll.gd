@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var speed: float = 25
-@export var repeat_size: float = 1950
+@export var repeat_size: float
 
 var _scroll_force: float
 var _target_pos: float

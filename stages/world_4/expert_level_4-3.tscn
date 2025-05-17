@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://b1l36ya0rh5te"]
+[gd_scene load_steps=75 format=3 uid="uid://b1l36ya0rh5te"]
 
 [ext_resource type="PackedScene" uid="uid://bp0ypvgchea7b" path="res://stages/world_4/level_4-3.tscn" id="1_cg7my"]
 [ext_resource type="AudioStream" uid="uid://bo8m5yubry1e7" path="res://music/extra/expert_mode/cyn-etic.xm" id="3_0wb8e"]
@@ -43,6 +43,7 @@
 [ext_resource type="Texture2D" uid="uid://dbq5fsw34jl0u" path="res://modules/switch-block/textures/switch_dotted.png" id="36_vm882"]
 [ext_resource type="SpriteFrames" uid="uid://bju2yqb8d3qb1" path="res://modules/switch-block/prefabs/swbl_2.tres" id="37_t2dwr"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="42_j8xnv"]
+[ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="44_rdn10"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ypc8n"]
 atlas = ExtResource("3_v7k8g")
@@ -1030,7 +1031,9 @@ no_hue_shader = true
 [node name="PipeIn6" parent="." index="85" instance=ExtResource("42_j8xnv")]
 position = Vector2(9056, 368)
 rotation = 3.14159
+script = ExtResource("44_rdn10")
+choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
 warp_direction = 2
 
+[connection signal="tried_to_enter" from="PipeIn6" to="SecretUnlockerOther" method="progress_secret"]
 [connection signal="warp_started" from="PipeIn6" to="HUD/Label" method="activate"]
-[connection signal="warp_started" from="PipeIn6" to="SecretUnlockerOther" method="progress_secret" binds= [0]]
