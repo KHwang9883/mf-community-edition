@@ -6,6 +6,8 @@ var opened: bool
 @onready var v_box_container: MenuItemsController = $VBoxContainer
 @onready var _warn_tweak: bool = SettingsManager.get_tweak("show_warning_on_revamped_levels", true)
 @onready var _remade_tweak: bool = SettingsManager.get_tweak("remade_levels", true)
+@onready var label_11: Label = $Label11
+@onready var revamp_warning: CanvasLayer = $".."
 
 signal popped
 signal closed
@@ -14,6 +16,10 @@ signal selected_old
 
 func _ready() -> void:
 	animation_player.play(&"init")
+	label_11.text = label_11.text.format([
+		revamp_warning.revamp_first_part_text,
+		revamp_warning.revamp_author_text
+	])
 
 
 func toggle(force_close: bool = false) -> void:
