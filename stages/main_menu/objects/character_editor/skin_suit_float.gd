@@ -47,7 +47,7 @@ func _handle_right_click() -> void:
 
 func _on_button_pressed() -> void:
 	$Label2.text = str(spin_box.value) if spin_box.step != 1 else str(int(spin_box.value))
-	Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	_play_sound()
 	var _quick_node = Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
 	var powerup_name = get_parent().get_meta(&"_powerup_name")
 	var submenu_name = get_parent().get_meta(&"_submenu_name", "")

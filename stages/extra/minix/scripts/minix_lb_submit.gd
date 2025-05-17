@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel") || (enter_to_preview.text == "press enter to continue" && Input.is_action_just_pressed("ui_accept")):
 		_on_line_edit_focus_exited()
 		Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
-		Audio.play_1d_sound(selected_sound, true, { ignore_pause = true })
+		_play_sound()
 		dufhdiufsfdoi = false
 	
 	if dufhdiufsfdoi: return
@@ -75,7 +75,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if can_submit && !submitting && Input.is_action_just_pressed("ui_accept"):
-		Audio.play_1d_sound(selected_sound)
+		_play_sound()
 		Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
 		line_edit.release_focus()
 		
