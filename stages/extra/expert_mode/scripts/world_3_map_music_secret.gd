@@ -4,6 +4,6 @@ extends Node
 @onready var music_loader: Node = $"../MusicLoader"
 
 func _ready() -> void:
-	if Scenes.previous_scene_path == trigger_on:
+	if Scenes.previous_scene_path == Scenes.get_scene_path(trigger_on):
 		music_loader.index = 1
 	music_loader.play_buffered()

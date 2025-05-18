@@ -12,7 +12,7 @@ var is_current: bool
 func _ready() -> void:
 	if !new_level_path: return
 	if _tweak && !_warn_tweak:
-		get_parent().level = new_level_path
+		get_parent().level = Scenes.get_scene_path(new_level_path)
 
 func _physics_process(delta: float) -> void:
 	if !_warn_tweak: return
@@ -29,7 +29,7 @@ func prepare_warning() -> void:
 	Scenes.current_scene.enter_on_request_only = true
 	Scenes.current_scene.player_entered_level.connect(revamp_warning.toggle)
 	revamp_warning.selected_new.connect(func() -> void:
-		get_parent().level = new_level_path
+		get_parent().level = Scenes.get_scene_path(new_level_path)
 		Scenes.current_scene.enter_level_sequence()
 	)
 	revamp_warning.selected_old.connect(func() -> void:
