@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=4 uid="uid://di04gixk0cxmi"]
+[gd_scene load_steps=138 format=4 uid="uid://di04gixk0cxmi"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_atyge"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_bprss"]
@@ -45,6 +45,7 @@
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="41_ddw1a"]
 [ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://tilesets/overworld_green/gfx/green_pipe_entering_another.png" id="42_evotm"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="45_bl50d"]
+[ext_resource type="PackedScene" uid="uid://c4xnbm7qagbhi" path="res://objects/_hammer_item/hammer_item.tscn" id="45_mp46a"]
 [ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="46_jhvki"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="47_dunw4"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="48_2vhak"]
@@ -285,6 +286,20 @@ resource_local_to_scene = true
 script = ExtResource("38_ehsle")
 creation_fallback_node = ExtResource("36_kxa1c")
 creation_nodepack = ExtResource("41_ddw1a")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_gskng"]
+resource_local_to_scene = true
+script = ExtResource("38_ehsle")
+creation_nodepack = ExtResource("45_mp46a")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -1584,6 +1599,8 @@ position = Vector2(3504, -3120)
 
 [node name="Brick29" parent="." instance=ExtResource("32_xd028")]
 position = Vector2(3536, -3120)
+max_items = 1
+result = SubResource("Resource_gskng")
 
 [node name="QuestionBlockFireFlower2" parent="." instance=ExtResource("40_6mse8")]
 position = Vector2(2544, -2992)
@@ -2460,6 +2477,22 @@ off = true
 sprite_frames_override = ExtResource("61_c1838")
 no_hue_shader = true
 
+[node name="SwitchBlock45" parent="." instance=ExtResource("59_msnjv")]
+z_index = -5
+position = Vector2(2832, -2896)
+id = 7
+off = true
+sprite_frames_override = ExtResource("61_c1838")
+no_hue_shader = true
+
+[node name="SwitchBlock46" parent="." instance=ExtResource("59_msnjv")]
+z_index = -5
+position = Vector2(2864, -2896)
+id = 7
+off = true
+sprite_frames_override = ExtResource("61_c1838")
+no_hue_shader = true
+
 [node name="SwitchBlock9" parent="." instance=ExtResource("59_msnjv")]
 z_index = -5
 position = Vector2(3184, -2864)
@@ -2780,8 +2813,6 @@ initially_visible_and_solid = false
 position = Vector2(2848, -2896)
 script = ExtResource("74_mc64r")
 choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
-use_circle_transition = true
-circle_closing_speed = 0.07
 
 [node name="PointLight2D22" type="PointLight2D" parent="PipeIn15"]
 position = Vector2(0, -16)

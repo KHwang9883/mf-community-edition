@@ -1,6 +1,7 @@
 extends Marker2D
 
 signal life_text_triggered
+signal entered_castle
 @export var run_crutches: bool = false
 
 var winned: bool
@@ -9,8 +10,8 @@ var winned: bool
 @onready var cross_area: Area2D = $"../../FinishLine/CrossingBarArea"
 
 func _ready() -> void:
-	Data.score_added.connect(_on_score_added)
-	Data.life_added.connect(_on_life_added)
+	if run_crutches:
+		Data.score_added.connect(_on_score_added)
 	
 	if Data.values.onetime_blocks:
 		Data.technical_values.saved_lives = Data.values.lives
@@ -32,6 +33,7 @@ func activate() -> void:
 	
 	await get_tree().create_timer(1.0, false).timeout
 	
+	entered_castle.emit()
 	var tw = create_tween()
 	tw.tween_property(pl, "modulate:a", 0.0, 0.5)
 	
@@ -49,10 +51,6 @@ func _on_score_added() -> void:
 		cross_area.process_mode = Node.PROCESS_MODE_INHERIT
 	else:
 		cross_area.process_mode = Node.PROCESS_MODE_DISABLED
-	
-
-func _on_life_added() -> void:
-	pass
 
 
 func _on_level_completed() -> void:

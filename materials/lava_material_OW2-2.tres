@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b3pip1m8xaqk3"]
+
+[ext_resource type="Shader" uid="uid://cr56v7mmajyyg" path="res://shaders/animated_texture_with_alpha.gdshader" id="1_4js6b"]
+[ext_resource type="Texture2D" uid="uid://cccjyxok3ss1l" path="res://engine/objects/fluid/textures/lava.png" id="1_bnpq7"]
+
+[sub_resource type="Gradient" id="Gradient_4js6b"]
+offsets = PackedFloat32Array(0, 0.548246, 1)
+colors = PackedColorArray(1, 1, 1, 0.545098, 1, 1, 1, 0.545098, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ed1mb"]
+gradient = SubResource("Gradient_4js6b")
+width = 32
+height = 32
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[resource]
+shader = ExtResource("1_4js6b")
+shader_parameter/sprite_sheet = ExtResource("1_bnpq7")
+shader_parameter/alpha_texture = SubResource("GradientTexture2D_ed1mb")
+shader_parameter/frame_size = Vector2(1, 8)
+shader_parameter/frame_count = 8
+shader_parameter/frames_per_row = 1
+shader_parameter/time_scale = 6.0
+shader_parameter/frame_offset = 0
