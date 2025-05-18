@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=4 uid="uid://ce1bd5fchi0lr"]
+[gd_scene load_steps=95 format=4 uid="uid://ce1bd5fchi0lr"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_maoyc"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ttody"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://bambnfev0g7pr" path="res://music/extra/expert_mode/dusty_bottle.mod" id="7_ue808"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_8l1nh"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_0ftex"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="9_gw76b"]
+[ext_resource type="PackedScene" uid="uid://dym6dmtca3rhi" path="res://objects/message_block/message_block_choicer.tscn" id="10_h43nk"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_jjp1h"]
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="11_a6d1b"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="12_d6hsl"]
@@ -22,7 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://dmwfhcgla7av" path="res://gfx/backgrounds/BGCastleVertical.png" id="19_5jbgp"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="20_v0jio"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="21_8jppn"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="21_80hea"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="22_a8vqf"]
+[ext_resource type="Script" uid="uid://ck8etkhldnph8" path="res://stages/world_1/scripts/text_secret_passage.gd" id="22_hxpbk"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="23_uiwhp"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="24_7ghvk"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="25_e7yay"]
@@ -48,6 +52,7 @@
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="45_ly3a5"]
 [ext_resource type="PackedScene" uid="uid://dvmhwh1khygq6" path="res://engine/objects/bumping_blocks/brick/brick_grey.tscn" id="47_bbcpc"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="48_x5ogy"]
+[ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="53_e6ny4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x53we"]
 atlas = ExtResource("16_werxh")
@@ -359,6 +364,16 @@ music = Array[Resource]([ExtResource("7_ue808")])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("2_y61n0")]
 
+[node name="SecretUnlockerOther" parent="." instance=ExtResource("9_gw76b")]
+secrets = Array[String](["all otherworld levels found"])
+progress_by_id = "8-3"
+progress_to = 8
+
+[node name="MessageBlockChoicer" parent="SecretUnlockerOther" instance=ExtResource("10_h43nk")]
+position = Vector2(-48, 16)
+message = "You have found a passage to otherworld level 8! Would you like to go in?
+It is now available in the save game room at any time."
+
 [node name="Mario" parent="." instance=ExtResource("8_8l1nh")]
 position = Vector2(304, 240)
 
@@ -420,6 +435,26 @@ text = "WORLD
 *8-3  "
 horizontal_alignment = 1
 uppercase = true
+
+[node name="Label" type="Label" parent="HUD"]
+offset_top = -20.0
+offset_right = 640.0
+offset_bottom = -5.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("21_80hea")
+theme_override_font_sizes/font_size = 12
+text = "The 2077 has called. they want their 8 - 4 back."
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("22_hxpbk")
+tween_to = 224
+action_after_sec = 3.0
+change_scene = "res://stages/extra/expert_mode/otherworld/level_8.tscn"
+skip_suspended_profile_save = false
+circle_transition_center_on_player = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -1643,7 +1678,14 @@ result = SubResource("Resource_v1n70")
 position = Vector2(176, -8944)
 result = SubResource("Resource_rd6uv")
 
+[node name="PipeIn6" parent="." instance=ExtResource("41_f0eyb")]
+position = Vector2(224, -7984)
+script = ExtResource("53_e6ny4")
+choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
+
 [connection signal="stage_ready" from="." to="Node2D/SoundRising" method="play"]
 [connection signal="died" from="Mario" to="Node2D" method="koniec_gry"]
 [connection signal="view_section_changed" from="CameraArea" to="PlayerCamera2D" method="switch_to_direction" binds= [2]]
 [connection signal="warp_started" from="PipeIn" to="Node2D" method="koniec_gry"]
+[connection signal="tried_to_enter" from="PipeIn6" to="SecretUnlockerOther" method="progress_secret"]
+[connection signal="warp_started" from="PipeIn6" to="HUD/Label" method="activate"]

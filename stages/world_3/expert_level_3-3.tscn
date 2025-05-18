@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bvucqvgiu82r2"]
+[gd_scene load_steps=47 format=4 uid="uid://bvucqvgiu82r2"]
 
 [ext_resource type="PackedScene" uid="uid://bwr844qulxx0m" path="res://stages/world_3/level_3-3.tscn" id="1_al1me"]
 [ext_resource type="PackedScene" uid="uid://12ak5pa7cf8u" path="res://engine/objects/powerups/super_star/super_star.tscn" id="3_0l66k"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="5_ncvxr"]
 [ext_resource type="PackedScene" uid="uid://dgcgfl28trox0" path="res://engine/objects/springboard/springboard.tscn" id="6_d0c6s"]
 [ext_resource type="PackedScene" uid="uid://dym6dmtca3rhi" path="res://objects/message_block/message_block_choicer.tscn" id="6_fhsuf"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="6_llauh"]
+[ext_resource type="Script" uid="uid://ck8etkhldnph8" path="res://stages/world_1/scripts/text_secret_passage.gd" id="7_d6oxt"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="8_uurei"]
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="10_klsh7"]
 [ext_resource type="PackedScene" uid="uid://cv4oxp3hprpfk" path="res://engine/objects/enemies/piranha_plants/piranha_long_pink.tscn" id="11_c03tm"]
@@ -316,7 +318,7 @@ metadata/_snap_count = 14
 metadata/_snap_enabled = true
 
 [node name="Level3-1" instance=ExtResource("1_al1me")]
-jump_to_scene = "res://stages/world_3/expert_map_3.tscn"
+jump_to_scene = "uid://k7pkx5udbasp"
 
 [node name="MusicLoader" parent="." index="0"]
 music = Array[Resource]([ExtResource("3_js5yg")])
@@ -333,8 +335,11 @@ progress_to = 8
 
 [node name="MessageBlockChoicer" parent="SecretUnlockerOther" index="0" instance=ExtResource("6_fhsuf")]
 position = Vector2(-48, 16)
-message = "You have found a passage to otherworld level 3! Would you like to go in?
+message = "You have found a passage to otherworld level 4! Would you like to go in?
 It is now available in the save game room at any time."
+
+[node name="sceneria" parent="." index="7"]
+tile_map_data = PackedByteArray("AAAJAA4AAwACAAAAAQDsAA4AAwAAAAAAAQDuAA4AAwACAAAAAADFAA4AAwABAAAAAABzAA4AAwACAAAAAQBPAA4AAwACAAAAAQAeAA4AAwACAAAAAAADAA4AAwACAAAAAABVAA4AAwABAAAAAABKAA4AAwACAAAAAAAmAA4AAwABAAAAAQAaAA4AAwAAAAAAAAAXAA0AAwADAAAAAAA0AA4AAwABAAAAAAA0AAsAAwADAAEAAAAJAAoABAAAAAAAAgBzAAsABAAAAAAAAQB2AAsAAwADAAEAAAB6AAwAAwAAAAEAAAB6AA0AAwADAAAAAABoAA4AAwACAAAAAABtAA4AAwAAAAAAAABwAA4AAwABAAAAAAB4AA4AAwABAAAAAQCJAA4AAwACAAAAAQCOAA4AAwABAAAAAQB+AA4AAwAAAAAAAQCDAA4AAwABAAAAAADCAAwAAwAAAAEAAADCAA0AAwADAAAAAAC+AA4AAwACAAAAAADUAA4AAwACAAAAAADZAA4AAwAAAAAAAADkAAwABAAAAAAAAQCCAAsAAwADAAEAAADlAA4AAwABAAAAAADgAA4AAwACAAAAAQAHAQ4AAwAAAAAAAQAMAQ4AAwACAAAAAAANAQ0AAwADAAAAAAAPAQ4AAwAAAAAAAAASAQ4AAwABAAAAAQAWAQ4AAwACAAAAAAAOAA4AAwABAAAAAQAUAA4AAwACAAAAAADYAAsAAwADAAEAAAA=")
 
 [node name="World" parent="HUD" index="2"]
 text = "WORLD
@@ -349,6 +354,26 @@ circle_transition_center_on_player = true
 offset_left = -320.0
 offset_right = 320.0
 text = "YOU HAVE FOUND A SECRET PASSAGE TO OTHERWORLD 3 - 3!!!"
+
+[node name="Label" type="Label" parent="HUD" index="5"]
+offset_top = -20.0
+offset_right = 640.0
+offset_bottom = -5.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("6_llauh")
+theme_override_font_sizes/font_size = 12
+text = "winter! cold! snow! ice? precision? madness!"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("7_d6oxt")
+tween_to = 224
+action_after_sec = 3.0
+change_scene = "uid://cijp5umubbc6f"
+skip_suspended_profile_save = false
+circle_transition_center_on_player = true
 
 [node name="Node2D" parent="." index="11"]
 script = ExtResource("4_vkxfi")
@@ -438,6 +463,9 @@ result = SubResource("Resource_m63cs")
 [node name="QuestionBlock17" parent="CoinChecker" index="31"]
 result = SubResource("Resource_x8hg5")
 
+[node name="AnimatedSprite2D9" parent="Node2D2" index="7"]
+position = Vector2(6928, 368)
+
 [node name="Springboard" parent="." index="22" instance=ExtResource("6_d0c6s")]
 position = Vector2(5040, 272)
 
@@ -494,13 +522,9 @@ position = Vector2(4368, 208)
 result = SubResource("Resource_er82l")
 
 [node name="PipeIn" parent="." index="40" instance=ExtResource("19_fhsuf")]
-position = Vector2(7104, 512)
+position = Vector2(7104, 336)
 script = ExtResource("21_ctsxo")
 choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
-warp_to_scene = "res://stages/world_3/expert_level_other_3-3.tscn"
-use_circle_transition = true
-circle_closing_speed = 0.09
-circle_opening_speed = 0.09
 
 [node name="PointLight2D22" type="PointLight2D" parent="PipeIn" index="5"]
 position = Vector2(0, -16)
@@ -524,3 +548,4 @@ minimum = true
 
 [connection signal="completed_with_star_rain" from="Node2D" to="SecretUnlocker" method="unlock_secret" binds= [1]]
 [connection signal="tried_to_enter" from="PipeIn" to="SecretUnlockerOther" method="progress_secret"]
+[connection signal="warp_started" from="PipeIn" to="HUD/Label" method="activate"]
