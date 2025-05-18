@@ -254,7 +254,7 @@ func death_sequence(body: Node2D) -> void:
 		Data.technical_values['lavarun_difficulty'] = difficulty
 	
 		if final_cutscene:
-			Data.technical_values['lavarun_after'] = final_cutscene
+			Data.technical_values['lavarun_after'] = Scenes.get_scene_path(final_cutscene)
 		return
 	await get_tree().create_timer(2.0, false).timeout
 	Thunder.reset_player_state()

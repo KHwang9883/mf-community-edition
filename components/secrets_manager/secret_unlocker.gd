@@ -55,6 +55,7 @@ func progress_secret(id: int = 0, replace_on_complete: bool = true) -> void:
 	
 	# Notify only if tweak is enabled
 	var can_notify: bool = SettingsManager.get_tweak("secrets_notification", true)
+	if SecretsManager.is_console_enabled(): can_notify = false
 	
 	# Finishing the progress, getting an achievement
 	if len(new_secret) >= progress_to:

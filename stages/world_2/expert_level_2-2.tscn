@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ca5okl181ttuc"]
+[gd_scene load_steps=20 format=3 uid="uid://ca5okl181ttuc"]
 
 [ext_resource type="PackedScene" uid="uid://ht5id10ochxu" path="res://stages/world_2/level_2-2.tscn" id="1_llyg0"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="3_kkct6"]
@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://dvmtgtjgrqsap" path="res://objects/underwater_push_platform/platform_underwater.tscn" id="10_mhx2e"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="13_ay83c"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="14_7mnor"]
-[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="15_mnapb"]
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="16_2sm1p"]
 
 [sub_resource type="Resource" id="Resource_pup4p"]
@@ -24,6 +23,7 @@ resource_local_to_scene = true
 script = ExtResource("5_f731h")
 creation_fallback_node = ExtResource("3_nb7ib")
 creation_nodepack = ExtResource("4_ad18a")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -39,18 +39,6 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 1728, -16, 0, 0, 0, 0, 1728, 512)
 }
 point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_er82l"]
-offsets = PackedFloat32Array(0.536585, 1)
-colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_potf4"]
-gradient = SubResource("Gradient_er82l")
-fill = 1
-fill_from = Vector2(0.5, 1)
-fill_to = Vector2(0.857143, 0.642857)
-metadata/_snap_count = 14
-metadata/_snap_enabled = true
 
 [node name="Level2-2" instance=ExtResource("1_llyg0")]
 jump_to_scene = "res://stages/world_2/expert_map_2.tscn"
@@ -90,7 +78,7 @@ uppercase = true
 script = ExtResource("6_7mnor")
 tween_to = 224
 action_after_sec = 3.0
-change_scene = "res://stages/extra/expert_mode/otherworld/level_5.tscn"
+change_scene = "uid://dt5mvr4b4ogj8"
 skip_suspended_profile_save = false
 circle_transition_center_on_player = true
 
@@ -301,29 +289,16 @@ warp_objects_on_end = false
 position = Vector2(7072, -720)
 script = ExtResource("14_7mnor")
 choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
-use_circle_transition = true
-circle_closing_speed = 0.09
-circle_opening_speed = 0.09
 
-[node name="PointLight2D22" type="PointLight2D" parent="PipeIn2" index="5"]
-position = Vector2(0, -16)
-range_layer_min = -512
-texture = SubResource("GradientTexture2D_potf4")
-script = ExtResource("15_mnapb")
-medium = true
-
-[node name="CloudLightEffect" type="Sprite2D" parent="PipeIn2" index="6"]
-visible = false
-modulate = Color(1, 1, 1, 0.627451)
+[node name="CloudLightEffect" type="Sprite2D" parent="PipeIn2" index="5"]
+modulate = Color(1, 1, 1, 0.835294)
+z_index = -15
 position = Vector2(-32, -16)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("16_2sm1p")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 128, 64)
-script = ExtResource("15_mnapb")
-maximum = false
-minimum = true
 
 [connection signal="tried_to_enter" from="PipeIn2" to="SecretUnlockerOther" method="progress_secret"]
 [connection signal="warp_started" from="PipeIn2" to="HUD/Label" method="activate"]
