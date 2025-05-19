@@ -1,13 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://1m11r2kd0x8v"]
+[gd_scene load_steps=12 format=3 uid="uid://1m11r2kd0x8v"]
 
 [ext_resource type="Script" uid="uid://cpeocq4h0mrbk" path="res://stages/extra/expert_mode/scripts/advance_edition_title.gd" id="1_w048x"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wpc5r"]
 [ext_resource type="AudioStream" uid="uid://dra0gptco75s3" path="res://music/extra/advance_edition.mod" id="3_aa1dc"]
-[ext_resource type="Texture2D" uid="uid://1wql5cqgi0pa" path="res://stages/extra/lost_map/gfx/lostmap_title_background.png" id="4_nx5wm"]
-[ext_resource type="Texture2D" uid="uid://dydqbjxrnmy8p" path="res://stages/extra/lost_map/gfx/lostmap_title_mario.png" id="5_kfcqg"]
+[ext_resource type="Texture2D" uid="uid://b782w03rntnew" path="res://stages/extra/expert_mode/gfx/expert_mode_bg.png" id="4_6bjbc"]
 [ext_resource type="Texture2D" uid="uid://c0vrbxhu1er6s" path="res://stages/extra/lost_map/gfx/lostmap_title_press_enter.png" id="6_yp0iw"]
 [ext_resource type="Script" uid="uid://drr3wdl8celkj" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="7_ywxol"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="8_ag1vo"]
 [ext_resource type="Texture2D" uid="uid://d04grr8l8d42i" path="res://stages/extra/lost_map/gfx/lostmap_title_border.png" id="8_s5gsq"]
+[ext_resource type="Texture2D" uid="uid://dqhgj0o3uavfj" path="res://gfx/fancy_graphics/LOSTMAPAMIRITE.png" id="9_ag1vo"]
+[ext_resource type="Texture2D" uid="uid://cmusg5stpc4n2" path="res://stages/extra/expert_mode/gfx/mario_forever.png" id="9_ls83a"]
+[ext_resource type="Texture2D" uid="uid://b42m0aqcgbocc" path="res://gfx/texts/expert_mode.png" id="10_8lxjv"]
 
 [node name="LostMapTitle" type="Node2D"]
 script = ExtResource("1_w048x")
@@ -19,11 +22,7 @@ volume_db = Array[float]([4.0])
 
 [node name="LostmapTitleBackground" type="Sprite2D" parent="."]
 position = Vector2(320, 240)
-texture = ExtResource("4_nx5wm")
-
-[node name="LostmapTitleMario" type="Sprite2D" parent="."]
-position = Vector2(320, 323)
-texture = ExtResource("5_kfcqg")
+texture = ExtResource("4_6bjbc")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 1
@@ -31,7 +30,7 @@ layer = 1
 [node name="Node2D" type="Node2D" parent="ParallaxBackground"]
 
 [node name="LostmapTitlePressEnter" type="Sprite2D" parent="ParallaxBackground/Node2D"]
-position = Vector2(347, 440)
+position = Vector2(320, 440)
 texture = ExtResource("6_yp0iw")
 script = ExtResource("7_ywxol")
 
@@ -49,20 +48,29 @@ texture = ExtResource("8_s5gsq")
 centered = false
 flip_h = true
 
-[node name="Label" type="RichTextLabel" parent="ParallaxBackground"]
-offset_left = 53.0
-offset_top = 195.0
-offset_right = 193.0
-offset_bottom = 256.0
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_constants/line_separation = 0
-theme_override_font_sizes/italics_font_size = 10
-theme_override_font_sizes/normal_font_size = 10
-bbcode_enabled = true
-text = "[center][i]
-HELLO IN MARIO
-FOREVER THE LOST MAP!"
-autowrap_mode = 2
+[node name="Label" type="Label" parent="ParallaxBackground"]
+offset_left = 80.0
+offset_top = 240.0
+offset_right = 560.0
+offset_bottom = 422.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.321569, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("8_ag1vo")
+theme_override_font_sizes/font_size = 21
+text = "welcome to mario forever expert mode!
+this mode takes 8 story mode worlds and makes them much more difficult, adding new enemies and obstacles throughout the levels.
+
+expert mode quirks:
+- some tweaks are enforced in this mode: mini-games are always on; stomping combos are always off.
+- only 3 game over continues for the game session!
+- mario's physics are enforced.
+- most usual extras are not accessible through this mode.
+
+GOOD LUCK!"
+horizontal_alignment = 1
+autowrap_mode = 3
+uppercase = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -73,3 +81,18 @@ offset_right = 640.0
 offset_bottom = 480.0
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
+
+[node name="LostmapamiriteGlow" type="Sprite2D" parent="."]
+texture_filter = 2
+position = Vector2(320, 130)
+texture = ExtResource("9_ag1vo")
+
+[node name="MarioForever" type="Sprite2D" parent="."]
+position = Vector2(320, 80)
+texture = ExtResource("9_ls83a")
+
+[node name="ExpertMode" type="Sprite2D" parent="."]
+texture_filter = 2
+position = Vector2(314, 173)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("10_8lxjv")

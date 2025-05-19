@@ -60,7 +60,7 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(1, false).timeout
 	can_start = true
-	await get_tree().create_timer(4, false).timeout
+	await get_tree().create_timer(2, false).timeout
 	var tw = create_tween().set_parallel()
 	tw.tween_property(lostmap_title_mario, "modulate:a", 1, 2)
 	tw.tween_property(node_2d, "modulate:a", 1, 2)
