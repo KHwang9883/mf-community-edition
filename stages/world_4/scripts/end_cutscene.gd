@@ -103,7 +103,7 @@ func _physics_process(delta: float) -> void:
 		wind_eff.global_position.x += 640 * 2
 	
 	if _shaking:
-		castle.global_position = init_pos + Vector2(randi_range(-2, 2), randi_range(-2, 2))
+		castle.global_position = init_pos + Vector2(randi_range(-2, 2), randi_range(0, 2))
 	
 	if _flying:
 		castle.global_position.x -= 600 * delta
