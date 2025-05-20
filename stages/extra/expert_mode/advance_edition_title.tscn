@@ -1,16 +1,45 @@
-[gd_scene load_steps=12 format=3 uid="uid://1m11r2kd0x8v"]
+[gd_scene load_steps=29 format=3 uid="uid://1m11r2kd0x8v"]
 
 [ext_resource type="Script" uid="uid://cpeocq4h0mrbk" path="res://stages/extra/expert_mode/scripts/advance_edition_title.gd" id="1_w048x"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wpc5r"]
 [ext_resource type="AudioStream" uid="uid://dra0gptco75s3" path="res://music/extra/advance_edition.mod" id="3_aa1dc"]
 [ext_resource type="Texture2D" uid="uid://b782w03rntnew" path="res://stages/extra/expert_mode/gfx/expert_mode_bg.png" id="4_6bjbc"]
 [ext_resource type="Texture2D" uid="uid://c0vrbxhu1er6s" path="res://stages/extra/lost_map/gfx/lostmap_title_press_enter.png" id="6_yp0iw"]
+[ext_resource type="Texture2D" uid="uid://38slikh3xcfa" path="res://stages/extra/expert_mode/gfx/title_border.png" id="7_w13uc"]
 [ext_resource type="Script" uid="uid://drr3wdl8celkj" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="7_ywxol"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="8_ag1vo"]
-[ext_resource type="Texture2D" uid="uid://d04grr8l8d42i" path="res://stages/extra/lost_map/gfx/lostmap_title_border.png" id="8_s5gsq"]
+[ext_resource type="Texture2D" uid="uid://c6bvur3wucnw2" path="res://stages/extra/expert_mode/gfx/thebg.png" id="8_byexe"]
 [ext_resource type="Texture2D" uid="uid://dqhgj0o3uavfj" path="res://gfx/fancy_graphics/LOSTMAPAMIRITE.png" id="9_ag1vo"]
 [ext_resource type="Texture2D" uid="uid://cmusg5stpc4n2" path="res://stages/extra/expert_mode/gfx/mario_forever.png" id="9_ls83a"]
+[ext_resource type="Texture2D" uid="uid://bmtf7tbhd1khe" path="res://stages/extra/expert_mode/gfx/scr1.png" id="9_vd6fh"]
 [ext_resource type="Texture2D" uid="uid://b42m0aqcgbocc" path="res://gfx/texts/expert_mode.png" id="10_8lxjv"]
+[ext_resource type="Texture2D" uid="uid://dvemhxmwdgfli" path="res://stages/extra/expert_mode/gfx/scr2.png" id="10_63t78"]
+[ext_resource type="Texture2D" uid="uid://ctndcnjp3hk3x" path="res://stages/extra/expert_mode/gfx/scr3.png" id="11_nst2h"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="12_8utpl"]
+[ext_resource type="Texture2D" uid="uid://dvtppa78msqil" path="res://stages/extra/expert_mode/gfx/scr4.png" id="12_mp4gj"]
+[ext_resource type="FontFile" uid="uid://cyijqik15r3me" path="res://gfx/fonts/QUANTUM.TTF" id="14_byexe"]
+[ext_resource type="Script" uid="uid://b6p871suo5jkl" path="res://engine/components/ui/generic/menu_selection.gd" id="15_8utpl"]
+[ext_resource type="Script" uid="uid://cvwo33bpa3jfn" path="res://stages/extra/minix/scripts/minix_end_sel.gd" id="17_1cwik"]
+[ext_resource type="Script" uid="uid://d38guwtff4ed" path="res://stages/extra/expert_mode/scripts/intro_info_sel.gd" id="17_484da"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="18_nst2h"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="19_byexe"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="20_vd6fh"]
+[ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="22_63t78"]
+
+[sub_resource type="Gradient" id="Gradient_byexe"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.835294)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vd6fh"]
+gradient = SubResource("Gradient_byexe")
+width = 32
+height = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_484da"]
+line_spacing = 2.0
+font = ExtResource("8_ag1vo")
+font_size = 21
+outline_size = 8
+outline_color = Color(0, 0, 0.372549, 1)
 
 [node name="LostMapTitle" type="Node2D"]
 script = ExtResource("1_w048x")
@@ -21,56 +50,131 @@ music = Array[Resource]([ExtResource("3_aa1dc")])
 volume_db = Array[float]([4.0])
 
 [node name="LostmapTitleBackground" type="Sprite2D" parent="."]
-position = Vector2(320, 240)
+position = Vector2(400, 240)
 texture = ExtResource("4_6bjbc")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 1
 
 [node name="Node2D" type="Node2D" parent="ParallaxBackground"]
+visible = false
 
 [node name="LostmapTitlePressEnter" type="Sprite2D" parent="ParallaxBackground/Node2D"]
 position = Vector2(320, 440)
 texture = ExtResource("6_yp0iw")
 script = ExtResource("7_ywxol")
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(0, 40)
+[node name="LostmapTitleBorder2" type="Sprite2D" parent="ParallaxBackground"]
+clip_children = 1
+texture_repeat = 3
+texture = ExtResource("7_w13uc")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 480)
 
-[node name="LostmapTitleBorder" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(616, -64)
-texture = ExtResource("8_s5gsq")
+[node name="Thebg" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2"]
+modulate = Color(0.63, 0.63, 0.63, 1)
+position = Vector2(80, 240)
+texture = ExtResource("8_byexe")
+
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground/LostmapTitleBorder2"]
+process_mode = 3
+repeat_size = Vector2(0, 512)
+autoscroll = Vector2(0, 50)
+
+[node name="Node2D" type="Node2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
+position = Vector2(64, 48)
+scale = Vector2(1, 1)
+texture = ExtResource("9_vd6fh")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
+position = Vector2(64, 176)
+scale = Vector2(1, 1)
+texture = ExtResource("9_vd6fh")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
+position = Vector2(64, 304)
+scale = Vector2(1, 1)
+texture = ExtResource("9_vd6fh")
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
+position = Vector2(64, 432)
+scale = Vector2(1, 1)
+texture = ExtResource("9_vd6fh")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2"]
+position = Vector2(50, 0)
+scale = Vector2(1, 7.64038)
+skew = -0.193732
+texture = SubResource("GradientTexture2D_vd6fh")
 centered = false
 
-[node name="LostmapTitleBorder2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(0, -64)
-texture = ExtResource("8_s5gsq")
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2"]
+position = Vector2(97, 240)
+scale = Vector2(1, 7.64038)
+skew = 0.193732
+texture = SubResource("GradientTexture2D_vd6fh")
+centered = false
+
+[node name="LostmapTitleBorder3" type="Sprite2D" parent="ParallaxBackground"]
+clip_children = 1
+texture_repeat = 3
+position = Vector2(512, 0)
+texture = ExtResource("7_w13uc")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 480)
+
+[node name="Thebg" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3"]
+modulate = Color(0.63, 0.63, 0.63, 1)
+position = Vector2(80, 240)
+texture = ExtResource("8_byexe")
+
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground/LostmapTitleBorder3"]
+process_mode = 3
+repeat_size = Vector2(0, 512)
+autoscroll = Vector2(0, -50)
+
+[node name="Node2D" type="Node2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D/Node2D"]
+position = Vector2(64, 48)
+scale = Vector2(1, 1)
+texture = ExtResource("10_63t78")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D/Node2D"]
+position = Vector2(64, 176)
+scale = Vector2(1, 1)
+texture = ExtResource("11_nst2h")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D/Node2D"]
+position = Vector2(64, 304)
+scale = Vector2(1, 1)
+texture = ExtResource("12_mp4gj")
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D/Node2D"]
+position = Vector2(64, 432)
+scale = Vector2(1, 1)
+texture = ExtResource("9_vd6fh")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3"]
+position = Vector2(46, 0)
+scale = Vector2(1, 7.64038)
+skew = 0.193732
+texture = SubResource("GradientTexture2D_vd6fh")
 centered = false
 flip_h = true
 
-[node name="Label" type="Label" parent="ParallaxBackground"]
-offset_left = 80.0
-offset_top = 240.0
-offset_right = 560.0
-offset_bottom = 422.0
-theme_override_colors/font_outline_color = Color(0, 0, 0.321569, 1)
-theme_override_constants/line_spacing = 1
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("8_ag1vo")
-theme_override_font_sizes/font_size = 21
-text = "welcome to mario forever expert mode!
-this mode takes 8 story mode worlds and makes them much more difficult, adding new enemies and obstacles throughout the levels.
-
-expert mode quirks:
-- some tweaks are enforced in this mode: mini-games are always on; stomping combos are always off.
-- only 3 game over continues for the game session!
-- mario's physics are enforced.
-- most usual extras are not accessible through this mode.
-
-GOOD LUCK!"
-horizontal_alignment = 1
-autowrap_mode = 3
-uppercase = true
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3"]
+position = Vector2(-1, 240)
+scale = Vector2(1, 7.64038)
+skew = -0.193732
+texture = SubResource("GradientTexture2D_vd6fh")
+centered = false
+flip_h = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -83,6 +187,7 @@ color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
 [node name="LostmapamiriteGlow" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 2
 position = Vector2(320, 130)
 texture = ExtResource("9_ag1vo")
@@ -93,6 +198,94 @@ texture = ExtResource("9_ls83a")
 
 [node name="ExpertMode" type="Sprite2D" parent="."]
 texture_filter = 2
-position = Vector2(314, 173)
-scale = Vector2(0.8, 0.8)
+position = Vector2(320, 201)
 texture = ExtResource("10_8lxjv")
+
+[node name="ExpertMode2" type="Sprite2D" parent="ExpertMode"]
+texture_filter = 2
+texture = ExtResource("10_8lxjv")
+
+[node name="ExpertMode3" type="Sprite2D" parent="ExpertMode"]
+texture_filter = 2
+texture = ExtResource("10_8lxjv")
+
+[node name="Controls" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 314.0
+offset_right = 640.0
+offset_bottom = 385.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+script = ExtResource("12_8utpl")
+focused = false
+
+[node name="Start" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.129412, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("14_byexe")
+theme_override_font_sizes/font_size = 18
+text = "Start"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("15_8utpl")
+
+[node name="Start3" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("14_byexe")
+theme_override_font_sizes/font_size = 18
+text = "Info"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("17_484da")
+
+[node name="Start5" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("14_byexe")
+theme_override_font_sizes/font_size = 18
+text = "Exit"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("17_1cwik")
+
+[node name="Selector" type="AnimatedSprite2D" parent="."]
+position = Vector2(256, 320)
+script = ExtResource("18_nst2h")
+smooth_speed = 0.4
+position_padding = 20
+position_paddings_array = Array[float]([0.0, 0.0, 0.0])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+position = Vector2(0, -2)
+sprite_frames = ExtResource("19_byexe")
+script = ExtResource("20_vd6fh")
+
+[node name="MessageBlock" parent="." instance=ExtResource("22_63t78")]
+position = Vector2(-16, 16)
+message = "WELCOME TO MARIO FOREVER EXPERT MODE!
+
+THIS MODE TAKES 8 STORY MODE WORLDS AND MAKES THEM MUCH MORE DIFFICULT, ADDING NEW ENEMIES AND OBSTACLES THROUGHOUT THE LEVELS.
+
+EXPERT MODE QUIRKS:
+- SOME TWEAKS ARE ENFORCED IN THIS MODE: MINI-GAMES ARE ALWAYS ON; STOMPING COMBOS ARE ALWAYS OFF.
+- ONLY 3 GAME OVER CONTINUES FOR THE GAME SESSION!
+- MARIO'S PHYSICS ARE ENFORCED.
+- MOST EXTRAS USUALLY FOUND IN NORMAL LEVELS ARE NOT ACCESSIBLE IN THIS MODE.
+
+GOOD LUCK!"
+box_size = Vector2(448, 240)
+message_label_settings = SubResource("LabelSettings_484da")
+
+[connection signal="selected" from="Controls" to="Selector" method="handle_selection"]

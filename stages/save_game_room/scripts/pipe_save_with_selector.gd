@@ -117,7 +117,7 @@ func _physics_process(delta: float) -> void:
 				if Console.cv.can_save_with_console:
 					addition = "\nthe game will continue saving to this save file."
 				else:
-					addition = '
+					addition = '\n
 the game will not save anything to this save file. use the "cv_forcesave" command to allow saving for this session.\n\n'
 				message_block_2.message += addition
 			message_block_2.show_message()
@@ -192,6 +192,7 @@ func delete_save() -> void:
 	cursed_pipe.visible = false
 	is_cursed = false
 	is_blocked = false
+	cheat_warned = false
 
 
 func pass_warp() -> void:

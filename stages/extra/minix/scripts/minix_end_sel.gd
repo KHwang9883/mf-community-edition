@@ -8,6 +8,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	Pause.get_child(0).open_blocked = false
 	Audio.stop_all_musics()
 	Data.reset_all_values()
+	get_parent().focused = false
 	if !_is_simple_fade:
 		TransitionManager.transition_middle.connect(func():
 			TransitionManager.current_transition.paused = true

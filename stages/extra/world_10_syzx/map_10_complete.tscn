@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=3 uid="uid://dh2o4kvv0edaf"]
+
+[ext_resource type="PackedScene" uid="uid://443hynmdu5so" path="res://stages/world_1/map_1_complete.tscn" id="1_iaulk"]
+[ext_resource type="Texture2D" uid="uid://cm4havsld8lo8" path="res://gfx/map/world_names/world_9.png" id="2_n1aps"]
+[ext_resource type="Shader" uid="uid://c1yibfdu766i8" path="res://engine/shaders/hsv_global.gdshader" id="3_hjx5i"]
+[ext_resource type="Texture2D" uid="uid://bhyq5cbc8i6ld" path="res://stages/extra/secrets/gfx/syzxchulun.png" id="4_bk6nr"]
+[ext_resource type="Texture2D" uid="uid://ch0oca57bj4cu" path="res://gfx/map/world_names/world_10.png" id="4_gv52b"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="5_4ruqt"]
+[ext_resource type="Texture2D" uid="uid://cgjj6fawei6k7" path="res://gfx/fancy_graphics/world_texts/world_10.png" id="5_ie386"]
+[ext_resource type="Texture2D" uid="uid://dgkqwhaq4i71y" path="res://stages/extra/world_9_syzx/gfx/custom_map.png" id="6_1p3dc"]
+[ext_resource type="Texture2D" uid="uid://cgrpgm46it7j4" path="res://gfx/map/maps/map10.png" id="9_hjx5i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0mn0p"]
+shader = ExtResource("3_hjx5i")
+shader_parameter/hue = 0.183
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[node name="Map-complete" instance=ExtResource("1_iaulk")]
+goto_scene = "res://stages/save_game_room/save_game_room.tscn"
+world_name = "9"
+
+[node name="WorldText2" parent="GUI" index="1"]
+texture = ExtResource("2_n1aps")
+
+[node name="BounceMarker" parent="GUI/WorldText2" index="0"]
+position = Vector2(0, 178)
+
+[node name="Sprite2D" parent="GUI/WorldText2" index="1"]
+material = SubResource("ShaderMaterial_0mn0p")
+texture = ExtResource("4_gv52b")
+
+[node name="World1" parent="GUI/WorldText2" index="2"]
+texture = ExtResource("5_ie386")
+offset = Vector2(0, 72)
+
+[node name="Syzxchulun" type="Sprite2D" parent="GUI" index="2"]
+z_index = -1
+position = Vector2(548, 30)
+texture = ExtResource("4_bk6nr")
+script = ExtResource("5_4ruqt")
+
+[node name="Syzxchulun2" type="Sprite2D" parent="GUI" index="3"]
+visible = false
+z_index = -1
+position = Vector2(550, 30)
+texture = ExtResource("6_1p3dc")
+script = ExtResource("5_4ruqt")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Map1-cumplete" parent="." index="3"]
+position = Vector2(-239, 278)
+texture = ExtResource("9_hjx5i")
