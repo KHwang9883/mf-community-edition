@@ -105,10 +105,6 @@ func _update_save() -> void:
 
 func pass_warp() -> void:
 	ProfileManager.set_current_profile(profile_name)
-	if SecretsManager.is_console_enabled():
-		ProfileManager.current_profile.data.executed = true
-	if ProfileManager.current_profile.data.get("executed"):
-		SecretsManager._has_cheated = true
 	
 	target = null
 	

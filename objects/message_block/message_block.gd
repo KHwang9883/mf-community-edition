@@ -53,8 +53,9 @@ func show_message() -> void:
 	Audio.play_1d_sound(MESSAGE_BLOCK, true, {ignore_pause = true})
 	get_tree().paused = true
 	
-	_prev_pause_bool = Scenes.current_scene.get(&"disable_pause_menu")
-	Scenes.current_scene.set(&"disable_pause_menu", true)
+	if "disable_pause_menu" in Scenes.current_scene:
+		_prev_pause_bool = Scenes.current_scene.get(&"disable_pause_menu")
+		Scenes.current_scene.set(&"disable_pause_menu", true)
 	
 	box.position = get_viewport_rect().get_center()
 	box.reset_physics_interpolation()
@@ -80,5 +81,6 @@ func hide_message() -> void:
 		process_mode = Node.PROCESS_MODE_INHERIT
 		get_tree().paused = false
 		activated = false
-		Scenes.current_scene.set(&"disable_pause_menu", _prev_pause_bool)
+		if "disable_pause_menu" in Scenes.current_scene:
+			Scenes.current_scene.set(&"disable_pause_menu", _prev_pause_bool)
 	)
