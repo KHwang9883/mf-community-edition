@@ -58,9 +58,12 @@ func _on_level_completed() -> void:
 		if Data.technical_values.saved_lives > Data.values.lives:
 			Data.values.lives = Data.technical_values.saved_lives
 			Data.technical_values.erase("saved_lives")
-			Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"))
+			var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
+			Audio.play_1d_sound(_sfx)
 		else:
-			Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/powerup.wav"))
+			const pwrp = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
+			var _sfx = CharacterManager.get_sound_replace(pwrp, pwrp, "hud_acceptance", false)
+			Audio.play_1d_sound(_sfx)
 	
 	life_text_triggered.emit()
 	if Data.technical_values.remaining_continues != -1:

@@ -9,5 +9,6 @@ func collect() -> void:
 	
 	Data.values.item = item_name
 	
-	Audio.play_sound(pickup_powerup_sound, self, false, {pitch = sound_pitch, ignore_pause = true})
+	var _sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "powerup", true)
+	Audio.play_sound(_sfx, self, false, {pitch = sound_pitch, ignore_pause = true})
 	queue_free()

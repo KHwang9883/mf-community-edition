@@ -22,7 +22,6 @@ func toggle(force_close: bool = false) -> void:
 
 	if opened:
 		popped.emit()
-		#Audio.play_1d_sound(preload("res://objects/message_block/message_block.wav"), true, {ignore_pause = true})
 	else:
 		closed.emit()
 

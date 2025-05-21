@@ -2,7 +2,6 @@ extends Node2D
 
 @export var goto_scene: String
 
-@onready var parallax_layer: ParallaxLayer = $ParallaxBackground/ParallaxLayer
 @onready var node_2d: Node2D = $ParallaxBackground/Node2D
 #@onready var label: Label = $ParallaxBackground/Label
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect

@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-const MESSAGE_BLOCK = preload("res://objects/message_block/message_block.wav")
+const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block/message_block.wav")
 
 var activated: bool
 
@@ -70,7 +70,8 @@ func show_description(desc: String, title: String) -> void:
 	btexture.reset_physics_interpolation()
 	#$Box/Texture.size.y = text.get_line_height() * text.get_line_count() + 8
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	Audio.play_1d_sound(MESSAGE_BLOCK)
+	var _sfx = CharacterManager.get_sound_replace(MESSAGE_BLOCK, MESSAGE_BLOCK, "message_box", false)
+	Audio.play_1d_sound(_sfx)
 	get_tree().paused = true
 	
 	box.position = Vector2(320, 240)

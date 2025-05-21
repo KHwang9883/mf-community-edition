@@ -3,6 +3,7 @@ extends GeneralMovementBody2D
 signal life_text_triggered
 
 const DEFAULT_WARP_SOUND = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
 
 @export var warping_sound: AudioStream = DEFAULT_WARP_SOUND
 @export_range(0, 99999, 0.1, "or_greater", "hide_slider", "suffix:px/s²") var deceleration: float = 500
@@ -52,10 +53,11 @@ func _physics_process(delta: float) -> void:
 			position.y += delta * 50
 		elif timer_enter == 1.5:
 			timer_enter = 100.0
-			Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/powerup.wav"))
+			var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
+			Audio.play_1d_sound(_sfx)
 			life_text_triggered.emit()
 			Data.technical_values.special_otherworld_toad = true
-			if Data.technical_values.remaining_continues != -1:
+			if int(Data.technical_values.remaining_continues) != -1:
 				Data.technical_values.remaining_continues += 1
 			print("added a continue, total: %d" % Data.technical_values.remaining_continues)
 	else:
