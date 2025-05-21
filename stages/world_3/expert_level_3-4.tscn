@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bdfmc8ctxsfjl"]
+[gd_scene load_steps=28 format=3 uid="uid://bdfmc8ctxsfjl"]
 
 [ext_resource type="PackedScene" uid="uid://bwyuvtyce0so0" path="res://stages/world_3/level_3-4.tscn" id="1_onc78"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_bt1pj"]
@@ -6,9 +6,13 @@
 [ext_resource type="Script" uid="uid://co2tyasfdab1" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_flame.gd" id="3_bv7a1"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_wupb8"]
 [ext_resource type="PackedScene" uid="uid://c4h7mvbgsj5si" path="res://engine/objects/enemies/falling_blocks/templates/Falling Stone Brick.tscn" id="3_xrd1y"]
+[ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://objects/gray_qblocks/Gray Coin Question Block.tscn" id="4_jj8um"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_lklr4"]
 [ext_resource type="PackedScene" uid="uid://dxgs3gdej852p" path="res://engine/objects/bosses/bowser/projectile/flame_following.tscn" id="4_u72j2"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="5_ch8yo"]
+[ext_resource type="PackedScene" uid="uid://dpikli783lsya" path="res://objects/_screen_clear_item/atom_star.tscn" id="6_sikgy"]
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://engine/objects/bumping_blocks/message_block/message_block.tscn" id="7_bmu1i"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="7_ov5n7"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="8_jjwvw"]
 [ext_resource type="PackedScene" uid="uid://8iaacf404in1" path="res://stages/extra/world_of_stupidity/chmurka_debil/stupidity_cloud_super_hidden.tscn" id="8_mdrqk"]
 [ext_resource type="PackedScene" uid="uid://c5ckuqfrnnltw" path="res://engine/objects/enemies/piranha_plants/piranha_long_green.tscn" id="10_8pyd8"]
@@ -20,9 +24,25 @@
 [ext_resource type="Script" uid="uid://c245k36x0shwv" path="res://stages/extra/expert_mode/scripts/bowser_flame_generator.gd" id="18_eo3nc"]
 [ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="19_k2xgp"]
 
+[sub_resource type="Resource" id="Resource_s1bwm"]
+script = ExtResource("7_ov5n7")
+creation_fallback_node = ExtResource("5_ch8yo")
+creation_nodepack = ExtResource("6_sikgy")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [sub_resource type="Resource" id="Resource_m5k67"]
 script = ExtResource("4_lklr4")
 creation_nodepack = ExtResource("4_u72j2")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -37,6 +57,7 @@ custom_vars = {}
 resource_local_to_scene = true
 script = ExtResource("4_lklr4")
 creation_nodepack = ExtResource("2_vxcu3")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -102,19 +123,24 @@ position = Vector2(976, 16)
 [node name="FallingStone14" parent="Objects" index="28" instance=ExtResource("3_xrd1y")]
 position = Vector2(1072, 16)
 
-[node name="BooSnake" parent="Objects" index="36" instance=ExtResource("14_acjxl")]
+[node name="QuestionBlock13" parent="Objects" index="34" instance=ExtResource("4_jj8um")]
+position = Vector2(336, 64)
+result = SubResource("Resource_s1bwm")
+initially_visible_and_solid = false
+
+[node name="BooSnake" parent="Objects" index="37" instance=ExtResource("14_acjxl")]
 position = Vector2(7344, 192)
 speed = Vector2(-100, 100)
 
-[node name="BooSnake2" parent="Objects" index="37" instance=ExtResource("14_acjxl")]
+[node name="BooSnake2" parent="Objects" index="38" instance=ExtResource("14_acjxl")]
 position = Vector2(7920, 144)
 speed = Vector2(-100, 100)
 
-[node name="BooSnake3" parent="Objects" index="38" instance=ExtResource("14_acjxl")]
+[node name="BooSnake3" parent="Objects" index="39" instance=ExtResource("14_acjxl")]
 position = Vector2(10608, 80)
 speed = Vector2(-100, 100)
 
-[node name="BooSnake4" parent="Objects" index="39" instance=ExtResource("14_acjxl")]
+[node name="BooSnake4" parent="Objects" index="40" instance=ExtResource("14_acjxl")]
 position = Vector2(10832, 176)
 speed = Vector2(-100, 100)
 
@@ -157,6 +183,9 @@ position = Vector2(10000, -16)
 
 [node name="Goomba12" parent="." index="29" instance=ExtResource("8_jjwvw")]
 position = Vector2(10064, -16)
+
+[node name="TileMap" parent="Node2D" index="0"]
+z_index = -1
 
 [node name="Sprite2D" parent="Node2D" index="1"]
 metadata/_edit_lock_ = true

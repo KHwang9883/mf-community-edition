@@ -42,6 +42,7 @@ func trigger_transition() -> void:
 		var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 		Data.values.checkpoint = -1
 		Data.values.checked_cps = []
+		Data.values.onetime_blocks = true
 		var goto_scene: String = Scenes.get_scene_path(change_scene)
 		if save_to_profile_as_current_world:
 			ProfileManager.current_profile.data.current_world = goto_scene
