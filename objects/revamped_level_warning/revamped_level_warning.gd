@@ -1,5 +1,7 @@
 extends Control
 
+const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block/message_block.wav")
+
 var opened: bool
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -42,7 +44,8 @@ func toggle(force_close: bool = false) -> void:
 				selected_old.emit()
 			return
 		popped.emit()
-		Audio.play_1d_sound(preload("res://objects/message_block/message_block.wav"), true, {ignore_pause = true})
+		var _sfx = CharacterManager.get_sound_replace(MESSAGE_BLOCK, MESSAGE_BLOCK, "message_box", false)
+		Audio.play_1d_sound(_sfx, true, {ignore_pause = true})
 	else:
 		closed.emit()
 

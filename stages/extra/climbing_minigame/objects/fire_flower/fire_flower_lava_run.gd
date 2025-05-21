@@ -5,5 +5,6 @@ func collect() -> void:
 		super()
 		return
 	Thunder.add_lives.call_deferred(1)
-	Audio.play_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"), self)
+	var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
+	Audio.play_sound(_sfx, self)
 	super()

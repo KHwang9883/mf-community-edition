@@ -39,7 +39,8 @@ func has_hit(hp: int) -> void:
 
 func add_life() -> void:
 	Thunder.add_lives(1)
-	Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"))
+	var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
+	Audio.play_1d_sound(_sfx, false)
 
 
 func _on_level_completed() -> void:

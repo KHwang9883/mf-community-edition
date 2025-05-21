@@ -9,7 +9,7 @@ func collect() -> void:
 	
 	Data.values.stopwatch = active_for_sec
 
-	var powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "powerup", true)
+	var powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "bonus_activate", false)
 
 	Audio.play_sound(powerup_sfx, self, false, {pitch = sound_pitch, ignore_pause = true})
 	queue_free()

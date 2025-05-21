@@ -58,7 +58,8 @@ func _physics_process(delta: float) -> void:
 	
 	if can_start && Input.is_action_just_pressed("ui_accept"):
 		can_start = false
-		Audio.play_1d_sound(POWERUP)
+		var powerup_sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
+		Audio.play_1d_sound(powerup_sfx)
 		
 		await get_tree().create_timer(1.5, false).timeout
 		Audio.stop_music_channel(1, true)

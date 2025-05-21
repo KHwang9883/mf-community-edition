@@ -26,7 +26,7 @@ func collect() -> void:
 	time_remaining = active_time_sec
 	body.collision_mask = 0b1110000
 
-	var powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "powerup", true)
+	var powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "bonus_activate", false)
 	Audio.play_sound(powerup_sfx, self, false, {pitch = sound_pitch, ignore_pause = true})
 	$Attack.enabled = true
 

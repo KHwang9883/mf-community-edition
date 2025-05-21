@@ -1,7 +1,8 @@
-[gd_scene load_steps=39 format=4 uid="uid://qfxyyb211vse"]
+[gd_scene load_steps=40 format=4 uid="uid://qfxyyb211vse"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_npvig"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_751tr"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_nnff1"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_44kkh"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_enwkv"]
 [ext_resource type="AudioStream" uid="uid://y87nvi41mws4" path="res://music/extra/trop de voix!.mod" id="4_y2qc8"]
@@ -26,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="22_426r2"]
 [ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="22_b4cbb"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="23_3vwqv"]
-[ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://objects/message_block/message_block.tscn" id="24_buakk"]
+[ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://engine/objects/bumping_blocks/message_block/message_block.tscn" id="24_buakk"]
 [ext_resource type="PackedScene" uid="uid://cawgkcha5sxvy" path="res://stages/extra/toad_house/objects/roulette_block/roulette_block.tscn" id="26_r0jga"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="27_41htu"]
 [ext_resource type="Script" uid="uid://ccr35re45g761" path="res://stages/extra/toad_house/objects/roulette_block/powerup_extension.gd" id="28_8jndx"]
@@ -44,6 +45,7 @@ resource_local_to_scene = true
 script = ExtResource("23_3vwqv")
 creation_fallback_node = ExtResource("21_y2inq")
 creation_nodepack = ExtResource("22_b4cbb")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -54,10 +56,11 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_h6j5p"]
+[sub_resource type="Resource" id="Resource_enwkv"]
 resource_local_to_scene = true
 script = ExtResource("23_3vwqv")
 creation_nodepack = ExtResource("27_41htu")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -72,6 +75,7 @@ custom_script = ExtResource("28_8jndx")
 [sub_resource type="Resource" id="Resource_3c84n"]
 script = ExtResource("23_3vwqv")
 creation_nodepack = ExtResource("29_7ulwy")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -86,6 +90,7 @@ custom_script = ExtResource("28_8jndx")
 [sub_resource type="Resource" id="Resource_cu0p7"]
 script = ExtResource("23_3vwqv")
 creation_nodepack = ExtResource("29_7ulwy")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -100,6 +105,7 @@ custom_script = ExtResource("28_8jndx")
 [sub_resource type="Resource" id="Resource_yurev"]
 script = ExtResource("23_3vwqv")
 creation_nodepack = ExtResource("22_b4cbb")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -115,6 +121,7 @@ custom_script = ExtResource("28_8jndx")
 script = ExtResource("1_npvig")
 time = -1
 enable_restart_in_pause = false
+completion_music = ExtResource("2_nnff1")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_751tr")]
 script = ExtResource("4_enwkv")
@@ -254,6 +261,6 @@ message = "welcome to my mysterious shop of wonderful things!"
 
 [node name="RouletteBlock" parent="." instance=ExtResource("26_r0jga")]
 position = Vector2(320, 272)
-result_array = Array[ExtResource("23_3vwqv")]([SubResource("Resource_h6j5p"), SubResource("Resource_3c84n"), SubResource("Resource_cu0p7"), SubResource("Resource_yurev")])
+result_array = Array[ExtResource("23_3vwqv")]([SubResource("Resource_enwkv"), SubResource("Resource_3c84n"), SubResource("Resource_cu0p7"), SubResource("Resource_yurev")])
 
 [connection signal="stage_ready" from="." to="MessageBlock" method="show_message"]

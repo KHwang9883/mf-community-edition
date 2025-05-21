@@ -112,7 +112,8 @@ func complete() -> void:
 	for i in 3:
 		await get_tree().create_timer(0.6, false, false, true).timeout
 		Thunder.add_lives(1, _hud)
-		Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"))
+		var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
+		Audio.play_1d_sound(_sfx, true)
 
 	await get_tree().create_timer(1.2, false).timeout
 	switch_scene()

@@ -19,7 +19,7 @@ func activate() -> bool:
 			i.got_killed("boomerang", [], false)
 			worked = true
 
-	var powerup_sfx = CharacterManager.get_sound_replace(DEFAULT_POWERUP_SOUND, DEFAULT_POWERUP_SOUND, "powerup", true)
+	var powerup_sfx = CharacterManager.get_sound_replace(DEFAULT_POWERUP_SOUND, DEFAULT_POWERUP_SOUND, "bonus_activate", false)
 
 	if worked:
 		Audio.play_1d_sound(powerup_sfx, false, {ignore_pause = true})
