@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ca5okl181ttuc"]
+[gd_scene load_steps=23 format=3 uid="uid://ca5okl181ttuc"]
 
 [ext_resource type="PackedScene" uid="uid://ht5id10ochxu" path="res://stages/world_2/level_2-2.tscn" id="1_llyg0"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="3_kkct6"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="13_ay83c"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="14_7mnor"]
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="16_2sm1p"]
+[ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="18_7mnor"]
+[ext_resource type="PackedScene" uid="uid://dpikli783lsya" path="res://objects/_screen_clear_item/atom_star.tscn" id="19_mnapb"]
 
 [sub_resource type="Resource" id="Resource_pup4p"]
 resource_local_to_scene = true
@@ -39,6 +41,21 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 1728, -16, 0, 0, 0, 0, 1728, 512)
 }
 point_count = 2
+
+[sub_resource type="Resource" id="Resource_2sm1p"]
+resource_local_to_scene = true
+script = ExtResource("5_f731h")
+creation_nodepack = ExtResource("19_mnapb")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [node name="Level2-2" instance=ExtResource("1_llyg0")]
 jump_to_scene = "res://stages/world_2/expert_map_2.tscn"
@@ -84,6 +101,9 @@ circle_transition_center_on_player = true
 
 [node name="Node" parent="." index="10"]
 delay_sec = 1.0
+
+[node name="Coin40" parent="CoinChecker" index="39" instance=ExtResource("3_kkct6")]
+position = Vector2(1328, 208)
 
 [node name="QuestionBlockFireFlower" parent="Objects" index="0"]
 result = SubResource("Resource_pup4p")
@@ -299,6 +319,11 @@ texture = ExtResource("16_2sm1p")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 128, 64)
+
+[node name="QuestionBlock" parent="." index="34" instance=ExtResource("18_7mnor")]
+position = Vector2(1328, 240)
+result = SubResource("Resource_2sm1p")
+initially_visible_and_solid = false
 
 [connection signal="tried_to_enter" from="PipeIn2" to="SecretUnlockerOther" method="progress_secret"]
 [connection signal="warp_started" from="PipeIn2" to="HUD/Label" method="activate"]

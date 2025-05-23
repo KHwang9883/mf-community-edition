@@ -19,11 +19,11 @@ func _on_quick_skin_settings_button_selection_entered() -> void:
 			var _cat_suit_sel = CATEGORY_SUIT_SELECTION.instantiate()
 			_cat_suit_sel.powerup_name = _arr[i]
 			_cat_suit_sel.get_node("Label").text = "%s suit" % [_arr[i].replacen("_", " ")]
-			_cat_suit_sel.reset_to = _arr.size() - i + 2
+			_cat_suit_sel.reset_to = _arr.size() - i
 			par.add_sibling(_cat_suit_sel)
-	elif SkinsManager.current_skin.is_empty():
-		var _cat_suit_sel = SKIN_SETTINGS_GLOBAL.instantiate()
-		par.add_sibling(_cat_suit_sel)
+	#elif SkinsManager.current_skin.is_empty():
+	#	var _cat_suit_sel = SKIN_SETTINGS_GLOBAL.instantiate()
+	#	par.add_sibling(_cat_suit_sel)
 		
 	
 	menu_controller._update_selectors()
@@ -37,7 +37,7 @@ func _on_exit_selection_entered() -> void:
 		var _current_skin = SkinsManager.current_skin
 		if !_current_skin:
 			_current_skin = "none"
-			powerup = "global"
+			powerup = "_all_suits"
 		_skin_path = SkinsManager.base_dir \
 			.path_join(_current_skin) \
 			.path_join(powerup) \
@@ -90,7 +90,7 @@ func _resize_submenu() -> void:
 func _resize_quick_skin() -> void:
 	for i in 8:
 		if !is_inside_tree(): return
-		var _control: Control = $"../../../QuickSkinSettings"
+		var _control: Control = $"../../../SkinTweaks"
 		#print(_control.get_combined_minimum_size().y)
 		if !_control.focused && i > 2: return
 		if _control.size.y > _control.get_combined_minimum_size().y:

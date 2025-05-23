@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=33 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -19,10 +19,14 @@
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="16_4e6sj"]
 [ext_resource type="Script" uid="uid://bdqxaq7js0oba" path="res://stages/main_menu/objects/character_editor/skin_open_dir.gd" id="16_h1dcq"]
 [ext_resource type="Script" uid="uid://cecpxvhq2gb6v" path="res://stages/main_menu/objects/character_editor/skin_check_errors.gd" id="16_mxo6u"]
+[ext_resource type="Script" uid="uid://dst35vwkyhj1d" path="res://stages/main_menu/objects/character_editor/skin_goto_skin_test.gd" id="17_mxo6u"]
 [ext_resource type="PackedScene" uid="uid://sxusog88yo0m" path="res://stages/main_menu/objects/character_editor/skin_settings_global.tscn" id="17_vcqe5"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="17_xjt7h"]
 [ext_resource type="Script" uid="uid://c8d27o4ux3qle" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="18_kemdi"]
 [ext_resource type="Script" uid="uid://bbtnv4o1bvrj8" path="res://stages/main_menu/objects/activator.gd" id="20_noqp5"]
+[ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="25_cgysl"]
+[ext_resource type="Script" uid="uid://dytr7bv8dfrel" path="res://stages/main_menu/objects/character_editor/skin_room_canvas_layer.gd" id="25_x2vru"]
+[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="26_x2vru"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_4hroi"]
 color = Color(0, 0, 0.329412, 1)
@@ -37,6 +41,23 @@ atlas = ExtResource("5_fjyvq")
 region = Rect2(0, 16, 16, 16)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vcqe5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bdo3j"]
+draw_center = false
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.627451, 0.627451, 0.627451, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 5
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -285,7 +306,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "skin set"
+text = "skin pack"
 uppercase = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tweaks/HBoxContainer2"]
@@ -361,7 +382,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "quick skin settings"
+text = "skin setup"
 uppercase = true
 
 [node name="Value" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
@@ -1110,7 +1131,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "QUICK SKIN SETTINGS"
+text = "skin setup"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
@@ -1119,6 +1140,40 @@ uppercase = true
 layout_mode = 2
 theme_override_constants/separation = 3
 theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../SkinTweaks")
+menu_selector_path = NodePath("../../Selector8")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "SKIN tweaks"
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
 
 [node name="HBoxContainer23" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
@@ -1214,17 +1269,13 @@ theme_override_font_sizes/font_size = 13
 text = "press enter"
 uppercase = true
 
-[node name="HSeparator5" type="HSeparator" parent="QuickSkinSettings"]
+[node name="HBoxContainer27" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
-theme_override_constants/separation = 3
-theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+script = ExtResource("17_mxo6u")
 
-[node name="Label" type="Label" parent="QuickSkinSettings/HSeparator5"]
-layout_mode = 0
-offset_top = 2.0
-offset_right = 456.0
-offset_bottom = 18.0
-theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer27"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
 theme_override_constants/line_spacing = 1
@@ -1233,22 +1284,59 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "select a category"
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "open sound test"
 uppercase = true
 
-[node name="HSeparatorSpawn" type="HSeparator" parent="QuickSkinSettings"]
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer27"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
+[node name="HBoxContainer26" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("17_mxo6u")
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer26"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "go to skin test room"
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer26"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press enter"
+uppercase = true
+
+[node name="HSeparator5" type="HSeparator" parent="QuickSkinSettings"]
 layout_mode = 2
 theme_override_constants/separation = 3
 theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
-
-[node name="QuickSettingsScript" type="Node" parent="QuickSkinSettings/HSeparatorSpawn"]
-script = ExtResource("15_h1dcq")
-
-[node name="SkinSettingsGlobal" parent="QuickSkinSettings" instance=ExtResource("17_vcqe5")]
-layout_mode = 2
-reset_to = 3
 
 [node name="Exit" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
@@ -1258,6 +1346,85 @@ move_to_path = NodePath("../../Tweaks")
 menu_selector_path = NodePath("../../Selector")
 
 [node name="Label" type="Label" parent="QuickSkinSettings/Exit"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "go back"
+uppercase = true
+
+[node name="SkinTweaks" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 432)
+layout_mode = 2
+offset_left = 3656.0
+offset_top = 24.0
+offset_right = 4112.0
+offset_bottom = 456.0
+theme_override_constants/separation = 14
+script = ExtResource("1_e1b0h")
+focused = false
+prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator2" type="HSeparator" parent="SkinTweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="SkinTweaks/HSeparator2"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "skin setup (skin tweaks)
+select a category"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator3" type="HSeparator" parent="SkinTweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_vcqe5")
+
+[node name="HSeparator5" type="HSeparator" parent="SkinTweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="SkinSettingsGlobal" parent="SkinTweaks" instance=ExtResource("17_vcqe5")]
+layout_mode = 2
+
+[node name="HSeparatorSpawn" type="HSeparator" parent="SkinTweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="QuickSettingsScript" type="Node" parent="SkinTweaks/HSeparatorSpawn"]
+script = ExtResource("15_h1dcq")
+
+[node name="Exit" type="HBoxContainer" parent="SkinTweaks"]
+layout_mode = 2
+size_flags_vertical = 10
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../QuickSkinSettings")
+menu_selector_path = NodePath("../../Selector")
+
+[node name="Label" type="Label" parent="SkinTweaks/Exit"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
@@ -1302,7 +1469,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "%s suit skin settings"
+text = "%s suit skin setup"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
@@ -1321,7 +1488,7 @@ theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 layout_mode = 2
 size_flags_vertical = 10
 script = ExtResource("2_2sf4t")
-move_to_path = NodePath("../../QuickSkinSettings")
+move_to_path = NodePath("../../SkinTweaks")
 menu_selector_path = NodePath("../../Selector5")
 
 [node name="Label" type="Label" parent="SkinSuitSettings/Exit"]
@@ -1369,7 +1536,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "%s suit skin settings
+text = "%s suit skin setup
 (%s)"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1482,6 +1649,16 @@ position_padding = 20
 sprite_frames = ExtResource("16_4e6sj")
 script = ExtResource("17_xjt7h")
 
+[node name="Selector8" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("15_lbl8e")
+smooth_speed = 0.4
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector8"]
+sprite_frames = ExtResource("16_4e6sj")
+script = ExtResource("17_xjt7h")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 process_callback = 0
@@ -1499,9 +1676,68 @@ menu_controller_path = NodePath("../Tweaks")
 [node name="Activator" type="Node" parent="."]
 script = ExtResource("20_noqp5")
 
+[node name="SkinRoom" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("25_x2vru")
+
+[node name="ColorRect" type="ColorRect" parent="SkinRoom"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.784314)
+
+[node name="Panel" type="Panel" parent="SkinRoom"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bdo3j")
+
+[node name="SVC" type="SubViewportContainer" parent="SkinRoom"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SV" type="SubViewport" parent="SkinRoom/SVC"]
+disable_3d = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(608, 384)
+render_target_update_mode = 0
+
+[node name="Label" type="Label" parent="SkinRoom"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("25_cgysl")
+theme_override_font_sizes/font_size = 17
+text = "press %s to exit skin test room"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("26_x2vru")
+action = "a_delete"
+
 [connection signal="selected" from="Tweaks" to="Selector" method="handle_selection"]
 [connection signal="selected" from="Tweaks" to="Camera2D" method="handle_selection"]
-[connection signal="selection_entered" from="Tweaks/QuickSkinSettingsButton" to="QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript" method="_on_quick_skin_settings_button_selection_entered"]
 [connection signal="selected" from="Gameplay" to="Selector2" method="handle_selection"]
 [connection signal="selected" from="Gameplay" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="Aesthetic" to="Selector3" method="handle_selection"]
@@ -1510,10 +1746,13 @@ script = ExtResource("20_noqp5")
 [connection signal="selected" from="Presets" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="QuickSkinSettings" to="Selector5" method="handle_selection"]
 [connection signal="selected" from="QuickSkinSettings" to="Camera2D" method="handle_selection"]
-[connection signal="selection_entered" from="QuickSkinSettings/Exit" to="QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript" method="_on_exit_selection_entered"]
+[connection signal="selection_entered" from="QuickSkinSettings/HBoxContainer" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_quick_skin_settings_button_selection_entered"]
+[connection signal="selected" from="SkinTweaks" to="Selector8" method="handle_selection"]
+[connection signal="selected" from="SkinTweaks" to="Camera2D" method="handle_selection"]
+[connection signal="selection_entered" from="SkinTweaks/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_exit_selection_entered"]
 [connection signal="selected" from="SkinSuitSettings" to="Selector6" method="handle_selection"]
 [connection signal="selected" from="SkinSuitSettings" to="Camera2D" method="handle_selection"]
-[connection signal="selection_entered" from="SkinSuitSettings/Exit" to="QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript" method="_on_skin_suit_exit_selection_entered"]
+[connection signal="selection_entered" from="SkinSuitSettings/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_skin_suit_exit_selection_entered"]
 [connection signal="selected" from="SkinSuitSettingsSubmenu" to="Selector7" method="handle_selection"]
 [connection signal="selected" from="SkinSuitSettingsSubmenu" to="Camera2D" method="handle_selection"]
-[connection signal="selection_entered" from="SkinSuitSettingsSubmenu/Exit" to="QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript" method="_on_submenu_exit_selection_entered"]
+[connection signal="selection_entered" from="SkinSuitSettingsSubmenu/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_submenu_exit_selection_entered"]

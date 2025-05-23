@@ -71,7 +71,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	#print(move_to.selectors)
 
 func get_quick_node() -> Node:
-	return Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
+	return Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/SkinTweaks/HSeparatorSpawn/QuickSettingsScript")
 
 func get_tweak_value(tweak) -> Variant:
 	var _quick_node = get_quick_node()

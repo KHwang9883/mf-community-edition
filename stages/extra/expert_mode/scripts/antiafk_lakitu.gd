@@ -32,6 +32,7 @@ var item_need_help: bool = true
 func _ready() -> void:
 	Data.values.stopwatch = 0
 	item = Data.values.get("item", "")
+	item_stock.visible = false
 	if item && item_stock.has_node(item):
 		item_stock.get_node(item).visible = true
 		item_stock.visible = true
