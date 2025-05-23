@@ -7,6 +7,8 @@ func _ready() -> void:
 		"application/thunder_settings/player/gameover_continues", -1
 	)
 	Data.technical_values.remaining_continues = -1
+	Data.technical_values.erase("special_otherworld_toad")
+	Data.technical_values.erase("special_otherworld_candy")
 	Scenes.custom_scenes.game_over.custom_resume_scene = ""
 	
 	SettingsManager.set_tweak("life_every_2_mil_score", false)

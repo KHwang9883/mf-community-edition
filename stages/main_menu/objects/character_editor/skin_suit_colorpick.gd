@@ -46,7 +46,7 @@ func _handle_right_click() -> void:
 func _on_button_pressed() -> void:
 	color_rect.color = color_picker.color
 	_play_sound()
-	var _quick_node = Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
+	var _quick_node = Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/SkinTweaks/HSeparatorSpawn/QuickSettingsScript")
 	var powerup_name = get_parent().get_meta(&"_powerup_name")
 	var submenu_name = get_parent().get_meta(&"_submenu_name", "")
 	if !powerup_name: return

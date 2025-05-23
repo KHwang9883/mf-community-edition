@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cvigdw7nldify"]
+[gd_scene load_steps=16 format=3 uid="uid://cvigdw7nldify"]
 
 [ext_resource type="Script" uid="uid://mmr6jpi68elh" path="res://stages/extra/expert_mode/scripts/antiafk_lakitu.gd" id="1_lrc0a"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="2_yo84f"]
@@ -6,6 +6,12 @@
 [ext_resource type="Material" uid="uid://wv2x2acu2faj" path="res://objects/antiafk_expert_mode/shaders/item_atom_material.tres" id="4_mc6jk"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="4_mo0ls"]
 [ext_resource type="Script" uid="uid://dcggspfuglyvd" path="res://objects/antiafk_expert_mode/item_scripts/item_atom.gd" id="5_jchqb"]
+[ext_resource type="Texture2D" uid="uid://ej6mw7bwl4ve" path="res://objects/_clock_item/clock.png" id="6_4xfk3"]
+[ext_resource type="Texture2D" uid="uid://c8q6ln4xewo0i" path="res://engine/objects/powerups/boomerang_flower/texture.png" id="7_16c0g"]
+[ext_resource type="Script" uid="uid://1ecnu4tbjc40" path="res://objects/antiafk_expert_mode/item_scripts/item_clock.gd" id="7_cgr3w"]
+[ext_resource type="Texture2D" uid="uid://bannp8iggxrgg" path="res://objects/_hammer_item/texture.png" id="8_24b6d"]
+[ext_resource type="Script" uid="uid://bhfasvyftne1e" path="res://objects/antiafk_expert_mode/item_scripts/item_boomerang.gd" id="9_8tub8"]
+[ext_resource type="Script" uid="uid://bgqk3ucie02p" path="res://objects/antiafk_expert_mode/item_scripts/item_hammer.gd" id="11_xq4u2"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
 noise_type = 5
@@ -16,6 +22,10 @@ width = 24
 height = 24
 generate_mipmaps = false
 noise = SubResource("FastNoiseLite_mubo6")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgr3w"]
+atlas = ExtResource("8_24b6d")
+region = Rect2(0, 0, 32, 32)
 
 [node name="AntiafkExpertMode" type="CanvasLayer"]
 script = ExtResource("1_lrc0a")
@@ -48,7 +58,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ItemStock" type="TextureRect" parent="Control"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2
@@ -61,6 +70,7 @@ texture = ExtResource("3_kd0ut")
 stretch_mode = 3
 
 [node name="atom" type="TextureRect" parent="Control/ItemStock"]
+visible = false
 show_behind_parent = true
 material = ExtResource("4_mc6jk")
 layout_mode = 1
@@ -72,6 +82,56 @@ grow_vertical = 2
 texture = SubResource("NoiseTexture2D_jchqb")
 stretch_mode = 3
 script = ExtResource("5_jchqb")
+
+[node name="clock" type="TextureRect" parent="Control/ItemStock"]
+visible = false
+show_behind_parent = true
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_4xfk3")
+stretch_mode = 3
+script = ExtResource("7_cgr3w")
+
+[node name="boomerang" type="TextureRect" parent="Control/ItemStock"]
+visible = false
+show_behind_parent = true
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 12.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.775, 0.775)
+texture = ExtResource("7_16c0g")
+stretch_mode = 3
+script = ExtResource("9_8tub8")
+
+[node name="hammer" type="TextureRect" parent="Control/ItemStock"]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 12.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+texture = SubResource("AtlasTexture_cgr3w")
+stretch_mode = 3
+script = ExtResource("11_xq4u2")
 
 [node name="Label" type="Label" parent="Control/ItemStock"]
 visible = false

@@ -20,7 +20,7 @@ func _ready() -> void:
 	animation_player.play(&"init")
 	label_11.text = label_11.text.format([
 		revamp_warning.revamp_first_part_text,
-		revamp_warning.revamp_author_text
+		revamp_warning.revamp_second_part_text
 	])
 
 

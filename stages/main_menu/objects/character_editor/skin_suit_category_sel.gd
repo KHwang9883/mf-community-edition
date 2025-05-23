@@ -34,6 +34,7 @@ var tweak_descriptions: Dictionary = {
 @onready var h_separator_spawn: HSeparator = $"../../SkinSuitSettings/HSeparatorSpawnTweaks"
 
 func _handle_select(mouse_input: bool = false) -> void:
+	if Data.technical_values.get("main_menu_scene"): return
 	# Custom skin
 	if SkinsManager.current_skin && SkinsManager.custom_textures.has(SkinsManager.current_skin):
 		get_tree().call_group(&"_skin_suit_tweak", &"queue_free")
@@ -55,7 +56,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 				create_tweak_selection(tweak)
 	
 	# Default skin (none)
-	elif SkinsManager.current_skin.is_empty() && powerup_name == "global":
+	elif SkinsManager.current_skin.is_empty() && powerup_name == "_all_suits":
 		get_tree().call_group(&"_skin_suit_tweak", &"queue_free")
 		var _char = CharacterManager.get_character_name()
 		if !CharacterManager.suit_tweaks.has(_char):
@@ -89,7 +90,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	#print(move_to.selectors)
 
 func get_quick_node() -> Node:
-	return Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/QuickSkinSettings/HSeparatorSpawn/QuickSettingsScript")
+	return Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/SkinTweaks/HSeparatorSpawn/QuickSettingsScript")
 
 func get_tweak_value(tweak) -> Variant:
 	var _quick_node = get_quick_node()
