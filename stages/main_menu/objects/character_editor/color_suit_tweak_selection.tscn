@@ -64,15 +64,14 @@ process_mode = 3
 disable_3d = true
 title = "Choose a New Color"
 initial_position = 2
-size = Vector2i(500, 240)
+size = Vector2i(400, 224)
 visible = false
+wrap_controls = true
 transient = true
 exclusive = true
 unresizable = true
-min_size = Vector2i(50, 50)
-keep_title_visible = true
 script = ExtResource("3_mh41t")
-init_focus_path = NodePath("ColorPickerButton")
+init_focus_path = NodePath("VBoxContainer/HBoxContainer2/ColorPickerButton")
 
 [node name="Panel" type="Panel" parent="Window"]
 anchors_preset = 15
@@ -82,55 +81,74 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2ee8w")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Window"]
-anchors_preset = 12
-anchor_top = 1.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Window"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -43.0
-offset_bottom = -12.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Window/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.8
+text = "Choose a New Color:"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Window/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Window/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Window/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(128, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_bottom = NodePath("../../HBoxContainer/ButtonOK")
+focus_next = NodePath("../../HBoxContainer/ButtonOK")
+focus_previous = NodePath("../../HBoxContainer/ButtonCancel")
+
+[node name="Control2" type="Control" parent="Window/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
 alignment = 1
 
-[node name="ButtonOK" type="Button" parent="Window/HBoxContainer"]
+[node name="ButtonOK" type="Button" parent="Window/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 6
-focus_neighbor_top = NodePath("../../ColorPickerButton")
+focus_neighbor_top = NodePath("../../HBoxContainer2/ColorPickerButton")
 focus_neighbor_right = NodePath("../ButtonCancel")
 focus_next = NodePath("../ButtonCancel")
-focus_previous = NodePath("../../ColorPickerButton")
+focus_previous = NodePath("../../HBoxContainer2/ColorPickerButton")
 shortcut = SubResource("Shortcut_2ee8w")
 text = "OK"
 
-[node name="ButtonCancel" type="Button" parent="Window/HBoxContainer"]
+[node name="ButtonCancel" type="Button" parent="Window/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 focus_neighbor_left = NodePath("../ButtonOK")
-focus_neighbor_top = NodePath("../../ColorPickerButton")
-focus_next = NodePath("../../ColorPickerButton")
+focus_neighbor_top = NodePath("../../HBoxContainer2/ColorPickerButton")
+focus_next = NodePath("../../HBoxContainer2/ColorPickerButton")
 focus_previous = NodePath("../ButtonOK")
 shortcut = SubResource("Shortcut_s3qfx")
 text = "Cancel"
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Window"]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 122.0
-offset_top = -57.0
-offset_right = -122.0
-offset_bottom = 15.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_neighbor_bottom = NodePath("../HBoxContainer/ButtonOK")
-focus_next = NodePath("../HBoxContainer/ButtonOK")
-focus_previous = NodePath("../HBoxContainer/ButtonCancel")
+[node name="Control" type="Control" parent="Window/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
 
 [connection signal="close_requested" from="Window" to="Window" method="hide"]
-[connection signal="pressed" from="Window/HBoxContainer/ButtonOK" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Window/HBoxContainer/ButtonOK" to="Window" method="hide"]
-[connection signal="pressed" from="Window/HBoxContainer/ButtonCancel" to="Window" method="hide"]
+[connection signal="pressed" from="Window/VBoxContainer/HBoxContainer/ButtonOK" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Window/VBoxContainer/HBoxContainer/ButtonOK" to="Window" method="hide"]
+[connection signal="pressed" from="Window/VBoxContainer/HBoxContainer/ButtonCancel" to="Window" method="hide"]
