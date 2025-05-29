@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=63 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" uid="uid://dukosa3hw8lff" path="res://stages/save_game_room/scripts/restore_tweaks_from_minix.gd" id="1_0nl34"]
 [ext_resource type="Script" uid="uid://d2esh46nc5aqc" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
@@ -33,14 +33,18 @@
 [ext_resource type="Texture2D" uid="uid://bg7ig1d27vebf" path="res://stages/main_menu/textures/previews/preview-5.png" id="18_ifdp3"]
 [ext_resource type="Texture2D" uid="uid://bmxjt4y3pjtmy" path="res://stages/main_menu/textures/previews/preview-6.png" id="19_03bli"]
 [ext_resource type="Script" uid="uid://cjgfed106pyjj" path="res://stages/main_menu/scripts/previews.gd" id="20_cmmgj"]
+[ext_resource type="Script" uid="uid://beoncj7kbx3yr" path="res://stages/main_menu/scripts/checkout_new_tweaks.gd" id="25_k3l22"]
 [ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="25_vf7gm"]
 [ext_resource type="Script" uid="uid://bh2tgtr0bnas1" path="res://stages/main_menu/scripts/appearing_modulate.gd" id="26_dffd6"]
+[ext_resource type="Texture2D" uid="uid://btc7ayg0akcri" path="res://stages/main_menu/textures/checkout_new_tweaks.png" id="26_npgmd"]
 [ext_resource type="Texture2D" uid="uid://c8se8kv5eegh6" path="res://stages/main_menu/textures/menu_mushrooms.png" id="26_w72sm"]
+[ext_resource type="Script" uid="uid://drr3wdl8celkj" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="27_bj1et"]
+[ext_resource type="Texture2D" uid="uid://bywq4lawtinuj" path="res://stages/main_menu/textures/checkout_arrow.png" id="28_7o3d3"]
+[ext_resource type="Script" uid="uid://dsk58sf1jip6x" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="29_sb5lk"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="30_ccf2u"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="31_uoq2x"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="33_axkr8"]
 [ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="34_0xv1c"]
-[ext_resource type="PackedScene" uid="uid://bmgrwlwl4woll" path="res://stages/main_menu/objects/character_editor/character_editor.tscn" id="36_jplg2"]
 [ext_resource type="Script" uid="uid://b1einw57f1r02" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="42_5mfmq"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="43_qdsgx"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="44_agpdy"]
@@ -167,20 +171,13 @@ offset = Vector2(320, 240)
 position_smoothing_speed = 20.0
 script = ExtResource("1_tc10h")
 
-[node name="Window" type="Window" parent="."]
-disable_3d = true
-title = "Character Editor"
-initial_position = 2
-size = Vector2i(400, 300)
-visible = false
-min_size = Vector2i(250, 175)
-
-[node name="CharacterEditor" parent="Window" instance=ExtResource("36_jplg2")]
-
 [node name="General" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Node2D" type="Node2D" parent="General"]
 script = ExtResource("5_7ehwd")
@@ -281,7 +278,7 @@ script = ExtResource("5_7ehwd")
 visible = false
 layout_mode = 0
 offset_top = 381.0
-offset_right = 219.0
+offset_right = 221.0
 offset_bottom = 469.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
@@ -329,6 +326,22 @@ script = ExtResource("14_c2yvg")
 [node name="HTTPRequest" type="HTTPRequest" parent="General"]
 timeout = 8.0
 
+[node name="NewTweaks" type="Node2D" parent="General"]
+script = ExtResource("25_k3l22")
+
+[node name="Checkout" type="Sprite2D" parent="General/NewTweaks"]
+position = Vector2(546, 372)
+texture = ExtResource("26_npgmd")
+script = ExtResource("27_bj1et")
+
+[node name="CheckoutArrow" type="TextureRect" parent="General/NewTweaks"]
+offset_left = 422.0
+offset_top = 361.0
+offset_right = 464.0
+offset_bottom = 385.0
+texture = ExtResource("28_7o3d3")
+script = ExtResource("29_sb5lk")
+
 [node name="Menu" type="Control" parent="."]
 physics_interpolation_mode = 1
 layout_mode = 1
@@ -341,6 +354,7 @@ mouse_filter = 2
 script = ExtResource("26_dffd6")
 appearing_duration_sec = 1.0
 no_appear_on_min_quality = true
+metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="Menu" instance=ExtResource("1_xf83d")]
 script = ExtResource("2_c40jm")
@@ -570,9 +584,7 @@ libraries = {
 }
 autoplay = "RESET"
 
-[connection signal="close_requested" from="Window" to="Window" method="hide"]
-[connection signal="mouse_entered" from="Window" to="Window/CharacterEditor" method="_on_window_mouse_entered"]
-[connection signal="visibility_changed" from="Window" to="Window/CharacterEditor" method="_on_window_visibility_changed"]
+[connection signal="menu_initiated" from="Camera" to="General/NewTweaks" method="_on_menu_initiated"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Node" method="handle_selection"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]
 [connection signal="selected" from="UpdateConfirmModal/Control/VBoxContainer" to="UpdateConfirmModal/Control/Selector" method="handle_selection"]

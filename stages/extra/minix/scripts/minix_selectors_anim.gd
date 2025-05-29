@@ -1,4 +1,4 @@
-extends Label
+extends Control
 
 @export var left_side: bool = true
 

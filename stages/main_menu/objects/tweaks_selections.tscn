@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=33 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -19,7 +19,6 @@
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="16_4e6sj"]
 [ext_resource type="Script" uid="uid://bdqxaq7js0oba" path="res://stages/main_menu/objects/character_editor/skin_open_dir.gd" id="16_h1dcq"]
 [ext_resource type="Script" uid="uid://cecpxvhq2gb6v" path="res://stages/main_menu/objects/character_editor/skin_check_errors.gd" id="16_mxo6u"]
-[ext_resource type="Script" uid="uid://bvn8mnc1llhjp" path="res://stages/main_menu/objects/character_editor/skin_sound_test.gd" id="17_ulbsg"]
 [ext_resource type="PackedScene" uid="uid://sxusog88yo0m" path="res://stages/main_menu/objects/character_editor/skin_settings_global.tscn" id="17_vcqe5"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="17_xjt7h"]
 [ext_resource type="Script" uid="uid://c8d27o4ux3qle" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="18_kemdi"]
@@ -295,7 +294,7 @@ layout_mode = 2
 script = ExtResource("6_n68nh")
 tweak_description_text = "set a modern skin for mario or luigi, or make your own character! you can also download custom skins of other players or share yours in our discord server! a guide on how to make your own skins is located there too.
 
-this list is expanded automatically if skins are detected in a skins folder, and applied on exit from this menu."
+this list is expanded automatically when skins are detected in a skins folder, and applied on exit from this menu."
 
 [node name="Label" type="Label" parent="Tweaks/HBoxContainer2"]
 layout_mode = 2
@@ -371,6 +370,7 @@ script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../QuickSkinSettings")
 menu_selector_path = NodePath("../../Selector5")
 reset_to = 5
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
 layout_mode = 2
@@ -522,7 +522,7 @@ disabling this tweak makes stomping on bowser identical to other enemies."
 [node name="HBoxContainer5" parent="Gameplay" instance=ExtResource("15_mxo6u")]
 layout_mode = 2
 tweak_name = "minigames_in_main_worlds"
-tweak_title_text = "enable minigames & secrets in main worlds
+tweak_title_text = "minigames & secrets in main worlds
 (from 5.08+)"
 tweak_description_text = "v5.08 added minigames, such as the \"star finder\", \"lava run\", and map enemy encounters. this tweak goes beyond the first 3 worlds and adds more challenging minigames to almost all story mode worlds.
 
@@ -562,13 +562,13 @@ if disabled, bricks above your head will break automatically while crouching. if
 layout_mode = 2
 tweak_name = "checkpoints"
 default_value = true
-tweak_title_text = "enable checkpoints"
+tweak_title_text = "mid-level checkpoints"
 tweak_description_text = "v4.4 added checkpoints to the whole game. disabling this tweak makes the game more challenging."
 
 [node name="HBoxContainer12" parent="Gameplay" instance=ExtResource("15_mxo6u")]
 layout_mode = 2
 tweak_name = "stomping_combo"
-tweak_title_text = "enable stomping combos"
+tweak_title_text = "stomping combos"
 tweak_description_text = "stomping combos were not a thing in the original mario forever. the stomping combo goes like this:
 
 100 > 200 > 400 > 500 > 800 > 1000 > 2000 > 4000 > 5000 > 8000 > 1up > back to 100.
@@ -869,16 +869,6 @@ tweak_title_text = "blur transitions between pipe warp areas"
 tweak_description_text = "adds a blur transition each time the player warps into a new area mid-level. disable this to make the new area load immediately."
 metadata/_edit_pinned_properties_ = [&"default_value"]
 
-[node name="HBoxTweakBool3" parent="Aesthetic" instance=ExtResource("15_mxo6u")]
-layout_mode = 2
-tweak_name = "hint_signs"
-default_value = true
-tweak_title_text = "display hints and tutorial signs in levels"
-tweak_description_text = "enabling this will add some tutorial signs introduced in v5.08.
-
-it may also show signs that can hint to a secret level passage."
-metadata/_edit_pinned_properties_ = [&"default_value"]
-
 [node name="HBoxTweakBool4" parent="Aesthetic" instance=ExtResource("15_mxo6u")]
 layout_mode = 2
 tweak_name = "pause_on_suit_change"
@@ -890,7 +880,7 @@ metadata/_edit_pinned_properties_ = [&"default_value"]
 [node name="HBoxContainer17" parent="Aesthetic" instance=ExtResource("15_mxo6u")]
 layout_mode = 2
 tweak_name = "player_skid_animation"
-tweak_title_text = "enable player skidding effects"
+tweak_title_text = "player skidding effects"
 tweak_description_text = "enables the skidding animation and particles, similar to something you would see in other mario games.
 
 note: this does not affect gameplay in any way!"
@@ -899,7 +889,7 @@ note: this does not affect gameplay in any way!"
 layout_mode = 2
 tweak_name = "secrets_notification"
 default_value = true
-tweak_title_text = "enable achievement notifications"
+tweak_title_text = "achievement notifications"
 tweak_description_text = "each time an achievement gets unlocked or progresses further, a pop up will appear for a few seconds and, if unlocked, a sound effect will play."
 
 [node name="HBoxContainer26" type="HBoxContainer" parent="Aesthetic"]
@@ -1147,6 +1137,7 @@ layout_mode = 2
 script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../SkinTweaks")
 menu_selector_path = NodePath("../../Selector8")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer"]
 layout_mode = 2
@@ -1179,6 +1170,7 @@ uppercase = true
 [node name="HBoxContainer23" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
 script = ExtResource("16_h1dcq")
+tweak_description_text = "opens up a folder on your file system where this skin is located."
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer23"]
 layout_mode = 2
@@ -1211,6 +1203,7 @@ uppercase = true
 layout_mode = 2
 script = ExtResource("16_h1dcq")
 is_docs = true
+tweak_description_text = "opens up your browser with a skin guide web page."
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer24"]
 layout_mode = 2
@@ -1272,7 +1265,11 @@ uppercase = true
 
 [node name="HBoxContainer27" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
-script = ExtResource("17_ulbsg")
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../SkinSoundTest")
+menu_selector_path = NodePath("../../Selector9")
+reset_to = 4
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer27"]
 layout_mode = 2
@@ -1310,6 +1307,8 @@ theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 [node name="HBoxContainer26" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
 script = ExtResource("2_2sf4t")
+tweak_description_text = "you can test your skin in this room!"
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer26"]
 layout_mode = 2
@@ -1342,6 +1341,12 @@ uppercase = true
 [node name="HBoxContainer28" type="HBoxContainer" parent="QuickSkinSettings"]
 layout_mode = 2
 script = ExtResource("18_ulbsg")
+tweak_description_text = "closes the game and starts up the skin editor, where you can create a new skin and edit and fine-tune existing skins. after the game is closed, you will have to start it up again yourself.
+
+the skin editor is a GUI tool made to conveniently configure how your skin is going to look like and how it is going to be animated.
+
+as an alternative to the skin editor, you can edit the 'skin_settings.tres' files in a text editor, but before doing so, please read the skin guide!"
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer28"]
 layout_mode = 2
@@ -1612,6 +1617,79 @@ theme_override_font_sizes/font_size = 12
 text = "go back"
 uppercase = true
 
+[node name="SkinSoundTest" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 432)
+layout_mode = 2
+offset_left = 4152.0
+offset_top = 24.0
+offset_right = 4608.0
+offset_bottom = 456.0
+theme_override_constants/separation = 14
+script = ExtResource("1_e1b0h")
+focused = false
+prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator2" type="HSeparator" parent="SkinSoundTest"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="SkinSoundTest/HSeparator2"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "skin setup (sound test)
+select a sound to playback"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator3" type="HSeparator" parent="SkinSoundTest"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_vcqe5")
+
+[node name="HSeparator4" type="HSeparator" parent="SkinSoundTest"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="HSeparatorSpawnTweaks" type="HSeparator" parent="SkinSoundTest"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Exit" type="HBoxContainer" parent="SkinSoundTest"]
+layout_mode = 2
+size_flags_vertical = 10
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../QuickSkinSettings")
+menu_selector_path = NodePath("../../Selector5")
+
+[node name="Label" type="Label" parent="SkinSoundTest/Exit"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "go back"
+uppercase = true
+
 [node name="Selector" type="Node2D" parent="."]
 physics_interpolation_mode = 1
 script = ExtResource("15_lbl8e")
@@ -1799,3 +1877,6 @@ action = "a_delete"
 [connection signal="selected" from="SkinSuitSettingsSubmenu" to="Selector7" method="handle_selection"]
 [connection signal="selected" from="SkinSuitSettingsSubmenu" to="Camera2D" method="handle_selection"]
 [connection signal="selection_entered" from="SkinSuitSettingsSubmenu/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_submenu_exit_selection_entered"]
+[connection signal="selected" from="SkinSoundTest" to="Selector9" method="handle_selection"]
+[connection signal="selected" from="SkinSoundTest" to="Camera2D" method="handle_selection"]
+[connection signal="selection_entered" from="SkinSoundTest/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_submenu_exit_selection_entered"]

@@ -5,21 +5,21 @@ const FLOAT_SUIT_TWEAK_SELECTION = preload("res://stages/main_menu/objects/chara
 const SUBMENU_TWEAK_SELECTION = preload("res://stages/main_menu/objects/character_editor/submenu_tweak_selection.tscn")
 
 var tweak_descriptions: Dictionary = {
-	"look_up_animation": "'look_up' & 'hold_look_up' animations: triggered by pressing up button.",
+	"look_up_animation": "'look_up' & 'hold_look_up' animations: triggered by pressing up button.\n\nwill also make a sound, if it exists.",
 	"attack_air_animation": "'attack_air' animation: shooting a projectile in mid-air plays this unique animation.\n\nfor suits without attacking, this has no effect.",
-	"separate_run_animation": "'p_run', 'p_jump', 'p_fall' animations: running at max speed triggers these animations.",
+	"separate_run_animation": "'p_run', 'p_jump', 'p_fall' animations: running at max speed triggers these animations.\n\nfor suits without constant running ability, this has no effect.",
 	"idle_animation": "'idle' animation: when no input is made, this animation plays after a specified amount of time.",
 	"idle_activate_after_sec": "from 0.1 to 9999; no effect if idle animation is disabled.",
 	#"stomp_animation": false, # after stomping an enemy or jumping on springboard
-	"kick_ground_animation": "the 'kick' animation also plays when kicking without holding anything.",
+	"kick_ground_animation": "the 'kick' animation also plays when kicking things without holding anything (e.g. shells).",
 	"warp_animation": "'warp' animation; if false, warping vertically will use 'jump', and 'crouch' or 'default'.",
-	"skid_sound_loop_delay": 'in seconds; from 0.05 to 2.0.',
+	"skid_sound_loop_delay": 'delay in seconds between each playback of the skidding sound; from 0.05 to 2.0.',
 	"head_bump_sound": "play global sound 'block_bump' on every touch of ceiling.",
 	"fall_animation": "if false, 'fall' animation and the derivatives are replaced by 'jump'.",
 	"emit_particles": {
 		"enabled": "if no texture is set, the default texture will be starman particles.",
-		"color": "HTML color, corresponds to HEX #RRGGBBAA, where A is alpha transparency.",
-		"show_behind": "'show_behind_parent': particles will be behind the player.",
+		"color": "particles will be modulated by this color.",
+		"show_behind": "'show_behind_parent': particles will be rendered behind the player.",
 		"lifetime_sec": "from 0.04 to 600; the more the value, the less frequently new particles will be generated.",
 		"amount_ratio": "from 0 to 1.0; the maximum particle amount is 48, and this tweak multiplies it.",
 		"local_coords": "should the particles follow player's position? also if true, may fix jitter on movement.",

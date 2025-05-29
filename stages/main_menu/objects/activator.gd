@@ -3,7 +3,7 @@ extends Node
 const KONAMI = preload("res://sfx/konami.ogg")
 
 const ACTIONS: PackedStringArray = [
-	"m_up", "m_up", "m_down", "m_down", "m_left", "m_right", "m_left", "m_right", "m_run", "m_jump", "ui_accept"
+	"m_up", "m_up", "m_down", "m_down", "m_left", "m_right", "m_left", "m_right", "m_run", "m_jump"
 ]
 
 var progress: int = 0
@@ -24,6 +24,9 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventJoypadButton:
 		progress = 0
 		#print("RESET")
+	elif event is InputEventMouseButton:
+		if event.button_index > 0 && event.button_index < MOUSE_BUTTON_MIDDLE:
+			progress = 0
 	
 	if progress == len(ACTIONS):
 		Audio.play_1d_sound(KONAMI)

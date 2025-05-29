@@ -1,5 +1,7 @@
 extends Camera2D
 
+signal menu_initiated
+
 @onready var music_loader: Node = $"../Menu/MusicLoader"
 @onready var main_menu_controls: MenuItemsController = $"../Menu/MainMenuControls"
 
@@ -11,6 +13,7 @@ func _ready() -> void:
 		await get_tree().physics_frame
 		music_loader.play_buffered()
 		main_menu_controls.focused = true
+		menu_initiated.emit()
 		return
 	
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
@@ -25,6 +28,7 @@ func _ready() -> void:
 			await get_tree().create_timer(1.0, false, false).timeout
 			music_loader.play_buffered.call_deferred()
 			main_menu_controls.focused = true
+			menu_initiated.emit()
 		return
 	
 	Audio.play_1d_sound(FADEOUT)
@@ -34,4 +38,5 @@ func _ready() -> void:
 	tw.tween_callback(func():
 		music_loader.play_buffered()
 		main_menu_controls.focused = true
+		menu_initiated.emit()
 	)

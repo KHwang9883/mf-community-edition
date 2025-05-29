@@ -4,6 +4,7 @@ extends MenuSelection
 @export_node_path("MenuSelector") var menu_selector_path: NodePath
 @export var reset_to: int = 0
 @export var show_desc_bool: bool = false
+@export_multiline var tweak_description_text: String
 
 @onready var valu = get_node_or_null(^"Value")
 @onready var camera_2d: Camera2D = $"../../Camera2D"
@@ -18,6 +19,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	if focused && get_parent().focused:
+		if Input.is_action_just_pressed(&"ui_select") && tweak_description_text:
+			$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
+	
 	if !valu:
 		return
 	if focused:
@@ -26,6 +31,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		valu.modulate.a = 0.0
 
+func _handle_focused(focus) -> void:
+	super(focus)
+	if !focus: return
+	if tweak_description_text:
+		$"../..".emit_signal(&"_tweak_desc", get_parent())
+
+func _handle_right_click() -> void:
+	if focused && get_parent().focused && tweak_description_text:
+		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
 
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
