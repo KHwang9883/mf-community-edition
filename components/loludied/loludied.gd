@@ -9,7 +9,7 @@ const LOLUDIED_SONG = preload("res://objects/chorniy_mario/loludied-song.ogg")
 const LOLUDIED_EASTER = preload("res://objects/chorniy_mario/pop'n'drop - game over.s3m")
 
 var target_scale = 2
-var _current_timer
+var _current_timer: SceneTreeTimer
 
 func _ready() -> void:
 	node_2d.visible = false
@@ -53,7 +53,16 @@ func _physics_process(delta: float) -> void:
 		node_2d2.modulate.a = min(node_2d2.modulate.a + 5 * delta, 1)
 		color_rect.modulate.a = min(color_rect.modulate.a + 5 * delta, 1)
 		
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed(&"ui_cancel") && _current_timer:
+			if _current_timer.time_left > 0.0 && is_instance_valid(Audio._music_channels.get(1)):
+				Thunder._disconnect(_current_timer.timeout, music)
+				_current_timer = null
+				Audio._music_channels[1].queue_free()
+				@warning_ignore("incompatible_ternary")
+				Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
+					1, {ignore_pause = true})
+			
+		elif Input.is_action_just_pressed("ui_accept"):
 			Audio.stop_all_sounds()
 			deactivate()
 			Scenes.reload_current_scene()
