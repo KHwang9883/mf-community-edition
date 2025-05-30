@@ -5,30 +5,10 @@ const FLOAT_SUIT_TWEAK_SELECTION = preload("res://stages/main_menu/objects/chara
 const COLOR_SUIT_TWEAK_SELECTION = preload("res://stages/main_menu/objects/character_editor/color_suit_tweak_selection.tscn")
 
 var tweak_descriptions: Dictionary = {}
-var tweak_description_text: String
 var powerup_name: String
 var tweak_name: String
 
 @onready var h_separator_spawn: HSeparator = $"../../SkinSuitSettingsSubmenu/HSeparatorSpawnTweaks"
-
-func _handle_focused(focus) -> void:
-	super(focus)
-	if !focus: return
-	if tweak_description_text:
-		$"../..".emit_signal(&"_tweak_desc", get_parent())
-
-func _physics_process(delta: float) -> void:
-	super(delta)
-	if !focused || !get_parent().focused: return
-	
-	if Input.is_action_just_pressed(&"ui_select"):
-		if tweak_description_text:
-			$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
-
-func _handle_right_click() -> void:
-	if focused && tweak_description_text:
-		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
-
 
 func _handle_select(mouse_input: bool = false) -> void:
 	# Custom skin

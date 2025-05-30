@@ -14,6 +14,7 @@ func _physics_process(delta: float) -> void:
 			appear_process(Thunder.get_delta(delta))
 	
 	if !player: return
+	if player.warp != Player.Warp.NONE: return
 	var overlaps: bool = body.overlaps_body(player)
 	if overlaps && !one_overlap:
 		collect()
