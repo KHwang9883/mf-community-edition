@@ -4,6 +4,8 @@ extends Node
 @onready var spike_ceiling: VBoxContainer = $"../../../Parallax2D/SpikeCeiling"
 
 func _physics_process(delta: float) -> void:
+	if !is_instance_valid(spike_ceiling): return
+	
 	if spike_ceiling._state == 3:
 		path_follow_2d.speed = 0
 	else:
