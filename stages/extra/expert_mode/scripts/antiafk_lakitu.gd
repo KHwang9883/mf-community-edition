@@ -4,6 +4,14 @@ const STOPWATCH = preload("res://objects/_clock_item/stopwatch.wav")
 const AIMING_LAKITU = preload("res://objects/aiming_lakitu/aiming_lakitu.tscn")
 
 @export var is_expert_mode: bool = true
+@export_group("Item Store Settings")
+@export var item_store_enabled: bool = true
+@export var store_inventory: Dictionary[String, int] = {
+	"atom": 1,
+	"clock": 2,
+	"boomerang": 2,
+	"hammer": 2
+}
 @export_group("Anti-AFK Settings")
 @export var antiafk_enabled: bool = true
 @export var afk_warning_delay: float = 8
@@ -23,11 +31,13 @@ var stopwatch_active: bool = false
 
 var item: String
 var item_need_help: bool = true
+var store_cooldown: float
 
 @onready var label: Label = $Label
 @onready var item_stock: TextureRect = $Control/ItemStock
 @onready var item_stock_help_label: Label = $Control/ItemStock/Label
 @onready var label_item_help_text: String = item_stock_help_label.text
+@onready var message_block_choicer: AnimatableBody2D = $MessageBlockChoicer
 
 func _ready() -> void:
 	Data.values.stopwatch = 0
@@ -55,6 +65,7 @@ func _ready() -> void:
 		ProfileManager.current_profile.data["mario_forever_expert"] = true
 
 func _physics_process(delta: float) -> void:
+	if store_cooldown > 0.0: store_cooldown -= delta
 	var player = Thunder._current_player
 	if player && "item" in Data.values && Data.values.item && item != Data.values.item:
 		if item_stock.has_node(Data.values.item):
@@ -76,16 +87,21 @@ func _physics_process(delta: float) -> void:
 		else:
 			empty_item_stock()
 	
-	if player && !player.completed && Input.is_action_just_pressed(&"m_extra"):
-		if item_stock.has_node(item):
-			if tw2: tw2.kill()
-			item_need_help = false
-			item_stock_help_label.visible = false
-			var has_used: bool = item_stock.get_node(item).activate()
-			if has_used:
+	if player && !player.completed:
+		if Input.is_action_just_pressed(&"m_extra") && !Input.is_action_pressed(&"a_tab"):
+			if item_stock.has_node(item):
+				if tw2: tw2.kill()
+				item_need_help = false
+				item_stock_help_label.visible = false
+				var has_used: bool = item_stock.get_node(item).activate()
+				if has_used:
+					empty_item_stock()
+			else:
 				empty_item_stock()
-		else:
-			empty_item_stock()
+		elif item_store_enabled && store_cooldown <= 0.0:
+			if Input.is_action_pressed(&"a_tab") && Input.is_action_pressed(&"m_extra"):
+				store_cooldown = 0.5
+				message_block_choicer.show_message()
 	
 	if Data.values.get("stopwatch", 0.0) > 0:
 		if !stopwatch_active:
@@ -136,7 +152,7 @@ func _physics_process(delta: float) -> void:
 		warned = 1
 		afk_warning()
 		
-	if timer > afk_delay && called < max_calls:
+	if timer > afk_delay && (called < max_calls || get_tree().get_node_count_in_group(&"antiafk_enemy") < max_calls):
 		if timer_2 < call_every:
 			timer_2 += delta
 		else:
@@ -180,6 +196,7 @@ func afk_logic(player: Player) -> void:
 	var lak = AIMING_LAKITU.instantiate()
 	lak.does_respawn = false
 	lak.pitching_interval_max = 5
+	lak.add_to_group(&"antiafk_enemy")
 	Scenes.current_scene.add_child(lak)
 	var rect_size: Vector2 = lak.get_viewport_rect().size
 	var cam_pos = cam.get_screen_center_position()

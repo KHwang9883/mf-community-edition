@@ -1,0 +1,258 @@
+[gd_scene load_steps=16 format=3 uid="uid://dmhw4dqxmgblr"]
+
+[ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="1_2gipa"]
+[ext_resource type="Script" uid="uid://dplsw3v4ytqkr" path="res://objects/antiafk_expert_mode/item_store/mid_level_item_store.gd" id="1_lrvxl"]
+[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="2_dl6o1"]
+[ext_resource type="Texture2D" uid="uid://c5yc2yn0wj6lc" path="res://objects/antiafk_expert_mode/textures/item_stock.png" id="3_vn6hk"]
+[ext_resource type="Material" uid="uid://wv2x2acu2faj" path="res://objects/antiafk_expert_mode/shaders/item_atom_material.tres" id="3_ysk4u"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="4_hcxd1"]
+[ext_resource type="Texture2D" uid="uid://ej6mw7bwl4ve" path="res://objects/_clock_item/clock.png" id="6_q6kb6"]
+[ext_resource type="Script" uid="uid://d17bpy2hayi06" path="res://objects/antiafk_expert_mode/item_store/item_selection.gd" id="6_ysk4u"]
+[ext_resource type="Texture2D" uid="uid://c8q6ln4xewo0i" path="res://engine/objects/powerups/boomerang_flower/texture.png" id="8_ky56m"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="9_ysk4u"]
+[ext_resource type="Texture2D" uid="uid://bannp8iggxrgg" path="res://objects/_hammer_item/texture.png" id="10_rimu1"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="12_lrvxl"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_515qv"]
+width = 32
+height = 32
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_mubo6")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5i4jw"]
+atlas = ExtResource("10_rimu1")
+region = Rect2(0, 0, 32, 32)
+
+[node name="MidLevelItemStore" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lrvxl")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.529412)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 96.0
+offset_bottom = 128.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_2gipa")
+theme_override_font_sizes/font_size = 10
+text = "you can exchange some extra lives for one of these items!!!
+but keep in mind: lives may be more important in harder levels."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 32.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_2gipa")
+theme_override_font_sizes/font_size = 20
+text = "Item shop"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 144.0
+offset_bottom = 176.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_2gipa")
+theme_override_font_sizes/font_size = 10
+text = "a purchased item will appear in the item storage, replacing any existing item.
+it will be available for use at any point mid-level."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -78.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_2gipa")
+theme_override_font_sizes/font_size = 12
+text = "to pick an item, press %s."
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("2_dl6o1")
+action = "ui_accept"
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -46.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_2gipa")
+theme_override_font_sizes/font_size = 12
+text = "to exit this menu, press %s."
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("2_dl6o1")
+action = "ui_cancel"
+
+[node name="LabelError" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 89.0
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.541176, 0.541176, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_2gipa")
+theme_override_font_sizes/font_size = 12
+text = "you have insufficient amount of extra lives!"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -32.0
+offset_right = -80.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.14902, 0.513726, 0.505882)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+alignment = 1
+script = ExtResource("4_hcxd1")
+focused = false
+control_forward = &"ui_right"
+control_backward = &"ui_left"
+
+[node name="atom" type="TextureRect" parent="ColorRect/HBoxContainer"]
+show_behind_parent = true
+material = ExtResource("3_ysk4u")
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("NoiseTexture2D_515qv")
+stretch_mode = 3
+script = ExtResource("6_ysk4u")
+
+[node name="clock" type="TextureRect" parent="ColorRect/HBoxContainer"]
+show_behind_parent = true
+texture_filter = 2
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_q6kb6")
+stretch_mode = 3
+script = ExtResource("6_ysk4u")
+
+[node name="boomerang" type="TextureRect" parent="ColorRect/HBoxContainer"]
+show_behind_parent = true
+texture_filter = 2
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("8_ky56m")
+stretch_mode = 3
+script = ExtResource("6_ysk4u")
+
+[node name="hammer" type="TextureRect" parent="ColorRect/HBoxContainer"]
+show_behind_parent = true
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_5i4jw")
+stretch_mode = 3
+script = ExtResource("6_ysk4u")
+
+[node name="Selector" type="Node2D" parent="."]
+position = Vector2(-48, -48)
+script = ExtResource("9_ysk4u")
+position_padding = 8
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Selector"]
+modulate = Color(1, 1, 0.627451, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 48.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_vn6hk")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Cost" type="Label" parent="Selector"]
+offset_left = -64.0
+offset_top = 48.0
+offset_right = 112.0
+offset_bottom = 71.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("12_lrvxl")
+theme_override_font_sizes/font_size = 21
+text = "COSTS 2 LIVES"
+horizontal_alignment = 1
+uppercase = true
+
+[connection signal="selected" from="ColorRect/HBoxContainer" to="Selector" method="handle_selection"]
