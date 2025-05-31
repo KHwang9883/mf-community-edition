@@ -5,6 +5,7 @@ const MID_LEVEL_ITEM_STORE = preload("res://objects/antiafk_expert_mode/item_sto
 signal choice_accepted
 signal choice_canceled
 
+@onready var antiafk_expert_mode: CanvasLayer = $".."
 
 func _physics_process(delta: float) -> void:
 	if !activated: return
@@ -22,10 +23,14 @@ func _physics_process(delta: float) -> void:
 
 func accepted() -> void:
 	message_hidden.emit()
+	box.scale = Vector2.ZERO
+	box.reset_physics_interpolation()
 	
 	var item_store = MID_LEVEL_ITEM_STORE.instantiate()
 	item_store.modulate.a = 0.0
 	add_sibling(item_store)
+	item_store.antiafk_ref_node = antiafk_expert_mode
+	item_store.msgbox_ref_node = self
 	var tw = item_store.create_tween()
 	tw.tween_property(item_store, ^"modulate:a", 1.0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_callback(item_store.activate)

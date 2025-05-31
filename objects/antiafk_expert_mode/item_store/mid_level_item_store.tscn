@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dmhw4dqxmgblr"]
+[gd_scene load_steps=18 format=3 uid="uid://dmhw4dqxmgblr"]
 
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="1_2gipa"]
 [ext_resource type="Script" uid="uid://dplsw3v4ytqkr" path="res://objects/antiafk_expert_mode/item_store/mid_level_item_store.gd" id="1_lrvxl"]
@@ -9,9 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://ej6mw7bwl4ve" path="res://objects/_clock_item/clock.png" id="6_q6kb6"]
 [ext_resource type="Script" uid="uid://d17bpy2hayi06" path="res://objects/antiafk_expert_mode/item_store/item_selection.gd" id="6_ysk4u"]
 [ext_resource type="Texture2D" uid="uid://c8q6ln4xewo0i" path="res://engine/objects/powerups/boomerang_flower/texture.png" id="8_ky56m"]
+[ext_resource type="Texture2D" uid="uid://8cgmkjqf2bkv" path="res://engine/objects/powerups/frog_suit/texture.png" id="9_q6kb6"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="9_ysk4u"]
 [ext_resource type="Texture2D" uid="uid://bannp8iggxrgg" path="res://objects/_hammer_item/texture.png" id="10_rimu1"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="12_lrvxl"]
+[ext_resource type="Script" uid="uid://bpegp7rd16gl6" path="res://engine/objects/bumping_blocks/message_block/blinking_text.gd" id="13_bp5ci"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
 noise_type = 5
@@ -28,6 +30,7 @@ atlas = ExtResource("10_rimu1")
 region = Rect2(0, 0, 32, 32)
 
 [node name="MidLevelItemStore" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,8 +52,8 @@ color = Color(0, 0, 0, 0.529412)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 96.0
-offset_bottom = 128.0
+offset_top = 112.0
+offset_bottom = 144.0
 grow_horizontal = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/outline_size = 8
@@ -66,8 +69,8 @@ uppercase = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 32.0
-offset_bottom = 64.0
+offset_top = 64.0
+offset_bottom = 96.0
 grow_horizontal = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/outline_size = 10
@@ -82,8 +85,8 @@ uppercase = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 144.0
-offset_bottom = 176.0
+offset_top = 160.0
+offset_bottom = 192.0
 grow_horizontal = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/outline_size = 8
@@ -101,15 +104,15 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -78.0
-offset_bottom = -64.0
+offset_top = -94.0
+offset_bottom = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("1_2gipa")
 theme_override_font_sizes/font_size = 12
-text = "to pick an item, press %s."
+text = "to purchase a selected item, press %s."
 horizontal_alignment = 1
 uppercase = true
 script = ExtResource("2_dl6o1")
@@ -121,8 +124,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -46.0
-offset_bottom = -32.0
+offset_top = -76.0
+offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
@@ -163,9 +166,9 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = 80.0
-offset_top = -32.0
+offset_top = -16.0
 offset_right = -80.0
-offset_bottom = 32.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.14902, 0.513726, 0.505882)
@@ -196,6 +199,7 @@ script = ExtResource("6_ysk4u")
 [node name="clock" type="TextureRect" parent="ColorRect/HBoxContainer"]
 show_behind_parent = true
 texture_filter = 2
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("6_q6kb6")
@@ -205,14 +209,26 @@ script = ExtResource("6_ysk4u")
 [node name="boomerang" type="TextureRect" parent="ColorRect/HBoxContainer"]
 show_behind_parent = true
 texture_filter = 2
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("8_ky56m")
 stretch_mode = 3
 script = ExtResource("6_ysk4u")
 
+[node name="frog" type="TextureRect" parent="ColorRect/HBoxContainer"]
+show_behind_parent = true
+texture_filter = 2
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("9_q6kb6")
+stretch_mode = 3
+script = ExtResource("6_ysk4u")
+
 [node name="hammer" type="TextureRect" parent="ColorRect/HBoxContainer"]
 show_behind_parent = true
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_5i4jw")
@@ -231,9 +247,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -8.0
+offset_top = -24.0
 offset_right = 48.0
-offset_bottom = 40.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_vn6hk")
@@ -241,18 +257,32 @@ patch_margin_left = 8
 patch_margin_top = 8
 patch_margin_right = 8
 patch_margin_bottom = 8
+script = ExtResource("13_bp5ci")
 
 [node name="Cost" type="Label" parent="Selector"]
 offset_left = -64.0
-offset_top = 48.0
+offset_top = 32.0
 offset_right = 112.0
-offset_bottom = 71.0
+offset_bottom = 55.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("12_lrvxl")
 theme_override_font_sizes/font_size = 21
-text = "COSTS 2 LIVES"
+text = "COSTS 1 LIFE"
 horizontal_alignment = 1
 uppercase = true
 
+[node name="Label6" type="Label" parent="."]
+layout_mode = 0
+offset_left = -32.0
+offset_right = -18.0
+offset_bottom = 16.0
+pivot_offset = Vector2(7, 8)
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("12_lrvxl")
+theme_override_font_sizes/font_size = 22
+text = "-2"
+
+[connection signal="selected" from="ColorRect/HBoxContainer" to="." method="_on_selected"]
 [connection signal="selected" from="ColorRect/HBoxContainer" to="Selector" method="handle_selection"]

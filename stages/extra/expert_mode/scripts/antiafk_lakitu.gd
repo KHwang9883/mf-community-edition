@@ -67,25 +67,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if store_cooldown > 0.0: store_cooldown -= delta
 	var player = Thunder._current_player
-	if player && "item" in Data.values && Data.values.item && item != Data.values.item:
-		if item_stock.has_node(Data.values.item):
-			item = Data.values.item
-			item_stock.visible = true
-			for i in item_stock.get_children():
-				if i is Control:
-					i.visible = false
-			item_stock.get_node(item).visible = true
-			if item_need_help:
-				item_stock_help_label.visible = true
-				item_stock_help_text()
-				item_stock_help_label.modulate.a = 0.5
-				tw2 = item_stock_help_label.create_tween()
-				tw2.tween_interval(10.0)
-				tw2.tween_property(item_stock_help_label, "modulate:a", 0.0, 2.0)
-				tw2.tween_callback(item_stock_help_label.hide)
-				tw2.tween_property(item_stock_help_label, "modulate:a", 0.5, 0.1)
-		else:
-			empty_item_stock()
+	update_item_stock_content()
 	
 	if player && !player.completed:
 		if Input.is_action_just_pressed(&"m_extra") && !Input.is_action_pressed(&"a_tab"):
@@ -99,9 +81,10 @@ func _physics_process(delta: float) -> void:
 			else:
 				empty_item_stock()
 		elif item_store_enabled && store_cooldown <= 0.0:
-			if Input.is_action_pressed(&"a_tab") && Input.is_action_pressed(&"m_extra"):
-				store_cooldown = 0.5
+			if Input.is_action_pressed(&"m_up") && Input.is_action_pressed(&"a_tab"):
+				store_cooldown = 0.65
 				message_block_choicer.show_message()
+				message_block_choicer.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	if Data.values.get("stopwatch", 0.0) > 0:
 		if !stopwatch_active:
@@ -159,6 +142,28 @@ func _physics_process(delta: float) -> void:
 			afk_logic(player)
 			timer_2 = 0
 
+func update_item_stock_content() -> void:
+	var player = Thunder._current_player
+	if !player: return
+	if "item" in Data.values && Data.values.item && item != Data.values.item:
+		if item_stock.has_node(Data.values.item):
+			item = Data.values.item
+			item_stock.visible = true
+			for i in item_stock.get_children():
+				if i is Control:
+					i.visible = false
+			item_stock.get_node(item).visible = true
+			if item_need_help:
+				item_stock_help_label.visible = true
+				item_stock_help_text()
+				item_stock_help_label.modulate.a = 0.5
+				tw2 = item_stock_help_label.create_tween()
+				tw2.tween_interval(10.0)
+				tw2.tween_property(item_stock_help_label, "modulate:a", 0.0, 2.0)
+				tw2.tween_callback(item_stock_help_label.hide)
+				tw2.tween_property(item_stock_help_label, "modulate:a", 0.5, 0.1)
+		else:
+			empty_item_stock()
 
 func item_stock_help_text() -> void:
 	var _events: Array[InputEvent] = InputMap.action_get_events(&"m_extra")
