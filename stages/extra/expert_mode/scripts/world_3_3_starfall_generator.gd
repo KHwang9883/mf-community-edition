@@ -13,7 +13,7 @@ var tw: Tween
 var pl_pos: Vector2
 var phase: bool
 
-@onready var question_block_star: AnimatableBody2D = $"../Objects/QuestionBlockStar"
+@onready var question_block_star: AnimatableBody2D = $"../QuestionBlock2"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
