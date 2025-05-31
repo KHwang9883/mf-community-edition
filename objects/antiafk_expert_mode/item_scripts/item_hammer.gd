@@ -14,10 +14,13 @@ func activate() -> bool:
 		ham.appear_distance = 0
 		ham.transform = pl.transform
 		Scenes.current_scene.add_child(ham)
-
-	var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "incorrect", false)
-
-	if !worked:
+		worked = true
+	
+	if worked:
+		var _sfx = CharacterManager.get_sound_replace(DEFAULT_POWERUP_SOUND, DEFAULT_POWERUP_SOUND, "bonus_activate", false)
+		Audio.play_1d_sound(_sfx, false, {ignore_pause = true})
+	else:
+		var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "incorrect", false)
 		Audio.play_1d_sound(inc_sfx, false, {ignore_pause = true})
 	
 	return worked

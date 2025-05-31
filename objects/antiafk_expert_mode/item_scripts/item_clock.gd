@@ -4,7 +4,7 @@ const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav
 const INCORRECT = preload("res://sfx/incorrect.wav")
 
 func activate() -> bool:
-	if Data.values.stopwatch <= 0.0:
+	if Data.values.stopwatch > 0.0:
 		var _sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "incorrect", false)
 		Audio.play_1d_sound(INCORRECT, false, {ignore_pause = true})
 		return false
