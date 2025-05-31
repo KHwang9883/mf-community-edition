@@ -11,6 +11,8 @@ const SIDE_SPIKES = preload("res://stages/extra/expert_mode/otherworld/sounds/si
 @export var reabilitation_delay: float = 2.0
 @export var reabilitation_speed: float = 100.0
 
+var _timeout: float = 5.0
+
 var _state: int = 0
 var _sine: float
 var _falling_vel: float
@@ -42,7 +44,7 @@ func _physics_process(delta: float) -> void:
 			_falling_vel = 0
 			Thunder._current_camera.shock_smooth(10, 5)
 			Audio.play_1d_sound(FALL)
-			await get_tree().create_timer(5.0, false).timeout
+			await get_tree().create_timer(_timeout, false).timeout
 			_state = 4
 	elif _state == 4:
 		_sound_played = false
