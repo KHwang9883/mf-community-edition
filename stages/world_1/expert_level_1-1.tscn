@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://dxqr6xmj8wu31"]
+[gd_scene load_steps=74 format=4 uid="uid://dxqr6xmj8wu31"]
 
 [ext_resource type="PackedScene" uid="uid://dtfhvfw317yu" path="res://stages/world_1/level_1-1.tscn" id="1_s8ojd"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="3_7es0h"]
@@ -21,6 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="14_2n1se"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="15_8stx6"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="16_c2sbv"]
+[ext_resource type="Texture2D" uid="uid://bgvmhpdvcdrpp" path="res://gfx/sign/sign_minix_welcome.png" id="24_s2o5d"]
+[ext_resource type="Texture2D" uid="uid://q8l5ujr14min" path="res://gfx/sign/sign_leg.png" id="25_ca843"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="26_1dqdy"]
+[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="27_sybmw"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="66_orwlv"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="67_p4fye"]
 
@@ -1251,6 +1255,36 @@ position = Vector2(7760, 400)
 
 [node name="PipeIn6" parent="." index="201" instance=ExtResource("9_1lpya")]
 position = Vector2(4672, 304)
+
+[node name="SignMinixWelcome" type="Sprite2D" parent="." index="202"]
+position = Vector2(297, 330)
+texture = ExtResource("24_s2o5d")
+
+[node name="SignLeg" type="Sprite2D" parent="SignMinixWelcome" index="0"]
+position = Vector2(-48, 56)
+texture = ExtResource("25_ca843")
+
+[node name="SignLeg2" type="Sprite2D" parent="SignMinixWelcome" index="1"]
+position = Vector2(48, 56)
+texture = ExtResource("25_ca843")
+
+[node name="LabelMisterEarl" parent="SignMinixWelcome" index="2" instance=ExtResource("26_1dqdy")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -82.0
+offset_top = -26.0
+offset_right = -82.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 1
+text = "press both move up
+and %ss
+to open item shop"
+vertical_alignment = 1
+script = ExtResource("27_sybmw")
+action = "a_tab"
 
 [connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="progress_secret" binds= [1]]
 [connection signal="warp_started" from="PipeIn6" to="SecretUnlockerOther" method="progress_secret"]
