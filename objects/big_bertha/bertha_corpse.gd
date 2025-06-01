@@ -24,7 +24,7 @@ func _ready() -> void:
 		if !_rotating_dir:
 			_rotating_dir = [-1, 1].pick_random()
 		if is_zero_approx(speed.x):
-			speed.x = _rotating_dir * randf_range(default_speed_x_min, default_speed_x_max)
+			speed.x = _rotating_dir * Thunder.rng.get_randf_range(default_speed_x_min, default_speed_x_max)
 		if !_fancy_effects_enabled():
 			scale.y = -scale.y
 			speed.y /= 1.5

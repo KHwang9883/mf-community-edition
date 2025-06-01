@@ -19,7 +19,6 @@ var _falling_vel: float
 var _sound_played: bool
 
 @onready var init_pos: Vector2 = position
-@onready var spike: TextureRect = $Spike
 
 func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player

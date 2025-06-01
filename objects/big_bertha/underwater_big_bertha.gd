@@ -39,7 +39,7 @@ func toggle_dir() -> void:
 	tw.tween_property(self, "speed:x", 180 * dir, 1.1).set_ease(Tween.EASE_OUT)
 	tw.tween_property(self, "speed:x", 0, 1.0).set_ease(Tween.EASE_IN)
 	tw.tween_callback(toggle_dir)
-	if !creating_baby && randi_range(0, 1) == 0 && skips < 0:
+	if !creating_baby && Thunder.rng.get_randi_range(0, 1) == 0 && skips < 0:
 		creating_baby = true
 		skips = 1
 		stop_and_create_baby()
@@ -96,6 +96,6 @@ func _on_enemy_attacked_killed_succeeded() -> void:
 		if !is_instance_valid(node) || node.is_queued_for_deletion(): continue
 		if node.turn_sprite == true: continue
 		node.turn_sprite = true
-		var dir: int = signf(node.speed.x)
+		var _dir: int = signi(node.speed.x)
 		var _btw = node.create_tween()
-		_btw.tween_property(node, "speed:x", 50 * dir, 0.4).set_ease(Tween.EASE_OUT)
+		_btw.tween_property(node, "speed:x", 50 * _dir, 0.4).set_ease(Tween.EASE_OUT)
