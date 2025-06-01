@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	if !_active || !ceiling: return
 	
 	ceiling._sine += 50 * delta
-	ceiling.global_position.y = ceiling.init_pos.y + sin(ceiling._sine) * (ceiling._sine / 70.0)
+	ceiling.global_position.y = ceiling.init_pos.y + sin(ceiling._sine) * (ceiling._sine / 50.0)
 	#bowser.sprite.play(animation_pre)
 
 
