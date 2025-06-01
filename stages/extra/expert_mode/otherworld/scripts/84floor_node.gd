@@ -12,11 +12,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !speed_enabled: return
-	
-	if speed < 200:
-		speed += 30 * delta
+	var pl = Thunder._current_player
+	if pl:
+		speed = min(speed + 30 * delta, 200)
 	else:
-		speed = 200
+		speed = max(speed - 300 * delta, 0)
 	
-	parallax_2d.scroll_offset.x += speed * delta
+	parallax_2d.autoscroll.x = speed
 	platform_path_tank_floor.position.x += speed * delta
+	

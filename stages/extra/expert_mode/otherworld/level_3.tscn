@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://dt5mvr4b4ogj8"]
+[gd_scene load_steps=71 format=3 uid="uid://dt5mvr4b4ogj8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_p2acl"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_gnmdq"]
@@ -53,6 +53,8 @@
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="51_xb6qv"]
 [ext_resource type="Script" uid="uid://crwuhdl2ox5y" path="res://stages/extra/expert_mode/otherworld/scripts/complete_win_anim_marker.gd" id="52_d8ap7"]
 [ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://tilesets/overworld_green/gfx/green_pipe_entering_another.png" id="53_xb6qv"]
+[ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="54_eipiu"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="55_d8ap7"]
 
 [sub_resource type="Gradient" id="Gradient_16eid"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -700,7 +702,7 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin16" parent="Path2D/PathFollow2D3/Block" index="3" instance=ExtResource("10_66a2o")]
+[node name="Coin16" parent="Path2D/PathFollow2D3/Block" index="2" instance=ExtResource("10_66a2o")]
 position = Vector2(0, -32)
 
 [node name="PathFollow2D4" parent="Path2D" instance=ExtResource("9_8uk2c")]
@@ -710,7 +712,7 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin16" parent="Path2D/PathFollow2D4/Block" index="3" instance=ExtResource("10_66a2o")]
+[node name="Coin16" parent="Path2D/PathFollow2D4/Block" index="2" instance=ExtResource("10_66a2o")]
 position = Vector2(0, -32)
 
 [node name="PathFollow2D5" parent="Path2D" instance=ExtResource("9_8uk2c")]
@@ -759,13 +761,13 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin42" parent="Path2D/PathFollow2D12/Block" index="3" instance=ExtResource("10_66a2o")]
+[node name="Coin42" parent="Path2D/PathFollow2D12/Block" index="2" instance=ExtResource("10_66a2o")]
 position = Vector2(0, -32)
 
-[node name="Coin43" parent="Path2D/PathFollow2D12/Block" index="4" instance=ExtResource("10_66a2o")]
+[node name="Coin43" parent="Path2D/PathFollow2D12/Block" index="3" instance=ExtResource("10_66a2o")]
 position = Vector2(-32, -32)
 
-[node name="Coin44" parent="Path2D/PathFollow2D12/Block" index="5" instance=ExtResource("10_66a2o")]
+[node name="Coin44" parent="Path2D/PathFollow2D12/Block" index="4" instance=ExtResource("10_66a2o")]
 position = Vector2(32, -32)
 
 [node name="PathFollow2D7" parent="Path2D" instance=ExtResource("9_8uk2c")]
@@ -776,13 +778,13 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin42" parent="Path2D/PathFollow2D7/Block" index="3" instance=ExtResource("10_66a2o")]
+[node name="Coin42" parent="Path2D/PathFollow2D7/Block" index="2" instance=ExtResource("10_66a2o")]
 position = Vector2(0, -32)
 
-[node name="Coin43" parent="Path2D/PathFollow2D7/Block" index="4" instance=ExtResource("10_66a2o")]
+[node name="Coin43" parent="Path2D/PathFollow2D7/Block" index="3" instance=ExtResource("10_66a2o")]
 position = Vector2(-32, -32)
 
-[node name="Coin44" parent="Path2D/PathFollow2D7/Block" index="5" instance=ExtResource("10_66a2o")]
+[node name="Coin44" parent="Path2D/PathFollow2D7/Block" index="4" instance=ExtResource("10_66a2o")]
 position = Vector2(32, -32)
 
 [node name="PathFollow2D8" parent="Path2D" instance=ExtResource("9_8uk2c")]
@@ -885,6 +887,24 @@ result = SubResource("Resource_sklqv")
 position = Vector2(7104, -608)
 scale = Vector2(-1, 1)
 texture = ExtResource("53_xb6qv")
+
+[node name="Sign" type="Sprite2D" parent="."]
+position = Vector2(2032, 361)
+texture = ExtResource("54_eipiu")
+
+[node name="LabelMisterEarl" parent="Sign" instance=ExtResource("55_d8ap7")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -57.0
+offset_right = -66.0
+offset_bottom = -123.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "jump on
+cheep cheeps"
+vertical_alignment = 1
 
 [connection signal="coin_checked_success" from="CoinChecker" to="SecretUnlocker" method="progress_secret"]
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]

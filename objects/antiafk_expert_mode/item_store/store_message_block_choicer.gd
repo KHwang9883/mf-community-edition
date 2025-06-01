@@ -31,6 +31,10 @@ func accepted() -> void:
 	add_sibling(item_store)
 	item_store.antiafk_ref_node = antiafk_expert_mode
 	item_store.msgbox_ref_node = self
+	for i in item_store.container.get_children():
+		if i is TextureRect && !i.name in antiafk_expert_mode.store_inventory.keys():
+			i.queue_free()
+	item_store.container._update_selectors()
 	var tw = item_store.create_tween()
 	tw.tween_property(item_store, ^"modulate:a", 1.0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_callback(item_store.activate)

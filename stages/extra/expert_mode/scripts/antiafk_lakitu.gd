@@ -10,6 +10,7 @@ const AIMING_LAKITU = preload("res://objects/aiming_lakitu/aiming_lakitu.tscn")
 	"atom": 1,
 	"clock": 2,
 	"boomerang": 2,
+	"frog": 2,
 	"hammer": 2
 }
 @export_group("Anti-AFK Settings")
