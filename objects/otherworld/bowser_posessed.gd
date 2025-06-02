@@ -45,6 +45,7 @@ func stop_following(set_gravity: bool = true) -> void:
 	_follow_progress = 0.0
 	_following_start = false
 	is_following = false
+	_chase_speed = 0
 	if set_gravity:
 		gravity_scale = 0.15
 
@@ -79,11 +80,12 @@ func _physics_process(delta: float) -> void:
 		]
 	
 	var pl: Player = Thunder._current_player
-	if !pl: return
+	if !pl:
+		stop_following(true)
 	
 	if !is_following:
 		vel_set_x(_chase_speed)
-		if (_chase_speed < 0 && global_position.x < pl.global_position.x) || (_chase_speed > 0 && global_position.x > pl.global_position.x):
+		if pl && (_chase_speed < 0 && global_position.x < pl.global_position.x) || (_chase_speed > 0 && global_position.x > pl.global_position.x):
 			gravity_scale = 0
 			is_following = true
 			_following_start = true
@@ -92,7 +94,9 @@ func _physics_process(delta: float) -> void:
 				sprite.play(&"default")
 			if sprite.animation == &"default" && !is_on_floor():
 				sprite.play(&"jump")
-	
+		
+		if !pl && sprite.animation == &"default":
+			sprite.stop()
 		# Physics
 		motion_process(delta)
 		if is_on_floor():
@@ -116,9 +120,13 @@ func _physics_process(delta: float) -> void:
 			_to_follow_pos = pos
 		global_position = lerp(_from_follow_pos, _to_follow_pos, Thunder.Math.ease_out_back(_follow_progress))
 		_follow_progress = min(_follow_progress + 1.25 * delta, 1)
+		gravity_scale = 0.05
 		if _follow_progress == 1:
 			_follow_progress = 0
 			_following_start = false
+			gravity_scale = 0
+		
+		motion_process(delta)
 		
 		if sprite.animation == &"default" && !is_on_floor():
 			sprite.play(&"jump")
@@ -128,6 +136,7 @@ func _physics_process(delta: float) -> void:
 		#if !is_instance_valid(mario):
 		#	kevin_podokh()
 		#	return
+		if !Thunder._current_player: return
 		global_position = pos
 		if on_floor && sprite.animation == &"jump" || !sprite.is_playing():
 			sprite.play(&"default")
