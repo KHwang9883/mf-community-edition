@@ -1,5 +1,7 @@
 extends BowserAttack
 
+const SIDE_SPIKES = preload("res://stages/extra/expert_mode/otherworld/sounds/side_spikes.wav")
+
 @export var attack_delay: float = 1.0
 @export var active_ceiling_rect: Rect2
 @export_group("Animations")
@@ -22,7 +24,9 @@ func start_attack() -> void:
 	_waiting_for_end = false
 	var tw = create_tween()
 	tw.tween_callback(set.bind("_active", true))
-	tw.tween_interval(attack_delay)
+	tw.tween_interval(0.5)
+	tw.tween_callback(Audio.play_1d_sound.bind(SIDE_SPIKES, false))
+	tw.tween_interval(attack_delay - 0.5)
 	tw.tween_callback(middle_attack)
 
 func _physics_process(delta: float) -> void:

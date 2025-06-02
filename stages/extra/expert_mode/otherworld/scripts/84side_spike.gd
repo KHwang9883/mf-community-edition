@@ -12,26 +12,23 @@ const SIDE_SPIKES = preload("res://stages/extra/expert_mode/otherworld/sounds/si
 @export var reabilitation_speed: float = 100.0
 
 var _timeout: float = 5.0
+var _activation_delay: float = 2.0
 
 var _state: int = 0
 var _sine: float
 var _falling_vel: float
 var _sound_played: bool
 
-@onready var init_pos: Vector2 = position
-
 func _physics_process(delta: float) -> void:
-	var player: Player = Thunder._current_player
-	
 	if _state == 1:
 		if !_sound_played:
-			Audio.play_1d_sound(SIDE_SPIKES)
+			Audio.play_1d_sound(SIDE_SPIKES, false)
 			_sound_played = true
 		
 		_sine += 50 * delta
 		position.x = sin(_sine) * (_sine / 70.0)
 		
-		if _sine > 100:
+		if _sine > _activation_delay * 50:
 			_state += 1
 			position.x = 0
 			_sine = 0
@@ -42,7 +39,7 @@ func _physics_process(delta: float) -> void:
 			_state = 3
 			_falling_vel = 0
 			Thunder._current_camera.shock_smooth(10, 5)
-			Audio.play_1d_sound(FALL)
+			Audio.play_1d_sound(FALL, false)
 			await get_tree().create_timer(_timeout, false).timeout
 			_state = 4
 	elif _state == 4:
@@ -51,6 +48,6 @@ func _physics_process(delta: float) -> void:
 		position.x = move_toward(position.x, 0, _falling_vel * 50 * delta)
 		if position.x == 0:
 			Thunder._current_camera.shock_smooth(10, 5)
-			Audio.play_1d_sound(FALL)
+			Audio.play_1d_sound(FALL, false)
 			_falling_vel = 0
 			_state = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://dlcukckub7l5b"]
+[gd_scene load_steps=54 format=3 uid="uid://dlcukckub7l5b"]
 
 [ext_resource type="Script" uid="uid://0h8f38jshvu8" path="res://objects/otherworld/bowser_posessed.gd" id="1_swgiv"]
 [ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="2_akia6"]
@@ -15,9 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://duyieyqodtxa8" path="res://engine/objects/bosses/bowser/texture/bowser_hammer_pre.png" id="14_s0c3t"]
 [ext_resource type="Script" uid="uid://co2tyasfdab1" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_flame.gd" id="15_axirj"]
 [ext_resource type="Script" uid="uid://j4rebadaab82" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_hammer.gd" id="16_x7url"]
+[ext_resource type="PackedScene" uid="uid://d3fn01t3sj6e7" path="res://objects/otherworld/flame_following_easier.tscn" id="17_yfbwa"]
 [ext_resource type="Script" uid="uid://5sbxl67n0cmo" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_post_hammer.gd" id="17_ylpp7"]
-[ext_resource type="PackedScene" uid="uid://dxgs3gdej852p" path="res://engine/objects/bosses/bowser/projectile/flame_following.tscn" id="18_6mw74"]
-[ext_resource type="Script" uid="uid://db7vj8707qsqt" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_burst.gd" id="18_xx6d2"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="19_yfbwa"]
 [ext_resource type="Script" uid="uid://d1r1xa4je3f4e" path="res://objects/otherworld/bowser_attack_ceiling.gd" id="20_yfbwa"]
 [ext_resource type="Script" uid="uid://h5dndme7fhbp" path="res://objects/otherworld/bowser_attack_ceiling_side.gd" id="21_dcxbr"]
@@ -299,7 +298,7 @@ animations = [{
 
 [sub_resource type="Resource" id="Resource_dcxbr"]
 script = ExtResource("19_yfbwa")
-creation_nodepack = ExtResource("18_6mw74")
+creation_nodepack = ExtResource("17_yfbwa")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -319,8 +318,8 @@ floor_max_angle = 0.802851
 floor_snap_length = 12.0
 script = ExtResource("1_swgiv")
 health = 21
-status_interval = Array[float]([3.0, 2.0, 3.0, 2.0, 0.2, 2.0, 3.0, 2.0, 2.0])
-status = Array[StringName]([&"multiflames", &"rotation", &"flamefast", &"flamefast", &"ceiling", &"rotation", &"flamefast", &"ceiling_side", &"flame"])
+status_interval = Array[float]([1.0, 2.0, 3.0, 2.0, 0.5, 0.4, 3.0, 2.0, 2.0, 2.0, 1.0, 2.0, 2.0, 2.0, 4.0])
+status = Array[StringName]([&"multiflames", &"rotation", &"flamefast", &"flamefast", &"ceiling", &"rotation", &"flamefast", &"ceiling_left", &"flame", &"multiflames", &"ceiling_right", &"flamefast", &"flame", &"ceiling_both", &"flamefast"])
 flame = null
 hammer = null
 burst_fireball = null
@@ -389,12 +388,12 @@ metadata/_edit_pinned_properties_ = [&"projectile_inst"]
 
 [node name="attack_hammer" type="Node" parent="."]
 script = ExtResource("16_x7url")
+hammer_amount = 8
+hammer_interval = 0.15
+hammer_speed_min = Vector2(100, -700)
 
 [node name="attack_post_hammer" type="Node" parent="."]
 script = ExtResource("17_ylpp7")
-
-[node name="attack_burst" type="Node" parent="."]
-script = ExtResource("18_xx6d2")
 
 [node name="attack_flamefast" type="Node" parent="."]
 script = ExtResource("15_axirj")
@@ -408,13 +407,26 @@ multiple_flames = [0]
 
 [node name="attack_ceiling" type="Node" parent="."]
 script = ExtResource("20_yfbwa")
-attack_delay = 2.5
+attack_delay = 3.0
 active_ceiling_rect = Rect2(0, 0, 640, 480)
 
-[node name="attack_ceiling_side" type="Node" parent="."]
+[node name="attack_ceiling_left" type="Node" parent="."]
 script = ExtResource("21_dcxbr")
 attack_delay = 2.0
-active_ceiling_rect = Rect2(0, 0, 640, 480)
+spike_left = true
+
+[node name="attack_ceiling_right" type="Node" parent="."]
+script = ExtResource("21_dcxbr")
+attack_delay = 2.0
+spike_right = true
+
+[node name="attack_ceiling_both" type="Node" parent="."]
+script = ExtResource("21_dcxbr")
+attack_delay = 2.5
+spike_left = true
+spike_right = true
+spike_left_pos = 208.0
+spike_right_pos = -208.0
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="bullet_hurt"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="hurt"]

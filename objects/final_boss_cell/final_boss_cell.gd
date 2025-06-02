@@ -13,7 +13,7 @@ const FINAL_BOSS_CELL_PALOCHKA = preload("res://objects/final_boss_cell/final_bo
 @onready var world = $World
 @onready var animation_player = $AnimationPlayer
 
-@onready var mario = Thunder._current_player
+@onready var mario: Player = Thunder._current_player
 
 var amount_counter = 0
 
@@ -41,12 +41,14 @@ func _creation_mushroom() -> void:
 	for i in Scenes.current_scene.get_children():
 		if i.name.begins_with('RedMushroom'):
 			hasMushroom = true
+			break
 	
 	var hasFlower = false
 	
 	for i in Scenes.current_scene.get_children():
 		if i.name.begins_with('FireFlower'):
 			hasFlower = true
+			break
 	
 	if !hasMushroom && !hasFlower && Thunder._current_player_state.type == PlayerSuit.Type.SMALL && amount_counter < 4:
 		cell_peach.animation = 'throw'
@@ -99,6 +101,8 @@ func cutscene() -> void:
 	mario.completed = true
 	
 	await get_tree().create_timer(1, false).timeout
+	if !is_instance_valid(mario):
+		return
 	
 	animation_player.pause()
 	_fade_help()
@@ -123,6 +127,8 @@ func _fade_help() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if !is_instance_valid(mario): return
+	
 	if _run_away:
 		_player_speed = move_toward(_player_speed, 325, delta * 250)
 		cell_peach.speed.x = move_toward(cell_peach.speed.x, 325, delta * 250)
