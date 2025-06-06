@@ -11,6 +11,7 @@ func _ready() -> void:
 	var not_done: bool = false
 	
 	for achievement in children:
+		if !achievement.visible: continue
 		var toggler: Label
 		var labels = achievement.get_children()
 		for i in len(labels):
