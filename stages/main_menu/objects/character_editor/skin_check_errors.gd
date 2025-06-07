@@ -16,8 +16,8 @@ func _physics_process(delta: float) -> void:
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	
-	
 	var errored: PackedStringArray = []
+	var using_default: PackedStringArray = []
 	if SkinsManager.current_skin:
 		SkinsManager.custom_sprite_frames[SkinsManager.current_skin] = {}
 		for i in CharacterManager.get_suit_names():
@@ -30,10 +30,16 @@ func _handle_select(mouse_input: bool = false) -> void:
 				if !_suit: continue
 				var spr_frames := SkinsManager.apply_player_skin(_suit, true)
 				if spr_frames && spr_frames == _suit.animation_sprites:
-					errored.append(
-						"Suit '%s' is using default textures." % [i]
-					)
-		if !errored.is_empty():
+					using_default.append(str(i))
+		if !errored.is_empty() || !using_default.is_empty():
+			if !using_default.is_empty():
+				errored.append("The following suits:\n%s" % ", ".join(using_default))
+				errored.append(
+					"\nhave been forced to load default textures due to errors in the skin. \
+This is a side-effect of this option.
+
+Re-enter the tweaks menu to ignore errors and use custom textures anyway (if possible)."
+				)
 			OS.alert("
 ".join(errored), "Player Skin Load Error")
 		

@@ -5,7 +5,7 @@ extends CanvasItem
 @export_group("Actions")
 @export var action_after_sec := 0.0
 @export var fade_on_end := false
-@export_file("*.tscn", "*.scn") var change_scene: String
+@export var change_scene: String
 @export_file("*.tscn", "*.scn") var remade_level_tweak_scene: String
 @export var skip_suspended_profile_save: bool = true
 @export var save_to_profile_as_current_world: bool = false
