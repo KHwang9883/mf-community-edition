@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=4 uid="uid://dq27ub5400i4u"]
+[gd_scene load_steps=119 format=4 uid="uid://dq27ub5400i4u"]
 
 [ext_resource type="PackedScene" uid="uid://dxqr6xmj8wu31" path="res://stages/world_1/expert_level_1-1.tscn" id="1_kc8rb"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="2_38ist"]
@@ -34,8 +34,12 @@
 [ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="32_5qh3s"]
 [ext_resource type="PackedScene" uid="uid://bybqr7heg8cg6" path="res://engine/objects/powerups/frog_suit/frog_suit_forced.tscn" id="33_33dsc"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="34_nwtk2"]
-[ext_resource type="PackedScene" uid="uid://bip1wgqvq8fmd" path="res://objects/otherworld/cheep_red_stompable.tscn" id="35_4f6cb"]
+[ext_resource type="PackedScene" uid="uid://cb5bu6hsd4l5n" path="res://objects/goomba_bro/goomba_thrown.tscn" id="35_4f6cb"]
 [ext_resource type="PackedScene" uid="uid://c02uktgryh3ku" path="res://engine/objects/enemies/paratroopas/paratroopa_blue.tscn" id="35_yoy6l"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="37_yoy6l"]
+[ext_resource type="Texture2D" uid="uid://dd4y00uu5s68g" path="res://objects/final_boss_cell/textures/cell_peach.png" id="38_b5iyd"]
+[ext_resource type="Script" uid="uid://bmjeo5phex13y" path="res://stages/extra/expert_mode/otherworld/play_sound.gd" id="39_81km0"]
+[ext_resource type="AudioStream" uid="uid://b4761l8j7aieq" path="res://sfx/brushed.wav" id="40_b5iyd"]
 
 [sub_resource type="Resource" id="Resource_81c3s"]
 resource_local_to_scene = true
@@ -1114,12 +1118,12 @@ custom_vars = {}
 script = ExtResource("34_nwtk2")
 creation_nodepack = ExtResource("35_4f6cb")
 creation_force_sibling = false
-trans_offset = Vector2(0, -28)
+trans_offset = Vector2(0, -32)
 trans_inheritances = 6
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0
-visi_z_index = 0
+visi_z_index = 1
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
@@ -1137,6 +1141,167 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ge7j"]
+size = Vector2(224, 208)
+
+[sub_resource type="Animation" id="Animation_2e8vn"]
+resource_name = "new_animation"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(61, -154)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.6), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CellPeach2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(61, -154), Vector2(-3, -154)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CellPeach2:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.6), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CellPeach3:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(61, -154), Vector2(125, -154)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CellPeach3:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.6), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_q8yqm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(61, -154)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CellPeach2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(61, -154)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CellPeach2:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CellPeach3:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(61, -154)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CellPeach3:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lr2rq"]
+_data = {
+&"RESET": SubResource("Animation_q8yqm"),
+&"new_animation": SubResource("Animation_2e8vn")
+}
 
 [node name="Level1-1" instance=ExtResource("1_kc8rb")]
 time = 440
@@ -1338,38 +1503,31 @@ result = SubResource("Resource_u3rf1")
 
 [node name="Goomba" parent="." index="111"]
 position = Vector2(1424, 398)
-speed = Vector2(15, 0)
-gravity_scale = 0.3
 
 [node name="Goomba4" parent="." index="114"]
 position = Vector2(2832, 32)
 look_at_player = false
 force_direction = -1
-speed = Vector2(15, 0)
 gravity_scale = 0.3
 max_falling_speed = 500.0
 
 [node name="Goomba6" parent="." index="115"]
 position = Vector2(2768, 400)
-speed = Vector2(15, 0)
 gravity_scale = 0.3
 max_falling_speed = 500.0
 
 [node name="Goomba5" parent="." index="116"]
 position = Vector2(2832, 32)
 force_direction = 1
-speed = Vector2(15, 0)
 gravity_scale = 0.3
 max_falling_speed = 500.0
 
 [node name="Goomba7" parent="." index="117"]
 position = Vector2(3376, 32)
-speed = Vector2(15, 0)
 gravity_scale = 0.3
 max_falling_speed = 500.0
 
 [node name="Goomba8" parent="." index="118"]
-speed = Vector2(15, 0)
 gravity_scale = 0.3
 max_falling_speed = 500.0
 
@@ -1450,7 +1608,6 @@ position = Vector2(2064, 720)
 result = SubResource("Resource_trb1t")
 
 [node name="Goomba14" parent="." index="165"]
-speed = Vector2(15, 0)
 gravity_scale = 0.3
 max_falling_speed = 500.0
 
@@ -1685,6 +1842,9 @@ offset_top = 96.0
 offset_right = 8096.0
 offset_bottom = 512.0
 
+[node name="KoopaRed10" parent="." index="213"]
+position = Vector2(7760, 688)
+
 [node name="PipeIn6" parent="." index="214"]
 position = Vector2(4672, 544)
 collision_mask = 0
@@ -1890,9 +2050,9 @@ warp_objects_on_end = false
 smooth_enabled = false
 
 [node name="PlatformPath5" parent="Path2D" index="3" instance=ExtResource("21_kt8rk")]
-position = Vector2(6888, 188.8)
+position = Vector2(7208, 188.8)
 progress = 204.8
-h_offset = 5560.0
+h_offset = 5880.0
 loop = true
 speed = 100.0
 loop_backwards = false
@@ -1916,74 +2076,81 @@ random_phase = false
 frequency = 0.0
 facing_method = 0
 
-[node name="KoopaParatroopaRed2" parent="." index="250" instance=ExtResource("22_4khch")]
-position = Vector2(6960, 400)
+[node name="KoopaParatroopaRed3" parent="." index="250" instance=ExtResource("22_4khch")]
+position = Vector2(272, 1232)
 amplitude = Vector2(0, 0)
 random_phase = false
 frequency = 0.0
 facing_method = 0
 
-[node name="Firebar" parent="." index="251" instance=ExtResource("23_d6gg3")]
+[node name="KoopaParatroopaRed2" parent="." index="251" instance=ExtResource("22_4khch")]
+position = Vector2(7760, 400)
+amplitude = Vector2(0, 0)
+random_phase = false
+frequency = 0.0
+facing_method = 0
+
+[node name="Firebar" parent="." index="252" instance=ExtResource("23_d6gg3")]
 position = Vector2(3280, 16)
 fireballs = 12
 angular_speed = 0.0
 angle = 90.0
 
-[node name="Firebar2" parent="." index="252" instance=ExtResource("23_d6gg3")]
+[node name="Firebar2" parent="." index="253" instance=ExtResource("23_d6gg3")]
 position = Vector2(4944, 240)
 fireballs = 12
 angular_speed = 0.0
 angle = 100.0
 
-[node name="Firebar3" parent="." index="253" instance=ExtResource("23_d6gg3")]
+[node name="Firebar3" parent="." index="254" instance=ExtResource("23_d6gg3")]
 position = Vector2(6192, -16)
 fireballs = 18
 angular_speed = 0.0
 angle = 110.0
 
-[node name="Thwomp2" parent="." index="254" instance=ExtResource("24_y4f2o")]
+[node name="Thwomp2" parent="." index="255" instance=ExtResource("24_y4f2o")]
 position = Vector2(3552, 384)
 rotation = 3.14159
 gravity_scale = -1.0
 
-[node name="Thwomp3" parent="." index="255" instance=ExtResource("24_y4f2o")]
+[node name="Thwomp3" parent="." index="256" instance=ExtResource("24_y4f2o")]
 position = Vector2(5728, 384)
 rotation = 3.14159
 gravity_scale = -1.0
 
-[node name="HammerBro" parent="." index="256" instance=ExtResource("25_nq5b2")]
+[node name="HammerBro" parent="." index="257" instance=ExtResource("25_nq5b2")]
 position = Vector2(4016, 240)
 
-[node name="HammerBroJumpMarker" parent="." index="257" instance=ExtResource("26_t05p1")]
+[node name="HammerBroJumpMarker" parent="." index="258" instance=ExtResource("26_t05p1")]
 position = Vector2(3936, 384)
 hammer_bros_jumping_type = 2
 
-[node name="HammerBroJumpMarker2" parent="." index="258" instance=ExtResource("26_t05p1")]
+[node name="HammerBroJumpMarker2" parent="." index="259" instance=ExtResource("26_t05p1")]
 position = Vector2(3936, 224)
 hammer_bros_jumping_type = 2
 
-[node name="BulletBill" parent="." index="259" instance=ExtResource("27_t05p1")]
+[node name="BulletBill" parent="." index="260" instance=ExtResource("27_t05p1")]
 position = Vector2(4528, 160)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="BulletBill" index="4"]
 rect = Rect2(-16, -16, 32, 32)
 
-[node name="BulletBill3" parent="." index="260" instance=ExtResource("27_t05p1")]
+[node name="BulletBill3" parent="." index="261" instance=ExtResource("27_t05p1")]
 position = Vector2(5616, 80)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="BulletBill3" index="4"]
 rect = Rect2(-16, -16, 32, 32)
 
-[node name="BulletBill2" parent="." index="261" instance=ExtResource("27_t05p1")]
+[node name="BulletBill2" parent="." index="262" instance=ExtResource("27_t05p1")]
 position = Vector2(1968, 176)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="BulletBill2" index="4"]
 rect = Rect2(-16, -16, 32, 32)
 
-[node name="BuzzleBettleShell" parent="." index="262" instance=ExtResource("28_gihaq")]
+[node name="BuzzleBettleShell" parent="." index="263" instance=ExtResource("28_gihaq")]
 position = Vector2(3856, 48)
 
-[node name="Bowser" parent="." index="263" instance=ExtResource("29_iuqj7")]
+[node name="Bowser" parent="." index="264" instance=ExtResource("29_iuqj7")]
 position = Vector2(5344, 384)
 status_interval = Array[float]([3.0, 3.0, 3.0, 3.0])
 status = Array[StringName]([&"flame", &"flame", &"flame", &"multiflames"])
@@ -1991,13 +2158,13 @@ finish_on_death = false
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Bowser" index="11"]
 
-[node name="BowserEdge" parent="." index="264" instance=ExtResource("30_ne8b2")]
+[node name="BowserEdge" parent="." index="265" instance=ExtResource("30_ne8b2")]
 position = Vector2(5200, 176)
 
-[node name="BowserEdge2" parent="." index="265" instance=ExtResource("30_ne8b2")]
+[node name="BowserEdge2" parent="." index="266" instance=ExtResource("30_ne8b2")]
 position = Vector2(5616, 176)
 
-[node name="PiranhaPink" parent="." index="266" instance=ExtResource("31_5qh3s")]
+[node name="PiranhaPink" parent="." index="267" instance=ExtResource("31_5qh3s")]
 position = Vector2(6560, 320)
 stay_in_interval = 1.2
 stay_out_interval = 1.0
@@ -2016,7 +2183,7 @@ custom_vars = {
 "projectile_speed_min": Vector2(-200, -250)
 }
 
-[node name="PiranhaPink3" parent="." index="267" instance=ExtResource("31_5qh3s")]
+[node name="PiranhaPink3" parent="." index="268" instance=ExtResource("31_5qh3s")]
 position = Vector2(1632, 352)
 stay_in_interval = 1.2
 stay_out_interval = 1.0
@@ -2031,11 +2198,11 @@ custom_vars = {
 "projectile_offscreen_time": 3.0,
 "projectile_remove_from_top": false,
 "projectile_speed_correction": true,
-"projectile_speed_max": Vector2(150, -550),
-"projectile_speed_min": Vector2(-150, -250)
+"projectile_speed_max": Vector2(150, -400),
+"projectile_speed_min": Vector2(-125, -250)
 }
 
-[node name="PiranhaPink2" parent="." index="268" instance=ExtResource("31_5qh3s")]
+[node name="PiranhaPink2" parent="." index="269" instance=ExtResource("31_5qh3s")]
 position = Vector2(7328, 288)
 stay_in_interval = 1.2
 stay_out_interval = 1.0
@@ -2054,8 +2221,41 @@ custom_vars = {
 "projectile_speed_min": Vector2(-200, -250)
 }
 
+[node name="Node2D3" type="Area2D" parent="." index="270"]
+position = Vector2(6867, 538)
+script = ExtResource("37_yoy6l")
+only_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D3" index="0"]
+position = Vector2(61, -226)
+shape = SubResource("RectangleShape2D_7ge7j")
+
+[node name="CellPeach2" type="Sprite2D" parent="Node2D3" index="1"]
+position = Vector2(61, -154)
+texture = ExtResource("38_b5iyd")
+
+[node name="CellPeach3" type="Sprite2D" parent="Node2D3" index="2"]
+position = Vector2(61, -154)
+texture = ExtResource("38_b5iyd")
+
+[node name="CellPeach" type="Sprite2D" parent="Node2D3" index="3"]
+position = Vector2(61, -154)
+texture = ExtResource("38_b5iyd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D3" index="4"]
+root_node = NodePath("../CellPeach")
+libraries = {
+&"": SubResource("AnimationLibrary_lr2rq")
+}
+
+[node name="Node" type="Node" parent="Node2D3" index="5"]
+script = ExtResource("39_81km0")
+sound = ExtResource("40_b5iyd")
+
 [connection signal="collided_floor" from="KoopaGreen2" to="KoopaGreen2" method="jump" binds= [-350.0]]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser" method="activate"]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser/VisibleOnScreenNotifier2D" method="queue_free"]
+[connection signal="player_enter" from="Node2D3" to="Node2D3/Node" method="sound_play"]
+[connection signal="player_enter" from="Node2D3" to="Node2D3/AnimationPlayer" method="play" binds= ["new_animation"]]
 
 [editable path="Water"]
