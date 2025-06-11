@@ -65,7 +65,7 @@ func _on_level_completed() -> void:
 			var _sfx = CharacterManager.get_sound_replace(pwrp, pwrp, "hud_acceptance", false)
 			Audio.play_1d_sound(_sfx)
 	
-	life_text_triggered.emit()
 	if Data.technical_values.remaining_continues != -1:
+		life_text_triggered.emit()
 		Data.technical_values.remaining_continues += 1
 	print("added a continue, total: %d" % Data.technical_values.remaining_continues)
