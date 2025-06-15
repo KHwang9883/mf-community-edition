@@ -7,7 +7,7 @@ extends Node2D
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
 @onready var super_mario: Sprite2D = $SuperMario
 @onready var super_mario_2: Sprite2D = $SuperMario2
-@onready var pause: Label = $Pause
+@onready var pause: Label = $CanvasLayer/Pause
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var marker_2d_2: Marker2D = $Marker2D2
 @onready var music_loader: Node = $MusicLoader
@@ -18,6 +18,7 @@ const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav
 
 var can_start: bool = false
 var pause_tw: Tween
+var counter: float
 
 func _ready() -> void:
 	label.modulate.a = 0
@@ -55,7 +56,6 @@ func _physics_process(delta: float) -> void:
 		pause_tw.tween_interval(1.0)
 		pause_tw.tween_property(pause, ^"modulate:a", 0.0, 0.6)
 	
-	
 	if can_start && Input.is_action_just_pressed("ui_accept"):
 		can_start = false
 		var powerup_sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
@@ -69,7 +69,10 @@ func _physics_process(delta: float) -> void:
 		tw.tween_interval(0.5)
 		tw.tween_property(control, "modulate:a", 1.0, 1.5)
 		tw.tween_interval(1.0)
-		tw.tween_callback(video_stream_player.play)
+		tw.tween_callback(func():
+			video_stream_player.play()
+			get_tree().create_timer(5.8, false, false, true).timeout.connect(start_transition, CONNECT_ONE_SHOT)
+		)
 		video_stream_player.finished.connect(start_transition)
 		
 func start_transition() -> void:

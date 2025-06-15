@@ -8,6 +8,7 @@ var skin_tweaks: Dictionary = {}
 @onready var menu_controller: MenuItemsController = $"../.."
 @onready var par: HSeparator = $".."
 @onready var camera_2d: Camera2D = $"../../../Camera2D"
+@onready var skin_sound_test: MenuItemsController = $"../../../SkinSoundTest"
 
 func _on_quick_skin_settings_button_selection_entered() -> void:
 	get_tree().call_group(&"_skin_suit_category", &"queue_free")
@@ -79,7 +80,6 @@ func _resize_submenu() -> void:
 	for i in 8:
 		if !is_inside_tree(): return
 		var _control: Control = $"../../../SkinSuitSettingsSubmenu"
-		#print(_control.get_combined_minimum_size().y)
 		if !_control.focused && i > 2: return
 		if _control.size.y > _control.get_combined_minimum_size().y:
 			_control.size.y = _control.get_combined_minimum_size().y
@@ -91,7 +91,6 @@ func _resize_quick_skin() -> void:
 	for i in 8:
 		if !is_inside_tree(): return
 		var _control: Control = $"../../../SkinTweaks"
-		#print(_control.get_combined_minimum_size().y)
 		if !_control.focused && i > 2: return
 		if _control.size.y > _control.get_combined_minimum_size().y:
 			_control.size.y = _control.get_combined_minimum_size().y
@@ -99,5 +98,53 @@ func _resize_quick_skin() -> void:
 		await get_tree().physics_frame
 
 
+func _resize_sound_test() -> void:
+	for i in 8:
+		if !is_inside_tree(): return
+		if !skin_sound_test.focused && i > 2: return
+		if skin_sound_test.size.y > skin_sound_test.get_combined_minimum_size().y:
+			skin_sound_test.size.y = skin_sound_test.get_combined_minimum_size().y
+		camera_2d.update_limit()
+		await get_tree().physics_frame
+
+
 func _on_skin_suit_exit_selection_entered() -> void:
 	_resize_quick_skin()
+
+
+func _on_sound_test_selection_entered() -> void:
+	var mus_ch = Audio._music_channels[0]
+	if is_instance_valid(mus_ch):
+		Audio.fade_music_1d_player(mus_ch, -60, 0.6)
+	
+	get_tree().call_group(&"_sounds", &"queue_free")
+	
+	if SkinsManager.current_skin && SkinsManager.custom_textures.has(SkinsManager.current_skin):
+		var _arr := PackedStringArray(SkinsManager.custom_textures[SkinsManager.current_skin].keys())
+		_arr.sort()
+		for i in _arr.size():
+			var _cat_suit_sel = CATEGORY_SUIT_SELECTION.instantiate()
+			_cat_suit_sel.powerup_name = _arr[i]
+			_cat_suit_sel.get_node("Label").text = "%s suit" % [_arr[i].replacen("_", " ")]
+			_cat_suit_sel.reset_to = _arr.size() - i
+			par.add_sibling(_cat_suit_sel)
+	#elif SkinsManager.current_skin.is_empty():
+	#	var _cat_suit_sel = SKIN_SETTINGS_GLOBAL.instantiate()
+	#	par.add_sibling(_cat_suit_sel)
+		
+	
+	skin_sound_test._update_selectors()
+	_resize_sound_test()
+
+
+func _on_audiotest_exit_selection_entered() -> void:
+	#if audio_tween: audio_tween.kill()
+	var mus_ch = Audio._music_channels[0]
+	if is_instance_valid(mus_ch):
+		Audio.fade_music_1d_player(mus_ch, -2, 0.6)
+		#audio_tween = create_tween()
+		#audio_tween.tween_property(mus_ch, "volume_linear", 0.8, 0.5)
+	
+	get_tree().call_group(&"_submenu_skin_suit_category", &"queue_free")
+	skin_sound_test.size.y = 432
+	_resize_skin_suit()
