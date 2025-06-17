@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://b2qn7ndbgkdnm"]
+[gd_scene load_steps=38 format=4 uid="uid://b2qn7ndbgkdnm"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_t1txt"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_glcsw"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://bbc3tx7dapbrk" path="res://engine/objects/signs/arrowsignR.png" id="26_ipr5p"]
 [ext_resource type="Script" uid="uid://b1lhd5quqk27h" path="res://gfx/texts/signs/sign_visible_tweak.gd" id="27_2b3l3"]
 [ext_resource type="Texture2D" uid="uid://culfv53lkdvt5" path="res://gfx/sign/sign_malpka.png" id="28_48hlq"]
+[ext_resource type="Script" uid="uid://80j6k8i6dr13" path="res://stages/extra/secrets/scripts/goompa_party_killer.gd" id="31_ir1f3"]
 
 [sub_resource type="Gradient" id="Gradient_ehahp"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -49,6 +50,7 @@ resource_local_to_scene = true
 script = ExtResource("14_7k1tp")
 creation_fallback_node = ExtResource("12_j0nor")
 creation_nodepack = ExtResource("22_53nn3")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -64,6 +66,7 @@ resource_local_to_scene = true
 script = ExtResource("14_7k1tp")
 creation_fallback_node = ExtResource("12_j0nor")
 creation_nodepack = ExtResource("25_866a0")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -73,6 +76,8 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1roqf"]
 
 [node name="EmalpkaMomento" type="Node2D"]
 script = ExtResource("1_t1txt")
@@ -282,6 +287,8 @@ position = Vector2(176, 240)
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -60
 script = ExtResource("19_eg0u1")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="GiantClouds3" type="Sprite2D" parent="Node2D"]
 position = Vector2(384, 184)
@@ -302,7 +309,7 @@ script = ExtResource("21_wjc2v")
 enemies = Array[NodePath]([NodePath("../HammerBro"), NodePath("../Goomba"), NodePath("../Goomba2"), NodePath("../Goomba3"), NodePath("../HammerBro6"), NodePath("../HammerBro4"), NodePath("../HammerBro3"), NodePath("../HammerBro5")])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 16
+collision_layer = 112
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -351,3 +358,13 @@ z_index = -1
 position = Vector2(464, 375)
 rotation = -0.261799
 texture = ExtResource("28_48hlq")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("31_ir1f3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 592)
+shape = SubResource("WorldBoundaryShape2D_1roqf")
