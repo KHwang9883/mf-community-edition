@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://41pe2tixm5n8"]
+[gd_scene load_steps=32 format=3 uid="uid://41pe2tixm5n8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_y8slg"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_dqq54"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="24_rok6q"]
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="24_sfk4b"]
 [ext_resource type="Script" uid="uid://b3k3km6quqqa2" path="res://stages/world_4/scripts/emalpka_checker.gd" id="25_f6etw"]
+[ext_resource type="Script" uid="uid://80j6k8i6dr13" path="res://stages/extra/secrets/scripts/goompa_party_killer.gd" id="26_33jni"]
 
 [sub_resource type="Gradient" id="Gradient_yisdg"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -38,6 +39,7 @@ resource_local_to_scene = true
 script = ExtResource("16_4esep")
 creation_fallback_node = ExtResource("14_ve82v")
 creation_nodepack = ExtResource("15_mpm5j")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -50,6 +52,8 @@ custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x50b1"]
 size = Vector2(32, 384)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rhu3d"]
 
 [node name="EmalpkaMomento" type="Node2D"]
 script = ExtResource("1_y8slg")
@@ -202,3 +206,13 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(656, 224)
 shape = SubResource("RectangleShape2D_x50b1")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("26_33jni")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 592)
+shape = SubResource("WorldBoundaryShape2D_rhu3d")

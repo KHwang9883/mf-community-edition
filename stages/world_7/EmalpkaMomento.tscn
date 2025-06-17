@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://br28pv86jpef0"]
+[gd_scene load_steps=33 format=4 uid="uid://br28pv86jpef0"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_opav8"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_vepfa"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="22_im4ls"]
 [ext_resource type="Texture2D" uid="uid://mpdkiuduprqj" path="res://gfx/fancy_graphics/clouds_looping_alpha.png" id="23_f774x"]
 [ext_resource type="PackedScene" uid="uid://dnyk0ph5vd52a" path="res://engine/objects/enemies/cheeps/cheep_blue.tscn" id="23_syb7u"]
+[ext_resource type="Script" uid="uid://80j6k8i6dr13" path="res://stages/extra/secrets/scripts/goompa_party_killer.gd" id="26_d8utb"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="26_vk1hj"]
 [ext_resource type="Script" uid="uid://b3k3km6quqqa2" path="res://stages/world_4/scripts/emalpka_checker.gd" id="27_1gfn5"]
 
@@ -41,6 +42,7 @@ resource_local_to_scene = true
 script = ExtResource("18_6jqj4")
 creation_fallback_node = ExtResource("16_x00xc")
 creation_nodepack = ExtResource("17_qr4lb")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -53,6 +55,11 @@ custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x50b1"]
 size = Vector2(32, 224)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ikaa8"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gqxyb"]
+normal = Vector2(0, 1)
 
 [node name="EmalpkaMomento" type="Node2D"]
 script = ExtResource("1_opav8")
@@ -251,3 +258,17 @@ position = Vector2(672, 464)
 
 [node name="CheepBlue2" parent="." instance=ExtResource("23_syb7u")]
 position = Vector2(784, 432)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("26_d8utb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 592)
+shape = SubResource("WorldBoundaryShape2D_ikaa8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -320)
+shape = SubResource("WorldBoundaryShape2D_gqxyb")
