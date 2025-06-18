@@ -6,7 +6,9 @@ var active: bool = false
 @onready var color_rect = $Node2D/ColorRect
 
 const LOLUDIED_SONG = preload("res://objects/chorniy_mario/loludied-song.ogg")
-const LOLUDIED_EASTER = preload("res://objects/chorniy_mario/pop'n'drop - game over.s3m")
+# WARNING: This uses LOAD method because when compiling in headless mode, plugins are loaded late
+# due to Godot bug, so this is a workaround.
+var LOLUDIED_EASTER = load("res://objects/chorniy_mario/pop'n'drop - game over.s3m")
 
 var target_scale = 2
 var _current_timer: SceneTreeTimer
