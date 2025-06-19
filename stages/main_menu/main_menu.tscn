@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=64 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" uid="uid://dukosa3hw8lff" path="res://stages/save_game_room/scripts/restore_tweaks_from_minix.gd" id="1_0nl34"]
 [ext_resource type="Script" uid="uid://d2esh46nc5aqc" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
@@ -45,13 +45,14 @@
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="31_uoq2x"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="33_axkr8"]
 [ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="34_0xv1c"]
-[ext_resource type="Script" uid="uid://b1einw57f1r02" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="42_5mfmq"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="43_qdsgx"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="44_agpdy"]
 [ext_resource type="Texture2D" uid="uid://cb24ytv72ue4t" path="res://engine/scenes/main_menu/textures/restart_cancel.png" id="45_1uype"]
-[ext_resource type="Script" uid="uid://c1indt3rqvneg" path="res://engine/scenes/main_menu/scripts/restart_now_selection.gd" id="46_k3l22"]
-[ext_resource type="Texture2D" uid="uid://ky1pe6qafydf" path="res://engine/scenes/main_menu/textures/restart_now.png" id="47_npgmd"]
+[ext_resource type="Script" uid="uid://d2upavvsv8fup" path="res://stages/main_menu/scripts/version.gd" id="46_npgmd"]
+[ext_resource type="Script" uid="uid://c6oa8xfkx61iq" path="res://stages/main_menu/update_modal.gd" id="47_bj1et"]
 [ext_resource type="Texture2D" uid="uid://dphjpmu2xobjk" path="res://objects/revamped_level_warning/textures/12321.png" id="48_bj1et"]
+[ext_resource type="Texture2D" uid="uid://fwa07n7kaesp" path="res://stages/main_menu/textures/update_now.png" id="50_npgmd"]
+[ext_resource type="Script" uid="uid://boeqlf5i7xnmx" path="res://stages/main_menu/scripts/update_modal_sel.gd" id="51_bj1et"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -270,7 +271,7 @@ script = ExtResource("26_dffd6")
 no_appear_on_min_quality = true
 
 [node name="MenuMushrooms" type="Sprite2D" parent="General/Node2D3"]
-position = Vector2(570, 257)
+position = Vector2(570, 253)
 texture = ExtResource("26_w72sm")
 script = ExtResource("5_7ehwd")
 
@@ -330,7 +331,7 @@ timeout = 8.0
 script = ExtResource("25_k3l22")
 
 [node name="Checkout" type="Sprite2D" parent="General/NewTweaks"]
-position = Vector2(546, 372)
+position = Vector2(546, 370)
 texture = ExtResource("26_npgmd")
 script = ExtResource("27_bj1et")
 
@@ -469,16 +470,19 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("15_4dur6")
 theme_override_font_sizes/font_size = 12
-text = "version 2.0 (beta)
+text = "version
 by meteo dream"
 horizontal_alignment = 2
 vertical_alignment = 2
+text_overrun_behavior = 3
 uppercase = true
+script = ExtResource("46_npgmd")
 
 [node name="UpdateConfirmModal" type="CanvasLayer" parent="."]
 layer = 127
 
 [node name="Control" type="Control" parent="UpdateConfirmModal"]
+process_mode = 3
 physics_interpolation_mode = 1
 visible = false
 modulate = Color(1, 1, 1, 0)
@@ -489,10 +493,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("42_5mfmq")
+script = ExtResource("47_bj1et")
 
 [node name="TextureRect" type="TextureRect" parent="UpdateConfirmModal/Control"]
-modulate = Color(1, 1, 1, 0.529412)
+modulate = Color(1, 1, 1, 0.8)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -507,7 +511,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 0.0
-offset_bottom = -16.0
+offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 26
@@ -516,7 +520,7 @@ mario forever: community edition!
 
 it is extremely recommended to update,
 as it includes bug fixes, compatibility with
-mario minix leaderboards, and, possibly, new content.
+mario minix leaderboards, and possibly new content.
 
 older versions of the game are not supported, but you can
 continue for now and update later."
@@ -540,20 +544,24 @@ script = ExtResource("44_agpdy")
 focused = false
 prev_screen_node_path = NodePath("TextureRect2")
 
+[node name="TextureRect" type="TextureRect" parent="UpdateConfirmModal/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("50_npgmd")
+stretch_mode = 3
+script = ExtResource("51_bj1et")
+cancel = false
+
 [node name="TextureRect2" type="TextureRect" parent="UpdateConfirmModal/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("45_1uype")
 stretch_mode = 3
-script = ExtResource("46_k3l22")
+script = ExtResource("51_bj1et")
 
-[node name="TextureRect" type="TextureRect" parent="UpdateConfirmModal/Control/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("47_npgmd")
-stretch_mode = 3
-script = ExtResource("46_k3l22")
-cancel = false
+[node name="Node" type="Node" parent="UpdateConfirmModal/Control"]
+script = ExtResource("25_vf7gm")
+menu_items_controller_path = NodePath("../VBoxContainer")
 
 [node name="Selector" type="Node2D" parent="UpdateConfirmModal/Control"]
 script = ExtResource("5_i43cl")
@@ -571,9 +579,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -320.0
-offset_top = 64.0
+offset_top = 56.0
 offset_right = 320.0
-offset_bottom = 104.0
+offset_bottom = 96.0
 grow_horizontal = 2
 texture = SubResource("AtlasTexture_sb5lk")
 stretch_mode = 3
@@ -588,3 +596,4 @@ autoplay = "RESET"
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Node" method="handle_selection"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]
 [connection signal="selected" from="UpdateConfirmModal/Control/VBoxContainer" to="UpdateConfirmModal/Control/Selector" method="handle_selection"]
+[connection signal="selected" from="UpdateConfirmModal/Control/VBoxContainer" to="UpdateConfirmModal/Control/Node" method="handle_selection"]

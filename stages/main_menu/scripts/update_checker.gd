@@ -72,6 +72,7 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 			_tw.tween_property(update_found, ^"modulate:a", 1, 0.5).set_ease(Tween.EASE_OUT)
 			
 			has_update = true
+			main_menu_controls.set_meta(&"has_update", true)
 			if dict.get("open_to", "").begins_with("https://"):
 				url_open = dict.open_to
 			Audio.play_1d_sound(COIN, true, { ignore_pause = true })

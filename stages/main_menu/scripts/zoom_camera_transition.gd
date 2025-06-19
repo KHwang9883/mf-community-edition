@@ -24,14 +24,14 @@ func _ready() -> void:
 				.with_speeds(999.0, -0.02)
 		)
 		if TransitionManager.current_transition:
-			Audio.play_1d_sound(FADEOUT)
+			Audio.play_1d_sound(FADEOUT, false, {ignore_pause = true})
 			await get_tree().create_timer(1.0, false, false).timeout
 			music_loader.play_buffered.call_deferred()
 			main_menu_controls.focused = true
 			menu_initiated.emit()
 		return
 	
-	Audio.play_1d_sound(FADEOUT)
+	Audio.play_1d_sound(FADEOUT, false, {ignore_pause = true})
 	zoom = Vector2(16, 16)
 	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tw.tween_property(self, "zoom", Vector2.ONE, 0.56)

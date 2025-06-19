@@ -143,28 +143,27 @@ func _on_sound_test_selection_entered() -> void:
 	
 	get_tree().call_group(&"_sounds", &"queue_free")
 	
-	if SkinsManager.current_skin && SkinsManager.custom_textures.has(SkinsManager.current_skin):
-		var _arr := PackedStringArray(CharacterManager.voice_lines.get(CharacterManager.get_character_name(), "Mario").keys())
-		_arr.sort()
-		for i in _arr.size():
-			var _cat_suit_sel = AUDIO_TEST_SELECTION.instantiate()
-			var voice_line = CharacterManager.get_voice_line(_arr[i])
-			if voice_line.is_empty():
-				if _arr[i] == "level_complete" && SettingsManager.get_tweak("alt_completion_music", false):
-					_cat_suit_sel.selected_sound = preload("res://music/complete_tweaked.ogg")
-				else:
-					_cat_suit_sel.selected_sound = DEFAULT_LINES.get(_arr[i], null)
+	var _arr := PackedStringArray(CharacterManager.voice_lines.get(CharacterManager.get_character_name(), "Mario").keys())
+	_arr.sort()
+	for i in _arr.size():
+		var _cat_suit_sel = AUDIO_TEST_SELECTION.instantiate()
+		var voice_line = CharacterManager.get_voice_line(_arr[i])
+		if voice_line.is_empty():
+			if _arr[i] == "level_complete" && SettingsManager.get_tweak("alt_completion_music", false):
+				_cat_suit_sel.selected_sound = preload("res://music/complete_tweaked.ogg")
 			else:
-				_cat_suit_sel.sounds_arr = voice_line
-			_cat_suit_sel.get_node("Label").text = _arr[i]
-			skin_sound_test.get_node("HSeparatorSpawnTweaks").add_sibling(_cat_suit_sel)
+				_cat_suit_sel.selected_sound = DEFAULT_LINES.get(_arr[i], null)
+		else:
+			_cat_suit_sel.sounds_arr = voice_line
+		_cat_suit_sel.get_node("Label").text = _arr[i]
+		skin_sound_test.get_node("HSeparatorSpawnTweaks").add_sibling(_cat_suit_sel)
 	#elif SkinsManager.current_skin.is_empty():
 	#	var _cat_suit_sel = SKIN_SETTINGS_GLOBAL.instantiate()
 	#	par.add_sibling(_cat_suit_sel)
 		
 	
-	skin_sound_test._update_selectors()
-	_resize_sound_test()
+	menu_controller._update_selectors()
+	_resize_quick_skin()
 
 
 func _on_audiotest_exit_selection_entered() -> void:
@@ -177,4 +176,5 @@ func _on_audiotest_exit_selection_entered() -> void:
 	
 	get_tree().call_group(&"_sounds", &"queue_free")
 	skin_sound_test.size.y = 432
-	_resize_skin_suit()
+	skin_sound_test._update_selectors()
+	_resize_sound_test()
