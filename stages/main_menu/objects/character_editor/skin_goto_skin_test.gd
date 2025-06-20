@@ -3,6 +3,7 @@ extends MenuSelection
 @onready var valu = get_node_or_null(^"Value")
 var _timer: float
 @onready var skin_room: CanvasLayer = $"../../SkinRoom"
+var _tw: Tween
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -32,6 +33,12 @@ func _handle_select(mouse_input: bool = false) -> void:
 		Audio._music_channels[0].process_mode = Node.PROCESS_MODE_DISABLED
 	skin_room.get_node("SVC/SV").add_child(room)
 	skin_room.visible = true
+	if _tw: _tw.kill()
+	_tw = skin_room.create_tween().set_parallel().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	_tw.tween_property(skin_room.get_node("ColorRect"), "modulate:a", 1.0, 0.5).from(0.0)
+	_tw.tween_property(skin_room.get_node("Panel"), "modulate:a", 1.0, 0.5).from(0.0)
+	_tw.tween_property(skin_room.get_node("Label"), "modulate:a", 1.0, 0.5).from(0.0)
+	_tw.tween_property(skin_room.svc, "modulate:a", 1.0, 0.5).from(0.0)
 	
 	$"..".focused = false
 	Scenes.current_scene.process_mode = Node.PROCESS_MODE_DISABLED
