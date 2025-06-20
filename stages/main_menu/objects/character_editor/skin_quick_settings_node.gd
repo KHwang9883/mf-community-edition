@@ -28,6 +28,7 @@ const DEFAULT_LINES = {
 }
 
 var skin_tweaks: Dictionary = {}
+var mus_tween: Tween
 
 @onready var menu_controller: MenuItemsController = $"../.."
 @onready var par: HSeparator = $".."
@@ -137,14 +138,16 @@ func _on_skin_suit_exit_selection_entered() -> void:
 
 
 func _on_sound_test_selection_entered() -> void:
-	var mus_ch = Audio._music_channels[0]
-	if is_instance_valid(mus_ch):
-		Audio.fade_music_1d_player(mus_ch, -60, 0.6)
-	
-	get_tree().call_group(&"_sounds", &"queue_free")
+	if 0 in Audio._music_channels:
+		var mus_ch = Audio._music_channels[0]
+		if is_instance_valid(mus_ch):
+			if mus_tween: mus_tween.kill()
+			mus_tween = create_tween()
+			mus_tween.tween_property(mus_ch, "volume_linear", 0, 0.6)
 	
 	var _arr := PackedStringArray(CharacterManager.voice_lines.get(CharacterManager.get_character_name(), "Mario").keys())
 	_arr.sort()
+	_arr.reverse()
 	for i in _arr.size():
 		var _cat_suit_sel = AUDIO_TEST_SELECTION.instantiate()
 		var voice_line = CharacterManager.get_voice_line(_arr[i])
@@ -162,19 +165,27 @@ func _on_sound_test_selection_entered() -> void:
 	#	par.add_sibling(_cat_suit_sel)
 		
 	
+	skin_sound_test._update_selectors()
 	menu_controller._update_selectors()
+	skin_sound_test.move_selector.call_deferred(0, true)
+	skin_sound_test.size.y = skin_sound_test.get_combined_minimum_size().y
+	camera_2d.force_update_scroll()
+	camera_2d.update_limit.call_deferred()
+	camera_2d.reset_physics_interpolation()
 	_resize_quick_skin()
 
 
 func _on_audiotest_exit_selection_entered() -> void:
-	#if audio_tween: audio_tween.kill()
-	var mus_ch = Audio._music_channels[0]
-	if is_instance_valid(mus_ch):
-		Audio.fade_music_1d_player(mus_ch, -2, 0.6)
-		#audio_tween = create_tween()
-		#audio_tween.tween_property(mus_ch, "volume_linear", 0.8, 0.5)
+	if mus_tween: mus_tween.kill()
+	if 0 in Audio._music_channels:
+		var mus_ch = Audio._music_channels[0]
+		if is_instance_valid(mus_ch):
+			#Audio.fade_music_1d_player(mus_ch, -2, 0.6)
+			mus_tween = create_tween()
+			mus_tween.tween_property(mus_ch, "volume_linear", 0.8, 0.6)
 	
 	get_tree().call_group(&"_sounds", &"queue_free")
+	get_tree().call_group(&"preview_sound", &"queue_free")
 	skin_sound_test.size.y = 432
 	skin_sound_test._update_selectors()
 	_resize_sound_test()

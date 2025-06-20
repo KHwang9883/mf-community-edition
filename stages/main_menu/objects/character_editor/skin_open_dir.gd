@@ -44,3 +44,26 @@ func _handle_select(mouse_input: bool = false) -> void:
 	else:
 		OS.shell_open(_dir)
 	
+var _template: String
+func _update_text() -> void:
+	var _events: Array[InputEvent] = InputMap.action_get_events(&"ui_accept")
+	var _event: String = "enter"
+	var _temp: String
+	for i in _events:
+		if i is InputEventKey:
+			_temp = i.as_text().get_slice(' (', 0)
+			#if SettingsManager.device_keyboard:
+			_event = _temp
+			break
+		#elif i is InputEventJoypadButton:
+		#	_temp = "Joy " + str(i.button_index)
+		if _temp: _event = _temp
+	
+	valu.text = _template % [_event]
+
+func _ready() -> void:
+	if valu:
+		valu.modulate.a = 0.0
+		_template = valu.text
+		_update_text()
+		SettingsManager.settings_saved.connect(_update_text)

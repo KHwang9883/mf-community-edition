@@ -1,9 +1,10 @@
-[gd_scene load_steps=52 format=4 uid="uid://bnjrxxm35addb"]
+[gd_scene load_steps=53 format=4 uid="uid://bnjrxxm35addb"]
 
 [ext_resource type="Script" uid="uid://dj1p0i6ojnsiy" path="res://stages/main_menu/objects/skin_test_level.gd" id="1_cyli0"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_jngfa"]
 [ext_resource type="AudioStream" uid="uid://d17fxsati04si" path="res://music/whalesvoyage2-planet1.mod" id="3_jsmvj"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_b6gil"]
+[ext_resource type="PackedScene" uid="uid://bi50i64c63lj7" path="res://stages/main_menu/objects/skin_test_player_death.tscn" id="5_xelti"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_682gu"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_tnkoi"]
 [ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="9_jsmvj"]
@@ -198,6 +199,7 @@ stop_all_music_on_start = false
 
 [node name="Player" parent="." instance=ExtResource("5_b6gil")]
 position = Vector2(96, 272)
+death_body = ExtResource("5_xelti")
 death_stop_music = false
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
@@ -474,4 +476,5 @@ offset_bottom = 320.0
 texture = SubResource("NoiseTexture2D_sjij6")
 stretch_mode = 1
 
+[connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="died" from="Player" to="MusicLoader" method="pause_music"]

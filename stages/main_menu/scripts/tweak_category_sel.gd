@@ -15,7 +15,11 @@ var _timer: float
 signal selection_entered
 
 func _ready() -> void:
-	if valu: valu.modulate.a = 0.0
+	if valu:
+		valu.modulate.a = 0.0
+		_template = valu.text
+		_update_text()
+		SettingsManager.settings_saved.connect(_update_text)
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -65,3 +69,20 @@ func _handle_select(mouse_input: bool = false) -> void:
 	get_parent().focused = false
 	if show_desc_bool:
 		Scenes.current_scene.get_node("Tweaks/Label2").visible = true
+
+var _template: String
+func _update_text() -> void:
+	var _events: Array[InputEvent] = InputMap.action_get_events(&"ui_accept")
+	var _event: String = "enter"
+	var _temp: String
+	for i in _events:
+		if i is InputEventKey:
+			_temp = i.as_text().get_slice(' (', 0)
+			#if SettingsManager.device_keyboard:
+			_event = _temp
+			break
+		#elif i is InputEventJoypadButton:
+		#	_temp = "Joy " + str(i.button_index)
+		if _temp: _event = _temp
+	
+	valu.text = _template % [_event]

@@ -1,6 +1,7 @@
 extends Stage2D
 
 @export var enable_restart_in_pause: bool = true
+@warning_ignore("unused_private_class_variable")
 var _skin_test_level: bool = true
 
 func _init() -> void:
@@ -30,7 +31,9 @@ func _physics_process(delta: float) -> void:
 		hide()
 		Scenes.current_scene = Data.technical_values.main_menu_scene
 		Scenes.current_scene.process_mode = Node.PROCESS_MODE_INHERIT
-		Audio.stop_music_channel(2, false)
+		Audio.stop_music_channel(2, false) # death
+		Audio.stop_music_channel(1, false) # game over
+		Audio.stop_music_channel(98, false) # starman
 		if 0 in Audio._music_channels:
 			Audio._music_channels[0].process_mode = Node.PROCESS_MODE_INHERIT
 		_is_stage_ready = false
@@ -50,3 +53,7 @@ func restart() -> void:
 	add_sibling.call_deferred(Scenes.current_scene)
 	get_tree().paused = false
 	
+
+
+func _on_player_died() -> void:
+	Audio.stop_music_channel(98, false) # starman
