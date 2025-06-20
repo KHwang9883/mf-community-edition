@@ -52,7 +52,7 @@ func restart() -> void:
 	Scenes.current_scene = Scenes._current_scene_buffer.instantiate()
 	add_sibling.call_deferred(Scenes.current_scene)
 	get_tree().paused = false
-	
+	Scenes.scene_ready.emit()
 
 
 func _on_player_died() -> void:

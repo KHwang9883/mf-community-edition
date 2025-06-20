@@ -5,7 +5,7 @@ func _start_transition() -> void:
 	if _is_simple_fade:
 		#var _scene = Scenes.current_scene.scene_file_path if jump_to_scene.is_empty() else jump_to_scene
 		Audio.stop_all_sounds()
-		Scenes.current_scene.restart()
+		Scenes.current_scene.restart.call_deferred()
 		#TransitionManager.accept_transition(
 		#load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 		#	.instantiate()
