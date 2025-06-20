@@ -8,7 +8,7 @@ var is_toggled: bool
 var cooldown: float = 0
 
 @onready var color_rect: ColorRect = $ColorRect
-@onready var color_picker: ColorPickerButton = $Window/ColorPickerButton
+@onready var color_picker: ColorPickerButton = $Window/VBoxContainer/HBoxContainer2/ColorPickerButton
 
 func _handle_focused(focus) -> void:
 	super(focus)

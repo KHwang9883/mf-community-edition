@@ -28,7 +28,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	
 	Data.reset_all_values()
 	
-	Audio._music_channels[0].process_mode = Node.PROCESS_MODE_DISABLED
+	if 0 in Audio._music_channels && is_instance_valid(Audio._music_channels[0]):
+		Audio._music_channels[0].process_mode = Node.PROCESS_MODE_DISABLED
 	skin_room.get_node("SVC/SV").add_child(room)
 	skin_room.visible = true
 	
@@ -41,3 +42,27 @@ func _handle_select(mouse_input: bool = false) -> void:
 	Scenes._current_scene_buffer = buffer
 	Thunder._connect(Scenes.scene_changed, skin_room._on_scene_changed, CONNECT_DEFERRED)
 	Thunder._connect(skin_room.get_node("SVC/SV").child_exiting_tree, skin_room._on_child_exit, CONNECT_ONE_SHOT)
+
+var _template: String
+func _update_text() -> void:
+	var _events: Array[InputEvent] = InputMap.action_get_events(&"ui_accept")
+	var _event: String = "enter"
+	var _temp: String
+	for i in _events:
+		if i is InputEventKey:
+			_temp = i.as_text().get_slice(' (', 0)
+			#if SettingsManager.device_keyboard:
+			_event = _temp
+			break
+		#elif i is InputEventJoypadButton:
+		#	_temp = "Joy " + str(i.button_index)
+		if _temp: _event = _temp
+	
+	valu.text = _template % [_event]
+
+func _ready() -> void:
+	if valu:
+		valu.modulate.a = 0.0
+		_template = valu.text
+		_update_text()
+		SettingsManager.settings_saved.connect(_update_text)
