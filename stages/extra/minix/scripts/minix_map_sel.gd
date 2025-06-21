@@ -56,7 +56,8 @@ func _physics_process(delta: float) -> void:
 
 func _toggled_option(old_val, new_val) -> void:
 	if old_val == new_val: return
-	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
+	var _sfx = CharacterManager.get_sound_replace(toggle_sound, toggle_sound, "menu_toggle", false)
+	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	_update_string()
 	selection_changed.emit()
 	map_changed_to.emit(new_val)
