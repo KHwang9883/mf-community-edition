@@ -9,13 +9,13 @@ extends Control
 
 var occurences: PackedInt32Array = []
 var valid_enemies: Array[Node]
-var step_counter: int
+var invalid_enemies: Array[bool]
 
 func _ready() -> void:
 	occurences.resize(len(enemy_tasks))
 	
-	recount_enemies(true)
-	update_strings(true)
+	recount_enemies.call_deferred(true)
+	update_strings.call_deferred(true)
 	
 	position.y = 104
 	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
@@ -33,6 +33,7 @@ func recount_enemies(init: bool = false) -> void:
 				occurences[j] += 1
 				if init:
 					valid_enemies.append(node)
+					invalid_enemies.append(false)
 
 
 func update_strings(init: bool = false) -> void:
@@ -49,25 +50,22 @@ func update_strings(init: bool = false) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if step_counter == 0: # 30 ticks in a second
-		step_counter = 1
-		return
-	step_counter = 0
 	
-	var queue_delete: PackedInt32Array = []
+	var queue_delete: bool
 	for i in len(valid_enemies):
 		if is_instance_valid(valid_enemies[i]):
 			continue
-		queue_delete.append(i)
+		if invalid_enemies[i] == false:
+			valid_enemies[i] = null
+			invalid_enemies[i] = true
+			queue_delete = true
 	
-	if len(queue_delete) > 0:
-		for i in queue_delete:
-			valid_enemies.remove_at(i)
+	if queue_delete:
 		recount_enemies()
 		update_strings()
 	
 	if is_instance_valid(player) && player.completed:
-		step_counter = -1
+		valid_enemies.resize(0)
 		player = null
 		hide_tasks()
 

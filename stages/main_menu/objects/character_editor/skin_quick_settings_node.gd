@@ -156,6 +156,7 @@ func _on_sound_test_selection_entered() -> void:
 				_cat_suit_sel.selected_sound = preload("res://music/complete_tweaked.ogg")
 			else:
 				_cat_suit_sel.selected_sound = DEFAULT_LINES.get(_arr[i], null)
+				print(_arr[i])
 		else:
 			_cat_suit_sel.sounds_arr = voice_line
 		_cat_suit_sel.get_node("Label").text = _arr[i]
