@@ -3,6 +3,7 @@ extends MenuSelection
 @onready var valu = get_node_or_null(^"Value")
 #var _timer: float
 var sounds_arr: Array
+var is_custom: bool
 var snd_is_selected: bool = false
 var snd_total_ids: int
 var snd_next_id: int
@@ -49,12 +50,12 @@ func _sound_finished() -> void:
 
 func _update_text() -> void:
 	if !snd_is_selected:
-		if sounds_arr.is_empty():
+		if !is_custom:
 			valu.text = "default"
 			if !selected_sound:
 				valu.text = "none"
 			return
-		valu.text = "total: %d" % [snd_total_ids]
+		valu.text = "custom, total: %d" % [snd_total_ids]
 	else:
 		valu.text = "playing %d / %d" % [snd_next_id + 1, max(snd_total_ids, 1)]
 

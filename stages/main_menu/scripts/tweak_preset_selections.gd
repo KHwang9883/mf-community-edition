@@ -51,5 +51,6 @@ func _physics_process(delta: float) -> void:
 func _toggled_option(old_value: Variant) -> void:
 	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
 	if old_value != tweak:
-		Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+		var _sfx = CharacterManager.get_sound_replace(toggle_sound, toggle_sound, "menu_toggle", false)
+		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 		

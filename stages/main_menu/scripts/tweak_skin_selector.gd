@@ -61,6 +61,7 @@ func _physics_process(delta: float) -> void:
 
 func _toggled_option(old_val, new_val) -> void:
 	if old_val == new_val: return
+	#var _sfx = CharacterManager.get_sound_replace(toggle_sound, toggle_sound, "menu_toggle", false)
 	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager._process_settings()
 	SkinsManager.current_skin = SettingsManager.settings.skin
@@ -80,7 +81,7 @@ func _update_string() -> void:
 	skin_sel_index = findings
 	if skin_sel_index >= skin_list.size():
 		skin_sel_index = 0
-	print(SkinsManager.current_skin, SettingsManager.settings.skin)
+	prints(SkinsManager.current_skin, SettingsManager.settings.skin)
 
 
 func _handle_right_click() -> void:

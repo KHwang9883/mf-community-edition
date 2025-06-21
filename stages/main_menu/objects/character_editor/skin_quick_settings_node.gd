@@ -25,6 +25,10 @@ const DEFAULT_LINES = {
 	"message_box": preload("res://engine/objects/bumping_blocks/message_block/message_block.wav"),
 	"bonus_activate": preload("res://engine/objects/players/prefabs/sounds/powerup.wav"),
 	"checkpoint_switch": preload("res://engine/objects/core/checkpoint/sounds/switch.wav"),
+	"menu_mouse_hover": preload("res://engine/components/ui/_sounds/select_mouse_hover.mp3"),
+	"menu_select": preload("res://engine/components/ui/_sounds/select_main.wav"),
+	"menu_failure": preload("res://engine/components/ui/_sounds/select_failure.wav"),
+	"menu_toggle": preload("res://engine/scenes/main_menu/sounds/change.wav"),
 }
 
 var skin_tweaks: Dictionary = {}
@@ -156,9 +160,11 @@ func _on_sound_test_selection_entered() -> void:
 				_cat_suit_sel.selected_sound = preload("res://music/complete_tweaked.ogg")
 			else:
 				_cat_suit_sel.selected_sound = DEFAULT_LINES.get(_arr[i], null)
-				print(_arr[i])
+				#print(_arr[i])
 		else:
 			_cat_suit_sel.sounds_arr = voice_line
+			if SkinsManager.current_skin in SkinsManager.misc_sounds:
+				_cat_suit_sel.is_custom = SkinsManager.misc_sounds[SkinsManager.current_skin].has(_arr[i])
 		_cat_suit_sel.get_node("Label").text = _arr[i]
 		skin_sound_test.get_node("HSeparatorSpawnTweaks").add_sibling(_cat_suit_sel)
 	#elif SkinsManager.current_skin.is_empty():
