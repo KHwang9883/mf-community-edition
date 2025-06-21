@@ -32,11 +32,10 @@ func _handle_right_click() -> void:
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	
-	var pck_arg = "--main-pack mfce-skin-editor.pck"
-	var args = OS.get_cmdline_args()
-	pck_arg.append(args)
-	OS.set_restart_on_exit(true, pck_arg)
-	get_tree().quit()
+	var pck_arg: PackedStringArray = ["--main-pack","mfce-skin-editor.pck"]
+	var pid := OS.create_instance(pck_arg)
+	if pid != -1:
+		get_tree().quit()
 
 var _template: String
 func _update_text() -> void:
