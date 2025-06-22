@@ -29,6 +29,8 @@ const DEFAULT_LINES = {
 	"menu_select": preload("res://engine/components/ui/_sounds/select_main.wav"),
 	"menu_failure": preload("res://engine/components/ui/_sounds/select_failure.wav"),
 	"menu_toggle": preload("res://engine/scenes/main_menu/sounds/change.wav"),
+	"menu_fade_out": preload("res://engine/components/ui/_sounds/fadeout.wav"),
+	"map_level_enter": preload("res://engine/objects/items/coin/coin.wav"),
 }
 
 var skin_tweaks: Dictionary = {}

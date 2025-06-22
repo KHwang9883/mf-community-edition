@@ -16,6 +16,7 @@ func _ready() -> void:
 		menu_initiated.emit()
 		return
 	
+	var _sfx = CharacterManager.get_sound_replace(FADEOUT, FADEOUT, "menu_fade_out", false)
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if !_crossfade:
 		TransitionManager.accept_transition(
@@ -24,14 +25,14 @@ func _ready() -> void:
 				.with_speeds(999.0, -0.02)
 		)
 		if TransitionManager.current_transition:
-			Audio.play_1d_sound(FADEOUT, false, {ignore_pause = true})
+			Audio.play_1d_sound(_sfx, false, { "ignore_pause": true, "bus": "1D Sound" })
 			await get_tree().create_timer(1.0, false, false).timeout
 			music_loader.play_buffered.call_deferred()
 			main_menu_controls.focused = true
 			menu_initiated.emit()
 		return
 	
-	Audio.play_1d_sound(FADEOUT, false, {ignore_pause = true})
+	Audio.play_1d_sound(_sfx, false, { "ignore_pause": true, "bus": "1D Sound" })
 	zoom = Vector2(16, 16)
 	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tw.tween_property(self, "zoom", Vector2.ONE, 0.56)
