@@ -16,6 +16,7 @@ var tweak_descriptions: Dictionary = {
 	"skid_sound_loop_delay": 'delay in seconds between each playback of the skidding sound; from 0.05 to 2.0.',
 	"head_bump_sound": "play global sound 'block_bump' on every touch of ceiling.",
 	"fall_animation": "if false, 'fall' animation and the derivatives are replaced by 'jump'.",
+	"separate_swim_idle_animation": "if looping for 'swim' animation is disabled, the 'swim_idle' animation will play right after.",
 	"emit_particles": {
 		"enabled": "if no texture is set, the default texture will be starman particles.",
 		"color": "particles will be modulated by this color.",
