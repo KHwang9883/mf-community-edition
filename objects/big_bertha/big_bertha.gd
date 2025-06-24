@@ -4,6 +4,7 @@ extends GeneralMovementBody2D
 @export var does_respawn: bool = true
 @export var respawn_delay: float = 6
 @export var respawn_offset: float = 0
+@export var checkpoints_offset: Dictionary = {}
 
 var state: int
 var free_roam: bool = true
@@ -17,6 +18,9 @@ var has_eaten: bool
 
 func _ready() -> void:
 	sprite_node.animation = &"default"
+	if Data.values.checkpoint in checkpoints_offset.keys():
+		position += checkpoints_offset[Data.values.checkpoint]
+		reset_physics_interpolation()
 
 
 func _physics_process(delta: float) -> void:

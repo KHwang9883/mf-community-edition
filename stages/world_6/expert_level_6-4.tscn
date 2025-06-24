@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://ba7eu78l86h15"]
+[gd_scene load_steps=69 format=4 uid="uid://ba7eu78l86h15"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_gw4s0"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ygtpu"]
@@ -36,7 +36,6 @@
 [ext_resource type="PackedScene" uid="uid://uhf6frao7p1m" path="res://engine/objects/enemies/podoboo/podoboo.tscn" id="33_xoj8x"]
 [ext_resource type="PackedScene" uid="uid://b3cggc3th4xua" path="res://stages/world_6/objects/long_platform/double_platform.tscn" id="34_v6kbm"]
 [ext_resource type="PackedScene" uid="uid://crb8jkwa0r1dl" path="res://engine/objects/enemies/spinies/spiny_iron.tscn" id="35_bd8qu"]
-[ext_resource type="AudioStream" uid="uid://h81ejhgftdud" path="res://engine/components/ui/_sounds/select_main.wav" id="36_xpllc"]
 [ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="37_jhav0"]
 [ext_resource type="Script" uid="uid://b1otb3mxtky6" path="res://stages/world_6/scripts/maze_script.gd" id="38_4ege4"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="39_qjdus"]
@@ -592,11 +591,6 @@ position = Vector2(3984, 336)
 [node name="SpinyIron3" parent="." instance=ExtResource("35_bd8qu")]
 position = Vector2(3792, 336)
 
-[node name="correct" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("36_xpllc")
-volume_db = -6.0
-bus = &"Sound"
-
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("37_jhav0")
 
@@ -760,5 +754,5 @@ script = ExtResource("43_i07e6")
 
 [connection signal="player_enter" from="Area2D" to="Node" method="entered"]
 [connection signal="player_enter" from="Area2D3" to="Node2" method="entered"]
-[connection signal="player_enter" from="Area2D2correct" to="correct" method="play"]
-[connection signal="player_enter" from="Area2D4correct" to="correct" method="play"]
+[connection signal="player_enter" from="Area2D2correct" to="Node" method="_play_correct"]
+[connection signal="player_enter" from="Area2D4correct" to="Node" method="_play_correct"]

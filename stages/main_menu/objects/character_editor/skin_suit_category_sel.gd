@@ -26,13 +26,17 @@ var tweak_descriptions: Dictionary = {
 		"local_coords": "should the particles follow player's position? also if true, may fix jitter on movement.",
 		"offset": "offset particles by this Vector2. (x, y)"
 	},
-	"emit_particles_sel": "particles for in-game character; for more options, see 'global_skin_tweaks.json' file.",
+	"emit_particles_sel": "particles for in-game character; for more options, see global skin tweaks menu.",
 	"loop_frame_offsets_sel": "add any animation to the list to set a frame where the animation will continue after looping; 0-based. negative values are ignored.",
 }
 
 @export var powerup_name: String
 
-@onready var h_separator_spawn: HSeparator = $"../../SkinSuitSettings/HSeparatorSpawnTweaks"
+var h_separator_spawn: HSeparator
+
+func _ready() -> void:
+	h_separator_spawn = $"../../SkinSuitSettings/HSeparatorSpawnTweaks"
+	super()
 
 func _handle_select(mouse_input: bool = false) -> void:
 	if Data.technical_values.get("main_menu_scene"): return
@@ -102,6 +106,7 @@ func get_tweak_value(tweak) -> Variant:
 	return CharacterManager.suit_tweaks[CharacterManager.get_character_name()][powerup_name][tweak]
 
 func create_tweak_selection(tweak) -> void:
+	#prints(tweak, get_tweak_value(tweak))
 	# Булеан, чекмарк
 	if get_tweak_value(tweak) is bool:
 		var _bool_tweak = BOOL_SUIT_TWEAK_SELECTION.instantiate()
@@ -111,6 +116,7 @@ func create_tweak_selection(tweak) -> void:
 		if tweak in tweak_descriptions:
 			_bool_tweak.tweak_description_text = tweak_descriptions[tweak]
 		move_to.add_child(_bool_tweak)
+		print(move_to)
 		Thunder.reorder_on_top_of(_bool_tweak, h_separator_spawn)
 	# Число, окно со спинбоксом
 	elif get_tweak_value(tweak) is float:

@@ -13,7 +13,7 @@ func activate() -> bool:
 		worked = true
 	
 	var powerup_sfx = CharacterManager.get_sound_replace(DEFAULT_POWERUP_SOUND, DEFAULT_POWERUP_SOUND, "bonus_activate", false)
-	var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "incorrect", false)
+	var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "menu_failure", false)
 	
 	if worked:
 		Audio.play_1d_sound(powerup_sfx, false, {ignore_pause = true})

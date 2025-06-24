@@ -1,10 +1,13 @@
 extends MenuSelection
 
+const SELECT_FAILURE = preload("res://engine/components/ui/_sounds/select_failure.wav")
+
 @export_node_path("MenuItemsController") var move_to_path: NodePath
 @export_node_path("MenuSelector") var menu_selector_path: NodePath
 @export var reset_to: int = 0
 @export var show_desc_bool: bool = false
 @export_multiline var tweak_description_text: String
+@export var is_blocked: bool
 
 @onready var valu = get_node_or_null(^"Value")
 @onready var camera_2d: Camera2D = $"../../Camera2D"
@@ -29,7 +32,7 @@ func _physics_process(delta: float) -> void:
 	
 	if !valu:
 		return
-	if focused:
+	if focused && !is_blocked:
 		_timer += delta * 10
 		valu.modulate.a = min((cos(_timer) / 2.5) + 0.6, 1.0)
 	else:
@@ -46,7 +49,14 @@ func _handle_right_click() -> void:
 		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
 
 func _handle_select(mouse_input: bool = false) -> void:
+	if is_blocked:
+		var _sfx = CharacterManager.get_sound_replace(SELECT_FAILURE, SELECT_FAILURE, "menu_failure", false)
+		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
+		return
 	super(mouse_input)
+	_select_category()
+
+func _select_category() -> void:
 	selection_entered.emit()
 	get_parent().position.x = 1000
 	get_parent().reset_physics_interpolation()

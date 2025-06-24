@@ -57,7 +57,8 @@ func _physics_process(delta: float) -> void:
 			#_star_sel_level = mini(_star_sel_level, level_count[_star_sel_world])
 			#label.set_world_numbers("%d-%d" % [_star_sel_world, _star_sel_level])
 		#elif player.up_down < -0.5:
-		Audio.play_1d_sound(SCORING)
+		var _sfx = CharacterManager.get_sound_replace(SCORING, SCORING, "menu_select_short", false)
+		Audio.play_1d_sound(_sfx)
 		_star_sel_level = wrapi(_star_sel_level + 1, 1, level_count[_star_sel_world] + 1)
 		_update_save()
 		_update_reset_labels()
@@ -79,7 +80,8 @@ func _input(event: InputEvent) -> void:
 		if event.keycode - 48 == _star_sel_level:
 			return
 		if event.keycode - 48 <= level_count[_star_sel_world]:
-			Audio.play_1d_sound(SCORING)
+			var _sfx = CharacterManager.get_sound_replace(SCORING, SCORING, "menu_select_short", false)
+			Audio.play_1d_sound(_sfx)
 			_star_sel_level = event.keycode - 48
 			_update_save()
 			_update_reset_labels()

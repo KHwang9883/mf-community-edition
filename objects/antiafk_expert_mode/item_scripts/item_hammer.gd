@@ -1,8 +1,6 @@
 extends TextureRect
 
 const HAMMER_ITEM = preload("res://objects/_hammer_item/hammer_item.tscn")
-
-const DEFAULT_POWERUP_SOUND = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
 const INCORRECT = preload("res://sfx/incorrect.wav")
 
 func activate() -> bool:
@@ -14,13 +12,13 @@ func activate() -> bool:
 		ham.appear_distance = 0
 		ham.transform = pl.transform
 		Scenes.current_scene.add_child(ham)
+		ham.collect()
+		ham.reset_physics_interpolation.call_deferred()
+		ham.process_mode = Node.PROCESS_MODE_INHERIT
 		worked = true
 	
-	if worked:
-		var _sfx = CharacterManager.get_sound_replace(DEFAULT_POWERUP_SOUND, DEFAULT_POWERUP_SOUND, "bonus_activate", false)
-		Audio.play_1d_sound(_sfx, false, {ignore_pause = true})
-	else:
-		var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "incorrect", false)
+	if !worked:
+		var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "menu_failure", false)
 		Audio.play_1d_sound(inc_sfx, false, {ignore_pause = true})
 	
 	return worked
