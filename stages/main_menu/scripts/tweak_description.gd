@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block/message_block.wav")
+const SELECT_ENTER = preload("res://engine/components/ui/_sounds/select_enter.wav")
 
 var activated: bool
 
@@ -91,7 +92,8 @@ func show_description(desc: String, title: String) -> void:
 func hide_message() -> void:
 	if !is_instance_valid(box): return
 	message_hidden.emit()
-	Audio.play_1d_sound(preload("res://engine/components/ui/_sounds/select_enter.wav"), false, {ignore_pause = true})
+	var _sfx = CharacterManager.get_sound_replace(SELECT_ENTER, SELECT_ENTER, "menu_enter", false)
+	Audio.play_1d_sound(_sfx, false, {ignore_pause = true})
 	
 	var tw2 = get_tree().create_tween().bind_node(color_rect).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw2.tween_property(color_rect, ^"color:a", 0.0, 0.5)
