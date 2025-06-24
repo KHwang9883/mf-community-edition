@@ -12,23 +12,26 @@ var tweak_name: String
 
 func _handle_select(mouse_input: bool = false) -> void:
 	# Custom skin
-	if SkinsManager.current_skin && SkinsManager.custom_textures.has(SkinsManager.current_skin):
+	if SkinsManager.current_skin:
+		var skin_tweaks = SkinsManager.suit_tweaks if powerup_name != "global" else SkinsManager.misc_textures
+		var _powerup = powerup_name if powerup_name != "global" else "global_skin_tweaks"
+		var _default_tweaks = CharacterManager.suit_tweaks if powerup_name != "global" else CharacterManager.misc_textures
 		get_tree().call_group(&"_submenu_skin_suit_tweak", &"queue_free")
 		var _char = CharacterManager.get_character_name()
-		if !CharacterManager.suit_tweaks.has(_char):
+		if !_default_tweaks.has(_char):
 			print("Warning: No suit tweaks for char: ", _char)
-		elif CharacterManager.suit_tweaks[_char].has(powerup_name) && CharacterManager.suit_tweaks[_char][powerup_name].has(tweak_name):
+		elif _default_tweaks[_char].has(_powerup) && _default_tweaks[_char][_powerup].has(tweak_name):
 			var _quick_node = get_quick_node()
 			# Засовываем скин твики в память, чтоб там ее редачить
 			if !_quick_node.skin_tweaks.has(powerup_name):
 				# Ищем в файле жсон и берем оттуда
-				if SkinsManager.suit_tweaks.has(SkinsManager.current_skin) && SkinsManager.suit_tweaks[SkinsManager.current_skin].has(powerup_name) && SkinsManager.suit_tweaks[SkinsManager.current_skin][powerup_name].has(tweak_name):
-					_quick_node.skin_tweaks[powerup_name] = SkinsManager.suit_tweaks[SkinsManager.current_skin][powerup_name][tweak_name].duplicate(true)
+				if skin_tweaks.has(SkinsManager.current_skin) && skin_tweaks[SkinsManager.current_skin].has(_powerup) && skin_tweaks[SkinsManager.current_skin][_powerup].has(tweak_name):
+					_quick_node.skin_tweaks[powerup_name] = skin_tweaks[SkinsManager.current_skin][_powerup][tweak_name].duplicate(true)
 				# Если в жсоне нет, берем дефолтные
 				else:
-					_quick_node.skin_tweaks[powerup_name] = CharacterManager.suit_tweaks[_char][powerup_name][tweak_name].duplicate(true)
+					_quick_node.skin_tweaks[powerup_name] = _default_tweaks[_char][_powerup][tweak_name].duplicate(true)
 			# Создаем опции для настройки скин твиков прямо из игры
-			for tweak in CharacterManager.suit_tweaks[_char][powerup_name][tweak_name]:
+			for tweak in _default_tweaks[_char][_powerup][tweak_name]:
 				create_tweak_selection(tweak)
 		
 	super(mouse_input)
@@ -57,8 +60,12 @@ func get_tweak_value(tweak) -> Variant:
 	var _quick_node = get_quick_node()
 	if _quick_node.skin_tweaks.has(powerup_name) && _quick_node.skin_tweaks[powerup_name].has(tweak_name) && _quick_node.skin_tweaks[powerup_name][tweak_name].has(tweak):
 		return _quick_node.skin_tweaks[powerup_name][tweak_name][tweak]
-	if SkinsManager.suit_tweaks.has(SkinsManager.current_skin) && SkinsManager.suit_tweaks[SkinsManager.current_skin].has(powerup_name) && SkinsManager.suit_tweaks[SkinsManager.current_skin][powerup_name].has(tweak_name):
-		return SkinsManager.suit_tweaks[SkinsManager.current_skin][powerup_name][tweak_name][tweak]
+	var skin_tweaks = SkinsManager.suit_tweaks if powerup_name != "global" else CharacterManager.misc_textures
+	var _powerup = powerup_name if powerup_name != "global" else "global_skin_tweaks"
+	if skin_tweaks.has(SkinsManager.current_skin) && skin_tweaks[SkinsManager.current_skin].has(_powerup) && skin_tweaks[SkinsManager.current_skin][_powerup].has(tweak_name):
+		return skin_tweaks[SkinsManager.current_skin][_powerup][tweak_name][tweak]
+	if powerup_name == "global":
+		return CharacterManager.misc_textures[CharacterManager.get_character_name()][_powerup][tweak_name][tweak]
 	return CharacterManager.suit_tweaks[CharacterManager.get_character_name()][powerup_name][tweak_name][tweak]
 
 func create_tweak_selection(tweak) -> void:

@@ -57,6 +57,9 @@ func _ready() -> void:
 		lvl.completion_write_save = false
 		lvl.jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
 	
+	reset_physics_interpolation.call_deferred()
+	item_stock.reset_physics_interpolation.call_deferred()
+	
 	if !is_expert_mode: return
 	
 	if !ProfileManager.current_profile.data.get("mario_forever_expert"):

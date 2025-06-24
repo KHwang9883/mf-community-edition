@@ -14,7 +14,8 @@ const DEFAULT_LINES = {
 	"block_appear": preload("res://engine/objects/bumping_blocks/_sounds/appear.wav"),
 	"block_bump": preload("res://engine/objects/bumping_blocks/_sounds/bump.wav"),
 	"block_break": preload("res://engine/objects/bumping_blocks/_sounds/break.wav"),
-	"hud_timeout": preload("res://engine/components/hud/sounds/timeout.wav"),
+	"hud_time_hurry": preload("res://engine/components/hud/sounds/timeout.wav"),
+	"hud_time_score": preload("res://engine/components/hud/sounds/scoring.wav"),
 	"hud_pause_open": preload("res://engine/components/pause/sounds/pause_open.wav"),
 	"hud_pause_close": null,
 	"menu_start_song": preload("res://engine/scenes/main_menu/sounds/lets.wav"),
@@ -31,6 +32,8 @@ const DEFAULT_LINES = {
 	"menu_toggle": preload("res://engine/scenes/main_menu/sounds/change.wav"),
 	"menu_fade_out": preload("res://engine/components/ui/_sounds/fadeout.wav"),
 	"map_level_enter": preload("res://engine/objects/items/coin/coin.wav"),
+	"menu_select_short": preload("res://engine/components/hud/sounds/scoring.wav"),
+	"game_over": preload("res://engine/objects/players/prefabs/sounds/music-gameover.ogg"),
 }
 
 var skin_tweaks: Dictionary = {}
@@ -63,6 +66,8 @@ func _on_quick_skin_settings_button_selection_entered() -> void:
 
 
 func _on_exit_selection_entered() -> void:
+	if skin_tweaks.is_empty():
+		return
 	print("Skin Suit tweaks saved!")
 	for powerup in skin_tweaks:
 		var _skin_path: String
@@ -85,7 +90,6 @@ func _on_exit_selection_entered() -> void:
 			SkinsManager.suit_tweaks[_current_skin][powerup] = skin_tweaks[powerup]
 	
 	skin_tweaks = {}
-	
 
 
 func _on_submenu_exit_selection_entered() -> void:
@@ -135,6 +139,17 @@ func _resize_sound_test() -> void:
 		if !skin_sound_test.focused && i > 2: return
 		if skin_sound_test.size.y > skin_sound_test.get_combined_minimum_size().y:
 			skin_sound_test.size.y = skin_sound_test.get_combined_minimum_size().y
+		camera_2d.update_limit()
+		await get_tree().physics_frame
+
+
+func _resize_global_skin_tweaks() -> void:
+	for i in 8:
+		if !is_inside_tree(): return
+		var _control: Control = $"../../../SkinGlobalTweaks"
+		if !_control.focused && i > 2: return
+		if _control.size.y > _control.get_combined_minimum_size().y:
+			_control.size.y = _control.get_combined_minimum_size().y
 		camera_2d.update_limit()
 		await get_tree().physics_frame
 
@@ -198,3 +213,34 @@ func _on_audiotest_exit_selection_entered() -> void:
 	skin_sound_test.size.y = 432
 	skin_sound_test._update_selectors()
 	_resize_sound_test()
+
+
+func _on_skin_global_tweaks_exit_selection_entered() -> void:
+	if !"global" in skin_tweaks:
+		return
+	
+	var _skin_path: String
+	var _current_skin = SkinsManager.current_skin
+	if !_current_skin:
+		return
+	_skin_path = SkinsManager.base_dir \
+		.path_join(_current_skin) \
+		.path_join("global_skin_tweaks.json")
+	print("Global skin tweaks saved!")
+	SettingsManager.save_data(skin_tweaks.global, _skin_path, "Global Skin Tweaks", true)
+	#if !SkinsManager.misc_textures[_current_skin].has("global_skin_tweaks"):
+	#	SkinsManager.misc_textures[_current_skin].global_skin_tweaks = {}
+	#var file_path: String = SkinsManager.base_dir + "/" + _current_skin
+	SkinsManager.misc_textures[_current_skin].global_skin_tweaks = skin_tweaks.global
+	
+	skin_tweaks = {}
+
+
+func _on_skin_setup_entered() -> void:
+	var _node = $"../../../QuickSkinSettings/HBoxContainer2"
+	_node.is_blocked = SkinsManager.current_skin.is_empty()
+	var _label_node: Label = $"../../../QuickSkinSettings/HBoxContainer2/Label"
+	if SkinsManager.current_skin.is_empty():
+		_label_node.add_theme_color_override(&"font_color", Color("#606060"))
+	else:
+		_label_node.add_theme_color_override(&"font_color", Color("#cacaff"))

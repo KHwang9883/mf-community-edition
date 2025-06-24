@@ -54,6 +54,17 @@ func selected(item: Control) -> void:
 	new_lbl.text = "-%d" % store_inv[item_name]
 	new_lbl.position = item.global_position + Vector2(8, 8)
 	add_child(new_lbl)
+	new_lbl.reset_physics_interpolation.call_deferred()
+	
+	$Label2.visible = false
+	container.focused = false
+	$ColorRect.modulate.a = 0.5
+	cost.visible = false
+	$Selector.visible = false
+	var _label3_tw = $Label3.create_tween().set_loops().set_trans(Tween.TRANS_CUBIC)
+	_label3_tw.tween_property($Label3, "modulate:a", 0.3, 0.5)
+	_label3_tw.tween_property($Label3, "modulate:a", 1.0, 0.5)
+	
 	var tw = new_lbl.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(new_lbl, "position:y", new_lbl.position.y - 48, 1.0)
 	tw.tween_interval(2.5)
@@ -72,6 +83,6 @@ func _error_message() -> void:
 	_tw = create_tween()
 	_tw.tween_interval(2.0)
 	_tw.tween_property(label_error, "modulate:a", 0.0, 1.0)
-	var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "incorrect", false)
+	var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "menu_failure", false)
 	Audio.play_1d_sound(inc_sfx, false, {ignore_pause = true})
 	

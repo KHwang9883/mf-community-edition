@@ -37,8 +37,8 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           echo "nightly-win64\n${{ github.sha }}" > stages/main_menu/version-text.txt
-          echo 'start "" ".\$EXPORT_NAME.exe" --rendering-driver opengl3' > "$EXPORT_DIR/windows/01. Launch in Compatibility Mode.bat"
-          echo 'start "" ".\$EXPORT_NAME.exe" --rendering-driver opengl3_angle' > "$EXPORT_DIR/windows/01. Launch in Compatibility Mode (angle).bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "$EXPORT_DIR/windows/01. Compatibility Mode.bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "$EXPORT_DIR/windows/02. Compatibility Mode (angle).bat"
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=35 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://dp3dqrsu0l7xe" path="res://stages/main_menu/scripts/tweak_quality.gd" id="12_4kuwt"]
 [ext_resource type="Script" uid="uid://cb2expjn6ur1r" path="res://stages/main_menu/scripts/console_patch.gd" id="12_4rgcr"]
 [ext_resource type="Script" uid="uid://dr6gtqawbcqp4" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
+[ext_resource type="Script" uid="uid://cfvboxlqatxd7" path="res://stages/main_menu/objects/character_editor/skin_suit_global_tweaks_sel.gd" id="15_1r2gn"]
 [ext_resource type="Script" uid="uid://b0ffisgrr6san" path="res://stages/main_menu/objects/character_editor/skin_quick_settings_node.gd" id="15_h1dcq"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="15_lbl8e"]
 [ext_resource type="PackedScene" uid="uid://cvr48m6x7dx4d" path="res://stages/main_menu/objects/tweak_boolean.tscn" id="15_mxo6u"]
@@ -218,42 +219,6 @@ layout_mode = 2
 theme_override_constants/separation = 3
 theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 
-[node name="QuickSkinSettingsButton" type="HBoxContainer" parent="Tweaks"]
-layout_mode = 2
-script = ExtResource("2_2sf4t")
-move_to_path = NodePath("../../QuickSkinSettings")
-menu_selector_path = NodePath("../../Selector5")
-reset_to = 3
-metadata/_edit_group_ = true
-
-[node name="Label" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
-theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 1
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("2_5xeuf")
-theme_override_font_sizes/font_size = 12
-text = "skin setup..."
-uppercase = true
-
-[node name="Value" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
-theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 1
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("2_5xeuf")
-theme_override_font_sizes/font_size = 13
-text = "press %s"
-uppercase = true
-
 [node name="HBoxContainer2" type="HBoxContainer" parent="Tweaks"]
 layout_mode = 2
 script = ExtResource("6_n68nh")
@@ -328,6 +293,42 @@ text = "-->"
 uppercase = true
 script = ExtResource("5_dhfy0")
 left_side = false
+
+[node name="QuickSkinSettingsButton" type="HBoxContainer" parent="Tweaks"]
+layout_mode = 2
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../QuickSkinSettings")
+menu_selector_path = NodePath("../../Selector5")
+reset_to = 3
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "skin setup..."
+uppercase = true
+
+[node name="Value" type="Label" parent="Tweaks/QuickSkinSettingsButton"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press %s"
+uppercase = true
 
 [node name="HSeparator5" type="HSeparator" parent="Tweaks"]
 layout_mode = 2
@@ -965,7 +966,7 @@ stretch_mode = 2
 layout_mode = 2
 tweak_name = "mouse_select_sound"
 default_value = true
-tweak_title_text = "quieter sound when hovering over
+tweak_title_text = "unique sound when hovering over
 menus with mouse"
 tweak_description_text = "if disabled, selecting menus using the mouse cursor will replace the hover sound with a much less noisy one."
 
@@ -1168,6 +1169,8 @@ layout_mode = 2
 script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../SkinTweaks")
 menu_selector_path = NodePath("../../Selector8")
+tweak_description_text = "suit-specific tweaks.
+if skin pack is set to \"none\", only a handful of tweaks are available, applied for all suits."
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer"]
@@ -1181,10 +1184,49 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "SKIN tweaks..."
+text = "Suit tweaks..."
 uppercase = true
 
 [node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press %s"
+uppercase = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="QuickSkinSettings"]
+layout_mode = 2
+script = ExtResource("15_1r2gn")
+powerup_name = "global"
+move_to_path = NodePath("../../SkinGlobalTweaks")
+menu_selector_path = NodePath("../../Selector10")
+reset_to = 1
+tweak_description_text = "tweaks that apply to the whole skin pack.
+these are different from suit tweaks."
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "global skin tweaks..."
+uppercase = true
+
+[node name="Value" type="Label" parent="QuickSkinSettings/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
@@ -1299,7 +1341,9 @@ layout_mode = 2
 script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../SkinSoundTest")
 menu_selector_path = NodePath("../../Selector9")
-reset_to = 4
+reset_to = 5
+tweak_description_text = "this menu is there to make sure your custom sounds are loaded properly.
+note: it does not include suit-specific sounds; you can use skin test room for such purpose."
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="QuickSkinSettings/HBoxContainer27"]
@@ -1458,7 +1502,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "skin setup (skin tweaks)
+text = "skin setup (suit tweaks)
 select a category"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1720,6 +1764,73 @@ theme_override_font_sizes/font_size = 12
 text = "go back"
 uppercase = true
 
+[node name="SkinGlobalTweaks" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 432)
+layout_mode = 2
+offset_left = 4648.0
+offset_top = 24.0
+offset_right = 5104.0
+offset_bottom = 456.0
+theme_override_constants/separation = 14
+script = ExtResource("1_e1b0h")
+focused = false
+prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator2" type="HSeparator" parent="SkinGlobalTweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="SkinGlobalTweaks/HSeparator2"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "%s skin tweaks"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator3" type="HSeparator" parent="SkinGlobalTweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="HSeparatorSpawnTweaks" type="HSeparator" parent="SkinGlobalTweaks"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Exit" type="HBoxContainer" parent="SkinGlobalTweaks"]
+layout_mode = 2
+size_flags_vertical = 10
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../QuickSkinSettings")
+menu_selector_path = NodePath("../../Selector5")
+
+[node name="Label" type="Label" parent="SkinGlobalTweaks/Exit"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "save and go back"
+uppercase = true
+
 [node name="Selector" type="Node2D" parent="."]
 physics_interpolation_mode = 1
 script = ExtResource("15_lbl8e")
@@ -1810,6 +1921,16 @@ position_padding = 20
 sprite_frames = ExtResource("16_4e6sj")
 script = ExtResource("17_xjt7h")
 
+[node name="Selector10" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("15_lbl8e")
+smooth_speed = 0.4
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector10"]
+sprite_frames = ExtResource("16_4e6sj")
+script = ExtResource("17_xjt7h")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 process_callback = 0
@@ -1889,6 +2010,7 @@ action = "a_delete"
 
 [connection signal="selected" from="Tweaks" to="Selector" method="handle_selection"]
 [connection signal="selected" from="Tweaks" to="Camera2D" method="handle_selection"]
+[connection signal="selection_entered" from="Tweaks/QuickSkinSettingsButton" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_skin_setup_entered"]
 [connection signal="selected" from="Gameplay" to="Selector2" method="handle_selection"]
 [connection signal="selected" from="Gameplay" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="Aesthetic" to="Selector3" method="handle_selection"]
@@ -1911,3 +2033,6 @@ action = "a_delete"
 [connection signal="selected" from="SkinSoundTest" to="Selector9" method="handle_selection"]
 [connection signal="selected" from="SkinSoundTest" to="Camera2D" method="handle_selection"]
 [connection signal="selection_entered" from="SkinSoundTest/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_audiotest_exit_selection_entered"]
+[connection signal="selected" from="SkinGlobalTweaks" to="Camera2D" method="handle_selection"]
+[connection signal="selected" from="SkinGlobalTweaks" to="Selector10" method="handle_selection"]
+[connection signal="selection_entered" from="SkinGlobalTweaks/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_skin_global_tweaks_exit_selection_entered"]
