@@ -45,7 +45,8 @@ func _physics_process(delta: float) -> void:
 	
 	if controls.focused && controls.get_child(0).focused && Input.is_action_just_pressed("ui_accept"):
 		controls.focused = false
-		Audio.play_1d_sound(POWERUP)
+		var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
+		Audio.play_1d_sound(_sfx)
 		
 		await get_tree().create_timer(1.2, false).timeout
 		

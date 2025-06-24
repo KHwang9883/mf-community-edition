@@ -90,7 +90,8 @@ func _physics_process(delta: float) -> void:
 	
 	if can_start && Input.is_action_just_pressed("ui_accept"):
 		can_start = false
-		Audio.play_1d_sound(POWERUP)
+		var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
+		Audio.play_1d_sound(_sfx)
 		Audio.play_1d_sound(CharacterManager.get_voice_line("checkpoint")[0])
 		
 		await get_tree().create_timer(1.5, false).timeout
