@@ -1,6 +1,9 @@
 extends Node
 
 const CASTLE_SMOKE = preload("res://stages/world_6/scripts/castle_smoke_w6.tscn")
+const BE_HAPPY = preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav")
+const PIPEC = preload("res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav")
+const WCIAGATOR = preload("res://sfx/Wciagator.wav")
 
 @onready var player: Player = Thunder._current_player
 @onready var castle = $"../Castle"
@@ -26,7 +29,7 @@ func _ready() -> void:
 	_moving = true
 	await get_tree().create_timer(2.5, false).timeout
 	
-	Audio.play_1d_sound(preload("res://sfx/Wciagator.wav"))
+	Audio.play_1d_sound(WCIAGATOR)
 	run_while(_smoke_particles, 0.1)
 	var amplitude = Vector2(3, 3)
 	tw = create_tween().set_loops()
@@ -39,8 +42,9 @@ func _ready() -> void:
 	).set_delay(0.01)
 	#Thunder._current_camera.shock(2, Vector2(4, 4))
 	await get_tree().create_timer(3, false, false, true).timeout
-	Audio.play_1d_sound(preload("res://sfx/Wciagator.wav"))
-	Audio.play_1d_sound(preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav"))
+	Audio.play_1d_sound(WCIAGATOR)
+	var _sfx = CharacterManager.get_sound_replace(BE_HAPPY, BE_HAPPY, "bowser_be_happy", false)
+	Audio.play_1d_sound(_sfx)
 	tw.stop()
 	castle.offset = Vector2.ZERO
 	tw = create_tween().set_trans(Tween.TRANS_SPRING)
@@ -48,7 +52,8 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(2, false).timeout
 	
-	Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav"))
+	_sfx = CharacterManager.get_sound_replace(PIPEC, PIPEC, "pipe_cutscene", false)
+	Audio.play_1d_sound(_sfx)
 	plushy_sun.self_modulate.a = 0
 	sunklass.visible = true
 	tw = create_tween()

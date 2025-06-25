@@ -7,6 +7,7 @@ const EXPLOSION_TANK = preload("res://stages/cutscenes/ending/part_1/scripts/exp
 const KUFON = preload("res://stages/cutscenes/ending/part_1/scripts/kufon.tscn")
 const DAMAGED_TILE = preload("res://stages/cutscenes/ending/part_1/scripts/damaged_tile.tscn")
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
+const STUN = preload("res://engine/objects/projectiles/sounds/stun.wav")
 
 @onready var camera_2d: PlayerCamera2D = $Path2D/PathFollow2D/Camera2D
 @onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
@@ -80,7 +81,8 @@ func _physics_process(delta):
 		
 		if !pipe_broken && path_follow_2d.progress > 1940:
 			pipe_broken = true
-			Audio.play_sound(preload("res://engine/objects/projectiles/sounds/stun.wav"), svo)
+			var _sfx = CharacterManager.get_sound_replace(STUN, STUN, "stun", false)
+			Audio.play_sound(_sfx, svo)
 			svo.gravity_scale = 0.5
 			svo.get_node("Sprite2D/cover").visible = false
 			await get_tree().physics_frame
@@ -96,16 +98,20 @@ func _physics_process(delta):
 			create_tween().tween_property(destruction, "volume_db", -40, 1.5)
 		
 
+const BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
+
 func _flow_intros():
 	await get_tree().create_timer(2.0, false).timeout
 	camera_2d.shock(4, Vector2(2, 2))
 	destruction.play()
-	Audio.play_sound(JUMP, mario)
+	var _sfx = CharacterManager.get_sound_replace(JUMP, JUMP, "jump", true)
+	Audio.play_sound(_sfx, mario)
 	create_tween().tween_property(peach, "self_modulate:a", 1.0, 0.15)
 	peach_path.speed = 175
 	
 	await get_tree().create_timer(1.0, false).timeout
-	Audio.play_sound(JUMP, mario)
+	_sfx = CharacterManager.get_sound_replace(JUMP, JUMP, "jump", true)
+	Audio.play_sound(_sfx, mario)
 	create_tween().tween_property(mario, "modulate:a", 1.0, 0.15)
 	mario_path.speed = 175
 	
@@ -121,9 +127,12 @@ func _flow_intros():
 	create_tween().tween_property(path_follow_2d, "speed", 150, 1.0)
 	
 	await get_tree().create_timer(6.0, false).timeout
-	Audio.play_sound(preload("res://engine/objects/bumping_blocks/_sounds/bump.wav"), marker_konchik)
+	_sfx = CharacterManager.get_sound_replace(BUMP, BUMP, "block_bump", false)
+	Audio.play_sound(_sfx, marker_konchik)
 	Audio.play_sound(preload("res://sfx/IntroCastleCrush2.wav"), marker_konchik)
-	Audio.play_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"), marker_konchik)
+	const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
+	_sfx = CharacterManager.get_sound_replace(BREAK, BREAK, "block_break", false)
+	Audio.play_sound(_sfx, marker_konchik)
 	var BEAM = preload("res://stages/cutscenes/ending/part_1/scripts/damaged_beam.tscn")
 	for i in 5:
 		var beam = BEAM.instantiate()

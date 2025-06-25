@@ -34,6 +34,14 @@ const DEFAULT_LINES = {
 	"map_level_enter": preload("res://engine/objects/items/coin/coin.wav"),
 	"menu_select_short": preload("res://engine/components/hud/sounds/scoring.wav"),
 	"game_over": preload("res://engine/objects/players/prefabs/sounds/music-gameover.ogg"),
+	"bowser_hurt": preload("res://engine/objects/bosses/bowser/sounds/bowser_hurt.wav"),
+	"bowser_be_happy": preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav"),
+	"bowser_fall": preload("res://engine/objects/bosses/bowser/sounds/bowser_fall.wav"),
+	"bowser_lava_love": preload("res://engine/objects/bosses/bowser/sounds/bowser_into_lava.wav"),
+	"stun": preload("res://engine/objects/projectiles/sounds/stun.wav"),
+	"fireball_bump": null,
+	"starman": preload("res://engine/objects/powerups/super_star/music-starman.it"),
+	"pipe_cutscene": preload("res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav"),
 }
 
 var skin_tweaks: Dictionary = {}
@@ -179,6 +187,9 @@ func _on_sound_test_selection_entered() -> void:
 				_cat_suit_sel.selected_sound = DEFAULT_LINES.get(_arr[i], null)
 				#print(_arr[i])
 		else:
+			if _arr[i] == "starman":
+				for j in voice_line:
+					if "loop" in j: j.loop = true
 			_cat_suit_sel.sounds_arr = voice_line
 			if SkinsManager.current_skin in SkinsManager.misc_sounds:
 				_cat_suit_sel.is_custom = SkinsManager.misc_sounds[SkinsManager.current_skin].has(_arr[i])
