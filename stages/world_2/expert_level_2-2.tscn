@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ca5okl181ttuc"]
+[gd_scene load_steps=25 format=3 uid="uid://ca5okl181ttuc"]
 
 [ext_resource type="PackedScene" uid="uid://ht5id10ochxu" path="res://stages/world_2/level_2-2.tscn" id="1_llyg0"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="3_kkct6"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="16_2sm1p"]
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="18_7mnor"]
 [ext_resource type="PackedScene" uid="uid://dpikli783lsya" path="res://objects/_screen_clear_item/atom_star.tscn" id="19_mnapb"]
+[ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="20_mnapb"]
 
 [sub_resource type="Resource" id="Resource_pup4p"]
 resource_local_to_scene = true
@@ -46,6 +47,21 @@ point_count = 2
 resource_local_to_scene = true
 script = ExtResource("5_f731h")
 creation_nodepack = ExtResource("19_mnapb")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_msora"]
+resource_local_to_scene = true
+script = ExtResource("5_f731h")
+creation_nodepack = ExtResource("20_mnapb")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -212,7 +228,7 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin16" parent="Path2D/PathFollow2D3/Block" index="3" instance=ExtResource("3_kkct6")]
+[node name="Coin16" parent="Path2D/PathFollow2D3/Block" index="2" instance=ExtResource("3_kkct6")]
 position = Vector2(0, -32)
 
 [node name="PathFollow2D4" parent="Path2D" index="3" instance=ExtResource("10_mhx2e")]
@@ -222,7 +238,7 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin16" parent="Path2D/PathFollow2D4/Block" index="3" instance=ExtResource("3_kkct6")]
+[node name="Coin16" parent="Path2D/PathFollow2D4/Block" index="2" instance=ExtResource("3_kkct6")]
 position = Vector2(0, -32)
 
 [node name="PathFollow2D5" parent="Path2D" index="4" instance=ExtResource("10_mhx2e")]
@@ -271,13 +287,13 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin42" parent="Path2D/PathFollow2D12/Block" index="3" instance=ExtResource("3_kkct6")]
+[node name="Coin42" parent="Path2D/PathFollow2D12/Block" index="2" instance=ExtResource("3_kkct6")]
 position = Vector2(0, -32)
 
-[node name="Coin43" parent="Path2D/PathFollow2D12/Block" index="4" instance=ExtResource("3_kkct6")]
+[node name="Coin43" parent="Path2D/PathFollow2D12/Block" index="3" instance=ExtResource("3_kkct6")]
 position = Vector2(-32, -32)
 
-[node name="Coin44" parent="Path2D/PathFollow2D12/Block" index="5" instance=ExtResource("3_kkct6")]
+[node name="Coin44" parent="Path2D/PathFollow2D12/Block" index="4" instance=ExtResource("3_kkct6")]
 position = Vector2(32, -32)
 
 [node name="PathFollow2D7" parent="Path2D" index="10" instance=ExtResource("10_mhx2e")]
@@ -288,13 +304,13 @@ loop = true
 loop_backwards = false
 warp_objects_on_end = false
 
-[node name="Coin42" parent="Path2D/PathFollow2D7/Block" index="3" instance=ExtResource("3_kkct6")]
+[node name="Coin42" parent="Path2D/PathFollow2D7/Block" index="2" instance=ExtResource("3_kkct6")]
 position = Vector2(0, -32)
 
-[node name="Coin43" parent="Path2D/PathFollow2D7/Block" index="4" instance=ExtResource("3_kkct6")]
+[node name="Coin43" parent="Path2D/PathFollow2D7/Block" index="3" instance=ExtResource("3_kkct6")]
 position = Vector2(-32, -32)
 
-[node name="Coin44" parent="Path2D/PathFollow2D7/Block" index="5" instance=ExtResource("3_kkct6")]
+[node name="Coin44" parent="Path2D/PathFollow2D7/Block" index="4" instance=ExtResource("3_kkct6")]
 position = Vector2(32, -32)
 
 [node name="PathFollow2D8" parent="Path2D" index="11" instance=ExtResource("10_mhx2e")]
@@ -306,7 +322,7 @@ loop_backwards = false
 warp_objects_on_end = false
 
 [node name="PipeIn2" parent="." index="33" instance=ExtResource("13_ay83c")]
-position = Vector2(7072, -720)
+position = Vector2(7072, -688)
 script = ExtResource("14_7mnor")
 choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
 
@@ -324,6 +340,9 @@ region_rect = Rect2(0, 0, 128, 64)
 position = Vector2(1328, 240)
 result = SubResource("Resource_2sm1p")
 initially_visible_and_solid = false
+
+[node name="QuestionBlockLife" parent="HarderDesignNode" index="27"]
+result = SubResource("Resource_msora")
 
 [connection signal="tried_to_enter" from="PipeIn2" to="SecretUnlockerOther" method="progress_secret"]
 [connection signal="warp_started" from="PipeIn2" to="HUD/Label" method="activate"]

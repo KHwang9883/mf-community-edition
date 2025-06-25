@@ -107,7 +107,8 @@ func _physics_process(delta: float) -> void:
 func _stun() -> void:
 	_step = 2
 	stun.emit()
-	Audio.play_sound(stunning_sound, self)
+	var _sfx = CharacterManager.get_sound_replace(stunning_sound, stunning_sound, "stun", false)
+	Audio.play_sound(_sfx, self)
 	motion_process(1)
 	_explosion()
 	if Thunder._current_camera.has_method(&"shock"):
