@@ -40,11 +40,17 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "$EXPORT_DIR/windows/01. Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "$EXPORT_DIR/windows/02. Compatibility Mode (angle).bat"
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
-      - name: Upload To Nextcloud
+      - name: Prepare For Upload
         run: |
           EXPORT_DIR="$(readlink -f build)"
-          echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "$EXPORT_DIR/windows/Readme.md"
-          for FILE in $EXPORT_DIR/windows/*
+          echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "$EXPORT_DIR/Readme.md"
+          cp $EXPORT_DIR/Readme.md $EXPORT_DIR/windows/Readme.md
+          zip -r $EXPORT_DIR/windows.zip $EXPORT_DIR/windows
+          rm -rf $EXPORT_DIR/windows
+      - name: Upload Files
+        run: |
+          EXPORT_DIR="$(readlink -f build)"
+          for FILE in $EXPORT_DIR/*
           do
             echo "Uploading file: $FILE"
             curl \
