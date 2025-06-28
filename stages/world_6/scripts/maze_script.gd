@@ -33,5 +33,5 @@ func entered() -> void:
 
 
 func _play_correct() -> void:
-	var _sfx = CharacterManager.get_sound_replace(SELECT_MAIN, SELECT_MAIN, "menu_select", false)
-	Audio.play_1d_sound(_sfx, false, {volume = -4})
+	#var _sfx = CharacterManager.get_sound_replace(SELECT_MAIN, SELECT_MAIN, "menu_select", false)
+	Audio.play_1d_sound(SELECT_MAIN, false, {volume = -4})
