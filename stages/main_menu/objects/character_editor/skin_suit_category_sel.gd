@@ -9,7 +9,12 @@ var tweak_descriptions: Dictionary = {
 	"attack_air_animation": "'attack_air' animation: shooting a projectile in mid-air plays this unique animation.\n\nfor suits without attacking, this has no effect.",
 	"separate_run_animation": "'p_run', 'p_jump', 'p_fall' animations: running at max speed triggers these animations.\n\nfor suits without constant running ability, this has no effect.",
 	"idle_animation": "'idle' animation: when no input is made, this animation plays after a specified amount of time.",
-	"idle_activate_after_sec": "from 0.1 to 9999; no effect if idle animation is disabled.",
+	"idle_activate_after_sec": {
+		"name" = "from 0.1 to 9999; no effect if idle animation is disabled.",
+		"min" = 0.1,
+		"max" = 9999.0,
+		"step" = 0.1,
+	},
 	#"stomp_animation": false, # after stomping an enemy or jumping on springboard
 	"kick_ground_animation": "the 'kick' animation also plays when kicking things without holding anything (e.g. shells).",
 	"warp_animation": "'warp' animation; if false, warping vertically will use 'jump', and 'crouch' or 'default'.",
@@ -21,13 +26,25 @@ var tweak_descriptions: Dictionary = {
 		"enabled": "if no texture is set, the default texture will be starman particles.",
 		"color": "particles will be modulated by this color.",
 		"show_behind": "'show_behind_parent': particles will be rendered behind the player.",
-		"lifetime_sec": "from 0.04 to 600; the more the value, the less frequently new particles will be generated.",
-		"amount_ratio": "from 0 to 1.0; the maximum particle amount is 48, and this tweak multiplies it.",
+		"lifetime_sec": {
+			"name" = "from 0.04 to 600; the more the value, the less frequently new particles will be generated.",
+			"min" = 0.04,
+			"max" = 600,
+			"step" = 0.1,
+		},
+		"amount_ratio": {
+			"name" = "from 0 to 1.0; the maximum particle amount is 48, and this tweak multiplies it.",
+			"min" = 0.0,
+			"max" = 1.0,
+			"step" = 0.1,
+		},
 		"local_coords": "should the particles follow player's position? also if true, may fix jitter on movement.",
 		"offset": "offset particles by this Vector2. (x, y)"
 	},
 	"emit_particles_sel": "particles for in-game character; for more options, see global skin tweaks menu.",
 	"loop_frame_offsets_sel": "add any animation to the list to set a frame where the animation will continue after looping; 0-based. negative values are ignored.",
+	
+	
 }
 
 @export var powerup_name: String
@@ -120,25 +137,11 @@ func create_tweak_selection(tweak) -> void:
 		Thunder.reorder_on_top_of(_bool_tweak, h_separator_spawn)
 	# Число, окно со спинбоксом
 	elif get_tweak_value(tweak) is float:
-		var _float_tweak = FLOAT_SUIT_TWEAK_SELECTION.instantiate()
-		_float_tweak.get_node("Label").text = tweak.replacen("_", " ")
-		_float_tweak.get_node("Label2").text = str(get_tweak_value(tweak))
-		_float_tweak.tweak_name = tweak
-		if tweak in tweak_descriptions:
-			_float_tweak.tweak_description_text = tweak_descriptions[tweak]
-		move_to.add_child(_float_tweak)
-		Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
+		_create_spinbox_selection(tweak, false)
+		
 	# То же
 	elif get_tweak_value(tweak) is int:
-		var _float_tweak = FLOAT_SUIT_TWEAK_SELECTION.instantiate()
-		_float_tweak.get_node("Label").text = tweak.replacen("_", " ")
-		_float_tweak.get_node("Label2").text = str(get_tweak_value(tweak))
-		_float_tweak.tweak_name = tweak
-		_float_tweak.get_node("Window/SpinBox").step = 1
-		if tweak in tweak_descriptions:
-			_float_tweak.tweak_description_text = tweak_descriptions[tweak]
-		move_to.add_child(_float_tweak)
-		Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
+		_create_spinbox_selection(tweak, true)
 	# Сабменю
 	elif get_tweak_value(tweak) is Dictionary:
 		var _submenu = SUBMENU_TWEAK_SELECTION.instantiate()
@@ -151,3 +154,27 @@ func create_tweak_selection(tweak) -> void:
 			_submenu.tweak_description_text = tweak_descriptions[tweak + "_sel"]
 		move_to.add_child(_submenu)
 		Thunder.reorder_on_top_of(_submenu, h_separator_spawn)
+
+
+func _create_spinbox_selection(tweak, is_int: bool) -> Node:
+	var _float_tweak = FLOAT_SUIT_TWEAK_SELECTION.instantiate()
+	_float_tweak.get_node("Label").text = tweak.replacen("_", " ")
+	_float_tweak.get_node("Label2").text = str(get_tweak_value(tweak))
+	_float_tweak.tweak_name = tweak
+	if is_int:
+		_float_tweak.get_node("Window/SpinBox").step = 1
+	if tweak in tweak_descriptions:
+		if tweak_descriptions[tweak] is String:
+			_float_tweak.tweak_description_text = tweak_descriptions[tweak]
+		else:
+			_float_tweak.tweak_description_text = tweak_descriptions[tweak].name
+			var spinbox: SpinBox = _float_tweak.get_node("Window/SpinBox")
+			if "min" in tweak_descriptions[tweak]:
+				spinbox.min_value = tweak_descriptions[tweak].min
+			if "max" in tweak_descriptions[tweak]:
+				spinbox.max_value = tweak_descriptions[tweak].max
+			if "step" in tweak_descriptions[tweak]:
+				spinbox.custom_arrow_step = tweak_descriptions[tweak].step
+	move_to.add_child(_float_tweak)
+	Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
+	return _float_tweak

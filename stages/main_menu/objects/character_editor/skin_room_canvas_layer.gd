@@ -15,10 +15,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !is_inside_tree(): return
-	if get_tree().paused:
-		svc.process_mode = Node.PROCESS_MODE_DISABLED
-	else:
-		svc.process_mode = Node.PROCESS_MODE_ALWAYS
+	if !get_tree().paused:
 		if !visible: return
 		if sv.get_child_count() == 0:
 			print("patching the skin room exit..")
