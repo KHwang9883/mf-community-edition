@@ -22,4 +22,6 @@ func _physics_process(delta: float) -> void:
 	
 	if bowsers_dead && !finished && get_tree().get_node_count_in_group(&"#bowser_corpse") == 0:
 		finished = true
+		if Scenes.current_scene.has_meta(&"boss_got_defeated"):
+			Scenes.current_scene.remove_meta(&"boss_got_defeated")
 		Scenes.current_scene.finish(true)
