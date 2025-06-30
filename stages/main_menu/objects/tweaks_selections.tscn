@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=38 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dsk58sf1jip6x" path="res://stages/extra/minix/scripts/minix_selectors_anim.gd" id="5_dhfy0"]
 [ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="5_fjyvq"]
 [ext_resource type="Script" uid="uid://dqc77o8dntkty" path="res://stages/main_menu/scripts/tweak_skin_selector.gd" id="6_n68nh"]
+[ext_resource type="Script" uid="uid://2entf8cb3cyx" path="res://stages/main_menu/objects/tweaks_livesplit_sel.gd" id="10_mnbbt"]
 [ext_resource type="Script" uid="uid://dp3dqrsu0l7xe" path="res://stages/main_menu/scripts/tweak_quality.gd" id="12_4kuwt"]
 [ext_resource type="Script" uid="uid://cb2expjn6ur1r" path="res://stages/main_menu/scripts/console_patch.gd" id="12_4rgcr"]
 [ext_resource type="Script" uid="uid://dr6gtqawbcqp4" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
@@ -32,6 +33,16 @@
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_4hroi"]
 color = Color(0, 0, 0.329412, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_hccet"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7p2c"]
+bg_color = Color(0.24, 0.24, 0.24, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_84j8u"]
 resource_local_to_scene = true
@@ -437,6 +448,170 @@ tweak_name = "mouse_in_menus"
 default_value = true
 tweak_title_text = "mouse input in menus"
 tweak_description_text = "you will be able to select and interact with menu controls such as this one using your mouse cursor."
+
+[node name="TweakLiveSplitSel" type="HBoxContainer" parent="Tweaks"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("10_mnbbt")
+selected_sound = ExtResource("3_ltw82")
+
+[node name="Label" type="Label" parent="Tweaks/TweakLiveSplitSel"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "autosplitter settings (livesplit server)..."
+uppercase = true
+
+[node name="Window" type="Window" parent="Tweaks/TweakLiveSplitSel"]
+disable_3d = true
+title = "Auto Splitter Settings"
+initial_position = 1
+size = Vector2i(500, 400)
+visible = false
+wrap_controls = true
+
+[node name="Control" type="Control" parent="Tweaks/TweakLiveSplitSel/Window"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Before launching the game, click \"Control\" > \"Start WebSocket Server\" in your LiveSplit, launch the game and wait for an in-game notification."
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_hccet")
+
+[node name="CheckBox" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Enabled (requires a restart)"
+
+[node name="CheckBox2" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pause Game Time while loading"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_s7p2c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = " Split on:"
+
+[node name="CheckBox2" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Level finish (no bosses)"
+
+[node name="CheckBox3" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Level finish (always)"
+
+[node name="CheckBox4" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Boss defeat"
+
+[node name="CheckBox5" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "World complete screen"
+
+[node name="CheckBox6" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Checkpoints"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer2" type="PanelContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_s7p2c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+text = " Start on:"
+
+[node name="CheckBox2" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "First level from map"
+
+[node name="CheckBox3" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pipe warp from save room"
+
+[node name="PanelContainer3" type="PanelContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_s7p2c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer3/VBoxContainer"]
+layout_mode = 2
+text = " Reset on:"
+
+[node name="CheckBox2" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Warping to save room"
+
+[node name="ApplyBtn" type="Button" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+text = "Apply"
 
 [node name="HBoxContainer18" parent="Tweaks" instance=ExtResource("15_mxo6u")]
 layout_mode = 2
@@ -2010,6 +2185,7 @@ action = "a_delete"
 [connection signal="selected" from="Tweaks" to="Selector" method="handle_selection"]
 [connection signal="selected" from="Tweaks" to="Camera2D" method="handle_selection"]
 [connection signal="selection_entered" from="Tweaks/QuickSkinSettingsButton" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_skin_setup_entered"]
+[connection signal="close_requested" from="Tweaks/TweakLiveSplitSel/Window" to="Tweaks/TweakLiveSplitSel" method="_on_window_close_requested"]
 [connection signal="selected" from="Gameplay" to="Selector2" method="handle_selection"]
 [connection signal="selected" from="Gameplay" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="Aesthetic" to="Selector3" method="handle_selection"]

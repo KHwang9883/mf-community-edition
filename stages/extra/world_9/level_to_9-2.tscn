@@ -1,0 +1,127 @@
+[gd_scene load_steps=21 format=4 uid="uid://b7wd2ntstpqde"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_24uxw"]
+[ext_resource type="Script" uid="uid://dlkn3px085yet" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_g0eft"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="3_cqn0j"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_wjyfv"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_6i1dv"]
+[ext_resource type="TileSet" uid="uid://cisrnptu4w3tf" path="res://tilesets/volcano/volcano.tres" id="6_lb3xj"]
+[ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://objects/wide_clouds_moving/texture.png" id="7_oqmoe"]
+[ext_resource type="Script" uid="uid://cg3pyfbjfcydc" path="res://objects/wide_clouds_moving/wide_clouds_moving.gd" id="8_8aft0"]
+[ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://objects/wide_clouds_moving/texture_alpha.png" id="9_bfgdc"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_tfqim"]
+[ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://tilesets/overworld_green/gfx/green_pipe_entering_another.png" id="11_b3533"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="12_nyw2i"]
+[ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="13_laokx"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="14_f63rd"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="15_reqpp"]
+[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="16_tqcpi"]
+[ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="17_7gsl7"]
+[ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="18_jkp3y"]
+
+[sub_resource type="Gradient" id="Gradient_slprf"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e3oq"]
+gradient = SubResource("Gradient_slprf")
+width = 480
+
+[node name="CaveCutscene" type="Node2D"]
+script = ExtResource("1_24uxw")
+
+[node name="CutsceneLogic" type="Node" parent="."]
+script = ExtResource("2_g0eft")
+
+[node name="Mario" parent="." instance=ExtResource("3_cqn0j")]
+position = Vector2(0, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("4_wjyfv")
+
+[node name="CamArea" parent="." instance=ExtResource("5_6i1dv")]
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="Layer0" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAATAA8AAQABAAIAAAATAA4AAQABAAEAAAATAA0AAQABAAAAAAASAA8AAQABAAIAAAASAA4AAQABAAEAAAASAA0AAQABAAAAAAARAA8AAQABAAIAAAARAA4AAQABAAEAAAARAA0AAQABAAAAAAAQAA8AAQABAAIAAAAQAA4AAQABAAEAAAAQAA0AAQABAAAAAAAPAA8AAQABAAIAAAAPAA4AAQABAAEAAAAPAA0AAQABAAAAAAAOAA8AAQABAAIAAAAOAA4AAQABAAEAAAAOAA0AAQABAAAAAAANAA8AAQABAAIAAAANAA4AAQABAAEAAAANAA0AAQABAAAAAAAMAA8AAQABAAIAAAAMAA4AAQABAAEAAAAMAA0AAQABAAAAAAALAA8AAQABAAIAAAALAA4AAQABAAEAAAALAA0AAQABAAAAAAAKAA8AAQABAAIAAAAKAA4AAQABAAEAAAAKAA0AAQABAAAAAAAJAA8AAQABAAIAAAAJAA4AAQABAAEAAAAJAA0AAQABAAAAAAAIAA8AAQABAAIAAAAIAA4AAQABAAEAAAAIAA0AAQABAAAAAAAHAA8AAQABAAIAAAAHAA4AAQABAAEAAAAHAA0AAQABAAAAAAAGAA8AAQABAAIAAAAGAA4AAQABAAEAAAAGAA0AAQABAAAAAAAFAA8AAQABAAIAAAAFAA4AAQABAAEAAAAFAA0AAQABAAAAAAAEAA8AAQABAAIAAAAEAA4AAQABAAEAAAAEAA0AAQABAAAAAAADAA8AAQABAAIAAAADAA4AAQABAAEAAAADAA0AAQABAAAAAAACAA8AAQABAAIAAAACAA4AAQABAAEAAAACAA0AAQABAAAAAAABAA8AAQABAAIAAAABAA4AAQABAAEAAAABAA0AAQABAAAAAAAAAA8AAQABAAIAAAAAAA4AAQABAAEAAAAAAA0AAQABAAAAAAD//w8AAQAAAAIAAAD//w4AAQAAAAEAAAD//w0AAQAAAAAAAAAPAAsACAACAAAAAAAPAAwACAACAAEAAAAQAAsACAADAAAAAAAQAAwACAADAAEAAAARAAkACAAAAAAAAAARAAoACAAAAAEAAAASAAkACAABAAAAAAASAAoACAABAAEAAAASAAsACAABAAEAAAASAAwACAABAAEAAAARAAsACAAAAAEAAAARAAwACAAAAAEAAAAFAAwACQABAAIAAAAHAAgAAgAAAAAAAgAEAAIAAgAAAAAAAgACAAYAAgAAAAAAAgANAAQAAgAAAAAAAgAQAAYAAgAAAAAAAgASAAIAAgAAAAAAAgAUAA8AAQACAAIAAAAUAA4AAQACAAEAAAAUAA0AAQACAAAAAAALAAwABgAEAAAAAAALAAsABgAFAAAAAAABAAwABgAAAAAAAAAGAAwABQAAAAAAAAAHAAwABQABAAAAAAAIAAwABQABAAAAAAAJAAwABQACAAAAAAAFAAoACQABAAAAAAAFAAsACQABAAEAAAANAAwABgADAAAAAAA=")
+tile_set = ExtResource("6_lb3xj")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_0e3oq")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+texture_repeat = 2
+position = Vector2(320, 16)
+texture = ExtResource("7_oqmoe")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("8_8aft0")
+
+[node name="TextureAlpha" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3/Sprite2D"]
+position = Vector2(0, 32)
+texture = ExtResource("9_bfgdc")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 32)
+script = ExtResource("10_tfqim")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 25
+texture_repeat = 2
+position = Vector2(320, 0)
+texture = ExtResource("7_oqmoe")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("8_8aft0")
+speed = 100.0
+
+[node name="GreenPipeEnteringAnother" type="Sprite2D" parent="."]
+position = Vector2(544, 384)
+texture = ExtResource("11_b3533")
+
+[node name="PipeIn" parent="." instance=ExtResource("12_nyw2i")]
+position = Vector2(470, 383)
+rotation = -1.57079
+warp_direction = 1
+warp_to_scene = "uid://bsnomo06t84ja"
+warping_speed = 50.0
+warping_sound = ExtResource("13_laokx")
+warp_disable_smooth_entry = true
+use_circle_transition = true
+
+[node name="HUD" parent="." instance=ExtResource("14_f63rd")]
+visible = false
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -20
+script = ExtResource("10_tfqim")
+
+[node name="GiantClouds3" type="Sprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.713726)
+position = Vector2(64, 208)
+texture = ExtResource("15_reqpp")
+
+[node name="GiantClouds4" type="Sprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.713726)
+position = Vector2(464, 208)
+texture = ExtResource("15_reqpp")
+
+[node name="Sun" type="Sprite2D" parent="Node2D"]
+position = Vector2(320, 112)
+texture = ExtResource("16_tqcpi")
+script = ExtResource("17_7gsl7")
+
+[node name="ChorniyCutsceneSpawner" type="Node" parent="."]
+script = ExtResource("18_jkp3y")

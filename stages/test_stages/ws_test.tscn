@@ -1,0 +1,169 @@
+[gd_scene load_steps=17 format=3 uid="uid://dv65ge8kwbohd"]
+
+[ext_resource type="Script" uid="uid://dhcjbo4h67l2k" path="res://stages/test_stages/test_scripts/ws_test.gd" id="1_y4r0h"]
+[ext_resource type="Texture2D" uid="uid://bdyg3ju76ed67" path="res://engine/components/hud/coins.png" id="2_dmewl"]
+
+[sub_resource type="Curve2D" id="Curve2D_40h34"]
+_data = {
+"points": PackedVector2Array(-17, 50, 17, -50, 129, 38, 3, -70, -3, 70, 390, 88, 102, 2, -102, -2, 198, 264, 0, 0, 0, 0, 128, 40)
+}
+point_count = 4
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jox5f"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="InputEventKey" id="InputEventKey_y4r0h"]
+device = -1
+keycode = 32
+unicode = 32
+
+[sub_resource type="Shortcut" id="Shortcut_dmewl"]
+events = [SubResource("InputEventKey_y4r0h")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_dmewl"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_40h34"]
+events = [SubResource("InputEventKey_dmewl")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_40h34"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_3i7he"]
+events = [SubResource("InputEventKey_40h34")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_r4urx"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_jox5f"]
+events = [SubResource("InputEventKey_r4urx")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_3i7he"]
+device = -1
+keycode = 52
+unicode = 52
+
+[sub_resource type="Shortcut" id="Shortcut_r4urx"]
+events = [SubResource("InputEventKey_3i7he")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_jox5f"]
+device = -1
+keycode = 53
+unicode = 53
+
+[sub_resource type="Shortcut" id="Shortcut_jemk4"]
+events = [SubResource("InputEventKey_jox5f")]
+
+[node name="WsTest" type="Control"]
+physics_interpolation_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y4r0h")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(103.6, 116.27)
+curve = SubResource("Curve2D_40h34")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(129, 38)
+rotates = false
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Path2D/PathFollow2D"]
+physics_interpolation_mode = 1
+amount = 15
+texture = ExtResource("2_dmewl")
+lifetime = 1.6
+draw_order = 1
+direction = Vector2(0, 1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+
+[node name="PathFollow2D2" type="PathFollow2D" parent="Path2D"]
+position = Vector2(257, 38)
+h_offset = 128.0
+rotates = false
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Path2D/PathFollow2D2"]
+physics_interpolation_mode = 1
+amount = 15
+texture = ExtResource("2_dmewl")
+lifetime = 1.6
+process_material = SubResource("ParticleProcessMaterial_jox5f")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 397.0
+offset_right = 120.0
+offset_bottom = 467.0
+shortcut = SubResource("Shortcut_dmewl")
+text = "split"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 71.0
+offset_bottom = 66.0
+shortcut = SubResource("Shortcut_40h34")
+text = "1: poll"
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 16.0
+offset_right = 135.0
+offset_bottom = 65.0
+shortcut = SubResource("Shortcut_3i7he")
+text = "2:ping"
+
+[node name="Button4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 65.0
+shortcut = SubResource("Shortcut_jox5f")
+text = "3:start"
+
+[node name="Button5" type="Button" parent="."]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 16.0
+offset_right = 267.0
+offset_bottom = 65.0
+shortcut = SubResource("Shortcut_r4urx")
+text = "4:reset"
+
+[node name="Button6" type="Button" parent="."]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 16.0
+offset_right = 331.0
+offset_bottom = 65.0
+shortcut = SubResource("Shortcut_jemk4")
+text = "5:gettimerphase"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="Button5" to="." method="_on_button_5_pressed"]
+[connection signal="pressed" from="Button6" to="." method="_on_button_6_pressed"]

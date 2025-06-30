@@ -73,6 +73,10 @@ func _ready() -> void:
 	
 	# Notifications
 	Thunder._connect(SkinsManager.skins_loaded, _on_skins_reloaded)
+	Thunder._connect(Thunder.autosplitter.connected, _on_asws_connected)
+	#if Console.allow_developer_commands:
+	#	pl_speed.show()
+	#	pl_speed.process_mode = Node.PROCESS_MODE_PAUSABLE
 
 
 func _physics_process(delta: float) -> void:
@@ -192,6 +196,9 @@ func notify_warn(text: String) -> void:
 func _on_skins_reloaded() -> void:
 	notify("Skins reloaded!")
 
+func _on_asws_connected() -> void:
+	notify("Auto Splitter Ready!")
+	Thunder._connect(Thunder.autosplitter.closed, notify_warn.bind("Auto Splitter Offline"))
 
 func load_secrets() -> void:
 	var data: Dictionary = SettingsManager.load_data(secrets_path, "Achievements")
