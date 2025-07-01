@@ -4,7 +4,10 @@ extends MenuSelection
 #var _timer: float
 
 @onready var window: Window = $Window
-var config = Thunder.autosplitter.config.duplicate(true)
+@onready var _split_on = %split_on
+@onready var _start_on = %start_on
+@onready var _reset_on = %reset_on
+@onready var config = Thunder.autosplitter.config.duplicate(true)
 
 #func _physics_process(delta: float) -> void:
 	#super(delta)
@@ -16,12 +19,54 @@ var config = Thunder.autosplitter.config.duplicate(true)
 	#else:
 		#valu.modulate.a = 0.0
 
+func _ready() -> void:
+	update_checkboxes()
+
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	
 	window.show()
-	
 
+func update_checkboxes() -> void:
+	%cb_enabled.button_pressed = bool(config.enabled)
+	%cb_pause_load.button_pressed = bool(config.pause_on_loading)
+	for i in _split_on.get_children():
+		if !i is CheckBox: continue
+		i.button_pressed = config.split_on.has(i.name)
+	for i in _start_on.get_children():
+		if !i is CheckBox: continue
+		i.button_pressed = config.start_on.has(i.name)
+	for i in _reset_on.get_children():
+		if !i is CheckBox: continue
+		i.button_pressed = config.reset_on.has(i.name)
+
+func save_checkboxes() -> void:
+	config.enabled = %cb_enabled.button_pressed
+	config.pause_on_loading = %cb_pause_load.button_pressed
+	config.split_on = []
+	for i in _split_on.get_children():
+		if !i is CheckBox: continue
+		if i.button_pressed:
+			config.split_on.append(i.name)
+	config.start_on = []
+	for i in _start_on.get_children():
+		if !i is CheckBox: continue
+		if i.button_pressed:
+			config.start_on.append(i.name)
+	config.reset_on = []
+	for i in _reset_on.get_children():
+		if !i is CheckBox: continue
+		if i.button_pressed:
+			config.reset_on.append(i.name)
 
 func _on_window_close_requested() -> void:
 	config = Thunder.autosplitter.config.duplicate(true)
+	update_checkboxes()
+	window.hide()
+
+
+func _on_apply_btn_pressed() -> void:
+	save_checkboxes()
+	Thunder.autosplitter.config = config
+	Thunder.autosplitter.save_config()
+	window.hide()
