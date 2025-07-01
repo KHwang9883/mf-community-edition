@@ -4,7 +4,6 @@
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_mr4fj"]
 [ext_resource type="Material" uid="uid://c17r7oabypbcx" path="res://objects/chorniy_mario/grayscale.tres" id="2_xi6gv"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="4_c8ud3"]
-[ext_resource type="Material" uid="uid://co6ga8wf4ws14" path="res://objects/chorniy_mario/chorniy_mario.tres" id="4_tsyt3"]
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="5_pcidr"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="6_aatj8"]
 
@@ -13,6 +12,10 @@ radius = 12.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w5wp1"]
 load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
+
+[sub_resource type="Curve" id="Curve_m7sk5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
+point_count = 3
 
 [node name="ChorniyMario" type="Area2D"]
 script = ExtResource("1_jcrf4")
@@ -26,13 +29,26 @@ offset = Vector2(0, -15)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_h7cef")
 
-[node name="Stars" type="GPUParticles2D" parent="."]
+[node name="Stars" type="CPUParticles2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
 amount = 24
-process_material = ExtResource("4_tsyt3")
 texture = SubResource("CompressedTexture2D_w5wp1")
 lifetime = 0.5
+draw_order = 1
+emission_shape = 1
+emission_sphere_radius = 24.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_m7sk5")
+script = ExtResource("6_aatj8")
+medium = true
 
 [node name="KevinText2" type="Label" parent="."]
 visible = false

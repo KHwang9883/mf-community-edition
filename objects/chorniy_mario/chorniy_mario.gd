@@ -6,7 +6,7 @@ const DEATH_SOUNDS = [
 	preload("res://objects/chorniy_mario/death_sounds/akh.mp3"),
 	preload("res://objects/chorniy_mario/death_sounds/amogusss.ogg"),
 	preload("res://objects/chorniy_mario/death_sounds/armatura_P29FH2w.mp3"),
-	preload("res://objects/chorniy_mario/death_sounds/baby-laughing-meme.mp3"),
+	preload("res://objects/chorniy_mario/death_sounds/death.ogg"),
 	preload("res://objects/chorniy_mario/death_sounds/blya.mp3"),
 	preload("res://objects/chorniy_mario/death_sounds/blyat.mp3"),
 	preload("res://objects/chorniy_mario/death_sounds/bo-womp.mp3"),
@@ -63,6 +63,7 @@ const APPEAR = preload("res://objects/chorniy_mario/appear.ogg")
 @onready var kevin_text_2 = $KevinText2
 @onready var _random_sounds_tweak: bool = SettingsManager.get_tweak("secret_mode_new_death_sounds")
 @onready var cloud_light_effect: Sprite2D = $CloudLightEffect
+@onready var stars: CPUParticles2D = $Stars
 
 var mario_pos: Vector2
 var appear_triggered = false

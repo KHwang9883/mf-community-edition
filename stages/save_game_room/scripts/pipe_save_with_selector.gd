@@ -47,7 +47,7 @@ var _star_sel_level: int
 @onready var cursed_pipe: Sprite2D = $CursedPipe
 @onready var message_block_2: AnimatableBody2D = %MessageBlock2
 @onready var message_warning: String = message_block_2.message
-@onready var faster_deletion_tw = SettingsManager.get_tweak("faster_save_deletion", false)
+var faster_deletion_tw: bool
 
 signal save_deleted
 
@@ -68,6 +68,7 @@ func _ready() -> void:
 			cheat_warned = false
 	)
 	_tweak = SettingsManager.get_tweak("load_save_from_world_start", false)
+	faster_deletion_tw = SettingsManager.get_tweak("faster_save_deletion", false)
 	
 	_update_save()
 	
