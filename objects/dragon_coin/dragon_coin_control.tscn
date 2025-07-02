@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnnn6g6x2r6uq"]
+
+[ext_resource type="Script" uid="uid://x2s5lfkiymxp" path="res://objects/dragon_coin/dragon_coin_controller.gd" id="1_b46ex"]
+[ext_resource type="Texture2D" uid="uid://cchba4g0au7i8" path="res://objects/dragon_coin/texture_hud.png" id="2_8t55t"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="3_cxob5"]
+[ext_resource type="Script" uid="uid://bc8txhndjjot7" path="res://engine/components/hud/value.gd" id="4_gdrau"]
+
+[node name="DragonCoinControl" type="Control"]
+editor_description = "Put this as a child of HUD."
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b46ex")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.4
+anchor_right = 0.4
+offset_left = -28.0
+offset_top = 55.0
+offset_right = 368.0
+offset_bottom = 71.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_8t55t")
+stretch_mode = 3
+
+[node name="Coins3" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("3_cxob5")
+text = "%s"
+horizontal_alignment = 2
+script = ExtResource("4_gdrau")
+value_name = "dragon_coins"
+
+[node name="Coins2" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("3_cxob5")
+text = "/"
+
+[node name="Coins4" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("3_cxob5")
+text = "%s"
+script = ExtResource("4_gdrau")
+value_name = "dragon_coins_max"

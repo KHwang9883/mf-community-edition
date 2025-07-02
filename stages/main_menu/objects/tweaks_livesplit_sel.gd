@@ -70,3 +70,14 @@ func _on_apply_btn_pressed() -> void:
 	Thunder.autosplitter.config = config
 	Thunder.autosplitter.save_config()
 	window.hide()
+	if config.enabled:
+		_on_reconnect_pressed()
+
+
+func _on_reconnect_pressed() -> void:
+	Thunder.autosplitter.ws.poll()
+	var state = Thunder.autosplitter.ws.get_ready_state()
+	if state != WebSocketPeer.STATE_OPEN:
+		Thunder.autosplitter.has_closed = false
+		Thunder.autosplitter.has_connected = false
+		Thunder.autosplitter.connect_websocket()

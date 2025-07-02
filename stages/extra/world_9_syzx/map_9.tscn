@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dikleqhkedcrb"]
+[gd_scene load_steps=38 format=3 uid="uid://dikleqhkedcrb"]
 
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_bmpkr"]
 [ext_resource type="AudioStream" uid="uid://dooguig5sr56s" path="res://music/extra/world_9_syzx/dyna-k_music6.mod" id="3_rbhek"]
@@ -12,9 +12,10 @@
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_1nw7e"]
 [ext_resource type="Texture2D" uid="uid://cii4pifncqrgp" path="res://gfx/map/world_names/world_1.png" id="13_kxs0b"]
 [ext_resource type="Texture2D" uid="uid://cm4havsld8lo8" path="res://gfx/map/world_names/world_9.png" id="13_oo4jx"]
-[ext_resource type="Texture2D" uid="uid://bmmc5enstq6c0" path="res://gfx/fancy_graphics/world_texts/world_9.png" id="14_eik7c"]
 [ext_resource type="Script" uid="uid://dr3vhptgbru6r" path="res://engine/scenes/map/scripts/world_text.gd" id="14_kgyg0"]
 [ext_resource type="Material" uid="uid://w3kqtxo6pgp8" path="res://materials/map_9_hsv.tres" id="14_wr66c"]
+[ext_resource type="Texture2D" uid="uid://cri6ax5vkgp6w" path="res://gfx/fancy_graphics/world_texts/MARIO_WORLD_bigger.png" id="15_ifotp"]
+[ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="16_c17sk"]
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="16_mdikp"]
 [ext_resource type="Script" uid="uid://dxfohdq1ugjpj" path="res://engine/scenes/map/scripts/start_text.gd" id="17_i0k5o"]
 [ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="18_ga5y6"]
@@ -35,6 +36,11 @@
 [ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="30_cjd1g"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="31_evt6l"]
 [ext_resource type="PackedScene" uid="uid://r6db0501lsxu" path="res://objects/bonus_level_map_button/bonus_level_click_on_me.tscn" id="32_ay0k0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laqnj"]
+atlas = ExtResource("16_c17sk")
+region = Rect2(121, 84, 61, 86)
+filter_clip = true
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_bmpkr")
@@ -128,10 +134,14 @@ texture = ExtResource("13_oo4jx")
 region_enabled = true
 region_rect = Rect2(216, 0, 58, 70)
 
-[node name="World1" type="Sprite2D" parent="GUI2/WorldText"]
-visible = false
-texture = ExtResource("14_eik7c")
+[node name="FancyWorld" type="Sprite2D" parent="GUI2/WorldText"]
+texture = ExtResource("15_ifotp")
+offset = Vector2(-24, 0)
 script = ExtResource("12_1nw7e")
+
+[node name="FancyNumber" type="Sprite2D" parent="GUI2/WorldText/FancyWorld"]
+position = Vector2(112, 0)
+texture = SubResource("AtlasTexture_laqnj")
 
 [node name="MarioIcon" type="Sprite2D" parent="GUI2"]
 position = Vector2(581, 436)

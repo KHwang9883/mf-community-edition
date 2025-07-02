@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnlw1csyelqh0"]
+
+[ext_resource type="Script" uid="uid://bs3aoklpy3u3f" path="res://stages/extra/world_9/scripts/platform_fireball.gd" id="1_14se0"]
+[ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_futjj"]
+[ext_resource type="AudioStream" uid="uid://b8v8vtk23j2na" path="res://sfx/fire_amb.ogg" id="3_jxwvm"]
+[ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="4_uu0tx"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_futjj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5i870"]
+radius = 70.0
+
+[sub_resource type="Gradient" id="Gradient_74oxi"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5i870"]
+gradient = SubResource("Gradient_74oxi")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.9, 0.2)
+metadata/_snap_enabled = true
+
+[node name="FireballBig" type="PathFollow2D"]
+rotation = 1.5708
+loop = false
+script = ExtResource("1_14se0")
+speed = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(10, 10)
+texture = ExtResource("2_futjj")
+flip_h = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jxwvm")
+autoplay = true
+max_distance = 1280.0
+bus = &"Sound"
+
+[node name="Spike" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+script = ExtResource("4_uu0tx")
+type = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spike"]
+shape = SubResource("CircleShape2D_5i870")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.313726, 0, 1)
+energy = 1.6
+range_layer_min = -512
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_5i870")
+texture_scale = 0.5
+script = ExtResource("5_futjj")
+final_value = 2.5
+duration = 0.1

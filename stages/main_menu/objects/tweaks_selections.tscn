@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=45 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -44,6 +44,13 @@ expand_margin_bottom = 4.0
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_hccet"]
 color = Color(0, 0, 0, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnbbt"]
+bg_color = Color(0.223529, 0.223529, 0.368627, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7p2c"]
 bg_color = Color(0.24, 0.24, 0.24, 1)
 corner_radius_top_left = 5
@@ -52,6 +59,18 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_hccet"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_hccet"]
+action = &"ui_accept"
+
+[sub_resource type="Shortcut" id="Shortcut_s7p2c"]
+events = [SubResource("InputEventAction_hccet")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_s7p2c"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_mnbbt"]
+events = [SubResource("InputEventAction_s7p2c")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_84j8u"]
 resource_local_to_scene = true
@@ -481,7 +500,7 @@ uppercase = true
 disable_3d = true
 title = "Auto Splitter Settings"
 initial_position = 1
-size = Vector2i(500, 400)
+size = Vector2i(500, 360)
 visible = false
 
 [node name="Control" type="PanelContainer" parent="Tweaks/TweakLiveSplitSel/Window"]
@@ -503,7 +522,7 @@ theme_override_constants/separation = 0
 [node name="Label" type="Label" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Before launching the game, click \"Control\" > \"Start WebSocket Server\" in your LiveSplit, launch the game and wait for an in-game notification."
+text = "Select \"Control\" > \"Start WebSocket Server\" in your LiveSplit, launch the game and wait for an in-game notification."
 autowrap_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
@@ -511,20 +530,39 @@ custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_hccet")
 
-[node name="cb_enabled" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_mnbbt")
+
+[node name="cb_enabled" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer3/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "To make use of this, you should have LiveSplit installed!"
-text = "Enabled (requires a restart)"
+text = "Enabled"
 
-[node name="cb_pause_load" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_s7p2c")
+
+[node name="cb_pause_load" type="CheckBox" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer3/PanelContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Pauses IGT timer between scenes. Do not forget to
 change your layout to use Game Time."
-text = "Pause Game Time while loading"
+text = "Pause IGT while loading"
+
+[node name="HSeparator2" type="HSeparator" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxLine_hccet")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
 layout_mode = 2
@@ -637,12 +675,34 @@ tooltip_text = "Self-explanatory. Use F3 shortcut & faster save deletion tweaks
 for more convenient resets."
 text = "Warping to save room"
 
-[node name="ApplyBtn" type="Button" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
-custom_minimum_size = Vector2(96, 0)
+[node name="HBoxContainer2" type="HBoxContainer" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="ApplyBtn" type="Button" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 6
 size_flags_vertical = 10
+shortcut = SubResource("Shortcut_s7p2c")
 text = "Apply"
+
+[node name="CloseBtn" type="Button" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+shortcut = SubResource("Shortcut_mnbbt")
+text = "Cancel"
+
+[node name="Reconnect" type="Button" parent="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+text = "Reconnect"
 
 [node name="HBoxContainer18" parent="Tweaks" instance=ExtResource("15_mxo6u")]
 layout_mode = 2
@@ -2225,7 +2285,9 @@ action = "a_delete"
 [connection signal="selected" from="Tweaks" to="Camera2D" method="handle_selection"]
 [connection signal="selection_entered" from="Tweaks/QuickSkinSettingsButton" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_skin_setup_entered"]
 [connection signal="close_requested" from="Tweaks/TweakLiveSplitSel/Window" to="Tweaks/TweakLiveSplitSel" method="_on_window_close_requested"]
-[connection signal="pressed" from="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/ApplyBtn" to="Tweaks/TweakLiveSplitSel" method="_on_apply_btn_pressed"]
+[connection signal="pressed" from="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2/ApplyBtn" to="Tweaks/TweakLiveSplitSel" method="_on_apply_btn_pressed"]
+[connection signal="pressed" from="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2/CloseBtn" to="Tweaks/TweakLiveSplitSel" method="_on_window_close_requested"]
+[connection signal="pressed" from="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2/Reconnect" to="Tweaks/TweakLiveSplitSel" method="_on_reconnect_pressed"]
 [connection signal="selected" from="Gameplay" to="Selector2" method="handle_selection"]
 [connection signal="selected" from="Gameplay" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="Aesthetic" to="Selector3" method="handle_selection"]

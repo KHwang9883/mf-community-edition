@@ -13,7 +13,6 @@ const url: String = \
 
 var url_open: String = "https://gist.github.com/jue131/f7ad31818af19fa91b5175cb67340529"
 
-const SELECT_ENTER = preload("res://engine/components/ui/_sounds/select_enter.wav")
 const COIN = preload("res://sfx/clear.wav")
 
 signal found_update
@@ -37,9 +36,7 @@ func _ready() -> void:
 	await get_tree().create_timer(0.8, true, false, true).timeout
 	update_checking.visible = true
 	update_checking.text = "checking for\nupdates..."
-	checking_tween = update_checking.create_tween().set_loops().set_trans(Tween.TRANS_SINE)
-	checking_tween.tween_property(update_checking, ^"modulate:a", 0.25, 0.25).set_ease(Tween.EASE_IN)
-	checking_tween.tween_property(update_checking, ^"modulate:a", 0.75, 0.25).set_ease(Tween.EASE_OUT)
+	update_checking.modulate.a = 0.75
 	
 	http_request.request_completed.connect(_on_http_get, CONNECT_ONE_SHOT)
 	http_request.request(url)
@@ -99,5 +96,4 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_select"):
 		OS.shell_open(url_open)
-		#Audio.play_1d_sound(SELECT_ENTER)
 		get_tree().quit()

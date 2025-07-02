@@ -29,5 +29,5 @@ func _jump() -> void:
 	await get_tree().create_timer(randf_range(0, 4), false).timeout
 	if is_zero_approx(velocity.y):
 		velocity.y = randf_range(-200, -400)
-		Audio.play_sound(preload("res://stages/cutscenes/ending/part_3/sounds/bobas_mario_jump.wav"), self)
+		Audio.play_sound(preload("res://stages/cutscenes/ending/part_3/sounds/bobas_mario_jump.wav"), self, false)
 	_jump()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bypsd87y1hf7h"]
+[gd_scene load_steps=30 format=3 uid="uid://bypsd87y1hf7h"]
 
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_xv1n3"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="2_sugu3"]
@@ -19,14 +19,21 @@
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="10_r0h4y"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="11_43jlh"]
 [ext_resource type="Script" uid="uid://bgm1hm3784ld7" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="11_na0aj"]
-[ext_resource type="Texture2D" uid="uid://dj8gmob5uucl3" path="res://gfx/fancy_graphics/world_texts/world_5.png" id="14_7gicw"]
+[ext_resource type="Texture2D" uid="uid://cri6ax5vkgp6w" path="res://gfx/fancy_graphics/world_texts/MARIO_WORLD_bigger.png" id="15_yvs0r"]
 [ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="16_10nam"]
 [ext_resource type="Script" uid="uid://w38wmhi8lagh" path="res://engine/scenes/map/scripts/map_camera.gd" id="16_413nm"]
+[ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="16_rs6q1"]
 [ext_resource type="Texture2D" uid="uid://cm3ivuidbyon1" path="res://gfx/fancy_graphics/map_jump_to_start.png" id="17_7j7gw"]
 [ext_resource type="PackedScene" uid="uid://dgyfu1v14ewiu" path="res://gfx/fancy_graphics/quality_dots.tscn" id="21_xdfeu"]
 [ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="22_tdajg"]
 [ext_resource type="Script" uid="uid://bgq4yksu7kl5m" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="24_tlhi2"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="26_18vn5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oerg6"]
+resource_local_to_scene = true
+atlas = ExtResource("16_rs6q1")
+region = Rect2(246, 0, 60, 83)
+filter_clip = true
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_xv1n3")
@@ -42,24 +49,6 @@ texture = ExtResource("2_sugu3")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 3333, 480)
-region_filter_clip_enabled = true
-metadata/_edit_lock_ = true
-
-[node name="Bg2" type="Sprite2D" parent="."]
-position = Vector2(3333, 0)
-texture = ExtResource("2_sugu3")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 480, 3333, 480)
-region_filter_clip_enabled = true
-metadata/_edit_lock_ = true
-
-[node name="Bg3" type="Sprite2D" parent="."]
-position = Vector2(6666, 0)
-texture = ExtResource("2_sugu3")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 960, 3333, 480)
 region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
@@ -114,11 +103,14 @@ maximum = false
 medium = true
 minimum = true
 
-[node name="World5" type="Sprite2D" parent="GUI/WorldText"]
-position = Vector2(0, -48)
-texture = ExtResource("14_7gicw")
-offset = Vector2(0, 24)
+[node name="FancyWorld" type="Sprite2D" parent="GUI/WorldText"]
+texture = ExtResource("15_yvs0r")
+offset = Vector2(-24, 0)
 script = ExtResource("11_43jlh")
+
+[node name="FancyNumber" type="Sprite2D" parent="GUI/WorldText/FancyWorld"]
+position = Vector2(113, 0)
+texture = SubResource("AtlasTexture_oerg6")
 
 [node name="MarioIcon" type="Sprite2D" parent="GUI"]
 position = Vector2(581, 436)
