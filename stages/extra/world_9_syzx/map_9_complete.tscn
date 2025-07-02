@@ -1,12 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3k27g6xkq3xr"]
+[gd_scene load_steps=10 format=3 uid="uid://b3k27g6xkq3xr"]
 
 [ext_resource type="PackedScene" uid="uid://443hynmdu5so" path="res://stages/world_1/map_1_complete.tscn" id="1_pdhub"]
 [ext_resource type="Texture2D" uid="uid://cm4havsld8lo8" path="res://gfx/map/world_names/world_9.png" id="2_ho0bd"]
-[ext_resource type="Texture2D" uid="uid://bmmc5enstq6c0" path="res://gfx/fancy_graphics/world_texts/world_9.png" id="3_bnaxx"]
+[ext_resource type="Material" uid="uid://w3kqtxo6pgp8" path="res://materials/map_9_hsv.tres" id="3_g5keb"]
+[ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="3_g41ab"]
 [ext_resource type="Texture2D" uid="uid://bhyq5cbc8i6ld" path="res://stages/extra/secrets/gfx/syzxchulun.png" id="4_4gtbg"]
 [ext_resource type="Texture2D" uid="uid://dykc2dvafmj0" path="res://gfx/map/maps/map9.png" id="4_cdcod"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="5_itc8a"]
 [ext_resource type="Texture2D" uid="uid://dgkqwhaq4i71y" path="res://stages/extra/world_9_syzx/gfx/custom_map.png" id="6_pfjoo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j28l"]
+atlas = ExtResource("3_g41ab")
+region = Rect2(121, 84, 61, 86)
+filter_clip = true
 
 [node name="Map-complete" instance=ExtResource("1_pdhub")]
 goto_scene = "res://stages/save_game_room/save_game_room.tscn"
@@ -20,10 +26,19 @@ position = Vector2(0, 178)
 
 [node name="Sprite2D" parent="GUI/WorldText2" index="1"]
 texture = ExtResource("2_ho0bd")
+offset = Vector2(-24, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 218, 70)
 
-[node name="World1" parent="GUI/WorldText2" index="2"]
-texture = ExtResource("3_bnaxx")
-offset = Vector2(0, 72)
+[node name="Sprite2D2" type="Sprite2D" parent="GUI/WorldText2/Sprite2D" index="1"]
+material = ExtResource("3_g5keb")
+position = Vector2(108, 0)
+texture = ExtResource("2_ho0bd")
+region_enabled = true
+region_rect = Rect2(216, 0, 58, 70)
+
+[node name="FancyNumber" parent="GUI/WorldText2/World2" index="0"]
+texture = SubResource("AtlasTexture_7j28l")
 
 [node name="Syzxchulun" type="Sprite2D" parent="GUI" index="2"]
 z_index = -1

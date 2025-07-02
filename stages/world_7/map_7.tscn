@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c2d18gcddumrj"]
+[gd_scene load_steps=34 format=3 uid="uid://c2d18gcddumrj"]
 
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_aiwi8"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_me13v"]
@@ -14,9 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="10_v7g4r"]
 [ext_resource type="Texture2D" uid="uid://h5k1m7htt20h" path="res://engine/scenes/map/textures/press_start.png" id="11_hin43"]
 [ext_resource type="Script" uid="uid://dxfohdq1ugjpj" path="res://engine/scenes/map/scripts/start_text.gd" id="12_6qie5"]
-[ext_resource type="Texture2D" uid="uid://tgbow7hvmh8m" path="res://gfx/fancy_graphics/world_texts/world_7.png" id="13_m6862"]
+[ext_resource type="Texture2D" uid="uid://cri6ax5vkgp6w" path="res://gfx/fancy_graphics/world_texts/MARIO_WORLD_bigger.png" id="13_duutj"]
 [ext_resource type="Script" uid="uid://v61jbnq007mi" path="res://engine/scenes/map/scripts/marker_space.gd" id="13_symfw"]
 [ext_resource type="Texture2D" uid="uid://cyx06gn10n78x" path="res://engine/scenes/map/textures/debug.png" id="14_d73u4"]
+[ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="14_pdylx"]
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_d03yu"]
 [ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="15_y0ofa"]
 [ext_resource type="Script" uid="uid://bgm1hm3784ld7" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_t45d3"]
@@ -30,6 +31,11 @@
 [ext_resource type="Script" uid="uid://b8puhalomggbj" path="res://engine/scenes/map/scripts/map_swim_area.gd" id="23_jcnc0"]
 [ext_resource type="PackedScene" uid="uid://de6ov53d8jyf7" path="res://objects/map_player_marker_emalpka/map_player_marker_emalpka.tscn" id="26_6cfty"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="27_4atuc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3h0w"]
+atlas = ExtResource("14_pdylx")
+region = Rect2(0, 85, 58, 82)
+filter_clip = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sojdq"]
 size = Vector2(342.5, 68.5)
@@ -100,11 +106,14 @@ maximum = false
 medium = true
 minimum = true
 
-[node name="World7" type="Sprite2D" parent="GUI2/WorldText"]
-position = Vector2(0, -48)
-texture = ExtResource("13_m6862")
-offset = Vector2(0, 24)
+[node name="FancyWorld" type="Sprite2D" parent="GUI2/WorldText"]
+texture = ExtResource("13_duutj")
+offset = Vector2(-24, 0)
 script = ExtResource("18_jrt3x")
+
+[node name="FancyNumber" type="Sprite2D" parent="GUI2/WorldText/FancyWorld"]
+position = Vector2(112, 0)
+texture = SubResource("AtlasTexture_y3h0w")
 
 [node name="MarioIcon" type="Sprite2D" parent="GUI2"]
 position = Vector2(581, 436)

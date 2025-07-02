@@ -1,0 +1,101 @@
+[gd_scene load_steps=13 format=3 uid="uid://cvt7wr4xv4m6j"]
+
+[ext_resource type="Script" uid="uid://c2fqpuatoik4" path="res://objects/dragon_coin/dragon_coin.gd" id="1_5u6nf"]
+[ext_resource type="Texture2D" uid="uid://cs646ydkxc1qo" path="res://objects/dragon_coin/texture.png" id="2_0o0px"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_xk344"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_us5a7"]
+[ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="6_rgikc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5u6nf"]
+size = Vector2(30, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4lll"]
+atlas = ExtResource("2_0o0px")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xk344"]
+atlas = ExtResource("2_0o0px")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhon0"]
+atlas = ExtResource("2_0o0px")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_us5a7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4lll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk344")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhon0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk344")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtqdq"]
+size = Vector2(20, 30)
+
+[sub_resource type="Resource" id="Resource_d1jsp"]
+script = ExtResource("5_us5a7")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[node name="DragonCoin" type="Area2D" groups=["dragon_coin"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_5u6nf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_5u6nf")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+process_mode = 1
+sprite_frames = SubResource("SpriteFrames_us5a7")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-20, -40, 40, 80)
+metadata/_edit_lock_ = true
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_gtqdq")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_xk344")
+stomping_enabled = false
+killing_immune = {
+"boomerang": false,
+"head": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false
+}
+killing_creation = SubResource("Resource_d1jsp")
+killing_sound_succeeded = ExtResource("6_rgikc")
+turn_into_coin_on_level_end = false
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="collect"]

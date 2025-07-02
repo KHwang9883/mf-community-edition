@@ -2,7 +2,7 @@ extends GeneralMovementBody2D
 
 @export var self_ignite_after_sec: float = 0.0
 @export var wait_for_explosion_for_sec: float = 3.0
-@export_group("Miscellanea")
+@export_group("Miscellaneous")
 @export var explosion_node: PackedScene = preload("res://objects/volcano/bob_omb/explosion/explosion.tscn")
 @export var explosion_sound: AudioStream = preload("res://engine/objects/enemies/spike_ceiling/sfx/fall.wav")
 @export var kicked_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
@@ -68,10 +68,10 @@ func _initiate_explosion() -> void:
 	if Thunder.view.is_getting_closer(self, 64):
 		Audio.play_sound(explosion_sound, self, false, { ignore_pause = true })
 		
-		var expl = explosion_node.instantiate()
-		Scenes.current_scene.add_child(expl)
-		expl.global_position = global_position
-		expl.reset_physics_interpolation()
+	var expl = explosion_node.instantiate()
+	Scenes.current_scene.add_child(expl)
+	expl.global_position = global_position
+	expl.reset_physics_interpolation()
 	
 	queue_free()
 

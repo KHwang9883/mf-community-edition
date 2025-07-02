@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://b6r0c5ki0fat4"]
+[gd_scene load_steps=36 format=3 uid="uid://b6r0c5ki0fat4"]
 
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_2u162"]
 [ext_resource type="AudioStream" uid="uid://d3uvv7yymwfwi" path="res://music/map8.mod" id="3_5is33"]
@@ -17,12 +17,13 @@
 [ext_resource type="Texture2D" uid="uid://h5k1m7htt20h" path="res://engine/scenes/map/textures/press_start.png" id="11_txn2w"]
 [ext_resource type="Script" uid="uid://dxfohdq1ugjpj" path="res://engine/scenes/map/scripts/start_text.gd" id="12_0g27j"]
 [ext_resource type="Script" uid="uid://bgq4yksu7kl5m" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="12_4dsjp"]
-[ext_resource type="Texture2D" uid="uid://b13ibm0nudhyk" path="res://gfx/fancy_graphics/world_texts/world_8.png" id="13_cvmbo"]
 [ext_resource type="Script" uid="uid://v61jbnq007mi" path="res://engine/scenes/map/scripts/marker_space.gd" id="13_sb2n8"]
 [ext_resource type="Material" uid="uid://gpgw7y2fuiqu" path="res://materials/map_8_hsv2.tres" id="14_jeaup"]
 [ext_resource type="Texture2D" uid="uid://cyx06gn10n78x" path="res://engine/scenes/map/textures/debug.png" id="14_lmq15"]
+[ext_resource type="Texture2D" uid="uid://cri6ax5vkgp6w" path="res://gfx/fancy_graphics/world_texts/MARIO_WORLD_bigger.png" id="15_05sf2"]
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_b8pmt"]
 [ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="16_3vx6r"]
+[ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="16_ppua2"]
 [ext_resource type="Script" uid="uid://bgm1hm3784ld7" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="16_y7nqp"]
 [ext_resource type="Texture2D" uid="uid://cm3ivuidbyon1" path="res://gfx/fancy_graphics/map_jump_to_start.png" id="17_rw1pu"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_b5kmq"]
@@ -33,6 +34,11 @@
 [ext_resource type="Texture2D" uid="uid://2i26237mu3av" path="res://gfx/fancy_graphics/skulsl_map8.png" id="28_33m86"]
 [ext_resource type="Texture2D" uid="uid://cyonp6akvmsvq" path="res://gfx/map/extra_decos/fishbone.png" id="30_1qldw"]
 [ext_resource type="Texture2D" uid="uid://c2y1yh8nhxnin" path="res://gfx/map/extra_decos/sharkbone.png" id="31_3s0c1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7vsx"]
+atlas = ExtResource("16_ppua2")
+region = Rect2(59, 84, 60, 84)
+filter_clip = true
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_2u162")
@@ -51,26 +57,6 @@ texture = ExtResource("4_1w7g1")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 3333, 480)
-region_filter_clip_enabled = true
-metadata/_edit_lock_ = true
-
-[node name="Bg2" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(3333, 0)
-texture = ExtResource("4_1w7g1")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 480, 3333, 480)
-region_filter_clip_enabled = true
-metadata/_edit_lock_ = true
-
-[node name="Bg3" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(6666, 0)
-texture = ExtResource("4_1w7g1")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 960, 3333, 480)
 region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
@@ -122,11 +108,15 @@ maximum = false
 medium = true
 minimum = true
 
-[node name="World8" type="Sprite2D" parent="GUI2/WorldText"]
-position = Vector2(0, -48)
-texture = ExtResource("13_cvmbo")
-offset = Vector2(0, 24)
+[node name="FancyWorld" type="Sprite2D" parent="GUI2/WorldText"]
+position = Vector2(0, 2)
+texture = ExtResource("15_05sf2")
+offset = Vector2(-24, 0)
 script = ExtResource("19_b5kmq")
+
+[node name="FancyNumber" type="Sprite2D" parent="GUI2/WorldText/FancyWorld"]
+position = Vector2(112, -2)
+texture = SubResource("AtlasTexture_q7vsx")
 
 [node name="MarioIcon" type="Sprite2D" parent="GUI2"]
 position = Vector2(581, 436)

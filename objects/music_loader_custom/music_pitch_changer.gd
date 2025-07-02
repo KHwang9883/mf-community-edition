@@ -23,7 +23,7 @@ func _on_order_changed() -> void:
 	if affect_indexies.size() - 1 < _idx: return
 	if affect_indexies[_idx] == false: return
 	if only_for_soundtrack_var.get(_snd_tweak) == false: return
-	print(_idx)
+	print("Changing pitch of ", _idx)
 	if !_channel_id in Audio._music_channels: return
 	
 	if Audio._music_channels[_channel_id].stream is AudioStreamMPT:
