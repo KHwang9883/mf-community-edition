@@ -72,7 +72,8 @@ func _physics_process(delta: float) -> void:
 			Thunder._current_player_state = null
 			Thunder._current_player_state_path = ""
 			ProfileManager.current_profile.data.lives = Data.values.lives
-			ProfileManager.save_current_profile()
+			if !ProfileManager.current_profile.name.begins_with(&"debug"):
+				ProfileManager.save_current_profile()
 	else:
 		node_2d2.modulate.a = max(node_2d2.modulate.a - 5 * delta, 0)
 		color_rect.modulate.a = max(color_rect.modulate.a - 5 * delta, 0)

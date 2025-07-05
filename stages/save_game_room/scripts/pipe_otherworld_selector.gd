@@ -124,6 +124,9 @@ func pass_warp() -> void:
 		warp_to_scene = level_scene_template.format([str(_star_sel_level)])
 	elif !(force_intro_if_level_1 && _star_sel_level == 1):
 		warp_to_scene = map_scene_template
+		if _star_sel_level > 1:
+			print("Profile Started from level %d, added bit to data." % _star_sel_level)
+			ProfileManager.current_profile.data.started_from_middle = true
 		if _star_sel_world && level_count.size() > 1:
 			ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
 		if _star_sel_level:
