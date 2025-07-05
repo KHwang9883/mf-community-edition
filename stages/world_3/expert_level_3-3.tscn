@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://bvucqvgiu82r2"]
+[gd_scene load_steps=49 format=4 uid="uid://bvucqvgiu82r2"]
 
 [ext_resource type="PackedScene" uid="uid://bwr844qulxx0m" path="res://stages/world_3/level_3-3.tscn" id="1_al1me"]
 [ext_resource type="PackedScene" uid="uid://12ak5pa7cf8u" path="res://engine/objects/powerups/super_star/super_star.tscn" id="3_0l66k"]
@@ -24,6 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://objects/blue_blocks/Blue Coin Question Block.tscn" id="22_d6oxt"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="22_gc332"]
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="23_llauh"]
+[ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="25_88ke4"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="26_fxuuj"]
 
 [sub_resource type="Gradient" id="Gradient_er82l"]
 offsets = PackedFloat32Array(0.536585, 1)
@@ -564,6 +566,21 @@ result = SubResource("Resource_nlj3o")
 [node name="QuestionBlock19" parent="." index="70" instance=ExtResource("22_d6oxt")]
 position = Vector2(4368, 208)
 result = SubResource("Resource_xganr")
+
+[node name="Sign" type="Sprite2D" parent="." index="71"]
+z_index = -15
+texture_filter = 2
+position = Vector2(2496, 372)
+rotation = -0.523598
+texture = ExtResource("25_88ke4")
+
+[node name="LabelMisterEarl" parent="Sign" index="0" instance=ExtResource("26_fxuuj")]
+offset_left = -57.2759
+offset_top = -45.9614
+offset_right = 40.7241
+offset_bottom = -16.9614
+text = "starman
+is a trap!"
 
 [connection signal="completed_with_star_rain" from="Node2D" to="SecretUnlocker" method="unlock_secret" binds= [1]]
 [connection signal="tried_to_enter" from="PipeIn" to="SecretUnlockerOther" method="progress_secret"]

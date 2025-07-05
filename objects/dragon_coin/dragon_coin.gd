@@ -43,6 +43,7 @@ func collect() -> void:
 	Data.emit_signal(&"dragon_coin_collected")
 	if !Data.values.get("dragon_coin_life", false) && Data.values.dragon_coins >= Data.values.dragon_coins_max:
 		Data.values.dragon_coin_life = true
+		Data.emit_signal(&"all_dragon_coins_collected")
 		Thunder.add_lives(1)
 		var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
 		Audio.play_1d_sound(_sfx, false)

@@ -29,6 +29,8 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export_node_path("Label") var kevin_label_path: NodePath = ^"../KevinLayer/KevinActivationLabel"
 @export var force_disable_level_save: bool = false
 @export var set_data_to_profile: String
+@export var allow_selecting_worlds: bool = false
+@export var allow_selecting_completed_levels: bool = false
 
 var deletion_progress: float
 var is_empty: bool
@@ -91,7 +93,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			deletion_progress = clampf(deletion_progress - delta, 0, 1)
 		
-		if _star_world && Input.is_action_just_pressed("a_tab"):
+		if (_star_world || allow_selecting_worlds) && Input.is_action_just_pressed("a_tab"):
 			var _sfx = CharacterManager.get_sound_replace(SCORING, SCORING, "menu_select_short", false)
 			if player.up_down == 0 && len(level_count) > 1:
 				Audio.play_1d_sound(_sfx)
@@ -215,7 +217,7 @@ func pass_warp() -> void:
 	if ProfileManager.current_profile.data.get("lives") && is_cursed:
 		Data.values.lives = ProfileManager.current_profile.data.lives
 	target = null
-	if _star_world:
+	if _star_world || allow_selecting_worlds:
 		if _star_sel_level && _star_sel_world:
 			ProfileManager.current_profile.data.star_numbers = &"%d-%d" % [_star_sel_world, _star_sel_level]
 			ProfileManager.save_current_profile()
@@ -241,7 +243,7 @@ func pass_warp() -> void:
 
 func _update_reset_labels() -> void:
 	if reset_node.unlock:
-		reset_node.unlock.visible = _star_world
+		reset_node.unlock.visible = (_star_world || allow_selecting_worlds) && len(level_count) > 1
 	reset_node.unlock2.visible = _star_world
 	reset_node.secrets.visible = false
 	

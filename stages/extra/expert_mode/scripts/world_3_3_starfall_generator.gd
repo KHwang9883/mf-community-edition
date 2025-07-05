@@ -53,6 +53,7 @@ func _physics_process(delta: float) -> void:
 
 
 func spawn_star() -> void:
+	if Data.values.stopwatch > 0: return
 	var starinst = DAMAGING_STAR.instantiate()
 	var rand_x: float
 	if phase:

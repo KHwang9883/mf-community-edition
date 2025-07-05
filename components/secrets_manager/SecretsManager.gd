@@ -4,6 +4,7 @@ const OLD_USER_PATH = "Redot/app_userdata/Mario Forever- Community Edition"
 const secrets_path = "user://achievements.thss"
 const SECRET_NOTIFICATION = preload("res://components/secrets_manager/achievement.wav")
 const NOTIFICATION = preload("res://components/secrets_manager/notification.tscn")
+const NOTIFICATION_ERROR = preload("res://components/secrets_manager/notification_error.wav")
 
 var secrets: Dictionary = {}
 var toast_queue: Array[Array] = []
@@ -186,10 +187,12 @@ func notify(text: String, outline_color: Color = Color(0.505, 1, 0.34)) -> void:
 
 func notify_error(text: String) -> void:
 	text = "Error: " + text
+	Audio.play_1d_sound(NOTIFICATION_ERROR, true, {ignore_pause = true})
 	notify(text, Color.FIREBRICK)
 	
 func notify_warn(text: String) -> void:
 	text = "Warning: " + text
+	Audio.play_1d_sound(NOTIFICATION_ERROR, true, {ignore_pause = true})
 	notify(text, Color.YELLOW)
 
 

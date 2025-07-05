@@ -1,12 +1,14 @@
-[gd_scene load_steps=51 format=4 uid="uid://bsnomo06t84ja"]
+[gd_scene load_steps=55 format=4 uid="uid://bsnomo06t84ja"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_w5q24"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_b7wog"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_flply"]
 [ext_resource type="AudioStream" uid="uid://boenwoa6312fm" path="res://music/extra/world_9/track0_atmospheric.ogg" id="4_2qc6y"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="4_33fy1"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_sooly"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_wygae"]
 [ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="5_2qc6y"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_pki1n"]
 [ext_resource type="Script" uid="uid://cnn6muchpcx7x" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="6_2epg6"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_do7it"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_uxutu"]
@@ -124,6 +126,36 @@ custom_vars = {}
 metadata/_custom_type_script = "uid://chvjy6okoognf"
 
 [sub_resource type="Resource" id="Resource_65y6b"]
+resource_local_to_scene = true
+script = ExtResource("12_144lv")
+creation_nodepack = ExtResource("15_2qc6y")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_mlr4l"]
+resource_local_to_scene = true
+script = ExtResource("12_144lv")
+creation_nodepack = ExtResource("15_2qc6y")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_nh4gr"]
 resource_local_to_scene = true
 script = ExtResource("12_144lv")
 creation_nodepack = ExtResource("15_2qc6y")
@@ -281,6 +313,23 @@ jump_to_scene = "res://stages/extra/world_9/map_9.tscn"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_flply")]
+script = ExtResource("4_sooly")
+tweaked_completion_music = ExtResource("5_pki1n")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_2qc6y")])
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
@@ -395,11 +444,11 @@ result = SubResource("Resource_65y6b")
 
 [node name="QuestionBlock40" parent="." instance=ExtResource("14_33fy1")]
 position = Vector2(3056, 112)
-result = SubResource("Resource_65y6b")
+result = SubResource("Resource_mlr4l")
 
 [node name="QuestionBlock41" parent="." instance=ExtResource("14_33fy1")]
 position = Vector2(3248, 144)
-result = SubResource("Resource_65y6b")
+result = SubResource("Resource_nh4gr")
 
 [node name="QuestionBlock34" parent="." instance=ExtResource("14_33fy1")]
 position = Vector2(3440, 80)

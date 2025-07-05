@@ -1,18 +1,14 @@
-[gd_scene load_steps=19 format=4 uid="uid://bq5pcal5woohw"]
+[gd_scene load_steps=15 format=4 uid="uid://bq5pcal5woohw"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_k5lwv"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_d7dbv"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_7uyu0"]
-[ext_resource type="Script" uid="uid://bxx54cyd4mjsq" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_okntm"]
 [ext_resource type="AudioStream" uid="uid://cm5n5r7w10tnb" path="res://music/extra/world_9/grown-up_kids-cut.mod" id="5_7uyu0"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_lvu7e"]
-[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_86cf5"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_2l6t6"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_4s821"]
-[ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="9_4cvbq"]
 [ext_resource type="TileSet" uid="uid://chyfm0dqhftw1" path="res://tilesets/crystal_cave/crystal_cave_tileset.tres" id="10_k5lwv"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_ywafl"]
-[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_jcyxn"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="14_okntm"]
 [ext_resource type="PackedScene" uid="uid://csr5enkl02jsj" path="res://objects/volcano/goomba_volcano/goomba_volcano.tscn" id="15_okntm"]
 [ext_resource type="Texture2D" uid="uid://c5lb7k53xnvs8" path="res://gfx/sign/sign_saveroom.png" id="16_86cf5"]
@@ -24,20 +20,11 @@ script = ExtResource("1_k5lwv")
 completion_music = ExtResource("2_d7dbv")
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_7uyu0")]
-script = ExtResource("4_okntm")
+[node name="MusicLoader" parent="." instance=ExtResource("3_7uyu0")]
 music = Array[Resource]([ExtResource("5_7uyu0")])
 
-[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_lvu7e")]
+[node name="Player" parent="." instance=ExtResource("5_lvu7e")]
 position = Vector2(80, -16)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 12.0
-platform_on_leave = 2
-script = ExtResource("6_86cf5")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -46,12 +33,9 @@ editor_draw_screen = false
 script = ExtResource("7_2l6t6")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_4s821")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("8_4s821")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("9_4cvbq")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -59,8 +43,7 @@ tile_map_data = PackedByteArray("AAAIAA4AAgAJAAIAAAAIAA0AAgAKAAAAAAAIAA8AAgAJAAM
 tile_set = ExtResource("10_k5lwv")
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_ywafl")]
-script = ExtResource("12_jcyxn")
+[node name="HUD" parent="." instance=ExtResource("11_ywafl")]
 
 [node name="World" type="Label" parent="HUD"]
 anchors_preset = -1

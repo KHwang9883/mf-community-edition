@@ -98,6 +98,8 @@ func _on_score_loaded() -> void:
 	print("Enough points gained for achievement: %d / %d" % [_achievement_get, map_count])
 	
 	if _achievement_get == map_count:
+		if Thunder.autosplitter.can_split_on("achievement_mfce") && !SecretsManager.has_secret("100000 points in minix maps"):
+			Thunder.autosplitter.split()
 		SecretsManager.set_secret("100000 points in minix maps", true, true)
 
 
