@@ -15,6 +15,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	music_loader.play_buffered()
 
 func throw_to_scene() -> void:
+	if Thunder.autosplitter.can_split_on("achievement_classic") && !SecretsManager.has_secret("story mode completed"):
+		Thunder.autosplitter.split()
 	SecretsManager.set_secret("story mode completed", true)
 	ProfileManager.current_profile.data.star_world = true
 	ProfileManager.save_current_profile()

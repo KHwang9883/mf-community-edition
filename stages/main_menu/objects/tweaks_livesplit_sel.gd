@@ -28,8 +28,9 @@ func _handle_select(mouse_input: bool = false) -> void:
 	window.show()
 
 func update_checkboxes() -> void:
-	%cb_enabled.button_pressed = bool(config.enabled)
-	%cb_pause_load.button_pressed = bool(config.pause_on_loading)
+	%cb_enabled.button_pressed = bool(config.get("enabled", false))
+	%cb_pause_load.button_pressed = bool(config.get("pause_on_loading", true))
+	%cb_restart.button_pressed = bool(config.get("restart_hotkey", false))
 	for i in _split_on.get_children():
 		if !i is CheckBox: continue
 		i.button_pressed = config.split_on.has(i.name)
@@ -43,6 +44,7 @@ func update_checkboxes() -> void:
 func save_checkboxes() -> void:
 	config.enabled = %cb_enabled.button_pressed
 	config.pause_on_loading = %cb_pause_load.button_pressed
+	config.restart_hotkey = %cb_restart.button_pressed
 	config.split_on = []
 	for i in _split_on.get_children():
 		if !i is CheckBox: continue

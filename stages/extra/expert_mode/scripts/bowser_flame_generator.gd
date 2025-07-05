@@ -24,6 +24,8 @@ func _on_timer_timeout() -> void:
 	var cam = Thunder._current_camera
 	var pl = Thunder._current_player
 	if !cam || !pl: return
+	if Data.values.stopwatch > 0: return
+	
 	var cam_center: Vector2 = cam.get_screen_center_position()
 	if cam_center.x > stop_trigger_pos_x:
 		timer.stop()

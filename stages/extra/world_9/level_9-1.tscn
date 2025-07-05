@@ -1,10 +1,12 @@
-[gd_scene load_steps=47 format=4 uid="uid://dpbcwkvleh36a"]
+[gd_scene load_steps=49 format=4 uid="uid://dpbcwkvleh36a"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5qaol"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_m1so6"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_mqq8i"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_grkyt"]
 [ext_resource type="AudioStream" uid="uid://wnal0dldwd3m" path="res://music/extra/world_9/anorexia.mod" id="4_loc5n"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_pfqbp"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_awmfc"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_84p2s"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_dda70"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="8_lswib"]
@@ -42,7 +44,7 @@ fill_to = Vector2(0, 1)
 
 [sub_resource type="Curve2D" id="Curve2D_nu1ji"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1472, -32, 0, 0, 0, 0, 1472, 512)
+"points": PackedVector2Array(0, 0, 0, 0, 1472, -32, 0, 0, 0, 0, 1472, 480)
 }
 point_count = 2
 
@@ -198,6 +200,23 @@ completion_music = ExtResource("2_mqq8i")
 jump_to_scene = "res://stages/extra/world_9/map_9.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_m1so6")]
+script = ExtResource("4_pfqbp")
+tweaked_completion_music = ExtResource("5_awmfc")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_loc5n")])
 
 [node name="Mario" parent="." instance=ExtResource("4_grkyt")]
@@ -264,7 +283,7 @@ metadata/_edit_lock_ = true
 position = Vector2(7440, 48)
 
 [node name="DragonCoin2" parent="." instance=ExtResource("11_loc5n")]
-position = Vector2(1840, 32)
+position = Vector2(4192, 192)
 
 [node name="DragonCoin3" parent="." instance=ExtResource("11_loc5n")]
 position = Vector2(6080, 256)
@@ -524,8 +543,8 @@ loop_backwards = false
 warp_objects_on_end = false
 
 [node name="PlatformPath2" parent="Path2D" instance=ExtResource("12_nwo57")]
-position = Vector2(1472, 240)
-progress = 272.0
+position = Vector2(1472, 224)
+progress = 256.0
 loop = true
 speed = 100.0
 loop_backwards = false
@@ -536,16 +555,16 @@ position = Vector2(2560, 0)
 curve = SubResource("Curve2D_nu1ji")
 
 [node name="PlatformPath" parent="Path2D2" instance=ExtResource("12_nwo57")]
-position = Vector2(1472, 22.4)
-progress = 54.4
+position = Vector2(1472, 96)
+progress = 128.0
 loop = true
 speed = 100.0
 loop_backwards = false
 warp_objects_on_end = false
 
 [node name="PlatformPath2" parent="Path2D2" instance=ExtResource("12_nwo57")]
-position = Vector2(1472, 294.4)
-progress = 326.4
+position = Vector2(1472, 352)
+progress = 384.0
 loop = true
 speed = 100.0
 loop_backwards = false
@@ -563,8 +582,8 @@ loop_backwards = false
 warp_objects_on_end = false
 
 [node name="PlatformPath2" parent="Path2D3" instance=ExtResource("12_nwo57")]
-position = Vector2(1472, 240)
-progress = 272.0
+position = Vector2(1472, 224)
+progress = 256.0
 loop = true
 speed = 100.0
 loop_backwards = false
@@ -575,16 +594,16 @@ position = Vector2(6496, 0)
 curve = SubResource("Curve2D_nu1ji")
 
 [node name="PlatformPath" parent="Path2D4" instance=ExtResource("12_nwo57")]
-position = Vector2(1472, 22.4)
-progress = 54.4
+position = Vector2(1472, 96)
+progress = 128.0
 loop = true
 speed = 100.0
 loop_backwards = false
 warp_objects_on_end = false
 
 [node name="PlatformPath2" parent="Path2D4" instance=ExtResource("12_nwo57")]
-position = Vector2(1472, 294.4)
-progress = 326.4
+position = Vector2(1472, 352)
+progress = 384.0
 loop = true
 speed = 100.0
 loop_backwards = false
@@ -602,8 +621,8 @@ loop_backwards = false
 warp_objects_on_end = false
 
 [node name="PlatformPath2" parent="Path2D5" instance=ExtResource("12_nwo57")]
-position = Vector2(1472, 240)
-progress = 272.0
+position = Vector2(1472, 224)
+progress = 256.0
 loop = true
 speed = 100.0
 loop_backwards = false
@@ -717,7 +736,6 @@ initial_fire_delay = 0.2
 position = Vector2(7088, 320)
 
 [node name="Checkpoint" parent="." instance=ExtResource("27_r8f6v")]
-z_index = -1
 position = Vector2(5552, 416)
 
 [node name="PlatformPath" parent="." instance=ExtResource("12_nwo57")]

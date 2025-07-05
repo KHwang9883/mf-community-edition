@@ -22,6 +22,10 @@ var level_scene_template: String = "res://stages/extra/expert_mode/otherworld/le
 @export var force_disable_level_save: bool = true
 @export var set_data_to_profile: String
 @export var secret_name: String = "all otherworld levels found"
+@export var no_star_world_until_secret: bool = true
+@export var no_secrets_label: bool = true
+@export var force_warp_to_save_room: bool = false
+@export var force_intro_if_level_1: bool = false
 
 var is_empty: bool
 var is_blocked: bool
@@ -38,6 +42,7 @@ signal save_deleted
 func _ready() -> void:
 	super()
 	if Engine.is_editor_hint(): return
+	if no_star_world_until_secret: _star_world = false
 	
 	_update_save()
 	
@@ -90,14 +95,19 @@ func _input(event: InputEvent) -> void:
 func _update_save() -> void:
 	is_blocked = false
 	label.remove_theme_color_override(&"font_color")
-	label._tweak = true
+	if level_count.size() <= 1:
+		label._tweak = true
 	
 	#var prof = ProfileManager.profiles.get(profile_name)
 	#if prof && prof.data.get("star_world"):
 	var secret = SecretsManager.get_secret(secret_name)
+	var is_not_allowed: bool = !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret)
+	
+	if no_star_world_until_secret && is_not_allowed:
+		return
 	_star_world = true
 	label.set_world_numbers("%d-0" % _star_sel_level)
-	if !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret):
+	if is_not_allowed:
 		is_blocked = true
 		label.add_theme_color_override(&"font_color", Color.LIGHT_CORAL)
 		return
@@ -112,9 +122,15 @@ func pass_warp() -> void:
 	
 	if map_scene_template.is_empty():
 		warp_to_scene = level_scene_template.format([str(_star_sel_level)])
-	else:
+	elif !(force_intro_if_level_1 && _star_sel_level == 1):
 		warp_to_scene = map_scene_template
-	ProfileManager.current_profile.data.warp_to_save_room = true
+		if _star_sel_world && level_count.size() > 1:
+			ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
+		if _star_sel_level:
+			Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
+			Data.values.map_force_go_next = true
+	if force_warp_to_save_room:
+		ProfileManager.current_profile.data.warp_to_save_room = true
 	Data.values.skip_progress_continue = true
 	# Activate Kevin in saved pipe on enter
 	if KevinGlobal.activated:
@@ -130,6 +146,7 @@ func _update_reset_labels() -> void:
 		#reset_node.unlock.visible = _star_world
 	reset_node.unlock2.visible = _star_world
 	
+	if no_secrets_label: return
 	reset_node.secrets.visible = true
 	var secret = SecretsManager.get_secret(secret_name)
 	if !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret):

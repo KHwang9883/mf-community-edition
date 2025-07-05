@@ -4,6 +4,7 @@ var active: bool = false
 var speed: float = 0.0
 var blocked: bool = false
 var is_fading: bool
+var switchd: bool
 
 @onready var cursed_preview: AnimatedSprite2D = $CursedPreview
 @onready var sign_giant: Sprite2D = $"../../SignKevin"
@@ -16,13 +17,28 @@ var is_fading: bool
 		progress_ratio = current
 		return max_length
 ).call()
+@onready var sign_mini: Sprite2D = $"../../SignMinixScore2"
+@onready var mystery_arrow: Node2D = $"../../MysteryArrow"
+@onready var mystery_kevin_sign: Node2D = $"../../MysteryKevinSign"
 
 func _ready() -> void:
+	sign_mini.visible = SecretsManager.has_secret("hint_guy_encountered")
+	mystery_arrow.visible = false
+	mystery_kevin_sign.visible = SecretsManager.has_secret("hint_guy_encountered")
 	visible = false
 	sign_giant.visible = false
+	if active:
+		sign_mini.visible = true
+		mystery_arrow.visible = true
 
 
 func _physics_process(delta: float) -> void:
+	if !switchd && active && blocked && SecretsManager.has_secret("hint_guy_encountered"):
+		if mystery_arrow.visible:
+			mystery_arrow.hide()
+			mystery_kevin_sign.show()
+			switchd = true
+	
 	progress += speed * delta
 	if progress > max_progress - 48 && !is_fading:
 		is_fading = true

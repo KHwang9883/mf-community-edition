@@ -3,13 +3,19 @@ extends Node
 @export_category("Unlock Achievement")
 @export var secrets: Array[String] = [""]
 @export var show_toast: bool = true
+@export var is_classic_achievement: Array[bool] = [false]
 @export_category("Progress Achievement")
 @export var progress_by_id: String
 @export var progress_to: int
 
+func _ready() -> void:
+	if secrets.size() > is_classic_achievement.size():
+		is_classic_achievement.resize(secrets.size())
+
 func unlock_secret(id: int = 0) -> void:
 	if id < len(secrets):
 		if secrets[id].is_empty(): return
+		_make_split(id)
 		SecretsManager.set_secret(secrets[id], true, true, show_toast)
 
 
@@ -19,6 +25,7 @@ func unlock_with_kevin(id: int = 0) -> void:
 		if !KevinGlobal.activated:
 			print("[Secrets] ID %d check failed (secret mode)" % [id])
 			return
+		_make_split(id)
 		SecretsManager.set_secret(secrets[id], true, true, show_toast)
 
 
@@ -59,6 +66,7 @@ func progress_secret(id: int = 0, replace_on_complete: bool = true) -> void:
 	
 	# Finishing the progress, getting an achievement
 	if len(new_secret) >= progress_to:
+		_make_split(id, true)
 		SecretsManager.set_secret(secrets[id], true if replace_on_complete else new_secret, true, false)
 		if can_notify:
 			SecretsManager.queue_achievement(secrets[id])
@@ -79,3 +87,11 @@ func progress_secret(id: int = 0, replace_on_complete: bool = true) -> void:
 ## This is adding garbage to profile for "unlock_if" method to prevent unlocking some secrets during gameplay
 func add_shit_to_profile(data: String, value: bool = true) -> void:
 	ProfileManager.current_profile.data[data] = value
+
+func _make_split(id: int, no_check: bool = false) -> void:
+	if SecretsManager.has_secret(secrets[id]) && !no_check:
+		return
+	if Thunder.autosplitter.can_split_on("achievement_mfce") && !is_classic_achievement[id]:
+		Thunder.autosplitter.split()
+	if Thunder.autosplitter.can_split_on("achievement_classic") && is_classic_achievement[id]:
+		Thunder.autosplitter.split()

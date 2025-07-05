@@ -5,6 +5,7 @@ extends Node
 @onready var bowser = $"../Bowser"
 
 var trail_timer: float
+var gifted: int
 
 func _ready() -> void:
 	Scenes.custom_scenes.game_over.custom_resume_scene = custom_go_resume_scene
@@ -38,7 +39,9 @@ func has_hit(hp: int) -> void:
 
 
 func add_life() -> void:
+	if gifted > 23: return
 	Thunder.add_lives(1)
+	gifted += 1
 	var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
 	Audio.play_1d_sound(_sfx, false)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://byadcxgx6k3x8"]
+[gd_scene load_steps=27 format=3 uid="uid://byadcxgx6k3x8"]
 
 [ext_resource type="Script" uid="uid://bkl0u78ma0t61" path="res://objects/revamped_level_warning/revamped_level_warning.gd" id="1_0dnm7"]
 [ext_resource type="Script" uid="uid://df7h2rfjy0fwh" path="res://objects/revamped_level_warning/revamped_level_canvas_layer_exports.gd" id="1_cfeli"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://cyhfdmwkwu7x5" path="res://objects/revamped_level_warning/revamp_fckoff.gd" id="8_jmtey"]
 [ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="9_ayvkh"]
 [ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="11_anq62"]
+[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="11_f2sdj"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="13_06asx"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -120,6 +122,14 @@ _data = {
 &"open": SubResource("Animation_hvhdc")
 }
 
+[sub_resource type="Gradient" id="Gradient_m018u"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0.085, 0.3, 0.921569)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ooxjk"]
+gradient = SubResource("Gradient_m018u")
+width = 284
+
 [node name="RevampWarning" type="CanvasLayer"]
 process_mode = 3
 layer = 2
@@ -163,9 +173,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -146.0
-offset_top = -120.0
+offset_top = -182.0
 offset_right = 146.0
-offset_bottom = -18.0
+offset_bottom = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 6
@@ -223,9 +233,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -320.0
-offset_top = 26.0
+offset_top = 77.0
 offset_right = 320.0
-offset_bottom = 61.0
+offset_bottom = 112.0
 grow_horizontal = 2
 texture = SubResource("AtlasTexture_s7bic")
 stretch_mode = 3
@@ -246,15 +256,15 @@ theme_override_constants/line_spacing = 1
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = SubResource("FontVariation_hc0wu")
 theme_override_font_sizes/font_size = 22
-text = "{0}{1}
+text = "This level has two versions.
+choose which one to play.
 
-to completely remove this message and always play
-the default variant, select \"do not remind me\".
-you can also force the original levels and/or toggle this message
-in the tweaks menu (accessible from the main menu)."
+press %s for more information."
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+script = ExtResource("11_f2sdj")
+action = "ui_select"
 
 [node name="Node" type="Node" parent="Control"]
 script = ExtResource("11_anq62")
@@ -265,6 +275,53 @@ libraries = {
 &"": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+layer = 4
+
+[node name="Box" type="Node2D" parent="Control/CanvasLayer"]
+process_mode = 3
+position = Vector2(320, 240)
+scale = Vector2(1e-05, 1e-05)
+
+[node name="Texture" type="TextureRect" parent="Control/CanvasLayer/Box"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -160.0
+offset_right = 288.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_ooxjk")
+
+[node name="Text" type="Label" parent="Control/CanvasLayer/Box/Texture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 27)
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/line_spacing = 5
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("13_06asx")
+theme_override_font_sizes/font_size = 24
+text = "{0}{1}
+
+to completely remove this message and always play
+the default variant, select \"do not remind me\".
+you can also force the original levels and/or toggle this message
+in the tweaks menu (accessible from the main menu)."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+uppercase = true
 
 [connection signal="selected" from="Control/VBoxContainer" to="Control/Selector" method="handle_selection"]
 [connection signal="selected" from="Control/VBoxContainer" to="Control/Node" method="handle_selection"]

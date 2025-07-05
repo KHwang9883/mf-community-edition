@@ -18,3 +18,9 @@ func _ready() -> void:
 	roto.cancel_free()
 	root_node.remove_child.call_deferred(roto)
 	node.add_child.call_deferred(roto, true)
+	
+	var vision = Thunder.get_child_by_class_name(node, "VisibleOnScreenEnabler2D")
+	if vision:
+		if Data.values.stopwatch > 0:
+			node.stopwatch_pause()
+		vision.scale = Vector2.ONE * 8

@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=4 uid="uid://b6emis2v2qgkl"]
+[gd_scene load_steps=93 format=4 uid="uid://b6emis2v2qgkl"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yfh5y"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_0o523"]
@@ -50,11 +50,8 @@
 [ext_resource type="Texture2D" uid="uid://cube175uuy8i6" path="res://engine/objects/core/finish_line/textures/finishline.png" id="45_oom7b"]
 [ext_resource type="Texture2D" uid="uid://ub283slvxgxe" path="res://tilesets/underground/gfx/pipe_bg.png" id="46_qicgc"]
 [ext_resource type="PackedScene" uid="uid://7p86qw2ptq4o" path="res://stages/extra/world_10_syzx/platform_path_blue.tscn" id="46_v05yg"]
-[ext_resource type="Material" uid="uid://bfnyr7gfug8qw" path="res://materials/bubble_canvas_item.tres" id="47_eppgs"]
-[ext_resource type="Texture2D" uid="uid://s0uyg78cefed" path="res://engine/objects/effects/bubble/bubble_anim.png" id="48_4vv7p"]
-[ext_resource type="Material" uid="uid://bj3abhylmlcbb" path="res://materials/pipe_bubbles.tres" id="49_oom7b"]
+[ext_resource type="PackedScene" uid="uid://eyqjecs0sfv0" path="res://engine/objects/effects/bubble/bubble_bg_generator.tscn" id="47_rsrmc"]
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://objects/blue_blocks/Blue Coin Question Block.tscn" id="49_xn8yd"]
-[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="50_xn8yd"]
 [ext_resource type="PackedScene" uid="uid://3tgyqgylcvji" path="res://objects/blue_blocks/brick_blue.tscn" id="54_j4tfq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ie4xm"]
@@ -205,6 +202,9 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 950.892, 471, 0, 0, 0, 0, 1206.89, 471)
 }
 point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oom7b"]
+size = Vector2(29, 64)
 
 [sub_resource type="Resource" id="Resource_inwqk"]
 resource_local_to_scene = true
@@ -978,17 +978,57 @@ texture = ExtResource("46_qicgc")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 480)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg7"]
-modulate = Color(1, 1, 1, 0.494118)
-z_index = -30
-material = ExtResource("47_eppgs")
-position = Vector2(0, 183)
-texture = ExtResource("48_4vv7p")
-lifetime = 10.0
-preprocess = 1.0
-randomness = 0.5
-process_material = ExtResource("49_oom7b")
-script = ExtResource("50_xn8yd")
+[node name="BubbleBGGenerator" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(0, 180)
+
+[node name="BubbleBGGenerator14" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(679, -138)
+rotation = 1.5708
+
+[node name="BubbleBGGenerator2" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(3356, 182)
+
+[node name="BubbleBGGenerator3" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(5936, 240)
+
+[node name="BubbleBGGenerator4" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(6560, 240)
+
+[node name="BubbleBGGenerator5" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(6944, 240)
+
+[node name="BubbleBGGenerator6" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(7680, 240)
+
+[node name="BubbleBGGenerator7" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(8288, 240)
+
+[node name="BubbleBGGenerator8" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(9408, 240)
+
+[node name="BubbleBGGenerator9" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(10240, 240)
+
+[node name="BubbleBGGenerator10" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(10848, 240)
+
+[node name="BubbleBGGenerator11" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(12448, 240)
+
+[node name="BubbleBGGenerator12" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(13984, 240)
+
+[node name="BubbleBGGenerator13" parent="PipeBg7" instance=ExtResource("47_rsrmc")]
+position = Vector2(14944, 240)
+
+[node name="Area2D" type="Area2D" parent="PipeBg7" groups=["#no_bubbles"]]
+collision_layer = 4096
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PipeBg7/Area2D"]
+position = Vector2(1313.5, -144)
+shape = SubResource("RectangleShape2D_oom7b")
 
 [node name="PipeBg8" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -998,29 +1038,11 @@ texture = ExtResource("46_qicgc")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 480)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="PipeBg8"]
-modulate = Color(1, 1, 1, 0.494118)
-z_index = -30
-material = ExtResource("47_eppgs")
+[node name="BubbleBGGenerator" parent="PipeBg8" instance=ExtResource("47_rsrmc")]
 position = Vector2(0, 240)
-texture = ExtResource("48_4vv7p")
-lifetime = 10.0
-preprocess = 1.0
-randomness = 0.5
-process_material = ExtResource("49_oom7b")
-script = ExtResource("50_xn8yd")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="PipeBg8"]
-modulate = Color(1, 1, 1, 0.494118)
-z_index = -30
-material = ExtResource("47_eppgs")
+[node name="BubbleBGGenerator2" parent="PipeBg8" instance=ExtResource("47_rsrmc")]
 position = Vector2(1947, 240)
-texture = ExtResource("48_4vv7p")
-lifetime = 10.0
-preprocess = 1.0
-randomness = 0.5
-process_material = ExtResource("49_oom7b")
-script = ExtResource("50_xn8yd")
 
 [node name="PipeBg11" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)
@@ -1061,42 +1083,6 @@ position = Vector2(8672, 240)
 texture = ExtResource("46_qicgc")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 480)
-
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="PipeBg15"]
-modulate = Color(1, 1, 1, 0.494118)
-z_index = -30
-material = ExtResource("47_eppgs")
-position = Vector2(0, 240)
-texture = ExtResource("48_4vv7p")
-lifetime = 10.0
-preprocess = 1.0
-randomness = 0.5
-process_material = ExtResource("49_oom7b")
-script = ExtResource("50_xn8yd")
-
-[node name="GPUParticles2D3" type="GPUParticles2D" parent="PipeBg15"]
-modulate = Color(1, 1, 1, 0.494118)
-z_index = -30
-material = ExtResource("47_eppgs")
-position = Vector2(1120, 240)
-texture = ExtResource("48_4vv7p")
-lifetime = 10.0
-preprocess = 1.0
-randomness = 0.5
-process_material = ExtResource("49_oom7b")
-script = ExtResource("50_xn8yd")
-
-[node name="GPUParticles2D4" type="GPUParticles2D" parent="PipeBg15"]
-modulate = Color(1, 1, 1, 0.494118)
-z_index = -30
-material = ExtResource("47_eppgs")
-position = Vector2(6656, 240)
-texture = ExtResource("48_4vv7p")
-lifetime = 10.0
-preprocess = 1.0
-randomness = 0.5
-process_material = ExtResource("49_oom7b")
-script = ExtResource("50_xn8yd")
 
 [node name="PipeBg16" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.376471)

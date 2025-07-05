@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://yndj5otlk0nw"]
+
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="1_q8ldy"]
+[ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="2_edni3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3wa2"]
+atlas = ExtResource("2_edni3")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8ldy"]
+size = Vector2(64, 32)
+
+[node name="PlatDoubleBlock" type="AnimatableBody2D"]
+disable_mode = 1
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_q8ldy")
+correction_on_player_falling = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_l3wa2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_q8ldy")

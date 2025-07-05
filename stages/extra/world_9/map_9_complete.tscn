@@ -1,8 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://0k2xro6lqjhn"]
+[gd_scene load_steps=36 format=3 uid="uid://0k2xro6lqjhn"]
 
 [ext_resource type="Script" uid="uid://cgmeyo2w81dhx" path="res://engine/scenes/map/scripts/map-complete.gd" id="1_pnjbh"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_k3g5n"]
 [ext_resource type="AudioStream" uid="uid://bhqt1f4oegqsp" path="res://engine/scenes/map/music/world_complete.ogg" id="3_joeuw"]
+[ext_resource type="Script" uid="uid://dpyh6mg6ylig0" path="res://stages/extra/world_9/scripts/complete_temporary_fix.gd" id="4_qgmaa"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="4_ybsyc"]
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="5_llch0"]
 [ext_resource type="Script" uid="uid://dr3vhptgbru6r" path="res://engine/scenes/map/scripts/world_text.gd" id="7_8jt1c"]
@@ -144,12 +145,16 @@ filter_clip = true
 
 [node name="Map-complete" type="Node2D"]
 script = ExtResource("1_pnjbh")
-goto_scene = "res://stages/save_game_room/save_game_room.tscn"
+goto_scene = "res://stages/extra/world_9/map_9.tscn"
 world_name = "9"
 
 [node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("2_k3g5n")
 music = Array[Resource]([ExtResource("3_joeuw")])
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("4_qgmaa")
+actually_real_goto = "res://stages/save_game_room/save_game_room.tscn"
 
 [node name="Bg" type="Sprite2D" parent="."]
 texture = ExtResource("4_ybsyc")
