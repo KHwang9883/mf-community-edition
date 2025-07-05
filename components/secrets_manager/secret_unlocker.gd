@@ -25,12 +25,18 @@ func unlock_with_kevin(id: int = 0) -> void:
 		if !KevinGlobal.activated:
 			print("[Secrets] ID %d check failed (secret mode)" % [id])
 			return
+		if ProfileManager.current_profile.data.get("started_from_middle", false):
+			print("[Secrets] Profile was started from middle! Cancelling ID %d. (secret mode)" % [id])
+			return
 		_make_split(id)
 		SecretsManager.set_secret(secrets[id], true, true, show_toast)
 
 
 ## "warped", "damaged", "died"
 func unlock_if(conditions: PackedStringArray, id: int = 0) -> void:
+	if ProfileManager.current_profile.data.get("started_from_middle", false):
+		print("[Secrets] Profile was started from middle! Cancelling ID %d. (conditions)" % [id])
+		return
 	for i in conditions:
 		if ProfileManager.current_profile.data.has(i):
 			print("[Secrets] ID %d check failed (contains %s)" % [id, i])
@@ -41,6 +47,9 @@ func unlock_if(conditions: PackedStringArray, id: int = 0) -> void:
 func unlock_with_kevin_if(conditions: PackedStringArray, id: int = 0) -> void:
 	if !KevinGlobal.activated:
 		print("[Secrets] ID %d check failed (secret mode and conditions)" % [id])
+		return
+	if ProfileManager.current_profile.data.get("started_from_middle", false):
+		print("[Secrets] Profile was started from middle! Cancelling ID %d. (secret mode and conditions)" % [id])
 		return
 	unlock_if(conditions, id)
 

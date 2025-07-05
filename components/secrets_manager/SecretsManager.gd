@@ -75,6 +75,7 @@ func _ready() -> void:
 	# Notifications
 	Thunder._connect(SkinsManager.skins_loaded, _on_skins_reloaded)
 	Thunder._connect(Thunder.autosplitter.connected, _on_asws_connected)
+	Thunder._connect(Thunder.autosplitter.restarting, notify.bind("Auto Splitter Restarting..."))
 	#if Console.allow_developer_commands:
 	#	pl_speed.show()
 	#	pl_speed.process_mode = Node.PROCESS_MODE_PAUSABLE
