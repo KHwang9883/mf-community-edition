@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://di2fnbwgknfnk"]
+[gd_scene load_steps=92 format=4 uid="uid://di2fnbwgknfnk"]
 
 [ext_resource type="Script" uid="uid://by7oafruhi7h4" path="res://stages/world_1/scripts/level_1_4.gd" id="1_6w73y"]
 [ext_resource type="AudioStream" uid="uid://bd7r5d5eb275q" path="res://music/smw-haunted-house.ogg" id="3_hlt6e"]
@@ -282,6 +282,36 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="Gradient" id="Gradient_3rkqq"]
+offsets = PackedFloat32Array(0, 0.4375)
+colors = PackedColorArray(0.3168, 0.504533, 0.88, 1, 0, 0.065, 0.13, 0.501961)
+metadata/_snap_enabled = true
+metadata/_snap_count = 32
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bpndt"]
+gradient = SubResource("Gradient_3rkqq")
+height = 480
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_cfxbo"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(0.1872, 0.314773, 0.52, 1, 0, 0.066, 0.44, 0.501961)
+metadata/_snap_enabled = true
+metadata/_snap_count = 32
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f8udn"]
+gradient = SubResource("Gradient_cfxbo")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_lqu7g"]
+offsets = PackedFloat32Array(0, 0.525, 1)
+colors = PackedColorArray(0.3168, 0.504533, 0.88, 0, 0.3168, 0.504533, 0.88, 1, 0.314, 0.502, 0.878, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r4o50"]
+gradient = SubResource("Gradient_lqu7g")
+height = 18
+fill_to = Vector2(0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_brkkw"]
 atlas = ExtResource("50_rd1dk")
@@ -1080,16 +1110,27 @@ script = ExtResource("47_w3sh1")
 position = Vector2(7792, -48)
 result = SubResource("Resource_ewm17")
 
-[node name="Water2" parent="." instance=ExtResource("35_8nknb")]
+[node name="Water3" parent="." instance=ExtResource("35_8nknb")]
 position = Vector2(0, 1120)
 
-[node name="WaterMin" parent="Water2" index="0"]
+[node name="WaterMin" parent="Water3" index="0"]
 offset_left = 11376.0
 offset_right = 17440.0
 
-[node name="Area2D" parent="Water2/WaterMin" index="1"]
+[node name="Area2D" parent="Water3/WaterMin" index="1"]
 visible = true
-position = Vector2(0, 64)
+
+[node name="WaterMed" parent="Water3" index="1"]
+visible = false
+
+[node name="background3" parent="Water3/WaterMax/Parallax2D" index="0"]
+texture = SubResource("GradientTexture2D_bpndt")
+
+[node name="Sprite2D6" parent="Water3/WaterMax/Parallax2D" index="1"]
+texture = SubResource("GradientTexture2D_f8udn")
+
+[node name="СкрываниеПерехода" parent="Water3/WaterMax/Parallax2D" index="2"]
+texture = SubResource("GradientTexture2D_r4o50")
 
 [node name="Node2D3" type="Node2D" parent="."]
 position = Vector2(4640, 0)
@@ -1308,4 +1349,4 @@ position = Vector2(8688, 304)
 [node name="StaticBodyAlt5" parent="Node2D3" instance=ExtResource("51_qarw0")]
 position = Vector2(8784, 304)
 
-[editable path="Water2"]
+[editable path="Water3"]
