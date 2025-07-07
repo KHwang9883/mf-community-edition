@@ -2,6 +2,7 @@ extends AnimationPlayer
 
 
 func _ready() -> void:
+	return
 	Thunder._current_player.died.connect(pause)
 	animation_finished.connect(func(anim: StringName) -> void:
 		play(anim)
