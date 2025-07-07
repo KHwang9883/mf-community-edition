@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cyb1pduje8anx"]
+[gd_scene load_steps=35 format=4 uid="uid://cyb1pduje8anx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_8rbd4"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3cfxq"]
@@ -14,6 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="12_l858x"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="13_l858x"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="14_6lc2d"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="15_dkay4"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="16_s52cw"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="17_qphn1"]
+[ext_resource type="Texture2D" uid="uid://deoqk105na3r5" path="res://gfx/fancy_graphics/devil_piranha.png" id="18_o5p3g"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_ch3w3"]
+[ext_resource type="Texture2D" uid="uid://bvsblr02fnosw" path="res://engine/objects/enemies/piranha_plants/textures/piranha_pink.png" id="20_glwq1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_25fwr"]
 texture = ExtResource("6_n7lhj")
@@ -33,6 +39,88 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_yp6h2"]
 gradient = SubResource("Gradient_ende5")
 width = 480
+
+[sub_resource type="Resource" id="Resource_i5haj"]
+script = ExtResource("17_qphn1")
+creation_nodepack = ExtResource("16_s52cw")
+creation_force_sibling = false
+trans_offset = Vector2(0, -28)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rulwf"]
+atlas = ExtResource("18_o5p3g")
+region = Rect2(0, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5wtg"]
+atlas = ExtResource("18_o5p3g")
+region = Rect2(64, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qv13"]
+atlas = ExtResource("18_o5p3g")
+region = Rect2(128, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4ghc"]
+atlas = ExtResource("18_o5p3g")
+region = Rect2(192, 0, 64, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o87mg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rulwf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5wtg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qv13")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4ghc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjp8o"]
+atlas = ExtResource("20_glwq1")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lpr3a"]
+atlas = ExtResource("20_glwq1")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnm75"]
+atlas = ExtResource("20_glwq1")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6lc2d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjp8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpr3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnm75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpr3a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
 
 [node name="Ice" type="Node2D"]
 script = ExtResource("1_8rbd4")
@@ -59,7 +147,7 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAAAAA0AAAAAAAAAAAABAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAbAAwAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAAAAA0AAAAAAAAAAAABAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAbAAwAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAYAAoAAAAAAAAAAAAYAAsAAAAAAAAAAAAYAAwAAAAAAAAAAAAZAAoAAAAAAAAAAAAZAAsAAAAAAAAAAAAZAAwAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_rincc")
 metadata/_edit_lock_ = true
 
@@ -101,3 +189,57 @@ hammer_bros_jumping_type = 2
 
 [node name="PiranhaPink" parent="." instance=ExtResource("13_l858x")]
 position = Vector2(608, 416)
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("15_dkay4"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.2",
+"projectile_integer_speed": true,
+"projectile_offscreen_time": 3.0,
+"projectile_remove_from_top": false,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
+
+[node name="PiranhaPink2" parent="." instance=ExtResource("13_l858x")]
+position = Vector2(800, 320)
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.04,
+"attack_sound": ExtResource("15_dkay4"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 30,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.2",
+"projectile_integer_speed": true,
+"projectile_offscreen_time": 3.0,
+"projectile_remove_from_top": false,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
+
+[node name="Sprite" parent="PiranhaPink2" index="1"]
+sprite_frames = SubResource("SpriteFrames_o87mg")
+script = ExtResource("19_ch3w3")
+medium = true
+
+[node name="VisibleOnScreenNotifier2D" parent="PiranhaPink2" index="2"]
+position = Vector2(0, 0)
+scale = Vector2(1, 1)
+rect = Rect2(-64, -64, 96, 64)
+
+[node name="Sprite2" type="AnimatedSprite2D" parent="PiranhaPink2"]
+z_index = -2
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_6lc2d")
+autoplay = "default"
+script = ExtResource("19_ch3w3")
+maximum = false
+minimum = true
+
+[editable path="PiranhaPink2"]

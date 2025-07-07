@@ -52,5 +52,6 @@ func _physics_process(delta: float) -> void:
 func independence() -> void:
 	active = false
 	reparent(Scenes.current_scene, true)
+	reset_physics_interpolation()
 	gravity_scale = 0.5
 	get_tree().create_timer(3.0, false).timeout.connect(queue_free)

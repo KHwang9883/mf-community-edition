@@ -1,9 +1,12 @@
 extends PathFollow2D
 
 @export_category("Platform")
+@export var no_ambience_audio: bool = false
 @export_group("Physics")
 @export var speed: float = 150.0
 @export var loop_backwards: bool = true
+@export var warp_objects_on_end: bool = true
+@export var warping_edge_ignore_px: float = 8.0
 @export_subgroup("Smooth","smooth_")
 @export var smooth_enabled: bool = true
 @export var smooth_turning_length: float = 64.0
@@ -35,17 +38,26 @@ var linear_velocity: Vector2
 		progress_ratio = current
 		return max_length
 ).call()
+@onready var sprite: Sprite2D = $Sprite2D
 
 # Block movement of the platform in scripts
 var _movement_blocked: bool = false
 
 func _ready() -> void:
+	if no_ambience_audio:
+		$AudioStreamPlayer2D.queue_free()
 	if smooth_turning_length > 0: _sign_up_points()
 
 func _physics_process(delta: float) -> void:
+	sprite.rotation_degrees += delta * 225# * clampf(speed, -10, 10)
 	if get_child_count() == 0: return
 	
 	_on_path_movement_process(delta)
+	
+	if warp_objects_on_end: return
+	if max_progress < warping_edge_ignore_px: return
+	if progress < warping_edge_ignore_px || progress + warping_edge_ignore_px > max_progress:
+		reset_physics_interpolation()
 
 
 func _on_path_movement_process(delta: float) -> void:
