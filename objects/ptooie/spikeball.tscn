@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ddy551uvxl0yb"]
+
+[ext_resource type="Script" path="res://objects/ptooie/spikeball.gd" id="1_eujlk"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_pp7nv"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="3_0kjm5"]
+[ext_resource type="Texture2D" uid="uid://btyi80owbbp5n" path="res://objects/ptooie/spike.png" id="4_jk8q7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6y8ch"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nylki"]
+
+[node name="Spikeball" type="CharacterBody2D"]
+position = Vector2(0, -112)
+script = ExtResource("1_eujlk")
+sprite = NodePath("Spike")
+collision = false
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_pp7nv")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"fireball": true,
+"hammer": true,
+"head": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_sound_failed = ExtResource("3_0kjm5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("CircleShape2D_6y8ch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_nylki")
+
+[node name="Spike" type="Sprite2D" parent="."]
+z_index = 2
+texture = ExtResource("4_jk8q7")
