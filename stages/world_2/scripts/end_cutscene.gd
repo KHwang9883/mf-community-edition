@@ -47,9 +47,9 @@ func _physics_process(delta: float) -> void:
 			else:
 				player.gravity_scale = 0.6 + min(float(_jump_num) / 5.0, 2.8)
 			
-			Audio.play_sound(JUMP, player)
+			Audio.play_sound(JUMP, player, false)
 			if _jump_num != 0:
-				Audio.play_sound(BREAK, player)
+				Audio.play_sound(BREAK, player, false)
 				Thunder._current_camera.shock(0.1, Vector2(2, 2))
 				for i in range(4):
 					_brick_particles()
@@ -74,7 +74,7 @@ func _physics_process(delta: float) -> void:
 		run_while(_smoke_particles, 0.02)
 		_running = true
 	
-	if _running && player.is_on_floor():
+	if _running && player.global_position.y >= 390:
 		player.speed.x = _player_speed
 		_player_speed = move_toward(_player_speed, 325, delta * 250)
 		_finished += delta

@@ -15,6 +15,17 @@ func execute(args:Array) -> Command.ExecuteResult:
 		return Command.ExecuteResult.new("NOW IS YOUR OPPORTUNITY TO BECOME A")
 	else:
 		Thunder._disconnect(Scenes.scene_ready, patch_level)
+		for i in get_incoming_connections():
+			if !i: continue
+			Thunder._disconnect(i.signal, i.callable)
+		#if Thunder._current_player:
+			#var pl = Thunder._current_player
+			#Thunder._disconnect(pl.attack.killed, _on_starman_killed)
+			#Thunder._disconnect(pl.timer_starman.timeout, _on_starman_timeout)
+			#Thunder._disconnect(pl.collided_wall, _on_collided_wall)
+			#Thunder._disconnect(pl.collided_floor, _on_collided_floor)
+			#Thunder._disconnect(pl.collided_ceiling, _on_collided_ceiling)
+			#Thunder._disconnect(pl.get_tree().physics_frame, _physics_frame)
 		return Command.ExecuteResult.new("It was just too big. (Restart the level to take effect)")
 		
 
@@ -67,10 +78,11 @@ func _on_collided_wall() -> void:
 
 func _on_collided_floor() -> void:
 	var speed_prev: float = Thunder._current_player.speed_previous.y
-	if speed_prev > 50:
+	if speed_prev > 150:
 		_tile_break_logic(Vector2(0, 1))
-	if speed_prev > 250:
-		how_many_floor_tiles_to_break += 1 + int(speed_prev > 325) + int(speed_prev > 400) + int(speed_prev > 480)
+	if speed_prev > 300:
+		how_many_floor_tiles_to_break += 1 + int(speed_prev > 350) + int(speed_prev > 415) + int(speed_prev > 480)
+		how_many_floor_tiles_to_break = mini(how_many_floor_tiles_to_break, 5)
 
 func _on_collided_ceiling() -> void:
 	if Thunder._current_player.speed_previous.y < 20:
@@ -90,24 +102,24 @@ func _tile_break_logic(offset: Vector2) -> void:
 			col_pos += offset * -which_wall
 		else:
 			col_pos += offset
-		var tile_pos = collider.local_to_map(col_pos)
+		var tile_pos = collider.local_to_map(collider.to_local(col_pos))
 		#print(tile_pos)
 		if !collider.get_cell_tile_data(tile_pos):
 			return
 		collider.set_cell(tile_pos)
-		tile_break(collider, collider.map_to_local(tile_pos))
+		tile_break(collider, collider.to_global(collider.map_to_local(tile_pos)))
 	elif collider is TileMap:
 		if offset == -Vector2.ONE:
 			col_pos += offset * -which_wall
 		else:
 			col_pos += offset
-		var tile_pos = collider.local_to_map(col_pos)
+		var tile_pos = collider.local_to_map(collider.to_local(col_pos))
 		for i in collider.get_layers_count():
 			var tdata: TileData = collider.get_cell_tile_data(i, tile_pos)
 			if !tdata: continue
 			if tdata.get_collision_polygons_count(i) == 0: continue
 			collider.set_cell(i, tile_pos)
-			tile_break(collider, collider.map_to_local(tile_pos))
+			tile_break(collider, collider.to_global(collider.map_to_local(tile_pos)))
 	elif collider is StaticBumpingBlock:
 		if collider.has_method(&"bricks_break"):
 			collider.bricks_break()
@@ -118,11 +130,20 @@ func _tile_break_logic(offset: Vector2) -> void:
 			collider.process_mode = Node.PROCESS_MODE_DISABLED
 			#collider.queue_free()
 	else:
+		var shape = col.get_collider_shape()
+		if shape is CollisionShape2D:
+			if shape.shape && shape.shape.get_rect().size.x > 300:
+				return
+		elif shape is CollisionPolygon2D:
+			var count = shape.polygon.size()
+			for i in mini(count, 12):
+				if shape.polygon.get(i)[shape.polygon.get(i).max_axis_index()] > 149:
+					return
 		tile_break(collider, collider.global_position)
 		collider.hide()
 		collider.set_deferred(&"collision_layer", 0)
 		collider.process_mode = Node.PROCESS_MODE_DISABLED
-		print(collider)
+		#print(collider)
 
 
 func tile_break(what: Node2D, pos: Vector2) -> void:

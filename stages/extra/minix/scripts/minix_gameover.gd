@@ -8,6 +8,7 @@ extends Node2D
 @onready var please_type: Node2D = $PleaseType
 
 @onready var minix_controls: MenuItemsController = $MinixControls
+@onready var submit: Label = $MinixControls/Submit
 @onready var starter: Node2D = $"../Node2D"
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
 @onready var lasted_template: String = lasted.text
@@ -24,7 +25,8 @@ func _on_mario_died() -> void:
 	Pause.get_child(0).open_blocked = true
 
 	var minix_name: String = "minix_" + starter.current_map.map_name
-	minix_score_loader.save_score.call_deferred(Data.values.score, minix_name)
+	if !SecretsManager.is_console_enabled():
+		minix_score_loader.save_score.call_deferred(Data.values.score, minix_name)
 
 	get_tree().paused = true
 	SettingsManager.show_mouse()
@@ -44,6 +46,9 @@ func _on_mario_died() -> void:
 
 	lasted.text = lasted_template % [mins, secs]
 	map_label.text = starter.map_names[starter.map_id]
+	if SecretsManager.is_console_enabled():
+		submit.is_enabled = false
+		print("Console is enabled, Minix saves & submition was disabled.")
 	minix_controls.focused = true
 	var cur_mus: int = starter.current_music_from_map
 	var map_music: MinixMap = starter.current_map if cur_mus == -1 else starter.map_paths[cur_mus]

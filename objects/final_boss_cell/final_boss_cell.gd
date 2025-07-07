@@ -33,6 +33,8 @@ func _creation_mushroom() -> void:
 	await get_tree().create_timer(1, false).timeout
 	
 	if !is_instance_valid(mario) || mario.completed: return
+	if !Scenes.current_scene.has_node("Bowser"):
+		return
 	
 	_creation_mushroom()
 	
@@ -69,6 +71,8 @@ func _creation_flower() -> void:
 	await get_tree().create_timer(5, false).timeout
 	
 	if !is_instance_valid(mario) || mario.completed: return
+	if !Scenes.current_scene.has_node("Bowser"):
+		return
 	
 	_creation_flower()
 	
@@ -153,8 +157,10 @@ func _physics_process(delta: float) -> void:
 		_player_speed = 0
 		_moving = false
 		await get_tree().create_timer(0.2, false).timeout
+		if !is_instance_valid(mario): return
 		mario.direction = 1
 		await get_tree().create_timer(0.5, false).timeout
+		if !is_instance_valid(mario): return
 		Audio.play_sound(JUMP, mario)
 		Audio.play_sound(BREAK, mario)
 		
@@ -173,6 +179,7 @@ func _physics_process(delta: float) -> void:
 		
 		Scenes.current_scene.throw_to_scene()
 	
+	if !is_instance_valid(mario): return
 	mario.speed.x = _player_speed
 
 func _particles() -> void:
