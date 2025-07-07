@@ -1,20 +1,21 @@
 [gd_scene load_steps=22 format=3 uid="uid://c2sqnfclkmk7r"]
 
-[ext_resource type="Script" path="res://objects/ptooie/ptooie.gd" id="1_5lpdv"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_wkh3i"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_2fowu"]
+[ext_resource type="Script" uid="uid://dsw5rjx0tp4qa" path="res://objects/ptooie/ptooie.gd" id="1_5lpdv"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_wkh3i"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_2fowu"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_akgsn"]
-[ext_resource type="Script" path="res://objects/ptooie/do_killed_ptooie.gd" id="4_srgj7"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_hpbbm"]
+[ext_resource type="Script" uid="uid://bspa8lu44t6oy" path="res://objects/ptooie/do_killed_ptooie.gd" id="4_srgj7"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_hpbbm"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_jdqmf"]
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="7_snu6h"]
 [ext_resource type="Texture2D" uid="uid://dok561trr28x7" path="res://objects/ptooie/legs.png" id="8_u3wxj"]
 [ext_resource type="PackedScene" uid="uid://ddy551uvxl0yb" path="res://objects/ptooie/spikeball.tscn" id="9_8oew5"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_mkpth"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="12_mkpth"]
 
 [sub_resource type="Resource" id="Resource_shso5"]
 script = ExtResource("5_hpbbm")
 creation_nodepack = ExtResource("3_akgsn")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -81,11 +82,11 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lx8e8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xkglm"]
 atlas = ExtResource("8_u3wxj")
 region = Rect2(0, 0, 32, 20)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qyfeb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sded3"]
 atlas = ExtResource("8_u3wxj")
 region = Rect2(32, 0, 32, 20)
 
@@ -93,10 +94,10 @@ region = Rect2(32, 0, 32, 20)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lx8e8")
+"texture": SubResource("AtlasTexture_xkglm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qyfeb")
+"texture": SubResource("AtlasTexture_sded3")
 }],
 "loop": true,
 "name": &"default",
@@ -148,13 +149,8 @@ autoplay = "default"
 
 [node name="Spikeball" parent="." instance=ExtResource("9_8oew5")]
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.4
-one_shot = true
-autostart = true
-
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-self_modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-20, -64, 40, 80)
 script = ExtResource("12_mkpth")
 new_rect = Rect2(-128, -640, 256, 656)
@@ -162,4 +158,3 @@ new_rect = Rect2(-128, -640, 256, 656)
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Head" method="stop"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
