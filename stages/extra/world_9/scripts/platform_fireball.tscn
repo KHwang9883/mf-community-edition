@@ -1,19 +1,44 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnlw1csyelqh0"]
+[gd_scene load_steps=16 format=3 uid="uid://bnlw1csyelqh0"]
 
 [ext_resource type="Script" uid="uid://bs3aoklpy3u3f" path="res://stages/extra/world_9/scripts/platform_fireball.gd" id="1_14se0"]
-[ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_futjj"]
+[ext_resource type="Texture2D" uid="uid://h7fbqoxapknb" path="res://gfx/misc/bigfireballspooky.png" id="2_futjj"]
 [ext_resource type="AudioStream" uid="uid://b8v8vtk23j2na" path="res://sfx/fire_amb.ogg" id="3_jxwvm"]
 [ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="4_uu0tx"]
-[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_futjj"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="5_dhr8b"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_qipo7"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_gatoj"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="8_561ue"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_m3m5y"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="10_u7y45"]
+[ext_resource type="Script" uid="uid://cb45v5kku30sv" path="res://shaders/quality_light2d_shadow.gd" id="11_bqxuc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5i870"]
 radius = 70.0
 
-[sub_resource type="Gradient" id="Gradient_74oxi"]
+[sub_resource type="Resource" id="Resource_1ael8"]
+resource_local_to_scene = true
+script = ExtResource("8_561ue")
+creation_nodepack = ExtResource("6_qipo7")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite2D"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("7_gatoj")
+
+[sub_resource type="Gradient" id="Gradient_bqxuc"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5i870"]
-gradient = SubResource("Gradient_74oxi")
+gradient = SubResource("Gradient_bqxuc")
 width = 256
 height = 256
 fill = 1
@@ -22,13 +47,11 @@ fill_to = Vector2(0.9, 0.2)
 metadata/_snap_enabled = true
 
 [node name="FireballBig" type="PathFollow2D"]
-rotation = 1.5708
 loop = false
 script = ExtResource("1_14se0")
 speed = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(10, 10)
 texture = ExtResource("2_futjj")
 flip_h = true
 
@@ -37,6 +60,34 @@ stream = ExtResource("3_jxwvm")
 autoplay = true
 max_distance = 1280.0
 bus = &"Sound"
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("CircleShape2D_5i870")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("5_dhr8b")
+stomping_enabled = false
+stomping_hurtable = false
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+&"beetroot": true,
+&"boomerang": false,
+&"fireball": true,
+&"hammer": false,
+&"iceball": true,
+&"iceblock": true,
+&"starman": false
+}
+killing_creation = SubResource("Resource_1ael8")
+killing_scores = 400
+killing_sound_succeeded = ExtResource("9_m3m5y")
+killing_sound_failed = ExtResource("10_u7y45")
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
 
 [node name="Spike" type="Area2D" parent="."]
 collision_layer = 0
@@ -48,12 +99,16 @@ type = 2
 shape = SubResource("CircleShape2D_5i870")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.313726, 0, 1)
+color = Color(1.50196, 0.470588, 0, 1)
 energy = 1.6
 range_layer_min = -512
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_5i870")
 texture_scale = 0.5
-script = ExtResource("5_futjj")
+script = ExtResource("11_bqxuc")
+medium = true
+energy_off = 1.25
 final_value = 2.5
 duration = 0.1
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
