@@ -55,7 +55,9 @@ func _physics_process(delta: float) -> void:
 		var col := _par.test_move(_par.global_transform, mv, kc)
 		if col && kc:
 			mv = mv.slide(kc.get_normal())
-		_par.move_and_collide(mv)
+		
+		if !_par.no_movement && !_par.completed:
+			_par.move_and_collide(mv)
 		
 		var acc := absf(wind_speed * snow_recovery_accumulation_rate)
 		if _par.is_crouching:
@@ -68,6 +70,7 @@ func _physics_process(delta: float) -> void:
 		jumped = true
 		snow_cover_accumulation = clamp(snow_cover_accumulation - snow_recovery_decumulation_each_jump, 0, 1)
 		if _snow_particle.visible && snow_cover_accumulation > 0.1:
+			Audio.play_1d_sound(preload("res://stages/extra/world_10/sfx/snow_break.wav"))
 			for i in 4:
 				_snow_particle.emit_particle(_snow_particle.global_transform, Vector2.RIGHT.rotated(-PARTICLE_VELOCITY_ROTATIONS[i]) * randf_range(50, 200), Color.WHITE, Color.WHITE, GPUParticles2D.EMIT_FLAG_POSITION | GPUParticles2D.EMIT_FLAG_VELOCITY)
 	_par.set_meta(&"not_slidable", snow_cover_accumulation > 0.2)

@@ -10,4 +10,5 @@ func _ready() -> void:
 			if !wind_snow_cover:
 				return
 			wind_snow_cover.snow_cover_accumulation += 0.5
+			Audio.play_1d_sound(preload("res://stages/extra/world_10/sfx/zamrozic.wav"))
 		)
