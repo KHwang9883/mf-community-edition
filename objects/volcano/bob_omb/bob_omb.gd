@@ -67,6 +67,9 @@ func _initiate_explosion() -> void:
 	await get_tree().create_timer(1.0, false).timeout
 	if Thunder.view.is_getting_closer(self, 64):
 		Audio.play_sound(explosion_sound, self, false, { ignore_pause = true })
+		var cam: PlayerCamera2D = Thunder._current_camera
+		if cam && cam.has_method(&"shock_smooth"):
+			cam.shock_smooth(5, 5)
 		
 	var expl = explosion_node.instantiate()
 	Scenes.current_scene.add_child(expl)

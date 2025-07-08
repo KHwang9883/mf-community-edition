@@ -15,6 +15,7 @@ func stomp() -> void:
 		sprite_node.animation = "damaged"
 		_shake()
 	else:
+		enemy_attacked.killing_can_combo = true
 		enemy_attacked.stomping_creation = InstanceNode2D.new()
 		enemy_attacked.stomping_creation.creation_nodepack = GOOMBA_VOLCANO_DEAD
 		enemy_attacked.stomping_sound = BREAK

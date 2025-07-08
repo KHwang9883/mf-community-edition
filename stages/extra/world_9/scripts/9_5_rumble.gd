@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		lava_speed = 0
 		return
 	lava_anim.position.x += lava_speed * delta
-	lava_speed = minf(lava_speed + 8 * delta, 275)
+	lava_speed = minf(lava_speed + 7 * delta, 275)
 	var player: Player = Thunder._current_player
 	if is_instance_valid(player):
 		lava_hud.position.y = lava_top_hud.position.y - ((lava_anim.global_position.x + 1400) - player.global_position.x) / 40
