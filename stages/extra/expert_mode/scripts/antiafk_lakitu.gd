@@ -1,7 +1,8 @@
 extends CanvasLayer
 
-const STOPWATCH = preload("res://engine/objects/items/stopwatch/stopwatch.wav")
+const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block/message_block.wav")
 const AIMING_LAKITU = preload("res://objects/aiming_lakitu/aiming_lakitu.tscn")
+const MID_LEVEL_ITEM_STORE = preload("res://objects/antiafk_expert_mode/item_store/mid_level_item_store.tscn")
 
 @export var is_expert_mode: bool = true
 @export_group("Item Store Settings")
@@ -33,12 +34,13 @@ var stopwatch_active: bool = false
 var item: String
 var item_need_help: bool = true
 var store_cooldown: float
+var _prev_pause_bool: bool
+var active_store: Control
 
 @onready var label: Label = $Label
 @onready var item_stock: TextureRect = $Control/ItemStock
 @onready var item_stock_help_label: Label = $Control/ItemStock/Label
 @onready var label_item_help_text: String = item_stock_help_label.text
-@onready var message_block_choicer: AnimatableBody2D = $MessageBlockChoicer
 
 func _ready() -> void:
 	item = Data.values.get("item", "")
@@ -84,10 +86,10 @@ func _physics_process(delta: float) -> void:
 			else:
 				empty_item_stock()
 		elif item_store_enabled && store_cooldown <= 0.0:
+			if is_instance_valid(active_store): return
 			if Input.is_action_pressed(&"m_up") && Input.is_action_pressed(&"a_tab"):
 				store_cooldown = 0.65
-				message_block_choicer.show_message()
-				message_block_choicer.process_mode = Node.PROCESS_MODE_ALWAYS
+				open_item_shop()
 	
 	
 	if !antiafk_enabled: return
@@ -163,6 +165,31 @@ func empty_item_stock() -> void:
 	item_stock.visible = false
 
 
+func open_item_shop() -> void:
+	var _sfx = CharacterManager.get_sound_replace(MESSAGE_BLOCK, MESSAGE_BLOCK, "message_box", false)
+	Audio.play_1d_sound(_sfx, true, {ignore_pause = true})
+	get_tree().paused = true
+	
+	if "disable_pause_menu" in Scenes.current_scene:
+		_prev_pause_bool = Scenes.current_scene.get(&"disable_pause_menu")
+		Scenes.current_scene.set(&"disable_pause_menu", true)
+	
+	var item_store = MID_LEVEL_ITEM_STORE.instantiate()
+	item_store.modulate.a = 0.0
+	add_child(item_store)
+	active_store = item_store
+	item_store.antiafk_ref_node = self
+	#item_store.msgbox_ref_node = self
+	
+	for i in item_store.container.get_children():
+		if i is TextureRect && !i.name in store_inventory.keys():
+			i.queue_free()
+	item_store.container._update_selectors()
+	var _tw = item_store.create_tween()
+	_tw.tween_property(item_store, ^"modulate:a", 1.0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	_tw.tween_callback(item_store.activate)
+
+
 func afk_warning() -> void:
 	label.modulate.a = 0.0
 	tw = create_tween().set_trans(Tween.TRANS_SINE).set_loops()
@@ -179,6 +206,7 @@ func afk_logic(player: Player) -> void:
 	lak.pitching_interval_max = 5
 	lak.add_to_group(&"antiafk_enemy")
 	Scenes.current_scene.add_child(lak)
+	
 	var rect_size: Vector2 = lak.get_viewport_rect().size
 	var cam_pos = cam.get_screen_center_position()
 	var random_offset: float = 64 + randf_range(-16, 16)
@@ -195,3 +223,10 @@ func afk_logic(player: Player) -> void:
 func stop_warning() -> void:
 	if tw: tw.kill()
 	label.modulate.a = 0.0
+
+func return_to_game() -> void:
+	#process_mode = Node.PROCESS_MODE_INHERIT
+	get_tree().paused = false
+	#activated = false
+	if "disable_pause_menu" in Scenes.current_scene:
+		Scenes.current_scene.set(&"disable_pause_menu", _prev_pause_bool)
