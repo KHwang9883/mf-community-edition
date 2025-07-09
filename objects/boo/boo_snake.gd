@@ -27,5 +27,8 @@ func _on_timer_timeout() -> void:
 		true,
 		0.02,
 		1.0,
-		ADD_EFFECT
+		ADD_EFFECT,
+		0,
+		true,
+		TEXTURE_FILTER_LINEAR
 	)

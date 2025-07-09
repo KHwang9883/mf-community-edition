@@ -5,9 +5,9 @@ const INCORRECT = preload("res://sfx/incorrect.wav")
 
 var activated: bool
 var antiafk_ref_node: Node
-var msgbox_ref_node: StaticBumpingBlock
 var store_inv: Dictionary
 var _tw: Tween
+var _inc_cd: float
 
 @onready var container: MenuItemsController = $ColorRect/HBoxContainer
 @onready var label_error: Label = $LabelError
@@ -17,13 +17,14 @@ var _tw: Tween
 
 func _physics_process(delta: float) -> void:
 	if !activated: return
+	if _inc_cd > 0: _inc_cd -= delta
 	if Input.is_action_just_pressed(&"ui_cancel"):
 		activated = false
 		container.focused = false
 		var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		tw.tween_property(self, "modulate:a", 0.0, 0.5)
 		tw.tween_callback(queue_free)
-		msgbox_ref_node.return_to_game()
+		antiafk_ref_node.return_to_game()
 		return
 
 func activate() -> void:
@@ -41,7 +42,9 @@ func selected(item: Control) -> void:
 		label_error.text = error_str_toomuch
 		return _error_message()
 	
-	Audio.play_1d_sound(ITEM_RESERVE, false, {ignore_pause = true})
+	var _sfx = CharacterManager.get_sound_replace(ITEM_RESERVE, ITEM_RESERVE, "bonus_reserve", false)
+	Audio.play_1d_sound(_sfx, false, {ignore_pause = true})
+	
 	label_error.modulate.a = 0.0
 	Data.values.item = str(item.name)
 	Data.add_lives(-store_inv[item_name])
@@ -83,6 +86,8 @@ func _error_message() -> void:
 	_tw = create_tween()
 	_tw.tween_interval(2.0)
 	_tw.tween_property(label_error, "modulate:a", 0.0, 1.0)
+	if _inc_cd > 0: return
 	var inc_sfx = CharacterManager.get_sound_replace(INCORRECT, INCORRECT, "menu_failure", false)
 	Audio.play_1d_sound(inc_sfx, false, {ignore_pause = true})
+	_inc_cd = 0.5
 	

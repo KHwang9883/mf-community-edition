@@ -25,6 +25,7 @@ const DEFAULT_LINES = {
 	"hud_acceptance": preload("res://engine/objects/players/prefabs/sounds/powerup.wav"),
 	"message_box": preload("res://engine/objects/bumping_blocks/message_block/message_block.wav"),
 	"bonus_activate": preload("res://engine/objects/players/prefabs/sounds/powerup.wav"),
+	"bonus_reserve": preload("res://sfx/item-reserve.wav"),
 	"checkpoint_switch": preload("res://engine/objects/core/checkpoint/sounds/switch.wav"),
 	"menu_mouse_hover": preload("res://engine/components/ui/_sounds/select_mouse_hover.mp3"),
 	"menu_select": preload("res://engine/components/ui/_sounds/select_main.wav"),
