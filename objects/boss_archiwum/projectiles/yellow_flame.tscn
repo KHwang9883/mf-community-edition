@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl7iy3wc77urt"]
+
+[ext_resource type="Script" uid="uid://c301dm0vw0jfc" path="res://objects/boss_archiwum/projectiles/red_flame.gd" id="1_e3dkv"]
+[ext_resource type="Texture2D" uid="uid://dj4p0c5s8ccps" path="res://objects/boss_archiwum/textures/yellowflame.png" id="2_cc0mo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ps8mv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cc0mo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgnrh"]
+size = Vector2(20, 64)
+
+[node name="YellowFlame" type="Area2D"]
+script = ExtResource("1_e3dkv")
+enable_statics = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ps8mv")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fgnrh")

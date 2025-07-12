@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://csy7dk02tnbcb"]
+
+[ext_resource type="Script" uid="uid://db71ktlo80su7" path="res://objects/arrowing_anchor/arrowing_particle.gd" id="1_u514i"]
+[ext_resource type="Texture2D" uid="uid://bxe2fyi7qpw5u" path="res://gfx/deco/light.png" id="2_nr8im"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bj8ha"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i8nih"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_4ektk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.38788, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g0v4x"]
+curve = SubResource("Curve_4ektk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5nb2m"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.03
+scale_max = 0.04
+scale_curve = SubResource("CurveTexture_g0v4x")
+color = Color(0.898039, 0, 0.917647, 1)
+
+[node name="ArrowingParticle" type="Node2D"]
+script = ExtResource("1_u514i")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.560784)
+
+[node name="SpriteLight" type="Sprite2D" parent="Sprite"]
+modulate = Color(1, 0.0862745, 1, 0.780392)
+material = SubResource("CanvasItemMaterial_bj8ha")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_nr8im")
+
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(0.435294, 0.00392157, 0.768627, 1)
+texture = ExtResource("2_nr8im")
+texture_scale = 0.2
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_i8nih")
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_5nb2m")
+texture = ExtResource("2_nr8im")
+lifetime = 1.5

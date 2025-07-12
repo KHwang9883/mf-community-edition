@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckyxnyeegxf6g"]
+
+[ext_resource type="Script" uid="uid://b04dgdy3c3ao3" path="res://objects/phantomic_objects/platforms/phantomic_platform.gd" id="1_fb1d0"]
+[ext_resource type="Texture2D" uid="uid://b2j48obkb78xb" path="res://objects/phantomic_objects/platforms/textures/phantomic_platform.png" id="1_ift36"]
+[ext_resource type="Texture2D" uid="uid://bxe2fyi7qpw5u" path="res://gfx/deco/light.png" id="3_7caoa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tam1j"]
+size = Vector2(64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3nyd"]
+size = Vector2(64, 2)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y7row"]
+blend_mode = 1
+
+[node name="PathFollower" type="PathFollow2D"]
+rotates = false
+loop = false
+script = ExtResource("1_fb1d0")
+metadata/_edit_group_ = true
+
+[node name="Platform" type="AnimatableBody2D" parent="."]
+position = Vector2(0, -16)
+collision_layer = 112
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Platform"]
+visible = false
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_tam1j")
+one_way_collision = true
+
+[node name="Surface" type="Area2D" parent="Platform"]
+visible = false
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Platform/Surface"]
+shape = SubResource("RectangleShape2D_c3nyd")
+debug_color = Color(0.776471, 0, 0.368627, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform"]
+position = Vector2(0, 16)
+texture = ExtResource("1_ift36")
+
+[node name="LightForward" type="PointLight2D" parent="Platform"]
+visible = false
+color = Color(0, 0.992157, 0.411765, 1)
+energy = 3.0
+blend_mode = 2
+texture = ExtResource("3_7caoa")
+texture_scale = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform/LightForward"]
+material = SubResource("CanvasItemMaterial_y7row")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_7caoa")
+
+[node name="LightBack" type="PointLight2D" parent="Platform"]
+visible = false
+color = Color(1, 0.466667, 0.411765, 1)
+energy = 3.0
+blend_mode = 2
+texture = ExtResource("3_7caoa")
+texture_scale = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform/LightBack"]
+material = SubResource("CanvasItemMaterial_y7row")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_7caoa")

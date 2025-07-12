@@ -1,0 +1,126 @@
+[gd_scene load_steps=16 format=3 uid="uid://vh2jq5kpf3gt"]
+
+[ext_resource type="Texture2D" uid="uid://d2u2ua8ky5bvf" path="res://objects/phantomic_enemies/thwomp/texture/phantomic_thwomp.png" id="1_lbi1g"]
+[ext_resource type="Script" uid="uid://bsuhjlj3t63i4" path="res://objects/phantomic_enemies/thwomp/phantomic_thwomp.gd" id="1_xsbyl"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_dadg5"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_n3bjv"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_n3xeb"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_37wb4"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_r35eg"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_533km"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8dmc"]
+size = Vector2(48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1ba6"]
+atlas = ExtResource("1_lbi1g")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jt7fe"]
+atlas = ExtResource("1_lbi1g")
+region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yr3b"]
+atlas = ExtResource("1_lbi1g")
+region = Rect2(96, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gw8ub"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1ba6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jt7fe")
+}],
+"loop": true,
+"name": &"ready",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yr3b")
+}],
+"loop": true,
+"name": &"stun",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jcldt"]
+size = Vector2(48, 1)
+
+[sub_resource type="Resource" id="Resource_jvvd1"]
+script = ExtResource("5_37wb4")
+creation_nodepack = ExtResource("3_n3bjv")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -150)
+}
+custom_script = ExtResource("4_n3xeb")
+
+[node name="PhantomicThwomp" type="Area2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_xsbyl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_k8dmc")
+debug_color = Color(0.988235, 0, 0.298039, 0.419608)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gw8ub")
+
+[node name="Bottom" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, 31)
+shape = SubResource("RectangleShape2D_jcldt")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 32
+
+[node name="LeftExplosion" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(-12, 28)
+target_position = Vector2(0, 10)
+collision_mask = 32
+
+[node name="RightExplosion" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(12, 28)
+target_position = Vector2(0, 10)
+collision_mask = 32
+
+[node name="EnemyAttacked" type="Node" parent="."]
+script = ExtResource("2_dadg5")
+center_node = NodePath("..")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 99
+}
+killing_creation = SubResource("Resource_jvvd1")
+killing_scores = 800
+killing_sound_succeeded = ExtResource("6_r35eg")
+killing_sound_failed = ExtResource("7_533km")
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed", &"center_node"]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
