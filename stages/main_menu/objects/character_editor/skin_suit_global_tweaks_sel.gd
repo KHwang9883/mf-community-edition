@@ -30,6 +30,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	var sorted_dict: Dictionary = CharacterManager.misc_textures[_char].global_skin_tweaks.duplicate(true)
 	sorted_dict.sort()
 	for tweak in sorted_dict:
+		print(tweak)
+		if tweak is Dictionary: continue
 		create_tweak_selection(tweak)
 	
 	var _sfx = CharacterManager.get_sound_replace(selected_sound, SELECT_ENTER, "menu_enter", false)

@@ -61,7 +61,7 @@ const APPEAR = preload("res://objects/chorniy_mario/appear.ogg")
 @onready var sprite = $Sprite
 @onready var player = get_node_or_null("../Player")
 @onready var kevin_text_2 = $KevinText2
-@onready var _random_sounds_tweak: bool = SettingsManager.get_tweak("secret_mode_new_death_sounds")
+@onready var _random_sounds_tweak: bool = SettingsManager.get_tweak("secret_mode_new_death_sounds", true)
 @onready var cloud_light_effect: Sprite2D = $CloudLightEffect
 @onready var stars: CPUParticles2D = $Stars
 

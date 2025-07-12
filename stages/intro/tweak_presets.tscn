@@ -1,57 +1,286 @@
-[gd_scene load_steps=5 format=3 uid="uid://be7g6iusfig30"]
+[gd_scene load_steps=23 format=3 uid="uid://be7g6iusfig30"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_3xnyq"]
+[ext_resource type="Script" uid="uid://dvf662cgwvb1w" path="res://stages/intro/scripts/intro_choosers.gd" id="1_g5ojl"]
+[ext_resource type="Texture2D" uid="uid://dphjpmu2xobjk" path="res://objects/revamped_level_warning/textures/12321.png" id="2_511ip"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="2_nicml"]
+[ext_resource type="Texture2D" uid="uid://c73knysfon1bc" path="res://stages/intro/textures/intro_selections.png" id="3_df751"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="3_p5ak4"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="4_511ip"]
+[ext_resource type="Script" uid="uid://bwg40fjnu2d4u" path="res://stages/intro/scripts/intro_choose_sel.gd" id="4_feciv"]
+[ext_resource type="Texture2D" uid="uid://8brj8654msyp" path="res://stages/intro/textures/intro_selections_tweaks.png" id="7_g5ojl"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="10_36vei"]
+[ext_resource type="Texture2D" uid="uid://dainjactwehyb" path="res://stages/intro/textures/scr2.png" id="10_v2hns"]
+[ext_resource type="Texture2D" uid="uid://bhjrr7a7ir7p1" path="res://stages/intro/textures/scr4.png" id="11_36vei"]
+[ext_resource type="Texture2D" uid="uid://bb06hyooci38s" path="res://stages/intro/textures/scr6.png" id="12_wfh56"]
 
-[node name="TweakPresets" type="Control"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_feciv"]
+atlas = ExtResource("2_511ip")
+region = Rect2(82, 60, 212, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckjm3"]
+atlas = ExtResource("3_df751")
+region = Rect2(0, 0, 127, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2hns"]
+atlas = ExtResource("3_df751")
+region = Rect2(128, 0, 121, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgjxd"]
+atlas = ExtResource("7_g5ojl")
+region = Rect2(0, 0, 266, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6jte"]
+atlas = ExtResource("7_g5ojl")
+region = Rect2(272, 0, 146, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwb3k"]
+atlas = ExtResource("7_g5ojl")
+region = Rect2(0, 38, 418, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36vei"]
+atlas = ExtResource("3_df751")
+region = Rect2(145, 33, 121, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfh56"]
+atlas = ExtResource("3_df751")
+region = Rect2(1, 33, 141, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_511ip"]
+atlas = ExtResource("7_g5ojl")
+region = Rect2(0, 70, 219, 35)
+filter_clip = true
+
+[node name="IntroChoosers" type="Control"]
+physics_interpolation_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_g5ojl")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 640.0
-offset_bottom = 480.0
-
-[node name="Label" type="Label" parent="."]
+[node name="ControlStyle" type="Control" parent="."]
+physics_interpolation_mode = 1
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_top = 48.0
-offset_bottom = 71.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Choose the preferred game style.
-You can fine-tune later in the main menu."
-horizontal_alignment = 1
-
-[node name="MenuItemsController" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -48.0
-offset_right = 64.0
-offset_bottom = 48.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameStyle" type="VBoxContainer" parent="ControlStyle"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.733
+anchor_right = 1.0
+anchor_bottom = 0.733
+offset_top = -47.84
+offset_bottom = 64.16
+grow_horizontal = 2
+grow_vertical = 0
 script = ExtResource("1_3xnyq")
 
-[node name="TextureRect" type="TextureRect" parent="MenuItemsController"]
+[node name="TextureRect" type="TextureRect" parent="ControlStyle/GameStyle"]
 layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_feciv")
+stretch_mode = 3
+script = ExtResource("4_feciv")
 
-[node name="Selector" type="Node2D" parent="."]
+[node name="TextureRect2" type="TextureRect" parent="ControlStyle/GameStyle"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_ckjm3")
+stretch_mode = 3
+script = ExtResource("4_feciv")
+selection_style = 1
+
+[node name="TextureRect3" type="TextureRect" parent="ControlStyle/GameStyle"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_v2hns")
+stretch_mode = 3
+script = ExtResource("4_feciv")
+selection_style = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="ControlStyle"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.267
+anchor_right = 0.5
+anchor_bottom = 0.267
+offset_left = -256.0
+offset_top = -48.16
+offset_right = 256.0
+offset_bottom = 47.84
+grow_horizontal = 2
+theme_override_constants/h_separation = -3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ControlStyle/HFlowContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_kgjxd")
+
+[node name="TextureRect2" type="TextureRect" parent="ControlStyle/HFlowContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_s6jte")
+
+[node name="TextureRect3" type="TextureRect" parent="ControlStyle/HFlowContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_cwb3k")
+
+[node name="Selector" type="Node2D" parent="ControlStyle"]
 script = ExtResource("2_nicml")
 smooth_speed = 0.4
 position_padding = 20
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControlStyle/Selector"]
 sprite_frames = ExtResource("3_p5ak4")
 script = ExtResource("4_511ip")
+
+[node name="Node" type="Node" parent="ControlStyle"]
+script = ExtResource("10_36vei")
+menu_items_controller_path = NodePath("../GameStyle")
+
+[node name="ControlLook" type="Control" parent="."]
+physics_interpolation_mode = 1
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 2.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="BG" type="Control" parent="ControlLook"]
+physics_interpolation_mode = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="ControlLook/BG"]
+physics_interpolation_mode = 0
+self_modulate = Color(0.5, 0.5, 0.5, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_v2hns")
+
+[node name="TextureRect2" type="TextureRect" parent="ControlLook/BG"]
+physics_interpolation_mode = 0
+self_modulate = Color(0.5, 0.5, 0.5, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 640.0
+offset_right = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_36vei")
+
+[node name="TextureRect3" type="TextureRect" parent="ControlLook/BG"]
+physics_interpolation_mode = 0
+self_modulate = Color(0.5, 0.5, 0.5, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1280.0
+offset_right = 1280.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_wfh56")
+
+[node name="GameLook" type="VBoxContainer" parent="ControlLook"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.733
+anchor_right = 1.0
+anchor_bottom = 0.733
+offset_top = -47.84
+offset_bottom = 64.16
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_3xnyq")
+focused = false
+
+[node name="TextureRect2" type="TextureRect" parent="ControlLook/GameLook"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_36vei")
+stretch_mode = 3
+script = ExtResource("4_feciv")
+is_game_style = false
+
+[node name="TextureRect3" type="TextureRect" parent="ControlLook/GameLook"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_wfh56")
+stretch_mode = 3
+script = ExtResource("4_feciv")
+is_game_style = false
+selection_look = 1
+
+[node name="TextureRect4" type="TextureRect" parent="ControlLook/GameLook"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_ckjm3")
+stretch_mode = 3
+script = ExtResource("4_feciv")
+is_game_style = false
+selection_look = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="ControlLook"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.267
+anchor_right = 0.5
+anchor_bottom = 0.267
+offset_left = -256.0
+offset_top = -57.16
+offset_right = 256.0
+offset_bottom = 38.84
+grow_horizontal = 2
+theme_override_constants/h_separation = -3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ControlLook/HFlowContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_kgjxd")
+
+[node name="TextureRect2" type="TextureRect" parent="ControlLook/HFlowContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_511ip")
+
+[node name="TextureRect3" type="TextureRect" parent="ControlLook/HFlowContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_cwb3k")
+
+[node name="Selector" type="Node2D" parent="ControlLook"]
+script = ExtResource("2_nicml")
+smooth_speed = 0.4
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ControlLook/Selector"]
+sprite_frames = ExtResource("3_p5ak4")
+script = ExtResource("4_511ip")
+
+[node name="Node" type="Node" parent="ControlLook"]
+script = ExtResource("10_36vei")
+menu_items_controller_path = NodePath("../GameLook")
+
+[connection signal="selected" from="ControlStyle/GameStyle" to="ControlStyle/Selector" method="handle_selection"]
+[connection signal="selected" from="ControlStyle/GameStyle" to="ControlStyle/Node" method="handle_selection"]
+[connection signal="selected" from="ControlLook/GameLook" to="." method="_on_game_look_selected"]
+[connection signal="selected" from="ControlLook/GameLook" to="ControlLook/Selector" method="handle_selection"]
+[connection signal="selected" from="ControlLook/GameLook" to="ControlLook/Node" method="handle_selection"]

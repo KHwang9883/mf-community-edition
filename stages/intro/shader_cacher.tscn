@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://bdq2aru46867r"]
+[gd_scene load_steps=45 format=3 uid="uid://bdq2aru46867r"]
 
 [ext_resource type="Material" uid="uid://gil546lvmhxo" path="res://engine/objects/items/ice_block/ice_block.tres" id="1_k7qp0"]
 [ext_resource type="Texture2D" uid="uid://knr0vufr6qpt" path="res://icon.png" id="2_kmp0k"]
@@ -13,7 +13,6 @@
 [ext_resource type="Material" uid="uid://ctvm6eweeo2si" path="res://materials/underwater_bg_wave.tres" id="10_ktemo"]
 [ext_resource type="Material" uid="uid://b0yh6ossriqe7" path="res://engine/objects/effects/slide/slide_effect.tres" id="10_lws1q"]
 [ext_resource type="Material" uid="uid://dpwcqva66u2sf" path="res://materials/grayscale.tres" id="11_feibi"]
-[ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="11_xd52n"]
 [ext_resource type="Material" uid="uid://lt5lxng3cdo2" path="res://engine/objects/effects/bubble/lava_bubbles.tres" id="12_4502w"]
 [ext_resource type="Material" uid="uid://gpgw7y2fuiqu" path="res://materials/map_8_hsv2.tres" id="12_t3r02"]
 [ext_resource type="Material" uid="uid://cpd0lft71406i" path="res://engine/objects/core/checkpoint/textures/checkpoint_material.tres" id="13_5hp22"]
@@ -28,14 +27,9 @@
 [ext_resource type="Material" uid="uid://buxudaaft4i5o" path="res://materials/level_8-3.tres" id="18_vjidw"]
 [ext_resource type="Material" uid="uid://bqbnhvliq3s32" path="res://materials/add_unshaded_effect.tres" id="19_8n7ph"]
 [ext_resource type="Material" uid="uid://bpvvksy7u5icg" path="res://materials/fog-funnytanks.tres" id="19_8tfju"]
-[ext_resource type="Material" uid="uid://bfnyr7gfug8qw" path="res://materials/bubble_canvas_item.tres" id="19_vddym"]
-[ext_resource type="Material" uid="uid://bj3abhylmlcbb" path="res://materials/pipe_bubbles.tres" id="20_3up1q"]
 [ext_resource type="Material" uid="uid://dvi7i7b5bslko" path="res://engine/objects/players/prefabs/materials/starman.tres" id="20_vauus"]
-[ext_resource type="Texture2D" uid="uid://s0uyg78cefed" path="res://engine/objects/effects/bubble/bubble_anim.png" id="21_4fao0"]
 [ext_resource type="Material" uid="uid://catvtcld2ik45" path="res://materials/fog3-1.tres" id="21_oqmnx"]
 [ext_resource type="Material" uid="uid://wv2x2acu2faj" path="res://objects/antiafk_expert_mode/shaders/item_atom_material.tres" id="22_3gi6k"]
-[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="22_gbj4p"]
-[ext_resource type="OccluderPolygon2D" uid="uid://cpx0tuh3118bw" path="res://materials/occlpol1.tres" id="23_38kaq"]
 [ext_resource type="Material" uid="uid://c65x6dl8i6pdh" path="res://engine/components/transitions/circle_transition/circle_transition.tres" id="23_v2a6t"]
 [ext_resource type="Material" uid="uid://blelf8euspg4e" path="res://materials/grayscale_offset_0-5.tres" id="23_yvds5"]
 [ext_resource type="Material" uid="uid://cjvud11pq1efj" path="res://engine/components/transitions/blur_transition/blur_transition.tres" id="24_hkxvb"]
@@ -46,8 +40,6 @@
 [ext_resource type="Material" uid="uid://dbo8ioi41p8hl" path="res://materials/ending_particles.tres" id="29_gw2pp"]
 [ext_resource type="Material" uid="uid://d3x6etaiuyhpv" path="res://stages/extra/click_bonus_game/objects/star_finder_cursor/particles2.tres" id="30_0w5st"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="37_grxoo"]
-[ext_resource type="Material" uid="uid://dyuxem8ku62vf" path="res://engine/objects/enemies/human_lab/container/textures/container_bubbles_material.tres" id="46_476cq"]
-[ext_resource type="Material" uid="uid://cnc323n6nnfq5" path="res://engine/objects/enemies/human_lab/container/textures/container_bubbles_particles.tres" id="47_nm55v"]
 
 [sub_resource type="Gradient" id="Gradient_a34eq"]
 colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
@@ -72,10 +64,6 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_xojma"]
-cull_mode = 1
-polygon = PackedVector2Array(-34, -28, 34, -28, 34, 4, -34, 4)
 
 [node name="CanvasLayer" type="CanvasLayer"]
 layer = -128
@@ -180,9 +168,6 @@ texture = ExtResource("2_kmp0k")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D"]
 process_material = ExtResource("10_lws1q")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="Node2D"]
-process_material = ExtResource("11_xd52n")
-
 [node name="GPUParticles2D3" type="GPUParticles2D" parent="Node2D"]
 process_material = ExtResource("12_4502w")
 
@@ -253,21 +238,6 @@ offset_bottom = 358.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("18_bogts")
 
-[node name="GPUParticles2D8" type="GPUParticles2D" parent="Node2D"]
-modulate = Color(1, 1, 1, 0.494118)
-z_index = -30
-material = ExtResource("19_vddym")
-position = Vector2(0, 183)
-texture = ExtResource("21_4fao0")
-lifetime = 10.0
-preprocess = 1.0
-randomness = 0.5
-process_material = ExtResource("20_3up1q")
-script = ExtResource("22_gbj4p")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Node2D/GPUParticles2D8"]
-occluder = ExtResource("23_38kaq")
-
 [node name="ochko" type="PointLight2D" parent="Node2D"]
 position = Vector2(4, 9)
 range_z_max = -1
@@ -276,19 +246,3 @@ range_layer_max = -1
 texture = SubResource("GradientTexture2D_1fswb")
 offset = Vector2(0, 8)
 script = ExtResource("37_grxoo")
-
-[node name="GPUParticles2D14" type="GPUParticles2D" parent="Node2D"]
-modulate = Color(1, 1, 1, 0.74902)
-material = ExtResource("46_476cq")
-position = Vector2(0, 52)
-texture = ExtResource("21_4fao0")
-lifetime = 3.0
-randomness = 0.5
-collision_base_size = 0.1
-visibility_rect = Rect2(-125, -157.916, 250, 212.678)
-process_material = ExtResource("47_nm55v")
-script = ExtResource("22_gbj4p")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Node2D/GPUParticles2D14"]
-position = Vector2(0, -40)
-occluder = SubResource("OccluderPolygon2D_xojma")
