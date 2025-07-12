@@ -9,7 +9,7 @@ func _ready() -> void:
 		SettingsManager.settings_saved.connect(_update_text)
 
 func _handle_select(mouse_input: bool = false) -> void:
-	if Data.technical_values.get("main_menu_scene"): return
+	#if Data.technical_values.get("main_menu_scene"): return
 	if !SkinsManager.current_skin: return
 	# Custom skin
 	get_tree().call_group(&"_skin_suit_tweak", &"queue_free")
@@ -59,3 +59,7 @@ func get_tweak_value(tweak) -> Variant:
 	if SkinsManager.misc_textures.has(SkinsManager.current_skin) && SkinsManager.misc_textures[SkinsManager.current_skin].has(_powerup):
 		return SkinsManager.misc_textures[SkinsManager.current_skin][_powerup][tweak]
 	return CharacterManager.misc_textures[CharacterManager.get_character_name()][_powerup][tweak]
+
+func create_tweak_selection(tweak) -> void:
+	if get_tweak_value(tweak) is Dictionary: return
+	super(tweak)

@@ -22,10 +22,10 @@ func _ready() -> void:
 func activate(wait_time: float) -> void:
 	if _current_timer:
 		Thunder._disconnect(_current_timer.timeout, music)
-	_current_timer = get_tree().create_timer(wait_time, true)
-	Thunder._connect(_current_timer.timeout, music, CONNECT_ONE_SHOT)
+	_current_timer = get_tree().create_timer(wait_time, true, false, true)
+	Thunder._connect(_current_timer.timeout, music.bind(wait_time), CONNECT_ONE_SHOT)
 	
-	await get_tree().create_timer(0.6, true).timeout
+	await get_tree().create_timer(0.5, true, false, true).timeout
 	
 	active = true
 	node_2d.visible = true
@@ -33,8 +33,8 @@ func activate(wait_time: float) -> void:
 	_timer()
 	target_scale = 1.1
 
-func music() -> void:
-	await get_tree().create_timer(0.3, true).timeout
+func music(wait_time: float = 0.0) -> void:
+	await get_tree().create_timer(max(0.52 - wait_time, 0.1), true, false, true).timeout
 	if !active: return
 	@warning_ignore("incompatible_ternary")
 	Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,

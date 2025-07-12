@@ -56,7 +56,7 @@ func _ready() -> void:
 	super()
 
 func _handle_select(mouse_input: bool = false) -> void:
-	if Data.technical_values.get("main_menu_scene"): return
+	#if Data.technical_values.get("main_menu_scene"): return
 	# Custom skin
 	if SkinsManager.current_skin && SkinsManager.custom_textures.has(SkinsManager.current_skin):
 		get_tree().call_group(&"_skin_suit_tweak", &"queue_free")
