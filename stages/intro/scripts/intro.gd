@@ -1,6 +1,7 @@
 extends Control
 
 const SHADER_CACHER = preload("res://stages/intro/shader_cacher.tscn")
+const TWEAK_PRESETS = preload("res://stages/intro/tweak_presets.tscn")
 
 @onready var disclaimer: TextureRect = $CenterContainer/TextureRect
 @onready var icon: TextureRect = $CenterContainer/Icon
@@ -8,6 +9,7 @@ const SHADER_CACHER = preload("res://stages/intro/shader_cacher.tscn")
 
 var loading_finished: bool = false
 var loading_init: bool = false
+var cacher
 
 func _ready() -> void:
 	SettingsManager.enable_shortcut_scene_change_keys = false
@@ -19,7 +21,7 @@ func _ready() -> void:
 		
 	await get_tree().create_timer(0.6, false, true, false).timeout
 	print("[Startup] Compiling shaders...")
-	var cacher = SHADER_CACHER.instantiate()
+	cacher = SHADER_CACHER.instantiate()
 	Scenes.current_scene.add_child(cacher)
 	Thunder.reorder_top(cacher)
 	loading_init = true
@@ -30,19 +32,36 @@ func _physics_process(delta: float) -> void:
 		loading_finished = true
 		print("[Startup] Waiting for a bit..")
 		get_tree().create_timer(0.6, false, true, false).timeout.connect(display_disclaimer)
-		print("[Startup] Shader compilation complete!")
 
 
 func display_disclaimer() -> void:
+	print("[Startup] Shader compilation complete!")
 	text.queue_free()
 	icon.queue_free()
+	if is_instance_valid(cacher):
+		cacher.hide()
+		cacher.queue_free()
+	
 	var tw = disclaimer.create_tween()
 	tw.tween_property(disclaimer, "modulate:a", 1.0, 0.6)
 	tw.tween_interval(2.2)
 	tw.tween_property(disclaimer, "modulate:a", 0.0, 0.6)
-	tw.tween_callback(transition)
+	tw.tween_callback(init_tweak_selections)
 	await get_tree().physics_frame
 	SettingsManager.enable_shortcut_scene_change_keys = true
+
+
+func init_tweak_selections() -> void:
+	if !SettingsManager.tweaks.is_empty():
+		transition()
+		return
+	
+	var chooser = TWEAK_PRESETS.instantiate()
+	chooser.modulate.a = 0
+	add_child(chooser)
+	var tw = chooser.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(chooser, "modulate:a", 1.0, 0.5)
+	
 
 
 func transition() -> void:
