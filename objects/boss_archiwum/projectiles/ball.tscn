@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcpsarc7immui"]
+
+[ext_resource type="Script" uid="uid://dkfrc516atywx" path="res://objects/boss_archiwum/projectiles/fly_flame.gd" id="1_j5bmw"]
+[ext_resource type="Texture2D" uid="uid://dss56m6syirko" path="res://objects/boss_archiwum/textures/ball.png" id="2_bg2qr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sfier"]
+radius = 9.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xs5f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bg2qr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 25.0
+}]
+
+[node name="FlyBall" type="Area2D"]
+script = ExtResource("1_j5bmw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_sfier")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7xs5f")
+autoplay = "default"

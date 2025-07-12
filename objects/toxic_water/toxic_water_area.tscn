@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdy83ngygjgs1"]
+
+[ext_resource type="Script" uid="uid://di182hyy2cddt" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="1_hu626"]
+[ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="10_iafbq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
+size = Vector2(1, 1)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
+frames = 8
+frame_0/duration = 0.15
+frame_1/duration = 0.15
+frame_2/duration = 0.15
+frame_3/duration = 0.15
+frame_4/duration = 0.15
+frame_5/duration = 0.15
+frame_6/duration = 0.15
+frame_7/duration = 0.15
+
+[node name="Water" type="VBoxContainer"]
+modulate = Color(1, 1, 1, 0.545098)
+offset_right = 64.0
+offset_bottom = 16.0
+theme_override_constants/separation = 0
+script = ExtResource("1_hu626")
+
+[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
+z_index = 1
+collision_layer = 128
+collision_mask = 7
+script = ExtResource("10_iafbq")
+type = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_08xmy")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.619608, 0, 0.619608, 0.788235)
+z_index = 31
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_cct87")
+stretch_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 31
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.176471, 0.101961, 0.32549, 1)

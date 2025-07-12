@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://cy4ikj0dicd7j"]
+
+[ext_resource type="Script" uid="uid://c7sadnbp80jg4" path="res://objects/phantomic_enemies/laser/phantomic_laser.gd" id="1_sreuy"]
+[ext_resource type="Texture2D" uid="uid://bxe2fyi7qpw5u" path="res://gfx/deco/light.png" id="2_6hv8m"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sqiod"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_awmvo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.38788, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ok2kh"]
+curve = SubResource("Curve_awmvo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4pffh"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 60.0
+initial_velocity_min = 50.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.03
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_ok2kh")
+color = Color(0.666667, 0.447059, 1, 1)
+
+[node name="PhantomicLaser" type="Line2D"]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 6.0
+default_color = Color(0.74902, 0.00392157, 0.984314, 1)
+script = ExtResource("1_sreuy")
+
+[node name="Detector" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 33
+hit_from_inside = true
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Light" type="PointLight2D" parent="Visual"]
+color = Color(0.580392, 0.509804, 1, 1)
+energy = 1.25
+texture = ExtResource("2_6hv8m")
+texture_scale = 0.2
+
+[node name="Sprite" type="Sprite2D" parent="Visual/Light"]
+modulate = Color(1, 0.54902, 0.984314, 1)
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("2_6hv8m")
+
+[node name="Particles" type="GPUParticles2D" parent="Visual"]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_sqiod")
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_4pffh")
+texture = ExtResource("2_6hv8m")
+lifetime = 0.5
+visibility_rect = Rect2(-64, -64, 128, 128)

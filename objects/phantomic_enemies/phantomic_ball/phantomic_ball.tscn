@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://denstqun1tqes"]
+
+[ext_resource type="Script" uid="uid://0f56s1l7khl5" path="res://objects/phantomic_enemies/phantomic_ball/phantomic_ball.gd" id="1_ooxjt"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_ucldh"]
+[ext_resource type="Texture2D" uid="uid://bxe2fyi7qpw5u" path="res://gfx/deco/light.png" id="3_cap07"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x6j1e"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xswlr"]
+radius = 8.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ioc1t"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sgkij"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_dro32"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.38788, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g0v4x"]
+curve = SubResource("Curve_dro32")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m2twx"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.03
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_g0v4x")
+color = Color(0.6, 0.25098, 1, 1)
+
+[node name="PhantomicBall" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ooxjt")
+belongs_to = 1
+gravity_scale = 0.25
+collision = false
+metadata/_edit_pinned_properties_ = [&"belongs_to", &"gravity_scale", &"collision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_x6j1e")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_xswlr")
+target_position = Vector2(0, 0)
+max_results = 8
+collide_with_areas = true
+script = ExtResource("2_ucldh")
+
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(0.313726, 0, 0.760784, 1)
+energy = 1.25
+texture = ExtResource("3_cap07")
+texture_scale = 0.2
+
+[node name="Sprite" type="Sprite2D" parent="Light"]
+modulate = Color(0.32549, 0, 0.584314, 1)
+material = SubResource("CanvasItemMaterial_ioc1t")
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("3_cap07")
+
+[node name="Particles" type="GPUParticles2D" parent="Light"]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_sgkij")
+process_material = SubResource("ParticleProcessMaterial_m2twx")
+texture = ExtResource("3_cap07")
+lifetime = 0.5
+visibility_rect = Rect2(-256, -256, 512, 512)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-100, -100, 200, 200)
+metadata/_edit_lock_ = true
+
+[connection signal="damaged_player" from="Attack" to="." method="queue_free"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

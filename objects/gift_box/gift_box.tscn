@@ -1,0 +1,156 @@
+[gd_scene load_steps=22 format=3 uid="uid://cpry7e0wkso3f"]
+
+[ext_resource type="Script" uid="uid://dn5boetww74ob" path="res://objects/gift_box/gift_box.gd" id="1_gd2vt"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_a3x17"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_mbdoj"]
+[ext_resource type="AudioStream" uid="uid://dnjjjlbis458v" path="res://objects/gift_box/sounds/present_try.wav" id="4_x6rth"]
+[ext_resource type="Texture2D" uid="uid://du7a44gui0kh0" path="res://objects/gift_box/gifts.png" id="7_08m51"]
+[ext_resource type="Texture2D" uid="uid://dt4l713dj8ype" path="res://engine/objects/enemies/goombas/textures/goomba_stamped.png" id="12_w1xb7"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="13_ll18y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8tm2"]
+atlas = ExtResource("7_08m51")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvlh1"]
+atlas = ExtResource("7_08m51")
+region = Rect2(32, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amywv"]
+atlas = ExtResource("7_08m51")
+region = Rect2(64, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
+atlas = ExtResource("7_08m51")
+region = Rect2(96, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlopg"]
+atlas = ExtResource("7_08m51")
+region = Rect2(128, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xk1c"]
+atlas = ExtResource("7_08m51")
+region = Rect2(160, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lesq"]
+atlas = ExtResource("7_08m51")
+region = Rect2(192, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1aose"]
+atlas = ExtResource("7_08m51")
+region = Rect2(224, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m61ip"]
+atlas = ExtResource("7_08m51")
+region = Rect2(256, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvl1h"]
+atlas = ExtResource("7_08m51")
+region = Rect2(288, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y0og"]
+atlas = ExtResource("7_08m51")
+region = Rect2(320, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qpda"]
+atlas = ExtResource("7_08m51")
+region = Rect2(352, 0, 32, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1e01p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8tm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvlh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amywv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jko6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlopg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xk1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lesq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1aose")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m61ip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvl1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3y0og")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qpda")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GiftBox" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_gd2vt")
+look_at_player = true
+sprite = NodePath("Sprite")
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_a3x17")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_mbdoj")
+stomping_hurtable = false
+stomping_creation = null
+stomping_scores = 0
+stomping_sound = ExtResource("4_x6rth")
+stomping_player_jumping_max = 450.0
+killing_enabled = false
+killing_creation = null
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_1e01p")
+
+[node name="Dead" type="Sprite2D" parent="Sprite"]
+visible = false
+texture = ExtResource("12_w1xb7")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+script = ExtResource("13_ll18y")
+metadata/_edit_lock_ = true
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="stomp"]

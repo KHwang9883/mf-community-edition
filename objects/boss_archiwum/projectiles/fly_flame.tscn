@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://kfthmj43oxty"]
+
+[ext_resource type="Script" uid="uid://dkfrc516atywx" path="res://objects/boss_archiwum/projectiles/fly_flame.gd" id="1_uiktm"]
+[ext_resource type="Texture2D" uid="uid://c3qp0utaxt07o" path="res://objects/boss_archiwum/textures/attack2.png" id="2_77j6n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_crlax"]
+radius = 14.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghi50"]
+atlas = ExtResource("2_77j6n")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdd1e"]
+atlas = ExtResource("2_77j6n")
+region = Rect2(0, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfajc"]
+atlas = ExtResource("2_77j6n")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbhvd"]
+atlas = ExtResource("2_77j6n")
+region = Rect2(0, 96, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ng38h"]
+atlas = ExtResource("2_77j6n")
+region = Rect2(0, 128, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnr5h"]
+atlas = ExtResource("2_77j6n")
+region = Rect2(0, 160, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qaqhw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghi50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdd1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfajc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbhvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ng38h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnr5h")
+}],
+"loop": true,
+"name": &"default",
+"speed": 25.0
+}]
+
+[node name="FlyFlame" type="Area2D"]
+script = ExtResource("1_uiktm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 0)
+shape = SubResource("CircleShape2D_crlax")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qaqhw")
+autoplay = "default"

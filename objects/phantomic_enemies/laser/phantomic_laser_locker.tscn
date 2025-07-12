@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://cygd8f2pxcdul"]
+
+[ext_resource type="Script" uid="uid://cb02m4r3sqx68" path="res://objects/phantomic_enemies/laser/phantomic_laser_locker.gd" id="1_ig1k3"]
+[ext_resource type="Texture2D" uid="uid://bwrv5sctg8fq8" path="res://objects/phantomic_enemies/laser/textures/phantomic_laser_locker.png" id="1_wsnqu"]
+[ext_resource type="Texture2D" uid="uid://bxe2fyi7qpw5u" path="res://gfx/deco/light.png" id="2_mjjiq"]
+[ext_resource type="AudioStream" uid="uid://c8whjh7xtbhyq" path="res://objects/phantomic_enemies/laser/sounds/laser.wav" id="4_nvvua"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3vf8l"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q3iqs"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_j71tn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.38788, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g0v4x"]
+curve = SubResource("Curve_j71tn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rnvo4"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.03
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_g0v4x")
+color = Color(0.666667, 0.447059, 1, 1)
+
+[node name="PhantomicLaserLocker" type="Node2D"]
+script = ExtResource("1_ig1k3")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 16)
+texture = ExtResource("1_wsnqu")
+
+[node name="Light" type="PointLight2D" parent="."]
+visible = false
+color = Color(0.580392, 0.509804, 1, 1)
+energy = 1.25
+texture = ExtResource("2_mjjiq")
+texture_scale = 0.2
+
+[node name="SpriteLight" type="Sprite2D" parent="Light"]
+modulate = Color(1, 0.54902, 0.984314, 1)
+material = SubResource("CanvasItemMaterial_3vf8l")
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("2_mjjiq")
+
+[node name="Particles" type="GPUParticles2D" parent="Light"]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_q3iqs")
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_rnvo4")
+texture = ExtResource("2_mjjiq")
+lifetime = 0.4
+visibility_rect = Rect2(-64, -64, 128, 128)
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_nvvua")
+bus = &"Sound"
+area_mask = 0

@@ -1,0 +1,109 @@
+[gd_scene load_steps=15 format=3 uid="uid://dakox7ylic13a"]
+
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_qhxjs"]
+[ext_resource type="Script" uid="uid://byfov6ohdfeqf" path="res://objects/phantomic_enemies/podoboo/phantomic_podoboo.gd" id="1_ycmib"]
+[ext_resource type="Texture2D" uid="uid://br1y8rpqxrhai" path="res://objects/phantomic_enemies/podoboo/textures/phantomic_podoboo.png" id="3_l0r5g"]
+[ext_resource type="Texture2D" uid="uid://bxe2fyi7qpw5u" path="res://gfx/deco/light.png" id="7_stg73"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1tkhj"]
+radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fbo7"]
+atlas = ExtResource("3_l0r5g")
+region = Rect2(0, 0, 26, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8x0w"]
+atlas = ExtResource("3_l0r5g")
+region = Rect2(26, 0, 26, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeecn"]
+atlas = ExtResource("3_l0r5g")
+region = Rect2(52, 0, 26, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iherp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fbo7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8x0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeecn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ekedd"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wk4dg"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_2ojrs"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.38788, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g0v4x"]
+curve = SubResource("Curve_2ojrs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3m70w"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.03
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_g0v4x")
+color = Color(0.666667, 0.447059, 1, 1)
+
+[node name="PhantomicPodoboo" type="Area2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_ycmib")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_1tkhj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.57079
+sprite_frames = SubResource("SpriteFrames_iherp")
+autoplay = "default"
+
+[node name="Light" type="PointLight2D" parent="AnimatedSprite2D"]
+color = Color(0.431373, 0.45098, 1, 1)
+energy = 0.5
+texture = ExtResource("7_stg73")
+texture_scale = 0.2
+
+[node name="SpriteLight" type="Sprite2D" parent="AnimatedSprite2D/Light"]
+modulate = Color(1, 0.54902, 0.984314, 1)
+material = SubResource("CanvasItemMaterial_ekedd")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_stg73")
+
+[node name="Particles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_wk4dg")
+process_material = SubResource("ParticleProcessMaterial_3m70w")
+texture = ExtResource("7_stg73")
+lifetime = 0.5
+visibility_rect = Rect2(-64, -64, 128, 128)
+
+[node name="EnemyAttacked" type="Node" parent="."]
+script = ExtResource("1_qhxjs")
+center_node = NodePath("..")
+stomping_standard = Vector2(0, 0)
+killing_enabled = false
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"center_node"]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
