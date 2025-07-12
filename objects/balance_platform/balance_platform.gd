@@ -36,6 +36,8 @@ func _balance(delta: float) -> void:
 	
 	if !objects_on.is_empty():
 		for i in objects_on:
+			if !i:
+				continue
 			average_offset += i.position.x - position.x
 			if i is GravityBody2D:
 				average_gravity += i.gravity_scale

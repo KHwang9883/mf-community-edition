@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+@export_range(0, 9999, 0.1, "or_greater", "suffix:px/s") var min_breaking_speed: float = 50
+
 var inv_counter: float
 var colliding: bool = false
 
@@ -11,7 +13,7 @@ func _ready() -> void:
 
 
 func _breaker(body: Node2D) -> void:
-	if linear_velocity.length_squared() <= 250 ** 2:
+	if linear_velocity.length_squared() <= min_breaking_speed ** 2:
 		return
 	
 	if body is StaticBumpingBlock && body.has_method(&"bricks_break"):
