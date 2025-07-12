@@ -56,6 +56,20 @@ func _ready():
 		var _pitch_changer = MUSIC_PITCH_CHANGER.instantiate()
 		add_child(_pitch_changer, true)
 	
+	if SettingsManager.get_tweak("amiga_ntsc_pitch", false):
+		Thunder._connect(music_started, func(_index: int):
+			await Audio.music_started
+			(func():
+				if !channel_id in Audio._music_channels: return
+				if !is_instance_valid(Audio._music_channels[channel_id]): return
+				
+				if Audio._music_channels[channel_id].stream is AudioStreamMPT:
+					if Audio._music_channels[channel_id].stream.resource_path.ends_with(".mod"):
+						print("Changing AMIGA pitch of ", _index)
+						var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
+						playback.set_pitch_factor(1.00917)
+			).call_deferred()
+		)
 	
 	# Soundtrack Stuff
 	if SettingsManager.get_tweak("alt_completion_music", false) && Scenes.current_scene is Level:
