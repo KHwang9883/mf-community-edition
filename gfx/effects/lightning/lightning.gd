@@ -32,7 +32,7 @@ func lightning() -> void:
 			_stop = false
 			return
 		
-		Audio.play_1d_sound(sound_lightning_list.pick_random(), false, {pitch = randf_range(0.75, 1.25), volume = 8})
+		Audio.play_1d_sound(sound_lightning_list.pick_random(), false, {pitch = randf_range(0.75, 1.25)})
 		visible = true
 		modulate.a = 1
 		region_rect.size.y = 0
