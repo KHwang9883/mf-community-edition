@@ -1,0 +1,102 @@
+[gd_scene load_steps=14 format=3 uid="uid://ddgqtcw1stpcv"]
+
+[ext_resource type="Script" uid="uid://sbwuyc12rg6p" path="res://objects/otherworld/3.1/cursor/cursor.gd" id="1_osqwl"]
+[ext_resource type="SpriteFrames" uid="uid://dbf4w1qu2b0el" path="res://objects/otherworld/3.1/cursor/cursor.tres" id="5_sx38x"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="6_au722"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_qpljn"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_xsr5b"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="9_wyd77"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="10_osqwl"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="10_qtytw"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_r1o83"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="12_x3c17"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vt408"]
+size = Vector2(28, 40)
+
+[sub_resource type="Resource" id="Resource_p2m44"]
+resource_local_to_scene = true
+script = ExtResource("9_wyd77")
+creation_nodepack = ExtResource("7_qpljn")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../AnimatedSprite2D"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_xsr5b")
+
+[sub_resource type="Resource" id="Resource_s6bvr"]
+script = ExtResource("9_wyd77")
+creation_nodepack = ExtResource("7_qpljn")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../AnimatedSprite2D"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_xsr5b")
+
+[node name="Cursor" type="Node2D"]
+z_index = 5
+script = ExtResource("1_osqwl")
+speed = 40.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("5_sx38x")
+animation = &"chase"
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_vt408")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("6_au722")
+stomping_standard = Vector2(0, 0)
+stomping_creation = SubResource("Resource_p2m44")
+stomping_scores = 100
+stomping_sound = ExtResource("10_qtytw")
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"starman": false
+}
+killing_creation = SubResource("Resource_s6bvr")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("11_r1o83")
+killing_sound_failed = ExtResource("12_x3c17")
+metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(1.43051e-06, 1.43051e-06)
+rect = Rect2(-16, -32, 32, 64)
+script = ExtResource("10_osqwl")
+new_rect = Rect2(-96, -256, 192, 512)
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

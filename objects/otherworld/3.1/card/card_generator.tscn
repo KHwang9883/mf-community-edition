@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://36qqxmpbheoa"]
+
+[ext_resource type="Script" uid="uid://cc3tmcdv4bpvf" path="res://objects/otherworld/3.1/card/card_generator.gd" id="1_e0yyv"]
+[ext_resource type="Texture2D" uid="uid://dc8ktutcpxkuo" path="res://objects/otherworld/3.1/card/textures/deck_empty.png" id="2_0kc38"]
+[ext_resource type="Texture2D" uid="uid://c4or40amxjtrd" path="res://objects/otherworld/3.1/card/textures/deck.png" id="3_f7ayn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0yyv"]
+resource_local_to_scene = true
+atlas = ExtResource("3_f7ayn")
+region = Rect2(0, 0, 71, 96)
+filter_clip = true
+
+[node name="CardGenerator" type="Node2D"]
+z_index = -1
+script = ExtResource("1_e0yyv")
+
+[node name="Deck" type="Sprite2D" parent="."]
+texture = ExtResource("2_0kc38")
+
+[node name="Sprite" type="Sprite2D" parent="Deck"]
+position = Vector2(0, 9)
+texture = SubResource("AtlasTexture_e0yyv")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-36, -64, 72, 128)
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 1.4
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
