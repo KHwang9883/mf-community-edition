@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://ckw8d7xc4wyv4"]
+
+[ext_resource type="Script" uid="uid://b5cdg272ngs0k" path="res://objects/otherworld/3.1/mine/mine.gd" id="1_vunuo"]
+[ext_resource type="Texture2D" uid="uid://cqfl1odmnry5p" path="res://objects/otherworld/3.1/mine/textures/mine.png" id="2_5vxj8"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_lgp5h"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_qs7cj"]
+[ext_resource type="PackedScene" uid="uid://ces7bytc0ugus" path="res://engine/objects/effects/explosion/explosion.tscn" id="5_l7sff"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_suu73"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_jr4bt"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_80hkn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rbuyq"]
+size = Vector2(30, 30)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_370vh"]
+radius = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c8003"]
+size = Vector2(30, 30)
+
+[sub_resource type="Resource" id="Resource_xga0d"]
+script = ExtResource("6_suu73")
+creation_nodepack = ExtResource("5_l7sff")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+metadata/_custom_type_script = "uid://bm81fg3h4j8sj"
+
+[node name="Mine" type="CharacterBody2D"]
+script = ExtResource("1_vunuo")
+metadata/_custom_type_script = "uid://bxq57dbowstxt"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rbuyq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5vxj8")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sound"
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+enabled = false
+shape = SubResource("CircleShape2D_370vh")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 2
+collide_with_areas = true
+script = ExtResource("3_lgp5h")
+killer_type = &"hammer"
+trigger_enemy_failed_signal = false
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_c8003")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("4_qs7cj")
+stomping_enabled = false
+killing_immune = {
+&"beetroot": true,
+&"boomerang": false,
+&"fireball": true
+}
+killing_creation = SubResource("Resource_xga0d")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_jr4bt")
+killing_sound_failed = ExtResource("8_80hkn")
+turn_into_coin_on_level_end = false
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

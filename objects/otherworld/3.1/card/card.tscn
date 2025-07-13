@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://1ffby48psx14"]
+
+[ext_resource type="Script" uid="uid://c6b0ka1gsmunw" path="res://objects/otherworld/3.1/card/card.gd" id="2_7i3yw"]
+[ext_resource type="Texture2D" uid="uid://c4or40amxjtrd" path="res://objects/otherworld/3.1/card/textures/deck.png" id="2_spix0"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_7i3yw"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_c0427"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_345ip"]
+resource_local_to_scene = true
+atlas = ExtResource("2_spix0")
+region = Rect2(0, 0, 71, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yxisa"]
+size = Vector2(64, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uuww3"]
+size = Vector2(64, 96)
+
+[node name="KoopaShell" type="CharacterBody2D"]
+z_index = 1
+collision_layer = 4
+collision_mask = 64
+script = ExtResource("2_7i3yw")
+bounces_left = 1
+turn_sprite = false
+sprite = NodePath("Texture")
+speed = Vector2(387.5, -300)
+gravity_scale = 0.3
+correct_collision = false
+
+[node name="Texture" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_345ip")
+region_rect = Rect2(96, 0, 32, 28)
+region_filter_clip_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yxisa")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+shape = SubResource("RectangleShape2D_uuww3")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 67
+collide_with_areas = true
+script = ExtResource("3_7i3yw")
+killer_type = &"beetroot"
+trigger_enemy_failed_signal = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-48, -64, 96, 512)
+script = ExtResource("4_c0427")
+new_rect = Rect2(-80, -64, 160, 512)
+
+[connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
+[connection signal="collided_floor" from="." to="." method="bounce"]
+[connection signal="collided_wall" from="." to="." method="bounce"]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="run_out" from="." to="Attack" method="queue_free"]
+[connection signal="killed_notify" from="Attack" to="." method="bounce" binds= [false]]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
