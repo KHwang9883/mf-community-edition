@@ -1,5 +1,7 @@
 extends Node2D
 
+signal secret_found
+
 @onready var cam_area: Control = $"../CamArea"
 var activated: bool = false
 var no_control: bool
@@ -54,3 +56,4 @@ func activate() -> void:
 	expl.show()
 	platform_path_gray.show()
 	platform_path_gray.process_mode = Node.PROCESS_MODE_INHERIT
+	secret_found.emit()

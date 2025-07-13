@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=4 uid="uid://m6fc6q47ja5x"]
+[gd_scene load_steps=85 format=4 uid="uid://m6fc6q47ja5x"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uvh6q"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_7bdyo"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_lw5oq"]
 [ext_resource type="AudioStream" uid="uid://bw01qdkagruhy" path="res://music/extra/expert_mode/kolobki.xm" id="6_7bf7k"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_de3gh"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_w3rux"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_7cvf6"]
 [ext_resource type="Script" uid="uid://dkthq2ycyrv01" path="res://stages/extra/expert_mode/scripts/world_8_music_loop.gd" id="8_41y1a"]
 [ext_resource type="AudioStream" uid="uid://cusrgc7jqf7qy" path="res://music/extra/expert_mode/short-die.ogg" id="9_26qhm"]
@@ -352,6 +353,11 @@ stop_all_music_on_start = false
 play_globally = 1
 volume_db = Array[float]([0.0])
 start_from_sec = Array[float]([0.0])
+
+[node name="SecretUnlocker3" parent="." instance=ExtResource("7_w3rux")]
+secrets = Array[String](["otherworld easter eggs"])
+progress_by_id = "5"
+progress_to = 4
 
 [node name="Player" parent="." instance=ExtResource("5_lw5oq")]
 position = Vector2(160, 272)
@@ -1671,5 +1677,7 @@ position = Vector2(10544, 1296)
 [connection signal="level_completed" from="." to="Area2D2/Marker2D" method="_on_level_completed"]
 [connection signal="player_enter" from="Area2D2" to="Area2D2/Marker2D" method="activate"]
 [connection signal="life_text_triggered" from="Area2D2/Marker2D" to="HUD/BonusLevelUnlocked" method="activate"]
+[connection signal="message_hidden" from="MessageBlock2" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]
+[connection signal="message_hidden" from="MessageBlock3" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]
 
 [editable path="Springboard2"]

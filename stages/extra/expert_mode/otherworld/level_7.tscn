@@ -1,9 +1,10 @@
-[gd_scene load_steps=157 format=4 uid="uid://dcgw7ivluvpsx"]
+[gd_scene load_steps=158 format=4 uid="uid://dcgw7ivluvpsx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_g6ctx"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_liom3"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_o3eut"]
 [ext_resource type="AudioStream" uid="uid://gxyb2xwo7602" path="res://music/extra/expert_mode/break_out-1739.mod" id="5_7ebrf"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_de8m0"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_ixtjl"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_27njw"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_lonbm"]
@@ -1554,6 +1555,11 @@ metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 music = Array[Resource]([ExtResource("5_7ebrf")])
 volume_db = Array[float]([-4.0])
 
+[node name="SecretUnlocker3" parent="." instance=ExtResource("5_de8m0")]
+secrets = Array[String](["otherworld easter eggs"])
+progress_by_id = "7"
+progress_to = 4
+
 [node name="Player" parent="." instance=ExtResource("5_ixtjl")]
 position = Vector2(128, 880)
 
@@ -3072,6 +3078,7 @@ result = SubResource("Resource_nr5uc")
 
 [connection signal="warp_ended" from="miscellaneous/snickers" to="miscellaneous/Node" method="activate"]
 [connection signal="warp_ended" from="miscellaneous/bounty" to="miscellaneous/Node" method="activate"]
+[connection signal="warp_ended" from="miscellaneous/bounty" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]
 [connection signal="warp_started" from="miscellaneous/PipeIn3" to="texts" method="queue_free"]
 [connection signal="warp_started" from="miscellaneous/PipeIn3" to="miscellaneous/snickers" method="queue_free"]
 [connection signal="warp_started" from="miscellaneous/PipeIn3" to="miscellaneous/bounty" method="queue_free"]
