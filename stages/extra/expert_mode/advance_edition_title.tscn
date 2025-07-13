@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://1m11r2kd0x8v"]
+[gd_scene load_steps=33 format=3 uid="uid://1m11r2kd0x8v"]
 
 [ext_resource type="Script" uid="uid://cpeocq4h0mrbk" path="res://stages/extra/expert_mode/scripts/advance_edition_title.gd" id="1_w048x"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wpc5r"]
@@ -14,11 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://bmtf7tbhd1khe" path="res://stages/extra/expert_mode/gfx/scr1.png" id="9_vd6fh"]
 [ext_resource type="Texture2D" uid="uid://b42m0aqcgbocc" path="res://gfx/texts/expert_mode.png" id="10_8lxjv"]
 [ext_resource type="Texture2D" uid="uid://dvemhxmwdgfli" path="res://stages/extra/expert_mode/gfx/scr2.png" id="10_63t78"]
+[ext_resource type="Texture2D" uid="uid://blh7n868tuw3b" path="res://stages/extra/expert_mode/gfx/scr8.png" id="10_v4amj"]
 [ext_resource type="Texture2D" uid="uid://ctndcnjp3hk3x" path="res://stages/extra/expert_mode/gfx/scr3.png" id="11_nst2h"]
 [ext_resource type="Texture2D" uid="uid://byvvp87lnbjch" path="res://stages/extra/expert_mode/gfx/scr6.png" id="11_w5gp5"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="12_8utpl"]
-[ext_resource type="Texture2D" uid="uid://dvtppa78msqil" path="res://stages/extra/expert_mode/gfx/scr4.png" id="12_mp4gj"]
 [ext_resource type="FontFile" uid="uid://cyijqik15r3me" path="res://gfx/fonts/QUANTUM.TTF" id="14_byexe"]
+[ext_resource type="Texture2D" uid="uid://dlxgxffsbl4r3" path="res://stages/extra/expert_mode/gfx/scr7.png" id="15_0y373"]
 [ext_resource type="Script" uid="uid://b6p871suo5jkl" path="res://engine/components/ui/generic/menu_selection.gd" id="15_8utpl"]
 [ext_resource type="Texture2D" uid="uid://d04grr8l8d42i" path="res://stages/extra/lost_map/gfx/lostmap_title_border.png" id="15_kiqqt"]
 [ext_resource type="Script" uid="uid://cvwo33bpa3jfn" path="res://stages/extra/minix/scripts/minix_end_sel.gd" id="17_1cwik"]
@@ -27,6 +28,7 @@
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="19_byexe"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="20_vd6fh"]
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://engine/objects/bumping_blocks/message_block/message_block.tscn" id="22_63t78"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="28_kiqqt"]
 
 [sub_resource type="Gradient" id="Gradient_byexe"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.835294)
@@ -37,7 +39,6 @@ width = 32
 height = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_484da"]
-line_spacing = 2.0
 font = ExtResource("8_ag1vo")
 font_size = 21
 outline_size = 8
@@ -49,7 +50,7 @@ goto_scene = "res://stages/world_1/expert_map_1.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_wpc5r")]
 music = Array[Resource]([ExtResource("3_kiqqt")])
-volume_db = Array[float]([4.0])
+volume_db = Array[float]([2.6])
 
 [node name="LostmapTitleBackground" type="Sprite2D" parent="."]
 position = Vector2(400, 240)
@@ -75,6 +76,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 128, 480)
 
 [node name="Thebg" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2"]
+visible = false
 modulate = Color(0.63, 0.63, 0.63, 1)
 position = Vector2(80, 240)
 texture = ExtResource("8_byexe")
@@ -92,7 +94,7 @@ texture = ExtResource("9_mp4gj")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
 position = Vector2(64, 144)
-texture = ExtResource("9_vd6fh")
+texture = ExtResource("10_v4amj")
 
 [node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
 position = Vector2(64, 240)
@@ -131,6 +133,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 128, 480)
 
 [node name="Thebg" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3"]
+visible = false
 modulate = Color(0.63, 0.63, 0.63, 1)
 position = Vector2(80, 240)
 texture = ExtResource("8_byexe")
@@ -148,11 +151,11 @@ texture = ExtResource("10_63t78")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D/Node2D"]
 position = Vector2(64, 144)
-texture = ExtResource("11_nst2h")
+texture = ExtResource("15_0y373")
 
 [node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D/Node2D"]
 position = Vector2(64, 240)
-texture = ExtResource("12_mp4gj")
+texture = ExtResource("10_v4amj")
 
 [node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3/Parallax2D/Node2D"]
 position = Vector2(64, 432)
@@ -306,15 +309,20 @@ message = "WELCOME TO MARIO FOREVER EXPERT MODE!
 
 THIS MODE TAKES 8 STORY MODE WORLDS AND MAKES THEM MUCH MORE DIFFICULT, ADDING NEW ENEMIES AND OBSTACLES THROUGHOUT THE LEVELS.
 
-EXPERT MODE QUIRKS:
+THE EXPERT MODE HAS SOME QUIRKS:
 - SOME TWEAKS ARE ENFORCED IN THIS MODE: MINI-GAMES ARE ALWAYS ON; STOMPING COMBOS ARE ALWAYS OFF.
-- ONLY 3 GAME OVER CONTINUES FOR THE GAME SESSION!
+- ONLY 3 GAME OVER CONTINUES FOR THE GAME SESSION! YOU CAN GET MORE BY FINDING SIDE LEVELS.
 - MARIO'S PHYSICS ARE ENFORCED.
-- MOST EXTRAS USUALLY FOUND IN NORMAL LEVELS ARE NOT ACCESSIBLE IN THIS MODE.
-- ACCESS ITEM SHOP MID-LEVEL BY PRESSING UP + TAB.
+- MOST EXTRAS USUALLY FOUND IN NORMAL LEVELS ARE NOT ACCESSIBLE IN THIS MODE; OLD WARPS ARE REPLACED WITH SOMETHING ELSE!
+- ACCESS THE ITEM SHOP MID-LEVEL BY PRESSING UP + TAB.
 
 GOOD LUCK!"
-box_size = Vector2(448, 240)
+box_size = Vector2(448, 272)
 message_label_settings = SubResource("LabelSettings_484da")
 
+[node name="Node" type="Node" parent="."]
+script = ExtResource("28_kiqqt")
+menu_items_controller_path = NodePath("../Controls")
+
 [connection signal="selected" from="Controls" to="Selector" method="handle_selection"]
+[connection signal="selected" from="Controls" to="Node" method="handle_selection"]
