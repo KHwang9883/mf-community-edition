@@ -12,6 +12,7 @@ func _on_cam_area_4_view_section_changed() -> void:
 		Thunder._disconnect(Thunder._current_hud.timer.timeout, Thunder._current_hud._on_timer_timeout)
 	sub_space.process_mode = Node.PROCESS_MODE_INHERIT
 	sub_space.show()
+	Audio._music_tweens.clear()
 	music_loader.index = 1
 	if !1 in Audio._music_channels: return
 	if !is_instance_valid(Audio._music_channels[1]): return
