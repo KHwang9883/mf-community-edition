@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=4 uid="uid://brjqav7dhnt6t"]
+[gd_scene load_steps=102 format=4 uid="uid://brjqav7dhnt6t"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_tokrm"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_8ip56"]
@@ -83,27 +83,6 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_2btu0"]
 gradient = SubResource("Gradient_omo2t")
 width = 64
-
-[sub_resource type="Gradient" id="Gradient_hvayu"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_e2g6i"]
-gradient = SubResource("Gradient_hvayu")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0gh28"]
-lifetime_randomness = 0.1
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(800, 600, 0)
-angle_min = 50.0
-angle_max = 60.0
-direction = Vector3(-0.6, 1, 0)
-spread = 10.0
-flatness = 1.0
-initial_velocity_min = 2000.0
-initial_velocity_max = 2400.0
-gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_e2g6i")
 
 [sub_resource type="Resource" id="Resource_tbt6g"]
 resource_local_to_scene = true
@@ -617,7 +596,7 @@ music = Array[Resource]([ExtResource("3_qssa7")])
 volume_db = Array[float]([-5.0])
 
 [node name="Mario" parent="." instance=ExtResource("4_oxyqw")]
-position = Vector2(64, 400)
+position = Vector2(80, 400)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
@@ -713,33 +692,31 @@ position = Vector2(320, 480)
 scale = Vector2(1, 481)
 color = Color(0.470076, 0.470076, 0.470076, 1)
 
-[node name="FG&BG" type="Node" parent="."]
+[node name="BG" type="ParallaxBackground" parent="."]
 
-[node name="BG" type="ParallaxBackground" parent="FG&BG"]
-
-[node name="CanvasModulate2" type="CanvasModulate" parent="FG&BG/BG"]
+[node name="CanvasModulate2" type="CanvasModulate" parent="BG"]
 position = Vector2(320, 480)
 scale = Vector2(1, 481)
 color = Color(0.470076, 0.470076, 0.470076, 1)
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="FG&BG/BG"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="BG"]
 motion_scale = Vector2(0, 1)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Gradient" type="TextureRect" parent="FG&BG/BG/ParallaxLayer"]
+[node name="Gradient" type="TextureRect" parent="BG/ParallaxLayer"]
 offset_left = 640.0
 offset_right = 1120.0
 offset_bottom = 640.0
 rotation = 1.57079
 texture = SubResource("GradientTexture1D_jpclx")
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="FG&BG/BG"]
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="BG"]
 motion_scale = Vector2(0.8, 1)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Clouds" type="TextureRect" parent="FG&BG/BG/ParallaxLayer2"]
+[node name="Clouds" type="TextureRect" parent="BG/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.317647)
 offset_left = -48.0
 offset_top = 21.0
@@ -748,12 +725,12 @@ offset_bottom = 85.0
 texture = ExtResource("10_ongft")
 stretch_mode = 1
 
-[node name="ParallaxLayer5" type="ParallaxLayer" parent="FG&BG/BG"]
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="BG"]
 motion_scale = Vector2(0.6, 0)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Rocks" type="TextureRect" parent="FG&BG/BG/ParallaxLayer5"]
+[node name="Rocks" type="TextureRect" parent="BG/ParallaxLayer5"]
 modulate = Color(0.203412, 0.0702644, 0, 1)
 offset_top = 160.0
 offset_right = 14080.0
@@ -761,24 +738,24 @@ offset_bottom = 480.0
 texture = ExtResource("12_ioyut")
 stretch_mode = 1
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="FG&BG/BG"]
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="BG"]
 motion_scale = Vector2(0.3, 1)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="CloudSea" type="TextureRect" parent="FG&BG/BG/ParallaxLayer3"]
+[node name="CloudSea" type="TextureRect" parent="BG/ParallaxLayer3"]
 modulate = Color(0.2, 0.278431, 0.34902, 0.282353)
 offset_right = 13760.0
 offset_bottom = 480.0
 texture = ExtResource("11_n6cq6")
 stretch_mode = 1
 
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="FG&BG/BG"]
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="BG"]
 motion_scale = Vector2(0.6, 1)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Mounts" type="TextureRect" parent="FG&BG/BG/ParallaxLayer4"]
+[node name="Mounts" type="TextureRect" parent="BG/ParallaxLayer4"]
 modulate = Color(0.45098, 0.45098, 0.45098, 1)
 offset_top = 240.0
 offset_right = 14080.0
@@ -786,29 +763,29 @@ offset_bottom = 480.0
 texture = ExtResource("12_55oub")
 stretch_mode = 1
 
-[node name="ParallaxLayer6" type="ParallaxLayer" parent="FG&BG/BG"]
+[node name="ParallaxLayer6" type="ParallaxLayer" parent="BG"]
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="FG&BG/BG/ParallaxLayer6"]
+[node name="Sprite2D" type="Sprite2D" parent="BG/ParallaxLayer6"]
 position = Vector2(9376, 943.863)
 rotation = 1.57079
 scale = Vector2(3.62393, 3808.26)
 texture = SubResource("GradientTexture1D_fui8f")
 
-[node name="BG2" type="ParallaxBackground" parent="FG&BG"]
+[node name="BG2" type="ParallaxBackground" parent="."]
 
-[node name="CanvasModulate3" type="CanvasModulate" parent="FG&BG/BG2"]
+[node name="CanvasModulate3" type="CanvasModulate" parent="BG2"]
 position = Vector2(320, 480)
 scale = Vector2(1, 481)
 color = Color(0.470076, 0.470076, 0.470076, 1)
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer7" type="ParallaxLayer" parent="FG&BG/BG2"]
+[node name="ParallaxLayer7" type="ParallaxLayer" parent="BG2"]
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D3" type="Sprite2D" parent="FG&BG/BG2/ParallaxLayer7"]
+[node name="Sprite2D3" type="Sprite2D" parent="BG2/ParallaxLayer7"]
 modulate = Color(1, 0.435294, 0.376471, 0.72549)
 texture_repeat = 2
 position = Vector2(9408, 480)
@@ -817,7 +794,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(32, 0, 4096, 1024)
 
-[node name="Sprite2D" type="Sprite2D" parent="FG&BG/BG2/ParallaxLayer7"]
+[node name="Sprite2D" type="Sprite2D" parent="BG2/ParallaxLayer7"]
 modulate = Color(0.428718, 0.260474, 0, 0.501961)
 texture_repeat = 2
 material = SubResource("CanvasItemMaterial_gf8ih")
@@ -827,7 +804,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(32, 0, 4096, 128)
 
-[node name="Sprite2D2" type="Sprite2D" parent="FG&BG/BG2/ParallaxLayer7"]
+[node name="Sprite2D2" type="Sprite2D" parent="BG2/ParallaxLayer7"]
 texture_repeat = 2
 position = Vector2(9408, 480)
 texture = ExtResource("17_dj3qq")
@@ -835,53 +812,54 @@ centered = false
 region_enabled = true
 region_rect = Rect2(32, 0, 4096, 1024)
 
-[node name="Gradient" type="Sprite2D" parent="FG&BG/BG2/ParallaxLayer7"]
+[node name="Gradient" type="Sprite2D" parent="BG2/ParallaxLayer7"]
 position = Vector2(9448, 527.946)
 rotation = 1.57079
 scale = Vector2(3.48157, 598.74)
 texture = SubResource("GradientTexture1D_2btu0")
 
-[node name="Gradient2" type="Sprite2D" parent="FG&BG/BG2/ParallaxLayer7"]
+[node name="Gradient2" type="Sprite2D" parent="BG2/ParallaxLayer7"]
 position = Vector2(12545, 560)
 rotation = 1.57079
 scale = Vector2(3.48157, 639.298)
 texture = SubResource("GradientTexture1D_2btu0")
 
-[node name="FG" type="ParallaxBackground" parent="FG&BG"]
+[node name="FG" type="ParallaxBackground" parent="."]
 layer = 1
+follow_viewport_enabled = true
 
-[node name="CanvasModulate3" type="CanvasModulate" parent="FG&BG/FG"]
+[node name="CanvasModulate3" type="CanvasModulate" parent="FG"]
 position = Vector2(320, 480)
 scale = Vector2(1, 481)
 color = Color(0.470076, 0.470076, 0.470076, 1)
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="FG&BG/FG"]
-motion_scale = Vector2(0, 1)
+[node name="ParallaxLayer" type="Parallax2D" parent="FG"]
+scroll_scale = Vector2(0, 1)
 
-[node name="CanvasLayer" type="Node2D" parent="FG&BG/FG/ParallaxLayer"]
+[node name="CanvasLayer" type="Node2D" parent="FG/ParallaxLayer"]
 
-[node name="Clip" parent="FG&BG/FG/ParallaxLayer/CanvasLayer" instance=ExtResource("13_ridmu")]
+[node name="Rain" parent="FG/ParallaxLayer/CanvasLayer" instance=ExtResource("13_ridmu")]
+amount = 1500
+sound_basic_volume = 4.0
+sound_dying_volume = -50.0
+metadata/_edit_pinned_properties_ = [&"sound_basic_volume", &"sound_dying_volume"]
 
-[node name="Rain" parent="FG&BG/FG/ParallaxLayer/CanvasLayer/Clip" index="0"]
-amount = 1200
-process_material = SubResource("ParticleProcessMaterial_0gh28")
-
-[node name="Lightning" parent="FG&BG/FG/ParallaxLayer" instance=ExtResource("14_rd1xg")]
+[node name="Lightning" parent="FG/ParallaxLayer" instance=ExtResource("14_rd1xg")]
 position = Vector2(352, 24)
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="FG&BG/FG"]
-motion_scale = Vector2(1.1, 1)
+[node name="ParallaxLayer2" type="Parallax2D" parent="FG"]
+scroll_scale = Vector2(1.1, 1)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="CloudsFront" type="TextureRect" parent="FG&BG/FG/ParallaxLayer2"]
+[node name="CloudsFront" type="TextureRect" parent="FG/ParallaxLayer2"]
 modulate = Color(1, 1, 1, 0.694118)
 offset_right = 16128.0
 offset_bottom = 64.0
 texture = ExtResource("10_ongft")
 stretch_mode = 1
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="FG&BG/FG"]
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="FG"]
 energy = 0.0
 range_layer_min = -128
 range_layer_max = 1
@@ -1953,6 +1931,6 @@ position = Vector2(9888, 192)
 [node name="DragonCoin4" parent="." instance=ExtResource("60_3yhf2")]
 position = Vector2(13088, 1249)
 
-[connection signal="lightning_emitted" from="FG&BG/FG/ParallaxLayer/Lightning" to="FG&BG/FG/DirectionalLight2D" method="lightning_flash"]
+[connection signal="lightning_emitted" from="FG/ParallaxLayer/Lightning" to="FG/DirectionalLight2D" method="lightning_flash"]
 
-[editable path="FG&BG/FG/ParallaxLayer/CanvasLayer/Clip"]
+[editable path="FG/ParallaxLayer/CanvasLayer/Rain"]
