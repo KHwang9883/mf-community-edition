@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var delay_sec: float = 1.4
 const CARD = preload("res://objects/otherworld/3.1/card/card.tscn")
 const STAKE = preload("res://objects/otherworld/3.1/card/stake.wav")
 const SPEEDS = [-110, -70, 70, 110]
@@ -9,6 +10,7 @@ const SPEEDS = [-110, -70, 70, 110]
 var order: int
 
 func _ready() -> void:
+	$Timer.wait_time = delay_sec
 	order = randi_range(0, SPEEDS.size() - 1)
 	sprite.texture.region.position.x = 71 * order
 
