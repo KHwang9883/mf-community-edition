@@ -19,7 +19,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		Thunder.autosplitter.can_split_on("level_end_always") ||
 		(Thunder.autosplitter.can_split_on("level_end_no_boss") && !has_meta(&"boss_got_defeated"))
 	):
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("Level Ended")
 	print("[Game] Level complete.")
 	
 	Thunder._current_hud.timer.paused = true

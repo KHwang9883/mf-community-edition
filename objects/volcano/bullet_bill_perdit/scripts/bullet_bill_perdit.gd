@@ -24,4 +24,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	if has_meta(&"added_speed_angle"):
+		speed += _adding * delta * get_meta(&"added_speed_angle", Vector2.RIGHT)
+		return
 	speed.x += _adding * delta * dir

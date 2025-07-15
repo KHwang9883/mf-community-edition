@@ -107,11 +107,10 @@ func _on_submenu_exit_selection_entered() -> void:
 	_resize_skin_suit()
 
 
-func _resize_skin_suit() -> void:
+func _base_resize_menu(_control: Control) -> void:
 	# WHAT THE FUCK IS WRONG
 	for i in 8:
 		if !is_inside_tree(): return
-		var _control: Control = $"../../../SkinSuitSettings"
 		#print(_control.get_combined_minimum_size().y)
 		if !_control.focused && i > 2: return
 		if _control.size.y > _control.get_combined_minimum_size().y:
@@ -120,47 +119,20 @@ func _resize_skin_suit() -> void:
 		await get_tree().physics_frame
 
 
-func _resize_submenu() -> void:
-	for i in 8:
-		if !is_inside_tree(): return
-		var _control: Control = $"../../../SkinSuitSettingsSubmenu"
-		if !_control.focused && i > 2: return
-		if _control.size.y > _control.get_combined_minimum_size().y:
-			_control.size.y = _control.get_combined_minimum_size().y
-		camera_2d.update_limit()
-		await get_tree().physics_frame
+func _resize_skin_suit() -> void:
+	_base_resize_menu($"../../../SkinSuitSettings")
 
+func _resize_submenu() -> void:
+	_base_resize_menu($"../../../SkinSuitSettingsSubmenu")
 
 func _resize_quick_skin() -> void:
-	for i in 8:
-		if !is_inside_tree(): return
-		var _control: Control = $"../../../SkinTweaks"
-		if !_control.focused && i > 2: return
-		if _control.size.y > _control.get_combined_minimum_size().y:
-			_control.size.y = _control.get_combined_minimum_size().y
-		camera_2d.update_limit()
-		await get_tree().physics_frame
-
+	_base_resize_menu($"../../../SkinTweaks")
 
 func _resize_sound_test() -> void:
-	for i in 8:
-		if !is_inside_tree(): return
-		if !skin_sound_test.focused && i > 2: return
-		if skin_sound_test.size.y > skin_sound_test.get_combined_minimum_size().y:
-			skin_sound_test.size.y = skin_sound_test.get_combined_minimum_size().y
-		camera_2d.update_limit()
-		await get_tree().physics_frame
-
+	_base_resize_menu(skin_sound_test)
 
 func _resize_global_skin_tweaks() -> void:
-	for i in 8:
-		if !is_inside_tree(): return
-		var _control: Control = $"../../../SkinGlobalTweaks"
-		if !_control.focused && i > 2: return
-		if _control.size.y > _control.get_combined_minimum_size().y:
-			_control.size.y = _control.get_combined_minimum_size().y
-		camera_2d.update_limit()
-		await get_tree().physics_frame
+	_base_resize_menu($"../../../SkinGlobalTweaks")
 
 
 func _on_skin_suit_exit_selection_entered() -> void:

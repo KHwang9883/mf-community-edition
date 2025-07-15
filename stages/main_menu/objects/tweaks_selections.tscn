@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://kiw6yxeov3fj"]
+[gd_scene load_steps=46 format=3 uid="uid://kiw6yxeov3fj"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_e1b0h"]
 [ext_resource type="Script" uid="uid://b48sd0k0x1tw6" path="res://stages/main_menu/scripts/tweak_category_sel.gd" id="2_2sf4t"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://c8d27o4ux3qle" path="res://stages/main_menu/scripts/camera_tweaks_menu.gd" id="18_kemdi"]
 [ext_resource type="Script" uid="uid://dm44fwqfbvy4v" path="res://stages/main_menu/objects/character_editor/skin_open_editor.gd" id="18_ulbsg"]
 [ext_resource type="Script" uid="uid://bbtnv4o1bvrj8" path="res://stages/main_menu/objects/activator.gd" id="20_noqp5"]
+[ext_resource type="PackedScene" uid="uid://c0xaj1ukf1axe" path="res://stages/main_menu/objects/character_editor/skin_pack_selection.tscn" id="23_s7p2c"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="25_cgysl"]
 [ext_resource type="Script" uid="uid://dytr7bv8dfrel" path="res://stages/main_menu/objects/character_editor/skin_room_canvas_layer.gd" id="25_x2vru"]
 [ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="26_x2vru"]
@@ -128,6 +129,7 @@ script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../Gameplay")
 menu_selector_path = NodePath("../../Selector2")
 show_desc_bool = true
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Tweaks/GameplayButton"]
 layout_mode = 2
@@ -164,6 +166,7 @@ move_to_path = NodePath("../../Aesthetic")
 menu_selector_path = NodePath("../../Selector3")
 reset_to = 1
 show_desc_bool = true
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Tweaks/AestheticsButton"]
 layout_mode = 2
@@ -200,6 +203,7 @@ move_to_path = NodePath("../../Presets")
 menu_selector_path = NodePath("../../Selector4")
 reset_to = 2
 show_desc_bool = true
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Tweaks/MiscaleneousButton"]
 layout_mode = 2
@@ -258,15 +262,21 @@ layout_mode = 2
 theme_override_constants/separation = 3
 theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Tweaks"]
+[node name="SkinPackSelect" type="HBoxContainer" parent="Tweaks"]
 layout_mode = 2
 script = ExtResource("6_n68nh")
+COLOR_SELECTED_SKIN = Color(0.88, 0.749027, 0.4664, 1)
+move_to_path = NodePath("../../SkinSelector")
+menu_selector_path = NodePath("../../Selector11")
+reset_to = 3
 tweak_description_text = "set a modern skin for mario or luigi, or make your own character! you can also download custom skins of other players or share yours in our discord server! a guide on how to make your own skins is located there too.
 
 this list is expanded automatically when skins are detected in a skins folder, and applied on exit from this menu."
+metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="Tweaks/HBoxContainer2"]
+[node name="Label" type="Label" parent="Tweaks/SkinPackSelect"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
 theme_override_constants/line_spacing = 1
@@ -275,15 +285,16 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_5xeuf")
 theme_override_font_sizes/font_size = 12
-text = "skin pack"
+text = "skin pack..."
 uppercase = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tweaks/HBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Tweaks/SkinPackSelect"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_constants/separation = 8
 
-[node name="Value" type="Label" parent="Tweaks/HBoxContainer2/HBoxContainer"]
+[node name="Value" type="Label" parent="Tweaks/SkinPackSelect/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_color = Color(0.79, 1, 0.909, 1)
@@ -298,7 +309,7 @@ theme_override_font_sizes/font_size = 13
 text = "mario"
 uppercase = true
 
-[node name="arrow" type="Label" parent="Tweaks/HBoxContainer2/HBoxContainer/Value"]
+[node name="arrow" type="Label" parent="Tweaks/SkinPackSelect/HBoxContainer/Value"]
 layout_mode = 0
 offset_left = -32.0
 offset_right = -7.0
@@ -315,10 +326,10 @@ text = "<--"
 uppercase = true
 script = ExtResource("5_dhfy0")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tweaks/HBoxContainer2/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Tweaks/SkinPackSelect/HBoxContainer"]
 layout_mode = 2
 
-[node name="arrow" type="Label" parent="Tweaks/HBoxContainer2/HBoxContainer/HBoxContainer"]
+[node name="arrow" type="Label" parent="Tweaks/SkinPackSelect/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
@@ -332,6 +343,20 @@ text = "-->"
 uppercase = true
 script = ExtResource("5_dhfy0")
 left_side = false
+
+[node name="Value" type="Label" parent="Tweaks/SkinPackSelect"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 13
+text = "press %s"
+uppercase = true
 
 [node name="QuickSkinSettingsButton" type="HBoxContainer" parent="Tweaks"]
 layout_mode = 2
@@ -930,6 +955,7 @@ size_flags_vertical = 10
 script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../Tweaks")
 menu_selector_path = NodePath("../../Selector")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Gameplay/Exit"]
 layout_mode = 2
@@ -1284,6 +1310,7 @@ size_flags_vertical = 10
 script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../Tweaks")
 menu_selector_path = NodePath("../../Selector")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Aesthetic/Exit"]
 layout_mode = 2
@@ -1409,6 +1436,7 @@ size_flags_vertical = 10
 script = ExtResource("2_2sf4t")
 move_to_path = NodePath("../../Tweaks")
 menu_selector_path = NodePath("../../Selector")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="Presets/Exit"]
 layout_mode = 2
@@ -2132,6 +2160,78 @@ theme_override_font_sizes/font_size = 12
 text = "save and go back"
 uppercase = true
 
+[node name="SkinSelector" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 432)
+layout_mode = 2
+offset_left = 5144.0
+offset_top = 24.0
+offset_right = 5600.0
+offset_bottom = 456.0
+theme_override_constants/separation = 14
+script = ExtResource("1_e1b0h")
+focused = false
+prev_screen_node_path = NodePath("Exit")
+
+[node name="HSeparator2" type="HSeparator" parent="SkinSelector"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Label" type="Label" parent="SkinSelector/HSeparator2"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 456.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 1, 0.792157, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "Select a skin pack"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HSeparator3" type="HSeparator" parent="SkinSelector"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="SkinPackNone" parent="SkinSelector" instance=ExtResource("23_s7p2c")]
+layout_mode = 2
+
+[node name="HSeparatorSpawnTweaks" type="HSeparator" parent="SkinSelector"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_4hroi")
+
+[node name="Exit" type="HBoxContainer" parent="SkinSelector"]
+layout_mode = 2
+size_flags_vertical = 10
+script = ExtResource("2_2sf4t")
+move_to_path = NodePath("../../Tweaks")
+menu_selector_path = NodePath("../../Selector")
+show_desc_bool = true
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="SkinSelector/Exit"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
+theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_5xeuf")
+theme_override_font_sizes/font_size = 12
+text = "go back"
+uppercase = true
+
 [node name="Selector" type="Node2D" parent="."]
 physics_interpolation_mode = 1
 script = ExtResource("15_lbl8e")
@@ -2229,6 +2329,16 @@ smooth_speed = 0.4
 position_padding = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector10"]
+sprite_frames = ExtResource("16_4e6sj")
+script = ExtResource("17_xjt7h")
+
+[node name="Selector11" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("15_lbl8e")
+smooth_speed = 0.4
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector11"]
 sprite_frames = ExtResource("16_4e6sj")
 script = ExtResource("17_xjt7h")
 
@@ -2342,3 +2452,6 @@ action = "a_delete"
 [connection signal="selected" from="SkinGlobalTweaks" to="Selector10" method="handle_selection"]
 [connection signal="selected" from="SkinGlobalTweaks" to="Camera2D" method="handle_selection"]
 [connection signal="selection_entered" from="SkinGlobalTweaks/Exit" to="SkinTweaks/HSeparatorSpawn/QuickSettingsScript" method="_on_skin_global_tweaks_exit_selection_entered"]
+[connection signal="selected" from="SkinSelector" to="Selector11" method="handle_selection"]
+[connection signal="selected" from="SkinSelector" to="Camera2D" method="handle_selection"]
+[connection signal="selection_entered" from="SkinSelector/Exit" to="Tweaks/SkinPackSelect" method="_on_exit_selection_entered"]

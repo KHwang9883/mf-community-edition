@@ -9,14 +9,14 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		Thunder.autosplitter.can_split_on("level_end_always") ||
 		(Thunder.autosplitter.can_split_on("level_end_no_boss") && !has_meta(&"boss_got_defeated"))
 	):
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("Level Ended")
 	level_completed.emit()
 	final_boss_cell.cutscene()
 	music_loader.play_buffered()
 
 func throw_to_scene() -> void:
 	if Thunder.autosplitter.can_split_on("achievement_classic") && !SecretsManager.has_secret("story mode completed"):
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("Classic Achievement")
 	SecretsManager.set_secret("story mode completed", true)
 	ProfileManager.current_profile.data.star_world = true
 	ProfileManager.save_current_profile()
