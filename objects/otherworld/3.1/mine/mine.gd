@@ -45,4 +45,5 @@ func _physics_process(delta: float) -> void:
 		expl.position = global_position
 		expl.z_index = 5
 		Scenes.current_scene.add_child(expl)
+		Thunder._current_camera.shock_smooth(6, 10)
 		queue_free()

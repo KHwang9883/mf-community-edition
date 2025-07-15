@@ -12,12 +12,20 @@ var LOLUDIED_EASTER = load("res://objects/chorniy_mario/pop'n'drop - game over.s
 
 var target_scale = 2
 var _current_timer: SceneTreeTimer
+var _post_death_timer: SceneTreeTimer
 
 func _ready() -> void:
 	node_2d.visible = false
 	node_2d2.modulate.a = 0
 	color_rect.modulate.a = 0
 	node_2d2.scale = Vector2.ONE * 2
+	Thunder._connect(Scenes.pre_scene_changed, func():
+		if !active && !_post_death_timer: return
+		if is_inside_tree():
+			deactivate()
+		else:
+			active = false
+	)
 
 func activate(wait_time: float) -> void:
 	if _current_timer:
@@ -25,13 +33,17 @@ func activate(wait_time: float) -> void:
 	_current_timer = get_tree().create_timer(wait_time, true, false, true)
 	Thunder._connect(_current_timer.timeout, music.bind(wait_time), CONNECT_ONE_SHOT)
 	
-	await get_tree().create_timer(0.5, true, false, true).timeout
-	
+	_post_death_timer = get_tree().create_timer(0.5, true, false, true)
+	Thunder._connect(_post_death_timer.timeout, _post_death_activation, CONNECT_ONE_SHOT)
+
+
+func _post_death_activation() -> void:
 	active = true
 	node_2d.visible = true
 	get_tree().paused = true
 	_timer()
 	target_scale = 1.1
+
 
 func music(wait_time: float = 0.0) -> void:
 	await get_tree().create_timer(max(0.52 - wait_time, 0.1), true, false, true).timeout
@@ -40,13 +52,17 @@ func music(wait_time: float = 0.0) -> void:
 	Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
 		1, {ignore_pause = true})
 
+
 func deactivate() -> void:
 	active = false
 	target_scale = 2
 	get_tree().paused = false
+	if _post_death_timer:
+		Thunder._disconnect(_post_death_timer.timeout, _post_death_activation)
 	if _current_timer:
 		Thunder._disconnect(_current_timer.timeout, music)
 	Scenes.custom_scenes.pause.open_blocked = false
+
 
 func _physics_process(delta: float) -> void:
 	node_2d2.scale = lerp(node_2d2.scale, Vector2.ONE * target_scale, 10 * delta)

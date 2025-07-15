@@ -12,6 +12,6 @@ func _handle_select(mouse_input: bool = false) -> void:
 	Scenes.current_scene.get_node("Tweaks/SubViewportContainer/SubViewport/Tweaks/Tweaks").focused = false
 	
 	var _tex: String = SkinsManager.load_external_textures()
-	print(_tex)
+	print_rich(_tex)
 	SettingsManager.save_tweaks()
 	SettingsManager.save_settings()

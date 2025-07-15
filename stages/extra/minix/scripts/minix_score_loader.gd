@@ -99,7 +99,7 @@ func _on_score_loaded() -> void:
 	
 	if _achievement_get == map_count:
 		if Thunder.autosplitter.can_split_on("achievement_mfce") && !SecretsManager.has_secret("100000 points in minix maps"):
-			Thunder.autosplitter.split()
+			Thunder.autosplitter.split("MFCE Achievement")
 		SecretsManager.set_secret("100000 points in minix maps", true, true)
 
 

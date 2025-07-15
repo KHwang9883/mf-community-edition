@@ -22,6 +22,6 @@ func _physics_process(delta: float) -> void:
 	if player.reached && player.current_marker == self && !activated:
 		activated = true
 		if Thunder.autosplitter.can_split_on("achievement_mfce") && !SecretsManager.has_secret("treasure level found"):
-			Thunder.autosplitter.split()
+			Thunder.autosplitter.split("MFCE Achievement")
 		SecretsManager.set_secret("treasure level found", true, true, true)
 		Audio.play_1d_sound(preload("res://stages/world_6/scripts/newpath.ogg"))

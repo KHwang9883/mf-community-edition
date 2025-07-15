@@ -101,6 +101,6 @@ func _make_split(id: int, no_check: bool = false) -> void:
 	if SecretsManager.has_secret(secrets[id]) && !no_check:
 		return
 	if Thunder.autosplitter.can_split_on("achievement_mfce") && !is_classic_achievement[id]:
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("MFCE Achievement")
 	if Thunder.autosplitter.can_split_on("achievement_classic") && is_classic_achievement[id]:
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("Classic Achievement")

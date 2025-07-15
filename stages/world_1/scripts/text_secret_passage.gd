@@ -75,4 +75,4 @@ func trigger_transition() -> void:
 
 func warp_split() -> void:
 	if Thunder.autosplitter.can_split_on("world_warps"):
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("World Warp (Project)")
