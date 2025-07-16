@@ -3,8 +3,8 @@ extends "res://engine/objects/warps/pipe_in.gd"
 
 signal tried_to_enter
 
-@export_node_path("StaticBumpingBlock") var choicer_node_path: NodePath
-@onready var choicer_node: StaticBumpingBlock = get_node_or_null(choicer_node_path)
+#@export_node_path("StaticBumpingBlock") var choicer_node_path: NodePath
+var choicer_node: StaticBumpingBlock
 var _prev_lr: float
 var _prev_ud: float
 var _temp_warp: bool
@@ -12,9 +12,15 @@ var _is_message_open: bool
 
 func _ready() -> void:
 	super()
-	if !choicer_node: return prints(name, "Choicer not defined")
 	
 	if Engine.is_editor_hint(): return
+	var ow_unlocker = Scenes.custom_scenes.get("otherworld_unlocker")
+	if !is_instance_valid(ow_unlocker):
+		return printerr(name, ":OW Unlocker not defined")
+	
+	choicer_node = ow_unlocker.get_node("MessageBlockChoicer")
+	if !is_instance_valid(choicer_node):
+		return printerr(name, ":Choicer not defined")
 	Thunder._connect(choicer_node.choice_accepted, _on_choice_accepted)
 	Thunder._connect(choicer_node.choice_canceled, _on_choice_canceled)
 

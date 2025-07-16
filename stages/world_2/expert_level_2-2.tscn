@@ -1,12 +1,11 @@
-[gd_scene load_steps=27 format=4 uid="uid://ca5okl181ttuc"]
+[gd_scene load_steps=26 format=4 uid="uid://ca5okl181ttuc"]
 
 [ext_resource type="PackedScene" uid="uid://ht5id10ochxu" path="res://stages/world_2/level_2-2.tscn" id="1_llyg0"]
+[ext_resource type="PackedScene" uid="uid://dw54kg4ssaj3o" path="res://objects/otherworld/secret_otherworld_unlocker_choicer.tscn" id="3_2sm1p"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="3_kkct6"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="3_nb7ib"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_v7ijn"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="3_xnnua"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="4_ad18a"]
-[ext_resource type="PackedScene" uid="uid://dym6dmtca3rhi" path="res://engine/objects/bumping_blocks/message_block/message_block_choicer.tscn" id="4_ud6gj"]
 [ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="5_ay83c"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="5_f731h"]
 [ext_resource type="TileSet" uid="uid://7ahm7i5kbbn6" path="res://tilesets/underwater/underwater.tres" id="5_potf4"]
@@ -80,15 +79,9 @@ jump_to_scene = "res://stages/world_2/expert_map_2.tscn"
 
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("3_xnnua")]
 
-[node name="SecretUnlockerOther" parent="." index="2" instance=ExtResource("3_v7ijn")]
-secrets = Array[String](["all otherworld levels found"])
+[node name="SecretUnlockerOther2" parent="." index="2" instance=ExtResource("3_2sm1p")]
+you_found_text = "otherworld level 3"
 progress_by_id = "2-2"
-progress_to = 8
-
-[node name="MessageBlockChoicer" parent="SecretUnlockerOther" index="0" instance=ExtResource("4_ud6gj")]
-position = Vector2(-48, 16)
-message = "You have found a passage to otherworld level 3! Would you like to go in?
-It is now available in the save game room at any time."
 
 [node name="Layer2" parent="." index="7"]
 process_mode = 4
@@ -155,6 +148,9 @@ circle_transition_center_on_player = true
 
 [node name="Node" parent="." index="14"]
 delay_sec = 1.0
+
+[node name="GiantCloud8" parent="ParallaxBackground/ParallaxLayer3/Node2D" index="9"]
+position = Vector2(7712, -736)
 
 [node name="Coin40" parent="CoinChecker" index="39" instance=ExtResource("3_kkct6")]
 position = Vector2(1328, 208)
@@ -362,10 +358,8 @@ warp_objects_on_end = false
 [node name="PipeIn2" parent="." index="36" instance=ExtResource("13_ay83c")]
 position = Vector2(7072, -688)
 script = ExtResource("14_7mnor")
-choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
 
 [node name="CloudLightEffect" type="Sprite2D" parent="PipeIn2" index="5"]
-modulate = Color(1, 1, 1, 0.835294)
 z_index = -15
 position = Vector2(-32, -16)
 scale = Vector2(0.5, 0.5)
@@ -382,7 +376,7 @@ initially_visible_and_solid = false
 [node name="QuestionBlockLife" parent="HarderDesignNode" index="27"]
 result = SubResource("Resource_msora")
 
-[connection signal="tried_to_enter" from="PipeIn2" to="SecretUnlockerOther" method="progress_secret"]
+[connection signal="tried_to_enter" from="PipeIn2" to="SecretUnlockerOther2" method="tried_to_warp"]
 [connection signal="warp_started" from="PipeIn2" to="HUD/Label" method="activate"]
 
 [editable path="Water"]

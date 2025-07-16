@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=4 uid="uid://dq27ub5400i4u"]
+[gd_scene load_steps=122 format=4 uid="uid://dq27ub5400i4u"]
 
 [ext_resource type="PackedScene" uid="uid://dxqr6xmj8wu31" path="res://stages/world_1/expert_level_1-1.tscn" id="1_kc8rb"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="2_38ist"]
@@ -10,8 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="5_5wm8q"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="6_maq6g"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="7_fvdvu"]
+[ext_resource type="PackedScene" uid="uid://ct8p366bkgxl6" path="res://objects/coin_bonus_level/bonus_level_unlocked.tscn" id="8_2e8vn"]
 [ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="8_6n7ru"]
 [ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="8_sun7u"]
+[ext_resource type="Texture2D" uid="uid://bsme1i735qnf2" path="res://gfx/texts/got_extra_continue.png" id="9_q8yqm"]
 [ext_resource type="Material" uid="uid://ctvm6eweeo2si" path="res://materials/underwater_bg_wave.tres" id="11_eddsf"]
 [ext_resource type="Texture2D" uid="uid://c4m5sukol1d28" path="res://gfx/backgrounds/UWcoral.png" id="12_cejim"]
 [ext_resource type="Script" uid="uid://cwexfhhlx0y0h" path="res://shaders/quality_shader_set.gd" id="13_ksaxc"]
@@ -40,6 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://dd4y00uu5s68g" path="res://objects/final_boss_cell/textures/cell_peach.png" id="38_b5iyd"]
 [ext_resource type="Script" uid="uid://bmjeo5phex13y" path="res://stages/extra/expert_mode/otherworld/play_sound.gd" id="39_81km0"]
 [ext_resource type="AudioStream" uid="uid://b4761l8j7aieq" path="res://sfx/brushed.wav" id="40_b5iyd"]
+[ext_resource type="Script" uid="uid://crwuhdl2ox5y" path="res://stages/extra/expert_mode/otherworld/scripts/complete_win_anim_marker.gd" id="43_lr2rq"]
 
 [sub_resource type="Resource" id="Resource_81c3s"]
 resource_local_to_scene = true
@@ -1309,6 +1312,10 @@ completion_write_save_path_override = "res://stages/world_1/expert_level_1-1.tsc
 
 [node name="MusicLoader" parent="." index="0"]
 music = Array[Resource]([ExtResource("2_keclr"), ExtResource("3_m407d")])
+volume_db = Array[float]([2.0, 4.0])
+
+[node name="AntiafkExpertMode" parent="MusicLoader" index="0"]
+is_expert_mode = false
 
 [node name="Mario" parent="." index="3"]
 position = Vector2(80, 16)
@@ -1360,6 +1367,9 @@ script = null
 [node name="World" parent="HUD" index="2"]
 text = "WORLD
 ?1-1  "
+
+[node name="ExtraGOContinue" parent="HUD" index="6" instance=ExtResource("8_2e8vn")]
+texture = ExtResource("9_q8yqm")
 
 [node name="GiantHill2" parent="Node2D" index="1"]
 position = Vector2(2302, 981)
@@ -1845,9 +1855,8 @@ offset_bottom = 512.0
 [node name="KoopaRed10" parent="." index="213"]
 position = Vector2(7760, 688)
 
-[node name="PipeIn6" parent="." index="214"]
-position = Vector2(4672, 544)
-collision_mask = 0
+[node name="SignMinixWelcome" parent="." index="214"]
+position = Vector2(-128, 448)
 
 [node name="Brick16" parent="." index="215" instance=ExtResource("19_kfcno")]
 position = Vector2(3504, 1232)
@@ -2016,9 +2025,6 @@ position = Vector2(4496, 1232)
 result = SubResource("Resource_7837e")
 initially_visible_and_solid = false
 exists_once = true
-
-[node name="SignMinixWelcome" parent="." index="247"]
-position = Vector2(-128, 448)
 
 [node name="Path2D" type="Path2D" parent="." index="248"]
 curve = SubResource("Curve2D_gtnju")
@@ -2255,11 +2261,17 @@ libraries = {
 script = ExtResource("39_81km0")
 sound = ExtResource("40_b5iyd")
 
+[node name="Marker2D" type="Marker2D" parent="." index="271"]
+position = Vector2(12864, 384)
+script = ExtResource("43_lr2rq")
+
+[connection signal="level_completed" from="." to="Marker2D" method="_on_level_completed"]
 [connection signal="collided_floor" from="KoopaGreen2" to="KoopaGreen2" method="jump" binds= [-350.0]]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser" method="activate"]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser/VisibleOnScreenNotifier2D" method="queue_free"]
 [connection signal="player_enter" from="Node2D3" to="Node2D3/Node" method="sound_play"]
 [connection signal="player_enter" from="Node2D3" to="Node2D3/AnimationPlayer" method="play" binds= ["new_animation"]]
+[connection signal="life_text_triggered" from="Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 
 [editable path="Water"]
 [editable path="Bowser"]

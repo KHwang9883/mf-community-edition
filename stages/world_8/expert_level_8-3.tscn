@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=4 uid="uid://ce1bd5fchi0lr"]
+[gd_scene load_steps=93 format=4 uid="uid://ce1bd5fchi0lr"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_maoyc"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ttody"]
@@ -8,9 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_8l5mj"]
 [ext_resource type="AudioStream" uid="uid://bambnfev0g7pr" path="res://music/extra/expert_mode/dusty_bottle.mod" id="7_ue808"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_8l1nh"]
+[ext_resource type="PackedScene" uid="uid://dw54kg4ssaj3o" path="res://objects/otherworld/secret_otherworld_unlocker_choicer.tscn" id="8_mj82y"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_0ftex"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="9_gw76b"]
-[ext_resource type="PackedScene" uid="uid://dym6dmtca3rhi" path="res://engine/objects/bumping_blocks/message_block/message_block_choicer.tscn" id="10_h43nk"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_jjp1h"]
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="11_a6d1b"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="12_d6hsl"]
@@ -367,15 +366,9 @@ music = Array[Resource]([ExtResource("7_ue808")])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("2_y61n0")]
 
-[node name="SecretUnlockerOther" parent="." instance=ExtResource("9_gw76b")]
-secrets = Array[String](["all otherworld levels found"])
+[node name="SecretUnlockerOther2" parent="." instance=ExtResource("8_mj82y")]
+you_found_text = "otherworld level 8! It is hard"
 progress_by_id = "8-3"
-progress_to = 8
-
-[node name="MessageBlockChoicer" parent="SecretUnlockerOther" instance=ExtResource("10_h43nk")]
-position = Vector2(-48, 16)
-message = "You have found a passage to otherworld level 8! It's better that you don't enter this right now.
-It is now available in the save game room at any time."
 
 [node name="Mario" parent="." instance=ExtResource("8_8l1nh")]
 position = Vector2(304, 240)
@@ -1684,11 +1677,10 @@ result = SubResource("Resource_rd6uv")
 [node name="PipeIn6" parent="." instance=ExtResource("41_f0eyb")]
 position = Vector2(224, -7984)
 script = ExtResource("53_e6ny4")
-choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
 
 [connection signal="stage_ready" from="." to="Node2D/SoundRising" method="play"]
 [connection signal="died" from="Mario" to="Node2D" method="koniec_gry"]
 [connection signal="view_section_changed" from="CameraArea" to="PlayerCamera2D" method="switch_to_direction" binds= [2]]
 [connection signal="warp_started" from="PipeIn" to="Node2D" method="koniec_gry"]
-[connection signal="tried_to_enter" from="PipeIn6" to="SecretUnlockerOther" method="progress_secret"]
+[connection signal="tried_to_enter" from="PipeIn6" to="SecretUnlockerOther2" method="tried_to_warp"]
 [connection signal="warp_started" from="PipeIn6" to="HUD/Label" method="activate"]

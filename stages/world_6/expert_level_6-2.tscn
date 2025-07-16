@@ -1,14 +1,13 @@
-[gd_scene load_steps=140 format=4 uid="uid://di04gixk0cxmi"]
+[gd_scene load_steps=139 format=4 uid="uid://di04gixk0cxmi"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_atyge"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_bprss"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_nbkr3"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_ltkrb"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_msnjv"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_gmu62"]
+[ext_resource type="PackedScene" uid="uid://dw54kg4ssaj3o" path="res://objects/otherworld/secret_otherworld_unlocker_choicer.tscn" id="8_mc64r"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="9_bprss"]
 [ext_resource type="AudioStream" uid="uid://ct1f1modl4lmk" path="res://music/extra/expert_mode/producer.mod" id="9_ltkrb"]
-[ext_resource type="PackedScene" uid="uid://dym6dmtca3rhi" path="res://engine/objects/bumping_blocks/message_block/message_block_choicer.tscn" id="9_v86s2"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="9_wy1ei"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="10_4cofe"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="11_lm5wb"]
@@ -668,17 +667,9 @@ volume_db = Array[float]([3.0])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("9_bprss")]
 
-[node name="SecretUnlockerOther" parent="." instance=ExtResource("8_gmu62")]
-secrets = Array[String](["all otherworld levels found"])
+[node name="SecretUnlockerOther2" parent="." instance=ExtResource("8_mc64r")]
+you_found_text = "otherworld level 7"
 progress_by_id = "6-2"
-progress_to = 8
-
-[node name="MessageBlockChoicer" parent="SecretUnlockerOther" instance=ExtResource("9_v86s2")]
-position = Vector2(-48, 16)
-message = "You have found a passage to otherworld level 7! Would you like to go in?
-It is now available in the save game room at any time."
-font_size = 22
-box_size = Vector2(320, 128)
 
 [node name="Mario" parent="." instance=ExtResource("9_wy1ei")]
 position = Vector2(96, 400)
@@ -2841,7 +2832,6 @@ initially_visible_and_solid = false
 [node name="PipeIn15" parent="." instance=ExtResource("25_n5cax")]
 position = Vector2(2848, -2896)
 script = ExtResource("74_mc64r")
-choicer_node_path = NodePath("../SecretUnlockerOther/MessageBlockChoicer")
 
 [node name="PointLight2D22" type="PointLight2D" parent="PipeIn15"]
 position = Vector2(0, -16)
@@ -2886,5 +2876,5 @@ rotation = 3.14159
 scale = Vector2(1, 4.5)
 texture = SubResource("GradientTexture2D_kq0w4")
 
-[connection signal="tried_to_enter" from="PipeIn15" to="SecretUnlockerOther" method="progress_secret"]
+[connection signal="tried_to_enter" from="PipeIn15" to="SecretUnlockerOther2" method="tried_to_warp"]
 [connection signal="warp_started" from="PipeIn15" to="HUD/Label" method="activate"]
