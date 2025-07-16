@@ -1,10 +1,12 @@
-[gd_scene load_steps=158 format=4 uid="uid://dcgw7ivluvpsx"]
+[gd_scene load_steps=160 format=4 uid="uid://dcgw7ivluvpsx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_g6ctx"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_liom3"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_o3eut"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_4d4jn"]
 [ext_resource type="AudioStream" uid="uid://gxyb2xwo7602" path="res://music/extra/expert_mode/break_out-1739.mod" id="5_7ebrf"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_de8m0"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_i5ghj"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_ixtjl"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_27njw"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_lonbm"]
@@ -1552,6 +1554,23 @@ jump_to_scene = "uid://dmagom1u0shqm"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_o3eut")]
+script = ExtResource("4_4d4jn")
+tweaked_completion_music = ExtResource("5_i5ghj")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_7ebrf")])
 volume_db = Array[float]([-4.0])
 
@@ -1579,6 +1598,7 @@ offset_bottom = 960.0
 metadata/_edit_lock_ = true
 
 [node name="AntiafkExpertMode" parent="." instance=ExtResource("10_o3eut")]
+is_expert_mode = false
 antiafk_enabled = false
 
 [node name="Quality-Med" type="Node2D" parent="."]

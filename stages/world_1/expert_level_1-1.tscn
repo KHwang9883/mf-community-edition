@@ -1,8 +1,8 @@
-[gd_scene load_steps=74 format=4 uid="uid://dxqr6xmj8wu31"]
+[gd_scene load_steps=75 format=4 uid="uid://dxqr6xmj8wu31"]
 
 [ext_resource type="PackedScene" uid="uid://dtfhvfw317yu" path="res://stages/world_1/level_1-1.tscn" id="1_s8ojd"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="3_7es0h"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_8oxcb"]
+[ext_resource type="PackedScene" uid="uid://dw54kg4ssaj3o" path="res://objects/otherworld/secret_otherworld_unlocker_choicer.tscn" id="3_s2o5d"]
 [ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="8_8dnu4"]
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="8_a1qhc"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="8_jbdsy"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://q8l5ujr14min" path="res://gfx/sign/sign_leg.png" id="25_ca843"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="26_1dqdy"]
 [ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="27_sybmw"]
+[ext_resource type="PackedScene" uid="uid://ucv4j45tjiss" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.tscn" id="28_ca843"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="66_orwlv"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="67_p4fye"]
 
@@ -726,10 +727,9 @@ jump_to_scene = "res://stages/world_1/expert_map_1.tscn"
 
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0" instance=ExtResource("3_7es0h")]
 
-[node name="SecretUnlockerOther" parent="." index="2" instance=ExtResource("3_8oxcb")]
-secrets = Array[String](["all otherworld levels found"])
+[node name="SecretUnlockerOther" parent="." index="2" instance=ExtResource("3_s2o5d")]
+you_found_text = "otherworld level 1"
 progress_by_id = "1-1"
-progress_to = 8
 
 [node name="CamArea" parent="." index="5"]
 offset_right = 8672.0
@@ -1253,10 +1253,7 @@ position = Vector2(6960, 400)
 [node name="KoopaRed10" parent="." index="200" instance=ExtResource("8_n6nqm")]
 position = Vector2(7760, 400)
 
-[node name="PipeIn6" parent="." index="201" instance=ExtResource("9_1lpya")]
-position = Vector2(4672, 304)
-
-[node name="SignMinixWelcome" type="Sprite2D" parent="." index="202"]
+[node name="SignMinixWelcome" type="Sprite2D" parent="." index="201"]
 position = Vector2(297, 330)
 texture = ExtResource("24_s2o5d")
 
@@ -1286,6 +1283,11 @@ vertical_alignment = 1
 script = ExtResource("27_sybmw")
 action = "a_tab"
 
+[node name="PipeIn7" parent="." index="202" instance=ExtResource("28_ca843")]
+position = Vector2(4672, 304)
+
+[connection signal="otherworld_lvl_1_condition" from="SecretUnlockerOther" to="PipeIn7" method="queue_free"]
 [connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="progress_secret" binds= [1]]
-[connection signal="warp_started" from="PipeIn6" to="SecretUnlockerOther" method="progress_secret"]
-[connection signal="warp_started" from="PipeIn6" to="HUD/Label" method="activate"]
+[connection signal="tried_to_enter" from="PipeIn7" to="SecretUnlockerOther" method="tried_to_warp"]
+[connection signal="warp_started" from="PipeIn7" to="SecretUnlockerOther" method="set_shit_to_data"]
+[connection signal="warp_started" from="PipeIn7" to="HUD/Label" method="activate"]

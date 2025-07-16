@@ -158,6 +158,7 @@ music = Array[Resource]([ExtResource("4_odop8"), ExtResource("5_eipiu")])
 volume_db = Array[float]([0.0, 4.0])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("2_gnmdq")]
+is_expert_mode = false
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("9_ylvna")]
 secrets = Array[String](["all toad houses found"])
@@ -235,7 +236,7 @@ text = "you have unlocked a secret toad house!"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="BonusLevelUnlocked" parent="HUD" instance=ExtResource("17_sklqv")]
+[node name="ExtraGOContinue" parent="HUD" instance=ExtResource("17_sklqv")]
 texture = ExtResource("18_xb6qv")
 
 [node name="Node" type="Node" parent="."]
@@ -898,7 +899,7 @@ vertical_alignment = 1
 
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D2" to="Area2D2/Marker2D" method="activate"]
-[connection signal="entered_castle" from="Area2D2/Marker2D" to="HUD/BonusLevelUnlocked" method="activate"]
+[connection signal="entered_castle" from="Area2D2/Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 [connection signal="entered_castle" from="Area2D2/Marker2D" to="Area2D2/Marker2D" method="_on_level_completed"]
 
 [editable path="Path2D/PathFollow2D3"]

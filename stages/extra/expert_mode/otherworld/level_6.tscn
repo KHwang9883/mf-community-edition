@@ -1,15 +1,21 @@
-[gd_scene load_steps=149 format=4 uid="uid://ro5dsj216p7u"]
+[gd_scene load_steps=155 format=4 uid="uid://ro5dsj216p7u"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_x038d"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_yf1xj"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_a0sxr"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_0s028"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_etb60"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_fahad"]
 [ext_resource type="AudioStream" uid="uid://ctjkq6fsrakou" path="res://music/extra/expert_mode/Cyborgmania.mod" id="5_wkgm6"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_7lg2f"]
+[ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="7_v1s5h"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_wkgm6"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_1c0if"]
 [ext_resource type="FontFile" uid="uid://bgsavu6joui2r" path="res://engine/fonts/junebug.ttf" id="10_x7wme"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_1i0pw"]
+[ext_resource type="PackedScene" uid="uid://ct8p366bkgxl6" path="res://objects/coin_bonus_level/bonus_level_unlocked.tscn" id="11_3mh4w"]
+[ext_resource type="Texture2D" uid="uid://bsme1i735qnf2" path="res://gfx/texts/got_extra_continue.png" id="12_p8jod"]
+[ext_resource type="Script" uid="uid://crwuhdl2ox5y" path="res://stages/extra/expert_mode/otherworld/scripts/complete_win_anim_marker.gd" id="13_bfhmn"]
 [ext_resource type="Texture2D" uid="uid://3gml25soipio" path="res://objects/otherworld/3.1/gfx/ctrlpnl.png" id="14_l1hee"]
 [ext_resource type="Texture2D" uid="uid://bx70mxbssspe3" path="res://objects/otherworld/3.1/gfx/progmgr.png" id="15_1c0if"]
 [ext_resource type="Texture2D" uid="uid://84ietbhpger" path="res://objects/otherworld/3.1/gfx/charmap.png" id="15_4qpi2"]
@@ -742,10 +748,34 @@ size = Vector2(102, 34)
 script = ExtResource("1_x038d")
 time = 580
 completion_music = ExtResource("2_yf1xj")
+completion_write_save_path_override = "res://stages/world_5/expert_level_5-2.tscn"
+jump_to_scene = "uid://du4p450axubtr"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_a0sxr")]
+script = ExtResource("4_0s028")
+tweaked_completion_music = ExtResource("5_etb60")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_wkgm6")])
+volume_db = Array[float]([-3.0])
+
+[node name="AntiafkExpertMode" parent="." instance=ExtResource("7_v1s5h")]
+is_expert_mode = false
+antiafk_enabled = false
 
 [node name="Player" parent="." instance=ExtResource("5_fahad")]
 position = Vector2(80, 416)
@@ -781,6 +811,12 @@ text = "world
 3.1"
 horizontal_alignment = 1
 uppercase = true
+
+[node name="ExtraGOContinue" parent="HUD" instance=ExtResource("11_3mh4w")]
+texture = ExtResource("12_p8jod")
+
+[node name="Marker2D" type="Marker2D" parent="HUD"]
+script = ExtResource("13_bfhmn")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -2638,6 +2674,8 @@ position = Vector2(3072, 144)
 [node name="Goomba6" parent="." instance=ExtResource("33_mrg2h")]
 position = Vector2(13328, 383)
 
+[connection signal="level_completed" from="." to="HUD/Marker2D" method="_on_level_completed"]
+[connection signal="life_text_triggered" from="HUD/Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 [connection signal="scripted_move_ended" from="Scripted/Cursor" to="Scripted/Color2" method="show"]
 [connection signal="scripted_move_ended" from="Scripted/Cursor" to="StaticBody2D/CollisionScripted" method="set_disabled" flags=3 binds= [false]]
 [connection signal="scripted_move_waiting" from="Scripted/Cursor" to="Scripted/Colorbtn" method="show"]

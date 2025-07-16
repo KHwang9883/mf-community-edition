@@ -9,6 +9,8 @@ func _ready() -> void:
 	Data.technical_values.remaining_continues = -1
 	Data.technical_values.erase("special_otherworld_toad")
 	Data.technical_values.erase("special_otherworld_candy")
+	Data.technical_values.erase("saved_lives")
+	Data.technical_values.erase("otherworld_lvl_1")
 	Scenes.custom_scenes.game_over.custom_resume_scene = ""
 	
 	if Data.technical_values.erase("lavarun_lives"):

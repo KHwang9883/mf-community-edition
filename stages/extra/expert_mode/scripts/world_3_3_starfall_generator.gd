@@ -6,6 +6,8 @@ signal completed_with_star_rain
 
 @export var active_min_pos: float = 350
 @export var active_max_pos: float = 8384
+@export var checkp_min: float = 4150
+@export var checkp_max: float = 4300
 @export var spawn_delay: float = 0.6
 
 var player: Player
@@ -45,6 +47,9 @@ func _physics_process(delta: float) -> void:
 		pl_pos = player.global_position
 	
 	var cannot_run: bool = pl_pos.x < active_min_pos || pl_pos.x > active_max_pos
+	if pl_pos.x > checkp_min && pl_pos.x < checkp_max:
+		cannot_run = true
+	
 	if !tw: return
 	if cannot_run:
 		tw.pause()
