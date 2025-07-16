@@ -9,7 +9,9 @@ const SMOKE = preload("res://engine/objects/effects/smoke/smoke.tscn")
 @export var speed: float = 50
 @export var scripted_move: bool = false
 @export var scripted_wait_to_end_sec: float = 0.6
+@export var scripted_disable_killing: bool = false
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var enemy_attacked: Node = $Body/EnemyAttacked
 
 var _moving_scripted: bool
 var _marker_pos: Vector2
@@ -19,6 +21,8 @@ func _ready() -> void:
 	if scripted_move:
 		_marker_pos = $Marker2D.global_position
 		_moving_scripted = true
+		if scripted_disable_killing:
+			enemy_attacked.killing_enabled = false
 
 func _physics_process(delta: float) -> void:
 	if _moving_scripted:
@@ -34,6 +38,8 @@ func _physics_process(delta: float) -> void:
 			if _moving_script_timer > scripted_wait_to_end_sec:
 				_moving_scripted = false
 				scripted_move_ended.emit()
+				if scripted_disable_killing:
+					enemy_attacked.killing_enabled = true
 		return
 	
 	var player: Player = Thunder._current_player

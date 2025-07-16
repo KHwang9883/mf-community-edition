@@ -1,6 +1,6 @@
 extends Projectile
 
-const explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
+const explosion_effect: PackedScene = preload("res://objects/volcano/bob_omb/explosion/explosion_effect.tscn")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
 @export var remove_offscreen_after: float = 2.0
