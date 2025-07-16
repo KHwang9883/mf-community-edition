@@ -3,16 +3,16 @@
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_im76u"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_55ish"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_cwose"]
-[ext_resource type="Script" uid="uid://bxx54cyd4mjsq" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_p4mol"]
+[ext_resource type="AudioStream" uid="uid://ws3qtit682f6" path="res://music/extra/world_12/ys8-smash_up.mp3" id="4_57ww3"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_e1c3d"]
-[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_fxaqw"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_5u4wx"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_6ren0"]
-[ext_resource type="Script" uid="uid://clghge075cv0" path="res://engine/components/cam_area/cam_area.gd" id="9_0hf30"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_yrpu6"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_gw65j"]
-[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_wek6j"]
+[ext_resource type="PackedScene" uid="uid://qfs0i2nlnp01" path="res://gfx/rain/rain.tscn" id="12_lwppp"]
+[ext_resource type="PackedScene" uid="uid://nrst3o8avjyh" path="res://gfx/effects/lightning/lightning.tscn" id="13_im76u"]
 [ext_resource type="PackedScene" uid="uid://cnnn6g6x2r6uq" path="res://objects/dragon_coin/dragon_coin_control.tscn" id="13_qokn2"]
+[ext_resource type="Script" uid="uid://pwo4jog8jogg" path="res://gfx/effects/lightning/lightning_dark_cover.gd" id="14_55ish"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="14_ykb8w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6kcw6"]
@@ -32,31 +32,21 @@ script = ExtResource("1_im76u")
 completion_music = ExtResource("2_55ish")
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_cwose")]
-script = ExtResource("4_p4mol")
+[node name="MusicLoader" parent="." instance=ExtResource("3_cwose")]
+music = Array[Resource]([ExtResource("4_57ww3")])
+volume_db = Array[float]([-5.0])
 
-[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_e1c3d")]
+[node name="Player" parent="." instance=ExtResource("5_e1c3d")]
 position = Vector2(80, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 12.0
-platform_on_leave = 2
-script = ExtResource("6_fxaqw")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("7_5u4wx")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_6ren0")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("8_6ren0")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("9_0hf30")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -64,8 +54,7 @@ tile_map_data = PackedByteArray(0, 0, 2, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_m6mmn")
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_gw65j")]
-script = ExtResource("12_wek6j")
+[node name="HUD" parent="." instance=ExtResource("11_gw65j")]
 
 [node name="DragonCoinControl" parent="HUD" instance=ExtResource("13_qokn2")]
 metadata/_edit_lock_ = true
@@ -86,6 +75,29 @@ text = "WORLD
 12-5"
 horizontal_alignment = 1
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="FG" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="RainStorm" type="Parallax2D" parent="FG"]
+scroll_scale = Vector2(0, 0)
+
+[node name="Rain" parent="FG/RainStorm" instance=ExtResource("12_lwppp")]
+amount = 1000
+sound_basic_volume = 3.0
+sound_dying_volume = -50.0
+metadata/_edit_pinned_properties_ = [&"sound_basic_volume", &"sound_dying_volume"]
+
+[node name="Lightning" parent="FG/RainStorm" instance=ExtResource("13_im76u")]
+position = Vector2(352, 24)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="FG/RainStorm"]
+energy = 0.0
+range_layer_min = -128
+range_layer_max = 1
+script = ExtResource("14_55ish")
 
 [node name="Objects" type="Node2D" parent="."]
+
+[connection signal="lightning_emitted" from="FG/RainStorm/Lightning" to="FG/RainStorm/DirectionalLight2D" method="lightning_flash"]
+
+[editable path="FG/RainStorm/Rain"]
