@@ -5,12 +5,16 @@
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_cwose"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_lwppp"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_43ew1"]
+[ext_resource type="AudioStream" uid="uid://dsq75h7xfug06" path="res://music/extra/world_12/ys8-smash_up.ogg" id="4_im76u"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_e1c3d"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_5u4wx"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_6ren0"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_yrpu6"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_gw65j"]
+[ext_resource type="PackedScene" uid="uid://qfs0i2nlnp01" path="res://gfx/rain/rain.tscn" id="12_lwppp"]
+[ext_resource type="PackedScene" uid="uid://nrst3o8avjyh" path="res://gfx/effects/lightning/lightning.tscn" id="13_im76u"]
 [ext_resource type="PackedScene" uid="uid://cnnn6g6x2r6uq" path="res://objects/dragon_coin/dragon_coin_control.tscn" id="13_qokn2"]
+[ext_resource type="Script" uid="uid://pwo4jog8jogg" path="res://gfx/effects/lightning/lightning_dark_cover.gd" id="14_55ish"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="14_ykb8w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6kcw6"]
@@ -48,6 +52,8 @@ boss_music_var_2 = null
 boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
+music = Array[Resource]([ExtResource("4_im76u")])
+volume_db = Array[float]([-5.0])
 
 [node name="Player" parent="." instance=ExtResource("5_e1c3d")]
 position = Vector2(80, 400)
@@ -88,6 +94,29 @@ text = "WORLD
 12-5"
 horizontal_alignment = 1
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="FG" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="RainStorm" type="Parallax2D" parent="FG"]
+scroll_scale = Vector2(0, 0)
+
+[node name="Rain" parent="FG/RainStorm" instance=ExtResource("12_lwppp")]
+amount = 1000
+sound_basic_volume = 3.0
+sound_dying_volume = -50.0
+metadata/_edit_pinned_properties_ = [&"sound_basic_volume", &"sound_dying_volume"]
+
+[node name="Lightning" parent="FG/RainStorm" instance=ExtResource("13_im76u")]
+position = Vector2(352, 24)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="FG/RainStorm"]
+energy = 0.0
+range_layer_min = -128
+range_layer_max = 1
+script = ExtResource("14_55ish")
 
 [node name="Objects" type="Node2D" parent="."]
+
+[connection signal="lightning_emitted" from="FG/RainStorm/Lightning" to="FG/RainStorm/DirectionalLight2D" method="lightning_flash"]
+
+[editable path="FG/RainStorm/Rain"]
