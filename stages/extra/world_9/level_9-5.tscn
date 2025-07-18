@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=4 uid="uid://drn8a6dwa6ywt"]
+[gd_scene load_steps=69 format=4 uid="uid://drn8a6dwa6ywt"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_o3nr6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3c416"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://bxbufag6ttv1w" path="res://music/extra/world_9/tims_tune_cut.mod" id="5_ifohn"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_3k6pv"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_66rq1"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_gbl7p"]
 [ext_resource type="Texture2D" uid="uid://bwax58h5ee6hh" path="res://tilesets/tanks/gfx/dots_pipe.png" id="9_3wam3"]
 [ext_resource type="Texture2D" uid="uid://dfi4d7levruc4" path="res://gfx/backgrounds/smasvolcanoresize.png" id="9_kpyok"]
 [ext_resource type="TileSet" uid="uid://cisrnptu4w3tf" path="res://tilesets/volcano/volcano.tres" id="9_m60rt"]
@@ -285,6 +286,10 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_ifohn")])
+volume_db = Array[float]([-3.0])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("7_gbl7p")]
+secrets = Array[String](["bte world 9 completed"])
 
 [node name="Mario" parent="." instance=ExtResource("4_miere")]
 position = Vector2(80, 400)
@@ -909,6 +914,7 @@ position = Vector2(11008, 288)
 position = Vector2(5392, 48)
 result = SubResource("Resource_v1n70")
 
+[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
 [connection signal="scroll_stopped" from="Path2D/PathFollow2D" to="TileMapLayer" method="set_process_mode" binds= [4]]
 
 [editable path="Path2D/PathFollow2D/PlatformPathTankFloor"]

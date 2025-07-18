@@ -1,9 +1,11 @@
-[gd_scene load_steps=80 format=4 uid="uid://r474traqfuvu"]
+[gd_scene load_steps=82 format=4 uid="uid://r474traqfuvu"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_6102r"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_pv64w"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_6iug6"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_og1c0"]
 [ext_resource type="AudioStream" uid="uid://dkp4boq6fjpq6" path="res://music/extra/world_12/black_market_is_everywhere.mp3" id="4_ojxmc"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_b1gfg"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_hurb1"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="6_8rrvj"]
 [ext_resource type="TileSet" uid="uid://be86ivcp3576o" path="res://gfx/tilesets/rockland/rockland_dark.tres" id="7_q8yhy"]
@@ -488,8 +490,26 @@ custom_vars = {}
 script = ExtResource("1_6102r")
 time = 500
 completion_music = ExtResource("2_pv64w")
+jump_to_scene = "uid://cfw1f41ufvh4b"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_6iug6")]
+script = ExtResource("4_og1c0")
+tweaked_completion_music = ExtResource("5_b1gfg")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_ojxmc")])
 
 [node name="Mario" parent="." instance=ExtResource("5_hurb1")]
@@ -562,6 +582,10 @@ scroll_scale = Vector2(0, 0)
 [node name="Rain" parent="FG/ParallaxLayer" instance=ExtResource("10_wq7ii")]
 amount = 100
 sound_basic_volume = -10.0
+
+[node name="Sound" parent="FG/ParallaxLayer/Rain" index="0"]
+volume_db = -10.0
+bus = &"Sound"
 
 [node name="ParallaxLayer2" type="Parallax2D" parent="FG"]
 scroll_scale = Vector2(1.1, 0)

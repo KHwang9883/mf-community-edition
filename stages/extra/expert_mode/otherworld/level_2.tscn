@@ -728,10 +728,13 @@ jump_to_scene = "uid://cgcbk2ubafoth"
 script = ExtResource("2_od7xb")
 music = Array[Resource]([ExtResource("4_r3fcm")])
 
-[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("5_e3eqj")]
-
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("6_lqlrb")]
 is_expert_mode = false
+
+[node name="SecretUnlocker2" parent="MusicLoader" instance=ExtResource("5_e3eqj")]
+secrets = Array[String](["all otherworld levels beaten"])
+progress_by_id = "2"
+progress_to = 8
 
 [node name="Mario" parent="." instance=ExtResource("4_xunor")]
 position = Vector2(224, 400)
@@ -1793,6 +1796,7 @@ position = Vector2(8175, 304)
 position = Vector2(9008, 272)
 result = SubResource("Resource_s2c5j")
 
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker2" method="progress_secret"]
 [connection signal="level_completed" from="." to="HUD/Marker2D" method="_on_level_completed"]
 [connection signal="life_text_triggered" from="HUD/Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 

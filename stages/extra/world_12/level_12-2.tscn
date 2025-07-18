@@ -1,10 +1,12 @@
-[gd_scene load_steps=107 format=4 uid="uid://7rinfxlb1vg1"]
+[gd_scene load_steps=109 format=4 uid="uid://7rinfxlb1vg1"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_kxxhg"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_215gl"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_808wj"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_h3cpq"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_q60tw"]
 [ext_resource type="AudioStream" uid="uid://c3yuucitcft1f" path="res://music/extra/world_12/cafard_saturne_exagon-the_factory.ogg" id="4_xm4uk"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_tpa6j"]
 [ext_resource type="TileSet" uid="uid://cbsrsqns4gje8" path="res://gfx/tilesets/rockland/rockland_underground.tres" id="6_fan8d"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="6_oakx0"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_jiwkf"]
@@ -27,7 +29,7 @@
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="22_bda6r"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="22_f5xwf"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="23_3va12"]
-[ext_resource type="Script" uid="uid://ffh0hebxe8ob" path="res://engine/objects/powerups/instance_powerup.gd" id="24_bv3in"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="24_bv3in"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="25_tav28"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="26_b4iic"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="26_ildc4"]
@@ -37,10 +39,10 @@
 [ext_resource type="PackedScene" uid="uid://r3wtvvkcepce" path="res://engine/objects/enemies/paratroopas/paratroopa_red.tscn" id="31_svpui"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="32_ab6xj"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="33_4rduh"]
-[ext_resource type="Script" uid="uid://bvlgmd4na3kxv" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="35_6iwpk"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="35_6iwpk"]
 [ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="38_gdi8f"]
 [ext_resource type="Shader" uid="uid://erh4rhsoly5d" path="res://modules/switch-block/shaders/hsv.gdshader" id="38_nhkvb"]
-[ext_resource type="Script" uid="uid://dphns0b5euyk2" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="39_jagmj"]
+[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="39_jagmj"]
 
 [sub_resource type="Curve2D" id="Curve2D_p7edu"]
 _data = {
@@ -804,8 +806,26 @@ scale_curve = SubResource("CurveTexture_gdi8f")
 script = ExtResource("1_kxxhg")
 time = 500
 completion_music = ExtResource("2_808wj")
+jump_to_scene = "uid://cfw1f41ufvh4b"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_215gl")]
+script = ExtResource("4_h3cpq")
+tweaked_completion_music = ExtResource("5_tpa6j")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_xm4uk")])
 
 [node name="Mario" parent="." instance=ExtResource("4_q60tw")]

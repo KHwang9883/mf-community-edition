@@ -359,6 +359,11 @@ start_from_sec = Array[float]([0.0])
 is_expert_mode = false
 antiafk_enabled = false
 
+[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_w3rux")]
+secrets = Array[String](["all otherworld levels beaten"])
+progress_by_id = "5"
+progress_to = 8
+
 [node name="SecretUnlocker3" parent="." instance=ExtResource("7_w3rux")]
 secrets = Array[String](["otherworld easter eggs"])
 progress_by_id = "5"
@@ -1680,6 +1685,7 @@ position = Vector2(9872, 1296)
 position = Vector2(10544, 1296)
 
 [connection signal="level_completed" from="." to="Area2D2/Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="player_enter" from="Area2D2" to="Area2D2/Marker2D" method="activate"]
 [connection signal="life_text_triggered" from="Area2D2/Marker2D" to="HUD/BonusLevelUnlocked" method="activate"]
 [connection signal="message_hidden" from="MessageBlock2" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]

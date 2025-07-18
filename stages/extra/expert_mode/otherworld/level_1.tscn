@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=4 uid="uid://dq27ub5400i4u"]
+[gd_scene load_steps=123 format=4 uid="uid://dq27ub5400i4u"]
 
 [ext_resource type="PackedScene" uid="uid://dxqr6xmj8wu31" path="res://stages/world_1/expert_level_1-1.tscn" id="1_kc8rb"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="2_38ist"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="3_m407d"]
 [ext_resource type="TileSet" uid="uid://7ahm7i5kbbn6" path="res://tilesets/underwater/underwater.tres" id="4_chph8"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="4_ntdn8"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_q8yqm"]
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="5_5wm8q"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="6_maq6g"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="7_fvdvu"]
@@ -1317,6 +1318,11 @@ volume_db = Array[float]([2.0, 4.0])
 [node name="AntiafkExpertMode" parent="MusicLoader" index="0"]
 is_expert_mode = false
 
+[node name="SecretUnlocker" parent="MusicLoader" index="1" instance=ExtResource("4_q8yqm")]
+secrets = Array[String](["all otherworld levels beaten"])
+progress_by_id = "1"
+progress_to = 8
+
 [node name="Mario" parent="." index="3"]
 position = Vector2(80, 16)
 
@@ -2266,6 +2272,7 @@ position = Vector2(12864, 384)
 script = ExtResource("43_lr2rq")
 
 [connection signal="level_completed" from="." to="Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="collided_floor" from="KoopaGreen2" to="KoopaGreen2" method="jump" binds= [-350.0]]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser" method="activate"]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser/VisibleOnScreenNotifier2D" method="queue_free"]
