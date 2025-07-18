@@ -160,6 +160,11 @@ volume_db = Array[float]([0.0, 4.0])
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("2_gnmdq")]
 is_expert_mode = false
 
+[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("9_ylvna")]
+secrets = Array[String](["all otherworld levels beaten"])
+progress_by_id = "3"
+progress_to = 8
+
 [node name="SecretUnlocker" parent="." instance=ExtResource("9_ylvna")]
 secrets = Array[String](["all toad houses found"])
 progress_by_id = "2-2"
@@ -897,10 +902,11 @@ text = "jump on
 cheep cheeps"
 vertical_alignment = 1
 
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D2" to="Area2D2/Marker2D" method="activate"]
-[connection signal="entered_castle" from="Area2D2/Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 [connection signal="entered_castle" from="Area2D2/Marker2D" to="Area2D2/Marker2D" method="_on_level_completed"]
+[connection signal="life_text_triggered" from="Area2D2/Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 
 [editable path="Path2D/PathFollow2D3"]
 [editable path="Path2D/PathFollow2D4"]

@@ -654,6 +654,11 @@ volume_db = Array[float]([-1.0])
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("5_813wo")]
 is_expert_mode = false
 
+[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("6_8b0sv")]
+secrets = Array[String](["all otherworld levels beaten"])
+progress_by_id = "4"
+progress_to = 8
+
 [node name="SecretUnlocker3" parent="." instance=ExtResource("6_8b0sv")]
 secrets = Array[String](["otherworld easter eggs"])
 progress_by_id = "4"
@@ -4055,6 +4060,7 @@ jumping_speed = 150.0
 gravity_scale = 0.5
 
 [connection signal="level_completed" from="." to="Area2D2/Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="view_section_changed" from="CameraArea2" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]
 [connection signal="player_enter" from="Sprite2D7/Area2D" to="Sprite2D7/PiranhaHead4" method="show"]
 [connection signal="player_enter" from="Sprite2D7/Area2D" to="Sprite2D7/PiranhaHead4" method="reset_physics_interpolation"]

@@ -59,7 +59,7 @@ func _on_level_completed() -> void:
 			Data.values.lives = Data.technical_values.saved_lives
 			var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
 			Audio.play_1d_sound(_sfx)
-		else:
+		elif Data.technical_values.remaining_continues != -1:
 			const pwrp = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
 			var _sfx = CharacterManager.get_sound_replace(pwrp, pwrp, "hud_acceptance", false)
 			Audio.play_1d_sound(_sfx)
