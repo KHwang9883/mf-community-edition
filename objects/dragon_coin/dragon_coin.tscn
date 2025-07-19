@@ -1,29 +1,48 @@
-[gd_scene load_steps=13 format=3 uid="uid://cvt7wr4xv4m6j"]
+[gd_scene load_steps=16 format=3 uid="uid://cvt7wr4xv4m6j"]
 
 [ext_resource type="Script" uid="uid://c2fqpuatoik4" path="res://objects/dragon_coin/dragon_coin.gd" id="1_5u6nf"]
-[ext_resource type="Texture2D" uid="uid://cs646ydkxc1qo" path="res://objects/dragon_coin/texture.png" id="2_0o0px"]
+[ext_resource type="Texture2D" uid="uid://di2oj14my1qxg" path="res://objects/dragon_coin/star_coin.png" id="2_0o0px"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_xk344"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_us5a7"]
 [ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="6_rgikc"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5u6nf"]
-size = Vector2(30, 40)
+[sub_resource type="CircleShape2D" id="CircleShape2D_0o0px"]
+radius = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5u6nf"]
+atlas = ExtResource("2_0o0px")
+region = Rect2(102, 2, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m4lll"]
 atlas = ExtResource("2_0o0px")
-region = Rect2(64, 0, 32, 64)
+region = Rect2(52, 2, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xk344"]
 atlas = ExtResource("2_0o0px")
-region = Rect2(32, 0, 32, 64)
+region = Rect2(2, 2, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o0px"]
+atlas = ExtResource("2_0o0px")
+region = Rect2(2, 52, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nhon0"]
 atlas = ExtResource("2_0o0px")
-region = Rect2(0, 0, 32, 64)
+region = Rect2(52, 52, 48, 48)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_us5a7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_us5a7"]
+atlas = ExtResource("2_0o0px")
+region = Rect2(102, 52, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgikc"]
+atlas = ExtResource("2_0o0px")
+region = Rect2(152, 52, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nhon0"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5u6nf")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m4lll")
 }, {
@@ -31,18 +50,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_xk344")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nhon0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xk344")
+"texture": SubResource("AtlasTexture_m4lll")
 }],
 "loop": true,
 "name": &"default",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o0px")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhon0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_us5a7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rgikc")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 15.0
 }]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtqdq"]
-size = Vector2(20, 30)
 
 [sub_resource type="Resource" id="Resource_d1jsp"]
 script = ExtResource("5_us5a7")
@@ -64,16 +94,16 @@ script = ExtResource("1_5u6nf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource("RectangleShape2D_5u6nf")
+shape = SubResource("CircleShape2D_0o0px")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 process_mode = 1
-sprite_frames = SubResource("SpriteFrames_us5a7")
+sprite_frames = SubResource("SpriteFrames_nhon0")
 autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0)
-rect = Rect2(-20, -40, 40, 80)
+rect = Rect2(-32, -32, 64, 64)
 metadata/_edit_lock_ = true
 
 [node name="Body" type="Area2D" parent="."]
@@ -82,7 +112,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 visible = false
-shape = SubResource("RectangleShape2D_gtqdq")
+shape = SubResource("CircleShape2D_0o0px")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("3_xk344")

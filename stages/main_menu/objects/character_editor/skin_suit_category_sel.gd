@@ -19,7 +19,7 @@ var tweak_descriptions: Dictionary = {
 	"kick_ground_animation": "the 'kick' animation also plays when kicking things without holding anything (e.g. shells).",
 	"warp_animation": "'warp' animation; if false, warping vertically will use 'jump', and 'crouch' or 'default'.",
 	"skid_sound_loop_delay": 'delay in seconds between each playback of the skidding sound; from 0.05 to 2.0.',
-	"head_bump_sound": "play global sound 'block_bump' on every touch of ceiling.",
+	"head_bump_sound": "play global sound 'head_bump' on every touch of ceiling.",
 	"fall_animation": "if false, 'fall' animation and the derivatives are replaced by 'jump'.",
 	"separate_swim_idle_animation": "if looping for 'swim' animation is disabled, the 'swim_idle' animation will play right after.",
 	"emit_particles": {

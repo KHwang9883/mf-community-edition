@@ -22,6 +22,7 @@ const DEFAULT_LINES = {
 	"menu_enter": preload("res://engine/components/ui/_sounds/select_enter.wav"),
 	"level_cutscene_song": preload("res://engine/scenes/main_menu/sounds/lets.wav"),
 	"1up": preload("res://engine/objects/players/prefabs/sounds/1up.wav"),
+	"head_bump": preload("res://engine/objects/players/prefabs/sounds/head_bump.wav"),
 	"hud_acceptance": preload("res://engine/objects/players/prefabs/sounds/powerup.wav"),
 	"message_box": preload("res://engine/objects/bumping_blocks/message_block/message_block.wav"),
 	"bonus_activate": preload("res://engine/objects/players/prefabs/sounds/powerup.wav"),
