@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bnlw1csyelqh0"]
+[gd_scene load_steps=17 format=3 uid="uid://bnlw1csyelqh0"]
 
 [ext_resource type="Script" uid="uid://bs3aoklpy3u3f" path="res://stages/extra/world_9/scripts/platform_fireball.gd" id="1_14se0"]
 [ext_resource type="Texture2D" uid="uid://h7fbqoxapknb" path="res://gfx/misc/bigfireballspooky.png" id="2_futjj"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="8_561ue"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_m3m5y"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="10_u7y45"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="11_4kfrb"]
 [ext_resource type="Script" uid="uid://cb45v5kku30sv" path="res://shaders/quality_light2d_shadow.gd" id="11_bqxuc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5i870"]
@@ -98,7 +99,11 @@ type = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spike"]
 shape = SubResource("CircleShape2D_5i870")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("11_4kfrb")
+medium = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Node2D"]
 color = Color(1.50196, 0.470588, 0, 1)
 energy = 1.6
 range_layer_min = -512

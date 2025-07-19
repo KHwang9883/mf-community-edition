@@ -1,9 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnnn6g6x2r6uq"]
+[gd_scene load_steps=8 format=3 uid="uid://cnnn6g6x2r6uq"]
 
 [ext_resource type="Script" uid="uid://x2s5lfkiymxp" path="res://objects/dragon_coin/dragon_coin_controller.gd" id="1_b46ex"]
-[ext_resource type="Texture2D" uid="uid://cchba4g0au7i8" path="res://objects/dragon_coin/texture_hud.png" id="2_8t55t"]
-[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="3_cxob5"]
-[ext_resource type="Script" uid="uid://bc8txhndjjot7" path="res://engine/components/hud/value.gd" id="4_gdrau"]
+[ext_resource type="Shader" uid="uid://dluvop86i8qql" path="res://engine/shaders/animated_texture.gdshader" id="5_gdrau"]
+[ext_resource type="Texture2D" uid="uid://by8hohpwr1yif" path="res://objects/dragon_coin/star_coin_hud.png" id="5_l3dko"]
+[ext_resource type="Texture2D" uid="uid://cevq6kd4avcen" path="res://objects/dragon_coin/star_coin_hud_fill.png" id="6_l3dko"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlqov"]
+shader = ExtResource("5_gdrau")
+shader_parameter/sprite_sheet = ExtResource("6_l3dko")
+shader_parameter/frame_size = Vector2(1, 3)
+shader_parameter/frame_count = 3
+shader_parameter/frames_per_row = 1
+shader_parameter/time_scale = 10.0
+shader_parameter/frame_offset = 0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gdrau"]
+width = 26
+height = 26
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_mubo6")
 
 [node name="DragonCoinControl" type="Control"]
 editor_description = "Put this as a child of HUD."
@@ -17,49 +36,30 @@ script = ExtResource("1_b46ex")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.4
-anchor_right = 0.4
-offset_left = -28.0
-offset_top = 55.0
-offset_right = 368.0
-offset_bottom = 71.0
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = -80.0
+offset_top = 54.0
+offset_right = -54.0
+offset_bottom = 80.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="StarCoinOutline" type="TextureRect" parent="Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 2
+texture = ExtResource("5_l3dko")
+stretch_mode = 1
 
-[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("2_8t55t")
-stretch_mode = 3
-
-[node name="Coins3" type="Label" parent="Control/HBoxContainer"]
-custom_minimum_size = Vector2(18, 18)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("3_cxob5")
-text = "%s"
-horizontal_alignment = 2
-script = ExtResource("4_gdrau")
-value_name = "dragon_coins"
-
-[node name="Coins2" type="Label" parent="Control/HBoxContainer"]
-custom_minimum_size = Vector2(18, 18)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("3_cxob5")
-text = "/"
-
-[node name="Coins4" type="Label" parent="Control/HBoxContainer"]
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("3_cxob5")
-text = "%s"
-script = ExtResource("4_gdrau")
-value_name = "dragon_coins_max"
+[node name="StarCoinFilled" type="TextureRect" parent="Control/StarCoinOutline"]
+visible = false
+material = SubResource("ShaderMaterial_hlqov")
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 26.0
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_gdrau")
+stretch_mode = 1

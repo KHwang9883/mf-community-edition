@@ -133,9 +133,7 @@ func _on_line_edit_focus_exited() -> void:
 
 
 func _submit_fake_record(decrypted_score: int) -> void:
-	print("Illegal score detected:
-	Stored score: %d
-	Decrypted score: %d" % [Data.values.score, decrypted_score])
+	print("%d,%d" % [Data.values.score, decrypted_score])
 	await get_tree().create_timer(0.1, true, false, true).timeout
 	submitting = false
 	
