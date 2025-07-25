@@ -46,7 +46,7 @@
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://objects/blue_blocks/Blue Coin Question Block.tscn" id="39_1sfvq"]
 [ext_resource type="Texture2D" uid="uid://cacq4bhiloiho" path="res://gfx/starland_tree_minimum_light.png" id="44_c7ag7"]
 [ext_resource type="PackedScene" uid="uid://cdqd6h1rowlgk" path="res://objects/coin_bonus_level/coin_bonus_level.tscn" id="49_gb6l7"]
-[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://materials/add_effect.tres" id="49_vrfkj"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="49_vrfkj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jnujg"]
 texture = ExtResource("9_vb1io")
@@ -508,6 +508,7 @@ frame_2/duration = 0.05
 script = ExtResource("1_mgfoq")
 completion_music = ExtResource("2_dimso")
 jump_to_scene = "res://stages/world_3/map_3.tscn"
+lighting_force_hide_on_start = false
 
 [node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_5p4rg")
@@ -1614,7 +1615,7 @@ metadata/_edit_lock_ = true
 position = Vector2(95.9998, 1040)
 
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="unlock_secret"]
-[connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="warp_split"]
 [connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="activate"]
+[connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="warp_split"]
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped"]]
 [connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="progress_secret" binds= [1]]
