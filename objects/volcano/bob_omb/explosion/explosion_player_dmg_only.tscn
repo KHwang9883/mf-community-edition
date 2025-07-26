@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtif4woe8inub"]
+
+[ext_resource type="PackedScene" uid="uid://jmg1hgnk2ebq" path="res://objects/volcano/bob_omb/explosion/explosion.tscn" id="1_kc0f7"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="5_s7cxh"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_357q8"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="7_y4ey7"]
+
+[sub_resource type="Resource" id="Resource_ahsh0"]
+resource_local_to_scene = true
+script = ExtResource("7_y4ey7")
+creation_nodepack = ExtResource("5_s7cxh")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../AnimatedSprite2D"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("6_357q8")
+
+[node name="ExplosionAreaPlayer" instance=ExtResource("1_kc0f7")]
+
+[node name="Attack" parent="." index="2"]
+enabled = false
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_creation = SubResource("Resource_ahsh0")
