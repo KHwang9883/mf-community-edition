@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=4 uid="uid://bwr844qulxx0m"]
+[gd_scene load_steps=98 format=4 uid="uid://bwr844qulxx0m"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5j5oj"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_5b1ay"]
@@ -44,9 +44,9 @@
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://gfx/misc/castle_big.png" id="34_q606i"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="37_sdksw"]
 [ext_resource type="PackedScene" uid="uid://chn6sxklw0ntb" path="res://components/secrets_manager/coin_checker.tscn" id="40_xd6ci"]
+[ext_resource type="Script" uid="uid://b6reo6h4cdgok" path="res://gfx/fancy_graphics/scripts/starland_light.gd" id="43_3rjv4"]
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://objects/blue_blocks/Blue Coin Question Block.tscn" id="44_3rjv4"]
 [ext_resource type="PackedScene" uid="uid://3tgyqgylcvji" path="res://objects/blue_blocks/brick_blue.tscn" id="47_r7mmn"]
-[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="49_vv1sm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4lmp"]
 texture = ExtResource("8_euidw")
@@ -306,57 +306,36 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Gradient" id="Gradient_kvylg"]
-offsets = PackedFloat32Array(0.1, 0.5, 1)
-colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.74902, 0.984314, 0.545098, 0.984314, 0)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mirsm"]
-gradient = SubResource("Gradient_kvylg")
-width = 256
-height = 256
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.2)
-metadata/_snap_enabled = true
-
-[sub_resource type="Gradient" id="Gradient_q8qp0"]
-offsets = PackedFloat32Array(0, 0.4, 1)
-colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_31oc7"]
-gradient = SubResource("Gradient_q8qp0")
-width = 256
-height = 256
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.2)
-metadata/_snap_enabled = true
-
-[sub_resource type="Gradient" id="Gradient_gm03p"]
-offsets = PackedFloat32Array(0.05, 0.45, 1)
-colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
+[sub_resource type="Gradient" id="Gradient_2afm3"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(0.768627, 0.741176, 0.788235, 1, 0.768627, 0.768627, 0.768627, 0.737255, 0.984314, 0.596078, 1, 0)
 metadata/_snap_enabled = true
 metadata/_snap_count = 20
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_6rtck"]
-gradient = SubResource("Gradient_gm03p")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r7mmn"]
+gradient = SubResource("Gradient_2afm3")
 width = 256
 height = 256
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.2)
+fill_to = Vector2(0.875, 0.25)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
+
+[sub_resource type="Gradient" id="Gradient_jn3cp"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
 metadata/_snap_enabled = true
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_4sa1y"]
-frames = 3
-frame_0/texture = SubResource("GradientTexture2D_mirsm")
-frame_0/duration = 0.05
-frame_1/texture = SubResource("GradientTexture2D_31oc7")
-frame_1/duration = 0.05
-frame_2/texture = SubResource("GradientTexture2D_6rtck")
-frame_2/duration = 0.05
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tglf0"]
+gradient = SubResource("Gradient_jn3cp")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.875, 0.25)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
 
 [sub_resource type="Resource" id="Resource_tglf0"]
 resource_local_to_scene = true
@@ -1377,81 +1356,169 @@ texture = ExtResource("34_q606i")
 script = ExtResource("21_3gmr6")
 medium = true
 
-[node name="AnimatedSprite2D" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
+[node name="AnimatedSprite2D12" type="PointLight2D" parent="Node2D2"]
 position = Vector2(144, 368)
-texture = SubResource("AnimatedTexture_4sa1y")
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D12"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D2" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
+[node name="AnimatedSprite2D13" type="PointLight2D" parent="Node2D2"]
+position = Vector2(749, 413)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D13"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D14" type="PointLight2D" parent="Node2D2"]
 position = Vector2(2640, 368)
-texture = SubResource("AnimatedTexture_4sa1y")
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D14"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D3" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
+[node name="AnimatedSprite2D15" type="PointLight2D" parent="Node2D2"]
 position = Vector2(3472, 368)
-texture = SubResource("AnimatedTexture_4sa1y")
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D15"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D4" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
-position = Vector2(3920, 416)
-texture = SubResource("AnimatedTexture_4sa1y")
+[node name="AnimatedSprite2D16" type="PointLight2D" parent="Node2D2"]
+position = Vector2(3917, 413)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D16"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D5" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
+[node name="AnimatedSprite2D17" type="PointLight2D" parent="Node2D2"]
 position = Vector2(4176, 368)
-texture = SubResource("AnimatedTexture_4sa1y")
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D17"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D6" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
+[node name="AnimatedSprite2D18" type="PointLight2D" parent="Node2D2"]
 position = Vector2(5648, 304)
-texture = SubResource("AnimatedTexture_4sa1y")
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D18"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D7" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
-position = Vector2(6224, 416)
-texture = SubResource("AnimatedTexture_4sa1y")
+[node name="AnimatedSprite2D19" type="PointLight2D" parent="Node2D2"]
+position = Vector2(6222, 412)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D19"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D9" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
+[node name="AnimatedSprite2D20" type="PointLight2D" parent="Node2D2"]
 position = Vector2(6992, 368)
-texture = SubResource("AnimatedTexture_4sa1y")
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D20"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D10" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
+[node name="AnimatedSprite2D21" type="PointLight2D" parent="Node2D2"]
 position = Vector2(7664, 368)
-texture = SubResource("AnimatedTexture_4sa1y")
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D21"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D11" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
-position = Vector2(8624, 416)
-texture = SubResource("AnimatedTexture_4sa1y")
-metadata/_edit_lock_ = true
+[node name="AnimatedSprite2D22" type="PointLight2D" parent="Node2D2"]
+position = Vector2(8622, 412)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_r7mmn")
+script = ExtResource("43_3rjv4")
+metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D8" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("49_vv1sm")
-position = Vector2(752, 416)
-texture = SubResource("AnimatedTexture_4sa1y")
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D22"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tglf0")
 metadata/_edit_lock_ = true
 
 [node name="QuestionBlock" parent="." instance=ExtResource("44_3rjv4")]
