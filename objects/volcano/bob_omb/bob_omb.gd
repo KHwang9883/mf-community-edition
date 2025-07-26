@@ -64,7 +64,9 @@ func fired() -> void:
 
 
 func _initiate_explosion() -> void:
-	await get_tree().create_timer(1.0, false).timeout
+	get_tree().create_timer(1.0, false).timeout.connect(_explode, CONNECT_ONE_SHOT)
+
+func _explode() -> void:
 	if Thunder.view.is_getting_closer(self, 64):
 		Audio.play_sound(explosion_sound, self, false, { ignore_pause = true })
 		var cam: PlayerCamera2D = Thunder._current_camera
