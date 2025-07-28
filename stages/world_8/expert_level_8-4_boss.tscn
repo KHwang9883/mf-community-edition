@@ -1,0 +1,219 @@
+[gd_scene load_steps=28 format=4 uid="uid://cueg4hektims0"]
+
+[ext_resource type="Script" uid="uid://iendjcqnqnrm" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_q3ccw"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_booer"]
+[ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="3_f3u0s"]
+[ext_resource type="AudioStream" uid="uid://dtl81bgntkqwv" path="res://music/cutscene/ending_part_1.it" id="4_brvmi"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_2bs1o"]
+[ext_resource type="Script" uid="uid://cv1j6q1os8w8f" path="res://stages/world_8/scripts/story_mode_secret_activator.gd" id="6_wnd4s"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_h7e1n"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_2vl5g"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_ljt3a"]
+[ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="10_tx0cm"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_qxtv3"]
+[ext_resource type="Texture2D" uid="uid://b1e2q1aijm7lm" path="res://gfx/backgrounds/8-4-boss.png" id="12_1untc"]
+[ext_resource type="PackedScene" uid="uid://d2bajdy6e54hb" path="res://objects/final_boss_cell/final_boss_cell.tscn" id="13_yi32i"]
+[ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="14_hmsxh"]
+[ext_resource type="AudioStream" uid="uid://bwlhej5mao270" path="res://music/smw2-bowser.ogg" id="15_mld3i"]
+[ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="16_mrvsw"]
+[ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="17_v5cbv"]
+[ext_resource type="PackedScene" uid="uid://bqxorfeujkfsl" path="res://stages/world_8/objects/lava_bowser_8-4.tscn" id="18_5bd8d"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_tg0ou"]
+[ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="20_jk6in"]
+[ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="21_booer"]
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_8xn02"]
+
+[sub_resource type="Curve2D" id="Curve2D_05e3f"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64, 0, 0, 0, 0, 0, -64, 0)
+}
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_8vy0w"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fegcr"]
+gradient = SubResource("Gradient_8vy0w")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_3cqhw"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8byrw"]
+gradient = SubResource("Gradient_3cqhw")
+width = 112
+
+[node name="Level8-4Boss" type="Node2D"]
+script = ExtResource("1_q3ccw")
+time = -1
+completion_write_save = false
+jump_to_scene = "res://stages/cutscenes/ending/part_1/ending_part_1.tscn"
+completion_center_on_player_after_transition = true
+
+[node name="MusicLoader" type="Node" parent="."]
+script = ExtResource("2_booer")
+music_var_1 = Array[Resource]([SubResource("AudioStreamWAV_8xn02")])
+boss_music_var_2 = ExtResource("3_f3u0s")
+boss_music_var_3 = ExtResource("3_f3u0s")
+boss_music_volume_db = Array[float]([0.0, 0.0, 0.0])
+boss_music_start_from_sec = Array[float]([0.0, 0.0, 0.0])
+music = Array[Resource]([ExtResource("4_brvmi")])
+play_immediately = false
+play_globally = 2
+volume_db = Array[float]([12.0])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("5_2bs1o")]
+secrets = Array[String](["story mode no hit", "story mode no death", "story mode in secret mode", "story mode no warps", "story mode beetroot"])
+show_toast = null
+is_classic_achievement = null
+progress_by_id = null
+progress_to = null
+
+[node name="Node" type="Node" parent="SecretUnlocker"]
+script = ExtResource("6_wnd4s")
+
+[node name="Mario" parent="." instance=ExtResource("7_h7e1n")]
+position = Vector2(96, 336)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("8_2vl5g")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("9_ljt3a")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAsAAgAAAAAAAAABAAsAAgAAAAAAAAACAAsAAgAAAAAAAAADAAsAAgAAAAAAAAAEAAsAAgAAAAAAAAAFAAsAAgAAAAAAAAAGAAsAAgAAAAAAAAAHAAsAAgAAAAAAAAAIAAsAAgAAAAAAAAAJAAsAAgAAAAAAAAAKAAsAAgAAAAAAAAALAAsAAgAAAAAAAAAMAAsAAgAAAAAAAAANAAsAAgAAAAAAAAAOAAsAAgAAAAAAAAAPAAsAAgAAAAAAAAAQAAsAAgAAAAAAAAARAAsAAgAAAAAAAAASAAsAAgAAAAAAAAATAAsAAgAAAAAAAAAUAAsAAgAAAAAAAAAVAAsAAAACAAAAAAAWAAsAAAACAAAAAAAXAAsAAAACAAAAAAAYAAsAAAACAAAAAAAZAAsAAAACAAAAAAAZAAoAAAACAAAAAAAZAAkAAAACAAAAAAAZAAgAAAACAAAAAAAZAAcAAAACAAAAAAAZAAYAAAACAAAAAAAZAAUAAAACAAAAAAAZAAQAAAACAAAAAAAZAAMAAAACAAAAAAAZAAIAAAACAAAAAAAZAAEAAAACAAAAAAAZAAAAAAACAAAAAAAZAP//AAACAAAAAAAZAP7/AAACAAAAAAAZAP3/AAACAAAAAAAZAPz/AAACAAAAAAAZAPv/AAACAAAAAAAZAPr/AAACAAAAAAAZAPn/AAACAAAAAAAZAPj/AAACAAAAAAAZAPf/AAACAAAAAAAZAPb/AAACAAAAAAAZAPX/AAACAAAAAAD//wsAAgAAAAAAAAA=")
+tile_set = ExtResource("10_tx0cm")
+navigation_enabled = false
+
+[node name="HUD" parent="." instance=ExtResource("11_qxtv3")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(640, 480)
+
+[node name="8-4-boss" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(320, 240)
+texture = ExtResource("12_1untc")
+metadata/_edit_lock_ = true
+
+[node name="FinalBossCell" parent="." instance=ExtResource("13_yi32i")]
+position = Vector2(320, 160)
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("14_hmsxh")]
+position = Vector2(384, 240)
+curve = SubResource("Curve2D_05e3f")
+trigger_area = Rect2(0, 0, 640, 480)
+trigger_bowser = NodePath("../Bowser")
+boss_music = ExtResource("15_mld3i")
+
+[node name="Bowser" parent="." instance=ExtResource("16_mrvsw")]
+position = Vector2(544, 320)
+health = 21
+status_interval = Array[float]([3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0])
+status = Array[StringName]([&"multiflames", &"hammer", &"hammer", &"hammer", &"hammer", &"post_hammer", &"flame", &"flame", &"burst", &"flame", &"flame", &"flame", &"flame", &"flame"])
+hammer_amount = 15
+hammer_interval = 0.12
+burst_fireball_amount = 50
+y_offset = -52
+speed = Vector2(150, 0)
+
+[node name="BowserEdge" parent="." instance=ExtResource("17_v5cbv")]
+position = Vector2(16, 112)
+
+[node name="BowserEdge2" parent="." instance=ExtResource("17_v5cbv")]
+position = Vector2(624, 112)
+
+[node name="Lava" parent="." instance=ExtResource("21_booer")]
+offset_left = 640.0
+offset_top = 432.0
+offset_right = 672.0
+offset_bottom = 496.0
+
+[node name="Lava2" parent="." instance=ExtResource("21_booer")]
+offset_left = -32.0
+offset_top = 432.0
+offset_right = 0.0
+offset_bottom = 496.0
+
+[node name="LavaBowser" parent="." instance=ExtResource("18_5bd8d")]
+position = Vector2(16, 448)
+
+[node name="Node2D" type="Node2D" parent="LavaBowser"]
+script = ExtResource("19_tg0ou")
+
+[node name="ochko" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(368, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("20_jk6in")
+
+[node name="ochko5" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(488, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("20_jk6in")
+
+[node name="ochko6" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(608, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("20_jk6in")
+
+[node name="ochko2" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(248, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("20_jk6in")
+
+[node name="ochko3" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(128, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("20_jk6in")
+
+[node name="ochko4" type="PointLight2D" parent="LavaBowser/Node2D"]
+position = Vector2(16, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_fegcr")
+offset = Vector2(0, 8)
+script = ExtResource("20_jk6in")
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("19_tg0ou")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+z_index = -20
+position = Vector2(648, 0)
+rotation = 1.5708
+scale = Vector2(1, 656)
+texture = SubResource("GradientTexture1D_8byrw")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node2D"]
+z_index = -20
+position = Vector2(-8, 0)
+rotation = -1.5708
+scale = Vector2(1, 656)
+texture = SubResource("GradientTexture1D_8byrw")
+centered = false
+
+[connection signal="level_completed" from="." to="SecretUnlocker/Node" method="perform_checks_and_unlock"]

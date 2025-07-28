@@ -20,7 +20,7 @@ const STUN = preload("res://engine/objects/projectiles/sounds/stun.wav")
 
 @onready var fire_markers: Node2D = $FireMarkers
 @onready var marker_konchik: Marker2D = $FireMarkers/MarkerKonch
-@onready var svo: GravityBody2D = $"сво/GravityBody2D"
+@onready var svo: GravityBody2D = $"breakage/GravityBody2D"
 @onready var brick_generators = $BrickGenerators
 
 var _original_time_scale: float

@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=4 uid="uid://7rinfxlb1vg1"]
+[gd_scene load_steps=110 format=4 uid="uid://7rinfxlb1vg1"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_kxxhg"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_215gl"]
@@ -16,6 +16,7 @@
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="10_dsvwq"]
 [ext_resource type="Texture2D" uid="uid://b4a6uqe5qsgqw" path="res://gfx/bgs/pillars_resized.png" id="10_wv2lc"]
 [ext_resource type="Texture2D" uid="uid://lirhnncdo6ns" path="res://gfx/bgs/woods_resized.png" id="11_5tc7m"]
+[ext_resource type="Script" uid="uid://mfmnvlxhuy05" path="res://stages/extra/world_12/scripts/12-2_toxic_fixer.gd" id="11_tpa6j"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="15_mider"]
 [ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="16_jagmj"]
 [ext_resource type="PackedScene" uid="uid://cdy83ngygjgs1" path="res://objects/toxic_water/toxic_water_area.tscn" id="17_0ty6b"]
@@ -871,6 +872,9 @@ offset_top = -1184.0
 offset_right = 6880.0
 offset_bottom = 480.0
 smooth_transition = true
+
+[node name="Node" type="Node" parent="CamArea2"]
+script = ExtResource("11_tpa6j")
 
 [node name="HUD" parent="." instance=ExtResource("8_1jhqn")]
 layer = 2
@@ -2614,6 +2618,7 @@ visibility_rect = Rect2(-160, -128, 320, 160)
 process_material = SubResource("ParticleProcessMaterial_jagmj")
 script = ExtResource("39_jagmj")
 
+[connection signal="view_section_changed" from="CamArea2" to="CamArea2/Node" method="_on_cam_area_2_view_section_changed"]
 [connection signal="finished" from="Water14/Node2D2/LavaBubbles12" to="Water14/Node2D2/LavaBubbles12" method="queue_free"]
 [connection signal="finished" from="Water14/Node2D2/LavaBubbles13" to="Water14/Node2D2/LavaBubbles13" method="queue_free"]
 [connection signal="finished" from="Node2D2/LavaBubbles" to="Node2D2/LavaBubbles" method="queue_free"]
