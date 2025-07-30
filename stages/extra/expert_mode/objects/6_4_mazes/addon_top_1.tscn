@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=4 uid="uid://mex0huuul2ge"]
+
+[ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="1_7iem2"]
+[ext_resource type="Texture2D" uid="uid://c7nrslfgsidtm" path="res://engine/objects/enemies/spikes/textures/spike_castle.png" id="2_hvety"]
+[ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="3_achtt"]
+[ext_resource type="PackedScene" uid="uid://uhf6frao7p1m" path="res://engine/objects/enemies/podoboo/podoboo.tscn" id="4_ob7q2"]
+[ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="5_n542b"]
+[ext_resource type="PackedScene" uid="uid://ndc3gacjmer2" path="res://stages/world_6/objects/long_platform/long_platform.tscn" id="6_d68cs"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="7_1p2f6"]
+[ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="8_8xka3"]
+[ext_resource type="PackedScene" uid="uid://crb8jkwa0r1dl" path="res://engine/objects/enemies/spinies/spiny_iron.tscn" id="9_onlor"]
+
+[sub_resource type="Gradient" id="Gradient_42xtm"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jjlqr"]
+gradient = SubResource("Gradient_42xtm")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[node name="Addon1" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAC3AAgAAAACAAAAAAC3AAkAAAACAAAAAAC3AAoAAAACAAAAAAC3AAsAAAACAAAAAAC3AAwAAAACAAAAAAC3AA0AAAABAAIAAAC3AA4AAAABAAEAAADEAAAAAAAAAAAAAADEAP//AAACAAAAAADEAP7/AAACAAAAAADEAP3/AAACAAAAAADEAPz/AAACAAAAAADEAPv/AAACAAAAAADEAPr/AAACAAAAAADEAPn/AAACAAAAAADEAPj/AAACAAAAAADEAPf/AAACAAAAAAC3AAQAAAACAAAAAAC3AAUAAAACAAAAAAC3AAYAAAACAAAAAAC3AAcAAAACAAAAAAC3AAMAAAACAAAAAADFAAAAAAABAAAAAADGAAAAAAAAAAAAAADHAAAAAAABAAAAAADFAAEAAAAAAAAAAADGAAEAAAABAAAAAADEAAEAAAACAAAAAADHAAEAAAACAAAAAADHAPf/AAACAAAAAADHAPj/AAACAAAAAADHAPn/AAACAAAAAADHAPr/AAACAAAAAADHAPv/AAACAAAAAADHAPz/AAACAAAAAADHAP3/AAACAAAAAADHAP7/AAACAAAAAADHAP//AAACAAAAAAC9AAAAAAABAAAAAAC9AAEAAAAAAAAAAAC+AAAAAAAAAAAAAAC+AAEAAAABAAAAAAC/AAAAAAABAAAAAAC/AAEAAAACAAAAAAC8APf/AAACAAAAAAC8APj/AAACAAAAAAC8APn/AAACAAAAAAC8APr/AAACAAAAAAC8APv/AAACAAAAAAC8APz/AAACAAAAAAC8AP3/AAACAAAAAAC8AP7/AAACAAAAAAC8AP//AAACAAAAAAC8AAAAAAAAAAAAAAC8AAEAAAACAAAAAAC/APf/AAACAAAAAAC/APj/AAACAAAAAAC/APn/AAACAAAAAAC/APr/AAACAAAAAAC/APv/AAACAAAAAAC/APz/AAACAAAAAAC/AP3/AAACAAAAAAC/AP7/AAACAAAAAAC/AP//AAACAAAAAADBAAcAAwAAAAAAAADBAAgAAwAAAAEAAADCAAcAAwABAAAAAADCAAgAAwABAAEAAADBAAkAAwAAAAEAAADCAAkAAwABAAEAAADBAAoAAwAAAAEAAADCAAoAAwABAAEAAADBAAsAAwAAAAEAAADCAAsAAwABAAEAAADBAAwAAwAAAAEAAADCAAwAAwABAAEAAADBAA0AAAACAAEAAADCAA0AAAABAAEAAADBAA4AAAACAAMAAADCAA4AAAADAAMAAAC2AA0AAAAAAAIAAAC2AA4AAAAAAAEAAADKAA0AAAADAAIAAADKAA4AAAADAAEAAADJAA0AAAACAAIAAADJAA4AAAACAAEAAADAAAoAAAACAAAAAADDAAoAAAACAAAAAADOAAIAAAACAAAAAADOAAEAAAACAAAAAADOAAAAAAACAAAAAADOAP//AAACAAAAAADOAP7/AAACAAAAAADOAP3/AAACAAAAAADOAPz/AAACAAAAAADOAPv/AAACAAAAAADOAPr/AAACAAAAAADOAPn/AAACAAAAAADOAPj/AAACAAAAAADOAPf/AAACAAAAAADNAPf/AAACAAAAAADMAPf/AAACAAAAAADLAPf/AAACAAAAAADKAPf/AAACAAAAAADJAPf/AAACAAAAAADIAPf/AAACAAAAAAA=")
+tile_set = ExtResource("1_7iem2")
+
+[node name="SpikeCastle" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(5840, 352)
+rotation = 1.5708
+texture = ExtResource("2_hvety")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 32)
+
+[node name="SpikeCastle2" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(5840, 192)
+rotation = 1.5708
+texture = ExtResource("2_hvety")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 32)
+
+[node name="Lava" parent="." instance=ExtResource("3_achtt")]
+offset_left = 5888.0
+offset_top = 416.0
+offset_right = 6176.0
+offset_bottom = 496.0
+
+[node name="Lava2" parent="." instance=ExtResource("3_achtt")]
+offset_left = 6240.0
+offset_top = 416.0
+offset_right = 6432.0
+offset_bottom = 496.0
+
+[node name="Podoboo" parent="." instance=ExtResource("4_ob7q2")]
+position = Vector2(6352, 432)
+interval = 0.5
+jumping_height = 320.0
+
+[node name="Podoboo2" parent="." instance=ExtResource("4_ob7q2")]
+position = Vector2(5968, 432)
+interval = 1.0
+jumping_height = 320.0
+
+[node name="PiranhaPink" parent="." instance=ExtResource("5_n542b")]
+position = Vector2(6208, 224)
+
+[node name="PlatformPath" parent="." instance=ExtResource("6_d68cs")]
+position = Vector2(6016, 192)
+falling_enabled = true
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("7_1p2f6")
+
+[node name="ochko2" type="PointLight2D" parent="Node2D"]
+position = Vector2(6271, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("8_8xka3")
+
+[node name="ochko5" type="PointLight2D" parent="Node2D"]
+position = Vector2(6399, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("8_8xka3")
+
+[node name="ochko3" type="PointLight2D" parent="Node2D"]
+position = Vector2(6103, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("8_8xka3")
+
+[node name="ochko4" type="PointLight2D" parent="Node2D"]
+position = Vector2(5968, 434)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_jjlqr")
+offset = Vector2(0, 8)
+script = ExtResource("8_8xka3")
+
+[node name="SpinyIron" parent="." instance=ExtResource("9_onlor")]
+position = Vector2(6574, 240)

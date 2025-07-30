@@ -7,9 +7,9 @@ const game_key: String = "Mario_Forever_Community_Edition_Update"
 
 const url: String = \
 
-#"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
+"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
 
-"https://gist.githubusercontent.com/jue131/eab20a1ed3661d92106f298ba78aedad/raw/beta_mfce_update_check.json"
+#"https://gist.githubusercontent.com/jue131/eab20a1ed3661d92106f298ba78aedad/raw/beta_mfce_update_check.json"
 
 var url_open: String = "https://gist.github.com/jue131/f7ad31818af19fa91b5175cb67340529"
 
@@ -28,7 +28,7 @@ var has_update: bool
 var checking_tween: Tween
 
 func _ready() -> void:
-	push_warning("CHANGE URL ON PUBLIC RELEASE at update_checker.gd")
+	#push_warning("CHANGE URL ON PUBLIC RELEASE at update_checker.gd")
 	SettingsManager.show_mouse()
 	update_checking.visible = false
 	update_found.visible = false
