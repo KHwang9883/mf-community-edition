@@ -27,6 +27,7 @@ func entered() -> void:
 	
 	camera.teleport(false, true)
 	camera._xscroll = old_xscroll
+	camera.teleport(false, false)
 	camera.reset_physics_interpolation()
 	camera.stop_blocking_edges = false
 	camera.set(&"ignore_retro_scroll", false)

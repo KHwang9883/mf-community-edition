@@ -1,4 +1,4 @@
-[gd_scene load_steps=132 format=4 uid="uid://crhxcrt7ulu0q"]
+[gd_scene load_steps=134 format=4 uid="uid://crhxcrt7ulu0q"]
 
 [ext_resource type="Script" uid="uid://by7oafruhi7h4" path="res://stages/world_1/scripts/level_1_4.gd" id="1_cbjld"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_y2c75"]
@@ -77,6 +77,8 @@
 [ext_resource type="PackedScene" uid="uid://ccocwhjh7r450" path="res://objects/bullet_launcher_timer/bullet_launcher_timer.tscn" id="74_5bll7"]
 [ext_resource type="PackedScene" uid="uid://dty7hkbg5qsn2" path="res://objects/volcano/bomb_launcher/bomb_launcher_base.tscn" id="75_fkwji"]
 [ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="76_fkwji"]
+[ext_resource type="Script" uid="uid://c245k36x0shwv" path="res://stages/extra/expert_mode/scripts/bowser_flame_generator.gd" id="78_n3sgc"]
+[ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="79_pgfcd"]
 
 [sub_resource type="Curve2D" id="Curve2D_rfyok"]
 _data = {
@@ -596,6 +598,7 @@ position = Vector2(12672, 224)
 curve = SubResource("Curve2D_rfyok")
 trigger_area = Rect2(0, 0, 32, 960)
 trigger_bowser = NodePath("../Bowser")
+camera_speed = 60.0
 boss_music = ExtResource("8_80q72")
 
 [node name="CameraArea" parent="." instance=ExtResource("9_3rk3y")]
@@ -2456,7 +2459,33 @@ texture = SubResource("GradientTexture2D_pgfcd")
 [node name="СкрываниеПерехода" parent="Water3/WaterMax/Parallax2D" index="2"]
 texture = SubResource("GradientTexture2D_rjqw2")
 
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(7760, 272)
+script = ExtResource("78_n3sgc")
+stop_trigger_pos_x = 13024.0
+projectile_inst = ExtResource("79_pgfcd")
+
+[node name="Timer" type="Timer" parent="Marker2D"]
+process_callback = 0
+wait_time = 3.0
+
+[node name="Marker2D2" type="Marker2D" parent="."]
+position = Vector2(7760, 272)
+script = ExtResource("78_n3sgc")
+stop_trigger_pos_x = 13024.0
+time_offset_sec = 1.6
+projectile_inst = ExtResource("79_pgfcd")
+multiple_flames = [0.0, 1.0, 2.0]
+
+[node name="Timer" type="Timer" parent="Marker2D2"]
+process_callback = 0
+wait_time = 3.0
+
+[connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]
+[connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D2" method="_on_bowser_trigger_bowser_triggered"]
 [connection signal="warp_started" from="PipeIn" to="Sign3" method="show"]
+[connection signal="timeout" from="Marker2D/Timer" to="Marker2D" method="_on_timer_timeout"]
+[connection signal="timeout" from="Marker2D2/Timer" to="Marker2D2" method="_on_timer_timeout"]
 
 [editable path="FallingStone"]
 [editable path="FallingStone2"]

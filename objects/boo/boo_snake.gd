@@ -1,6 +1,6 @@
 extends GravityBody2D
 
-const ADD_EFFECT = preload("res://materials/add_effect.tres")
+const ADD_EFFECT = preload("res://engine/shaders/add_effect.tres")
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://cueg4hektims0"]
+[gd_scene load_steps=31 format=4 uid="uid://cueg4hektims0"]
 
 [ext_resource type="Script" uid="uid://iendjcqnqnrm" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_q3ccw"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_booer"]
@@ -14,10 +14,13 @@
 [ext_resource type="Texture2D" uid="uid://b1e2q1aijm7lm" path="res://gfx/backgrounds/8-4-boss.png" id="12_1untc"]
 [ext_resource type="PackedScene" uid="uid://d2bajdy6e54hb" path="res://objects/final_boss_cell/final_boss_cell.tscn" id="13_yi32i"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="14_hmsxh"]
+[ext_resource type="Script" uid="uid://cunxwcc5vvgob" path="res://stages/extra/expert_mode/scripts/bowser_advance_trigger.gd" id="15_brvmi"]
 [ext_resource type="AudioStream" uid="uid://bwlhej5mao270" path="res://music/smw2-bowser.ogg" id="15_mld3i"]
+[ext_resource type="Script" uid="uid://bvmuncyek1tsx" path="res://stages/extra/expert_mode/scripts/bowser_advance_checker.gd" id="16_f3u0s"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="16_mrvsw"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="17_v5cbv"]
 [ext_resource type="PackedScene" uid="uid://bqxorfeujkfsl" path="res://stages/world_8/objects/lava_bowser_8-4.tscn" id="18_5bd8d"]
+[ext_resource type="Script" uid="uid://bhv5ojme5xisw" path="res://stages/extra/expert_mode/scripts/world_8_4_bowser.gd" id="19_2bs1o"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_tg0ou"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="20_jk6in"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="21_booer"]
@@ -26,9 +29,9 @@
 
 [sub_resource type="Curve2D" id="Curve2D_05e3f"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -64, 0, 0, 0, 0, 0, -64, 0)
+"points": PackedVector2Array(0, 0, 0, 0, -64, 0)
 }
-point_count = 2
+point_count = 1
 
 [sub_resource type="Gradient" id="Gradient_8vy0w"]
 colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
@@ -92,7 +95,7 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="Layer0" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAsAAgAAAAAAAAABAAsAAgAAAAAAAAACAAsAAgAAAAAAAAADAAsAAgAAAAAAAAAEAAsAAgAAAAAAAAAFAAsAAgAAAAAAAAAGAAsAAgAAAAAAAAAHAAsAAgAAAAAAAAAIAAsAAgAAAAAAAAAJAAsAAgAAAAAAAAAKAAsAAgAAAAAAAAALAAsAAgAAAAAAAAAMAAsAAgAAAAAAAAANAAsAAgAAAAAAAAAOAAsAAgAAAAAAAAAPAAsAAgAAAAAAAAAQAAsAAgAAAAAAAAARAAsAAgAAAAAAAAASAAsAAgAAAAAAAAATAAsAAgAAAAAAAAAUAAsAAgAAAAAAAAAVAAsAAAACAAAAAAAWAAsAAAACAAAAAAAXAAsAAAACAAAAAAAYAAsAAAACAAAAAAAZAAsAAAACAAAAAAAZAAoAAAACAAAAAAAZAAkAAAACAAAAAAAZAAgAAAACAAAAAAAZAAcAAAACAAAAAAAZAAYAAAACAAAAAAAZAAUAAAACAAAAAAAZAAQAAAACAAAAAAAZAAMAAAACAAAAAAAZAAIAAAACAAAAAAAZAAEAAAACAAAAAAAZAAAAAAACAAAAAAAZAP//AAACAAAAAAAZAP7/AAACAAAAAAAZAP3/AAACAAAAAAAZAPz/AAACAAAAAAAZAPv/AAACAAAAAAAZAPr/AAACAAAAAAAZAPn/AAACAAAAAAAZAPj/AAACAAAAAAAZAPf/AAACAAAAAAAZAPb/AAACAAAAAAAZAPX/AAACAAAAAAD//wsAAgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAsAAgAAAAAAAAABAAsAAgAAAAAAAAACAAsAAgAAAAAAAAADAAsAAgAAAAAAAAAEAAsAAgAAAAAAAAAFAAsAAgAAAAAAAAAGAAsAAgAAAAAAAAAHAAsAAgAAAAAAAAAIAAsAAgAAAAAAAAAJAAsAAgAAAAAAAAAKAAsAAgAAAAAAAAALAAsAAgAAAAAAAAAMAAsAAgAAAAAAAAANAAsAAgAAAAAAAAAOAAsAAgAAAAAAAAAPAAsAAgAAAAAAAAAQAAsAAgAAAAAAAAARAAsAAgAAAAAAAAASAAsAAgAAAAAAAAATAAsAAgAAAAAAAAAUAAsAAgAAAAAAAAAVAAsAAAACAAAAAAAWAAsAAAACAAAAAAAXAAsAAAACAAAAAAAYAAsAAAACAAAAAAAZAAsAAAACAAAAAAAZAAoAAAACAAAAAAAZAAkAAAACAAAAAAAZAAgAAAACAAAAAAAZAAcAAAACAAAAAAAZAAYAAAACAAAAAAAZAAUAAAACAAAAAAAZAAQAAAACAAAAAAAZAAMAAAACAAAAAAAZAAIAAAACAAAAAAAZAAEAAAACAAAAAAAZAAAAAAACAAAAAAAZAP//AAACAAAAAAAZAP7/AAACAAAAAAAZAP3/AAACAAAAAAAZAPz/AAACAAAAAAAZAPv/AAACAAAAAAAZAPr/AAACAAAAAAAZAPn/AAACAAAAAAAZAPj/AAACAAAAAAAZAPf/AAACAAAAAAAZAPb/AAACAAAAAAAZAPX/AAACAAAAAAD//wsAAgAAAAAAAAD//wMAAgAAAAAAAAAAAAMAAgAAAAAAAAABAAMAAgAAAAAAAAACAAMAAgAAAAAAAAADAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAAFAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAHAAMAAgAAAAAAAAAIAAMAAgAAAAAAAAAJAAMAAgAAAAAAAAAKAAMAAgAAAAAAAAALAAMAAgAAAAAAAAAMAAMAAgAAAAAAAAANAAMAAgAAAAAAAAAOAAMAAgAAAAAAAAAPAAMAAgAAAAAAAAAQAAMAAgAAAAAAAAARAAMAAgAAAAAAAAASAAMAAgAAAAAAAAATAAMAAgAAAAAAAAAUAAMAAgAAAAAAAAA=")
 tile_set = ExtResource("10_tx0cm")
 navigation_enabled = false
 
@@ -109,16 +112,24 @@ texture = ExtResource("12_1untc")
 metadata/_edit_lock_ = true
 
 [node name="FinalBossCell" parent="." instance=ExtResource("13_yi32i")]
-position = Vector2(320, 160)
+modulate = Color(0.5, 0.5, 0.5, 1)
+z_index = -1
+position = Vector2(320, 224)
 
 [node name="Objects" type="Node2D" parent="."]
 
-[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("14_hmsxh")]
+[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser_2", "trigger_bowser") instance=ExtResource("14_hmsxh")]
 position = Vector2(384, 240)
 curve = SubResource("Curve2D_05e3f")
+script = ExtResource("15_brvmi")
+trigger_bowser_2 = NodePath("../Bowser2")
 trigger_area = Rect2(0, 0, 640, 480)
 trigger_bowser = NodePath("../Bowser")
 boss_music = ExtResource("15_mld3i")
+metadata/_edit_lock_ = true
+
+[node name="Node" type="Node" parent="BowserTrigger"]
+script = ExtResource("16_f3u0s")
 
 [node name="Bowser" parent="." instance=ExtResource("16_mrvsw")]
 position = Vector2(544, 320)
@@ -128,8 +139,29 @@ status = Array[StringName]([&"multiflames", &"hammer", &"hammer", &"hammer", &"h
 hammer_amount = 15
 hammer_interval = 0.12
 burst_fireball_amount = 50
+finish_on_death = false
 y_offset = -52
 speed = Vector2(150, 0)
+
+[node name="Bowser2" parent="." instance=ExtResource("16_mrvsw")]
+position = Vector2(544, 144)
+rotation = -3.14159
+script = ExtResource("19_2bs1o")
+health = 21
+status_interval = Array[float]([3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0])
+status = Array[StringName]([&"multiflames", &"hammer", &"hammer", &"hammer", &"hammer", &"post_hammer", &"flame", &"flame", &"burst", &"flame", &"flame", &"flame", &"flame", &"flame"])
+flame = null
+hammer = null
+hammer_amount = 15
+hammer_interval = 0.12
+burst_fireball = null
+burst_fireball_amount = 50
+jumping_speed = -300.0
+finish_on_death = false
+y_offset = -8
+speed = Vector2(150, 0)
+gravity_dir = Vector2(0, -1)
+gravity_scale = -0.15
 
 [node name="BowserEdge" parent="." instance=ExtResource("17_v5cbv")]
 position = Vector2(16, 112)
@@ -199,6 +231,8 @@ script = ExtResource("20_jk6in")
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("19_tg0ou")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 z_index = -20

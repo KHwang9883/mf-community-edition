@@ -62,3 +62,8 @@ func _toggled_option(old_value: Variant) -> void:
 	if old_value != tweak:
 		var _sfx = CharacterManager.get_sound_replace(toggle_sound, toggle_sound, "menu_toggle", false)
 		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
+
+
+func _handle_right_click() -> void:
+	if focused && tweak_description_text:
+		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)

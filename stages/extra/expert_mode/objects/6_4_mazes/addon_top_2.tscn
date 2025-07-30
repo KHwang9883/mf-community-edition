@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=4 uid="uid://dqcjbqpp42rjk"]
+
+[ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="1_w42yx"]
+[ext_resource type="Texture2D" uid="uid://c7nrslfgsidtm" path="res://engine/objects/enemies/spikes/textures/spike_castle.png" id="2_dxy7b"]
+[ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="3_28xu6"]
+[ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="4_wgyv8"]
+[ext_resource type="Material" uid="uid://bqbnhvliq3s32" path="res://engine/shaders/add_unshaded_effect.tres" id="5_534pp"]
+[ext_resource type="PackedScene" uid="uid://b4bjvmqtj8nv0" path="res://engine/objects/enemies/dry_bones/dry_bones.tscn" id="6_556a5"]
+
+[node name="Addon2" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAC3AAgAAAACAAAAAAC3AAkAAAACAAAAAAC3AAoAAAACAAAAAAC3AAsAAAACAAAAAAC3AAwAAAACAAAAAADEAAAAAAAAAAAAAAC3AAQAAAACAAAAAAC3AAUAAAACAAAAAAC3AAYAAAACAAAAAAC3AAcAAAACAAAAAAC3AAMAAAACAAAAAADFAAAAAAABAAAAAADGAAAAAAAAAAAAAADHAAAAAAABAAAAAADFAAEAAAAAAAAAAADGAAEAAAABAAAAAADEAAEAAAABAAAAAADHAAEAAAACAAAAAADHAPf/AAACAAAAAADHAPj/AAACAAAAAADHAPn/AAACAAAAAADHAPr/AAACAAAAAADHAPv/AAACAAAAAADHAPz/AAACAAAAAADHAP3/AAACAAAAAADHAP7/AAACAAAAAADHAP//AAACAAAAAAC9AAAAAAABAAAAAAC9AAEAAAAAAAAAAAC+AAAAAAAAAAAAAAC+AAEAAAABAAAAAAC/AAAAAAABAAAAAAC/AAEAAAAAAAAAAAC8APf/AAACAAAAAAC8APj/AAACAAAAAAC8APn/AAACAAAAAAC8APr/AAACAAAAAAC8APv/AAACAAAAAAC8APz/AAACAAAAAAC8AP3/AAACAAAAAAC8AP7/AAACAAAAAAC8AP//AAACAAAAAAC8AAAAAAAAAAAAAAC8AAEAAAACAAAAAADAAAEAAAABAAAAAADAAAAAAAAAAAAAAADBAAAAAAABAAAAAADBAAEAAAAAAAAAAADCAAEAAAABAAAAAADCAAAAAAAAAAAAAADDAAAAAAABAAAAAADDAAEAAAAAAAAAAAC5AAUAAAACAAAAAAC7AAgAAAACAAAAAAC9AAkAAAACAAAAAADAAAgAAAACAAAAAADCAAkAAAACAAAAAADFAAkAAAACAAAAAADHAAgAAAACAAAAAADJAAUAAAACAAAAAAC3AA4AAAABAAAAAAC3AA0AAAACAAAAAAC/AAIAAAACAAAAAADEAAIAAAACAAAAAADDAAwAAAACAAAAAAC+AAwAAAACAAAAAADOAAAAAAACAAAAAADOAAEAAAACAAAAAADOAAIAAAACAAAAAADOAP//AAACAAAAAADOAP7/AAACAAAAAADOAP3/AAACAAAAAADOAPz/AAACAAAAAADOAPv/AAACAAAAAADOAPr/AAACAAAAAADOAPn/AAACAAAAAADOAPj/AAACAAAAAADOAPf/AAACAAAAAADNAPf/AAACAAAAAADMAPf/AAACAAAAAADLAPf/AAACAAAAAADKAPf/AAACAAAAAADJAPf/AAACAAAAAADIAPf/AAACAAAAAAA=")
+tile_set = ExtResource("1_w42yx")
+
+[node name="SpikeCastle" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(5840, 352)
+rotation = 1.5708
+texture = ExtResource("2_dxy7b")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 32)
+
+[node name="SpikeCastle2" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(5840, 192)
+rotation = 1.5708
+texture = ExtResource("2_dxy7b")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 32)
+
+[node name="RotoCenter" parent="." instance=ExtResource("3_28xu6")]
+position = Vector2(6128, 80)
+
+[node name="RotoRed" parent="RotoCenter" instance=ExtResource("4_wgyv8")]
+z_index = 1
+material = ExtResource("5_534pp")
+position = Vector2(0, -150)
+phase = -90.0
+frequency = -50.0
+
+[node name="RotoCenter3" parent="." instance=ExtResource("3_28xu6")]
+position = Vector2(6288, 80)
+
+[node name="RotoRed" parent="RotoCenter3" instance=ExtResource("4_wgyv8")]
+z_index = 1
+material = ExtResource("5_534pp")
+position = Vector2(0, -150)
+phase = -90.0
+frequency = -50.0
+
+[node name="RotoCenter2" parent="." instance=ExtResource("3_28xu6")]
+position = Vector2(6160, 272)
+
+[node name="RotoRed" parent="RotoCenter2" instance=ExtResource("4_wgyv8")]
+z_index = 1
+material = ExtResource("5_534pp")
+position = Vector2(0, 180)
+amplitude = Vector2(180, 180)
+phase = 90.0
+frequency = -50.0
+
+[node name="RotoCenter13" parent="." instance=ExtResource("3_28xu6")]
+position = Vector2(6448, 176)
+
+[node name="RotoRed" parent="RotoCenter13" instance=ExtResource("4_wgyv8")]
+z_index = 1
+material = ExtResource("5_534pp")
+position = Vector2(150, 0)
+frequency = -50.0
+
+[node name="RotoCenter14" parent="." instance=ExtResource("3_28xu6")]
+position = Vector2(6320, 304)
+
+[node name="RotoRed" parent="RotoCenter14" instance=ExtResource("4_wgyv8")]
+z_index = 1
+material = ExtResource("5_534pp")
+position = Vector2(-150, 0)
+amplitude_enable = true
+amplitude_changing_speed = 300.0
+phase = 180.0
+frequency = -50.0
+
+[node name="DryBones" parent="." instance=ExtResource("6_556a5")]
+position = Vector2(6464, 144)

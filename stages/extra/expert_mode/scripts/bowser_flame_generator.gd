@@ -1,6 +1,7 @@
 extends Marker2D
 
 @export var stop_trigger_pos_x: float = 8000
+@export var time_offset_sec: float = 0
 @export_group("Projectile")
 @export var projectile_inst: InstanceNode2D
 @export var flame_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_flame.wav")
@@ -16,6 +17,8 @@ var triggered: bool = false
 func _on_bowser_trigger_bowser_triggered() -> void:
 	if triggered: return
 	triggered = true
+	if time_offset_sec > 0:
+		await get_tree().create_timer(time_offset_sec, false).timeout
 	timer.start()
 	_on_timer_timeout()
 
