@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=4 uid="uid://boadwiyer2k56"]
+[gd_scene load_steps=85 format=4 uid="uid://boadwiyer2k56"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_pkl7n"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ml6k2"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="34_tfrin"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="35_evjbb"]
 [ext_resource type="Texture2D" uid="uid://bmasn65vobox6" path="res://engine/tilesets/overworld/tree_animated.png" id="38_ckmdq"]
+[ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="38_ylmyp"]
 
 [sub_resource type="Gradient" id="Gradient_pk0lj"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -934,12 +935,6 @@ position = Vector2(7664, 336)
 [node name="Coin34" parent="." instance=ExtResource("22_o4141")]
 position = Vector2(7696, 336)
 
-[node name="Coin35" parent="." instance=ExtResource("22_o4141")]
-position = Vector2(8000, 208)
-
-[node name="Coin36" parent="." instance=ExtResource("22_o4141")]
-position = Vector2(8224, 208)
-
 [node name="Coin31" parent="." instance=ExtResource("22_o4141")]
 position = Vector2(7504, 400)
 
@@ -1058,7 +1053,7 @@ position = Vector2(7920, 320)
 texture = ExtResource("30_cvn5o")
 
 [node name="BigCloudsFace2" type="AnimatedSprite2D" parent="BigClouds4"]
-position = Vector2(144, 32)
+position = Vector2(128, 48)
 sprite_frames = SubResource("SpriteFrames_nlkt7")
 script = ExtResource("32_h6rjy")
 
@@ -1145,3 +1140,20 @@ autoplay = "default"
 centered = false
 
 [node name="Node2D2" type="Node2D" parent="."]
+
+[node name="HarderDesignNode" parent="." instance=ExtResource("38_ylmyp")]
+inverted = true
+
+[node name="Coin35" parent="HarderDesignNode" instance=ExtResource("22_o4141")]
+position = Vector2(8000, 208)
+
+[node name="Coin36" parent="HarderDesignNode" instance=ExtResource("22_o4141")]
+position = Vector2(8224, 208)
+
+[node name="HarderDesignNode2" parent="." instance=ExtResource("38_ylmyp")]
+
+[node name="Coin35" parent="HarderDesignNode2" instance=ExtResource("22_o4141")]
+position = Vector2(8048, 336)
+
+[node name="Coin36" parent="HarderDesignNode2" instance=ExtResource("22_o4141")]
+position = Vector2(8080, 336)
