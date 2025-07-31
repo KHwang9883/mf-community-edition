@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=4 uid="uid://e3qwwofniv8"]
+[gd_scene load_steps=116 format=4 uid="uid://e3qwwofniv8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uk6ge"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sv5we"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://5uqbprtu0qb4" path="res://music/extra/world_9/looper231_-_fuel-dump.mod" id="4_yirwi"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_7un8d"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="6_60ren"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_gdtnc"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_th0is"]
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="9_732sa"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_3t2fd"]
@@ -867,6 +868,11 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_yirwi")])
+
+[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_gdtnc")]
+secrets = Array[String](["bte world 9 completed"])
+progress_by_id = "4"
+progress_to = 5
 
 [node name="Mario" parent="." instance=ExtResource("4_ld3ml")]
 position = Vector2(112, 400)
@@ -2471,6 +2477,7 @@ offset_bottom = 512.0
 size_flags_vertical = 3
 color = Color(0.470588, 0, 0, 1)
 
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="died" from="Mario" to="Area2D/Node" method="warped"]
 [connection signal="player_enter" from="Area2D" to="Area2D/Node" method="_player_triggered"]
 [connection signal="player_enter" from="Area2D" to="LavaAnim/AnimationPlayer" method="play" binds= [&"new_animation"]]

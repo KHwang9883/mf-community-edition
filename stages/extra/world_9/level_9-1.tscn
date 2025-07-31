@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://dpbcwkvleh36a"]
+[gd_scene load_steps=50 format=4 uid="uid://dpbcwkvleh36a"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5qaol"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_m1so6"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_pfqbp"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_awmfc"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_84p2s"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_awmfc"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_dda70"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="8_lswib"]
 [ext_resource type="PackedScene" uid="uid://df5i2eol1nrof" path="res://engine/objects/enemies/volcano/volcano.tscn" id="8_xw81v"]
@@ -218,6 +219,11 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_loc5n")])
+
+[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_awmfc")]
+secrets = Array[String](["bte world 9 completed"])
+progress_by_id = "1"
+progress_to = 5
 
 [node name="Mario" parent="." instance=ExtResource("4_grkyt")]
 position = Vector2(112, 400)
@@ -1145,3 +1151,5 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_gejfm")
 offset = Vector2(0, 8)
 script = ExtResource("32_loc5n")
+
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
