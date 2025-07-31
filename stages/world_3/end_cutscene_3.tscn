@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://7y7mgdlcfwlj"]
+[gd_scene load_steps=34 format=4 uid="uid://7y7mgdlcfwlj"]
 
 [ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_6uxxv"]
 [ext_resource type="Script" uid="uid://7slxbyko02pf" path="res://stages/world_3/scripts/end_cutscene.gd" id="2_2xkkk"]
@@ -9,11 +9,11 @@
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_ldrsc"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_fgu8i"]
 [ext_resource type="Texture2D" uid="uid://5p36u73djuoh" path="res://gfx/backgrounds/starland.png" id="10_wuivo"]
-[ext_resource type="Material" uid="uid://catvtcld2ik45" path="res://materials/fog3-1.tres" id="11_bh34o"]
-[ext_resource type="Script" uid="uid://cnn6muchpcx7x" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_dvlkd"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_rqjvk"]
+[ext_resource type="Script" uid="uid://b6reo6h4cdgok" path="res://gfx/fancy_graphics/scripts/starland_light.gd" id="12_4ugb8"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_8jwgi"]
-[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="14_xdcd8"]
+[ext_resource type="Texture2D" uid="uid://cacq4bhiloiho" path="res://gfx/starland_tree_minimum_light.png" id="12_tnsyr"]
+[ext_resource type="Texture2D" uid="uid://twuqlr7c1w6e" path="res://gfx/starland_tree_minimum_ground_light.png" id="13_hksf1"]
 [ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="14_xep76"]
 
 [sub_resource type="Gradient" id="Gradient_hwlet"]
@@ -44,57 +44,94 @@ colors = PackedColorArray(0.116, 0, 0.24, 1, 0, 0.184314, 0.458824, 1)
 gradient = SubResource("Gradient_ig6vp")
 width = 640
 
-[sub_resource type="Gradient" id="Gradient_kgk31"]
-offsets = PackedFloat32Array(0.1, 0.5, 1)
-colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.74902, 0.984314, 0.545098, 0.984314, 0)
-metadata/_snap_enabled = true
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jgqj"]
+atlas = ExtResource("12_tnsyr")
+region = Rect2(0, 0, 124, 121)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_005fx"]
-gradient = SubResource("Gradient_kgk31")
-width = 256
-height = 256
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.2)
-metadata/_snap_enabled = true
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3iis"]
+atlas = ExtResource("12_tnsyr")
+region = Rect2(0, 121, 124, 121)
 
-[sub_resource type="Gradient" id="Gradient_03h6g"]
-offsets = PackedFloat32Array(0, 0.4, 1)
-colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
-metadata/_snap_enabled = true
+[sub_resource type="AtlasTexture" id="AtlasTexture_nh4ip"]
+atlas = ExtResource("12_tnsyr")
+region = Rect2(0, 242, 124, 121)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mbq22"]
-gradient = SubResource("Gradient_03h6g")
-width = 256
-height = 256
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.2)
-metadata/_snap_enabled = true
+[sub_resource type="SpriteFrames" id="SpriteFrames_i1qe5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jgqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3iis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nh4ip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
 
-[sub_resource type="Gradient" id="Gradient_elf8u"]
-offsets = PackedFloat32Array(0.05, 0.45, 1)
-colors = PackedColorArray(0.972549, 0.909804, 0.972549, 1, 0.984314, 0.545098, 0.984314, 0.737255, 0.984314, 0.545098, 0.984314, 0)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sfvq"]
+atlas = ExtResource("13_hksf1")
+region = Rect2(0, 0, 140, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p342"]
+atlas = ExtResource("13_hksf1")
+region = Rect2(0, 36, 140, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qe85"]
+atlas = ExtResource("13_hksf1")
+region = Rect2(0, 72, 140, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0gx35"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sfvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8p342")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qe85")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_evv3b"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(0.768627, 0.741176, 0.788235, 1, 0.768627, 0.768627, 0.768627, 0.737255, 0.984314, 0.596078, 1, 0)
 metadata/_snap_enabled = true
 metadata/_snap_count = 20
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tnbvb"]
-gradient = SubResource("Gradient_elf8u")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_40fem"]
+gradient = SubResource("Gradient_evv3b")
 width = 256
 height = 256
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.2)
+fill_to = Vector2(0.875, 0.25)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
+
+[sub_resource type="Gradient" id="Gradient_1sfvq"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
 metadata/_snap_enabled = true
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_qbywt"]
-frames = 3
-frame_0/texture = SubResource("GradientTexture2D_005fx")
-frame_0/duration = 0.05
-frame_1/texture = SubResource("GradientTexture2D_mbq22")
-frame_1/duration = 0.05
-frame_2/texture = SubResource("GradientTexture2D_tnbvb")
-frame_2/duration = 0.05
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tnsyr"]
+gradient = SubResource("Gradient_1sfvq")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.875, 0.25)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
 
 [node name="CaveCutscene" type="Node2D"]
 script = ExtResource("1_6uxxv")
@@ -130,33 +167,39 @@ offset_right = 640.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Layer0" type="TileMapLayer" parent="."]
 z_index = 4
+tile_map_data = PackedByteArray("AAATAA8AAAABAAEAAAATAA4AAAABAAIAAAATAA0AAAABAAAAAAASAA8AAAABAAEAAAASAA4AAAABAAIAAAASAA0AAAABAAAAAAARAA8AAAABAAEAAAARAA4AAAABAAIAAAARAA0AAAABAAAAAAAQAA8AAAABAAEAAAAQAA4AAAABAAIAAAAQAA0AAAABAAAAAAAPAA8AAAABAAEAAAAPAA4AAAABAAIAAAAPAA0AAAABAAAAAAAOAA8AAAABAAEAAAAOAA4AAAABAAIAAAAOAA0AAAABAAAAAAANAA8AAAABAAEAAAANAA4AAAABAAIAAAANAA0AAAABAAAAAAAMAA8AAAABAAEAAAAMAA4AAAABAAIAAAAMAA0AAAABAAAAAAALAA8AAAABAAEAAAALAA4AAAABAAIAAAALAA0AAAABAAAAAAAKAA8AAAABAAEAAAAKAA4AAAABAAIAAAAKAA0AAAABAAAAAAAJAA8AAAABAAEAAAAJAA4AAAABAAIAAAAJAA0AAAABAAAAAAAIAA8AAAABAAEAAAAIAA4AAAABAAIAAAAIAA0AAAABAAAAAAAHAA8AAAABAAEAAAAHAA4AAAABAAIAAAAHAA0AAAABAAAAAAAGAA8AAAABAAEAAAAGAA4AAAABAAIAAAAGAA0AAAABAAAAAAAFAA8AAAABAAEAAAAFAA4AAAABAAIAAAAEAA8AAAABAAEAAAAEAA4AAAABAAIAAAAEAA0AAAABAAAAAAADAA8AAAABAAEAAAADAA4AAAABAAIAAAADAA0AAAABAAAAAAACAA8AAAABAAEAAAACAA4AAAABAAIAAAACAA0AAAABAAAAAAABAA8AAAABAAEAAAABAA4AAAABAAIAAAABAA0AAAABAAAAAAAAAA8AAAABAAEAAAAAAA4AAAABAAIAAAAAAA0AAAABAAAAAAD//w8AAAAAAAEAAAD//w4AAAAAAAIAAAD//w0AAAAAAAAAAAAUAA0AAAABAAAAAAAUAA4AAAABAAIAAAAUAA8AAAABAAEAAAAFAA0AAAABAAAAAAAVAA8AAAACAAEAAAAVAA4AAAACAAIAAAAVAA0AAAACAAAAAAAWAAYAAQAAAAAAAAAWAAcAAQAAAAAAAAAWAAgAAQAAAAAAAAAWAAkAAQAAAAAAAAAWAAoAAQAAAAAAAAAWAAsAAQAAAAAAAAAWAAwAAQAAAAAAAAASAAsAAwADAAEAAQA=")
 tile_set = ExtResource("7_pqdo8")
-format = 2
-layer_0/tile_data = PackedInt32Array(983059, 65536, 1, 917523, 65536, 2, 851987, 65536, 0, 983058, 65536, 1, 917522, 65536, 2, 851986, 65536, 0, 983057, 65536, 1, 917521, 65536, 2, 851985, 65536, 0, 983056, 65536, 1, 917520, 65536, 2, 851984, 65536, 0, 983055, 65536, 1, 917519, 65536, 2, 851983, 65536, 0, 983054, 65536, 1, 917518, 65536, 2, 851982, 65536, 0, 983053, 65536, 1, 917517, 65536, 2, 851981, 65536, 0, 983052, 65536, 1, 917516, 65536, 2, 851980, 65536, 0, 983051, 65536, 1, 917515, 65536, 2, 851979, 65536, 0, 983050, 65536, 1, 917514, 65536, 2, 851978, 65536, 0, 983049, 65536, 1, 917513, 65536, 2, 851977, 65536, 0, 983048, 65536, 1, 917512, 65536, 2, 851976, 65536, 0, 983047, 65536, 1, 917511, 65536, 2, 851975, 65536, 0, 983046, 65536, 1, 917510, 65536, 2, 851974, 65536, 0, 983045, 65536, 1, 917509, 65536, 2, 983044, 65536, 1, 917508, 65536, 2, 851972, 65536, 0, 983043, 65536, 1, 917507, 65536, 2, 851971, 65536, 0, 983042, 65536, 1, 917506, 65536, 2, 851970, 65536, 0, 983041, 65536, 1, 917505, 65536, 2, 851969, 65536, 0, 983040, 65536, 1, 917504, 65536, 2, 851968, 65536, 0, 1048575, 0, 1, 983039, 0, 2, 917503, 0, 0, 851988, 65536, 0, 917524, 65536, 2, 983060, 65536, 1, 851973, 65536, 0, 983061, 131072, 1, 917525, 131072, 2, 851989, 131072, 0, 720915, 196611, 1, 393238, 1, 0, 458774, 1, 0, 524310, 1, 0, 589846, 1, 0, 655382, 1, 0, 720918, 1, 0, 786454, 1, 0)
-layer_1/name = "Layer1"
-layer_1/tile_data = PackedInt32Array(917505, 3, 0, 917513, 65539, 0, 917520, 131075, 0, 851979, 196611, 0, 786443, 3, 1, 720906, 196611, 1, 720896, 262147, 0)
+navigation_enabled = false
 
-[node name="Node2D" type="Node2D" parent="TileMap"]
+[node name="Layer1" type="TileMapLayer" parent="."]
+z_index = 4
+tile_map_data = PackedByteArray("AAABAA4AAwAAAAAAAAAJAA4AAwABAAAAAAAQAA4AAwACAAAAAAALAA0AAwADAAAAAAALAAwAAwAAAAEAAAAKAAsAAwADAAEAAAAAAAsAAwAEAAAAAAA=")
+tile_set = ExtResource("7_pqdo8")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="Node2D" type="Node2D" parent="Layer1"]
 script = ExtResource("12_8jwgi")
 medium = true
 
-[node name="PointLight2D2" type="PointLight2D" parent="TileMap/Node2D"]
+[node name="PointLight2D2" type="PointLight2D" parent="Layer1/Node2D"]
 position = Vector2(49, 466)
 scale = Vector2(0.175781, 0.175781)
 color = Color(1, 1, 0.443137, 1)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_pdu4q")
 
-[node name="PointLight2D3" type="PointLight2D" parent="TileMap/Node2D"]
+[node name="PointLight2D3" type="PointLight2D" parent="Layer1/Node2D"]
 position = Vector2(301, 459)
 scale = Vector2(0.34375, 0.34375)
 color = Color(1, 1, 0.443137, 1)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_pdu4q")
 
-[node name="PointLight2D4" type="PointLight2D" parent="TileMap/Node2D"]
+[node name="PointLight2D4" type="PointLight2D" parent="Layer1/Node2D"]
 position = Vector2(529, 460)
 scale = Vector2(0.34375, 0.34375)
 color = Color(1, 1, 0.443137, 1)
@@ -199,20 +242,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 200)
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(800, 600)
-script = ExtResource("12_8jwgi")
-medium = true
-
-[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer4"]
-modulate = Color(1, 1, 1, 0.666667)
-material = ExtResource("11_bh34o")
-offset_right = 800.0
-offset_bottom = 600.0
-color = Color(0, 0, 0, 1)
-script = ExtResource("11_dvlkd")
-metadata/_edit_lock_ = true
-
 [node name="HUD" parent="." instance=ExtResource("11_rqjvk")]
 visible = false
 
@@ -220,8 +249,22 @@ visible = false
 position = Vector2(173, 416)
 
 [node name="Node2D" type="Node2D" parent="."]
-z_index = -20
+z_index = 4
 script = ExtResource("12_8jwgi")
+maximum = false
+minimum = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.529412)
+position = Vector2(600, 368)
+sprite_frames = SubResource("SpriteFrames_i1qe5")
+autoplay = "default"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.752941)
+position = Vector2(600, 434)
+sprite_frames = SubResource("SpriteFrames_0gx35")
+autoplay = "default"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.587751, 0.587751, 0.58775, 1)
@@ -229,20 +272,37 @@ script = ExtResource("12_8jwgi")
 medium = true
 
 [node name="Node2D2" type="Node2D" parent="."]
+z_index = 4
 script = ExtResource("12_8jwgi")
 medium = true
 
-[node name="AnimatedSprite2D" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("14_xdcd8")
-position = Vector2(624, 368)
-texture = SubResource("AnimatedTexture_qbywt")
+[node name="AnimatedSprite2D8" type="PointLight2D" parent="Node2D2"]
+position = Vector2(600, 368)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_40fem")
+script = ExtResource("12_4ugb8")
 
-[node name="AnimatedSprite2D2" type="Sprite2D" parent="Node2D2"]
-modulate = Color(1, 1, 1, 0.541176)
-material = ExtResource("14_xdcd8")
-position = Vector2(368, 416)
-texture = SubResource("AnimatedTexture_qbywt")
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D8"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tnsyr")
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2"]
+position = Vector2(366, 411)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_40fem")
+script = ExtResource("12_4ugb8")
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D9"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tnsyr")
+metadata/_edit_lock_ = true
 
 [node name="ChorniyCutsceneSpawner" type="Node" parent="."]
 script = ExtResource("14_xep76")

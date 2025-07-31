@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=4 uid="uid://e3qwwofniv8"]
+[gd_scene load_steps=115 format=4 uid="uid://e3qwwofniv8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uk6ge"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sv5we"]
@@ -62,6 +62,9 @@
 [ext_resource type="PackedScene" uid="uid://cvt7wr4xv4m6j" path="res://objects/dragon_coin/dragon_coin.tscn" id="56_0djak"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="58_4ra0x"]
 [ext_resource type="PackedScene" uid="uid://b0o2s50kjcw6" path="res://engine/objects/enemies/piranha_plants/piranha_gray.tscn" id="62_7un8d"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_7un8d"]
+b = Vector2(32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x53we"]
 atlas = ExtResource("14_m3x1p")
@@ -251,7 +254,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 metadata/_custom_type_script = "uid://chvjy6okoognf"
 
-[sub_resource type="Resource" id="Resource_7un8d"]
+[sub_resource type="Resource" id="Resource_gdtnc"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
 creation_fallback_node = ExtResource("28_q4q3a")
@@ -912,6 +915,14 @@ position = Vector2(15808, 128)
 
 [node name="Thwomp5" parent="Node2D2" instance=ExtResource("9_732sa")]
 position = Vector2(16416, 160)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node2D2"]
+collision_layer = 112
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D2/StaticBody2D"]
+position = Vector2(9088, 256)
+shape = SubResource("SegmentShape2D_7un8d")
 
 [node name="HUD" parent="." instance=ExtResource("10_3t2fd")]
 
@@ -1895,7 +1906,7 @@ result = SubResource("Resource_oydpa")
 [node name="Brick11" parent="." instance=ExtResource("38_hyv55")]
 position = Vector2(13328, 240)
 max_items = 1
-result = SubResource("Resource_7un8d")
+result = SubResource("Resource_gdtnc")
 
 [node name="QuestionBlock2" parent="." instance=ExtResource("39_fd2nv")]
 position = Vector2(272, 144)

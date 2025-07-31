@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://c0r6ld204t00b"]
+[gd_scene load_steps=87 format=3 uid="uid://c0r6ld204t00b"]
 
 [ext_resource type="Script" uid="uid://by7oafruhi7h4" path="res://stages/world_1/scripts/level_1_4.gd" id="1_fj1pm"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_orbv5"]
@@ -55,6 +55,7 @@
 [ext_resource type="Script" uid="uid://b60w6hvmspdar" path="res://stages/world_1/objects/1_4_castle_brick.gd" id="48_ykgy3"]
 [ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="49_xys77"]
 [ext_resource type="PackedScene" uid="uid://d13yixatuidg5" path="res://stages/world_1/objects/1-4_castle_brick_alt.tscn" id="50_xnrnh"]
+[ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="56_4kvhu"]
 
 [sub_resource type="Curve2D" id="Curve2D_gjfjy"]
 _data = {
@@ -652,14 +653,6 @@ initially_visible_and_solid = false
 position = Vector2(1200, 208)
 result = SubResource("Resource_g4na4")
 
-[node name="QuestionBlock11" parent="Objects" instance=ExtResource("36_b28n6")]
-position = Vector2(6640, 272)
-result = SubResource("Resource_g4na4")
-
-[node name="QuestionBlock12" parent="Objects" instance=ExtResource("36_b28n6")]
-position = Vector2(7552, 224)
-result = SubResource("Resource_g4na4")
-
 [node name="Lava" parent="." instance=ExtResource("9_e7vlv")]
 offset_left = 640.0
 offset_top = 408.0
@@ -763,11 +756,6 @@ sprite = NodePath("")
 
 [node name="PlatformPath5" parent="." instance=ExtResource("25_om101")]
 position = Vector2(1984, 336)
-falling_enabled = true
-sprite = NodePath("")
-
-[node name="PlatformPath6" parent="." instance=ExtResource("25_om101")]
-position = Vector2(6944, 384)
 falling_enabled = true
 sprite = NodePath("")
 
@@ -1269,6 +1257,23 @@ position = Vector2(8688, 304)
 
 [node name="StaticBodyAlt5" parent="Node2D2" instance=ExtResource("50_xnrnh")]
 position = Vector2(8784, 304)
+
+[node name="HarderDesignNode" parent="." instance=ExtResource("56_4kvhu")]
+modulate = Color(0.52, 1, 0.52, 1)
+inverted = true
+
+[node name="QuestionBlock11" parent="HarderDesignNode" instance=ExtResource("36_b28n6")]
+position = Vector2(6640, 272)
+result = SubResource("Resource_g4na4")
+
+[node name="QuestionBlock12" parent="HarderDesignNode" instance=ExtResource("36_b28n6")]
+position = Vector2(7552, 224)
+result = SubResource("Resource_g4na4")
+
+[node name="PlatformPath6" parent="HarderDesignNode" instance=ExtResource("25_om101")]
+position = Vector2(6944, 384)
+falling_enabled = true
+sprite = NodePath("")
 
 [connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="unlock_secret"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
