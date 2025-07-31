@@ -18,6 +18,7 @@ const BOTTOM_ADDONS = [
 @export_enum("None", "Top", "Middle", "Bottom") var side: int
 @export var pos_x_offset: float = 0
 @export var loop_area_offset: float = -64
+@export var move_checkpoint: bool = false
 
 const INCORRECT = preload("res://sfx/incorrect.wav")
 const SELECT_MAIN = preload("res://engine/components/ui/_sounds/select_main.wav")

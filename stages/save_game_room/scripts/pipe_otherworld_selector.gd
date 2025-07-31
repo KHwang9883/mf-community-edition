@@ -100,8 +100,10 @@ func _update_save() -> void:
 	
 	#var prof = ProfileManager.profiles.get(profile_name)
 	#if prof && prof.data.get("star_world"):
-	var secret = SecretsManager.get_secret(secret_name)
-	var is_not_allowed: bool = !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret)
+	var is_not_allowed: bool
+	if secret_name:
+		var secret = SecretsManager.get_secret(secret_name)
+		is_not_allowed = !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret)
 	
 	if no_star_world_until_secret && is_not_allowed:
 		return
@@ -151,6 +153,7 @@ func _update_reset_labels() -> void:
 	
 	if no_secrets_label: return
 	reset_node.secrets.visible = true
+	if !secret_name: return
 	var secret = SecretsManager.get_secret(secret_name)
 	if !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret):
 		reset_node.secrets.text = "level locked! find a passage in expert mode worlds!"

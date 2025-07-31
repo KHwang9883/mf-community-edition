@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=4 uid="uid://bsnomo06t84ja"]
+[gd_scene load_steps=76 format=4 uid="uid://bsnomo06t84ja"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_w5q24"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_b7wog"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_pki1n"]
 [ext_resource type="Script" uid="uid://cnn6muchpcx7x" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="6_2epg6"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_do7it"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_mlr4l"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_uxutu"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://gfx/backgrounds/underground.png" id="10_8qg2h"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_t5di5"]
@@ -487,6 +488,11 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_2qc6y")])
 
+[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_mlr4l")]
+secrets = Array[String](["bte world 9 completed"])
+progress_by_id = "2"
+progress_to = 5
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.69, 0.69, 0.69, 1)
 script = ExtResource("4_33fy1")
@@ -605,6 +611,12 @@ result = SubResource("Resource_74oxi")
 
 [node name="Brick28" parent="." instance=ExtResource("19_2epg6")]
 position = Vector2(112, 144)
+
+[node name="Brick31" parent="." instance=ExtResource("19_2epg6")]
+position = Vector2(2320, 112)
+
+[node name="Brick34" parent="." instance=ExtResource("19_2epg6")]
+position = Vector2(2352, 112)
 
 [node name="QuestionBlock32" parent="." instance=ExtResource("14_33fy1")]
 position = Vector2(3376, 80)
@@ -1323,3 +1335,5 @@ metadata/_edit_lock_ = true
 position = Vector2(5600, 48)
 rotation = -3.14159
 warp_direction = 3
+
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
