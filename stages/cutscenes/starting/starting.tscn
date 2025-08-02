@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://csrq2nmn5a3gc"]
+[gd_scene load_steps=67 format=3 uid="uid://csrq2nmn5a3gc"]
 
 [ext_resource type="Script" uid="uid://bjpekmrx5xnob" path="res://stages/cutscenes/starting/scripts/starting.gd" id="1_1cb5a"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_v8bnp"]
@@ -6,10 +6,6 @@
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="3_0s5t3"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_tcdwv"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_8m2vr"]
-[ext_resource type="Script" uid="uid://b2fcc33thkogp" path="res://stages/cutscenes/starting/scripts/layer_fadeout.gd" id="4_26prt"]
-[ext_resource type="Script" uid="uid://bb0p5p0xpb15t" path="res://stages/cutscenes/starting/scripts/skip_label.gd" id="4_f2gt1"]
-[ext_resource type="Texture2D" uid="uid://bgag45bfxo6yd" path="res://stages/cutscenes/starting/gfx/buziol.png" id="4_xdxx3"]
-[ext_resource type="Script" uid="uid://buxojbcjhukga" path="res://stages/cutscenes/starting/scripts/layer.gd" id="6_ejagc"]
 [ext_resource type="Script" uid="uid://c35urvf32qeud" path="res://stages/cutscenes/starting/scripts/cloud_bg.gd" id="9_qfqn8"]
 [ext_resource type="Script" uid="uid://rh8bbo0ntugd" path="res://stages/cutscenes/starting/scripts/camera_path.gd" id="10_kxwd7"]
 [ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="10_mrmqq"]
@@ -36,66 +32,6 @@
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="31_62hof"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="32_t7u8o"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="33_dodfw"]
-
-[sub_resource type="Animation" id="Animation_vs5d2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Label5:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-512, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Buziol:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(816, 224)]
-}
-
-[sub_resource type="Animation" id="Animation_xc8ih"]
-resource_name = "appear"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Label5:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-432, 0), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Buziol:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(800, 224), Vector2(320, 224)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_qe5py"]
-_data = {
-&"RESET": SubResource("Animation_vs5d2"),
-&"appear": SubResource("Animation_xc8ih")
-}
 
 [sub_resource type="Gradient" id="Gradient_ehahp"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -367,73 +303,6 @@ play_immediately = false
 stop_all_music_on_start = false
 play_globally = 2
 start_from_sec = Array[float]([0.0, 26.28])
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
-visible = false
-
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer"]
-offset_right = 640.0
-offset_bottom = 480.0
-script = ExtResource("6_ejagc")
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_right = 640.0
-offset_bottom = 480.0
-script = ExtResource("4_26prt")
-
-[node name="Buziol" type="Sprite2D" parent="CanvasLayer/ColorRect"]
-position = Vector2(816, 224)
-texture = ExtResource("4_xdxx3")
-
-[node name="Label5" type="Label" parent="CanvasLayer/ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -512.0
-offset_right = 14208.0
-offset_bottom = 10688.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("3_0s5t3")
-theme_override_font_sizes/font_size = 21
-text = "originally created by"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ColorRect"]
-libraries = {
-"": SubResource("AnimationLibrary_qe5py")
-}
-
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
-offset_right = 640.0
-offset_bottom = 480.0
-color = Color(0, 0, 0, 1)
-script = ExtResource("6_ejagc")
-
-[node name="Label5" type="Label" parent="CanvasLayer/ColorRect2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("3_0s5t3")
-theme_override_font_sizes/font_size = 21
-text = "hold jump button to skip the intro"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-script = ExtResource("4_f2gt1")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 script = ExtResource("9_qfqn8")

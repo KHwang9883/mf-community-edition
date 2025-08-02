@@ -18,7 +18,12 @@ var tweak_descriptions: Dictionary = {
 	#"stomp_animation": false, # after stomping an enemy or jumping on springboard
 	"kick_ground_animation": "the 'kick' animation also plays when kicking things without holding anything (e.g. shells).",
 	"warp_animation": "'warp' animation; if false, warping vertically will use 'jump', and 'crouch' or 'default'.",
-	"skid_sound_loop_delay": 'delay in seconds between each playback of the skidding sound; from 0.05 to 2.0.',
+	"skid_sound_loop_delay": {
+		"name" = 'delay in seconds between each playback of the skidding sound; from 0.05 to 2.0.',
+		"min" = 0.05,
+		"max" = 2.0,
+		"step" = 0.01,
+	},
 	"head_bump_sound": "play global sound 'head_bump' on every touch of ceiling.",
 	"fall_animation": "if false, 'fall' animation and the derivatives are replaced by 'jump'.",
 	"separate_swim_idle_animation": "if looping for 'swim' animation is disabled, the 'swim_idle' animation will play right after.",
@@ -36,7 +41,7 @@ var tweak_descriptions: Dictionary = {
 			"name" = "from 0 to 1.0; the maximum particle amount is 48, and this tweak multiplies it.",
 			"min" = 0.0,
 			"max" = 1.0,
-			"step" = 0.1,
+			"step" = 0.01,
 		},
 		"local_coords": "should the particles follow player's position? also if true, may fix jitter on movement.",
 		"offset": "offset particles by this Vector2. (x, y)"
@@ -55,8 +60,24 @@ func _ready() -> void:
 	h_separator_spawn = $"../../SkinSuitSettings/HSeparatorSpawnTweaks"
 	super()
 
+func _physics_process(delta: float) -> void:
+	super(delta)
+	if !get_parent().focused: return
+	if !powerup_name == "_all_suits": return
+	if SkinsManager.current_skin.is_empty():
+		modulate.v = 1.0
+		is_blocked = false
+	else:
+		is_blocked = true
+		modulate.v = 0.5
+	
+
 func _handle_select(mouse_input: bool = false) -> void:
 	#if Data.technical_values.get("main_menu_scene"): return
+	if !SkinsManager.current_skin.is_empty() && powerup_name == "_all_suits":
+		var _sfx = CharacterManager.get_sound_replace(SELECT_FAILURE, SELECT_FAILURE, "menu_failure", false)
+		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
+		return
 	# Custom skin
 	if SkinsManager.current_skin && SkinsManager.custom_textures.has(SkinsManager.current_skin):
 		get_tree().call_group(&"_skin_suit_tweak", &"queue_free")

@@ -82,4 +82,5 @@ func _on_reconnect_pressed() -> void:
 	if state != WebSocketPeer.STATE_OPEN:
 		Thunder.autosplitter.has_closed = false
 		Thunder.autosplitter.has_connected = false
-		Thunder.autosplitter.connect_websocket()
+		var err = Thunder.autosplitter.connect_websocket()
+		if err: print(err)

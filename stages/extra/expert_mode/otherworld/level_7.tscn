@@ -4,12 +4,12 @@
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_liom3"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_o3eut"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_4d4jn"]
-[ext_resource type="AudioStream" uid="uid://gxyb2xwo7602" path="res://music/extra/expert_mode/break_out-1739.mod" id="5_7ebrf"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_de8m0"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_i5ghj"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_ixtjl"]
-[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_27njw"]
+[ext_resource type="AudioStream" uid="uid://coyyqbgo1fy0d" path="res://music/extra/expert_mode/break_out-1739.mod" id="6_4d4jn"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_lonbm"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_4d4jn"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="10_o3eut"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="11_3hky5"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_xksft"]
@@ -1571,7 +1571,7 @@ boss_music_var_2 = null
 boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
-music = Array[Resource]([ExtResource("5_7ebrf")])
+music = Array[Resource]([ExtResource("6_4d4jn")])
 volume_db = Array[float]([-4.0])
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("5_de8m0")]
@@ -1594,7 +1594,7 @@ drag_right_margin = 0.0
 drag_bottom_margin = 0.0
 editor_draw_screen = false
 editor_draw_drag_margin = true
-script = ExtResource("7_27njw")
+script = ExtResource("9_4d4jn")
 metadata/_edit_lock_ = true
 
 [node name="CameraArea" parent="." instance=ExtResource("8_lonbm")]
@@ -3111,8 +3111,8 @@ result = SubResource("Resource_nr5uc")
 [connection signal="warp_started" from="miscellaneous/PipeIn4" to="texts" method="queue_free"]
 [connection signal="warp_started" from="miscellaneous/PipeIn4" to="miscellaneous/snickers" method="queue_free"]
 [connection signal="warp_started" from="miscellaneous/PipeIn4" to="miscellaneous/bounty" method="queue_free"]
-[connection signal="life_text_triggered" from="miscellaneous/GravityBody2D" to="HUD/BonusLevelUnlocked" method="activate"]
 [connection signal="life_text_triggered" from="miscellaneous/GravityBody2D" to="HUD/BonusLevelUnlocked" method="show"]
+[connection signal="life_text_triggered" from="miscellaneous/GravityBody2D" to="HUD/BonusLevelUnlocked" method="activate"]
 [connection signal="grab_initiated" from="miscellaneous/GravityBody2D/GrabbableModifier" to="miscellaneous/GravityBody2D" method="_on_grab_initiated"]
 [connection signal="grabbed" from="miscellaneous/GravityBody2D/GrabbableModifier" to="miscellaneous/GravityBody2D" method="_on_grabbed"]
 [connection signal="ungrabbed" from="miscellaneous/GravityBody2D/GrabbableModifier" to="miscellaneous/GravityBody2D" method="_on_ungrabbed"]

@@ -2,14 +2,6 @@ extends Node2D
 
 @export var goto_scene: String = "res://stages/cutscenes/starting/starting2.tscn"
 
-@onready var canvas_layer = $CanvasLayer
-
-@onready var skip_layer = $CanvasLayer/ColorRect2
-@onready var buziol_layer = $CanvasLayer/ColorRect
-@onready var buziol_animation_player = $CanvasLayer/ColorRect/AnimationPlayer
-@onready var transition_layer = $CanvasLayer/ColorRect3
-@onready var originally_created_label = $CanvasLayer/ColorRect/Label5
-
 @onready var music_loader = $MusicLoader
 
 @onready var main_camera_path = $Path2D/PathFollow2D
@@ -23,7 +15,7 @@ var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_wit
 
 func _ready() -> void:
 	_flow_intros()
-	await get_tree().create_timer(1.2, false).timeout
+	await get_tree().create_timer(1.0, false, false, true).timeout
 	_skippable = true
 
 func _enter_tree() -> void:
@@ -38,23 +30,6 @@ func _restore() -> void:
 func _flow_intros() -> void:
 	# INTRO
 	
-	canvas_layer.visible = false
-	# godot moment
-	originally_created_label.size = Vector2(640, 128)
-	
-	#await get_tree().create_timer(3.2, false).timeout
-	#skip_layer.out = true
-	
-	#await get_tree().create_timer(1, false).timeout
-	#buziol_animation_player.play("appear")
-	
-	#await get_tree().create_timer(2, false).timeout
-	#buziol_layer.out = true
-	
-	#await get_tree().create_timer(0.8, false).timeout
-	#transition_layer.out = true
-	
-	#await get_tree().create_timer(0.4, false).timeout
 	music_loader.play_buffered()
 	
 	# MAIN INTRO
@@ -80,17 +55,29 @@ func _flow_intros() -> void:
 	tw3.tween_property(second_camera_path, "speed", 60, 1.5)
 	
 	await get_tree().create_timer(35, false).timeout
+	if !_skippable: return
 	_fade_out()
 
-func _unhandled_input(event: InputEvent):
+
+func _physics_process(delta: float) -> void:
 	if !_skippable: return
-	if event is InputEventKey || event is InputEventJoypadButton:
+	if (
+		Input.is_action_pressed(&"m_attack") || Input.is_action_pressed(&"ui_accept") ||
+		Input.is_action_pressed(&"m_extra") || Input.is_action_pressed(&"ui_select") ||
+		Input.is_action_pressed(&"m_jump") || Input.is_action_pressed(&"m_run")
+	):
 		_fade_out()
+
+#func _unhandled_input(event: InputEvent):
+	#if !_skippable: return
+	#if event is InputEventKey || event is InputEventJoypadButton:
+		#_fade_out()
 
 func _fade_out() -> void:
 	_skippable = false
 	
 	_restore()
+	Audio.stop_music_channel(1, true)
 	await get_tree().physics_frame
 	
 	if !_crossfade:
