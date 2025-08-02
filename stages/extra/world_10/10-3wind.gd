@@ -69,8 +69,10 @@ func _physics_process(delta: float) -> void:
 				_snow_particle.emit_particle(_snow_particle.global_transform, Vector2.RIGHT.rotated(-PARTICLE_VELOCITY_ROTATIONS[i]) * randf_range(50, 200), Color.WHITE, Color.WHITE, GPUParticles2D.EMIT_FLAG_POSITION | GPUParticles2D.EMIT_FLAG_VELOCITY)
 	_par.set_meta(&"not_slidable", snow_cover_accumulation > 0.2)
 
-func _snow_cover_accumulation_changed() -> void:
 	for i in PLAYER_PHYSICS:
 		if !_par.config_buffer || (!i in _par.config_buffer):
 			continue
 		_par.suit.physics_config[i] = _par.config_buffer[i] *  clampf(1 - snow_cover_accumulation, 0.0 if i != &"jump_speed" else 0.1, 1.0)
+
+func _snow_cover_accumulation_changed() -> void:
+	pass
