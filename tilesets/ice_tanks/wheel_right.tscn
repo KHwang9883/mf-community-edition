@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://dch5mwykkiulu"]
+
+[ext_resource type="Script" uid="uid://j5xqb3mcvtyu" path="res://tilesets/tanks/scenes/wheel_stop_on_death.gd" id="1_q8nvh"]
+[ext_resource type="Texture2D" uid="uid://dnlqq6ymc2guk" path="res://tilesets/ice_tanks/wheel_right.png" id="2_q8nvh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc1cq"]
+atlas = ExtResource("2_q8nvh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i21y3"]
+atlas = ExtResource("2_q8nvh")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2o1f"]
+atlas = ExtResource("2_q8nvh")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dvwn2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc1cq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i21y3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2o1f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ei7fp"]
+size = Vector2(32, 32)
+
+[node name="WheelCenter" type="StaticBody2D"]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_q8nvh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dvwn2")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ei7fp")

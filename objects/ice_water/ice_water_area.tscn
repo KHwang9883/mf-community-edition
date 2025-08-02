@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://h4vtt6taalpu"]
+
+[ext_resource type="Script" uid="uid://bk0dstnf18ycm" path="res://objects/ice_water/ice_water_area.gd" id="1_8ulad"]
+[ext_resource type="Shader" uid="uid://c1yibfdu766i8" path="res://engine/shaders/hsv_global.gdshader" id="1_24rbb"]
+[ext_resource type="Shader" uid="uid://dluvop86i8qql" path="res://engine/shaders/animated_texture.gdshader" id="3_k41pl"]
+[ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="3_wcqqx"]
+[ext_resource type="Texture2D" uid="uid://wd3w15rkj5nx" path="res://objects/ice_water/water_smooth.png" id="4_p36gh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k41pl"]
+shader = ExtResource("1_24rbb")
+shader_parameter/hue = 0.0
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ogl7c"]
+shader = ExtResource("3_k41pl")
+shader_parameter/sprite_sheet = ExtResource("4_p36gh")
+shader_parameter/frame_size = Vector2(1, 8)
+shader_parameter/frame_count = 8
+shader_parameter/frames_per_row = 1
+shader_parameter/time_scale = 6.0
+shader_parameter/frame_offset = 0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6qe0v"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cuxos"]
+width = 64
+height = 16
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_6qe0v")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
+size = Vector2(1, 1)
+
+[node name="Water" type="VBoxContainer"]
+modulate = Color(1, 1, 1, 0.819608)
+material = SubResource("ShaderMaterial_k41pl")
+offset_right = 64.0
+offset_bottom = 16.0
+theme_override_constants/separation = 0
+script = ExtResource("1_8ulad")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = 31
+material = SubResource("ShaderMaterial_ogl7c")
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("NoiseTexture2D_cuxos")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
+z_index = 1
+collision_layer = 128
+collision_mask = 7
+script = ExtResource("3_wcqqx")
+type = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_08xmy")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 31
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.490196, 0.760784, 0.894118, 1)
