@@ -23,7 +23,6 @@ var snow_cover_accumulation: float = 0:
 			)
 			_snow_cover.offset.y = remap(snow_cover_accumulation, 0, 1, 16, 0)
 			_snow_cover.modulate.a = snow_cover_accumulation
-var initial_player_physics: Dictionary = {}
 var jumped: bool = false
 
 @onready var _par: Player = get_parent()
@@ -33,11 +32,6 @@ var jumped: bool = false
 
 func _ready() -> void:
 	snow_cover_accumulation = 0
-	for i in 10:
-		await get_tree().physics_frame
-	for j in PLAYER_PHYSICS:
-		if !(j in initial_player_physics):
-			initial_player_physics[j] = _par.suit.physics_config[j]
 	SettingsManager.settings_updated.connect(func() -> void:
 		_snow_particle.visible = SettingsManager.get_quality() > SettingsManager.QUALITY.MIN
 	)
@@ -77,6 +71,6 @@ func _physics_process(delta: float) -> void:
 
 func _snow_cover_accumulation_changed() -> void:
 	for i in PLAYER_PHYSICS:
-		if (!i in initial_player_physics):
+		if !_par.config_buffer || (!i in _par.config_buffer):
 			continue
-		_par.suit.physics_config[i] =initial_player_physics[i] *  clampf(1 - snow_cover_accumulation, 0.0 if i != &"jump_speed" else 0.1, 1.0)
+		_par.suit.physics_config[i] = _par.config_buffer[i] *  clampf(1 - snow_cover_accumulation, 0.0 if i != &"jump_speed" else 0.1, 1.0)
