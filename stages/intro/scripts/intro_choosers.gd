@@ -39,7 +39,25 @@ func on_choosed(is_game_style: bool, selection_style: GameStyle, selection_look:
 	
 	_apply_look_tweaks(selection_look)
 	end()
-	
+
+
+const CHECKS = {
+	0: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+	1: [1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
+	2: [2, 0, 0, 1, 0, 2, 1, 2, 2, 0],
+}
+
+func _on_game_style_selected(item_index: int, item_node: Control, immediate: bool, mouse_input: bool) -> void:
+	var checks = $ControlStyle/HBoxContainer/Checks.get_children()
+	var checks_2 = $ControlStyle/HBoxContainer/Checks2.get_children()
+	for i in checks.size():
+		if !checks[i] is Control: continue
+		checks[i].get_child(0).frame = CHECKS[item_index][i]
+	for i in checks_2.size():
+		if !checks_2[i] is Control: continue
+		checks_2[i].get_child(0).frame = CHECKS[item_index][i + 5]
+
+
 func _apply_style_tweaks(style: GameStyle) -> void:
 	var is_recommended: bool = style == GameStyle.RECOMMENDED
 	var _tweaks: Dictionary = {}
@@ -52,6 +70,7 @@ func _apply_style_tweaks(style: GameStyle) -> void:
 	_tweaks.remade_levels = is_recommended
 	_tweaks.bowser_stomping = not is_recommended
 	_tweaks.stomping_combo = is_recommended
+	_tweaks.minigames_in_main_worlds = is_recommended
 	print("[Intro] Selected Style is Recommended: %s" % is_recommended)
 	
 	# Both Recommended and Classic style options

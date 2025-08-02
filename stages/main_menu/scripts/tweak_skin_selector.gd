@@ -82,21 +82,30 @@ func _handle_select(mouse_input: bool = false) -> void:
 	#_toggled_option(old_value, SettingsManager.settings.skin)
 	#Scenes.current_scene.get_node("Window").visible = true
 
-#func _physics_process(delta: float) -> void:
-	#super(delta)
+func _physics_process(delta: float) -> void:
+	var par_focused: bool = get_parent().focused
+	if focused && par_focused && get_window().has_focus() && Input.is_action_just_pressed(trigger_action):
+		_handle_select(false)
+	
+	if focused && Input.is_action_just_pressed(&"ui_select") && par_focused && tweak_description_text:
+		$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
+	
+	if !valu:
+		return
+	if focused && !is_blocked:
+		_timer += delta * 10
+		valu.modulate.a = min((cos(_timer) / 2.5) + 0.6, 1.0)
+		valu.remove_theme_color_override(&"font_color")
+		_update_text()
+	elif par_focused:
+		valu.modulate.a = 1.0
+		valu.text = SettingsManager.settings.skin
+		if valu.text.is_empty():
+			valu.text = "none"
+		valu.add_theme_color_override(&"font_color", Color(0.8, 1.0, 0.9))
 	#
 	#arrow_r.visible = focused
 	#arrow_l.visible = focused
-	#
-	#if focused:
-		#_timer += delta * 10
-		#value.modulate.a = min((cos(_timer) / 2.5) + 0.6, 1.0)
-	#else:
-		#value.modulate.a = 0.0
-	#
-	#if !get_parent().focused: return
-	#
-	#if !focused: return
 	#
 	#var old_value = SettingsManager.settings.skin
 	#
@@ -108,9 +117,6 @@ func _handle_select(mouse_input: bool = false) -> void:
 		#skin_sel_index = wrapi(skin_sel_index - 1, 0, skin_list.size())
 		#SettingsManager.settings.skin = skin_list[skin_sel_index]
 		#_toggled_option(old_value, SettingsManager.settings.skin)
-	#elif Input.is_action_just_pressed(&"ui_select"):
-		#if tweak_description_text:
-			#$"../..".emit_signal(&"_show_desc", tweak_description_text, $Label.text)
 
 
 #func _toggled_option(old_val, new_val) -> void:

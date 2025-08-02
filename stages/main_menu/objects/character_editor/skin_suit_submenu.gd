@@ -87,9 +87,18 @@ func create_tweak_selection(tweak) -> void:
 		_float_tweak.get_node("Label2").text = str(get_tweak_value(tweak))
 		_float_tweak.tweak_name = tweak
 		_float_tweak.add_to_group(&"_submenu_skin_suit_tweak")
-		if tweak in tweak_descriptions:
-			_float_tweak.tweak_description_text = tweak_descriptions[tweak]
 		move_to.add_child(_float_tweak)
+		if tweak in tweak_descriptions:
+			if tweak_descriptions[tweak] is String:
+				_float_tweak.tweak_description_text = tweak_descriptions[tweak]
+			else:
+				_float_tweak.tweak_description_text = tweak_descriptions[tweak].name
+				if "min" in tweak_descriptions[tweak]:
+					_float_tweak.spin_box.min_value = tweak_descriptions[tweak].min
+				if "max" in tweak_descriptions[tweak]:
+					_float_tweak.spin_box.max_value = tweak_descriptions[tweak].max
+				if "step" in tweak_descriptions[tweak]:
+					_float_tweak.spin_box.custom_arrow_step = tweak_descriptions[tweak].step
 		Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
 	# То же
 	elif get_tweak_value(tweak) is int || (get_tweak_value(tweak) is float && tweak_name == "loop_frame_offsets"):
@@ -98,12 +107,21 @@ func create_tweak_selection(tweak) -> void:
 		_float_tweak.get_node("Label2").text = str(int(get_tweak_value(tweak)))
 		_float_tweak.tweak_name = tweak
 		_float_tweak.add_to_group(&"_submenu_skin_suit_tweak")
-		if tweak in tweak_descriptions:
-			_float_tweak.tweak_description_text = tweak_descriptions[tweak]
-		move_to.add_child(_float_tweak)
 		_float_tweak.spin_box.step = 1
 		_float_tweak.spin_box.min_value = -1
 		_float_tweak.spin_box.custom_arrow_step = 1
+		move_to.add_child(_float_tweak)
+		if tweak in tweak_descriptions:
+			if tweak_descriptions[tweak] is String:
+				_float_tweak.tweak_description_text = tweak_descriptions[tweak]
+			else:
+				_float_tweak.tweak_description_text = tweak_descriptions[tweak].name
+				if "min" in tweak_descriptions[tweak]:
+					_float_tweak.spin_box.min_value = tweak_descriptions[tweak].min
+				if "max" in tweak_descriptions[tweak]:
+					_float_tweak.spin_box.max_value = tweak_descriptions[tweak].max
+				if "step" in tweak_descriptions[tweak]:
+					_float_tweak.spin_box.custom_arrow_step = tweak_descriptions[tweak].step
 		Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
 	# Колор пикер
 	elif get_tweak_value(tweak) is String && get_tweak_value(tweak).is_valid_html_color():
