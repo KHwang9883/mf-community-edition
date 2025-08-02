@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dt2ini001fvgd"]
+[gd_scene load_steps=36 format=3 uid="uid://dt2ini001fvgd"]
 
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="1_3mnhj"]
 [ext_resource type="Texture2D" uid="uid://de2epwq5u7i6v" path="res://objects/extra_enemies/roto_snowcover/roto_snowcover.png" id="2_fgso7"]
@@ -211,19 +211,6 @@ fill_to = Vector2(0.75, 0.75)
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.54604, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_t58i8"]
-curve = SubResource("Curve_vtw81")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f0y7v"]
-particle_flag_disable_z = true
-spread = 180.0
-initial_velocity_min = 10.0
-initial_velocity_max = 40.0
-gravity = Vector3(0, 9.8, 0)
-scale_min = 0.1
-scale_max = 0.5
-scale_curve = SubResource("CurveTexture_t58i8")
-
 [node name="RotoSnowCover" instance=ExtResource("1_3mnhj")]
 frequency = 100.0
 metadata/_edit_pinned_properties_ = [&"frequency"]
@@ -232,10 +219,18 @@ metadata/_edit_pinned_properties_ = [&"frequency"]
 sprite_frames = SubResource("SpriteFrames_hwwax")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="LightParticle" type="GPUParticles2D" parent="Sprite" index="0"]
+[node name="LightParticle" type="CPUParticles2D" parent="Sprite" index="0"]
 material = SubResource("CanvasItemMaterial_v4dt7")
 texture = SubResource("GradientTexture2D_5coxy")
-process_material = SubResource("ParticleProcessMaterial_f0y7v")
+fixed_fps = 30
+draw_order = 1
+spread = 180.0
+gravity = Vector2(0, 9.8)
+initial_velocity_min = 10.0
+initial_velocity_max = 40.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_vtw81")
 script = ExtResource("3_qrhtv")
 medium = true
 
