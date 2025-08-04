@@ -12,6 +12,7 @@ var collision_enabled: bool = false
 var _is_ready: bool = false
 
 func _ready() -> void:
+	life_time = 5
 	for i in 2:
 		await get_tree().physics_frame
 	_is_ready = true
@@ -39,5 +40,8 @@ func _physics_process(delta: float) -> void:
 		NodeCreator.prepare_ins_2d(goomba_creation, self).create_2d().call_method(
 			func(enemy: Node) -> void:
 				enemy.add_to_group(&"#spawned_by_throw")
+				var groups = get_groups().filter(func(st): return "_spawn" in st)
+				for i in groups:
+					enemy.add_to_group(i)
 		)
 		queue_free()

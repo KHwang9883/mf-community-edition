@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=4 uid="uid://di04gixk0cxmi"]
+[gd_scene load_steps=138 format=4 uid="uid://di04gixk0cxmi"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_atyge"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_bprss"]
@@ -75,8 +75,9 @@
 [ext_resource type="Texture2D" uid="uid://b6d1verym1gkk" path="res://gfx/sign/arrow_switchers.png" id="72_d1s44"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="73_mh4kl"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="74_gmu62"]
+[ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="74_gskng"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="74_mc64r"]
-[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="75_mp46a"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="75_kq0w4"]
 
 [sub_resource type="Gradient" id="Gradient_igxpo"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -307,7 +308,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_mp46a"]
+[sub_resource type="Resource" id="Resource_n5cax"]
 resource_local_to_scene = true
 script = ExtResource("38_ehsle")
 creation_nodepack = ExtResource("45_mp46a")
@@ -619,18 +620,6 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
-
-[sub_resource type="Gradient" id="Gradient_ha2mt"]
-offsets = PackedFloat32Array(0.536585, 1)
-colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_gskng"]
-gradient = SubResource("Gradient_ha2mt")
-fill = 1
-fill_from = Vector2(0.5, 1)
-fill_to = Vector2(0.857143, 0.642857)
-metadata/_snap_count = 14
-metadata/_snap_enabled = true
 
 [sub_resource type="Gradient" id="Gradient_a6rri"]
 colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
@@ -1620,7 +1609,7 @@ position = Vector2(3504, -3120)
 [node name="Brick29" parent="." instance=ExtResource("32_xd028")]
 position = Vector2(3536, -3120)
 max_items = 1
-result = SubResource("Resource_mp46a")
+result = SubResource("Resource_n5cax")
 
 [node name="QuestionBlockFireFlower2" parent="." instance=ExtResource("40_6mse8")]
 position = Vector2(2544, -2992)
@@ -2093,6 +2082,7 @@ custom_vars = {
 }
 
 [node name="AudioAreaCave" parent="." instance=ExtResource("53_hjsej")]
+visible = false
 position = Vector2(-112, -2096)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
@@ -2824,6 +2814,26 @@ position = Vector2(1.00049, -28.9995)
 texture = SubResource("AtlasTexture_aligj")
 flip_h = true
 
+[node name="Sign11" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 2
+position = Vector2(2791, -3324)
+rotation = 0.785397
+texture = ExtResource("74_gskng")
+
+[node name="LabelMisterEarl" parent="Sign11" instance=ExtResource("75_kq0w4")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -44.0
+offset_right = -69.0
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "otherworld
+passage"
+
 [node name="QuestionBlockLife" parent="." instance=ExtResource("73_mh4kl")]
 position = Vector2(3504, -3600)
 result = SubResource("Resource_v86s2")
@@ -2832,27 +2842,6 @@ initially_visible_and_solid = false
 [node name="PipeIn15" parent="." instance=ExtResource("25_n5cax")]
 position = Vector2(2848, -2896)
 script = ExtResource("74_mc64r")
-
-[node name="PointLight2D22" type="PointLight2D" parent="PipeIn15"]
-position = Vector2(0, -16)
-range_layer_min = -512
-texture = SubResource("GradientTexture2D_gskng")
-script = ExtResource("18_mh4kl")
-medium = true
-metadata/_edit_lock_ = true
-
-[node name="CloudLightEffect" type="Sprite2D" parent="PipeIn15"]
-visible = false
-modulate = Color(1, 1, 1, 0.627451)
-position = Vector2(-32, -16)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("75_mp46a")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 128, 64)
-script = ExtResource("18_mh4kl")
-maximum = false
-minimum = true
 
 [node name="LavaHeat" type="Sprite2D" parent="."]
 position = Vector2(1888, -1904)
