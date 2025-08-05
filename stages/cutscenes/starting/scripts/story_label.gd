@@ -1,13 +1,16 @@
 extends Label
 
 @export var call_by_pronouns: bool = true
+@export var call_his: bool = false
 
-var speed = 6
+@export var speed: float = 6
 
 func _ready() -> void:
 	modulate.a = 0
 	if call_by_pronouns:
 		text = text.format([CharacterManager.get_character_story_text(0)], "%s")
+	elif call_his:
+		text = text.format([CharacterManager.get_character_story_text(3)], "%s")
 	else:
 		text = text.format([CharacterManager.get_character_story_text(2), CharacterManager.get_character_display_name()], "%s")
 

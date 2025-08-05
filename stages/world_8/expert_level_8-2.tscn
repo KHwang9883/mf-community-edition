@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_nn8uk"]
 [ext_resource type="PackedScene" uid="uid://0s1sj8ke5lyv" path="res://engine/objects/platform/platform_path_tank_floor.tscn" id="10_lf0hv"]
 [ext_resource type="Texture2D" uid="uid://bs57b16ok6fv5" path="res://tilesets/icy_ground/snow_night_forest.png" id="10_novg7"]
+[ext_resource type="Material" uid="uid://b001bbchqtlhk" path="res://stages/extra/world_10/particles/snow_particle_mat.tres" id="11_ahwkk"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="11_avtle"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="13_le0lk"]
 [ext_resource type="TileSet" uid="uid://dt7f34ynxjdvy" path="res://tilesets/ice_tanks/ice_tanks.tres" id="13_m3xp8"]
@@ -25,14 +26,17 @@
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="20_qhehv"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="22_w7chr"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="23_ipgw0"]
+[ext_resource type="Material" uid="uid://hn7xep1lqcsm" path="res://stages/extra/expert_mode/gfx/8_2_fx_material.tres" id="23_le0lk"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="24_r2knk"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="25_2ydhh"]
+[ext_resource type="Material" uid="uid://cpsks8f452p3c" path="res://stages/world_8/objects/8-2_particles.tres" id="25_ly7i0"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="26_3m8l7"]
 [ext_resource type="PackedScene" uid="uid://cjroicsm5yiy6" path="res://engine/objects/enemies/spikeball_launcher/spikeball_launcher.tscn" id="27_ww5ch"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="28_ypjjq"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="30_g3m05"]
 [ext_resource type="Texture2D" uid="uid://dbcy47sluunl4" path="res://gfx/misc/ice_roto_center.png" id="30_lf0hv"]
 [ext_resource type="PackedScene" uid="uid://dt2ini001fvgd" path="res://objects/extra_enemies/roto_snowcover/roto_snowcover.tscn" id="30_nn8uk"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="33_mxgtx"]
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="34_lqn3h"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="35_36voc"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="36_w8g1r"]
@@ -55,15 +59,9 @@
 atlas = ExtResource("10_novg7")
 region = Rect2(232, 136, 16, 16)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lf0hv"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 98, 0)
-scale_min = 0.1
-scale_max = 0.4
-
 [sub_resource type="Curve2D" id="Curve2D_8qimj"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 320, 240, 0, 0, 0, 0, 7451, 240)
+"points": PackedVector2Array(0, 0, 0, 0, 320, 240, 0, 0, 0, 0, 7488, 240)
 }
 point_count = 2
 
@@ -91,44 +89,23 @@ colors = PackedColorArray(0, 0, 0, 1, 9.04858e-06, 0.661063, 0.875499, 1)
 gradient = SubResource("Gradient_gntxf")
 width = 480
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nn8uk"]
-shader = ExtResource("42_gntxf")
-shader_parameter/hue = 0.447
-shader_parameter/saturation = -0.967
-shader_parameter/value = 0.0
+[sub_resource type="Gradient" id="Gradient_ahwkk"]
+colors = PackedColorArray(0.2106, 0.70408, 0.78, 1, 0.2106, 0.67561, 0.78, 0)
 
-[sub_resource type="Curve" id="Curve_avtle"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.224105, 0.364525), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_r2knk"]
-curve = SubResource("Curve_avtle")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_le0lk"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(320, 240, 0)
-angle_min = -180.0
-angle_max = 180.0
-direction = Vector3(0, 0, 0)
-spread = 180.0
-initial_velocity_max = 20.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -10.0
-radial_accel_max = 10.0
-scale_curve = SubResource("CurveTexture_r2knk")
-
-[sub_resource type="Gradient" id="Gradient_lk3iu"]
-colors = PackedColorArray(0.63203, 0.211006, 0.779942, 1, 0.972549, 0.658824, 0.658824, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_w5kfg"]
-gradient = SubResource("Gradient_lk3iu")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mxgtx"]
+gradient = SubResource("Gradient_ahwkk")
 width = 180
 height = 180
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nn8uk"]
+shader = ExtResource("42_gntxf")
+shader_parameter/hue = 0.447
+shader_parameter/saturation = -0.967
+shader_parameter/value = 0.0
 
 [sub_resource type="Curve" id="Curve_lf0hv"]
 _data = [Vector2(0, 0.550562), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -287,7 +264,8 @@ emitting = false
 texture = SubResource("AtlasTexture_nn8uk")
 lifetime = 1.5
 randomness = 0.3
-process_material = SubResource("ParticleProcessMaterial_lf0hv")
+process_material = ExtResource("11_ahwkk")
+script = ExtResource("44_novg7")
 metadata/_edit_lock_ = true
 
 [node name="Path2D" type="Path2D" parent="."]
@@ -438,16 +416,18 @@ centered = false
 
 [node name="Node2D" type="Node2D" parent="CanvasLayer"]
 script = ExtResource("15_ahwkk")
+medium = true
 
 [node name="BGParticles" type="GPUParticles2D" parent="CanvasLayer/Node2D"]
+modulate = Color(1, 1, 1, 0.760784)
 z_index = 1
-material = SubResource("ShaderMaterial_nn8uk")
+material = ExtResource("23_le0lk")
 position = Vector2(320, 240)
 amount = 15
 texture = ExtResource("24_r2knk")
 lifetime = 5.0
 visibility_rect = Rect2(-320, -240, 640, 480)
-process_material = SubResource("ParticleProcessMaterial_le0lk")
+process_material = ExtResource("25_ly7i0")
 script = ExtResource("44_novg7")
 
 [node name="Objects" type="Node2D" parent="."]
@@ -523,6 +503,15 @@ position = Vector2(6800, 336)
 
 [node name="SpinyRed5" parent="." instance=ExtResource("28_ypjjq")]
 position = Vector2(6640, 336)
+
+[node name="Coin" parent="." instance=ExtResource("33_mxgtx")]
+position = Vector2(1776, 112)
+
+[node name="Coin2" parent="." instance=ExtResource("33_mxgtx")]
+position = Vector2(1776, 144)
+
+[node name="Thwomp11" parent="." instance=ExtResource("41_jau3g")]
+position = Vector2(6720, 32)
 
 [node name="RotoCenter3" parent="." instance=ExtResource("30_g3m05")]
 position = Vector2(3456, 336)
@@ -729,9 +718,6 @@ position = Vector2(5280, 64)
 [node name="Thwomp15" parent="." instance=ExtResource("41_jau3g")]
 position = Vector2(6256, 64)
 
-[node name="Thwomp11" parent="." instance=ExtResource("41_jau3g")]
-position = Vector2(6720, 32)
-
 [node name="Thwomp12" parent="." instance=ExtResource("41_jau3g")]
 position = Vector2(7136, 32)
 
@@ -815,53 +801,54 @@ offset_bottom = 352.0
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("15_ahwkk")
+medium = true
 
 [node name="ochko" type="PointLight2D" parent="Node2D"]
 position = Vector2(5584, 331)
 range_layer_min = -512
-texture = SubResource("GradientTexture2D_w5kfg")
+texture = SubResource("GradientTexture2D_mxgtx")
 offset = Vector2(0, 8)
 script = ExtResource("41_78qal")
 
 [node name="ochko4" type="PointLight2D" parent="Node2D"]
 position = Vector2(2144, 330)
 range_layer_min = -512
-texture = SubResource("GradientTexture2D_w5kfg")
+texture = SubResource("GradientTexture2D_mxgtx")
 offset = Vector2(0, 8)
 script = ExtResource("41_78qal")
 
 [node name="ochko5" type="PointLight2D" parent="Node2D"]
 position = Vector2(2224, 330)
 range_layer_min = -512
-texture = SubResource("GradientTexture2D_w5kfg")
+texture = SubResource("GradientTexture2D_mxgtx")
 offset = Vector2(0, 8)
 script = ExtResource("41_78qal")
 
 [node name="ochko6" type="PointLight2D" parent="Node2D"]
 position = Vector2(2304, 330)
 range_layer_min = -512
-texture = SubResource("GradientTexture2D_w5kfg")
+texture = SubResource("GradientTexture2D_mxgtx")
 offset = Vector2(0, 8)
 script = ExtResource("41_78qal")
 
 [node name="ochko7" type="PointLight2D" parent="Node2D"]
 position = Vector2(2384, 330)
 range_layer_min = -512
-texture = SubResource("GradientTexture2D_w5kfg")
+texture = SubResource("GradientTexture2D_mxgtx")
 offset = Vector2(0, 8)
 script = ExtResource("41_78qal")
 
 [node name="ochko2" type="PointLight2D" parent="Node2D"]
 position = Vector2(5696, 331)
 range_layer_min = -512
-texture = SubResource("GradientTexture2D_w5kfg")
+texture = SubResource("GradientTexture2D_mxgtx")
 offset = Vector2(0, 8)
 script = ExtResource("41_78qal")
 
 [node name="ochko3" type="PointLight2D" parent="Node2D"]
 position = Vector2(5792, 331)
 range_layer_min = -512
-texture = SubResource("GradientTexture2D_w5kfg")
+texture = SubResource("GradientTexture2D_mxgtx")
 offset = Vector2(0, 8)
 script = ExtResource("41_78qal")
 

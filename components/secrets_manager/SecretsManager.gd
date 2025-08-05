@@ -12,11 +12,13 @@ var toast_queue: Array[Array] = []
 var _save_queued: bool
 var _is_free: bool = true
 var _has_cheated: bool = false
+var _tween_game_save: Tween
 
 @onready var label: Label = $Map
 @onready var ninepatch: NinePatchRect = $Map/Title
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var vignette: Sprite2D = $Vignette
+@onready var saved: Control = $Saved
 
 signal secret_set(_name: String)
 
@@ -60,6 +62,7 @@ func _init() -> void:
 ".join(errored))
 
 func _ready() -> void:
+	saved.modulate.a = 0
 	load_secrets()
 	reparent.call_deferred(GlobalViewport.vp, false)
 	Data.life_added.connect(func():
@@ -204,6 +207,7 @@ func _on_asws_connected() -> void:
 	notify("Auto Splitter Ready!")
 	Thunder._connect(Thunder.autosplitter.closed, notify_warn.bind("Auto Splitter Offline"))
 
+
 func load_secrets() -> void:
 	var data: Dictionary = SettingsManager.load_data(secrets_path, "Achievements")
 	if data.is_empty():
@@ -215,7 +219,14 @@ func load_secrets() -> void:
 
 func save_secrets() -> void:
 	_save_queued = true
+
+
+func game_saved() -> void:
+	if _tween_game_save && _tween_game_save.is_valid():
+		_tween_game_save.kill()
+	_tween_game_save = create_tween()
 	
+
 
 func is_console_enabled() -> bool:
 	return SettingsManager.get_tweak("console_enabled", false) || Console.command_executed || _has_cheated

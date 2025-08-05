@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://1m11r2kd0x8v"]
+[gd_scene load_steps=32 format=3 uid="uid://1m11r2kd0x8v"]
 
 [ext_resource type="Script" uid="uid://cpeocq4h0mrbk" path="res://stages/extra/expert_mode/scripts/advance_edition_title.gd" id="1_w048x"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_wpc5r"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://38slikh3xcfa" path="res://stages/extra/expert_mode/gfx/title_border.png" id="7_w13uc"]
 [ext_resource type="Script" uid="uid://drr3wdl8celkj" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="7_ywxol"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="8_ag1vo"]
-[ext_resource type="Texture2D" uid="uid://c6bvur3wucnw2" path="res://stages/extra/expert_mode/gfx/thebg.png" id="8_byexe"]
 [ext_resource type="Texture2D" uid="uid://cmusg5stpc4n2" path="res://stages/extra/expert_mode/gfx/mario_forever.png" id="9_ls83a"]
 [ext_resource type="Texture2D" uid="uid://b6m7g8fcmg2ef" path="res://stages/extra/expert_mode/gfx/scr5.png" id="9_mp4gj"]
 [ext_resource type="Texture2D" uid="uid://bmtf7tbhd1khe" path="res://stages/extra/expert_mode/gfx/scr1.png" id="9_vd6fh"]
@@ -50,11 +49,32 @@ goto_scene = "res://stages/world_1/expert_map_1.tscn"
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_wpc5r")]
 music = Array[Resource]([ExtResource("3_kiqqt")])
-volume_db = Array[float]([2.6])
+channel_id = 2
+volume_db = Array[float]([-2.0])
 
 [node name="LostmapTitleBackground" type="Sprite2D" parent="."]
-position = Vector2(400, 240)
+position = Vector2(80, 0)
 texture = ExtResource("4_6bjbc")
+centered = false
+
+[node name="Start5" type="Label" parent="LostmapTitleBackground"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -41.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("14_byexe")
+theme_override_font_sizes/font_size = 16
+text = "by meteo dream"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("17_1cwik")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 1
@@ -75,12 +95,6 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 128, 480)
 
-[node name="Thebg" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2"]
-visible = false
-modulate = Color(0.63, 0.63, 0.63, 1)
-position = Vector2(80, 240)
-texture = ExtResource("8_byexe")
-
 [node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground/LostmapTitleBorder2"]
 process_mode = 3
 repeat_size = Vector2(0, 480)
@@ -94,11 +108,11 @@ texture = ExtResource("9_mp4gj")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
 position = Vector2(64, 144)
-texture = ExtResource("10_v4amj")
+texture = ExtResource("11_w5gp5")
 
 [node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
 position = Vector2(64, 240)
-texture = ExtResource("11_w5gp5")
+texture = ExtResource("15_0y373")
 
 [node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder2/Parallax2D/Node2D"]
 position = Vector2(64, 336)
@@ -131,12 +145,6 @@ centered = false
 flip_h = true
 region_enabled = true
 region_rect = Rect2(0, 0, 128, 480)
-
-[node name="Thebg" type="Sprite2D" parent="ParallaxBackground/LostmapTitleBorder3"]
-visible = false
-modulate = Color(0.63, 0.63, 0.63, 1)
-position = Vector2(80, 240)
-texture = ExtResource("8_byexe")
 
 [node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground/LostmapTitleBorder3"]
 process_mode = 3
