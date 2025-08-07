@@ -337,11 +337,12 @@ func create_platform() -> void:
 		#)
 
 
-func podo_create() -> void:
-	if !use_sequence_table: get_tree().create_timer(6, false).timeout.connect(podo_create)
+func podo_create(left_pos: float = 128, right_pos: float = 512) -> void:
+	if !use_sequence_table:
+		get_tree().create_timer(6, false).timeout.connect(podo_create.bind())
 
 	var podo1 = podoboo.instantiate()
-	podo1.position = Vector2(128, 448-16)
+	podo1.position = Vector2(left_pos, 432)
 	podo1.one_shot = true
 	podo1.interval = 0
 	podo1.jumping = true
@@ -349,7 +350,7 @@ func podo_create() -> void:
 	moving_group.add_child(podo1)
 
 	var podo2 = podoboo.instantiate()
-	podo2.position = Vector2(512, 448-16)
+	podo2.position = Vector2(right_pos, 432)
 	podo2.one_shot = true
 	podo2.interval = 0
 	podo2.jumping = true
@@ -358,7 +359,8 @@ func podo_create() -> void:
 
 
 func big_fish_create() -> void:
-	if !use_sequence_table: get_tree().create_timer(15, false).timeout.connect(big_fish_create)
+	if !use_sequence_table:
+		get_tree().create_timer(15, false).timeout.connect(big_fish_create)
 	strelochka.position = Vector2(last_player_pos.x, 384)
 	strelochka.reset_physics_interpolation()
 	fish_preparing = true
@@ -374,7 +376,8 @@ func big_fish_create() -> void:
 
 
 func stihl_create() -> void:
-	if !use_sequence_table: get_tree().create_timer(20, false).timeout.connect(stihl_create)
+	if !use_sequence_table:
+		get_tree().create_timer(20, false).timeout.connect(stihl_create)
 
 	var stihl = STIHL.instantiate()
 	moving_group.add_child(stihl)
@@ -386,7 +389,8 @@ func stihl_create() -> void:
 
 
 func bullet_create(expert: bool = false) -> void:
-	if !use_sequence_table: get_tree().create_timer(10, false).timeout.connect(bullet_create.bind(expert))
+	if !use_sequence_table:
+		get_tree().create_timer(10, false).timeout.connect(bullet_create.bind(expert))
 	
 	var bul
 	if expert:
@@ -405,7 +409,8 @@ func bullet_exp_create() -> void:
 
 
 func volcano_up() -> void:
-	if !use_sequence_table: get_tree().create_timer(30, false).timeout.connect(volcano_up)
+	if !use_sequence_table:
+		get_tree().create_timer(30, false).timeout.connect(volcano_up)
 	
 	var tw = create_tween().set_parallel()
 	tw.tween_property(volcano, "position:y", 400, 1.5)
@@ -430,7 +435,8 @@ func bowser_attack() -> void:
 	Audio.play_1d_sound(preload("res://music/climbing_minigame/snd_bowser_laugh.ogg"), false)
 	if difficulty < 3:
 		return
-	if !use_sequence_table: get_tree().create_timer(12, false).timeout.connect(bowser_attack)
+	if !use_sequence_table:
+		get_tree().create_timer(12, false).timeout.connect(bowser_attack)
 	
 	var tween_hammer: Tween = create_tween()
 	tween_hammer.tween_property(bowser, "position:x", 608, 1.5)

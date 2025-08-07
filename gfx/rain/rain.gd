@@ -2,9 +2,10 @@ extends GPUParticles2D
 
 @export_category("Rain")
 @export_group("Sound", "sound_")
-@export_range(-50, 50, 0.1, "or_less", "or_greater", "suffix:dB") var sound_basic_volume: float = 0.0
+@export_range(-50, 50, 0.1, "or_less", "or_greater", "suffix:dB") var sound_basic_volume: float = -6
 @export_range(-50, 50, 0.1, "or_less", "or_greater", "suffix:dB") var sound_dying_volume: float = -100.0
 @export_range(0, 256, 0.1, "or_greater", "suffix:px") var sound_margin: float = 96.0
+@export var sound_only_in_visible_rect: bool = true
 
 var _prev_is_player_in_rect: bool = false
 var _is_player_in_rect: bool = false
@@ -20,6 +21,8 @@ func _ready() -> void:
 	_update_visibility.call_deferred()
 
 func _process(_delta: float) -> void:
+	if !sound_only_in_visible_rect:
+		return
 	if _tweening: return
 	
 	var p: Player = Thunder._current_player
