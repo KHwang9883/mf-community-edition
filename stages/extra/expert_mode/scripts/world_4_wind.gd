@@ -7,8 +7,8 @@ var player
 var stopped: bool
 
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
-@onready var gpu_particles_2d: GPUParticles2D = $"../HUD/GPUParticles2D"
-@onready var gpu_particles_2d_2: GPUParticles2D = $"../HUD/GPUParticles2D2"
+@onready var gpu_particles_2d: GPUParticles2D = $"../CanvasLayer/GPUParticles2D"
+@onready var gpu_particles_2d_2: GPUParticles2D = $"../CanvasLayer/GPUParticles2D2"
 
 func _ready() -> void:
 	player = Thunder._current_player
