@@ -33,7 +33,7 @@ func _spawn_goomba() -> void:
 	var _intersection := direct_space.intersect_point(dir_space_params, 16)
 	for i in _intersection:
 		if is_instance_valid(i.get("collider", null)):
-			print(i)
+			print_verbose(i)
 			return
 	
 	var instance = GOOMBA.instantiate()

@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://d35hxgxesr8ls"]
+
+[ext_resource type="Script" uid="uid://cumri0recjqu0" path="res://commands/minec/dropped_item.gd" id="1_a8mv1"]
+[ext_resource type="Texture2D" uid="uid://cfrvt5cgedoab" path="res://commands/minec/gfx/unknown.png" id="2_fj885"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="2_srrk2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_srrk2"]
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fj885"]
+size = Vector2(40, 40)
+
+[node name="DroppedItem" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+script = ExtResource("1_a8mv1")
+speed = Vector2(0, -120)
+gravity_scale = 0.35
+max_falling_speed = 1000.0
+metadata/_custom_type_script = "uid://ng3vu4qwreu5"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_srrk2")
+
+[node name="Sprite" type="Node2D" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Sprite"]
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+texture = ExtResource("2_fj885")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_srrk2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_fj885")
+disabled = true
+
+[connection signal="player_enter" from="Area2D" to="." method="_on_area_2d_player_enter"]
