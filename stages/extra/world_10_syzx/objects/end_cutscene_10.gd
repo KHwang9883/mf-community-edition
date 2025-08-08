@@ -1,5 +1,7 @@
 extends Node
 
+const CASTLE_BRICK = preload("res://stages/world_1/scripts/castle_brick.tscn")
+const CASTLE_SMOKE = preload("res://stages/world_1/scripts/castle_smoke.tscn")
 const EXPLOSION_NEAREST = preload("res://stages/extra/world_10_syzx/objects/explosion_nearest.tscn")
 
 @onready var player: Player = Thunder._current_player
@@ -7,7 +9,7 @@ const EXPLOSION_NEAREST = preload("res://stages/extra/world_10_syzx/objects/expl
 @onready var castle_end_marker = $"../CastleEndMarker"
 @onready var castle_pos: Vector2 = castle.position
 
-#@onready var brick_checker: Area2D = $"../Area2D"
+@onready var brick37: StaticBumpingBlock = $"../Brick37"
 @onready var castle_small: Sprite2D = $"../CastleSmall"
 @onready var thwomp: CharacterBody2D = $"../Thwomp"
 
@@ -18,6 +20,7 @@ var _destroying: bool = false
 var _finished: float = 0.0
 var _thwomp_smiled: bool
 var _speeding: float
+var _small_castle_seq: bool
 
 func _ready() -> void:
 	await get_parent().ready
@@ -31,7 +34,7 @@ func _ready() -> void:
 	await get_tree().create_timer(3.5, false).timeout
 	
 	thwomp._step = 1
-	thwomp.speed.y = 5
+	thwomp.speed.y = 1
 	_speeding = 1
 	_destroying = true
 	#Thunder._current_camera.shock(2, Vector2(4, 4))
@@ -64,9 +67,20 @@ func _physics_process(delta: float) -> void:
 		Scenes.current_scene.end()
 	
 	if _destroying:
-		thwomp.speed.y += 3 + _speeding * delta
+		thwomp.speed.y += 2 + _speeding * delta
 		_speeding += delta
 		print(thwomp.speed.y)
+		if thwomp.position.y > -64 && !_small_castle_seq:
+			_small_castle_seq = true
+			brick37.bricks_break()
+			castle_small.queue_free()
+			
+			var expl = EXPLOSION_NEAREST.instantiate()
+			expl.position = castle_small.position
+			expl.scale = thwomp.scale
+			Scenes.current_scene.add_child(expl)
+		if thwomp.position.y > 64 && castle.position.y < thwomp.position.y + 258 && thwomp.speed.y >= 0:
+			castle.position.y = thwomp.position.y + 258
 		if thwomp.position.y > -192 && thwomp.speed.y < 930:
 			_destroying = false
 			thwomp.speed.y = 0
@@ -75,6 +89,8 @@ func _physics_process(delta: float) -> void:
 			thwomp.speed.y = 950
 			_destroying = true
 			Thunder._connect(thwomp.stun, func():
+				_brick_particles()
+				run_while(_smoke_particles, 0.02)
 				thwomp._on_smile()
 				_thwomp_smiled = true
 			, CONNECT_ONE_SHOT)
@@ -87,17 +103,24 @@ func run_while(callable: Callable, repeat_delay: float) -> void:
 	run_while(callable, repeat_delay)
 
 
-#func _smoke_particles() -> void:
-	#var smoke = CASTLE_SMOKE.instantiate()
-	#Scenes.current_scene.add_child(smoke)
+func _brick_particles() -> void:
+	var brick = CASTLE_BRICK.instantiate()
+	brick.position = castle_end_marker.position + Vector2(randi_range(-145, 145), 0)
+	brick.reset_physics_interpolation()
+	brick.speed = Vector2(randf_range(-4.0, 4.0), randi_range(-11, -6))
+	Scenes.current_scene.add_child(brick)
+	for i in 10:
+		var _br = brick.duplicate()
+		_br.position = castle_end_marker.position + Vector2(randi_range(-145, 145), 0)
+		_br.reset_physics_interpolation()
+		_br.speed = Vector2(randf_range(-4.0, 4.0), randi_range(-11, -6))
+		Scenes.current_scene.add_child(_br)
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	print(body)
-	if !is_instance_valid(castle_small): return
-	if body == thwomp:
-		castle_small.queue_free()
-		var expl = EXPLOSION_NEAREST.instantiate()
-		expl.position = castle_small.position
-		expl.scale = thwomp.scale
-		Scenes.current_scene.add_child(expl)
+func _smoke_particles() -> void:
+	var smoke = CASTLE_SMOKE.instantiate()
+	smoke.position = castle_end_marker.position + Vector2(randi_range(-157, 157), 0)
+	smoke.reset_physics_interpolation()
+	smoke.y_modifier = randi_range(-10, 10)
+	smoke.rotation_speed = randi_range(-90, 90)
+	Scenes.current_scene.add_child(smoke)
