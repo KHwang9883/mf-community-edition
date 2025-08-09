@@ -2,7 +2,7 @@ extends Command
 
 
 static func register() -> Command:
-	return new().set_name("minetheevil").set_description("Grab your enemies on the go. (Requires Minecraft Mode)")
+	return new().set_name("evilminecraft").set_description("Grab your enemies on the go. (Requires Minecraft Mode)")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	if !Console.cv.get("mc_enemy_mode", false):

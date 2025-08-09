@@ -14,6 +14,7 @@ class ItemTile:
 	var source_id: int
 	var atlas_source: TileSetAtlasSource
 	var scenes_source: TileSetScenesCollectionSource
+	var alt_id: int
 	var scene: PackedScene
 
 class ItemBody:
