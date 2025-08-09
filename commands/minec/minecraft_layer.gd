@@ -48,26 +48,31 @@ func try_placing_block() -> void:
 	if !outline.can_place: return
 	if !is_instance_valid(item.object_ref):
 		return
-	if item.type == ItemSlot.OutlineType.BODY:
-		item.object_ref.show()
-		item.object_ref.process_mode = item.item_body.process_mode
-		item.object_ref.set_deferred("collision_layer", item.item_body.collision_layer)
-		item.object_ref.global_position = outline.outlined_center_pos
-		item.object_ref.reset_physics_interpolation()
-		var body = item.object_ref.get_node_or_null("Body")
-		if body:
-			body.process_mode = item.item_body.body_process
-	elif item.type == ItemSlot.OutlineType.TILE_MAP_LAYER:
-		var itemtile: MCItem.ItemTile = item.item_tile
-		var object: TileMapLayer = item.object_ref
-		var tile_pos = object.local_to_map(object.to_local(outline.outlined_center_pos))
-		if itemtile.atlas_source:
-			if itemtile.tile_data.terrain == -1:
-				object.set_cell(tile_pos, itemtile.source_id, itemtile.atlas_coords)
-			else:
-				object.set_cells_terrain_connect(
-					[tile_pos], itemtile.tile_data.terrain_set, itemtile.tile_data.terrain
-				)
+	match item.type:
+		ItemSlot.OutlineType.BODY, ItemSlot.OutlineType.UNKNOWN:
+			item.object_ref.show()
+			item.object_ref.process_mode = item.item_body.process_mode
+			if item.type == ItemSlot.OutlineType.BODY:
+				item.object_ref.set_deferred("collision_layer", item.item_body.collision_layer)
+			item.object_ref.global_position = outline.outlined_center_pos
+			item.object_ref.reset_physics_interpolation()
+			var body = item.object_ref.get_node_or_null("Body")
+			if body:
+				body.process_mode = item.item_body.body_process
+		ItemSlot.OutlineType.TILE_MAP_LAYER:
+			var itemtile: MCItem.ItemTile = item.item_tile
+			var object: TileMapLayer = item.object_ref
+			var tile_pos = object.local_to_map(object.to_local(outline.outlined_center_pos))
+			if itemtile.atlas_source:
+				if itemtile.tile_data.terrain == -1:
+					object.set_cell(tile_pos, itemtile.source_id, itemtile.atlas_coords, itemtile.alt_id)
+				else:
+					object.set_cells_terrain_connect(
+						[tile_pos], itemtile.tile_data.terrain_set, itemtile.tile_data.terrain
+					)
+			elif itemtile.scenes_source:
+				object.set_cell(tile_pos, itemtile.source_id, Vector2i.ZERO, itemtile.alt_id)
+		
 	
 	inventory[selected].items.pop_back()
 	update_hotbar()
@@ -104,7 +109,11 @@ func _is_same_item(inv: MCItem, new: MCItem) -> bool:
 			inv.object_ref == new.object_ref &&
 			inv.item_tile.atlas_source == new.item_tile.atlas_source &&
 			inv.item_tile.tile_data.terrain == new.item_tile.tile_data.terrain &&
-			inv.item_tile.tile_data.terrain_set == new.item_tile.tile_data.terrain_set
+			inv.item_tile.tile_data.terrain_set == new.item_tile.tile_data.terrain_set &&
+			(inv.item_tile.atlas_coords == new.item_tile.atlas_coords \
+				if inv.item_tile.tile_data.terrain == -1 \
+				else true
+			)
 		)
 	if inv.item_tile.scenes_source:
 		return (
@@ -162,7 +171,8 @@ class ItemSlot:
 		NONE,
 		BODY,
 		TILE_MAP_LAYER,
-		TILE_MAP
+		TILE_MAP,
+		UNKNOWN
 	}
 	var type: OutlineType
 	var items: Array[MCItem]

@@ -8,9 +8,10 @@ enum OutlineType {
 	BODY = 1,
 	TILE_MAP_LAYER = 2,
 	TILE_MAP = 3,
+	UNKNOWN = 4,
 }
 
-var outlined: CollisionObject2D
+var outlined: Node2D
 var outlined_tilemap: TileMapLayer
 var outlined_tilemap_item: MCItem.ItemTile
 var outlined_center_pos: Vector2
@@ -31,7 +32,7 @@ func _ready() -> void:
 		await get_tree().physics_frame
 		gui = Scenes.custom_scenes.get("MinecraftGUI")
 		gui.evil_mode_activated.connect(func():
-			collision_mask = 2 + 16 + 64
+			collision_mask = 2 + 16 + 64# + 4
 		)
 		gui.evil_mode_deactivated.connect(func():
 			collision_mask = 16 + 64
@@ -52,15 +53,18 @@ func check_tile_process() -> void:
 	query.collision_mask = collision_mask
 	_saved_mouse_pos = get_global_mouse_position()
 	query.position = _saved_mouse_pos
+	#query.collide_with_areas = true
 	
-	var cldata: Array[Dictionary] = get_world_2d().direct_space_state.intersect_point(query, 10)
+	var cldata: Array[Dictionary] = get_world_2d().direct_space_state.intersect_point(query, 12)
 	var has_something: bool
+	var node_area: Node2D
 	
 	for k in cldata:
 		var l: Object = k.get(&"collider", null)
 		if !l: continue
 		#print(l)
 		if l is CollisionObject2D:
+			#if l.scene_file_path == DROPPED_ITEM.resource_path: continue
 			outlined = l
 			outlined_tilemap = null
 			outlined_tilemap_item = null
@@ -81,13 +85,14 @@ func check_tile_process() -> void:
 			outlined_tilemap_item = MCItem.ItemTile.new()
 			outlined_tilemap_item.tile_data = tile_data
 			outlined_tilemap_item.coords = tile_pos
+			var alt_id = l.get_cell_alternative_tile(tile_pos)
+			outlined_tilemap_item.alt_id = alt_id
 			var _source = l.tile_set.get_source(cell_source)
 			if _source is TileSetAtlasSource:
 				outlined_tilemap_item.atlas_source = _source
 				outlined_tilemap_item.atlas_coords = l.get_cell_atlas_coords(tile_pos)
 			elif _source is TileSetScenesCollectionSource:
 				outlined_tilemap_item.scenes_source = _source
-				var alt_id = l.get_cell_alternative_tile(tile_pos)
 				outlined_tilemap_item.scene = _source.get_scene_tile_scene(alt_id)
 			
 			outlined_center_pos = l.to_global(l.map_to_local(tile_pos))
@@ -95,6 +100,18 @@ func check_tile_process() -> void:
 			outlined_tilemap = l
 			has_something = true
 			break
+		
+		#elif l is Node2D && l.has_node("Body") && l.scene_file_path:
+		#	node_area = l
+	
+	if !has_something && node_area:
+		#print(node_area)
+		outlined = node_area
+		outlined_tilemap = null
+		outlined_tilemap_item = null
+		outlined_center_pos = node_area.global_position
+		outline_type = OutlineType.UNKNOWN
+		has_something = true
 	
 	if !has_something:
 		outlined = null
@@ -112,7 +129,6 @@ func check_tile_process() -> void:
 			var shape_rid = PhysicsServer2D.rectangle_shape_create()
 			PhysicsServer2D.shape_set_data(shape_rid, Vector2.ONE * 15)
 			place_query.shape_rid = shape_rid
-			
 			
 			var cls := get_world_2d().direct_space_state.intersect_shape(place_query, 1)
 			PhysicsServer2D.free_rid(shape_rid)
@@ -139,10 +155,15 @@ func _draw() -> void:
 	var _polygons: Array[PackedVector2Array]
 	var _color := Color(0, 0, 0, 0.5)
 	if is_instance_valid(outlined):
-		for i in outlined.get_shape_owners():
-			draw_set_transform(outlined.shape_owner_get_owner(i).global_position)
-			for j in outlined.shape_owner_get_shape_count(i):
-				_rect = (outlined.shape_owner_get_shape(i, j).get_rect())
+		var shape_parent := outlined
+		if outline_type == OutlineType.UNKNOWN:
+			shape_parent = outlined.get_node_or_null(^"Body")
+		if !shape_parent: return
+		
+		for i in shape_parent.get_shape_owners():
+			draw_set_transform(shape_parent.shape_owner_get_owner(i).global_position)
+			for j in shape_parent.shape_owner_get_shape_count(i):
+				_rect = (shape_parent.shape_owner_get_shape(i, j).get_rect())
 	elif is_instance_valid(outlined_tilemap):
 		var tile_pos = outlined_tilemap.local_to_map(outlined_tilemap.to_local(_saved_mouse_pos))
 		#print(tile_pos)
@@ -174,7 +195,10 @@ func _draw() -> void:
 ## Breaking tiles (holding left mouse button)
 func breaking_process(delta: float) -> void:
 	var can_break: bool = outline_type > OutlineType.NONE
+	#if outlined:
+	#	print(outlined.scene_file_path)
 	if outline_type == OutlineType.BODY && !outlined.scene_file_path:
+		#print("Cannot braek!")
 		can_break = false
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && can_break:
 		breaking += delta
@@ -198,19 +222,20 @@ func block_break() -> void:
 	drop.item.type = outline_type
 	drop.position = outlined_center_pos
 	match outline_type:
-		OutlineType.BODY:
+		OutlineType.BODY, OutlineType.UNKNOWN:
 			drop.item.object_ref = outlined
 			drop.item.item_body = MCItem.ItemBody.new()
-			drop.item.item_body.collision_layer = outlined.collision_layer
 			drop.item.item_body.process_mode = outlined.process_mode
 			drop.item.item_body.resource_path = outlined.scene_file_path
+			if outline_type == OutlineType.BODY:
+				drop.item.item_body.collision_layer = outlined.collision_layer
+				outlined.set_deferred("collision_layer", 0)
 			var packed = PackedScene.new()
 			packed.pack(outlined)
 			texture = _get_packed_scene_texture(packed)
 			packed = null
 			outlined.hide()
 			outlined.process_mode = Node.PROCESS_MODE_DISABLED
-			outlined.set_deferred("collision_layer", 0)
 			var body = outlined.get_node_or_null("Body")
 			if body:
 				drop.item.item_body.body_process = body.process_mode
