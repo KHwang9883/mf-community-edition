@@ -25,8 +25,6 @@ func suspended_game_logic() -> void:
 	label_text += profile.title_level
 	level_label.text = label_text
 	
-	if profile.get(&"executed"):
-		SecretsManager._has_cheated = true
 	if profile.get(&"advanced_edition"):
 		ProfileManager.current_profile.data.advanced_edition = true
 	

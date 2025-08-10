@@ -16,6 +16,7 @@ confirm once again to proceed."""
 func _handle_select(mouse_input: bool = false) -> void:
 	if _has_started:
 		return
+	
 	if !really_yes && (SecretsManager.is_console_enabled() || !!prog.profile.get("saved_profile_data").get("executed")):
 		message_block_2.message_hidden.connect(_on_message_hidden, CONNECT_ONE_SHOT)
 		texture_rect.visible = true
@@ -29,6 +30,9 @@ func _handle_select(mouse_input: bool = false) -> void:
 				message_block_2.message += '\nthe game will not override this saved progress file. Use the "cv_forcesave_suspended" command to allow overriding.'
 		message_block_2.show_message()
 		return
+	if !!prog.profile.get("saved_profile_data").get("executed"):
+		SecretsManager._has_cheated = true
+		print("Game session marked as cheated")
 	if !!prog.profile.get("saved_profile_data").get("mario_forever_expert"):
 		progress_skipper.mario_forever_advance(true)
 	

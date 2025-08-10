@@ -7,6 +7,7 @@ const DRAGON_COIN = preload("res://objects/dragon_coin/dragon_coin.wav")
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 var collected: bool
+var speedy: float = 0
 #@export var sound: AudioStream = DRAGON_COIN
 
 func _ready() -> void:
@@ -33,6 +34,9 @@ func _from_bumping_block() -> void:
 
 
 func _physics_process(delta):
+	if collected:
+		position.y += speedy * delta
+		speedy += 600 * delta
 	if !Thunder._current_player: return
 	if overlaps_body(Thunder._current_player):
 		collect()
@@ -56,6 +60,7 @@ func collect() -> void:
 	enemy_attacked.killing_enabled = false
 	remove_from_group(&"dragon_coin")
 	collected = true
+	speedy = -250
 	
 	if SettingsManager.get_quality() != SettingsManager.QUALITY.MIN:
 		NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:

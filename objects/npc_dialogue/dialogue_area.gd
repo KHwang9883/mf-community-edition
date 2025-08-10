@@ -38,34 +38,36 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if player && event.is_action_pressed(player.control.up):
-		if tween:
-			tween.kill()
-		
-		dialogued.emit()
-		dialogue.visible_ratio = 0
-		dialogue.text = dialogues[0]
-		if !dialogue_sound.is_empty() && dialogue_sound[0]:
-			Audio.play_sound(dialogue_sound[0], self, false)
-		
-		tween = create_tween()
-		for i in dialogues.size():
-			tween.tween_callback(
-				func() -> void:
-					dialogue_changed.emit(i)
-			)
-			tween.tween_property(dialogue, "visible_ratio", 1, dialogue_completion_seconds[i])
-			tween.tween_interval(dialogue_display_duration[i])
-			tween.tween_callback(
-				func() -> void:
-					if i < dialogues.size() - 1:
-						dialogue.text = dialogues[i + 1]
-						dialogue.visible_ratio = 0
-						if !dialogue_sound.is_empty() && dialogue_sound[i + 1]:
-							Audio.play_sound(dialogue_sound[i], self, false)
-					elif dialogue_fade_out:
-						dialogue.text = ""
-						tween.kill()
-						tween = null
-						dialogue_finished.emit()
-			)
+	if !player: return
+	if !event.is_action_pressed(player.control.up):
+		return
+	if tween:
+		tween.kill()
+	
+	dialogued.emit()
+	dialogue.visible_ratio = 0
+	dialogue.text = dialogues[0]
+	if !dialogue_sound.is_empty() && dialogue_sound[0]:
+		Audio.play_sound(dialogue_sound[0], self, false)
+	
+	tween = create_tween()
+	for i in dialogues.size():
+		tween.tween_callback(
+			func() -> void:
+				dialogue_changed.emit(i)
+		)
+		tween.tween_property(dialogue, "visible_ratio", 1, dialogue_completion_seconds[i])
+		tween.tween_interval(dialogue_display_duration[i])
+		tween.tween_callback(
+			func() -> void:
+				if i < dialogues.size() - 1:
+					dialogue.text = dialogues[i + 1]
+					dialogue.visible_ratio = 0
+					if !dialogue_sound.is_empty() && dialogue_sound[i + 1]:
+						Audio.play_sound(dialogue_sound[i], self, false)
+				elif dialogue_fade_out:
+					dialogue.text = ""
+					tween.kill()
+					tween = null
+					dialogue_finished.emit()
+		)

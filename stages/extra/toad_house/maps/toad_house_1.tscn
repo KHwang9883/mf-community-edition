@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://qfxyyb211vse"]
+[gd_scene load_steps=38 format=4 uid="uid://qfxyyb211vse"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_npvig"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_751tr"]
@@ -21,9 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="18_cj5qi"]
 [ext_resource type="Texture2D" uid="uid://ckfb3opqbapyi" path="res://engine/tilesets/overworld/tree_tall.png" id="18_poxhe"]
 [ext_resource type="Texture2D" uid="uid://d7bguquxitp5" path="res://engine/tilesets/overworld/tree_short.png" id="19_r52jv"]
-[ext_resource type="PackedScene" uid="uid://d20tu17c32ipm" path="res://engine/objects/bumping_blocks/question_block/templates/Boomerang Flower Question Block.tscn" id="20_yl63d"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="21_063ss"]
-[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="21_y2inq"]
 [ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="22_426r2"]
 [ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="22_b4cbb"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="23_3vwqv"]
@@ -32,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="27_41htu"]
 [ext_resource type="Script" uid="uid://ccr35re45g761" path="res://stages/extra/toad_house/objects/roulette_block/powerup_extension.gd" id="28_8jndx"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="29_7ulwy"]
+[ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="33_enwkv"]
 
 [sub_resource type="Gradient" id="Gradient_1f5ng"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -40,23 +39,7 @@ colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.
 gradient = SubResource("Gradient_1f5ng")
 width = 480
 
-[sub_resource type="Resource" id="Resource_0bol0"]
-resource_local_to_scene = true
-script = ExtResource("23_3vwqv")
-creation_fallback_node = ExtResource("21_y2inq")
-creation_nodepack = ExtResource("22_b4cbb")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="Resource" id="Resource_nnff1"]
+[sub_resource type="Resource" id="Resource_enwkv"]
 resource_local_to_scene = true
 script = ExtResource("23_3vwqv")
 creation_nodepack = ExtResource("27_41htu")
@@ -72,7 +55,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 custom_script = ExtResource("28_8jndx")
 
-[sub_resource type="Resource" id="Resource_3c84n"]
+[sub_resource type="Resource" id="Resource_ro7vd"]
 script = ExtResource("23_3vwqv")
 creation_nodepack = ExtResource("29_7ulwy")
 creation_force_sibling = false
@@ -87,9 +70,9 @@ visi_y_sort_enabled = false
 custom_vars = {}
 custom_script = ExtResource("28_8jndx")
 
-[sub_resource type="Resource" id="Resource_cu0p7"]
+[sub_resource type="Resource" id="Resource_tl0ot"]
 script = ExtResource("23_3vwqv")
-creation_nodepack = ExtResource("29_7ulwy")
+creation_nodepack = ExtResource("33_enwkv")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -102,7 +85,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 custom_script = ExtResource("28_8jndx")
 
-[sub_resource type="Resource" id="Resource_yurev"]
+[sub_resource type="Resource" id="Resource_uuli0"]
 script = ExtResource("23_3vwqv")
 creation_nodepack = ExtResource("22_b4cbb")
 creation_force_sibling = false
@@ -250,17 +233,12 @@ position = Vector2(448, 336)
 texture = ExtResource("22_426r2")
 metadata/_edit_lock_ = true
 
-[node name="QuestionBlockGreenLui" parent="." instance=ExtResource("20_yl63d")]
-position = Vector2(-96, 256)
-disable_mode = 0
-result = SubResource("Resource_0bol0")
-
 [node name="MessageBlock" parent="." instance=ExtResource("24_buakk")]
 position = Vector2(128, 624)
 message = "welcome to my mysterious shop of wonderful things!"
 
 [node name="RouletteBlock" parent="." instance=ExtResource("26_r0jga")]
 position = Vector2(320, 272)
-result_array = Array[ExtResource("23_3vwqv")]([SubResource("Resource_nnff1"), SubResource("Resource_3c84n"), SubResource("Resource_cu0p7"), SubResource("Resource_yurev")])
+result_array = Array[ExtResource("23_3vwqv")]([SubResource("Resource_enwkv"), SubResource("Resource_ro7vd"), SubResource("Resource_tl0ot"), SubResource("Resource_uuli0")])
 
 [connection signal="stage_ready" from="." to="MessageBlock" method="show_message"]

@@ -45,13 +45,16 @@ var active_store: Control
 func _ready() -> void:
 	item = Data.values.get("item", "")
 	item_stock.visible = false
+	if !item:
+		var replenished = Data.technical_values.custom_saved_values.get("item_replenisher", "")
+		if replenished:
+			item = replenished
 	if item && item_stock.has_node(item):
 		item_stock.get_node(item).visible = true
 		item_stock.visible = true
-		item_stock_help_label.visible = false
 	else:
 		empty_item_stock()
-		item_stock_help_label.visible = false
+	item_stock_help_label.visible = false
 	
 	if ProfileManager.current_profile.data.get("warp_to_save_room"):
 		var lvl: Level = Scenes.current_scene
