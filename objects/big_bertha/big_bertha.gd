@@ -21,18 +21,30 @@ func _ready() -> void:
 	if Data.values.checkpoint in checkpoints_offset.keys():
 		position += checkpoints_offset[Data.values.checkpoint]
 		reset_physics_interpolation()
+	
+	if !OS.is_debug_build():
+		Scenes.current_scene.get_node("HUD/DebugSpd").hide()
 
 
 func _physics_process(delta: float) -> void:
 	if !water_node: return
-	speed.x = clampf(speed.x, -600, 600)
 	super(delta)
 	if !Thunder._current_camera: return
 	var cam_center = Thunder._current_camera.get_screen_center_position()
+	# If outside of the screen, Bertha's speed will be faster to keep up with the player
+	if abs(position.x - cam_center.x) > 330:
+		speed.x = clampf(speed.x, -600, 700)
+	else:
+		speed.x = clampf(speed.x, -500, 500)
 	
 	var water_pos_y: float = _process_states(delta, cam_center)
 	if sprite_node.animation != &"fall":
 		sprite_node.animation = &"default" if !can_eat else &"jump"
+	
+	if OS.is_debug_build():
+		var hud = Thunder._current_hud
+		if hud:
+			hud.get_node("DebugSpd").text = "%.1f" % [speed.x]
 	var pl: Player = Thunder._current_player
 	if !pl: return
 	
@@ -80,17 +92,17 @@ func _process_states(delta, cam_center) -> float:
 	else:
 		position.y = lerpf(position.y, target_y, ease(delta, 0.25))
 	
-	var pl_speed = 1 if !Thunder._current_player else 1 + abs(Thunder._current_player.speed.x) / 150
+	var pl_speed = 1 if !Thunder._current_player else 1 + abs(Thunder._current_player.speed.x) / 450
 	match state:
 		0:
 			if position.x > cam_center.x - 128 || has_eaten:
-				speed.x = move_toward(speed.x, -400 * pl_speed, delta * 1250)
+				speed.x = move_toward(speed.x, -350 * pl_speed, delta * 1000)
 			else:
 				state = 1
 				_process_states(delta, cam_center)
 		1:
 			if position.x < cam_center.x + 128 || has_eaten:
-				speed.x = move_toward(speed.x, 400 * pl_speed, delta * 1250 * pl_speed)
+				speed.x = move_toward(speed.x, 350 * pl_speed, delta * 1100 * pl_speed)
 			else:
 				state = 0
 				_process_states(delta, cam_center)

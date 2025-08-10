@@ -461,7 +461,7 @@ is_classic_achievement = Array[bool]([true])
 [node name="SecretUnlocker2" parent="." instance=ExtResource("3_sberb")]
 secrets = Array[String](["expert mode easter eggs"])
 progress_by_id = "1-4"
-progress_to = 6
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("7_j32o4")]
 position = Vector2(144, 336)
@@ -1098,7 +1098,7 @@ position = Vector2(6416, 400)
 [node name="Bowser" parent="." instance=ExtResource("34_48eg2")]
 position = Vector2(8736, 256)
 health = 3
-status_interval = Array[float]([1.25, 1.25, 1.25])
+status_interval = Array[float]([1.75, 1.75, 1.75])
 status = Array[StringName]([&"flame", &"flame", &"multiflames"])
 
 [node name="Node" type="Node" parent="Bowser"]
@@ -1673,6 +1673,7 @@ metadata/_edit_lock_ = true
 [node name="PipeIn" parent="." instance=ExtResource("25_jshax")]
 position = Vector2(-192, 240)
 warp_to = NodePath("../PipeOut2")
+use_blur_transition = true
 
 [node name="PipeOut" parent="." instance=ExtResource("26_sdyid")]
 position = Vector2(-704, 272)
@@ -1705,8 +1706,8 @@ result = SubResource("Resource_4tq6j")
 
 [connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="unlock_secret"]
-[connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="warp_split"]
+[connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped"]]
 [connection signal="timeout" from="Marker2D/Timer" to="Marker2D" method="_on_timer_timeout"]
 [connection signal="warp_ended" from="PipeIn2" to="HUD/Label/Node" method="activate"]

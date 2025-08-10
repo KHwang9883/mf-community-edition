@@ -2,7 +2,7 @@ extends Node2D
 
 const HAMMER_BRO = preload("res://engine/objects/enemies/hammer_bros/hammer_bro.tscn")
 
-@onready var _tweak: bool = SettingsManager.get_tweak("harder_level_design", false)
+@onready var _tweak: bool = ProfileManager.current_profile.data.get("advanced_edition", false)
 
 func _ready() -> void:
 	if !_tweak: return

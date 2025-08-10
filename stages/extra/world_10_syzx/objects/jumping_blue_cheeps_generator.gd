@@ -1,6 +1,9 @@
 extends "res://engine/objects/enemies/cheeps/jumping_cheeps_generator.gd"
 
+const CHEEP_YEL_JUMPING = preload("res://stages/extra/world_10_syzx/objects/cheep_yel_jumping.tscn")
+
 @export var chance_every_stopped_sec: float = 0.2
+@onready var _tweak = ProfileManager.current_profile.data.get("advanced_edition", false)
 
 func _time() -> void:
 	var player = Thunder._current_player
@@ -15,8 +18,11 @@ func _time() -> void:
 	Thunder.view.cam_border()
 	var to_pos = Vector2(Thunder.view.border.end) + Vector2(32, randi_range(16, 316))
 	
-	
-	var fish = cheep_scene.instantiate()
+	var fish
+	if !_tweak:
+		fish = cheep_scene.instantiate()
+	else:
+		fish = CHEEP_YEL_JUMPING.instantiate()
 	fish.global_position = to_pos
 	fish.reset_physics_interpolation()
 	fish.speed.x = randi_range(speed_min.x, speed_max.x)

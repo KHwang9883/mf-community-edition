@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=4 uid="uid://c0kxa8mci4e8m"]
+[gd_scene load_steps=109 format=4 uid="uid://c0kxa8mci4e8m"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uigt3"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_emnku"]
@@ -456,6 +456,22 @@ visi_y_sort_enabled = false
 custom_vars = {}
 metadata/_custom_type_script = "uid://chvjy6okoognf"
 
+[sub_resource type="Resource" id="Resource_uigt3"]
+resource_local_to_scene = true
+script = ExtResource("4_ixbgt")
+creation_nodepack = ExtResource("6_sbrfd")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+metadata/_custom_type_script = "uid://chvjy6okoognf"
+
 [sub_resource type="Resource" id="Resource_8p342"]
 script = ExtResource("4_ixbgt")
 creation_nodepack = ExtResource("3_o4psc")
@@ -733,7 +749,7 @@ progress_to = 7
 [node name="SecretUnlocker2" parent="." instance=ExtResource("3_nt32s")]
 secrets = Array[String](["expert mode easter eggs"])
 progress_by_id = "3-1"
-progress_to = 6
+progress_to = 7
 
 [node name="Mario" parent="." instance=ExtResource("8_ye5pi")]
 position = Vector2(167, 400)
@@ -1584,7 +1600,7 @@ position = Vector2(4848, 176)
 position = Vector2(4688, 176)
 result_counter_value = 1.0
 max_items = 1
-result = SubResource("Resource_gv05a")
+result = SubResource("Resource_uigt3")
 
 [node name="Brick88" parent="Objects" instance=ExtResource("6_w85lf")]
 position = Vector2(4912, 176)
@@ -2094,8 +2110,8 @@ position = Vector2(176, 976)
 position = Vector2(144, 976)
 result = SubResource("Resource_hexui")
 
-[connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="activate"]
 [connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="warp_split"]
+[connection signal="warp_started" from="PipeIn" to="HUD/World8Warp" method="activate"]
 [connection signal="warp_started" from="PipeIn" to="PipeIn/Node" method="hello"]
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped"]]
 [connection signal="warp_started" from="PipeIn" to="SecretUnlocker2" method="progress_secret" binds= [0, false]]

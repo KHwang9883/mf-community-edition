@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://kv73y0lk8w2u"]
+
+[ext_resource type="Script" uid="uid://cxm5hqr5gg8kr" path="res://objects/ability_atom_replenisher/atom_replenisher.gd" id="1_ugfee"]
+[ext_resource type="Texture2D" uid="uid://dkibangiw23or" path="res://objects/ability_atom_replenisher/molecule.png" id="2_ugfee"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ugfee"]
+size = Vector2(28, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htqay"]
+size = Vector2(31, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vtya"]
+atlas = ExtResource("2_ugfee")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jayc7"]
+atlas = ExtResource("2_ugfee")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_087u0"]
+atlas = ExtResource("2_ugfee")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22od4"]
+atlas = ExtResource("2_ugfee")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xtdp6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vtya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jayc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_087u0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22od4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="AtomReplenisher" type="CharacterBody2D"]
+script = ExtResource("1_ugfee")
+appear_distance = 0.0
+appear_visible = 0.0
+appear_collectable = 0.0
+score = 5000
+metadata/_custom_type_script = "uid://bxq57dbowstxt"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ugfee")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_htqay")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xtdp6")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -112, 32, 224)
+metadata/_edit_lock_ = true
