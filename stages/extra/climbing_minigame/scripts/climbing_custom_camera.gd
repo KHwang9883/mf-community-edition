@@ -34,6 +34,8 @@ const LAKITU = preload("res://engine/objects/enemies/lakitus/lakitu.tscn")
 const GOOMBA = preload("res://engine/objects/enemies/goombas/goomba.tscn")
 const EXPERT_BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/expert_bullet_launcher_structure.tscn")
 
+const ANTIAFK = preload("res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn")
+
 @onready var platform_path: AnimatableBody2D = $"../../PlatformPath"
 @onready var platform_path_2: AnimatableBody2D = $"../../PlatformPath2"
 @onready var platform_path_3: AnimatableBody2D = $"../../PlatformPath3"
@@ -126,6 +128,12 @@ func _ready() -> void:
 	elif 'lavarun_after' in Data.technical_values:
 		final_cutscene = Data.technical_values['lavarun_after']
 		Data.technical_values.erase('lavarun_after')
+	
+	if ProfileManager.current_profile.data.get("mario_forever_expert"):
+		var antiafk = ANTIAFK.instantiate()
+		antiafk.item_store_enabled = false
+		antiafk.antiafk_enabled = false
+		Scenes.current_scene.add_child(antiafk)
 
 	await Scenes.current_scene.stage_ready
 
@@ -336,10 +344,21 @@ func create_platform() -> void:
 			#bg_sounds[i]
 		#)
 
+var podo_hard_seq: int = -1
 
 func podo_create(left_pos: float = 128, right_pos: float = 512) -> void:
 	if !use_sequence_table:
 		get_tree().create_timer(6, false).timeout.connect(podo_create.bind())
+	
+	if difficulty >= 2:
+		if podo_hard_seq < 4:
+			podo_hard_seq += 1
+			get_tree().create_timer(0.5, false).timeout.connect(
+				podo_create.bind(left_pos + 32, right_pos - 32)
+			)
+		else:
+			podo_hard_seq = 0
+		Audio.play_1d_sound(preload("res://engine/objects/projectiles/sounds/shoot.wav"), false)
 
 	var podo1 = podoboo.instantiate()
 	podo1.position = Vector2(left_pos, 432)

@@ -100,6 +100,8 @@ func _physics_process(delta: float) -> void:
 	elif par_focused:
 		valu.modulate.a = 1.0
 		valu.text = SettingsManager.settings.skin
+		if valu.text && !valu.text in SkinsManager.custom_textures:
+			valu.text = "<< missing >>"
 		if valu.text.is_empty():
 			valu.text = "none"
 		valu.add_theme_color_override(&"font_color", Color(0.8, 1.0, 0.9))

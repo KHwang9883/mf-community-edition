@@ -4,6 +4,7 @@ extends Node
 @export var secrets: Array[String] = [""]
 @export var show_toast: bool = true
 @export var is_classic_achievement: Array[bool] = [false]
+@export var toast_text_overrides: Array[String] = [""]
 @export_category("Progress Achievement")
 @export var progress_by_id: String
 @export var progress_to: int
@@ -11,12 +12,14 @@ extends Node
 func _ready() -> void:
 	if secrets.size() > is_classic_achievement.size():
 		is_classic_achievement.resize(secrets.size())
+	if secrets.size() > toast_text_overrides.size():
+		toast_text_overrides.resize(secrets.size())
 
 func unlock_secret(id: int = 0) -> void:
 	if id < len(secrets):
 		if secrets[id].is_empty(): return
 		_make_split(id)
-		SecretsManager.set_secret(secrets[id], true, true, show_toast)
+		SecretsManager.set_secret(secrets[id], true, true, show_toast, toast_text_overrides[id])
 
 
 func unlock_with_kevin(id: int = 0) -> void:
@@ -29,7 +32,7 @@ func unlock_with_kevin(id: int = 0) -> void:
 			print("[Secrets] Profile was started from middle! Cancelling ID %d. (secret mode)" % [id])
 			return
 		_make_split(id)
-		SecretsManager.set_secret(secrets[id], true, true, show_toast)
+		SecretsManager.set_secret(secrets[id], true, true, show_toast, toast_text_overrides[id])
 
 
 ## "warped", "damaged", "died"
@@ -78,7 +81,7 @@ func progress_secret(id: int = 0, replace_on_complete: bool = true) -> void:
 		_make_split(id, true)
 		SecretsManager.set_secret(secrets[id], true if replace_on_complete else new_secret, true, false)
 		if can_notify:
-			SecretsManager.queue_achievement(secrets[id])
+			SecretsManager.queue_achievement(secrets[id] if !toast_text_overrides[id] else toast_text_overrides[id])
 		print("[Secrets] ID %d has been completed! total %d" % [id, progress_to])
 		return
 	

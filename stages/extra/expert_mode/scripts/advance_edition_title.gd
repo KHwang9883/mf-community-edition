@@ -1,4 +1,4 @@
-extends Node2D
+extends Stage2D
 
 @export var goto_scene: String
 
@@ -9,7 +9,6 @@ extends Node2D
 @onready var selector: MenuSelector = $Selector
 
 const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
-
 
 #@onready var initial_label_y = label.global_position.y
 
@@ -41,38 +40,37 @@ func _ready() -> void:
 	#
 	#_label_fader()
 
-func _physics_process(delta: float) -> void:
+func start_selected() -> void:
+	if !controls.focused: return
+	controls.focused = false
+	var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
+	Audio.play_1d_sound(_sfx)
+
+	await get_tree().create_timer(1.2, false).timeout
 	
-	if controls.focused && controls.get_child(0).focused && Input.is_action_just_pressed("ui_accept"):
-		controls.focused = false
-		var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
-		Audio.play_1d_sound(_sfx)
+	var tw = create_tween()
+	tw.tween_property(color_rect, "modulate:a", 1, 1)
+	Audio.stop_music_channel(2, true)
+	await tw.finished
+	
+	#ProfileManager.current_profile.data.current_world = goto_scene
+	#ProfileManager.save_current_profile()
+	
+	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+	
+	if !_crossfade:
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+				.instantiate()
+				.with_speeds(0.04, -0.1)
+				.with_pause()
+		)
 		
-		await get_tree().create_timer(1.2, false).timeout
-		
-		var tw = create_tween()
-		tw.tween_property(color_rect, "modulate:a", 1, 1)
-		Audio.stop_music_channel(2, true)
-		await tw.finished
-		
-		#ProfileManager.current_profile.data.current_world = goto_scene
-		#ProfileManager.save_current_profile()
-		
-		var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
-		
-		if !_crossfade:
-			TransitionManager.accept_transition(
-				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-					.instantiate()
-					.with_speeds(0.04, -0.1)
-					.with_pause()
-			)
-			
-			await TransitionManager.transition_middle
-			Scenes.goto_scene(goto_scene)
-		else:
-			TransitionManager.accept_transition(
-				load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-					.instantiate()
-					.with_scene(goto_scene)
-			)
+		await TransitionManager.transition_middle
+		Scenes.goto_scene(goto_scene)
+	else:
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+				.instantiate()
+				.with_scene(goto_scene)
+		)
