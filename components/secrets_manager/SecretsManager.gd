@@ -94,7 +94,7 @@ func _physics_process(delta: float) -> void:
 		show_achievement(_toast.pop_front(), _toast.pop_front(), _toast.pop_front())
 
 
-func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true) -> void:
+func set_secret(secret: String, value: Variant, save: bool = true, show_toast: bool = true, toast_text: String = "") -> void:
 	if secret in secrets && (
 		typeof(secrets[secret]) == TYPE_BOOL &&
 		typeof(value) == TYPE_BOOL &&
@@ -106,7 +106,7 @@ func set_secret(secret: String, value: Variant, save: bool = true, show_toast: b
 		print("[Secrets Manager] Console tweak is enabled! Didn't set %s to %s" % [str(value), secret])
 		return
 	if !secret in secrets && show_toast && SettingsManager.get_tweak("secrets_notification", true):
-		queue_achievement(secret)
+		queue_achievement(secret if !toast_text else toast_text)
 	secrets[secret] = value
 	secret_set.emit(secret)
 	if save: save_secrets()
