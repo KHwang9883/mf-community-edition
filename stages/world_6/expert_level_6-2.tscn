@@ -1,4 +1,4 @@
-[gd_scene load_steps=138 format=4 uid="uid://di04gixk0cxmi"]
+[gd_scene load_steps=141 format=4 uid="uid://di04gixk0cxmi"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_atyge"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_bprss"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="11_lm5wb"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="12_rksc6"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="13_3ctkm"]
+[ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://tilesets/underground/gfx/purple_pipe.png" id="13_gskng"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="14_c1838"]
 [ext_resource type="PackedScene" uid="uid://ct8p366bkgxl6" path="res://objects/coin_bonus_level/bonus_level_unlocked.tscn" id="15_efq53"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://gfx/backgrounds/underground.png" id="16_qeag8"]
@@ -78,6 +79,14 @@
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="74_gskng"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="74_mc64r"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="75_kq0w4"]
+
+[sub_resource type="Gradient" id="Gradient_kq0w4"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.945098)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n5cax"]
+gradient = SubResource("Gradient_kq0w4")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
 
 [sub_resource type="Gradient" id="Gradient_igxpo"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -308,7 +317,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_n5cax"]
+[sub_resource type="Resource" id="Resource_s1y80"]
 resource_local_to_scene = true
 script = ExtResource("38_ehsle")
 creation_nodepack = ExtResource("45_mp46a")
@@ -708,8 +717,18 @@ tile_set = ExtResource("12_rksc6")
 
 [node name="Layer1" type="TileMapLayer" parent="."]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAWAAwAAgAAAAAAAwAOAAwAAgAAAAAAAwAJAAwAAgAAAAAABQAFAA4AAgAAAAAACgAMAAwAAgAAAAAACAATAA0AAgAAAAAACwAbAAYAAgAAAAAAAgBiAAEAAgAAAAAAAgBoAAUAAgAAAAAAAgBzAAEAAgAAAAAAAgB7AAQAAgAAAAAAAgCDAAUAAgAAAAAAAgCKAAEAAgAAAAAAAgCPAAUAAgAAAAAAAgCZAAEAAgAAAAAAAgCiAAUAAgAAAAAAAgCsAAYAAgAAAAAAAgC1AAEAAgAAAAAAAgDAAAUAAgAAAAAAAgDIAAIAAgAAAAAAAgDSAAIAAgAAAAAAAgDZAAkAAgAAAAAAAgDrAQMAAgAAAAAAAgDwAQEAAgAAAAAAAgDzAQcAAgAAAAAAAgDSAQYAAgAAAAAAAgDTAQIAAgAAAAAAAgDKAQQAAgAAAAAAAgBMAAwAAgAAAAAABQBeAAwAAgAAAAAABQBTAAwAAgAAAAAACABlAA4AAgAAAAAACABwABAAAgAAAAAABACBAA0AAgAAAAAABACFAA4AAgAAAAAACgCIAAwAAgAAAAAAAwCRAAwAAgAAAAAABQCeAA8AAgAAAAAACAClAA4AAgAAAAAACACxABAAAgAAAAAACQC4AAwAAgAAAAAAAwC6AAwAAgAAAAAABQDWAA8AAgAAAAAACADjABAAAgAAAAAACADXABAAAgAAAAAACQDNARAAAgAAAAAACQDXAQ8AAgAAAAAABADdAQ4AAgAAAAAACADfAQwAAgAAAAAABQDhAQwAAgAAAAAAAwDyAQwAAgAAAAAABQBYAKj/BAAAAAEAAABZAKj/BAABAAEAAABYAKn/BAAAAAEAAABZAKn/BAABAAEAAABYAKr/BAAAAAEAAABZAKr/BAABAAEAAABYAKv/BAAAAAEAAABZAKv/BAABAAEAAABYAKz/BAAAAAEAAABZAKz/BAABAAEAAAA=")
+tile_map_data = PackedByteArray("AAAWAAwAAgAAAAAAAwAOAAwAAgAAAAAAAwAJAAwAAgAAAAAABQAFAA4AAgAAAAAACgAMAAwAAgAAAAAACAATAA0AAgAAAAAACwAbAAYAAgAAAAAAAgBiAAEAAgAAAAAAAgBoAAUAAgAAAAAAAgBzAAEAAgAAAAAAAgB7AAQAAgAAAAAAAgCDAAUAAgAAAAAAAgCKAAEAAgAAAAAAAgCPAAUAAgAAAAAAAgCZAAEAAgAAAAAAAgCiAAUAAgAAAAAAAgCsAAYAAgAAAAAAAgC1AAEAAgAAAAAAAgDAAAUAAgAAAAAAAgDIAAIAAgAAAAAAAgDSAAIAAgAAAAAAAgDZAAkAAgAAAAAAAgDrAQMAAgAAAAAAAgDwAQEAAgAAAAAAAgDzAQcAAgAAAAAAAgDSAQYAAgAAAAAAAgDTAQIAAgAAAAAAAgDKAQQAAgAAAAAAAgBMAAwAAgAAAAAABQBeAAwAAgAAAAAABQBTAAwAAgAAAAAACABlAA4AAgAAAAAACABwABAAAgAAAAAABACBAA0AAgAAAAAABACFAA4AAgAAAAAACgCIAAwAAgAAAAAAAwCRAAwAAgAAAAAABQCeAA8AAgAAAAAACAClAA4AAgAAAAAACACxABAAAgAAAAAACQC4AAwAAgAAAAAAAwC6AAwAAgAAAAAABQDWAA8AAgAAAAAACADjABAAAgAAAAAACADXABAAAgAAAAAACQDNARAAAgAAAAAACQDXAQ8AAgAAAAAABADdAQ4AAgAAAAAACADfAQwAAgAAAAAABQDhAQwAAgAAAAAAAwDyAQwAAgAAAAAABQBYAKj/AwAAAAEAAABZAKj/AwABAAEAAABYAKn/AwAAAAEAAABZAKn/AwABAAEAAABYAKr/AwAAAAEAAABZAKr/AwABAAEAAABYAKv/AwAAAAEAAABZAKv/AwABAAEAAABYAKz/AwAAAAEAAABZAKz/AwABAAEAAABYAKb/AwAAAAAAAABYAKf/AwAAAAEAAABZAKb/AwABAAAAAABZAKf/AwABAAEAAAA=")
 tile_set = ExtResource("12_rksc6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(2848, -2848)
+texture = SubResource("GradientTexture2D_n5cax")
+
+[node name="PurplePipe" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("13_gskng")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
 
 [node name="HUD" parent="." instance=ExtResource("13_3ctkm")]
 
@@ -1609,7 +1628,7 @@ position = Vector2(3504, -3120)
 [node name="Brick29" parent="." instance=ExtResource("32_xd028")]
 position = Vector2(3536, -3120)
 max_items = 1
-result = SubResource("Resource_n5cax")
+result = SubResource("Resource_s1y80")
 
 [node name="QuestionBlockFireFlower2" parent="." instance=ExtResource("40_6mse8")]
 position = Vector2(2544, -2992)
