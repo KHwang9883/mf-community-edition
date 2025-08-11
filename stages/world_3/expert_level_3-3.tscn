@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://bvucqvgiu82r2"]
+[gd_scene load_steps=48 format=3 uid="uid://bvucqvgiu82r2"]
 
 [ext_resource type="PackedScene" uid="uid://bwr844qulxx0m" path="res://stages/world_3/level_3-3.tscn" id="1_al1me"]
 [ext_resource type="PackedScene" uid="uid://12ak5pa7cf8u" path="res://engine/objects/powerups/super_star/super_star.tscn" id="3_0l66k"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://objects/blue_blocks/Blue Coin Question Block.tscn" id="22_d6oxt"]
 [ext_resource type="Texture2D" uid="uid://ch2glr3y1h8dn" path="res://tilesets/icy_ground/dark_blue_pipe.png" id="24_llauh"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="25_88ke4"]
+[ext_resource type="Texture2D" uid="uid://ds505eluh8own" path="res://tilesets/snowland_red/gfx/pipe_snow.png" id="25_d6oxt"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="26_fxuuj"]
 
 [sub_resource type="Resource" id="Resource_tglf0"]
@@ -325,6 +326,14 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Gradient" id="Gradient_88ke4"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d6oxt"]
+gradient = SubResource("Gradient_88ke4")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
 [node name="Level3-1" instance=ExtResource("1_al1me")]
 jump_to_scene = "uid://k7pkx5udbasp"
 
@@ -339,9 +348,6 @@ secrets = Array[String](["all toad houses found", "expert 3-3 with high star dro
 [node name="SecretUnlockerOther2" parent="." index="2" instance=ExtResource("4_d6oxt")]
 you_found_text = "otherworld level 4"
 progress_by_id = "3-3"
-
-[node name="sceneria" parent="." index="7"]
-tile_map_data = PackedByteArray("AAAJAA4AAwACAAAAAQDsAA4AAwAAAAAAAQDuAA4AAwACAAAAAADFAA4AAwABAAAAAABzAA4AAwACAAAAAQBPAA4AAwACAAAAAQAeAA4AAwACAAAAAAADAA4AAwACAAAAAABVAA4AAwABAAAAAABKAA4AAwACAAAAAAAmAA4AAwABAAAAAQAaAA4AAwAAAAAAAAAXAA0AAwADAAAAAAA0AA4AAwABAAAAAAA0AAsAAwADAAEAAAAJAAoABAAAAAAAAgBzAAsABAAAAAAAAQB2AAsAAwADAAEAAAB6AAwAAwAAAAEAAAB6AA0AAwADAAAAAABoAA4AAwACAAAAAABtAA4AAwAAAAAAAABwAA4AAwABAAAAAAB4AA4AAwABAAAAAQCJAA4AAwACAAAAAQCOAA4AAwABAAAAAQB+AA4AAwAAAAAAAQCDAA4AAwABAAAAAADCAAwAAwAAAAEAAADCAA0AAwADAAAAAAC+AA4AAwACAAAAAADUAA4AAwACAAAAAADZAA4AAwAAAAAAAADkAAwABAAAAAAAAQCCAAsAAwADAAEAAADlAA4AAwABAAAAAADgAA4AAwACAAAAAQAHAQ4AAwAAAAAAAQAMAQ4AAwACAAAAAAANAQ0AAwADAAAAAAAPAQ4AAwAAAAAAAAASAQ4AAwABAAAAAQAWAQ4AAwACAAAAAAAOAA4AAwABAAAAAQAUAA4AAwACAAAAAADaAAsAAwADAAEAAAA=")
 
 [node name="World" parent="HUD" index="2"]
 text = "WORLD
@@ -546,6 +552,16 @@ texture = ExtResource("24_llauh")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 144)
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="73"]
+clip_children = 1
+position = Vector2(7104, 384)
+texture = SubResource("GradientTexture2D_d6oxt")
+
+[node name="PurplePipe" type="Sprite2D" parent="Sprite2D" index="0"]
+texture = ExtResource("25_d6oxt")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
 
 [connection signal="completed_with_star_rain" from="Node2D" to="SecretUnlocker" method="unlock_secret" binds= [1]]
 [connection signal="tried_to_enter" from="PipeIn" to="SecretUnlockerOther2" method="tried_to_warp"]
