@@ -81,7 +81,7 @@ func _flow_intros() -> void:
 	await _time(5)
 	toad_animation()
 	
-	await _time(25)
+	await _time(24.5)
 	if !_skippable: return
 	_fade_out()
 
@@ -188,22 +188,25 @@ func _physics_process(delta: float) -> void:
 		Input.is_action_pressed(&"m_extra") || Input.is_action_pressed(&"ui_select") ||
 		Input.is_action_pressed(&"m_jump") || Input.is_action_pressed(&"m_run")
 	):
-		_fade_out()
+		_fade_out(true)
 
 func _time(t: float) -> void:
 	await get_tree().create_timer(t, false).timeout
 
 
-func _fade_out() -> void:
+func _fade_out(forced: bool = false) -> void:
 	_skippable = false
-	
+	if forced && _crossfade:
+		await get_tree().create_timer(1.0, false, true, true).timeout
+		Audio.stop_music_channel(1, true)
+		
 	_restore()
-	Audio.stop_music_channel(1, true)
 	await get_tree().physics_frame
 	ProfileManager.current_profile.data.current_world = goto_scene
 	ProfileManager.save_current_profile()
 	
 	if !_crossfade:
+		Audio.stop_music_channel(1, true)
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 				.instantiate()
@@ -215,6 +218,7 @@ func _fade_out() -> void:
 		await TransitionManager.transition_middle
 		Scenes.goto_scene(goto_scene)
 	else:
+		Audio.stop_music_channel(1, false)
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 				.instantiate()

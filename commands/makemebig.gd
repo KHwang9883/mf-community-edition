@@ -18,15 +18,18 @@ func execute(args:Array) -> Command.ExecuteResult:
 		for i in get_incoming_connections():
 			if !i: continue
 			Thunder._disconnect(i.signal, i.callable)
-		#if Thunder._current_player:
-			#var pl = Thunder._current_player
+		var pl = Thunder._current_player
+		if pl:
+			pl.scale = Vector2.ONE
+			pl.position.y += 48
+			pl.attack.enabled = false
 			#Thunder._disconnect(pl.attack.killed, _on_starman_killed)
 			#Thunder._disconnect(pl.timer_starman.timeout, _on_starman_timeout)
 			#Thunder._disconnect(pl.collided_wall, _on_collided_wall)
 			#Thunder._disconnect(pl.collided_floor, _on_collided_floor)
 			#Thunder._disconnect(pl.collided_ceiling, _on_collided_ceiling)
 			#Thunder._disconnect(pl.get_tree().physics_frame, _physics_frame)
-		return Command.ExecuteResult.new("It was just too big. (Restart the level to take effect)")
+		return Command.ExecuteResult.new("Success, OFF. Restart the level to take effect")
 		
 
 func patch_level() -> void:

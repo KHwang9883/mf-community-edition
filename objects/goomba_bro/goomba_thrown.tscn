@@ -127,10 +127,6 @@ stomping_sound = ExtResource("7_ffc8q")
 killing_creation = SubResource("Resource_mq0gj")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_mkvj8")
-custom_vars = {
-"attachment_killed": NodePath(""),
-"attachment_stomped": NodePath("")
-}
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -152,6 +148,8 @@ shape = SubResource("RectangleShape2D_0uvpi")
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_rotation" binds= [0.0]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_rotation" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
