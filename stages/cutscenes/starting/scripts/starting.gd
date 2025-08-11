@@ -66,19 +66,21 @@ func _physics_process(delta: float) -> void:
 		Input.is_action_pressed(&"m_extra") || Input.is_action_pressed(&"ui_select") ||
 		Input.is_action_pressed(&"m_jump") || Input.is_action_pressed(&"m_run")
 	):
-		_fade_out()
+		_fade_out(true)
 
 #func _unhandled_input(event: InputEvent):
 	#if !_skippable: return
 	#if event is InputEventKey || event is InputEventJoypadButton:
 		#_fade_out()
 
-func _fade_out() -> void:
+func _fade_out(forced: bool = false) -> void:
 	_skippable = false
 	
 	_restore()
 	Audio.stop_music_channel(1, true)
 	await get_tree().physics_frame
+	if !forced:
+		await get_tree().create_timer(1.0, false, false, true).timeout
 	
 	if !_crossfade:
 		TransitionManager.accept_transition(

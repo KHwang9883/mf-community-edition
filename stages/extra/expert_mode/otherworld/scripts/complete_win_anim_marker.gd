@@ -5,9 +5,9 @@ signal entered_castle
 @export var run_crutches: bool = false
 
 var winned: bool
-@onready var fn = $"../../FinishLine"
-@onready var sprite: Sprite2D = $"../../FinishLine/Finishline"
-@onready var cross_area: Area2D = $"../../FinishLine/CrossingBarArea"
+@onready var fn = get_node_or_null(^"../../FinishLine")
+@onready var sprite: Sprite2D = get_node_or_null(^"../../FinishLine/Finishline")
+@onready var cross_area: Area2D = get_node_or_null(^"../../FinishLine/CrossingBarArea")
 
 func _ready() -> void:
 	if run_crutches:
