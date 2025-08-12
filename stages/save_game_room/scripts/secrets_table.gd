@@ -39,3 +39,7 @@ func _ready() -> void:
 func toggle_yes(label: Label) -> void:
 	label.text = "yes"
 	label.add_theme_color_override("font_color", Color("a8a0f8"))
+
+func show_achievement(achievement_name: String) -> void:
+	if !has_node(achievement_name): return
+	get_node(achievement_name).show_hidden()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=4 uid="uid://dmmfjls0yidg8"]
+[gd_scene load_steps=108 format=4 uid="uid://dmmfjls0yidg8"]
 
 [ext_resource type="Script" uid="uid://by7oafruhi7h4" path="res://stages/world_1/scripts/level_1_4.gd" id="1_60js1"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_01e5q"]
@@ -40,6 +40,7 @@
 [ext_resource type="PackedScene" uid="uid://bsj22ejc7ot31" path="res://objects/volcano/volcano_bullet_launcher/volcano_bullet_bill_base.tscn" id="18_h1sot"]
 [ext_resource type="PackedScene" uid="uid://dvmhwh1khygq6" path="res://engine/objects/bumping_blocks/brick/brick_grey.tscn" id="20_folwi"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="22_vufph"]
+[ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="25_60js1"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="25_jshax"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="26_sdyid"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="27_w4em8"]
@@ -129,10 +130,11 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_045px"]
+[sub_resource type="Resource" id="Resource_2b6yg"]
 resource_local_to_scene = true
 script = ExtResource("3_fs733")
-creation_nodepack = ExtResource("2_elsn0")
+creation_fallback_node = ExtResource("12_57nns")
+creation_nodepack = ExtResource("25_60js1")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -279,7 +281,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_g4na4"]
+[sub_resource type="Resource" id="Resource_vcmse"]
 script = ExtResource("3_fs733")
 creation_fallback_node = ExtResource("32_6f210")
 creation_nodepack = ExtResource("33_pa2gx")
@@ -788,7 +790,7 @@ position = Vector2(1168, 208)
 position = Vector2(1264, 208)
 
 [node name="PipeIn3" parent="Objects" instance=ExtResource("25_jshax")]
-position = Vector2(6704, -176)
+position = Vector2(6736, -368)
 collision_mask = 0
 
 [node name="QuestionBlock9" parent="Objects" instance=ExtResource("4_i54l6")]
@@ -805,7 +807,7 @@ result = SubResource("Resource_k7jt7")
 
 [node name="QuestionBlock15" parent="Objects" instance=ExtResource("4_i54l6")]
 position = Vector2(3728, 16)
-result = SubResource("Resource_045px")
+result = SubResource("Resource_2b6yg")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock16" parent="Objects" instance=ExtResource("4_i54l6")]
@@ -852,7 +854,7 @@ initially_visible_and_solid = false
 
 [node name="QuestionBlock10" parent="Objects" instance=ExtResource("4_i54l6")]
 position = Vector2(1200, 208)
-result = SubResource("Resource_g4na4")
+result = SubResource("Resource_vcmse")
 
 [node name="Lava" parent="." instance=ExtResource("8_i1nhr")]
 offset_left = 640.0
@@ -1706,8 +1708,8 @@ result = SubResource("Resource_4tq6j")
 
 [connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="unlock_secret"]
-[connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="warp_split"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
+[connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="warp_split"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped"]]
 [connection signal="timeout" from="Marker2D/Timer" to="Marker2D" method="_on_timer_timeout"]
 [connection signal="warp_ended" from="PipeIn2" to="HUD/Label/Node" method="activate"]

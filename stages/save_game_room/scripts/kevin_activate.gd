@@ -22,6 +22,7 @@ const KEVIN_ACTIVATED = preload("res://sfx/kevin_activated.ogg")
 const EVENT_WIN_LEVEL_ORIGINAL = preload("res://sfx/event_win_level_original.ogg")
 
 var is_pressed: bool
+var only_compat_activation: bool
 
 func _ready() -> void:
 	node_2d.visible = false
@@ -41,7 +42,8 @@ func _physics_process(_delta: float) -> void:
 	if !Input.is_anything_pressed():
 		is_pressed = false
 	
-	progress_process(progress, string, true)
+	if !only_compat_activation:
+		progress_process(progress, string, true)
 	if !SecretsManager.has_secret("hint_guy_encountered"):
 		progress_process(dumbprogress, dumbstring, false)
 	
@@ -63,42 +65,40 @@ func _physics_process(_delta: float) -> void:
 			deactivated.emit()
 
 func progress_process(_progress: int, _string: String, real: bool) -> void:
-	if _progress < len(_string) && !KevinGlobal.activated && !is_pressed:
-		if Input.is_key_pressed(OS.find_keycode_from_string(_string[_progress])):
+	if KevinGlobal.activated || is_pressed: return
+	if _progress >= len(_string): return
+	if Input.is_key_pressed(OS.find_keycode_from_string(_string[_progress])):
+		is_pressed = true
+		if real:
+			progress += 1
+			dumbprogress = 0
+			kevin_label_fake.visible = false
+		else:
+			dumbprogress += 1
+			progress = 0
+		#print(progress)
+		if real:
+			if progress < len(_string):
+				Audio.play_1d_sound(SECRET_CODE_TYPE, true, { ignore_pause = true })
+			else:
+				kevin_activate()
+		elif !dumb_activated && dumbprogress >= len(_string):
+			Audio.play_1d_sound(EVENT_WIN_LEVEL_ORIGINAL, true, { ignore_pause = true, volume = -4 })
+			dumbactivated.emit()
+			kevin_label_fake.text = "uh, no... not literally, you dummy"
+			kevin_label_fake.visible = true
+			dumb_activated = true
+			var _twe = kevin_label_fake.create_tween()
+			_twe.tween_interval(5.0)
+			_twe.tween_property(kevin_label_fake, "modulate:a", 0.0, 0.7)
+	elif Input.is_anything_pressed():
+		if real:
+			progress = 0
+		else:
+			dumbprogress = 0
 			is_pressed = true
-			if real:
-				progress += 1
-				dumbprogress = 0
-				kevin_label_fake.visible = false
-			else:
-				dumbprogress += 1
-				progress = 0
-			#print(progress)
-			if real:
-				if progress < len(_string):
-					Audio.play_1d_sound(SECRET_CODE_TYPE, true, { ignore_pause = true })
-				else:
-					Audio.play_1d_sound(KEVIN_ACTIVATED, true, { ignore_pause = true })
-					KevinGlobal.activated = true
-					activated.emit()
-					Thunder._current_camera.shock(0.5, Vector2(1, 1))
-			elif !dumb_activated && dumbprogress >= len(_string):
-					Audio.play_1d_sound(EVENT_WIN_LEVEL_ORIGINAL, true, { ignore_pause = true, volume = -4 })
-					dumbactivated.emit()
-					kevin_label_fake.text = "uh, no... not literally, you dummy"
-					kevin_label_fake.visible = true
-					dumb_activated = true
-					var _twe = kevin_label_fake.create_tween()
-					_twe.tween_interval(5.0)
-					_twe.tween_property(kevin_label_fake, "modulate:a", 0.0, 0.7)
-		elif Input.is_anything_pressed():
-			if real:
-				progress = 0
-			else:
-				dumbprogress = 0
-				is_pressed = true
-				kevin_label_fake.visible = false
-			text = ""
+			kevin_label_fake.visible = false
+		text = ""
 
 func kevin_reset(no_music: bool = false) -> void:
 	if !no_music:
@@ -114,3 +114,12 @@ func kevin_reset(no_music: bool = false) -> void:
 	text = ""
 	kevin_label_fake.visible = false
 	progress = 0
+
+func kevin_activate() -> void:
+	Audio.play_1d_sound(KEVIN_ACTIVATED, true, { ignore_pause = true })
+	KevinGlobal.activated = true
+	activated.emit()
+	Thunder._current_camera.shock(0.5, Vector2(1, 1))
+
+func set_compat_activation_only() -> void:
+	only_compat_activation = true

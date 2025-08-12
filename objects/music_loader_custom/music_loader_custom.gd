@@ -40,16 +40,29 @@ func _ready():
 			while !is_instance_valid(pl) && _i < 200:
 				await get_tree().physics_frame
 				_i += 1
+			
+			var frog_failed: Callable = (func():
+				if !Data.values.get("frog_challenge", false):
+					return
+				SecretsManager.show_failure("frog challenge failed!")
+				Data.values.erase("frog_challenge")
+			)
 			pl.damaged.connect(func():
-				if ProfileManager.current_profile.data.get("damaged", false):
-					SecretsManager.show_failure("no hit run is now invalid!", "achievement failed")
+				if Data.values.get("frog_challenge", false) && ProfileManager.current_profile.data.get("damaged", false):
+					frog_failed.call()
+					#SecretsManager.show_failure("no hit run is now invalid!", "achievement failed")
 				ProfileManager.current_profile.data.damaged = true
 			)
 			pl.died.connect(func():
-				if ProfileManager.current_profile.data.get("died", false):
-					SecretsManager.show_failure("no deaths run is now invalid!", "achievement failed")
+				if Data.values.get("frog_challenge", false):
+					frog_failed.call()
+					#SecretsManager.show_failure("no deaths run is now invalid!", "achievement failed")
 				ProfileManager.current_profile.data.died = true
 			)
+			if Data.values.get("frog_challenge", false):
+				if !Thunder._current_player.no_movement && Thunder._current_player.suit.name != &"frog":
+					frog_failed.call()
+				pl.suit_changed.connect(frog_failed.unbind(1))
 		).call_deferred()
 	
 	if SettingsManager.get_tweak("pitch_music_everywhere", false) && !has_node("MusicPitchChanger"):

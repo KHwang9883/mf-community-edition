@@ -152,8 +152,9 @@ func show_achievement(text: String, title: String, emit_sound: bool) -> void:
 
 
 func show_failure(text: String, title: String = "achievement failed") -> void:
-	if is_console_enabled() || !SettingsManager.get_tweak("failure_notification", false):
+	if is_console_enabled() || !SettingsManager.get_tweak("secrets_notification", false):
 		return
+	Audio.play_1d_sound(NOTIFICATION_ERROR, true, {ignore_pause = true, volume = -4, bus = "1D Sound" })
 	_is_free = false
 	label.text = ""
 	label.size.x = 192
@@ -191,12 +192,12 @@ func notify(text: String, outline_color: Color = Color(0.505, 1, 0.34)) -> void:
 
 func notify_error(text: String) -> void:
 	text = "Error: " + text
-	Audio.play_1d_sound(NOTIFICATION_ERROR, true, {ignore_pause = true})
+	Audio.play_1d_sound(NOTIFICATION_ERROR, true, { ignore_pause = true, bus = "1D Sound" })
 	notify(text, Color.FIREBRICK)
 	
 func notify_warn(text: String) -> void:
 	text = "Warning: " + text
-	Audio.play_1d_sound(NOTIFICATION_ERROR, true, {ignore_pause = true})
+	Audio.play_1d_sound(NOTIFICATION_ERROR, true, { ignore_pause = true, bus = "1D Sound" })
 	notify(text, Color.YELLOW)
 
 

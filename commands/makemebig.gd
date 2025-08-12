@@ -1,6 +1,6 @@
 extends Command
 
-const debris_effect = preload("res://engine/objects/effects/brick_debris/brick_debris_grey.tscn")
+const debris_effect = preload("res://objects/gray_qblocks/brick_debris_hsv.tscn")
 const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 
 var how_many_floor_tiles_to_break: int
@@ -127,6 +127,11 @@ func _tile_break_logic(offset: Vector2) -> void:
 		if collider.has_method(&"bricks_break"):
 			collider.bricks_break()
 		else:
+			#var new_scene = null
+			#if collider.scene_file_path:
+				#new_scene = PackedScene.new()
+				#new_scene.pack(collider)
+				#new_scene = Util.get_packed_scene_texture(new_scene)
 			tile_break(collider, collider.global_position)
 			collider.hide()
 			collider.set_deferred(&"collision_layer", 0)
@@ -149,14 +154,24 @@ func _tile_break_logic(offset: Vector2) -> void:
 		#print(collider)
 
 
-func tile_break(what: Node2D, pos: Vector2) -> void:
+func tile_break(what: Node2D, pos: Vector2, texture: Texture2D = null) -> void:
 	Audio.play_sound(BREAK, Thunder._current_player)
 	var speeds = [Vector2(2, -8), Vector2(4, -7), Vector2(-2, -8), Vector2(-4, -7)]
+	#var img = texture.get_image()
+	#img.resize(1, 1, Image.INTERPOLATE_LANCZOS)
+	#var color := img.get_pixel(0, 0)
 	for i in speeds:
 		NodeCreator.prepare_2d(debris_effect, what).create_2d(true).call_method(func(eff: Node2D):
 			eff.global_transform = what.global_transform
 			eff.global_position = pos
 			eff.velocity = i
+			#if texture:
+				#eff.material.set_shader_parameter("hue", color.h)
+				#eff.material.set_shader_parameter("saturation", color.s)
+				#eff.material.set_shader_parameter("value", color.v - 0.5)
+			#else:
+				#eff.material.set_shader_parameter("saturation", -1.0)
+				#
 		)
 		
 	Data.add_score(10)

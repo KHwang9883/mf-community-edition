@@ -232,7 +232,7 @@ func block_break() -> void:
 				outlined.set_deferred("collision_layer", 0)
 			var packed = PackedScene.new()
 			packed.pack(outlined)
-			texture = _get_packed_scene_texture(packed)
+			texture = Util.get_packed_scene_texture(packed)
 			packed = null
 			outlined.hide()
 			outlined.process_mode = Node.PROCESS_MODE_DISABLED
@@ -253,7 +253,7 @@ func block_break() -> void:
 				atlas_texture.region = region
 				texture = atlas_texture
 			elif outlined_tilemap_item.scenes_source:
-				texture = _get_packed_scene_texture(outlined_tilemap_item.scene)
+				texture = Util.get_packed_scene_texture(outlined_tilemap_item.scene)
 			
 			if outlined_tilemap_item.tile_data.terrain > -1:
 				outlined_tilemap.set_cells_terrain_connect([outlined_tilemap_item.coords], outlined_tilemap_item.tile_data.terrain_set, -1)
@@ -264,40 +264,6 @@ func block_break() -> void:
 	drop.texture = texture
 	Scenes.current_scene.add_child(drop)
 
-#func can_place() -> bool:
-	
-
-func _get_packed_scene_texture(scene: PackedScene) -> Texture2D:
-	var state = scene.get_state()
-	var specific_node = null
-	var specific_index: int = -1
-	var specific_anim: String
-	for i in state.get_node_count():
-		if specific_node != null && specific_index == -1:
-			#prints(specific_node, str(state.get_node_path(i, false)).right(-2))
-			if specific_node == str(state.get_node_path(i, false)).right(-2):
-				specific_index = i
-		if specific_index != -1 && i != specific_index:
-			continue
-		for j in state.get_node_property_count(i):
-			var propname = state.get_node_property_name(i, j)
-			#if state.get_node_type(i) == &"AnimatedSprite2D":
-			#	print(propname)
-			if specific_node == null && propname == "sprite":
-				specific_node = str(state.get_node_property_value(i, j))
-			if propname == "animation":
-				specific_anim = state.get_node_property_value(i, j)
-				#print(specific_anim)
-				continue
-			if propname in ["sprite_frames", "texture"]:
-				var prop = state.get_node_property_value(i, j)
-				if is_instance_of(prop, Texture2D):
-					return prop
-				elif is_instance_of(prop, SpriteFrames):
-					var anim = prop.get_animation_names()[0] if !specific_anim else specific_anim
-					return prop.get_frame_texture(anim, 0)
-	
-	return null
 
 func _input(event) -> void:
 	gui = Scenes.custom_scenes.get("MinecraftGUI")

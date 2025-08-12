@@ -196,7 +196,7 @@ func _time(t: float) -> void:
 
 func _fade_out(forced: bool = false) -> void:
 	_skippable = false
-	if forced && _crossfade:
+	if !forced && _crossfade:
 		await get_tree().create_timer(1.0, false, true, true).timeout
 		Audio.stop_music_channel(1, true)
 		

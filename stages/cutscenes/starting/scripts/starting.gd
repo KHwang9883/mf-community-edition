@@ -76,11 +76,11 @@ func _physics_process(delta: float) -> void:
 func _fade_out(forced: bool = false) -> void:
 	_skippable = false
 	
-	_restore()
 	Audio.stop_music_channel(1, true)
-	await get_tree().physics_frame
 	if !forced:
 		await get_tree().create_timer(1.0, false, false, true).timeout
+	_restore()
+	await get_tree().physics_frame
 	
 	if !_crossfade:
 		TransitionManager.accept_transition(

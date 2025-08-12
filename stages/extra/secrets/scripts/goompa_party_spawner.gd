@@ -1,10 +1,9 @@
 extends Node
 
-@export var max_enemies: int = 99
+@export var max_enemies: int = 25
 @export var life_time_sec: float = 15
+@export var spawned_enemy := preload("res://engine/objects/enemies/goombas/goomba.tscn")
 @onready var timer = $Timer
-
-const GOOMBA = preload("res://engine/objects/enemies/goombas/goomba.tscn")
 
 
 func _ready() -> void:
@@ -36,7 +35,7 @@ func _spawn_goomba() -> void:
 			print_verbose(i)
 			return
 	
-	var instance = GOOMBA.instantiate()
+	var instance = spawned_enemy.instantiate()
 	instance.life_time = life_time_sec
 	instance.position = calculated_position
 	instance.reset_physics_interpolation()

@@ -2,7 +2,8 @@ extends GeneralMovementBody2D
 
 @export var goomba_creation: InstanceNode2D
 @export var rotation_speed: float = 22.5
-@export var limit_of_spawned_enemies: int = 30
+@export var limit_of_spawned_enemies: int = 25
+@export var enemy_life_time: float = 15
 
 @onready var solid_checker: Area2D = $SolidChecker
 @onready var col: CollisionShape2D = $Collision
@@ -40,6 +41,7 @@ func _physics_process(delta: float) -> void:
 		NodeCreator.prepare_ins_2d(goomba_creation, self).create_2d().call_method(
 			func(enemy: Node) -> void:
 				enemy.add_to_group(&"#spawned_by_throw")
+				enemy.life_time = enemy_life_time
 				var groups = get_groups().filter(func(st): return "_spawn" in st)
 				for i in groups:
 					enemy.add_to_group(i)
