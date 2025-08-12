@@ -31,9 +31,9 @@ func _ready() -> void:
 		ProfileManager.save_current_profile()
 	$CanvasLayer/Control/Label.text = "coming\n" + str(Time.get_datetime_dict_from_system().year + 1)
 	
-	await get_tree().create_timer(1, false).timeout
+	await get_tree().create_timer(0.5, false).timeout
 	can_start = true
-	await get_tree().create_timer(3, false).timeout
+	await get_tree().create_timer(3.5, false).timeout
 	var tw = create_tween()
 	tw.tween_property(lostmap_title_mario, "modulate:a", 1, 2)
 	

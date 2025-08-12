@@ -2,7 +2,6 @@ extends LevelCutscene
 
 @export var goto_scene: String
 
-@onready var music_loader = $MusicLoader
 @onready var camera_2d = $Camera2D
 @onready var mario: Player = Thunder._current_player
 @onready var cell_peach = $CellPeach

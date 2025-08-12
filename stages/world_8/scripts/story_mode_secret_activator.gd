@@ -9,4 +9,6 @@ func perform_checks_and_unlock() -> void:
 	secret_unlocker.unlock_with_kevin_if(["warped"], 3)
 	if Thunder._current_player_state.get("name") == "beetroot":
 		secret_unlocker.unlock_if(["damaged"], 4)
+	if Data.values.get("frog_challenge", false):
+		secret_unlocker.unlock_if(["died"], 5)
 	

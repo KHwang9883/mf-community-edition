@@ -134,6 +134,7 @@ func pass_warp() -> void:
 		if _star_sel_level:
 			Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
 			Data.values.map_force_go_next = true
+	
 	if force_warp_to_save_room:
 		ProfileManager.current_profile.data.warp_to_save_room = true
 	Data.values.skip_progress_continue = true

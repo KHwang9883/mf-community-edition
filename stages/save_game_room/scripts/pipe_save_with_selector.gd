@@ -31,12 +31,14 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export var set_data_to_profile: String
 @export var allow_selecting_worlds: bool = false
 @export var allow_selecting_completed_levels: bool = false
+@export var can_frog_challenge: bool = false
 
 var deletion_progress: float
 var is_empty: bool
 var is_cursed: bool
 var is_blocked: bool
 var cheat_warned: bool
+var frog_asked: bool
 var _tweak: bool
 
 var _star_world: bool
@@ -48,6 +50,7 @@ var _star_sel_level: int
 @onready var kevin_activation_label: Label = get_node_or_null(kevin_label_path)
 @onready var cursed_pipe: Sprite2D = $CursedPipe
 @onready var message_block_2: AnimatableBody2D = %MessageBlock2
+@onready var message_block_choicer: AnimatableBody2D = %MessageBlockChoicer
 @onready var message_warning: String = message_block_2.message
 var faster_deletion_tw: bool
 
@@ -135,6 +138,14 @@ the game will not save anything to this save file. use the "cv_forcesave" comman
 	
 
 	if !_on_warp: return
+	
+	if !frog_asked && !console_enabled && can_frog_challenge && is_empty && Thunder._current_player_state.name == &"frog":
+		Thunder._connect(message_block_choicer.choice_accepted, func():
+			Data.values.frog_challenge = true
+		, CONNECT_ONE_SHOT)
+		message_block_choicer.show_message()
+		frog_asked = true
+	
 	_warping_process(delta)
 
 
@@ -205,22 +216,30 @@ func delete_save() -> void:
 
 
 func pass_warp() -> void:
+	print("--PASSING WARP--")
 	ProfileManager.set_current_profile(profile_name)
+	print("Entering profile: %s" % profile_name)
 	if SecretsManager.is_console_enabled():
 		ProfileManager.current_profile.data.executed = true
 	if ProfileManager.current_profile.data.get("executed"):
 		SecretsManager._has_cheated = true
+		print("Console enabled, profile marked as cheated.")
 	
 	if _tweak || (force_disable_level_save && !_star_world):
 		ProfileManager.current_profile.data.completed_levels = []
 		_star_sel_level = 1
+		print("Forcibly started from Level 1. Either tweak enabled or no star level selector.")
 	if ProfileManager.current_profile.data.get("lives") && is_cursed:
 		Data.values.lives = ProfileManager.current_profile.data.lives
+		print("Lives changed to %d." % Data.values.lives)
 	target = null
 	if _star_world || allow_selecting_worlds:
 		if _star_sel_level && _star_sel_world:
 			ProfileManager.current_profile.data.star_numbers = &"%d-%d" % [_star_sel_world, _star_sel_level]
 			ProfileManager.save_current_profile()
+		if _star_sel_level > 1 || _star_sel_world > 1:
+			print("Profile Started from world/level %d/%d, added bit to data." % [_star_sel_world, _star_sel_level])
+			ProfileManager.current_profile.data.started_from_middle = true
 		if _star_sel_world:
 			ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
 		if _star_sel_level:
@@ -229,15 +248,19 @@ func pass_warp() -> void:
 	
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
 		warp_to_scene = ProfileManager.current_profile.data.current_world
+		print("Starting from: %s" % set_data_to_profile)
 	Data.values.skip_progress_continue = true
 	# Activate Kevin in saved pipe on enter
 	if is_cursed:
 		KevinGlobal.activated = true
 	if KevinGlobal.activated:
 		ProfileManager.current_profile.data.kevin_mode_enabled = true
+		print("Profile Data: Kevin Mode")
 	if set_data_to_profile:
 		ProfileManager.current_profile.data[set_data_to_profile] = true
+		print("Profile Data: %s" % set_data_to_profile)
 	await get_tree().physics_frame
+	print("--END OF WARP INFO--")
 	super()
 
 
