@@ -3,6 +3,7 @@ extends Node
 @export_category("Unlock Achievement")
 @export var secrets: Array[String] = [""]
 @export var show_toast: bool = true
+@export var show_progress_toast: bool = true
 @export var is_classic_achievement: Array[bool] = [false]
 @export var toast_text_overrides: Array[String] = [""]
 @export_category("Progress Achievement")
@@ -87,7 +88,7 @@ func progress_secret(id: int = 0, replace_on_complete: bool = true) -> void:
 	
 	# Progressing the achievement
 	SecretsManager.set_secret(secrets[id], new_secret, true, false)
-	if can_notify:
+	if can_notify && show_progress_toast:
 		var _current_progress: int = len(SecretsManager.secrets[secrets[id]])
 		SecretsManager.queue_achievement(
 			"%s: %d / %d" % [secrets[id], _current_progress, progress_to],

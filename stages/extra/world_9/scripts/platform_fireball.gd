@@ -2,6 +2,7 @@ extends PathFollow2D
 
 @export_category("Platform")
 @export var no_ambience_audio: bool = false
+@export var ambience_volume_db: float = -2
 @export_group("Physics")
 @export var speed: float = 150.0
 @export var loop_backwards: bool = true
@@ -46,6 +47,8 @@ var _movement_blocked: bool = false
 func _ready() -> void:
 	if no_ambience_audio:
 		$AudioStreamPlayer2D.queue_free()
+	elif ambience_volume_db:
+		$AudioStreamPlayer2D.volume_db = ambience_volume_db
 	if smooth_turning_length > 0: _sign_up_points()
 
 func _physics_process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=4 uid="uid://bsnomo06t84ja"]
+[gd_scene load_steps=78 format=4 uid="uid://bsnomo06t84ja"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_w5q24"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_b7wog"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="35_wifn2"]
 [ext_resource type="Script" uid="uid://cb45v5kku30sv" path="res://shaders/quality_light2d_shadow.gd" id="36_m3vvg"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="36_njriq"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="40_nh4gr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2epg6"]
 texture = ExtResource("12_2qc6y")
@@ -460,6 +461,8 @@ _data = {
 }
 point_count = 11
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_w3utf"]
+
 [node name="Level9-2" type="Node2D"]
 script = ExtResource("1_w5q24")
 time = 500
@@ -490,6 +493,7 @@ music = Array[Resource]([ExtResource("4_2qc6y")])
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_mlr4l")]
 secrets = Array[String](["bte world 9 completed"])
+show_progress_toast = false
 progress_by_id = "2"
 progress_to = 5
 
@@ -1064,8 +1068,9 @@ position = Vector2(2192, 400)
 curve = SubResource("Curve2D_ojkni")
 
 [node name="FireballBig" parent="Paths/Path2D" instance=ExtResource("26_65y6b")]
-position = Vector2(1192, 184)
-rotation = 1.5708
+position = Vector2(1416.17, 322.382)
+rotation = -1.23128
+progress = 419.912
 
 [node name="Path2D2" type="Path2D" parent="Paths"]
 curve = SubResource("Curve2D_sooly")
@@ -1073,11 +1078,13 @@ curve = SubResource("Curve2D_sooly")
 [node name="FireballBig" parent="Paths/Path2D2" instance=ExtResource("26_65y6b")]
 position = Vector2(1904, 208)
 rotation = 0.273009
+ambience_volume_db = -5.0
 
 [node name="FireballBig2" parent="Paths/Path2D2" instance=ExtResource("26_65y6b")]
 position = Vector2(2688, 128)
 rotation = -0.463682
 progress = 862.028
+ambience_volume_db = -5.0
 
 [node name="Path2D3" type="Path2D" parent="Paths"]
 curve = SubResource("Curve2D_pki1n")
@@ -1191,6 +1198,7 @@ curve = SubResource("Curve2D_nh4gr")
 position = Vector2(7968, 608)
 rotates = false
 loop = true
+ambience_volume_db = -7.0
 loop_backwards = false
 warp_objects_on_end = false
 
@@ -1199,7 +1207,7 @@ position = Vector2(8353.15, 112.011)
 progress = 671.189
 rotates = false
 loop = true
-no_ambience_audio = true
+ambience_volume_db = -7.0
 loop_backwards = false
 warp_objects_on_end = false
 
@@ -1211,6 +1219,7 @@ curve = SubResource("Curve2D_nh4gr")
 position = Vector2(7968, 608)
 rotates = false
 loop = true
+ambience_volume_db = -7.0
 loop_backwards = false
 warp_objects_on_end = false
 
@@ -1219,29 +1228,34 @@ position = Vector2(8353.15, 112.011)
 progress = 671.189
 rotates = false
 loop = true
-no_ambience_audio = true
+ambience_volume_db = -7.0
 loop_backwards = false
 warp_objects_on_end = false
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Paths"]
 position = Vector2(6592, 0)
 stream = ExtResource("35_njriq")
+volume_db = -3.0
 autoplay = true
-max_distance = 1280.0
+max_distance = 1000.0
+attenuation = 0.5
 bus = &"Sound"
 
 [node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="Paths"]
 position = Vector2(7216, 480)
 stream = ExtResource("35_njriq")
+volume_db = -3.0
 autoplay = true
-max_distance = 1280.0
+max_distance = 1000.0
+attenuation = 0.5
 bus = &"Sound"
 
 [node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="Paths"]
 position = Vector2(320, 2016)
 stream = ExtResource("35_njriq")
+volume_db = -3.0
 autoplay = true
-max_distance = 1280.0
+max_distance = 800.0
 bus = &"Sound"
 
 [node name="PointLight2D" type="PointLight2D" parent="Paths"]
@@ -1315,10 +1329,12 @@ position = Vector2(5040, 96)
 rotation = -1.5708
 warp_direction = 1
 warp_to = NodePath("../PipeOut")
+use_blur_transition = true
 
 [node name="PipeIn2" parent="." instance=ExtResource("35_wifn2")]
 position = Vector2(96, 2096)
 warp_to = NodePath("../PipeOut2")
+use_blur_transition = true
 
 [node name="PipeOut" parent="." instance=ExtResource("36_njriq")]
 position = Vector2(96, 1840)
@@ -1335,5 +1351,11 @@ metadata/_edit_lock_ = true
 position = Vector2(5600, 48)
 rotation = -3.14159
 warp_direction = 3
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("40_nh4gr")]
+position = Vector2(0, -496)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+shape = SubResource("WorldBoundaryShape2D_w3utf")
 
 [connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
