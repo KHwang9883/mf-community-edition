@@ -6,6 +6,6 @@ func _ready() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if !is_instance_valid(area.get_parent()): return
-	var par = area.get_parent()
-	if !par.is_in_group(&"map_dot"): return
-	par.visible = true
+	#var par = area.get_parent()
+	#if !par.is_in_group(&"map_dot"): return
+	#par.visible = true

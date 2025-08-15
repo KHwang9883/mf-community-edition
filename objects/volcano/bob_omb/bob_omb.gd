@@ -92,3 +92,9 @@ func _on_body_entered(body: Node2D) -> void:
 	speed = Vector2(350 * -dir, 0)
 	turn_sprite = true
 	
+
+
+func _on_collided_wall() -> void:
+	turn_x()
+	if ignited && abs(speed.x) > 100:
+		speed.x /= 2

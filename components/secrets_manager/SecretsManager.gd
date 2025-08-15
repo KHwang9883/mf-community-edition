@@ -71,9 +71,11 @@ func _ready() -> void:
 	)
 	SettingsManager.tweaks_updated.connect(func():
 		vignette.visible = SettingsManager.get_tweak(&"vignette", false)
+		set_save_icon()
 	)
 	await get_tree().physics_frame
 	vignette.visible = SettingsManager.get_tweak(&"vignette", false)
+	set_save_icon()
 	
 	# Notifications
 	Thunder._connect(SkinsManager.skins_loaded, _on_skins_reloaded)
@@ -225,8 +227,17 @@ func save_secrets() -> void:
 func game_saved() -> void:
 	if _tween_game_save && _tween_game_save.is_valid():
 		_tween_game_save.kill()
-	_tween_game_save = create_tween()
-	
+	_tween_game_save = create_tween().set_trans(Tween.TRANS_SINE)
+	_tween_game_save.tween_property(saved, "modulate:a", 1.0, 0.3).from(0.0)
+	_tween_game_save.tween_interval(3.0)
+	_tween_game_save.tween_property(saved, "modulate:a", 0.0, 0.5).set_ease(Tween.EASE_IN)
+
+
+func set_save_icon():
+	if SettingsManager.get_tweak("save_icon", true):
+		Thunder._connect(ProfileManager.current_profile_saved, game_saved)
+	else:
+		Thunder._disconnect(ProfileManager.current_profile_saved, game_saved)
 
 
 func is_console_enabled() -> bool:

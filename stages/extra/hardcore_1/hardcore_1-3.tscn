@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://dt0fwwihebkyb"]
+[gd_scene load_steps=82 format=4 uid="uid://dt0fwwihebkyb"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_7hqwa"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_hj0uw"]
@@ -48,6 +48,7 @@
 [ext_resource type="PackedScene" uid="uid://cyjlylh7q8atw" path="res://engine/objects/enemies/hammer_bros/silver_hammer_bro.tscn" id="41_h03cu"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="43_te76i"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="44_5jui5"]
+[ext_resource type="Texture2D" uid="uid://dsxh7dvtbj4sa" path="res://gfx/sign/sign_reversed.png" id="45_japrg"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="45_vwcm6"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_d6pl4"]
@@ -536,6 +537,14 @@ offset_left = 2528.0
 offset_top = 256.0
 offset_right = 2592.0
 offset_bottom = 352.0
+script = ExtResource("7_6toly")
+
+[node name="Control2" type="Control" parent="CamArea2"]
+anchors_preset = 0
+offset_left = 1552.0
+offset_top = 256.0
+offset_right = 1648.0
+offset_bottom = 384.0
 script = ExtResource("7_6toly")
 
 [node name="CamArea3" parent="." instance=ExtResource("7_5f7sp")]
@@ -1313,7 +1322,11 @@ warp_to = NodePath("../PipeOut2")
 use_blur_transition = true
 
 [node name="Checkpoint" parent="." instance=ExtResource("39_e0ln4")]
-position = Vector2(6224, -576)
+position = Vector2(6560, 384)
+
+[node name="Sign" parent="Checkpoint" index="0"]
+texture = ExtResource("45_japrg")
+offset = Vector2(-14, 0)
 
 [node name="CamArea4" parent="." instance=ExtResource("7_5f7sp")]
 offset_left = 5888.0
@@ -1342,6 +1355,8 @@ position = Vector2(7872, -592)
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -21
 script = ExtResource("43_te76i")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="GiantHill" type="Sprite2D" parent="Node2D"]
 position = Vector2(624, 368)
@@ -1459,3 +1474,5 @@ texture = ExtResource("45_vwcm6")
 [connection signal="view_section_changed" from="CamArea2" to="PlayerCamera2D" method="switch_to_direction" binds= [-1]]
 [connection signal="view_section_changed" from="CamArea3" to="PlayerCamera2D" method="switch_to_direction" binds= [-1]]
 [connection signal="view_section_changed" from="CamArea4" to="PlayerCamera2D" method="switch_to_direction" binds= [1]]
+
+[editable path="Checkpoint"]
