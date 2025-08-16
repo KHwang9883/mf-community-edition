@@ -2,6 +2,7 @@ extends GravityBody2D
 
 signal going_up
 signal going_down
+signal got_killed
 
 @export var offset: Vector2 = Vector2(0, -56)
 @export_category("References")

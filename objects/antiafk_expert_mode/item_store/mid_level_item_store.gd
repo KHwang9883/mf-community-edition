@@ -1,7 +1,7 @@
 extends Control
 
 const ITEM_RESERVE = preload("res://sfx/item-reserve.wav")
-const INCORRECT = preload("res://sfx/incorrect.wav")
+const INCORRECT = preload("res://engine/components/ui/_sounds/incorrect.wav")
 
 var activated: bool
 var antiafk_ref_node: Node

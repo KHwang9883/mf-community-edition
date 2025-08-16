@@ -13,6 +13,9 @@ func _ready() -> void:
 	spikeball.going_down.connect(func():
 		sprite_node.play(&"open")
 	)
+	spikeball.got_killed.connect(func():
+		speed.x *= 2
+	, CONNECT_ONE_SHOT)
 
 
 #func _on_timer_timeout() -> void:

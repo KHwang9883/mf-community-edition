@@ -21,7 +21,7 @@ const BOTTOM_ADDONS = [
 @export var block_off_path: bool = false
 @export var only_one: bool = false
 
-const INCORRECT = preload("res://sfx/incorrect.wav")
+const INCORRECT = preload("res://engine/components/ui/_sounds/incorrect.wav")
 const SELECT_MAIN = preload("res://engine/components/ui/_sounds/select_main.wav")
 
 func _ready() -> void:

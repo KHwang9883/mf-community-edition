@@ -72,6 +72,23 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hvro1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r3lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lduic")
+}],
+"loop": true,
+"name": &"normal",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r3lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvro1")
 }],
 "loop": false,
 "name": &"open",
@@ -104,6 +121,7 @@ offset = Vector2(0, -80)
 self_modulate = Color(1, 1, 1, 0)
 rect = Rect2(-20, -64, 40, 80)
 script = ExtResource("7_2b0iw")
+new_rect = Rect2(-400, -512, 800, 1024)
 
 [node name="Head" type="AnimatedSprite2D" parent="."]
 z_index = -2
@@ -118,3 +136,4 @@ texture = ExtResource("9_nr2v1")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Head" method="stop"]
+[connection signal="got_killed" from="Spikeball" to="Head" method="play" binds= [&"normal"]]

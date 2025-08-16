@@ -54,6 +54,7 @@ func stop_and_create_baby() -> void:
 	var baby = BABY_BERTHA.instantiate()
 	baby.is_spawned = true
 	baby.speed.x = 350 * dir
+	baby.life_time = 5
 	baby.add_to_group(str(get_instance_id()))
 	baby.transform = transform
 	add_sibling(baby)

@@ -18,8 +18,9 @@ func _ready() -> void:
 	var death: NodePath = vars.death as NodePath
 	var speed: Vector2 = vars.death_speed as Vector2
 	var spikeball: NodePath = vars.spikeball as NodePath
-	var spk = enemy_attacked.get_node(spikeball)
-	spk.independence()
+	var spk = enemy_attacked.get_node_or_null(spikeball)
+	if spk:
+		spk.independence()
 	
 	if death.is_empty(): return
 	var death_node: Node2D = enemy_attacked.get_node_or_null(death).duplicate()

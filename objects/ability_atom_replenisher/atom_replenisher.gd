@@ -11,5 +11,5 @@ func collect() -> void:
 	Data.technical_values.custom_saved_values.item_replenisher = item_name
 	
 	var _sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, pickup_powerup_sound, "powerup_no_transform", false)
-	Audio.play_sound(_sfx, self, false, {pitch = sound_pitch, ignore_pause = true})
+	Audio.play_1d_sound(_sfx, false, {pitch = sound_pitch, ignore_pause = true})
 	queue_free()

@@ -57,6 +57,7 @@ var hammer_speed_max := Vector2(500, -250)
 @onready var mariomarker: Sprite2D = $"../../HUD/Mariomarker"
 @onready var mariomarker_init_pos: float = mariomarker.global_position.y
 @onready var goodluck: Sprite2D = $"../../HUD/Goodluck"
+@onready var kevinlabel: Label = $"../../LabelKevin"
 
 @onready var moving_group: Node2D = $".."
 
@@ -72,6 +73,8 @@ const SEQ_TABLE_EXP := {
 	&"stihl_create":  4.5,
 }
 var seq_tw: Tween
+var ongoing_actives: int
+var max_actives: int = 3
 
 func _ready() -> void:
 	super()
@@ -133,7 +136,7 @@ func _ready() -> void:
 		var antiafk = ANTIAFK.instantiate()
 		antiafk.item_store_enabled = false
 		antiafk.antiafk_enabled = false
-		Scenes.current_scene.add_child(antiafk)
+		Scenes.current_scene.add_child.call_deferred(antiafk)
 
 	await Scenes.current_scene.stage_ready
 
@@ -142,7 +145,6 @@ func _ready() -> void:
 		Thunder._current_player.death_stop_music = true
 	
 	if Data.values.onetime_blocks && difficulty >= 4 && KevinGlobal.activated:
-		var kevinlabel: Label = $"../../LabelKevin"
 		kevinlabel.show()
 		var twwt = kevinlabel.create_tween().set_trans(Tween.TRANS_SINE)
 		twwt.tween_property(kevinlabel, "position:y", 448.0, 0.5).set_ease(Tween.EASE_OUT)
@@ -248,6 +250,12 @@ func _physics_process(_delta: float) -> void:
 #
 	#if Data.values['highest'] < Data.values['miles']:
 		#Data.values['highest'] = Data.values['miles']
+	
+	if Console.cv.player_stats_shown:
+		kevinlabel.show()
+		kevinlabel.position.y = 436
+		kevinlabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		kevinlabel.text = "actives: %d" % [ongoing_actives]
 
 
 func death_sequence(body: Node2D) -> void:
@@ -330,6 +338,7 @@ func create_platform() -> void:
 	if goomba_counter <= 1 && difficulty > 3:
 		var goombai = GOOMBA.instantiate()
 		goombai.global_position = plati.global_position - Vector2(48, 16)
+		goombai.life_time = 3
 		Scenes.current_scene.add_child(goombai)
 		goomba_counter = 6
 
@@ -346,15 +355,16 @@ func create_platform() -> void:
 
 var podo_hard_seq: int = -1
 
-func podo_create(left_pos: float = 128, right_pos: float = 512) -> void:
-	if !use_sequence_table:
-		get_tree().create_timer(6, false).timeout.connect(podo_create.bind())
+func podo_create(left_pos: float = 128, right_pos: float = 512, no_repeat: bool = false) -> void:
+	if !use_sequence_table && !no_repeat:
+		var repeat_time: float = 6.0 if difficulty < 2 else 10.0
+		get_tree().create_timer(repeat_time, false).timeout.connect(podo_create.bind())
 	
-	if difficulty >= 2:
+	if difficulty >= 2 && !use_sequence_table:
 		if podo_hard_seq < 4:
 			podo_hard_seq += 1
 			get_tree().create_timer(0.5, false).timeout.connect(
-				podo_create.bind(left_pos + 32, right_pos - 32)
+				podo_create.bind(left_pos + 32, right_pos - 32, true)
 			)
 		else:
 			podo_hard_seq = 0
@@ -384,27 +394,35 @@ func big_fish_create() -> void:
 	strelochka.reset_physics_interpolation()
 	fish_preparing = true
 
-	await get_tree().create_timer(3.0, false).timeout
+	await get_tree().create_timer(2.0, false).timeout
+	ongoing_actives += 1
+	await get_tree().create_timer(1.0, false).timeout
 	fish_preparing = false
 	var fisj = BIG_FISH_BONES.instantiate()
 	fisj.position.x = strelochka.position.x
 	fisj.global_position.y = moving_group.global_position.y + 480 + 96
+	fisj.life_time = 3
 	strelochka.position.x = -500
 	strelochka.reset_physics_interpolation()
 	Scenes.current_scene.add_child(fisj)
+	await get_tree().create_timer(2.0, false).timeout
+	ongoing_actives -= 1
 
 
 func stihl_create() -> void:
 	if !use_sequence_table:
 		get_tree().create_timer(20, false).timeout.connect(stihl_create)
 
+	ongoing_actives += 1
 	var stihl = STIHL.instantiate()
 	moving_group.add_child(stihl)
 	stihl.global_position = global_position + Vector2(randi_range(-96, 480), 480)
 	stihl.reset_physics_interpolation()
 	var _tw = stihl.create_tween()
-	_tw.tween_interval(8.0)
+	_tw.tween_interval(6.0)
 	_tw.tween_callback(stihl.queue_free)
+	await get_tree().create_timer(3.0, false).timeout
+	ongoing_actives -= 1
 
 
 func bullet_create(expert: bool = false) -> void:
