@@ -41,6 +41,7 @@ const DEFAULT_LINES = {
 	#"bowser_fall": preload("res://engine/objects/bosses/bowser/sounds/bowser_fall.wav"),
 	#"bowser_lava_love": preload("res://engine/objects/bosses/bowser/sounds/bowser_into_lava.wav"),
 	"stun": preload("res://engine/objects/projectiles/sounds/stun.wav"),
+	"stun_beetroot": preload("res://engine/objects/projectiles/sounds/stun.wav"),
 	"fireball_bump": null,
 	"starman": preload("res://engine/objects/powerups/super_star/music-starman.it"),
 	"pipe_cutscene": preload("res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav"),

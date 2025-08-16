@@ -2,7 +2,7 @@ extends TextureRect
 
 const CLOCK = preload("res://engine/objects/items/stopwatch/clock.tscn")
 const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
-const INCORRECT = preload("res://sfx/incorrect.wav")
+const INCORRECT = preload("res://engine/components/ui/_sounds/incorrect.wav")
 
 func activate() -> bool:
 	if Data.values.stopwatch > 0.0:

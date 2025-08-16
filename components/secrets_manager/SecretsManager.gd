@@ -225,6 +225,8 @@ func save_secrets() -> void:
 
 
 func game_saved() -> void:
+	if ProfileManager.current_profile.name == "debug":
+		return
 	if _tween_game_save && _tween_game_save.is_valid():
 		_tween_game_save.kill()
 	_tween_game_save = create_tween().set_trans(Tween.TRANS_SINE)
@@ -234,7 +236,7 @@ func game_saved() -> void:
 
 
 func set_save_icon():
-	if SettingsManager.get_tweak("save_icon", true):
+	if SettingsManager.get_tweak("save_icon", false):
 		Thunder._connect(ProfileManager.current_profile_saved, game_saved)
 	else:
 		Thunder._disconnect(ProfileManager.current_profile_saved, game_saved)

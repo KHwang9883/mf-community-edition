@@ -6,7 +6,7 @@ const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 var how_many_floor_tiles_to_break: int
 
 static func register() -> Command:
-	return new().set_name("makemebig").set_description("IT'S. TOO. BIG. Toggles between huge-sized player and regular one.")
+	return new().set_name("makemebig").set_description("Toggles between huge-sized player and regular one.")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):

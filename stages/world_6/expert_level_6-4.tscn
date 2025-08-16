@@ -35,9 +35,9 @@
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="29_4jftw"]
 [ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="30_myysy"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="31_5koh4"]
-[ext_resource type="PackedScene" uid="uid://ndc3gacjmer2" path="res://stages/world_6/objects/long_platform/long_platform.tscn" id="32_dc8kd"]
+[ext_resource type="PackedScene" uid="uid://ndc3gacjmer2" path="res://engine/objects/platform/castle_platforms/long_platform.tscn" id="32_dc8kd"]
 [ext_resource type="PackedScene" uid="uid://uhf6frao7p1m" path="res://engine/objects/enemies/podoboo/podoboo.tscn" id="33_xoj8x"]
-[ext_resource type="PackedScene" uid="uid://b3cggc3th4xua" path="res://stages/world_6/objects/long_platform/double_platform.tscn" id="34_v6kbm"]
+[ext_resource type="PackedScene" uid="uid://b3cggc3th4xua" path="res://engine/objects/platform/castle_platforms/double_platform.tscn" id="34_v6kbm"]
 [ext_resource type="PackedScene" uid="uid://crb8jkwa0r1dl" path="res://engine/objects/enemies/spinies/spiny_iron.tscn" id="35_bd8qu"]
 [ext_resource type="Script" uid="uid://pfm8s6o4vl5u" path="res://stages/extra/expert_mode/scripts/world_6_4_maze.gd" id="36_7fpmv"]
 [ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="37_jhav0"]
@@ -51,7 +51,7 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="46_86kf4"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="47_8bps0"]
 [ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="48_1q0l6"]
-[ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://stages/world_6/objects/long_platform/single_platform.tscn" id="49_ygtpu"]
+[ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://engine/objects/platform/castle_platforms/single_platform.tscn" id="49_ygtpu"]
 [ext_resource type="PackedScene" uid="uid://b4bjvmqtj8nv0" path="res://engine/objects/enemies/dry_bones/dry_bones.tscn" id="50_oxaix"]
 [ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="51_0rumn"]
 [ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="52_pm670"]
@@ -296,7 +296,7 @@ size = Vector2(32, 128)
 
 [node name="Level6-4" type="Node2D"]
 script = ExtResource("1_gw4s0")
-time = 600
+time = 540
 completion_music = ExtResource("2_ygtpu")
 completion_write_save = false
 jump_to_scene = "res://stages/world_6/expert_end_cutscene_6.tscn"
@@ -306,7 +306,7 @@ completion_center_on_player_after_transition = true
 script = ExtResource("3_oxaix")
 boss_music_var_1 = ExtResource("4_0rumn")
 music = Array[Resource]([ExtResource("5_ygtpu")])
-volume_db = Array[float]([2.5])
+volume_db = Array[float]([1.5])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("6_ygtpu")]
 
@@ -374,7 +374,6 @@ metadata/_edit_group_ = true
 [node name="BgCastle" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 texture_repeat = 2
 position = Vector2(-192, 0)
-scale = Vector2(1.04348, 1)
 texture = ExtResource("14_1jxd6")
 centered = false
 region_rect = Rect2(-164, 0, 4416, 480)
@@ -449,17 +448,6 @@ z_index = 1
 material = ExtResource("19_8s7ro")
 position = Vector2(150, 0)
 frequency = -150.0
-
-[node name="RotoCenter11" parent="Objects" instance=ExtResource("17_kvxyq")]
-position = Vector2(10736, 432)
-
-[node name="RotoRed" parent="Objects/RotoCenter11" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, -90)
-amplitude = Vector2(90, 90)
-phase = -90.0
-frequency = -50.0
 
 [node name="RotoCenter18" parent="Objects" instance=ExtResource("17_kvxyq")]
 position = Vector2(11792, 432)
@@ -554,10 +542,10 @@ position = Vector2(10448, 432)
 [node name="RotoRed" parent="Objects/RotoCenter6" instance=ExtResource("18_tfq5h")]
 z_index = 1
 material = ExtResource("19_8s7ro")
-position = Vector2(0, 180)
-amplitude = Vector2(180, 180)
+position = Vector2(0, 64)
+amplitude = Vector2(64, 64)
 phase = 90.0
-frequency = -50.0
+frequency = -100.0
 
 [node name="RotoCenter7" parent="Objects" instance=ExtResource("17_kvxyq")]
 position = Vector2(10928, 112)
@@ -1059,120 +1047,6 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_jjlqr")
 offset = Vector2(0, 8)
 script = ExtResource("43_i07e6")
-
-[node name="RotoCenter22" parent="." instance=ExtResource("17_kvxyq")]
-position = Vector2(624, 1040)
-metadata/_edit_group_ = true
-
-[node name="RotoRed" parent="RotoCenter22" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-amplitude = Vector2(0, 180)
-frequency = -50.0
-
-[node name="RotoRed2" parent="RotoCenter22" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-amplitude = Vector2(0, 180)
-phase = 180.0
-frequency = -50.0
-
-[node name="RotoCenter23" parent="." instance=ExtResource("17_kvxyq")]
-position = Vector2(656, 1040)
-metadata/_edit_group_ = true
-
-[node name="RotoRed" parent="RotoCenter23" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, 47)
-amplitude = Vector2(0, 180)
-phase = 15.0
-frequency = -50.0
-
-[node name="RotoRed2" parent="RotoCenter23" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, -47)
-amplitude = Vector2(0, 180)
-phase = -165.0
-frequency = -50.0
-
-[node name="RotoCenter24" parent="." instance=ExtResource("17_kvxyq")]
-position = Vector2(688, 1040)
-metadata/_edit_group_ = true
-
-[node name="RotoRed" parent="RotoCenter24" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, 90)
-amplitude = Vector2(0, 180)
-phase = 30.0
-frequency = -50.0
-
-[node name="RotoRed2" parent="RotoCenter24" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, -90)
-amplitude = Vector2(0, 180)
-phase = -150.0
-frequency = -50.0
-
-[node name="RotoCenter25" parent="." instance=ExtResource("17_kvxyq")]
-position = Vector2(688, 880)
-metadata/_edit_group_ = true
-
-[node name="RotoRed" parent="RotoCenter25" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-amplitude = Vector2(0, 180)
-frequency = -50.0
-
-[node name="RotoRed2" parent="RotoCenter25" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-amplitude = Vector2(0, 180)
-phase = 180.0
-frequency = -50.0
-
-[node name="RotoCenter26" parent="." instance=ExtResource("17_kvxyq")]
-position = Vector2(656, 880)
-metadata/_edit_group_ = true
-
-[node name="RotoRed" parent="RotoCenter26" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, 47)
-amplitude = Vector2(0, 180)
-phase = 15.0
-frequency = -50.0
-
-[node name="RotoRed2" parent="RotoCenter26" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, -47)
-amplitude = Vector2(0, 180)
-phase = -165.0
-frequency = -50.0
-
-[node name="RotoCenter27" parent="." instance=ExtResource("17_kvxyq")]
-position = Vector2(624, 880)
-metadata/_edit_group_ = true
-
-[node name="RotoRed" parent="RotoCenter27" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, 90)
-amplitude = Vector2(0, 180)
-phase = 30.0
-frequency = -50.0
-
-[node name="RotoRed2" parent="RotoCenter27" instance=ExtResource("18_tfq5h")]
-z_index = 1
-material = ExtResource("19_8s7ro")
-position = Vector2(0, -90)
-amplitude = Vector2(0, 180)
-phase = -150.0
-frequency = -50.0
 
 [node name="RotoCenter21" parent="." instance=ExtResource("17_kvxyq")]
 position = Vector2(1616, 208)

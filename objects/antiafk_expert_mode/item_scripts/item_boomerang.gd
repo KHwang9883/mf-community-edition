@@ -2,7 +2,7 @@ extends TextureRect
 
 @export var suit_name: String = "boomerang"
 const DEFAULT_POWERUP_SOUND = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
-const INCORRECT = preload("res://sfx/incorrect.wav")
+const INCORRECT = preload("res://engine/components/ui/_sounds/incorrect.wav")
 
 func activate() -> bool:
 	var worked: bool
