@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 				Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
 					1, {ignore_pause = true})
 			
-		elif Input.is_action_just_pressed("ui_accept"):
+		elif Input.is_action_just_pressed("ui_accept") || Input.is_physical_key_pressed(KEY_KP_ENTER):
 			Audio.stop_all_sounds()
 			deactivate()
 			Scenes.reload_current_scene()
