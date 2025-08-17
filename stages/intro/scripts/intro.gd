@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	if loading_init && !loading_finished:
 		loading_finished = true
 		print("[Startup] Waiting for a bit..")
-		get_tree().create_timer(0.6, false, true, false).timeout.connect(display_disclaimer)
+		get_tree().create_timer(0.4, false, true, false).timeout.connect(display_disclaimer)
 
 
 func display_disclaimer() -> void:
