@@ -15,6 +15,8 @@ var mario_walking: bool = false
 var peach_enter: bool = false
 var mario_enter: bool = false
 
+var _50_switch: bool = false
+
 func _enter_tree() -> void:
 	print('[Cutscene] altered time scale from %s' % Engine.time_scale)
 	_original_time_scale = Engine.time_scale
@@ -41,6 +43,9 @@ func _flow_intros() -> void:
 	
 	await _time(3)
 	camera_2d.speed = 50
+	camera_2d.global_position.x = floor(camera_2d.global_position.x)
+	mario.global_position.x = floor(mario.global_position.x)
+	cell_peach.global_position.x = floor(cell_peach.global_position.x)
 
 func _flow_enter_castle() -> void:
 	camera_2d.speed = 0
@@ -85,7 +90,9 @@ func _time(t: float) -> void:
 func _physics_process(_delta: float) -> void:
 	if mario_walking:
 		mario.speed.x = 50
-		mario.global_position.x = cell_peach.global_position.x - 40
+		(func():
+			mario.global_position.x = cell_peach.global_position.x - 40
+		).call_deferred()
 	
 	if cell_peach.global_position.x >= 1056 && !peach_enter:
 		peach_enter = true
