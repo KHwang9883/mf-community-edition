@@ -37,21 +37,34 @@ func _physics_process(delta: float) -> void:
 	s_timer += delta
 	match lava_step:
 		0 when path_follow_2d.progress > 80:
-			lava_step += 1
-			sound.play()
+			add_step()
 			s_freq = 4
-			if tw && tw.is_valid(): tw.kill()
 			tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
-			tw.tween_property(self, "position:y", -256, 2.0)
+			tw.tween_property(self, "lava_offset", -64, 2.0)
 		1 when path_follow_2d.progress > 640:
-			lava_step += 1
-			sound.play()
-			if tw && tw.is_valid(): tw.kill()
+			add_step()
 			tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-			tw.tween_property(self, "s_freq", 96, 2.5)
+			tw.tween_property(self, "s_freq", 104, 2.5)
+		2 when path_follow_2d.progress > 3008:
+			add_step()
+			tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).set_parallel()
+			tw.tween_property(self, "lava_offset", -32, 2.0)
+			tw.tween_property(self, "s_freq", 64, 2.0)
+		3 when path_follow_2d.progress > 4576:
+			add_step()
+			tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).set_parallel()
+			tw.tween_property(self, "lava_offset", -24, 2.0)
+			tw.tween_property(self, "s_freq", 12, 2.0)
 	lava_loop()
 
 func lava_loop() -> void:
 	#lava_offset = -128
 	for i in len(lava_arr_bottom):
 		lava_arr_bottom[i].position.y = lava_offset + sin(s_timer + (i * 0.31) + PI) * s_freq
+
+func add_step() -> void:
+	lava_step += 1
+	sound.play()
+	if tw && tw.is_valid():
+		tw.kill()
+	
