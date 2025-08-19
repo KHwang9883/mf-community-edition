@@ -47,8 +47,8 @@ func _physics_process(delta: float) -> void:
 			lava_step += 1
 			sound.play()
 			if tw && tw.is_valid(): tw.kill()
-			tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
-			tw.tween_property(self, "s_freq", 96, 2.0)
+			tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+			tw.tween_property(self, "s_freq", 96, 2.5)
 	lava_loop()
 
 func lava_loop() -> void:
