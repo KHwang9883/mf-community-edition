@@ -96,6 +96,7 @@ func _physics_process(delta: float) -> void:
 	
 		if player.is_on_wall():
 			player.left_right = 1
+			player.modulate.a = 0.05
 			player_at_wall.emit()
 	
 	if _letit:
