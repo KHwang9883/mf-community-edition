@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://1eocd52426sa"]
+[gd_scene load_steps=48 format=4 uid="uid://1eocd52426sa"]
 
 [ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_pg3oa"]
 [ext_resource type="Script" uid="uid://dejbvmjpsaypn" path="res://stages/world_8/scripts/expert_to_8-4_cutscene.gd" id="2_djj51"]
@@ -14,12 +14,13 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_ssckd"]
 [ext_resource type="Script" uid="uid://cnn6muchpcx7x" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="12_qw83q"]
 [ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="13_mjtah"]
-[ext_resource type="Texture2D" uid="uid://dtid7vv85jl7u" path="res://stages/extra/expert_mode/starting_cutscene/gfx/toad_helping_powerups.png" id="14_rgdhn"]
 [ext_resource type="Material" uid="uid://boqbb5a1kaq2p" path="res://materials/9-3_lava_bubble_foreground.tres" id="14_yrej2"]
 [ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="15_1r2xu"]
+[ext_resource type="Texture2D" uid="uid://cbsgsgpu8kf5i" path="res://stages/extra/expert_mode/starting_cutscene/gfx/toad_jump_34.png" id="16_faqkn"]
 [ext_resource type="Texture2D" uid="uid://dsagppu16vuce" path="res://stages/cutscenes/ending/part_4/gfx/toad_walker.png" id="16_pq3uy"]
 [ext_resource type="TileSet" uid="uid://b0s4irijlvag3" path="res://tilesets/tanks_burning/tanks_burning.tres" id="18_1r2xu"]
 [ext_resource type="PackedScene" uid="uid://24svsapfcl7v" path="res://tilesets/tanks_burning/scenes/flameball_launcher.tscn" id="19_pq3uy"]
+[ext_resource type="Script" uid="uid://c3yajwpcwf3h8" path="res://tilesets/volcano/script_pulsating.gd" id="20_btb78"]
 [ext_resource type="PackedScene" uid="uid://etoqb2vxat2u" path="res://tilesets/tanks_burning/scenes/spikeball_launcher.tscn" id="20_v6i0i"]
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="21_onqyj"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="22_3o2pg"]
@@ -79,17 +80,9 @@ width = 160
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_g8ugh"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a2q4p"]
-atlas = ExtResource("14_rgdhn")
-region = Rect2(0, 0, 32, 46)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jsicq"]
 atlas = ExtResource("16_pq3uy")
 region = Rect2(0, 116, 32, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qw83q"]
-atlas = ExtResource("14_rgdhn")
-region = Rect2(99, 0, 32, 46)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gi66a"]
 atlas = ExtResource("16_pq3uy")
@@ -107,7 +100,7 @@ region = Rect2(0, 116, 32, 46)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a2q4p")
+"texture": SubResource("AtlasTexture_jsicq")
 }],
 "loop": true,
 "name": &"cursed",
@@ -123,7 +116,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qw83q")
+"texture": ExtResource("16_faqkn")
 }],
 "loop": true,
 "name": &"jump",
@@ -338,13 +331,15 @@ process_material = ExtResource("14_yrej2")
 [node name="TileMapLayer" type="TileMapLayer" parent="Tanks"]
 tile_map_data = PackedByteArray("AAAoAAsAAgAAAAEAAAApAAwAAwAAAAAAAQAqAAwAAwAAAAAAAQArAAwAAwAAAAAAAQAsAAwAAwAAAAAAAQAoAAwAAwAAAAAAAgAtAAwAAwAAAAAAAwApAAsAAgACAAEAAAAqAAsAAgACAAEAAAArAAsAAgACAAEAAAAsAAsAAgACAAEAAAAtAAsAAgADAAEAAAAsAAoAAgADAAEAAAArAAoAAgABAAEAAAAzAAsAAgAAAAEAAAA0AAsAAgACAAEAAAA1AAsAAgACAAEAAAA2AAsAAgACAAEAAAA3AAsAAgACAAEAAAA4AAsAAgACAAEAAAA5AAsAAgACAAEAAAA6AAsAAgACAAEAAAA7AAsAAgACAAEAAAAzAAwAAwAAAAAAAgA0AAwAAwAAAAAAAQA1AAwAAwAAAAAAAQA2AAwAAwAAAAAAAQA3AAwAAwAAAAAAAQA4AAwAAwAAAAAAAQA5AAwAAwAAAAAAAQA6AAwAAwAAAAAAAQA7AAwAAwAAAAAAAQA8AAsAAgACAAEAAAA8AAwAAwAAAAAAAQA9AAsAAgACAAEAAAA9AAwAAwAAAAAAAQA+AAoAAgAAAAEAAAA+AAsAAgADAAEAAAA+AAwAAwAAAAAAAwA/AAoAAgADAAEAAAAsAAkAAgAAAAEAAAAuAAkAAgACAAEAAAAvAAkAAgADAAEAAAAtAAkAAgACAAEAAAA=")
 tile_set = ExtResource("18_1r2xu")
+script = ExtResource("20_btb78")
 
 [node name="FlameballLauncher" parent="Tanks" instance=ExtResource("19_pq3uy")]
 offset_left = 1312.0
 offset_top = 320.0
 offset_right = 1376.0
 offset_bottom = 352.0
-script = null
+script = ExtResource("20_btb78")
+divider = 3.0
 
 [node name="SpikeballLauncher" parent="Tanks" instance=ExtResource("20_v6i0i")]
 position = Vector2(1696, 336)
