@@ -32,7 +32,7 @@ func _ready() -> void:
 		await get_tree().physics_frame
 		gui = Scenes.custom_scenes.get("MinecraftGUI")
 		gui.evil_mode_activated.connect(func():
-			collision_mask = 2 + 16 + 64# + 4
+			collision_mask = 2 + 16 + 64 + 4
 		)
 		gui.evil_mode_deactivated.connect(func():
 			collision_mask = 16 + 64
@@ -64,7 +64,7 @@ func check_tile_process() -> void:
 		if !l: continue
 		#print(l)
 		if l is CollisionObject2D:
-			#if l.scene_file_path == DROPPED_ITEM.resource_path: continue
+			if l.scene_file_path == DROPPED_ITEM.resource_path: continue
 			outlined = l
 			outlined_tilemap = null
 			outlined_tilemap_item = null
