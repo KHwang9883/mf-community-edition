@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=4 uid="uid://e3qwwofniv8"]
+[gd_scene load_steps=110 format=4 uid="uid://e3qwwofniv8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uk6ge"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sv5we"]
@@ -30,6 +30,7 @@
 [ext_resource type="Script" uid="uid://cbnxx85hsvlm1" path="res://gfx/fancy_graphics/scripts/fancy_water_background.gd" id="18_lwwpb"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="18_p6hx5"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="19_k7xrb"]
+[ext_resource type="Material" uid="uid://boqbb5a1kaq2p" path="res://materials/9-3_lava_bubble_foreground.tres" id="26_41wgi"]
 [ext_resource type="PackedScene" uid="uid://c6jebmtmr1aap" path="res://objects/volcano/bob_omb/bob_omb.tscn" id="28_2pwhr"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="28_q4q3a"]
 [ext_resource type="PackedScene" uid="uid://csr5enkl02jsj" path="res://objects/volcano/goomba_volcano/goomba_volcano.tscn" id="29_i7ims"]
@@ -167,44 +168,6 @@ shader_parameter/density = 0.65
 shader_parameter/speed = Vector2(0.02, 0.01)
 shader_parameter/freq = 1.0
 
-[sub_resource type="Curve" id="Curve_8b1lq"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.381944, 1), 0.0, 0.0, 0, 0, Vector2(0.761574, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.501887), 2.1939, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_3ri61"]
-curve = SubResource("Curve_8b1lq")
-
-[sub_resource type="Curve" id="Curve_m3x1p"]
-_data = [Vector2(0, 0.411321), 0.0, 0.0, 0, 0, Vector2(0.256944, 0.698113), 0.0, 0.0, 0, 0, Vector2(0.585648, 0.366038), 2.83511, 2.83511, 0, 0, Vector2(1, 0.471698), -2.29604, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_2tkxs"]
-curve = SubResource("Curve_m3x1p")
-
-[sub_resource type="Curve" id="Curve_1n4in"]
-_limits = [0.0, 3.0, 0.0, 1.0]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_ylh60"]
-curve = SubResource("Curve_1n4in")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjwi3"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(320, 490, 0)
-emission_shape = 3
-emission_box_extents = Vector3(320, 1, 1)
-direction = Vector3(0, -1, 0)
-spread = 0.0
-initial_velocity_min = 100.0
-initial_velocity_max = 100.0
-radial_velocity_min = -50.0
-radial_velocity_max = 50.0
-radial_velocity_curve = SubResource("CurveTexture_3ri61")
-gravity = Vector3(0, 0, 0)
-scale_curve = SubResource("CurveTexture_2tkxs")
-scale_over_velocity_curve = SubResource("CurveTexture_ylh60")
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pwxgs"]
 blend_mode = 1
 
@@ -255,7 +218,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 metadata/_custom_type_script = "uid://chvjy6okoognf"
 
-[sub_resource type="Resource" id="Resource_gdtnc"]
+[sub_resource type="Resource" id="Resource_8m77t"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
 creation_fallback_node = ExtResource("28_q4q3a")
@@ -1034,7 +997,7 @@ lifetime = 6.0
 preprocess = 2.0
 visibility_rect = Rect2(-80, -80, 800, 560)
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_fjwi3")
+process_material = ExtResource("26_41wgi")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -1913,7 +1876,7 @@ result = SubResource("Resource_oydpa")
 [node name="Brick11" parent="." instance=ExtResource("38_hyv55")]
 position = Vector2(13328, 240)
 max_items = 1
-result = SubResource("Resource_gdtnc")
+result = SubResource("Resource_8m77t")
 
 [node name="QuestionBlock2" parent="." instance=ExtResource("39_fd2nv")]
 position = Vector2(272, 144)

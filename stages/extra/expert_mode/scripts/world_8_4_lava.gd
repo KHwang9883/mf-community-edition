@@ -5,12 +5,15 @@ extends Node2D
 @onready var light_effect_lava: Node2D = $LightEffectLava
 #@onready var podoboos: Node2D = $"../../Podoboos"
 #@onready var podoboos_arr: Array
+@onready var path_follow_2d: PathFollow2D = $".."
 
 var lava_arr_bottom: Array[Node2D]
 
 var s_timer: float
-var s_freq: float = 4
+var s_freq: float = 0
 var lava_offset: float
+var lava_step: int
+var tw: Tween
 
 func _ready() -> void:
 	#podoboos_arr = podoboos.get_children()
@@ -32,6 +35,20 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	s_timer += delta
+	match lava_step:
+		0 when path_follow_2d.progress > 80:
+			lava_step += 1
+			sound.play()
+			s_freq = 4
+			if tw && tw.is_valid(): tw.kill()
+			tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+			tw.tween_property(self, "position:y", -256, 2.0)
+		1 when path_follow_2d.progress > 640:
+			lava_step += 1
+			sound.play()
+			if tw && tw.is_valid(): tw.kill()
+			tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUAD)
+			tw.tween_property(self, "s_freq", 96, 2.0)
 	lava_loop()
 
 func lava_loop() -> void:
