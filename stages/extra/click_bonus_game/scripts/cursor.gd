@@ -34,16 +34,21 @@ func _input(event) -> void:
 	
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_pressed():
 		var group_stars = get_tree().get_nodes_in_group(&"bonus_star")
+		var hud_find_me_star = get_tree().get_first_node_in_group(&"find_me_star")
 		var has_collision: bool
+		var has_failed: bool = true
 		for i in area_2d.get_overlapping_areas():
 			if group_stars.has(i):
 				has_collision = true
 				i.activate()
 				break
+			if hud_find_me_star.has(i):
+				has_failed = false
 		if !has_collision:
 			gpu_particles_2d.restart()
 			Audio.play_1d_sound(DIE)
-			Scenes.current_scene.tries._try_lost()
+			if has_failed:
+				Scenes.current_scene.tries._try_lost()
 		else:
 			gpu_particles_2d_2.restart()
 			Audio.play_1d_sound(LAKITU_MYU)
