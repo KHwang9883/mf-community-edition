@@ -4,6 +4,7 @@ signal evil_mode_activated
 signal evil_mode_deactivated
 
 const DROPPED_ITEM = preload("res://commands/minec/dropped_item.tscn")
+const POP = preload("res://commands/minec/pop.ogg")
 
 @onready var hotbar: HBoxContainer = $Control/TextureRect/Hotbar
 @onready var selector: TextureRect = $Control/TextureRect/Selector
@@ -29,12 +30,14 @@ func push_item(item: MCItem) -> bool:
 			inventory[i].items = [item]
 			if item.type == ItemSlot.OutlineType.BODY && !item.item_body.resource_path:
 				inventory[i].exclusive = true
+			play_pop_sound()
 			update_hotbar()
 			return false
 		elif inventory[i].exclusive:
 			continue
 		elif inventory[i].type == item.type && _is_same_item(inventory[i].items[0], item):
 			inventory[i].items.append(item)
+			play_pop_sound()
 			update_hotbar()
 			return false
 	return is_full
@@ -157,6 +160,10 @@ func update_hotbar() -> void:
 			slot.get_node("Count").text = ""
 		else:
 			slot.get_node("Count").text = str(len(inventory[i].items))
+
+
+func play_pop_sound() -> void:
+	Audio.play_1d_sound(POP, false, {volume = -6, pitch = randf_range(1.6, 2.2)})
 
 
 func activate_enemy_mode() -> void:
