@@ -1,5 +1,6 @@
-[gd_scene load_steps=52 format=3 uid="uid://bdq2aru46867r"]
+[gd_scene load_steps=54 format=3 uid="uid://bdq2aru46867r"]
 
+[ext_resource type="Script" uid="uid://ckdxl3lfmf5dl" path="res://stages/intro/scripts/cacher_ice_creator.gd" id="1_3gi6k"]
 [ext_resource type="Material" uid="uid://gil546lvmhxo" path="res://engine/objects/items/ice_block/ice_block.tres" id="1_k7qp0"]
 [ext_resource type="Texture2D" uid="uid://knr0vufr6qpt" path="res://icon.png" id="2_kmp0k"]
 [ext_resource type="Material" uid="uid://0tow6ooiox1k" path="res://stages/extra/expert_mode/gfx/canvas_item_multiply.tres" id="3_iapfs"]
@@ -38,7 +39,6 @@
 [ext_resource type="Material" uid="uid://dfbxn1fsipsqw" path="res://gfx/bgs/1-3/wodospad_lava.tres" id="26_k2xd0"]
 [ext_resource type="Material" uid="uid://d1ugwoshsm3a6" path="res://materials/sgr_stars.tres" id="27_avpwm"]
 [ext_resource type="Material" uid="uid://coknea5vg1j00" path="res://materials/ending_particles_material.tres" id="28_pgleo"]
-[ext_resource type="Material" uid="uid://cxrjr3xisox2o" path="res://materials/sparking_star_particles.tres" id="28_sise2"]
 [ext_resource type="Material" uid="uid://dalglq4htxhci" path="res://stages/extra/click_bonus_game/objects/star_finder_cursor/particles1.tres" id="29_7wg6n"]
 [ext_resource type="Material" uid="uid://dbo8ioi41p8hl" path="res://materials/ending_particles.tres" id="29_gw2pp"]
 [ext_resource type="Material" uid="uid://d3x6etaiuyhpv" path="res://stages/extra/click_bonus_game/objects/star_finder_cursor/particles2.tres" id="30_0w5st"]
@@ -47,6 +47,8 @@
 [ext_resource type="Material" uid="uid://hn7xep1lqcsm" path="res://stages/extra/expert_mode/gfx/8_2_fx_material.tres" id="43_5xslr"]
 [ext_resource type="Material" uid="uid://cpsks8f452p3c" path="res://stages/world_8/objects/8-2_particles.tres" id="45_xncf6"]
 [ext_resource type="Material" uid="uid://b001bbchqtlhk" path="res://stages/extra/world_10/particles/snow_particle_mat.tres" id="46_xncf6"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="48_iapfs"]
+[ext_resource type="Material" uid="uid://boqbb5a1kaq2p" path="res://materials/9-3_lava_bubble_foreground.tres" id="49_3gi6k"]
 
 [sub_resource type="Gradient" id="Gradient_a34eq"]
 colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
@@ -78,6 +80,7 @@ layer = -128
 [node name="Node2D" type="Node2D" parent="."]
 z_index = -999
 position = Vector2(320, 240)
+script = ExtResource("1_3gi6k")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 material = ExtResource("1_k7qp0")
@@ -200,9 +203,6 @@ process_material = ExtResource("15_wc6yp")
 [node name="GPUParticles2D9" type="GPUParticles2D" parent="Node2D"]
 process_material = ExtResource("27_avpwm")
 
-[node name="GPUParticles2D11" type="GPUParticles2D" parent="Node2D"]
-process_material = ExtResource("28_sise2")
-
 [node name="GPUParticles2D12" type="GPUParticles2D" parent="Node2D"]
 process_material = ExtResource("29_7wg6n")
 
@@ -276,3 +276,11 @@ process_material = ExtResource("45_xncf6")
 
 [node name="BGParticles2" type="GPUParticles2D" parent="Node2D"]
 process_material = ExtResource("46_xncf6")
+
+[node name="RedMushroom" parent="Node2D" instance=ExtResource("48_iapfs")]
+process_mode = 4
+position = Vector2(4, 13)
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Node2D"]
+local_coords = true
+process_material = ExtResource("49_3gi6k")
