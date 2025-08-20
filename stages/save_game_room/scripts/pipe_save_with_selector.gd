@@ -5,13 +5,13 @@ extends "res://engine/objects/warps/pipe_in.gd"
 const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
 const message_warning_from_save: String = """warning!
 
-one or more console cheat commands have been activated in this save. this has affected your save data, and you will not be able to get achievements in this save until it is reset.
-try warping once again to proceed."""
+one or more console cheat commands have been activated in this save, affecting your save data. you won't be able to earn achievements until it is reset.
+try warping again to proceed."""
 const message_warning_forced_save: String = """warning!
 
-one or more console cheat commands or a console tweak has been activated. the "cv_forcesave" command has been activated in this session, which will make this save permanently ineligible for achievements until it is reset.
-try warping once again to proceed.
-if you think that this is a mistake, please restart the game.
+one or more console cheat commands or a console tweak has been activated. the "cv_forcesave" command is active, making this save permanently ineligible for achievements until it is reset.
+try warping again to proceed.
+if you believe this is a mistake, please restart the game.
 
 """
 
@@ -129,7 +129,7 @@ func _physics_process(delta: float) -> void:
 					addition = "\nthe game will continue saving to this save file."
 				else:
 					addition = '\n
-the game will not save anything to this save file. use the "cv_forcesave" command to allow saving for this session.\n\n'
+the game will not save, until you use the "cv_forcesave" command.\n\n'
 				message_block_2.message += addition
 			message_block_2.show_message()
 			cheat_warned = true
