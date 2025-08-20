@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=4 uid="uid://dg5tos3s3h0h"]
+[gd_scene load_steps=123 format=4 uid="uid://dg5tos3s3h0h"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_8po74"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_ar5eg"]
@@ -73,6 +73,7 @@
 [ext_resource type="Script" uid="uid://dpnc0xvkxt846" path="res://engine/objects/enemies/human_lab/container/container_area_node.gd" id="46_waf6b"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="51_uhrwn"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="52_x45kh"]
+[ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://tilesets/overworld_green/gfx/green_pipe_entering_another.png" id="74_nvhvk"]
 
 [sub_resource type="Gradient" id="Gradient_nvhvk"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.835294)
@@ -530,6 +531,12 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_waf6b"]
 size = Vector2(2482.5, 781)
+
+[sub_resource type="Gradient" id="Gradient_481au"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1ln3e"]
+gradient = SubResource("Gradient_481au")
 
 [node name="Level5-2" type="Node2D"]
 script = ExtResource("1_8po74")
@@ -2024,6 +2031,43 @@ metadata/_edit_use_anchors_ = true
 [node name="PipeIn" parent="." instance=ExtResource("51_uhrwn")]
 position = Vector2(12608, 48)
 script = ExtResource("52_x45kh")
+
+[node name="GreenPipeEnteringAnother" type="Sprite2D" parent="."]
+position = Vector2(6816, 448)
+scale = Vector2(-1, 1)
+texture = ExtResource("74_nvhvk")
+
+[node name="LavaHeat2" type="Sprite2D" parent="."]
+position = Vector2(4976, 464)
+rotation = 3.14159
+scale = Vector2(1, 4.5)
+texture = SubResource("GradientTexture2D_1ln3e")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 64)
+
+[node name="GreenPipeEnteringAnother2" type="Sprite2D" parent="."]
+position = Vector2(8896, 448)
+texture = ExtResource("74_nvhvk")
+
+[node name="LavaHeat5" type="Sprite2D" parent="."]
+position = Vector2(4992, 304)
+rotation = 3.14159
+scale = Vector2(1, 0.5)
+texture = SubResource("GradientTexture2D_1ln3e")
+
+[node name="LavaHeat3" type="Sprite2D" parent="."]
+position = Vector2(4592, 464)
+rotation = 3.14159
+scale = Vector2(-1, 4.5)
+texture = SubResource("GradientTexture2D_1ln3e")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 64)
+
+[node name="LavaHeat4" type="Sprite2D" parent="."]
+position = Vector2(4576, 304)
+rotation = 3.14159
+scale = Vector2(-1, 0.5)
+texture = SubResource("GradientTexture2D_1ln3e")
 
 [connection signal="player_enter" from="Area2D" to="GeneralMovementBody2D2" method="activate"]
 [connection signal="player_enter" from="Area2D2" to="GeneralMovementBody2D3" method="activate"]
