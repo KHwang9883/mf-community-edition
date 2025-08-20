@@ -1,7 +1,5 @@
 extends PlayerPhysicsModifier
 
-var sliding_sound_interval: SceneTreeTimer
-
 @onready var progress_bar: ProgressBar = $"../BurningSurface/ProgressBar"
 @onready var particles: CPUParticles2D = $"../BurningSurface/Particles"
 var heat: float

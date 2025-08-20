@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://byc6nhxi3as3a"]
+
+[ext_resource type="Texture2D" uid="uid://be1deqnym07i8" path="res://gfx/cutscene/smoke.png" id="1_p0blw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3wc5"]
+bg_color = Color(0, 0, 0, 0.72549)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="Gradient" id="Gradient_mxm1p"]
+offsets = PackedFloat32Array(0, 0.970199)
+colors = PackedColorArray(0.2176, 0.2176, 0.68, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xgxqh"]
+gradient = SubResource("Gradient_mxm1p")
+width = 40
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rnu55"]
+texture = SubResource("GradientTexture1D_xgxqh")
+axis_stretch_horizontal = 1
+
+[sub_resource type="Gradient" id="Gradient_xgxqh"]
+offsets = PackedFloat32Array(0.1, 0.6, 1)
+colors = PackedColorArray(0.176471, 0.176471, 0.176471, 1, 0.494118, 0.494118, 0.490196, 0.67451, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+
+[node name="BurningSurface" type="Node2D"]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0.862745)
+z_index = 55
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = 24.0
+offset_right = 20.0
+offset_bottom = 36.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_e3wc5")
+theme_override_styles/fill = SubResource("StyleBoxTexture_rnu55")
+step = 1.0
+rounded = true
+show_percentage = false
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+z_index = 5
+emitting = false
+texture = ExtResource("1_p0blw")
+lifetime = 0.6
+emission_shape = 1
+emission_sphere_radius = 16.0
+gravity = Vector2(0, -150)
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.3
+scale_amount_max = 0.5
+color_ramp = SubResource("Gradient_xgxqh")
