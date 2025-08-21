@@ -1,11 +1,10 @@
-[gd_scene load_steps=30 format=4 uid="uid://cueg4hektims0"]
+[gd_scene load_steps=28 format=4 uid="uid://cueg4hektims0"]
 
 [ext_resource type="Script" uid="uid://iendjcqnqnrm" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_q3ccw"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_booer"]
 [ext_resource type="AudioStream" uid="uid://cnn040q2lodum" path="res://music/smrpg-bowser.ogg" id="3_f3u0s"]
 [ext_resource type="AudioStream" uid="uid://dtl81bgntkqwv" path="res://music/cutscene/ending_part_1.it" id="4_brvmi"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_2bs1o"]
-[ext_resource type="Script" uid="uid://cv1j6q1os8w8f" path="res://stages/world_8/scripts/story_mode_secret_activator.gd" id="6_wnd4s"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_h7e1n"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_2vl5g"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_ljt3a"]
@@ -16,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="14_hmsxh"]
 [ext_resource type="Script" uid="uid://cunxwcc5vvgob" path="res://stages/extra/expert_mode/scripts/bowser_advance_trigger.gd" id="15_brvmi"]
 [ext_resource type="AudioStream" uid="uid://bwlhej5mao270" path="res://music/smw2-bowser.ogg" id="15_mld3i"]
-[ext_resource type="Script" uid="uid://bvmuncyek1tsx" path="res://stages/extra/expert_mode/scripts/bowser_advance_checker.gd" id="16_f3u0s"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="16_mrvsw"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="17_v5cbv"]
 [ext_resource type="PackedScene" uid="uid://bqxorfeujkfsl" path="res://stages/world_8/objects/lava_bowser_8-4.tscn" id="18_5bd8d"]
@@ -71,10 +69,7 @@ play_globally = 2
 volume_db = Array[float]([12.0])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("5_2bs1o")]
-secrets = Array[String](["story mode no hit", "story mode no death", "story mode in secret mode", "story mode no warps", "story mode beetroot"])
-
-[node name="Node" type="Node" parent="SecretUnlocker"]
-script = ExtResource("6_wnd4s")
+secrets = Array[String](["expert mode completed"])
 
 [node name="Mario" parent="." instance=ExtResource("7_h7e1n")]
 position = Vector2(96, 336)
@@ -113,18 +108,14 @@ position = Vector2(320, 224)
 
 [node name="Objects" type="Node2D" parent="."]
 
-[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser_2", "trigger_bowser") instance=ExtResource("14_hmsxh")]
+[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("14_hmsxh")]
 position = Vector2(384, 240)
 curve = SubResource("Curve2D_05e3f")
 script = ExtResource("15_brvmi")
-trigger_bowser_2 = NodePath("")
 trigger_area = Rect2(0, 0, 640, 480)
 trigger_bowser = NodePath("../Bowser")
 boss_music = ExtResource("15_mld3i")
 metadata/_edit_lock_ = true
-
-[node name="Node" type="Node" parent="BowserTrigger"]
-script = ExtResource("16_f3u0s")
 
 [node name="Bowser" parent="." instance=ExtResource("16_mrvsw")]
 position = Vector2(544, 320)
@@ -224,5 +215,3 @@ rotation = -1.5708
 scale = Vector2(1, 656)
 texture = SubResource("GradientTexture1D_8byrw")
 centered = false
-
-[connection signal="level_completed" from="." to="SecretUnlocker/Node" method="perform_checks_and_unlock"]
