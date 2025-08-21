@@ -27,6 +27,7 @@ const STIHL = preload("res://stages/extra/climbing_minigame/objects/stihl/stihl.
 const BIG_FISH_BONES = preload("res://stages/extra/climbing_minigame/objects/big_fish_bones/big_fish_bones.tscn")
 const MARIO = preload("res://stages/extra/climbing_minigame/objects/mario.tscn")
 const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/platform_path_cloud.tscn")
+#const PLATFORM_PATH_CLOUD = preload("res://engine/objects/platform/castle_platforms/long_platform.tscn")
 const BULLET_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_launcher_structure.tscn")
 const BULLET_FIRE_LAUNCHER_STRUCTURE = preload("res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_fire_launcher_structure.tscn")
 const SND_BOWSER_LAUGH = preload("res://music/climbing_minigame/snd_bowser_laugh.ogg")
@@ -191,6 +192,7 @@ func _ready() -> void:
 func setup_platform(platf: AnimatableBody2D, pos: float) -> void:
 	platf.collision_layer = 0
 	platf.position.x = pos
+	platf.add_to_group(&"kill_oob")
 	platf.reset_physics_interpolation()
 
 
@@ -245,6 +247,12 @@ func _physics_process(_delta: float) -> void:
 			start_transition()
 		else:
 			mariomarker.global_position.y = 95
+	
+	
+	for i in get_tree().get_nodes_in_group(&"kill_oob"):
+		if !is_instance_valid(i) || !i.is_inside_tree(): continue
+		if i.global_position.y > moving_group.global_position.y + 520:
+			i.queue_free()
 
 	#Data.values['miles'] = int(abs(moving_group.global_position.y))
 #
@@ -267,6 +275,8 @@ func death_sequence(body: Node2D) -> void:
 		
 	if Data.values.lives == 0:
 		body.wait_time = 2.5
+		if is_instance_valid(Audio._music_channels.get(1)):
+			Audio.stop_music_channel(1, true)
 		Data.technical_values['lavarun_difficulty'] = difficulty
 	
 		if final_cutscene:
@@ -282,10 +292,14 @@ func death_sequence(body: Node2D) -> void:
 	new_player.position = moving_group.position + Vector2(320, 160)
 	new_plat.position = moving_group.position + Vector2(320, 176)
 	new_plat.modulate.a = 0.01
+	new_plat.z_index = -1
 	Scenes.current_scene.add_child(new_player)
 	Scenes.current_scene.add_child(new_plat)
 	var tw = new_plat.create_tween()
 	tw.tween_property(new_plat, "modulate:a", 1.0, 0.25)
+	tw.tween_interval(6)
+	tw.tween_property(new_plat, "modulate:a", 0.0, 0.5)
+	tw.tween_callback(new_plat.queue_free)
 	var tw2 = body.create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 	tw2.tween_property(body, "modulate:a", 0.0, 0.5)
 	tw2.tween_callback(body.queue_free)
@@ -301,6 +315,7 @@ func create_platform() -> void:
 	var _difficult_pos := moving_group.global_position + Vector2(randi_range(150, 500), -50)
 	plati.global_position = _normal_pos if difficulty < 2 else _difficult_pos
 	Scenes.current_scene.add_child(plati)
+	plati.add_to_group(&"kill_oob")
 
 	rand_offset = randi_range(100, 180)
 	y_counter = moving_group.global_position.y
@@ -311,6 +326,10 @@ func create_platform() -> void:
 	var skulli = skulltroopa.instantiate()
 	skulli.global_position = Vector2(-32 if left_right else (640 + 32), randi_range(32, 400))
 	skulli.velocity = Vector2(1.2, 0) if left_right else Vector2(-1.2, 0)
+	var _tw = skulli.create_tween()
+	_tw.tween_interval(13.0)
+	_tw.tween_property(skulli, "modulate:a", 0.0, 0.5)
+	_tw.tween_callback(skulli.queue_free)
 	moving_group.add_child(skulli)
 
 	# coins
@@ -318,6 +337,7 @@ func create_platform() -> void:
 		var coinsi = coins.instantiate()
 		coinsi.global_position = plati.global_position - Vector2(0, 28)
 		Scenes.current_scene.add_child(coinsi)
+		coinsi.add_to_group(&"kill_oob")
 
 	# flower spawn
 	flower_counter -= 1
@@ -328,6 +348,7 @@ func create_platform() -> void:
 		floweri.appear_distance = 0
 		floweri.force_powerup_state = true
 		Scenes.current_scene.add_child(floweri)
+		Thunder.reorder_on_top_of(floweri, moving_group)
 		match difficulty:
 			3: flower_counter = 12
 			4: flower_counter = 18
