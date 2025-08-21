@@ -40,8 +40,8 @@ func _physics_process(delta: float) -> void:
 		player._physics_behavior = null
 		player._suit_behavior = null
 		player._extra_behavior = null
-		_player_z = player.z_index
-		player.z_index = -10
+		_player_z = player.sprite_container.z_index
+		player.sprite_container.z_index = -10
 		player.visible = false
 		player.warp = Player.Warp.IN
 		
@@ -89,6 +89,6 @@ func _physics_process(delta: float) -> void:
 			direction.visible = false
 	
 	if !_player_left && !overlaps_body(player):
-		player.z_index = _player_z
+		player.sprite_container.z_index = _player_z
 		_player_z = 0
 		_player_left = true
