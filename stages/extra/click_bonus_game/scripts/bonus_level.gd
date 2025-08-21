@@ -100,9 +100,10 @@ func complete() -> void:
 	var mario: Player = Thunder._current_player
 	if mario:
 		var old_mar_pos: Vector2 = mario.global_position
-		mario.reparent(_hud)
+		mario.sprite_container.reparent(_hud)
 		if mario_special_case:
 			mario.position = old_mar_pos
+		mario.sprite.play(&"jump")
 		mario.reset_physics_interpolation()
 		mario.completed = true
 		mario.gravity_scale = 0
