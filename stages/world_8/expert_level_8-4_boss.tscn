@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://cueg4hektims0"]
+[gd_scene load_steps=32 format=4 uid="uid://cueg4hektims0"]
 
 [ext_resource type="Script" uid="uid://iendjcqnqnrm" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_q3ccw"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_booer"]
@@ -16,9 +16,12 @@
 [ext_resource type="Script" uid="uid://cunxwcc5vvgob" path="res://stages/extra/expert_mode/scripts/bowser_advance_trigger.gd" id="15_brvmi"]
 [ext_resource type="AudioStream" uid="uid://bwlhej5mao270" path="res://music/smw2-bowser.ogg" id="15_mld3i"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="16_mrvsw"]
+[ext_resource type="Script" uid="uid://fhx73nu140vk" path="res://stages/world_8/scripts/expert_bowser_attack_lava.gd" id="17_brvmi"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="17_v5cbv"]
+[ext_resource type="Script" uid="uid://jl3jnd7f1jm0" path="res://engine/scripts/classes/bumping_block/static_bumping_block.gd" id="18_2bs1o"]
 [ext_resource type="PackedScene" uid="uid://bqxorfeujkfsl" path="res://stages/world_8/objects/lava_bowser_8-4.tscn" id="18_5bd8d"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_tg0ou"]
+[ext_resource type="Script" uid="uid://cjbyb2sjuikqj" path="res://stages/world_8/scripts/expert_lava_8-4_bowser.gd" id="20_f3u0s"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="20_jk6in"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="21_booer"]
 
@@ -29,6 +32,9 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -64, 0)
 }
 point_count = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnd4s"]
+size = Vector2(32, 32)
 
 [sub_resource type="Gradient" id="Gradient_8vy0w"]
 colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
@@ -85,7 +91,7 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="Layer0" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAsAAgAAAAAAAAABAAsAAgAAAAAAAAACAAsAAgAAAAAAAAADAAsAAgAAAAAAAAAEAAsAAgAAAAAAAAAFAAsAAgAAAAAAAAAGAAsAAgAAAAAAAAAHAAsAAgAAAAAAAAAIAAsAAgAAAAAAAAAJAAsAAgAAAAAAAAAKAAsAAgAAAAAAAAALAAsAAgAAAAAAAAAMAAsAAgAAAAAAAAANAAsAAgAAAAAAAAAOAAsAAgAAAAAAAAAPAAsAAgAAAAAAAAAQAAsAAgAAAAAAAAARAAsAAgAAAAAAAAASAAsAAgAAAAAAAAATAAsAAgAAAAAAAAAUAAsAAgAAAAAAAAAVAAsAAAACAAAAAAAWAAsAAAACAAAAAAAXAAsAAAACAAAAAAAYAAsAAAACAAAAAAAZAAsAAAACAAAAAAAZAAoAAAACAAAAAAAZAAkAAAACAAAAAAAZAAgAAAACAAAAAAAZAAcAAAACAAAAAAAZAAYAAAACAAAAAAAZAAUAAAACAAAAAAAZAAQAAAACAAAAAAAZAAMAAAACAAAAAAAZAAIAAAACAAAAAAAZAAEAAAACAAAAAAAZAAAAAAACAAAAAAAZAP//AAACAAAAAAAZAP7/AAACAAAAAAAZAP3/AAACAAAAAAAZAPz/AAACAAAAAAAZAPv/AAACAAAAAAAZAPr/AAACAAAAAAAZAPn/AAACAAAAAAAZAPj/AAACAAAAAAAZAPf/AAACAAAAAAAZAPb/AAACAAAAAAAZAPX/AAACAAAAAAD//wsAAgAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAABAAAAAAABAAEAAAAAAAAAAAACAAEAAAABAAAAAAADAAEAAAAAAAAAAAAEAAEAAAABAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAABAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAABAAAAAAAJAAEAAAAAAAAAAAAKAAEAAAABAAAAAAALAAEAAAAAAAAAAAAMAAEAAAABAAAAAAANAAEAAAAAAAAAAAAOAAEAAAABAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAABAAAAAAARAAEAAAAAAAAAAAASAAEAAAABAAAAAAATAAEAAAAAAAAAAAAUAAEAAAABAAAAAAAAAAAAAAAAAAAAAAABAAAAAAABAAAAAAACAAAAAAAAAAAAAAADAAAAAAABAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAABAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAABAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAABAAAAAAAKAAAAAAAAAAAAAAALAAAAAAABAAAAAAAMAAAAAAAAAAAAAAANAAAAAAABAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAABAAAAAAAQAAAAAAAAAAAAAAARAAAAAAABAAAAAAASAAAAAAAAAAAAAAATAAAAAAABAAAAAAAUAAAAAAAAAAAAAAAVAAAAAAABAAAAAAD+/wAAAAAAAAAAAAD//wAAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAsAAgAAAAAAAAABAAsAAgAAAAAAAAACAAsAAgAAAAAAAAADAAsAAgAAAAAAAAAEAAsAAgAAAAAAAAAFAAsAAgAAAAAAAAAGAAsAAgAAAAAAAAAHAAsAAgAAAAAAAAAIAAsAAgAAAAAAAAAJAAsAAgAAAAAAAAAKAAsAAgAAAAAAAAALAAsAAgAAAAAAAAAMAAsAAgAAAAAAAAANAAsAAgAAAAAAAAAOAAsAAgAAAAAAAAAPAAsAAgAAAAAAAAAQAAsAAgAAAAAAAAARAAsAAgAAAAAAAAASAAsAAgAAAAAAAAATAAsAAgAAAAAAAAAUAAsAAgAAAAAAAAAVAAsAAAACAAAAAAAWAAsAAAACAAAAAAAXAAsAAAACAAAAAAAYAAsAAAACAAAAAAAZAAsAAAACAAAAAAAZAAoAAAACAAAAAAAZAAkAAAACAAAAAAAZAAgAAAACAAAAAAAZAAcAAAACAAAAAAAZAAYAAAACAAAAAAAZAAUAAAACAAAAAAAZAAQAAAACAAAAAAAZAAMAAAACAAAAAAAZAAIAAAACAAAAAAAZAAEAAAACAAAAAAAZAAAAAAACAAAAAAAZAP//AAACAAAAAAAZAP7/AAACAAAAAAAZAP3/AAACAAAAAAAZAPz/AAACAAAAAAAZAPv/AAACAAAAAAD//wsAAgAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAABAAAAAAABAAEAAAAAAAAAAAACAAEAAAABAAAAAAADAAEAAAAAAAAAAAAEAAEAAAABAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAABAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAABAAAAAAAJAAEAAAAAAAAAAAAKAAEAAAABAAAAAAALAAEAAAAAAAAAAAAMAAEAAAABAAAAAAANAAEAAAAAAAAAAAAOAAEAAAABAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAABAAAAAAARAAEAAAAAAAAAAAASAAEAAAABAAAAAAATAAEAAAAAAAAAAAAUAAEAAAABAAAAAAAAAAAAAAAAAAAAAAABAAAAAAABAAAAAAACAAAAAAAAAAAAAAADAAAAAAABAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAABAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAABAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAABAAAAAAAKAAAAAAAAAAAAAAALAAAAAAABAAAAAAAMAAAAAAAAAAAAAAANAAAAAAABAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAABAAAAAAAQAAAAAAAAAAAAAAARAAAAAAABAAAAAAASAAAAAAAAAAAAAAATAAAAAAABAAAAAAAUAAAAAAAAAAAAAAAVAAAAAAABAAAAAAD+/wAAAAAAAAAAAAD//wAAAAABAAAAAAD+/wsAAAACAAAAAAD9/wsAAAACAAAAAAD8/wsAAAACAAAAAAD7/wsAAAACAAAAAAD6/wsAAAACAAAAAAD5/wsAAAACAAAAAAD5/woAAAACAAAAAAD5/wkAAAACAAAAAAD5/wgAAAACAAAAAAD5/wcAAAACAAAAAAD5/wYAAAACAAAAAAD5/wUAAAACAAAAAAD5/wQAAAACAAAAAAD5/wMAAAACAAAAAAD5/wIAAAACAAAAAAD5/wEAAAACAAAAAAD5/wAAAAACAAAAAAD5////AAACAAAAAAA=")
 tile_set = ExtResource("10_tx0cm")
 navigation_enabled = false
 
@@ -120,14 +126,39 @@ metadata/_edit_lock_ = true
 [node name="Bowser" parent="." instance=ExtResource("16_mrvsw")]
 position = Vector2(544, 320)
 health = 21
-status_interval = Array[float]([3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0])
-status = Array[StringName]([&"multiflames", &"hammer", &"hammer", &"hammer", &"hammer", &"post_hammer", &"flame", &"flame", &"burst", &"flame", &"flame", &"flame", &"flame", &"flame"])
+hardness = 10
+status_interval = Array[float]([3.0, 3.0, 3.0, 0.0, 0.0, 0.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0])
+status = Array[StringName]([&"multiflames", &"lava", &"flame", &"hammer", &"hammer", &"post_hammer", &"flame", &"flame", &"burst", &"flame", &"flame", &"flame", &"flame", &"flame"])
 hammer_amount = 15
 hammer_interval = 0.12
 burst_fireball_amount = 50
 finish_on_death = false
 y_offset = -52
 speed = Vector2(150, 0)
+
+[node name="attack_lava" type="Node" parent="Bowser"]
+script = ExtResource("17_brvmi")
+
+[node name="Node2D" type="Node2D" parent="Bowser"]
+position = Vector2(0, 208)
+
+[node name="StaticBody2D" type="AnimatableBody2D" parent="Bowser/Node2D"]
+position = Vector2(-16, 0)
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("18_2bs1o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bowser/Node2D/StaticBody2D"]
+shape = SubResource("RectangleShape2D_wnd4s")
+
+[node name="StaticBody2D2" type="AnimatableBody2D" parent="Bowser/Node2D"]
+position = Vector2(16, 0)
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("18_2bs1o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bowser/Node2D/StaticBody2D2"]
+shape = SubResource("RectangleShape2D_wnd4s")
 
 [node name="BowserEdge" parent="." instance=ExtResource("17_v5cbv")]
 position = Vector2(16, 112)
@@ -149,6 +180,7 @@ offset_bottom = 496.0
 
 [node name="LavaBowser" parent="." instance=ExtResource("18_5bd8d")]
 position = Vector2(16, 448)
+script = ExtResource("20_f3u0s")
 
 [node name="Node2D" type="Node2D" parent="LavaBowser"]
 script = ExtResource("19_tg0ou")
