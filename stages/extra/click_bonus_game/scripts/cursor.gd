@@ -42,7 +42,7 @@ func _input(event) -> void:
 				has_collision = true
 				i.activate()
 				break
-			if hud_find_me_star.has(i):
+			if hud_find_me_star == i:
 				has_failed = false
 		if !has_collision:
 			gpu_particles_2d.restart()
