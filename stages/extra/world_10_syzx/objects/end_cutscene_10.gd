@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 	if _destroying:
 		thwomp.speed.y += 2 + _speeding * delta
 		_speeding += delta
-		print(thwomp.speed.y)
+		#print(thwomp.speed.y)
 		if thwomp.position.y > -64 && !_small_castle_seq:
 			_small_castle_seq = true
 			brick37.bricks_break()
@@ -85,7 +85,7 @@ func _physics_process(delta: float) -> void:
 			_destroying = false
 			thwomp.speed.y = 0
 			_speeding = 0
-			await get_tree().create_timer(2.8, false, true, false).timeout
+			await get_tree().create_timer(1.6, false, true, false).timeout
 			thwomp.speed.y = 950
 			_destroying = true
 			Thunder._connect(thwomp.stun, func():
