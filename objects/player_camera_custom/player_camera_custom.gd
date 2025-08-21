@@ -36,7 +36,7 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 	player = Thunder._current_player
 	if !par is PathFollow2D && player:
 		var _prev_pos: Vector2 = global_position
-		global_position = Vector2(Thunder._current_player.global_position)
+		global_position = player.global_position.round()
 		if is_retro_scroll():
 			var scr_dir: int = retro_scroll_direction
 			if _prev_pos.x > limit_right - 320 && scr_dir == 1:
