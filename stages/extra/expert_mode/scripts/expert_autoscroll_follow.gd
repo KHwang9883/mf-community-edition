@@ -12,6 +12,7 @@ var notified = false
 @onready var right_area: Area2D = $RightArea
 @onready var left_area: Area2D = $LeftArea
 @onready var platform_path_cloud_2: PathFollow2D = $"../../PlatformPathCloud2"
+@onready var free_after_cp: Node2D = $"../../FreeAfterCP"
 
 var r_area_in: bool
 var l_area_in: bool
@@ -58,6 +59,9 @@ func _physics_process(delta: float) -> void:
 		
 		if is_instance_valid(platform_path_cloud_2):
 			platform_path_cloud_2.queue_free()
+		
+		if is_instance_valid(free_after_cp):
+			free_after_cp.queue_free()
 	
 		get_tree().create_timer(0.5, false).timeout.connect(func():
 			finish_line.position.y = 416
