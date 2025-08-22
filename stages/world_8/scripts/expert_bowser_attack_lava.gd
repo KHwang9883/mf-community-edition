@@ -11,6 +11,7 @@ extends BowserAttack
 @export var animation_pre: String = "throw_pre"
 @export var sprite_offset_x: float = 7
 
+@onready var platf: Node2D = $"../AmazingPlatf"
 
 func start_attack() -> void:
 	super()
@@ -35,6 +36,10 @@ func middle_attack() -> void:
 
 
 func end_attack() -> void:
+	var tween: Tween = create_tween()
+	tween.tween_property(platf, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(platf.set_position.bind(Vector2(0, 432)))
+	await tween.finished
 	super()
 	bowser.sprite.offset.x = 0
 	bowser.sprite.play(&"default")
