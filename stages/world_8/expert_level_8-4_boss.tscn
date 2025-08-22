@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://cueg4hektims0"]
+[gd_scene load_steps=34 format=4 uid="uid://cueg4hektims0"]
 
 [ext_resource type="Script" uid="uid://iendjcqnqnrm" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_q3ccw"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_booer"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://jl3jnd7f1jm0" path="res://engine/scripts/classes/bumping_block/static_bumping_block.gd" id="18_2bs1o"]
 [ext_resource type="PackedScene" uid="uid://bqxorfeujkfsl" path="res://stages/world_8/objects/lava_bowser_8-4.tscn" id="18_5bd8d"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_tg0ou"]
+[ext_resource type="Texture2D" uid="uid://jeknc62dc1qo" path="res://gfx/misc/amazing_bro_block.png" id="19_wnd4s"]
 [ext_resource type="Script" uid="uid://cjbyb2sjuikqj" path="res://stages/world_8/scripts/expert_lava_8-4_bowser.gd" id="20_f3u0s"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="20_jk6in"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="21_booer"]
@@ -35,6 +36,25 @@ point_count = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnd4s"]
 size = Vector2(32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7e1n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_wnd4s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_wnd4s")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]
 
 [sub_resource type="Gradient" id="Gradient_8vy0w"]
 colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
@@ -139,26 +159,38 @@ speed = Vector2(150, 0)
 [node name="attack_lava" type="Node" parent="Bowser"]
 script = ExtResource("17_brvmi")
 
-[node name="Node2D" type="Node2D" parent="Bowser"]
-position = Vector2(0, 208)
+[node name="AmazingPlatf" type="Node2D" parent="Bowser"]
+position = Vector2(0, 432)
 
-[node name="StaticBody2D" type="AnimatableBody2D" parent="Bowser/Node2D"]
+[node name="StaticBody2D" type="AnimatableBody2D" parent="Bowser/AmazingPlatf"]
 position = Vector2(-16, 0)
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("18_2bs1o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bowser/Node2D/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bowser/AmazingPlatf/StaticBody2D"]
 shape = SubResource("RectangleShape2D_wnd4s")
 
-[node name="StaticBody2D2" type="AnimatableBody2D" parent="Bowser/Node2D"]
+[node name="Sprites" type="Node2D" parent="Bowser/AmazingPlatf/StaticBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Bowser/AmazingPlatf/StaticBody2D/Sprites"]
+sprite_frames = SubResource("SpriteFrames_h7e1n")
+autoplay = "default"
+
+[node name="StaticBody2D2" type="AnimatableBody2D" parent="Bowser/AmazingPlatf"]
 position = Vector2(16, 0)
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("18_2bs1o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bowser/Node2D/StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bowser/AmazingPlatf/StaticBody2D2"]
 shape = SubResource("RectangleShape2D_wnd4s")
+
+[node name="Sprites" type="Node2D" parent="Bowser/AmazingPlatf/StaticBody2D2"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Bowser/AmazingPlatf/StaticBody2D2/Sprites"]
+sprite_frames = SubResource("SpriteFrames_h7e1n")
+autoplay = "default"
 
 [node name="BowserEdge" parent="." instance=ExtResource("17_v5cbv")]
 position = Vector2(16, 112)
