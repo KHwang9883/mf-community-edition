@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://d0pqs8aq5ax4c"]
+
+[ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_6n7if"]
+[ext_resource type="Texture2D" uid="uid://dtlhaf5h68hta" path="res://tilesets/tanks_burning/gfx/damaged_pipe.png" id="2_5mn2b"]
+[ext_resource type="Texture2D" uid="uid://c3dbw8idnf4sx" path="res://tilesets/tanks_burning/gfx/pipe_hot.png" id="3_rnfc3"]
+[ext_resource type="AudioStream" uid="uid://ctfpepe74akjs" path="res://engine/objects/bumping_blocks/_sounds/break.wav" id="4_gfe1o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ny1tc"]
+atlas = ExtResource("3_rnfc3")
+region = Rect2(0, 32, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isv8m"]
+atlas = ExtResource("3_rnfc3")
+region = Rect2(64, 64, 64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ad6om"]
+size = Vector2(64, 80)
+
+[node name="FallingPipe" type="CharacterBody2D"]
+collision_layer = 48
+collision_mask = 128
+script = ExtResource("1_6n7if")
+turn_sprite = false
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("2_5mn2b")
+
+[node name="fdsfdsfdssdf" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(0, 48)
+texture = SubResource("AtlasTexture_ny1tc")
+
+[node name="cover" type="Sprite2D" parent="Sprite2D"]
+texture = SubResource("AtlasTexture_isv8m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_ad6om")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gfe1o")
+bus = &"Sound"
+
+[connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="queue_free"]

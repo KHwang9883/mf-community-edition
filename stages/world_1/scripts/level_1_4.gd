@@ -41,11 +41,13 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	falling_below_y_offset = 666
 	
 	var _voices = CharacterManager.get_voice_line("fall")
-	Audio.play_sound(_voices[randi_range(0, len(_voices) - 1)], Thunder._current_player, true, { ignore_pause = true })
-	Thunder._current_player.gravity_scale = 0.1
-	if Thunder._current_player.speed.y < 0:
-		Thunder._current_player.speed.y = 0
-	Thunder._current_player.debug_god = true
+	var pl := Thunder._current_player
+	if pl:
+		Audio.play_sound(_voices[randi_range(0, len(_voices) - 1)], pl, true, { ignore_pause = true })
+		pl.gravity_scale = 0.1
+		if pl.speed.y < 0:
+			pl.speed.y = 0
+		pl.debug_god = true
 	
 	await get_tree().create_timer(3.0, false, false).timeout
 	
