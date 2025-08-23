@@ -20,7 +20,7 @@ func _ready() -> void:
 	await get_tree().create_timer(2.3, false, false, true).timeout
 	print("go")
 	label_2.activate()
-	path_follow_2d.speed = 125
+	path_follow_2d.speed = 100
 
 const JUMP = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 const EXPLOSION_TANK = preload("res://stages/cutscenes/ending/part_1/scripts/explosion_tank.tscn")
@@ -36,10 +36,11 @@ const CRUSH2 = preload("res://sfx/IntroCastleCrush2.wav")
 
 @onready var fire_markers: Node2D = $FireMarkers
 @onready var marker_konchik: Marker2D = $FireMarkers/MarkerKonch
-@onready var breakage: GravityBody2D = $"breakage/GravityBody2D"
+#@onready var breakage: GravityBody2D = $"breakage/GravityBody2D"
 @onready var brick_generators = $BrickGenerators
 @onready var scripted_1: Node2D = $Scripted1
 @onready var sprite_2d: Sprite2D = $Scripted1/Sprite2D
+@onready var scripted_1_col: CollisionShape2D = $Scripted1/Area2D/CollisionShape2D
 
 var step: int
 var counter: float = -1
@@ -50,7 +51,38 @@ func _physics_process(delta: float) -> void:
 	var _break = CharacterManager.get_sound_replace(BREAK, BREAK, "block_break", false)
 	
 	match step:
-		0 when path_follow_2d.progress > 704:
+		0 when path_follow_2d.progress > 640:
+			step += 1
+			camera_2d.shock_smooth(6, 10)
+			Audio.play_sound(_break, scripted_1)
+			Audio.play_1d_sound(STUN)
+			sprite_2d.visible = false
+			var tile = DAMAGED_TILE.instantiate()
+			tile.position = sprite_2d.global_position
+			tile.speed = Vector2(randf_range(-3, 3), -randf_range(3, 6))
+			Scenes.current_scene.add_child(tile)
+			var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE).set_parallel()
+			tw.tween_property(scripted_1, "position", Vector2(6608, 270), 1.5)
+			tw.tween_property(scripted_1, "rotation_degrees", 30, 1.5)
+			var tw2 = create_tween()
+			tw2.tween_interval(1.2)
+			tw2.tween_callback(scripted_1_col.set_deferred.bind("disabled", false))
+			tw2.tween_interval(0.25)
+			tw2.tween_callback(func():
+				for i in 3:
+					var tile2 = DAMAGED_TILE.instantiate()
+					tile2.position = Vector2(6736, 352)
+					tile2.speed = Vector2(randf_range(-3, 3), -randf_range(5, 8))
+					Scenes.current_scene.add_child(tile2)
+				var expl = EXPLOSION_TANK.instantiate()
+				expl.position = Vector2(6736, 336)
+				Scenes.current_scene.add_child(expl)
+				camera_2d.shock_smooth(4, 10)
+			)
+			tw2.tween_interval(0.15)
+			tw2.tween_callback(scripted_1_col.set_deferred.bind("disabled", true))
+		
+		1 when path_follow_2d.progress > 800:
 			step += 1
 			camera_2d.shock_smooth(10, 20)
 			Audio.play_sound(bump, marker_konchik)
@@ -72,14 +104,7 @@ func _physics_process(delta: float) -> void:
 				kufon.vel_set(-Vector2(50, 50) * randf_range(5, 10))
 			)
 			tw.tween_interval(0.13)
-		1 when path_follow_2d.progress > 768:
-			step += 1
-			camera_2d.shock_smooth(6, 10)
-			Audio.play_sound(_break, scripted_1)
-			sprite_2d.visible = false
-			var tile = DAMAGED_TILE.instantiate()
-			tile.position = sprite_2d.global_position
-			Scenes.current_scene.add_child(tile)
+			
 			#var expl = EXPLOSION_TANK.instantiate()
 			#expl.position = sprite_2d.global_position
 			#Scenes.current_scene.add_child(expl)

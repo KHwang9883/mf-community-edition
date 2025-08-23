@@ -1,6 +1,6 @@
 extends BowserAttack
 
-## Bowser's hammer attack
+const GOOMBA_BRO = preload("res://objects/goomba_bro/goomba_bro.tscn")
 
 @export var wait_time: float = 1.5
 @export_group("Movement")

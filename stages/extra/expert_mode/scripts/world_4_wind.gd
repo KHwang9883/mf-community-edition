@@ -3,7 +3,7 @@ extends Node
 @export var max_pos: float = 10000
 @export var speed: float = 50
 
-var player
+var player: Player
 var stopped: bool
 
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
