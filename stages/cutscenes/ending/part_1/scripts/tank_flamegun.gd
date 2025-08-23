@@ -6,6 +6,7 @@ extends Area2D
 const EXPLOSION_TANK = preload("res://stages/cutscenes/ending/part_1/scripts/explosion_tank.tscn")
 
 func _ready():
+	z_index = 0
 	area_entered.connect(func(area):
 		if eba.visible: return
 		if area.is_in_group("cam_manager"):
@@ -15,6 +16,7 @@ func _ready():
 var speed: Vector2 = Vector2.ZERO
 
 func deploy():
+	z_index = 4
 	speed = Vector2(-3, -7)
 	Audio.play_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"), self)
 	

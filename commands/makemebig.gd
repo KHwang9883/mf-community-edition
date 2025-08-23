@@ -53,6 +53,7 @@ func patch_level() -> void:
 	Thunder._connect(pl.collided_floor, _on_collided_floor)
 	Thunder._connect(pl.collided_ceiling, _on_collided_ceiling)
 	Thunder._connect(pl.get_tree().physics_frame, _physics_frame)
+	Thunder._connect(pl.died_with_body, _on_died)
 
 func _on_starman_killed(what: Node, result: Dictionary) -> void:
 	if !Thunder._current_player.is_starman():
@@ -175,3 +176,8 @@ func tile_break(what: Node2D, pos: Vector2, texture: Texture2D = null) -> void:
 		)
 		
 	Data.add_score(10)
+
+
+func _on_died(body: Node2D) -> void:
+	if !body: return
+	body.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
