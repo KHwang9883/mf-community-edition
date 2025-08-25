@@ -6,6 +6,7 @@ const CASTLE_SMOKE = preload("res://stages/world_1/scripts/castle_smoke.tscn")
 const WIND = preload("res://sfx/wind.ogg")
 const FLY = preload("res://sfx/fly.wav")
 
+@onready var parallax_layer: ParallaxLayer = $"../ParallaxBackground2/ParallaxLayer"
 @onready var wind_eff = $"../ParallaxBackground2/ParallaxLayer/WindEff"
 @onready var player: Player = Thunder._current_player
 @onready var castle = $"../Castle"
@@ -96,11 +97,9 @@ func _physics_process(delta: float) -> void:
 		_finished = 1000
 		Scenes.current_scene.end()
 	
-	wind_eff.global_position.x -= (300 + _spid) * delta
+	parallax_layer.motion_offset.x -= (300 + _spid) * delta
 	if _spidding:
 		_spid += 300 * delta
-	if wind_eff.global_position.x < 0 - 640 * 2:
-		wind_eff.global_position.x += 640 * 2
 	
 	if _shaking:
 		castle.global_position = init_pos + Vector2(randi_range(-2, 2), randi_range(0, 2))
