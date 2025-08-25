@@ -1,4 +1,4 @@
-[gd_scene load_steps=160 format=4 uid="uid://dcgw7ivluvpsx"]
+[gd_scene load_steps=162 format=4 uid="uid://dcgw7ivluvpsx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_g6ctx"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_liom3"]
@@ -56,6 +56,7 @@
 [ext_resource type="PackedScene" uid="uid://de5li21b1adqi" path="res://tilesets/tanks/scenes/wheel_right.tscn" id="50_x5alx"]
 [ext_resource type="PackedScene" uid="uid://c3epwkigl3r8i" path="res://tilesets/tanks/scenes/wheel_left.tscn" id="51_xlsio"]
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="52_a0wa4"]
+[ext_resource type="PackedScene" uid="uid://d3wd3j0m0dek8" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower_forced.tscn" id="52_p7qnf"]
 [ext_resource type="PackedScene" uid="uid://cwyl4gv0plser" path="res://tilesets/tanks/scenes/wheel_center.tscn" id="52_sdhfj"]
 [ext_resource type="Texture2D" uid="uid://dltqgwojd0ywp" path="res://engine/tilesets/signs/sign2.png" id="54_2hkii"]
 [ext_resource type="PackedScene" uid="uid://hspseuntgfb6" path="res://objects/otherworld/missile_bullet_launcher-invisible.tscn" id="56_j4koo"]
@@ -71,6 +72,7 @@
 [ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="68_dr2po"]
 [ext_resource type="PackedScene" uid="uid://ooj2vullj5a5" path="res://stages/save_game_room/objects/pipe_in_placeholder.tscn" id="69_f17jj"]
 [ext_resource type="Script" uid="uid://b0wmqj4tu7rjm" path="res://stages/extra/expert_mode/otherworld/scripts/free_bounty_once.gd" id="70_lyyth"]
+[ext_resource type="Texture2D" uid="uid://nucurgv7nem3" path="res://engine/objects/signs/arrowsignL.png" id="73_i5ghj"]
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://engine/objects/bumping_blocks/message_block/message_block.tscn" id="74_lyyth"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_7bwdq"]
@@ -526,11 +528,11 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_xwaiq"]
+[sub_resource type="Resource" id="Resource_656p1"]
 resource_local_to_scene = true
 script = ExtResource("39_aa5jw")
-creation_fallback_node = ExtResource("42_axlsd")
-creation_nodepack = ExtResource("43_e30y0")
+creation_fallback_node = ExtResource("52_p7qnf")
+creation_nodepack = ExtResource("52_p7qnf")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -2207,7 +2209,7 @@ result = SubResource("Resource_de8m0")
 
 [node name="QuestionBlock9" parent="Objects" instance=ExtResource("47_4d4jn")]
 position = Vector2(9360, 368)
-result = SubResource("Resource_xwaiq")
+result = SubResource("Resource_656p1")
 
 [node name="QuestionBlock" parent="Objects" instance=ExtResource("47_4d4jn")]
 position = Vector2(4784, 272)
@@ -2717,6 +2719,7 @@ collision_mask = 64
 script = ExtResource("65_jeopp")
 deceleration = 400.0
 sprite = NodePath("AnimatedSprite2D")
+visible_on_screen_notifier = NodePath("")
 gravity_scale = 0.5
 max_falling_speed = 500.0
 metadata/_custom_type_script = "uid://ng3vu4qwreu5"
@@ -3102,6 +3105,11 @@ result = SubResource("Resource_1tg1v")
 [node name="QuestionBlock56" parent="." instance=ExtResource("47_4d4jn")]
 position = Vector2(8112, 816)
 result = SubResource("Resource_nr5uc")
+
+[node name="ArrowsignL" type="Sprite2D" parent="."]
+z_index = -20
+position = Vector2(7408, 744)
+texture = ExtResource("73_i5ghj")
 
 [connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="warp_ended" from="miscellaneous/snickers" to="miscellaneous/Node" method="activate"]
