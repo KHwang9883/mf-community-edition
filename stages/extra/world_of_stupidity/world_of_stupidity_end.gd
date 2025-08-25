@@ -9,6 +9,7 @@ func activate() -> void:
 	if !pl: return
 	pl.death_wait_time = 7.0
 	pl.death_jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
+	pl.set_meta(&"ignore_loludied", true)
 	Thunder._connect(pl.died, _on_death)
 
 

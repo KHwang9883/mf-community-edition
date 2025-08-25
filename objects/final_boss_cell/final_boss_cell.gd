@@ -6,12 +6,12 @@ const JUMP = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 const FINAL_BOSS_CELL_PALOCHKA = preload("res://objects/final_boss_cell/final_boss_cell_palochka.tscn")
 
-@onready var cell = $Cell
-@onready var marker_2d = $Marker2D
-@onready var cell_peach = $CellPeach
+@onready var cell: Sprite2D = $Cell
+@onready var marker_2d: Marker2D = $Marker2D
+@onready var cell_peach: AnimatedSprite2D = $CellPeach
 @onready var marker_mario_destroyer_pos = $MarkerMarioDestroyerPos
-@onready var world = $World
-@onready var animation_player = $AnimationPlayer
+@onready var world: Label = $World
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @onready var mario: Player = Thunder._current_player
 
@@ -126,6 +126,12 @@ func cutscene() -> void:
 
 
 func _fade_help() -> void:
+	world.reparent(Scenes.current_scene)
+	world.reset_physics_interpolation()
+	world.modulate.r = modulate.r
+	world.modulate.g = modulate.g
+	world.modulate.b = modulate.b
+	
 	var tw = create_tween()
 	tw.tween_property(world, "modulate:a", 0, 0.5)
 

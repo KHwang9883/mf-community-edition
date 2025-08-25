@@ -30,11 +30,13 @@ func patch_mario() -> void:
 	
 	if player && activated:
 		player.death_check_for_lives = false
-		if player.death_stop_music && !fast_respawn:
+		if player.death_stop_music && !fast_respawn && !player.has_meta(&"ignore_loludied"):
 			player.death_wait_time = 9999999
 			player.died.connect(loludied)
 
 func loludied() -> void:
+	if Thunder._current_player && Thunder._current_player.has_meta(&"ignore_loludied"):
+		return
 	Data.values.lives -= 1
 	Scenes.custom_scenes.pause.open_blocked = true
 	Loludied.get_child(0).activate(wait_time)
