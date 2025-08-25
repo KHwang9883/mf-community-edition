@@ -1,10 +1,12 @@
-[gd_scene load_steps=36 format=3 uid="uid://dt2ini001fvgd"]
+[gd_scene load_steps=39 format=3 uid="uid://dt2ini001fvgd"]
 
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="1_3mnhj"]
 [ext_resource type="Texture2D" uid="uid://de2epwq5u7i6v" path="res://objects/extra_enemies/roto_snowcover/roto_snowcover.png" id="2_fgso7"]
 [ext_resource type="Script" uid="uid://f7pun5l021gd" path="res://objects/extra_enemies/roto_snowcover/roto_snow_cover.gd" id="3_4niql"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="3_qrhtv"]
 [ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="3_rm111"]
+[ext_resource type="PackedScene" uid="uid://bbmf88bb8sjw" path="res://engine/objects/effects/smoke/smoke.tscn" id="5_13ta3"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_yf78f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_788tj"]
 atlas = ExtResource("2_fgso7")
@@ -209,6 +211,20 @@ fill_to = Vector2(0.75, 0.75)
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.54604, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Resource" id="Resource_qs4si"]
+script = ExtResource("6_yf78f")
+creation_nodepack = ExtResource("5_13ta3")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 2
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="RotoSnowCover" instance=ExtResource("1_3mnhj")]
 frequency = 100.0
 metadata/_edit_pinned_properties_ = [&"frequency"]
@@ -238,6 +254,13 @@ blend_mode = 0
 [node name="EnemyAttacked" parent="." index="2"]
 stomping_enabled = false
 stomping_hurtable = false
+killing_immune = {
+"boomerang": false,
+"hammer": false,
+"starman": true
+}
+killing_creation = SubResource("Resource_qs4si")
+frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_enabled", &"stomping_hurtable"]
 
 [node name="SnowCover" type="Node" parent="." index="3"]
