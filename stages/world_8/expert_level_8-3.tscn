@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=4 uid="uid://ce1bd5fchi0lr"]
+[gd_scene load_steps=95 format=4 uid="uid://ce1bd5fchi0lr"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_maoyc"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ttody"]
@@ -49,7 +49,6 @@
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="44_udt36"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="45_ly3a5"]
 [ext_resource type="PackedScene" uid="uid://dvmhwh1khygq6" path="res://engine/objects/bumping_blocks/brick/brick_grey.tscn" id="47_bbcpc"]
-[ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="48_x5ogy"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://tilesets/underground/gfx/purple_pipe.png" id="52_fdxwi"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="53_e6ny4"]
 
@@ -124,6 +123,21 @@ size = Vector2(32, 448)
 script = ExtResource("24_7ghvk")
 creation_fallback_node = ExtResource("22_a8vqf")
 creation_nodepack = ExtResource("23_uiwhp")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_mj82y"]
+resource_local_to_scene = true
+script = ExtResource("24_7ghvk")
+creation_nodepack = ExtResource("25_e7yay")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -307,8 +321,8 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 gradient = SubResource("Gradient_kyugb")
 width = 112
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm7f7"]
-size = Vector2(992, 9552)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fdxwi"]
+normal = Vector2(0, 1)
 
 [sub_resource type="Resource" id="Resource_v1n70"]
 script = ExtResource("24_7ghvk")
@@ -316,21 +330,6 @@ creation_nodepack = ExtResource("20_v0jio")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 0
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="Resource" id="Resource_rd6uv"]
-resource_local_to_scene = true
-script = ExtResource("24_7ghvk")
-creation_nodepack = ExtResource("25_e7yay")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0
@@ -377,8 +376,13 @@ volume_db = Array[float]([-3.0])
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("2_y61n0")]
 
 [node name="SecretUnlockerOther2" parent="." instance=ExtResource("8_mj82y")]
-you_found_text = "the last otherworld level (8)! It is hard"
+you_found_text = "the last otherworld level (8)!
+
+Warning: This leads to an alternative ending"
 progress_by_id = "8-3"
+
+[node name="MessageBlockChoicer" parent="SecretUnlockerOther2" index="0"]
+box_size = Vector2(320, 144)
 
 [node name="Mario" parent="." instance=ExtResource("8_8l1nh")]
 position = Vector2(304, 240)
@@ -1135,6 +1139,10 @@ position = Vector2(464, -3120)
 position = Vector2(112, 144)
 result = SubResource("Resource_tjcsc")
 
+[node name="QuestionBlock28" parent="Objects" instance=ExtResource("21_8jppn")]
+position = Vector2(176, -8944)
+result = SubResource("Resource_mj82y")
+
 [node name="QuestionBlock27" parent="Objects" instance=ExtResource("21_8jppn")]
 position = Vector2(592, -4880)
 result = SubResource("Resource_tjcsc")
@@ -1646,9 +1654,8 @@ script = ExtResource("30_ekk71")
 [node name="AudioAreaCave" parent="." instance=ExtResource("44_udt36")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
-visible = false
-position = Vector2(320, -4104)
-shape = SubResource("RectangleShape2D_fm7f7")
+position = Vector2(0, 704)
+shape = SubResource("WorldBoundaryShape2D_fdxwi")
 
 [node name="HarderDesignNode" parent="." instance=ExtResource("45_ly3a5")]
 
@@ -1680,10 +1687,6 @@ result = SubResource("Resource_v1n70")
 position = Vector2(400, -3152)
 result = SubResource("Resource_v1n70")
 
-[node name="QuestionBlockLife" parent="." instance=ExtResource("48_x5ogy")]
-position = Vector2(176, -8944)
-result = SubResource("Resource_rd6uv")
-
 [node name="PipeIn6" parent="." instance=ExtResource("41_f0eyb")]
 position = Vector2(224, -7984)
 script = ExtResource("53_e6ny4")
@@ -1704,3 +1707,5 @@ region_rect = Rect2(0, 0, 64, 64)
 [connection signal="warp_started" from="PipeIn" to="Node2D" method="koniec_gry"]
 [connection signal="tried_to_enter" from="PipeIn6" to="SecretUnlockerOther2" method="tried_to_warp"]
 [connection signal="warp_started" from="PipeIn6" to="HUD/Label" method="activate"]
+
+[editable path="SecretUnlockerOther2"]

@@ -6,7 +6,12 @@ extends BowserAttack
 @export var lock_direction: bool = false
 @export var burst_attack_offset_from_screen_border: float = 80
 
-@onready var platf: Node2D = $"../AmazingPlatf"
+@onready var platf: Node2D = $"../../AmazingPlatf"
+
+func _physics_process(delta: float) -> void:
+	if !platf || !bowser: return
+	if !platf.is_inside_tree(): return
+	platf.global_position.x = bowser.global_position.x
 
 func start_attack() -> void:
 	super()
@@ -35,12 +40,11 @@ func start_attack() -> void:
 func middle_attack() -> void:
 	super()
 	bowser.jump(bowser.jumping_speed + 100)
-	await get_tree().create_timer(0.3, false, true, false).timeout
+	await get_tree().create_timer(0.25, false, true, false).timeout
 	# Tween for processing attack
 	var tween: Tween = create_tween().set_trans(Tween.TRANS_SINE)
-	tween.tween_interval(0.3)
 	tween.tween_property(platf, "modulate:a", 1.0, 0.3).from(0.0)
-	tween.chain().tween_property(platf, "position:y", 48, 1.0).set_ease(Tween.EASE_IN)
+	tween.chain().tween_property(platf, "global_position:y", 176, 1.0).set_ease(Tween.EASE_OUT)
 	
 	# Tween to end the process and restore data
 	tween.tween_callback(end_attack)
