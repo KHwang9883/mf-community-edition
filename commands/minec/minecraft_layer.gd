@@ -139,7 +139,13 @@ func _input(event: InputEvent) -> void:
 		reserved_inventory = _prev_inv
 		#print(_prev_inv)
 		update_hotbar()
-		
+	
+	if !(event is InputEventKey && event.is_pressed() && !event.is_echo()):
+		return
+	if event.keycode > 48 && event.keycode <= 57:
+		switch_selected(wrapi(event.keycode - 49, 0, 9))
+
+
 func switch_selected(to: int) -> void:
 	selected = clampi(to, 0, 8)
 	selector.position.x = -2 + (selected * 40)
