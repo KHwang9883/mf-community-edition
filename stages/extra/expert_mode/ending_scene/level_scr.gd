@@ -4,8 +4,15 @@ extends Node2D
 @onready var label: Label = $"../HUD/Label"
 @onready var label_2: Label = $"../HUD/Label2"
 @onready var destruction: AudioStreamPlayer = $"../Destruction"
+var bump
+var _break
 
 func _ready() -> void:
+	# setup sounds
+	bump = CharacterManager.get_sound_replace(BUMP, BUMP, "block_bump", false)
+	_break = CharacterManager.get_sound_replace(BREAK, BREAK, "block_break", false)
+	
+	# initial start delay
 	path_follow_2d.speed = 0
 	var lvl: Level = Scenes.current_scene
 	while is_instance_valid(lvl) && !lvl._is_stage_ready:
@@ -31,6 +38,7 @@ const STUN = preload("res://engine/objects/projectiles/sounds/stun.wav")
 const BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
 const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 const CRUSH2 = preload("res://sfx/IntroCastleCrush2.wav")
+const ENDING_ANIM_3 = preload("res://sfx/ending_anim_3.ogg")
 
 @onready var mario: Player = Thunder._current_player
 
@@ -44,13 +52,13 @@ const CRUSH2 = preload("res://sfx/IntroCastleCrush2.wav")
 
 var step: int
 var counter: float = -1
+
 func _physics_process(delta: float) -> void:
 	var camera_2d: PlayerCamera2D = Thunder._current_camera
 	if !camera_2d: return
-	var bump = CharacterManager.get_sound_replace(BUMP, BUMP, "block_bump", false)
-	var _break = CharacterManager.get_sound_replace(BREAK, BREAK, "block_break", false)
 	
 	match step:
+		# first brick fall and break
 		0 when path_follow_2d.progress > 640:
 			step += 1
 			camera_2d.shock_smooth(6, 10)
@@ -61,6 +69,7 @@ func _physics_process(delta: float) -> void:
 			tile.position = sprite_2d.global_position
 			tile.speed = Vector2(randf_range(-3, 3), -randf_range(3, 6))
 			Scenes.current_scene.add_child(tile)
+			tile.reset_physics_interpolation()
 			var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE).set_parallel()
 			tw.tween_property(scripted_1, "position", Vector2(6608, 270), 1.5)
 			tw.tween_property(scripted_1, "rotation_degrees", 30, 1.5)
@@ -74,14 +83,16 @@ func _physics_process(delta: float) -> void:
 					tile2.position = Vector2(6736, 352)
 					tile2.speed = Vector2(randf_range(-3, 3), -randf_range(5, 8))
 					Scenes.current_scene.add_child(tile2)
+					tile2.reset_physics_interpolation()
 				var expl = EXPLOSION_TANK.instantiate()
 				expl.position = Vector2(6736, 336)
 				Scenes.current_scene.add_child(expl)
+				expl.reset_physics_interpolation()
 				camera_2d.shock_smooth(4, 10)
 			)
 			tw2.tween_interval(0.15)
 			tw2.tween_callback(scripted_1_col.set_deferred.bind("disabled", true))
-		
+		# final bowser tank explosion sequence
 		1 when path_follow_2d.progress > 800:
 			step += 1
 			camera_2d.shock_smooth(10, 20)
@@ -93,17 +104,28 @@ func _physics_process(delta: float) -> void:
 				var beam = BEAM.instantiate()
 				Scenes.current_scene.add_child(beam)
 				beam.position = camera_2d.get_screen_center_position() + Vector2(400, randf_range(-128, 128))
-				beam.reset_physics_interpolation()
 				beam.speed = -Vector2.ONE * randf_range(5, 10)
+				beam.reset_physics_interpolation()
 			var tw = create_tween().set_loops(10)
 			tw.tween_callback(func():
 				var kufon = KUFON.instantiate()
 				Scenes.current_scene.add_child(kufon)
 				kufon.position = camera_2d.get_screen_center_position() + Vector2(400, randf_range(-128, 128))
-				kufon.reset_physics_interpolation()
 				kufon.vel_set(-Vector2(50, 50) * randf_range(5, 10))
+				kufon.reset_physics_interpolation()
 			)
 			tw.tween_interval(0.13)
+		# second brick fall and break, chains fall
+		2 when path_follow_2d.progress > 2784:
+			step += 1
+			$AnimationPlayer.play(&"scripted2")
+			Audio.play_1d_sound(CRUSH2, false)
+			camera_2d.shock_smooth(4, 10)
+		3 when path_follow_2d.progress > 3520:
+			step += 1
+			Audio.play_1d_sound(CRUSH2, false)
+			camera_2d.shock_smooth(4, 10)
+			
 			
 			#var expl = EXPLOSION_TANK.instantiate()
 			#expl.position = sprite_2d.global_position
@@ -148,3 +170,35 @@ func _physics_process(delta: float) -> void:
 				#_expl.position.y = 48
 				#svo.add_child(_expl)
 			#, CONNECT_ONE_SHOT)
+
+@onready var chains: Node2D = $Scripted2/Chains
+
+func scr2_chain_fall() -> void:
+	var camera_2d: PlayerCamera2D = Thunder._current_camera
+
+	Audio.play_1d_sound(_break)
+	Audio.play_1d_sound(ENDING_ANIM_3, false)
+	var children := chains.get_children()
+	for i in chains.get_child_count():
+		if i < 5:
+			children[i].queue_free()
+			var expl = EXPLOSION_TANK.instantiate()
+			expl.position = Vector2(6736, 336)
+			Scenes.current_scene.add_child(expl)
+			expl.reset_physics_interpolation()
+			if Thunder._current_camera:
+				camera_2d.shock_smooth(4, 10)
+			continue
+		for _j in 4:
+			await get_tree().physics_frame
+		Audio.play_1d_sound(ENDING_ANIM_3, false, {volume = -5})
+		children[i].activate()
+
+func scr2_end() -> void:
+	Audio.play_1d_sound(_break)
+	for i in 4:
+		var tile2 = DAMAGED_TILE.instantiate()
+		tile2.position = Vector2(4640 - (i * 16), 400)
+		tile2.speed = Vector2(randf_range(-3, 3), -randf_range(6, 9))
+		Scenes.current_scene.add_child(tile2)
+		tile2.reset_physics_interpolation()
