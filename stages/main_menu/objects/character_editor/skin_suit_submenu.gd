@@ -107,10 +107,11 @@ func create_tweak_selection(tweak) -> void:
 		_float_tweak.get_node("Label2").text = str(int(get_tweak_value(tweak)))
 		_float_tweak.tweak_name = tweak
 		_float_tweak.add_to_group(&"_submenu_skin_suit_tweak")
-		_float_tweak.spin_box.step = 1
-		_float_tweak.spin_box.min_value = -1
-		_float_tweak.spin_box.custom_arrow_step = 1
 		move_to.add_child(_float_tweak)
+		if _float_tweak.get(&"spin_box"):
+			_float_tweak.spin_box.step = 1
+			_float_tweak.spin_box.min_value = -1
+			_float_tweak.spin_box.custom_arrow_step = 1
 		if tweak in tweak_descriptions:
 			if tweak_descriptions[tweak] is String:
 				_float_tweak.tweak_description_text = tweak_descriptions[tweak]
