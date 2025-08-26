@@ -1,12 +1,12 @@
 extends Area2D
 
+@export var damaged_tile = preload("res://stages/cutscenes/ending/part_1/scripts/damaged_tile.tscn")
 @export var destroy_on_cam_touch: bool = true
 @export var min_speed := Vector2(-3, -5)
 @export var max_speed := Vector2(3, -12)
 @onready var sprite: Sprite2D = $Sprite2D
 
 const EXPLOSION_TANK = preload("res://stages/cutscenes/ending/part_1/scripts/explosion_tank.tscn")
-const DAMAGED_TILE = preload("res://stages/cutscenes/ending/part_1/scripts/damaged_tile.tscn")
 
 func _ready():
 	if destroy_on_cam_touch:
@@ -21,9 +21,11 @@ func deploy_and_destroy() -> void:
 	queue_free()
 
 func deploy():
-	var inst = DAMAGED_TILE.instantiate()
+	var inst = damaged_tile.instantiate()
 	inst.texture = sprite.texture
 	inst.position = global_position
+	inst.region_enabled = sprite.region_enabled
+	inst.region_rect = sprite.region_rect
 	inst.reset_physics_interpolation()
 	inst.speed = Vector2(randf_range(min_speed.x, max_speed.x), randf_range(min_speed.y, max_speed.y))
 	Scenes.current_scene.add_child(inst)
