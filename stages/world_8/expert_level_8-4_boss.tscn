@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=4 uid="uid://cueg4hektims0"]
+[gd_scene load_steps=89 format=4 uid="uid://cueg4hektims0"]
 
 [ext_resource type="Script" uid="uid://iendjcqnqnrm" path="res://stages/world_8/scripts/level_8-4_boss_level.gd" id="1_q3ccw"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_booer"]
@@ -16,16 +16,13 @@
 [ext_resource type="PackedScene" uid="uid://d2bajdy6e54hb" path="res://objects/final_boss_cell/final_boss_cell.tscn" id="13_yi32i"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="14_hmsxh"]
 [ext_resource type="Script" uid="uid://cunxwcc5vvgob" path="res://stages/extra/expert_mode/scripts/bowser_advance_trigger.gd" id="15_brvmi"]
+[ext_resource type="Script" uid="uid://dbkciqq0v08le" path="res://stages/extra/expert_mode/scripts/final_boss_cell_exp.gd" id="15_igud2"]
 [ext_resource type="AudioStream" uid="uid://bwlhej5mao270" path="res://music/smw2-bowser.ogg" id="15_mld3i"]
-[ext_resource type="Script" uid="uid://cqrle108cqk6p" path="res://engine/objects/bosses/bowser/bowser.gd" id="16_u7oiy"]
 [ext_resource type="Script" uid="uid://cj8fmu7ak820a" path="res://stages/extra/expert_mode/scripts/final_bowser_attack_goombabro.gd" id="17_2vl5g"]
 [ext_resource type="Script" uid="uid://fhx73nu140vk" path="res://stages/extra/expert_mode/scripts/final_bowser_attack_lava.gd" id="17_brvmi"]
-[ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="17_jmbxn"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="17_v5cbv"]
-[ext_resource type="Script" uid="uid://jl3jnd7f1jm0" path="res://engine/scripts/classes/bumping_block/static_bumping_block.gd" id="18_2bs1o"]
-[ext_resource type="Resource" uid="uid://b4t8dw4oie34e" path="res://engine/objects/bosses/bowser/attacks/prefabs/hammer.tres" id="18_vsqa4"]
-[ext_resource type="Resource" uid="uid://bbss8l3pxvrjn" path="res://engine/objects/bosses/bowser/attacks/prefabs/burst.tres" id="19_flo6w"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_tg0ou"]
+[ext_resource type="Script" uid="uid://bg2xv5dkdw0qr" path="res://stages/extra/expert_mode/scripts/final_bowser.gd" id="19_vsqa4"]
 [ext_resource type="Texture2D" uid="uid://jeknc62dc1qo" path="res://gfx/misc/amazing_bro_block.png" id="19_wnd4s"]
 [ext_resource type="Script" uid="uid://bd8lyhmdqx8um" path="res://engine/objects/bosses/bowser/bowser_body.gd" id="20_fc8v3"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="20_jk6in"]
@@ -47,6 +44,7 @@
 [ext_resource type="Script" uid="uid://d3obpxfm534u4" path="res://stages/extra/expert_mode/scripts/final_attack_platfstart.gd" id="37_jmbxn"]
 [ext_resource type="Script" uid="uid://cgmap40q44t3x" path="res://stages/extra/expert_mode/scripts/final_attack_bobomb.gd" id="38_fc8v3"]
 [ext_resource type="Script" uid="uid://djmqefy4bcjqa" path="res://stages/extra/expert_mode/scripts/final_attack_platfend.gd" id="38_vsqa4"]
+[ext_resource type="Script" uid="uid://bjya8r4kp7g7d" path="res://stages/extra/expert_mode/scripts/final_amazing_platform.gd" id="42_igud2"]
 [ext_resource type="Material" uid="uid://sbymk46jn3sg" path="res://engine/objects/fluid/textures/lava_material.tres" id="45_vsqa4"]
 [ext_resource type="PackedScene" uid="uid://ce40twtgpwpra" path="res://stages/extra/expert_mode/objects/8_3_lava/lava_patch.tscn" id="46_flo6w"]
 
@@ -519,6 +517,7 @@ metadata/_edit_lock_ = true
 modulate = Color(0.5, 0.36, 0.36, 1)
 z_index = -1
 position = Vector2(320, 224)
+script = ExtResource("15_igud2")
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -538,16 +537,14 @@ collision_mask = 32
 floor_constant_speed = true
 floor_max_angle = 0.802851
 floor_snap_length = 12.0
-script = ExtResource("16_u7oiy")
+script = ExtResource("19_vsqa4")
 health = 21
 hardness = 10
-status_interval = Array[float]([1.0, 0.0, 1.0, 0.0, 0.0, 2.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0])
-status = Array[StringName]([&"multiflames", &"platfstart", &"goombabro", &"goombabro", &"flame", &"goombabro", &"flame", &"lava", &"platfend", &"hammer", &"hammer", &"post_hammer", &"flame", &"burst", &"flame"])
-flame = ExtResource("17_jmbxn")
-hammer = ExtResource("18_vsqa4")
+invincible_duration = 3.0
+status_interval = Array[float]([1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 3.0, 0.0, 0.0, 2.0, 0.0, 0.0, 1.0, 1.0, 1.0])
+status = Array[StringName]([&"multiflames", &"platfstart", &"goombabro", &"flame", &"goombabro", &"goombabro", &"flame", &"lava", &"platfend", &"hammer", &"hammer", &"post_hammer", &"platfstart", &"lava", &"platfend", &"flame", &"burst", &"flame"])
 hammer_amount = 15
 hammer_interval = 0.12
-burst_fireball = ExtResource("19_flo6w")
 burst_fireball_amount = 50
 finish_on_death = false
 y_offset = -52
@@ -602,7 +599,8 @@ offset_right = 64.0
 offset_bottom = 74.0
 theme_override_constants/line_spacing = -4
 text = "t: %6.2f
-run: %s, lup: %d"
+run: %s, lup: %d
+spd: %.1f"
 
 [node name="PosFlame" type="Marker2D" parent="Bowser"]
 visible = false
@@ -629,6 +627,8 @@ script = ExtResource("33_grs7d")
 
 [node name="attack_burst" type="Node" parent="Bowser"]
 script = ExtResource("34_tw71y")
+burst_delay = 2.0
+burst_fire_duration = 3.0
 
 [node name="attack_goombabro" type="Node" parent="Bowser"]
 script = ExtResource("17_2vl5g")
@@ -650,35 +650,35 @@ script = ExtResource("38_vsqa4")
 [node name="AmazingPlatf" type="Node2D" parent="."]
 position = Vector2(544, 592)
 
-[node name="StaticBody2D" type="AnimatableBody2D" parent="AmazingPlatf"]
+[node name="Body1" type="AnimatableBody2D" parent="AmazingPlatf"]
 position = Vector2(-16, 0)
 collision_layer = 48
 collision_mask = 0
 sync_to_physics = false
-script = ExtResource("18_2bs1o")
+script = ExtResource("42_igud2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AmazingPlatf/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AmazingPlatf/Body1"]
 shape = SubResource("RectangleShape2D_wnd4s")
 
-[node name="Sprites" type="Node2D" parent="AmazingPlatf/StaticBody2D"]
+[node name="Sprites" type="Node2D" parent="AmazingPlatf/Body1"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AmazingPlatf/StaticBody2D/Sprites"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AmazingPlatf/Body1/Sprites"]
 sprite_frames = SubResource("SpriteFrames_h7e1n")
 autoplay = "default"
 
-[node name="StaticBody2D2" type="AnimatableBody2D" parent="AmazingPlatf"]
+[node name="Body2" type="AnimatableBody2D" parent="AmazingPlatf"]
 position = Vector2(16, 0)
 collision_layer = 48
 collision_mask = 0
 sync_to_physics = false
-script = ExtResource("18_2bs1o")
+script = ExtResource("42_igud2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AmazingPlatf/StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AmazingPlatf/Body2"]
 shape = SubResource("RectangleShape2D_wnd4s")
 
-[node name="Sprites" type="Node2D" parent="AmazingPlatf/StaticBody2D2"]
+[node name="Sprites" type="Node2D" parent="AmazingPlatf/Body2"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AmazingPlatf/StaticBody2D2/Sprites"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AmazingPlatf/Body2/Sprites"]
 sprite_frames = SubResource("SpriteFrames_h7e1n")
 autoplay = "default"
 

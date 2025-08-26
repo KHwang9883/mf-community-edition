@@ -16,6 +16,7 @@ const FINAL_BOSS_CELL_PALOCHKA = preload("res://objects/final_boss_cell/final_bo
 @onready var mario: Player = Thunder._current_player
 
 var amount_counter = 0
+var max_item_count: int = 4
 
 var _player_speed: float = 0.0
 var _moving: bool = false
@@ -52,7 +53,7 @@ func _creation_mushroom() -> void:
 			hasFlower = true
 			break
 	
-	if !hasMushroom && !hasFlower && Thunder._current_player_state.type == PlayerSuit.Type.SMALL && amount_counter < 4:
+	if !hasMushroom && !hasFlower && Thunder._current_player_state.type == PlayerSuit.Type.SMALL && amount_counter < max_item_count:
 		cell_peach.animation = 'throw'
 		
 		var mushroom = RED_MUSHROOM.instantiate()
@@ -82,7 +83,7 @@ func _creation_flower() -> void:
 		if i.name.begins_with('FireFlower'):
 			hasFlower = true
 	
-	if !hasFlower && Thunder._current_player_state.type == PlayerSuit.Type.SUPER && amount_counter < 4:
+	if !hasFlower && Thunder._current_player_state.type == PlayerSuit.Type.SUPER && amount_counter < max_item_count:
 		cell_peach.animation = 'throw'
 		
 		var flower = FIRE_FLOWER.instantiate()
