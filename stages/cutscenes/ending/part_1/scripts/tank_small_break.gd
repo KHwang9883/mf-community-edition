@@ -1,12 +1,12 @@
 extends Node2D
 
 signal got_broken
+@export var damaged_tile = preload("res://stages/cutscenes/ending/part_1/scripts/damaged_tile.tscn")
 @export_enum("middle", "left", "right") var damage_sprite: int = 0
 @export var min_delay: int = 1
 @export var max_delay: int = 3
 @onready var sprite: AnimatedSprite2D = $Sprite
 
-const DAMAGED_TILE = preload("res://stages/cutscenes/ending/part_1/scripts/damaged_tile.tscn")
 
 func _ready() -> void:
 	sprite.animation = "default"
@@ -14,7 +14,7 @@ func _ready() -> void:
 func _on_visible_on_screen_enabler_2d_screen_entered():
 	await get_tree().create_timer(randi_range(min_delay, max_delay), false).timeout
 	
-	var inst = DAMAGED_TILE.instantiate()
+	var inst = damaged_tile.instantiate()
 	inst.position = global_position
 	inst.reset_physics_interpolation()
 	inst.speed = Vector2(randf_range(-3, 3), randf_range(-5, -12))
