@@ -32,6 +32,7 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export var allow_selecting_worlds: bool = false
 @export var allow_selecting_completed_levels: bool = false
 @export var can_frog_challenge: bool = false
+@export var show_kevin_not_tested_warning: bool = false
 
 var deletion_progress: float
 var is_empty: bool
@@ -40,6 +41,7 @@ var is_blocked: bool
 var cheat_warned: bool
 var frog_asked: bool
 var _tweak: bool
+var kevin_not_tested_asked: bool
 
 var _star_world: bool
 var _star_sel_world: int
@@ -52,6 +54,7 @@ var _star_sel_level: int
 @onready var message_block_2: AnimatableBody2D = %MessageBlock2
 @onready var message_block_choicer: AnimatableBody2D = %MessageBlockChoicer
 @onready var message_warning: String = message_block_2.message
+@onready var message_expert_kevin: AnimatableBody2D = %MessageExpertKevin
 var faster_deletion_tw: bool
 
 signal save_deleted
