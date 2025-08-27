@@ -152,9 +152,10 @@ func _update_reset_labels() -> void:
 		#reset_node.unlock.visible = _star_world
 	reset_node.unlock2.visible = _star_world
 	
-	if no_secrets_label: return
 	reset_node.secrets.visible = true
-	if !secret_name: return
+	if no_secrets_label || !secret_name:
+		reset_node.secrets.visible = false
+		return
 	var secret = SecretsManager.get_secret(secret_name)
 	if !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret):
 		reset_node.secrets.text = "level locked! find a passage in expert mode worlds!"

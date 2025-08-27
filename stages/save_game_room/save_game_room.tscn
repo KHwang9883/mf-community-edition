@@ -1662,6 +1662,7 @@ set_data_to_profile = ""
 allow_selecting_worlds = false
 allow_selecting_completed_levels = false
 can_frog_challenge = true
+show_kevin_not_tested_warning = null
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/cutscenes/starting/starting.tscn"
@@ -1740,6 +1741,7 @@ set_data_to_profile = ""
 allow_selecting_worlds = false
 allow_selecting_completed_levels = false
 can_frog_challenge = true
+show_kevin_not_tested_warning = null
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/cutscenes/starting/starting.tscn"
@@ -1818,6 +1820,7 @@ set_data_to_profile = ""
 allow_selecting_worlds = false
 allow_selecting_completed_levels = false
 can_frog_challenge = true
+show_kevin_not_tested_warning = null
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://stages/cutscenes/starting/starting.tscn"
@@ -2705,6 +2708,7 @@ set_data_to_profile = "mario_forever_expert"
 allow_selecting_worlds = false
 allow_selecting_completed_levels = false
 can_frog_challenge = false
+show_kevin_not_tested_warning = true
 warping_editor_display_path = false
 warp_to = NodePath("../../PipeOut")
 warp_to_scene = "res://stages/extra/expert_mode/advance_edition_title.tscn"
@@ -2780,6 +2784,7 @@ set_data_to_profile = "mario_forever_expert"
 allow_selecting_worlds = false
 allow_selecting_completed_levels = false
 can_frog_challenge = false
+show_kevin_not_tested_warning = true
 warping_editor_display_path = false
 warp_to = NodePath("../../PipeOut")
 warp_to_scene = "res://stages/extra/expert_mode/advance_edition_title.tscn"
@@ -2855,6 +2860,7 @@ set_data_to_profile = "mario_forever_expert"
 allow_selecting_worlds = false
 allow_selecting_completed_levels = false
 can_frog_challenge = false
+show_kevin_not_tested_warning = true
 warping_editor_display_path = false
 warp_to = NodePath("../../PipeOut")
 warp_to_scene = "res://stages/extra/expert_mode/advance_edition_title.tscn"
@@ -3327,6 +3333,36 @@ position = Vector2(-192, -32)
 
 [node name="PlatformPath3" parent="ScriptedEvents/AllAchievements2" instance=ExtResource("63_qpnqr")]
 position = Vector2(96, -32)
+
+[node name="Sign4" type="Sprite2D" parent="ScriptedEvents/AllAchievements2"]
+z_index = -10
+position = Vector2(-992, 49)
+texture = ExtResource("65_65wpm")
+centered = false
+
+[node name="Label" type="Label" parent="ScriptedEvents/AllAchievements2/Sign4"]
+offset_right = 138.0
+offset_bottom = 51.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("64_d5rth")
+theme_override_font_sizes/font_size = 12
+text = "frog suit
+is unlocked!!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Node2D" parent="ScriptedEvents/AllAchievements2/Sign4"]
+script = ExtResource("10_cgryk")
+amplitude = Vector2(1.25, 0)
+frequency = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ScriptedEvents/AllAchievements2/Sign4/Sprite2D"]
+position = Vector2(143, 24)
+texture = ExtResource("67_sjdmy")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -4321,6 +4357,7 @@ position = Vector2(112, 608)
 message = "Would you like to start the Frog Challenge?"
 
 [node name="MessageExpertKevin" parent="." instance=ExtResource("115_nqbov")]
+unique_name_in_owner = true
 position = Vector2(144, 608)
 message = "Expert mode with Kevin has not been tested, so completing it is not guaranteed. You might get stuck on some level.
 Try warping again to continue anyway."
@@ -5400,7 +5437,8 @@ texture = ExtResource("63_nbacx")
 centered = false
 
 [node name="Label" type="Label" parent="Scenery/SignAdvanceEdition"]
-offset_right = 109.0
+offset_left = 1.0
+offset_right = 110.0
 offset_bottom = 51.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)
 theme_override_constants/line_spacing = 0
