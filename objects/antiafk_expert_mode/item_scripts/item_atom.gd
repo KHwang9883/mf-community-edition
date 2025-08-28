@@ -10,6 +10,7 @@ func activate() -> bool:
 			if i.belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
 				continue
 			i.queue_free()
+			worked = true
 			continue
 		if !i.get(&"_center"): continue
 		if !Thunder.view.is_getting_closer(i._center, 32):
