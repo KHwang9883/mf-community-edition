@@ -42,6 +42,9 @@ func middle_attack() -> void:
 			var bobomb = BOB_OMB_INSTANTIATER.instantiate()
 			bobomb.get_child(0).self_ignite_after_sec = 1.5
 			bobomb.get_child(0).wait_for_explosion_for_sec = 2.0
+			bobomb.speed_x = 200
+			bobomb.speed_y = -400
+			bobomb.speed_x_go_to = 125
 			bobomb.get_child(0).force_direction = bowser.facing
 			bobomb.position = pos_bobomb.global_position
 			bowser.add_sibling(bobomb)

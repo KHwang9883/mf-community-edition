@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=4 uid="uid://6ou70vxm0of6"]
+[gd_scene load_steps=67 format=4 uid="uid://6ou70vxm0of6"]
 
 [ext_resource type="PackedScene" uid="uid://bgdaesvf0ofqu" path="res://stages/world_1/level_1-2.tscn" id="1_6g7en"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_a6rri"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="16_fggo5"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="19_5hsbg"]
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://objects/blue_blocks/Blue Coin Question Block.tscn" id="19_a6rri"]
+[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="25_rj8xs"]
 
 [sub_resource type="Resource" id="Resource_tscwq"]
 resource_local_to_scene = true
@@ -432,11 +433,10 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_uxy8q"]
+[sub_resource type="Resource" id="Resource_f1tqt"]
 resource_local_to_scene = true
 script = ExtResource("5_626js")
-creation_fallback_node = ExtResource("3_kqvsa")
-creation_nodepack = ExtResource("4_8qrvw")
+creation_nodepack = ExtResource("9_vruuk")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -447,7 +447,6 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
-metadata/_custom_type_script = "uid://chvjy6okoognf"
 
 [sub_resource type="Resource" id="Resource_hy0y1"]
 resource_local_to_scene = true
@@ -465,10 +464,27 @@ visi_y_sort_enabled = false
 custom_vars = {}
 metadata/_custom_type_script = "uid://chvjy6okoognf"
 
-[sub_resource type="Resource" id="Resource_yk4wh"]
+[sub_resource type="Resource" id="Resource_pjwhv"]
 resource_local_to_scene = true
 script = ExtResource("5_626js")
-creation_nodepack = ExtResource("7_7kiqw")
+creation_nodepack = ExtResource("9_vruuk")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+metadata/_custom_type_script = "uid://chvjy6okoognf"
+
+[sub_resource type="Resource" id="Resource_uxy8q"]
+resource_local_to_scene = true
+script = ExtResource("5_626js")
+creation_fallback_node = ExtResource("3_kqvsa")
+creation_nodepack = ExtResource("4_8qrvw")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
@@ -826,14 +842,19 @@ result = SubResource("Resource_fcakl")
 result = SubResource("Resource_smv4h")
 
 [node name="QuestionBlock30" parent="." index="114"]
-result = SubResource("Resource_uxy8q")
+result = SubResource("Resource_f1tqt")
 
 [node name="QuestionBlock45" parent="." index="115"]
 position = Vector2(1552, 1536)
 result = SubResource("Resource_hy0y1")
 
 [node name="QuestionBlock46" parent="." index="116"]
-result = SubResource("Resource_yk4wh")
+result = SubResource("Resource_pjwhv")
+
+[node name="Brick28" parent="." index="120"]
+result_counter_value = 1.0
+max_items = 1
+result = SubResource("Resource_uxy8q")
 
 [node name="KoopaRed3" parent="." index="143" instance=ExtResource("9_gk61t")]
 position = Vector2(6192, 1360)
@@ -1108,6 +1129,15 @@ initially_visible_and_solid = false
 position = Vector2(-240, 1232)
 result = SubResource("Resource_efi8b")
 initially_visible_and_solid = false
+
+[node name="LavaBubbles" parent="." index="193" instance=ExtResource("25_rj8xs")]
+position = Vector2(3904, 1424)
+
+[node name="LavaBubbles2" parent="." index="194" instance=ExtResource("25_rj8xs")]
+position = Vector2(5184, 1424)
+
+[node name="LavaBubbles3" parent="." index="195" instance=ExtResource("25_rj8xs")]
+position = Vector2(5792, 1424)
 
 [connection signal="warp_started" from="PipeIn5" to="HUD/HardcoreWarp" method="activate"]
 [connection signal="warp_started" from="PipeIn5" to="SecretUnlockerOther" method="progress_secret" binds= [0]]
