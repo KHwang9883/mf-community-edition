@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=73 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" uid="uid://dukosa3hw8lff" path="res://stages/save_game_room/scripts/restore_tweaks_from_minix.gd" id="1_0nl34"]
 [ext_resource type="Script" uid="uid://d2esh46nc5aqc" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
@@ -53,6 +53,12 @@
 [ext_resource type="Texture2D" uid="uid://dphjpmu2xobjk" path="res://objects/revamped_level_warning/textures/12321.png" id="48_bj1et"]
 [ext_resource type="Texture2D" uid="uid://fwa07n7kaesp" path="res://stages/main_menu/textures/update_now.png" id="50_npgmd"]
 [ext_resource type="Script" uid="uid://boeqlf5i7xnmx" path="res://stages/main_menu/scripts/update_modal_sel.gd" id="51_bj1et"]
+[ext_resource type="Texture2D" uid="uid://ds6tn401tb2cp" path="res://stages/main_menu/textures/menu_community.png" id="54_iowah"]
+[ext_resource type="Script" uid="uid://cob00h1m67uij" path="res://stages/main_menu/scripts/website_sel.gd" id="55_03i18"]
+[ext_resource type="Texture2D" uid="uid://dxnhqp8pgba0f" path="res://stages/main_menu/textures/menu_link.png" id="56_h74ns"]
+[ext_resource type="Texture2D" uid="uid://cao0jvdq3cxj8" path="res://stages/main_menu/textures/menu_discord.png" id="57_102uj"]
+[ext_resource type="Script" uid="uid://bf4h7qed2u3p2" path="res://stages/main_menu/scripts/community_back_sel.gd" id="58_03i18"]
+[ext_resource type="Texture2D" uid="uid://dhvd84i8sw52e" path="res://stages/main_menu/textures/community_title.png" id="58_ryex0"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -119,11 +125,11 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
@@ -150,6 +156,18 @@ _data = {
 &"fade": SubResource("Animation_5mfmq"),
 &"init": SubResource("Animation_agpdy")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnkn0"]
+atlas = ExtResource("54_iowah")
+region = Rect2(0, 52, 84, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chcfq"]
+atlas = ExtResource("54_iowah")
+region = Rect2(0, 26, 142, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iowah"]
+atlas = ExtResource("54_iowah")
+region = Rect2(85, 52, 70, 26)
 
 [node name="MainMenu" type="Control"]
 physics_interpolation_mode = 0
@@ -592,8 +610,188 @@ libraries = {
 }
 autoplay = "RESET"
 
+[node name="CommunityModal" type="CanvasLayer" parent="."]
+layer = 126
+
+[node name="Control" type="Control" parent="CommunityModal"]
+physics_interpolation_mode = 1
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CommunityModal/Control"]
+modulate = Color(1, 1, 1, 0.8)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_7o3d3")
+
+[node name="LabelMisterEarl" parent="CommunityModal/Control" instance=ExtResource("43_qdsgx")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 96.0
+offset_right = 0.0
+offset_bottom = -320.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "Explore the mario forever community!"
+vertical_alignment = 1
+
+[node name="Menuitemsbg2" type="NinePatchRect" parent="CommunityModal/Control"]
+modulate = Color(1, 1, 1, 0.501961)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -40.0
+offset_right = 96.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_umesd")
+region_rect = Rect2(0, 0, 254, 194)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CommunityModal/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.542
+anchor_right = 0.5
+anchor_bottom = 0.542
+offset_left = -96.0
+offset_top = -50.16
+offset_right = 96.0
+offset_bottom = 81.84
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("44_agpdy")
+focused = false
+prev_screen_node_path = NodePath("Back")
+
+[node name="Forum" type="TextureRect" parent="CommunityModal/Control/VBoxContainer"]
+physics_interpolation_mode = 0
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_bnkn0")
+stretch_mode = 3
+script = ExtResource("55_03i18")
+link = "https://marioforever.space"
+
+[node name="TextureRect2" type="TextureRect" parent="CommunityModal/Control/VBoxContainer/Forum"]
+physics_interpolation_mode = 0
+layout_mode = 0
+offset_left = 132.0
+offset_top = -2.0
+offset_right = 164.0
+offset_bottom = 30.0
+texture = ExtResource("56_h74ns")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Discord" type="TextureRect" parent="CommunityModal/Control/VBoxContainer"]
+physics_interpolation_mode = 0
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("57_102uj")
+stretch_mode = 3
+script = ExtResource("55_03i18")
+link = "https://discord.gg/VwgV6GmwXv"
+
+[node name="TextureRect2" type="TextureRect" parent="CommunityModal/Control/VBoxContainer/Discord"]
+physics_interpolation_mode = 0
+layout_mode = 0
+offset_left = 142.0
+offset_top = -2.0
+offset_right = 174.0
+offset_bottom = 30.0
+texture = ExtResource("56_h74ns")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Fangames" type="TextureRect" parent="CommunityModal/Control/VBoxContainer"]
+physics_interpolation_mode = 0
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_chcfq")
+stretch_mode = 3
+script = ExtResource("55_03i18")
+link = "https://download.marioforever.net/mf-games.html"
+
+[node name="TextureRect2" type="TextureRect" parent="CommunityModal/Control/VBoxContainer/Fangames"]
+physics_interpolation_mode = 0
+layout_mode = 0
+offset_left = 161.0
+offset_top = -2.0
+offset_right = 193.0
+offset_bottom = 30.0
+texture = ExtResource("56_h74ns")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Back" type="TextureRect" parent="CommunityModal/Control/VBoxContainer"]
+physics_interpolation_mode = 0
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_iowah")
+stretch_mode = 3
+script = ExtResource("58_03i18")
+
+[node name="Node" type="Node" parent="CommunityModal/Control"]
+script = ExtResource("25_vf7gm")
+menu_items_controller_path = NodePath("../VBoxContainer")
+
+[node name="Selector" type="Node2D" parent="CommunityModal/Control"]
+script = ExtResource("5_i43cl")
+smooth_speed = 0.4
+position_padding = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CommunityModal/Control/Selector"]
+sprite_frames = ExtResource("30_ccf2u")
+script = ExtResource("31_uoq2x")
+
+[node name="GamePaused" type="TextureRect" parent="CommunityModal/Control"]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 56.0
+offset_right = 320.0
+offset_bottom = 96.0
+grow_horizontal = 2
+texture = ExtResource("58_ryex0")
+stretch_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CommunityModal/Control"]
+libraries = {
+&"": SubResource("AnimationLibrary_1uype")
+}
+autoplay = "RESET"
+
 [connection signal="menu_initiated" from="Camera" to="General/NewTweaks" method="_on_menu_initiated"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Node" method="handle_selection"]
 [connection signal="selected" from="Menu/MainMenuControls" to="Menu/Selector" method="handle_selection"]
 [connection signal="selected" from="UpdateConfirmModal/Control/VBoxContainer" to="UpdateConfirmModal/Control/Node" method="handle_selection"]
 [connection signal="selected" from="UpdateConfirmModal/Control/VBoxContainer" to="UpdateConfirmModal/Control/Selector" method="handle_selection"]
+[connection signal="selected" from="CommunityModal/Control/VBoxContainer" to="CommunityModal/Control/Node" method="handle_selection"]
+[connection signal="selected" from="CommunityModal/Control/VBoxContainer" to="CommunityModal/Control/Selector" method="handle_selection"]
