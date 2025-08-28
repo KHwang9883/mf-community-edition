@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=4 uid="uid://dg5tos3s3h0h"]
+[gd_scene load_steps=127 format=4 uid="uid://dg5tos3s3h0h"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_8po74"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_ar5eg"]
@@ -74,6 +74,9 @@
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="51_uhrwn"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="52_x45kh"]
 [ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://tilesets/overworld_green/gfx/green_pipe_entering_another.png" id="74_nvhvk"]
+[ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="75_481au"]
+[ext_resource type="Texture2D" uid="uid://bgvmhpdvcdrpp" path="res://gfx/sign/sign_minix_welcome.png" id="76_rghmy"]
+[ext_resource type="Texture2D" uid="uid://cyimmxnyciuj2" path="res://gfx/sign/ArrowsHardcoreSigns.png" id="77_pjclh"]
 
 [sub_resource type="Gradient" id="Gradient_nvhvk"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.835294)
@@ -537,6 +540,10 @@ colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_1ln3e"]
 gradient = SubResource("Gradient_481au")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vycf6"]
+atlas = ExtResource("77_pjclh")
+region = Rect2(4, 8, 38, 38)
 
 [node name="Level5-2" type="Node2D"]
 script = ExtResource("1_8po74")
@@ -1850,7 +1857,7 @@ result = SubResource("Resource_2gspw")
 initially_visible_and_solid = false
 
 [node name="QuestionBlockPSwitch4" parent="." instance=ExtResource("36_8nt4a")]
-position = Vector2(11344, 48)
+position = Vector2(11344, 80)
 result = SubResource("Resource_qy6bx")
 initially_visible_and_solid = false
 
@@ -2068,6 +2075,56 @@ position = Vector2(4576, 304)
 rotation = 3.14159
 scale = Vector2(-1, 0.5)
 texture = SubResource("GradientTexture2D_1ln3e")
+
+[node name="Sign3" type="Sprite2D" parent="."]
+z_index = -12
+texture_filter = 2
+position = Vector2(7006, 391)
+texture = ExtResource("21_qgamn")
+
+[node name="Label" type="Label" parent="Sign3"]
+offset_left = -60.0
+offset_top = -56.0
+offset_right = 49.0
+offset_bottom = -5.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("75_481au")
+theme_override_font_sizes/font_size = 13
+text = "keep the
+mushroom!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="SignMinixWelcome" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(11136, 87)
+texture = ExtResource("76_rghmy")
+
+[node name="LabelMisterEarl" parent="SignMinixWelcome" instance=ExtResource("22_66x6f")]
+offset_left = -48.0
+offset_top = -22.0
+offset_right = 80.0
+offset_bottom = 23.0
+theme_override_constants/line_spacing = 1
+text = "usefull block
+fore free
+check it out"
+
+[node name="ArrowLeft" type="Sprite2D" parent="SignMinixWelcome"]
+position = Vector2(-58, 1)
+texture = SubResource("AtlasTexture_vycf6")
+
+[node name="SignLeg" type="Sprite2D" parent="SignMinixWelcome"]
+position = Vector2(-48, -56)
+texture = ExtResource("45_waf6b")
+
+[node name="SignLeg2" type="Sprite2D" parent="SignMinixWelcome"]
+position = Vector2(48, -56)
+texture = ExtResource("45_waf6b")
 
 [connection signal="player_enter" from="Area2D" to="GeneralMovementBody2D2" method="activate"]
 [connection signal="player_enter" from="Area2D2" to="GeneralMovementBody2D3" method="activate"]

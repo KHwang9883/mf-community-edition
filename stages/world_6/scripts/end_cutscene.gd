@@ -43,8 +43,8 @@ func _ready() -> void:
 	#Thunder._current_camera.shock(2, Vector2(4, 4))
 	await get_tree().create_timer(3, false, false, true).timeout
 	Audio.play_1d_sound(WCIAGATOR)
-	var _sfx = CharacterManager.get_sound_replace(BE_HAPPY, BE_HAPPY, "bowser_be_happy", false)
-	Audio.play_1d_sound(_sfx)
+	#var _sfx = CharacterManager.get_sound_replace(BE_HAPPY, BE_HAPPY, "bowser_be_happy", false)
+	Audio.play_1d_sound(BE_HAPPY)
 	tw.stop()
 	castle.offset = Vector2.ZERO
 	tw = create_tween().set_trans(Tween.TRANS_SPRING)
@@ -52,7 +52,7 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(2, false).timeout
 	
-	_sfx = CharacterManager.get_sound_replace(PIPEC, PIPEC, "pipe_cutscene", false)
+	var _sfx = CharacterManager.get_sound_replace(PIPEC, PIPEC, "pipe_cutscene", false)
 	Audio.play_1d_sound(_sfx)
 	plushy_sun.self_modulate.a = 0
 	sunklass.visible = true

@@ -412,6 +412,7 @@ play_globally = 2
 volume_db = Array[float]([0.0])
 
 [node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("4_flo6w")]
+item_store_enabled = false
 
 [node name="Mario" parent="." instance=ExtResource("7_h7e1n")]
 position = Vector2(96, 336)
@@ -757,12 +758,23 @@ position = Vector2(96, -48)
 trigger_area = Rect2(-100, -32, 200, 1)
 waiting_time = 0.5
 rising_speed = 80.0
+metadata/_edit_group_ = true
+
+[node name="EnemyAttacked" parent="Thwomp/Body" index="1"]
+killing_enabled = false
 
 [node name="Thwomp2" parent="." instance=ExtResource("27_ljt3a")]
 position = Vector2(544, -48)
 trigger_area = Rect2(-100, -32, 200, 1)
 waiting_time = 0.5
 rising_speed = 80.0
+metadata/_edit_group_ = true
+
+[node name="EnemyAttacked" parent="Thwomp2/Body" index="1"]
+killing_enabled = false
 
 [connection signal="killed_succeeded_by" from="Bowser/Body/EnemyAttacked" to="Bowser" method="bullet_hurt"]
 [connection signal="stomped_succeeded" from="Bowser/Body/EnemyAttacked" to="Bowser" method="hurt"]
+
+[editable path="Thwomp"]
+[editable path="Thwomp2"]
