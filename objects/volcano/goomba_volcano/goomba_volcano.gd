@@ -9,8 +9,8 @@ const GOOMBA_VOLCANO_DEAD = preload("res://objects/volcano/goomba_volcano/goomba
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 
 
-func stomp() -> void:
-	if hp > 0:
+func stomp(attacker: StringName = &"") -> void:
+	if hp > 0 && (attacker == &"fireball" || !attacker):
 		hp -= 1
 		sprite_node.animation = "damaged"
 		_shake()
