@@ -118,7 +118,7 @@ func _physics_process(delta: float) -> void:
 	
 	if (
 		!is_blocked && (cheat_warned || (!console_enabled && !save_is_cheated)) &&
-		(!show_kevin_not_tested_warning || (show_kevin_not_tested_warning && kevin_not_tested_asked && KevinGlobal.activated))
+		(!show_kevin_not_tested_warning || !KevinGlobal.activated || (show_kevin_not_tested_warning && kevin_not_tested_asked && KevinGlobal.activated))
 	):
 		_warp_initiator()
 	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
