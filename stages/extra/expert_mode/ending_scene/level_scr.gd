@@ -61,6 +61,7 @@ const FLAMEGUN_EXPERT = preload("res://stages/extra/expert_mode/ending_scene/bre
 var step: int
 var counter: float = -1
 var upal: bool
+var mario_running: bool
 
 func _physics_process(delta: float) -> void:
 	flow_intros(delta)
@@ -112,10 +113,20 @@ func _physics_process(delta: float) -> void:
 
 
 @onready var color_rect: ColorRect = $"../HUD/ColorRect"
+var _player_speed: float
 
 func flow_intros(delta: float) -> void:
 	var camera_2d: PlayerCamera2D = Thunder._current_camera
 	if !camera_2d: return
+	if mario_running:
+		var pl := Thunder._current_player
+		if !pl: return
+		if _player_speed > 0:
+			_player_speed = move_toward(_player_speed, -325, delta * 300)
+		else:
+			pl.direction = -1
+		_player_speed = move_toward(_player_speed, -325, delta * 300)
+		pl.speed.x = _player_speed
 	match step:
 		# first brick fall and break
 		0 when path_follow_2d.progress > 640:
@@ -277,8 +288,14 @@ func flow_intros(delta: float) -> void:
 			
 			Scenes.current_scene.disable_pause_menu = true
 			Thunder._current_hud.pause_timer()
-			if Thunder._current_player:
-				Thunder._current_player.completed = true
+			var pl := Thunder._current_player
+			if !pl: return
+			pl.completed = true
+			pl.left_right = -1
+			pl.running = true
+			_player_speed = pl.speed.x
+			mario_running = true
+			finish()
 			
 			await get_tree().create_timer(2.5, false).timeout
 			if is_instance_valid(music): music.stop()
@@ -374,3 +391,13 @@ func scr4() -> void:
 
 func scr4_end() -> void:
 	Audio.play_1d_sound(bump, false)
+
+func finish() -> void:
+	Scenes.current_scene.get_node("SecretUnlocker").unlock_secret()
+	ProfileManager.current_profile.data.star_world = true
+	ProfileManager.save_current_profile()
+	if (
+		ProfileManager.profiles.has("suspended") &&
+		ProfileManager.profiles.suspended.data.saved_profile == ProfileManager.current_profile.name
+	):
+		ProfileManager.delete_profile(&"suspended")

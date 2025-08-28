@@ -7,6 +7,8 @@ extends BowserAttack
 @export var burst_attack_offset_from_screen_border: float = 80
 
 @onready var platf: Node2D = $"../../AmazingPlatf"
+@onready var body_1: AnimatableBody2D = $"../../AmazingPlatf/Body1"
+@onready var body_2: AnimatableBody2D = $"../../AmazingPlatf/Body2"
 
 func _physics_process(delta: float) -> void:
 	if !platf || !bowser: return
@@ -41,6 +43,8 @@ func middle_attack() -> void:
 	super()
 	bowser.jump(bowser.jumping_speed + 100)
 	await get_tree().create_timer(0.25, false, true, false).timeout
+	body_1.collision_layer = body_1.collision_layer_ori
+	body_2.collision_layer = body_2.collision_layer_ori
 	# Tween for processing attack
 	var tween: Tween = create_tween().set_trans(Tween.TRANS_SINE)
 	tween.tween_property(platf, "modulate:a", 1.0, 0.3).from(0.0)
