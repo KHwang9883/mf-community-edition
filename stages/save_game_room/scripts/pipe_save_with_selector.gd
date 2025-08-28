@@ -116,10 +116,17 @@ func _physics_process(delta: float) -> void:
 	var prof = ProfileManager.profiles.get(profile_name)
 	var save_is_cheated: bool = prof && prof.data.get("executed")
 	
-	if !is_blocked && (cheat_warned || (!console_enabled && !save_is_cheated)):
+	if (
+		!is_blocked && (cheat_warned || (!console_enabled && !save_is_cheated)) &&
+		(!show_kevin_not_tested_warning || (show_kevin_not_tested_warning && kevin_not_tested_asked && KevinGlobal.activated))
+	):
 		_warp_initiator()
 	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
 		player.up_down = 0
+		if show_kevin_not_tested_warning && KevinGlobal.activated && !kevin_not_tested_asked:
+			kevin_not_tested_asked = true
+			message_expert_kevin.show_message()
+			return
 		if !cheat_warned && (console_enabled || save_is_cheated):
 			message_block_2.message = (
 				message_warning_from_save if save_is_cheated \

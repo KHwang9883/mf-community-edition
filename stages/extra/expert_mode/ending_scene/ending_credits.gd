@@ -5,6 +5,7 @@ extends Node2D
 var _original_time_scale: float
 var skippable: bool = false
 var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+@onready var credits: Control = $Canvas/Credits
 
 var counter: float
 
@@ -13,6 +14,8 @@ var counter: float
 
 func _ready() -> void:
 	color_rect.visible = true
+	credits.visible = false
+	credits.modulate.a = 0.0
 	var tw = color_rect.create_tween()
 	tw.tween_property(color_rect, "color:a", 0.0, 3.0)
 	animation_player.play(&"new_animation")
