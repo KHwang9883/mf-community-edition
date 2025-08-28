@@ -278,6 +278,7 @@ func flow_intros(delta: float) -> void:
 		9 when path_follow_2d.progress > 7136:
 			step += 1
 			print("Fading out...")
+			Thunder.autosplitter.update_il_counter()
 			var tw = create_tween().set_parallel()
 			tw.tween_property(destruction, "volume_linear", 0.0, 0.8)
 			tw.tween_property(color_rect, "color:a", 1.0, 2.0)
