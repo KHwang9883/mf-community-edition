@@ -1,8 +1,10 @@
-[gd_scene load_steps=80 format=4 uid="uid://rshcgbjp1qe8"]
+[gd_scene load_steps=82 format=4 uid="uid://rshcgbjp1qe8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_xk0re"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_4vmq4"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_c7wgt"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_r5cce"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_vwjgx"]
 [ext_resource type="AudioStream" uid="uid://b8pcdleki0b86" path="res://music/smw-fortress.ogg" id="5_ypm5a"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="6_cj3at"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_5tkmb"]
@@ -296,6 +298,20 @@ completion_write_save = false
 jump_to_scene = "uid://w7lcx2nmy7gy"
 completion_center_on_player_after_transition = true
 lighting_force_hide_on_start = false
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("3_c7wgt")]
+secrets = Array[String](["syzx worlds completed", "syzx worlds secret mode", "syzx worlds completed softendo", "syzx worlds secret mode softendo"])
+progress_by_id = "10"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker"]
+script = ExtResource("4_vwjgx")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
+check_for_softendo_mode = true
+softendo_progress_ids = Array[int]([2])
+softendo_progress_secret_mode_ids = Array[int]([3])
 
 [node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_r5cce")
@@ -1079,3 +1095,5 @@ falling_enabled = true
 z_index = -21
 position = Vector2(14322, 115)
 texture = ExtResource("48_gsquf")
+
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
