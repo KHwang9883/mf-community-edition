@@ -394,7 +394,9 @@ func scr4_end() -> void:
 	Audio.play_1d_sound(bump, false)
 
 func finish() -> void:
-	Scenes.current_scene.get_node("SecretUnlocker").unlock_secret()
+	var unlocker = Scenes.current_scene.get_node("SecretUnlocker")
+	unlocker.unlock_secret(0)
+	unlocker.unlock_if(["warped"], 1)
 	ProfileManager.current_profile.data.star_world = true
 	ProfileManager.save_current_profile()
 	if !(SecretsManager.is_console_enabled() && !Console.cv.can_save_suspended_with_console):
