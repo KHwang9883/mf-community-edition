@@ -31,12 +31,12 @@ func _physics_process(delta: float) -> void:
 	if counter < 0: return
 	counter += delta * 20
 	credits.position.y = -counter
-	if credits.position.y < -2144:
+	if credits.position.y < -2360:
 		skippable_extra = true
 	if credits.position.y <= -2900:
 		counter = -99
 	if thanks.position.y > 0:
-		thanks.position.y = credits.position.y + 2432
+		thanks.position.y = credits.position.y + 2560
 	else:
 		thanks.position.y = 0
 
