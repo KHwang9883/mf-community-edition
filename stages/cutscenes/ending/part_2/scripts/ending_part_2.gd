@@ -15,8 +15,6 @@ var mario_walking: bool = false
 var peach_enter: bool = false
 var mario_enter: bool = false
 
-var _50_switch: bool = false
-
 func _enter_tree() -> void:
 	print('[Cutscene] altered time scale from %s' % Engine.time_scale)
 	_original_time_scale = Engine.time_scale
