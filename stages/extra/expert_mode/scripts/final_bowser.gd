@@ -3,6 +3,7 @@ extends "res://engine/objects/bosses/bowser/bowser.gd"
 const LAUGHING = preload("res://engine/objects/enemies/thwomp/sounds/laughing.wav")
 const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 const DAMAGED_TILE = preload("res://stages/extra/expert_mode/ending_scene/breakage/damaged_tile.tscn")
+const BOWSER_HUD = preload("res://stages/extra/expert_mode/objects/expert_bowser_hud.tscn")
 
 var second_phase: bool
 @onready var static_body_2d: StaticBody2D = $"../TileMapLayer/StaticBody2D"
@@ -13,7 +14,24 @@ var second_phase: bool
 @onready var thwomp2: CharacterBody2D = $"../Thwomp2"
 
 func _ready() -> void:
-	super()
+	if instakill_from_lava:
+		$Body.add_to_group(&"#lava_body")
+	sprite.animation_looped.connect(_on_sprite_animation_looped)
+	_speed = speed.x
+	facing = get_facing(facing)
+	direction = facing
+	vel_set_x(0)
+	#enemy_attacked.killing_immune = {}
+	if tweaked_stomping:
+		enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
+	
+	# HUD
+	hud = BOWSER_HUD.instantiate()
+	hud.bowser = self
+	hud.y_offset = y_offset
+	health_changed.connect(hud.life_changed)
+	add_sibling.call_deferred(hud)
+	
 	Thunder._connect(health_changed, _on_health_changed)
 
 func _on_health_changed(to: int) -> void:

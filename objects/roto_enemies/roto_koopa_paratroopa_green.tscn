@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://1wp1bmiwoj6"]
+[gd_scene load_steps=9 format=3 uid="uid://1wp1bmiwoj6"]
 
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_xxtpk"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_2i541"]
@@ -6,8 +6,6 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_71acp"]
 [ext_resource type="Script" uid="uid://dvqqro524ihxh" path="res://objects/roto_enemies/roto_paratroopa_spawn_koopa.gd" id="3_ey2xt"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_ey2xt"]
-[ext_resource type="Shader" uid="uid://cp3tqscorc5v1" path="res://engine/shaders/blend/overlay_and_gray.gdshader" id="7_3q6xp"]
-[ext_resource type="Texture2D" uid="uid://cwwn5i5xn7j32" path="res://engine/objects/enemies/rotos/roto_center.png" id="8_1vhba"]
 
 [sub_resource type="Resource" id="Resource_wtaty"]
 script = ExtResource("4_ey2xt")
@@ -43,17 +41,14 @@ custom_vars = {
 }
 custom_script = ExtResource("3_71acp")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3q6xp"]
-shader = ExtResource("7_3q6xp")
-
 [node name="KoopaParatroopaGreen" instance=ExtResource("1_xxtpk")]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 stomping_creation = SubResource("Resource_wtaty")
 killing_creation = SubResource("Resource_kvnwg")
 
-[node name="Sprite2D2" type="Sprite2D" parent="." index="3"]
-visible = false
-material = SubResource("ShaderMaterial_3q6xp")
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("8_1vhba")
+[node name="Sprite" parent="." index="1"]
+show_behind_parent = true
+
+[node name="Wings" parent="." index="2"]
+show_behind_parent = true
