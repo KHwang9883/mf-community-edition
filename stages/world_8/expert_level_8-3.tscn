@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=4 uid="uid://ce1bd5fchi0lr"]
+[gd_scene load_steps=96 format=4 uid="uid://ce1bd5fchi0lr"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_maoyc"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ttody"]
@@ -37,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="32_fiust"]
 [ext_resource type="PackedScene" uid="uid://crb8jkwa0r1dl" path="res://engine/objects/enemies/spinies/spiny_iron.tscn" id="33_dc2ob"]
 [ext_resource type="Texture2D" uid="uid://c7madb3fe540" path="res://tilesets/castle/gfx/bowser_portrait.png" id="34_42eim"]
+[ext_resource type="Script" uid="uid://ceo168xrpwk6v" path="res://stages/extra/expert_mode/scripts/world_8_3_lava_area_2d.gd" id="35_fdxwi"]
 [ext_resource type="Texture2D" uid="uid://bcb0p63rnf2gm" path="res://tilesets/castle/gfx/bowser_portrait_anim.png" id="35_s257e"]
 [ext_resource type="PackedScene" uid="uid://c4enqp3bwybyh" path="res://engine/objects/platform/castle_platforms/8-3_platform_path.tscn" id="36_xcgcn"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="37_rnop0"]
@@ -417,12 +418,14 @@ tile_set = ExtResource("11_a6d1b")
 [node name="HUD" parent="." instance=ExtResource("12_d6hsl")]
 
 [node name="LavaTopHUD" type="Sprite2D" parent="HUD"]
+visible = false
 position = Vector2(28, 76)
 texture = ExtResource("13_ddnvq")
 offset = Vector2(0, -16)
 script = ExtResource("14_uqpx6")
 
 [node name="LavaHUD" type="AnimatedSprite2D" parent="HUD"]
+visible = false
 material = ExtResource("15_d3pt0")
 position = Vector2(28, 188)
 sprite_frames = SubResource("SpriteFrames_1ack5")
@@ -1201,6 +1204,9 @@ rotation = 3.14159
 
 [node name="Sprite2D" parent="Node2D/LavaTop" instance=ExtResource("31_tmr5v")]
 
+[node name="Area2D" parent="Node2D/LavaTop/Sprite2D" index="1"]
+script = ExtResource("35_fdxwi")
+
 [node name="Marker2D" type="Marker2D" parent="Node2D"]
 position = Vector2(0, 400)
 
@@ -1519,9 +1525,11 @@ falling_enabled = true
 
 [node name="KoopaParatroopaGreen" parent="." instance=ExtResource("37_rnop0")]
 position = Vector2(128, -928)
+phase = 286.581
 
 [node name="KoopaParatroopaGreen2" parent="." instance=ExtResource("37_rnop0")]
 position = Vector2(496, -928)
+phase = 351.192
 
 [node name="BulletLauncher" parent="." instance=ExtResource("38_bv827")]
 position = Vector2(304, -2096)
@@ -1709,3 +1717,4 @@ region_rect = Rect2(0, 0, 64, 64)
 [connection signal="warp_started" from="PipeIn6" to="HUD/Label" method="activate"]
 
 [editable path="SecretUnlockerOther2"]
+[editable path="Node2D/LavaTop/Sprite2D"]
