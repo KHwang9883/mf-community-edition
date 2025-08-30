@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=4 uid="uid://crhxcrt7ulu0q"]
+[gd_scene load_steps=142 format=4 uid="uid://crhxcrt7ulu0q"]
 
 [ext_resource type="Script" uid="uid://by7oafruhi7h4" path="res://stages/world_1/scripts/level_1_4.gd" id="1_cbjld"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_y2c75"]
@@ -83,6 +83,7 @@
 [ext_resource type="PackedScene" uid="uid://5pmwnbbklcjj" path="res://engine/objects/enemies/spikes/spike.tscn" id="76_fkwji"]
 [ext_resource type="Script" uid="uid://c245k36x0shwv" path="res://stages/extra/expert_mode/scripts/bowser_flame_generator.gd" id="78_n3sgc"]
 [ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="79_pgfcd"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="79_wjph7"]
 
 [sub_resource type="Curve2D" id="Curve2D_rfyok"]
 _data = {
@@ -571,6 +572,9 @@ _data = {
 point_count = 2
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_fkwji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f1ws5"]
+size = Vector2(58, 688)
 
 [sub_resource type="Gradient" id="Gradient_3rkqq"]
 offsets = PackedFloat32Array(0, 0.4375)
@@ -2430,6 +2434,15 @@ offset_top = -16.16
 offset_bottom = 15.84
 rotation = 3.14159
 
+[node name="Area2D" type="Area2D" parent="BulletLauncherTimer2"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("79_wjph7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletLauncherTimer2/Area2D"]
+position = Vector2(51, -168)
+shape = SubResource("RectangleShape2D_f1ws5")
+
 [node name="Spike" parent="." instance=ExtResource("76_fkwji")]
 position = Vector2(9280, 112)
 rotation = 1.57079
@@ -2601,6 +2614,7 @@ wait_time = 3.0
 [connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]
 [connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D2" method="_on_bowser_trigger_bowser_triggered"]
 [connection signal="warp_started" from="PipeIn" to="Sign3" method="show"]
+[connection signal="player_enter" from="BulletLauncherTimer2/Area2D" to="BulletLauncherTimer2" method="stop_anim"]
 [connection signal="timeout" from="Marker2D/Timer" to="Marker2D" method="_on_timer_timeout"]
 [connection signal="timeout" from="Marker2D2/Timer" to="Marker2D2" method="_on_timer_timeout"]
 
