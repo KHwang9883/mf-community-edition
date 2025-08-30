@@ -127,7 +127,8 @@ func _physics_process(delta: float) -> void:
 		mario.direction = 1
 		await get_tree().create_timer(0.5, false).timeout
 		if !is_instance_valid(mario): return
-		Audio.play_sound(JUMP, mario)
+		var _sfx = CharacterManager.get_sound_replace(JUMP, JUMP, "jump", true)
+		Audio.play_sound(_sfx, mario)
 		Audio.play_sound(BREAK, mario)
 		
 		_particles()

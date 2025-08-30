@@ -47,7 +47,8 @@ func _physics_process(delta: float) -> void:
 			else:
 				player.gravity_scale = 0.6 + min(float(_jump_num) / 5.0, 2.8)
 			
-			Audio.play_sound(JUMP, player, false)
+			var _sfx = CharacterManager.get_sound_replace(JUMP, JUMP, "jump", true)
+			Audio.play_sound(_sfx, player, false)
 			if _jump_num != 0:
 				Audio.play_sound(BREAK, player, false)
 				Thunder._current_camera.shock(0.1, Vector2(2, 2))
