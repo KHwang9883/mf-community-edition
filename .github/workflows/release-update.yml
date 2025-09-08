@@ -1,0 +1,72 @@
+name: "release build"
+on:
+  workflow_dispatch:
+
+# NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
+
+env:
+  GODOT_VERSION: 4.4.1
+  EXPORT_NAME: Mario-Forever-Community-Edition
+  PROJECT_PATH: .
+
+jobs:
+  export-release:
+    name: Release Export
+    runs-on: ubuntu-24.04  # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
+    container:
+      image: jue13/godot-ci:4.4.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Set WINEPREFIX
+        run: echo WINEPREFIX=/root/.wine >> "$GITHUB_ENV"
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Project Import
+        run: |
+          cd $PROJECT_PATH
+          godot --headless --verbose --import
+      - name: Windows x64 Build
+        run: |
+          mkdir -v -p build/windows
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe"' > "$EXPORT_DIR/windows/00. Launch in Recommended Mode.bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "$EXPORT_DIR/windows/01. Launch in Compatibility Mode.bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "$EXPORT_DIR/windows/02. Launch in Compatibility Mode (angle).bat"
+          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
+      - name: Linux x64 Build
+        run: |
+          mkdir -v -p build/linux
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Linux Desktop" "$EXPORT_DIR/linux/$EXPORT_NAME.exe"
+      - name: Prepare For Upload
+        run: |
+          EXPORT_DIR="$(readlink -f build)"
+          echo "MFCE Release Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "$EXPORT_DIR/Readme.md"
+          cd $EXPORT_DIR
+          zip -r "${{ env.EXPORT_NAME }}_windows.zip" windows
+          rm -rf $EXPORT_DIR/windows
+      - name: Upload Files
+        run: |
+          EXPORT_DIR="$(readlink -f build)"
+          for FILE in $EXPORT_DIR/*
+          do
+            echo "Uploading file: $FILE"
+            curl \
+              -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+              -T "$FILE" \
+              -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/MFCE-Builds/Release/
+          done
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: windows
+#          path: build/windows
