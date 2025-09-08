@@ -2,6 +2,8 @@ extends GeneralMovementBody2D
 
 const Shell: Script = preload("./koopa_shell_green_minix.gd")
 
+const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+
 @export_category("KoopaShell")
 @export var stopping: bool = true
 @export var restoring_damage_delay: float = 0.6
@@ -89,7 +91,8 @@ func disappearing_shell() -> void:
 
 
 func sound() -> void:
-	Audio.play_sound(kicked_sound, self)
+	var _custom_sound = CharacterManager.get_sound_replace(kicked_sound, DEFAULT_KICK, "kick", true)
+	Audio.play_sound(_custom_sound, self)
 
 
 func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:

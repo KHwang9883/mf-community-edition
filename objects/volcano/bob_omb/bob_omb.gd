@@ -1,5 +1,7 @@
 extends GeneralMovementBody2D
 
+const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+
 @export var self_ignite_after_sec: float = 0.0
 @export var wait_for_explosion_for_sec: float = 3.0
 @export_group("Miscellaneous")
@@ -84,7 +86,8 @@ func _explode() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if !body is Player || !ignited: return
 	if body.warp > Player.Warp.NONE || enemy_attacked.get_stomping_delayer(): return
-	Audio.play_sound(kicked_sound, self)
+	var _custom_sound = CharacterManager.get_sound_replace(kicked_sound, DEFAULT_KICK, "kick", true)
+	Audio.play_sound(_custom_sound, self)
 	body.ground_kicked.emit()
 	
 	enemy_attacked.stomping_delay()
