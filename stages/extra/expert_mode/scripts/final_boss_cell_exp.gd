@@ -101,6 +101,7 @@ func _physics_process(delta: float) -> void:
 		cell_peach.flip_h = true
 		await get_tree().create_timer(0.3, false).timeout
 		cell_peach.flip_h = false
+		if !is_instance_valid(mario): return
 		mario.direction = -1
 		
 		await get_tree().create_timer(0.3, false).timeout

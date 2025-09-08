@@ -1,6 +1,7 @@
 extends "res://stages/world_1/scripts/text_secret_passage.gd"
 
 const expert_1_1 := "res://stages/world_1/expert_level_1-1.tscn"
+const expert_1_0 := "res://stages/world_1/expert_level_1-0.tscn"
 const expert_1_1_str := &"res://stages/world_1/expert_level_1-1.tscn"
 
 func activate() -> void:
@@ -9,7 +10,7 @@ func activate() -> void:
 	if ProfileManager.current_profile.has_completed(expert_1_1_str):
 		ProfileManager.current_profile.data.completed_levels.erase(expert_1_1_str)
 	if ProfileManager.current_profile.data.get("star_world") && "map_force_selected_marker" in Data.values:
-		Data.values.map_force_selected_marker = ""
+		Data.values.map_force_selected_marker = expert_1_0
 	if Data.values.lives > 4:
 		Data.values.lives = 4
 	super()
