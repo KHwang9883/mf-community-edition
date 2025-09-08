@@ -857,6 +857,36 @@ initially_visible_and_solid = false
 position = Vector2(1200, 208)
 result = SubResource("Resource_vcmse")
 
+[node name="Podoboo" parent="." instance=ExtResource("7_tji6w")]
+position = Vector2(1392, 432)
+interval = 1.0
+jumping_height = 320.0
+
+[node name="Podoboo2" parent="." instance=ExtResource("7_tji6w")]
+position = Vector2(1968, 432)
+interval = 1.0
+jumping_height = 320.0
+
+[node name="Podoboo3" parent="." instance=ExtResource("7_tji6w")]
+position = Vector2(6928, 448)
+interval = 1.0
+jumping_height = 320.0
+
+[node name="LavaBubbles3" parent="." instance=ExtResource("13_qdqth")]
+z_index = 1
+position = Vector2(-512, 428)
+
+[node name="LavaBubbles2" parent="." instance=ExtResource("13_qdqth")]
+z_index = 1
+position = Vector2(1568, 432)
+
+[node name="LavaBubbles4" parent="." instance=ExtResource("13_qdqth")]
+position = Vector2(1968, 432)
+
+[node name="LavaBubbles5" parent="." instance=ExtResource("13_qdqth")]
+z_index = 1
+position = Vector2(6944, 448)
+
 [node name="Lava" parent="." instance=ExtResource("8_i1nhr")]
 offset_left = 640.0
 offset_top = 408.0
@@ -882,6 +912,7 @@ offset_right = 1600.0
 offset_bottom = 488.0
 
 [node name="Lava4" parent="." instance=ExtResource("8_i1nhr")]
+z_index = -31
 offset_left = 1856.0
 offset_top = 408.0
 offset_right = 2112.0
@@ -904,6 +935,9 @@ offset_left = 6816.0
 offset_top = 427.0
 offset_right = 7072.0
 offset_bottom = 507.0
+
+[node name="Lavafall2" parent="." instance=ExtResource("12_nechx")]
+position = Vector2(1568, 0)
 
 [node name="RotoCenter" parent="." instance=ExtResource("4_20yxp")]
 position = Vector2(2368, 176)
@@ -1116,9 +1150,6 @@ position = Vector2(8848, 48)
 [node name="Lavafall" parent="." instance=ExtResource("12_nechx")]
 position = Vector2(3344, 0)
 
-[node name="Lavafall2" parent="." instance=ExtResource("12_nechx")]
-position = Vector2(1568, 0)
-
 [node name="LavaBubbles" parent="." instance=ExtResource("13_qdqth")]
 z_index = 1
 position = Vector2(3344, 416)
@@ -1128,30 +1159,6 @@ position = Vector2(3536, 352)
 
 [node name="Lavafall3" parent="." instance=ExtResource("12_nechx")]
 position = Vector2(-512, 0)
-
-[node name="LavaBubbles3" parent="." instance=ExtResource("13_qdqth")]
-z_index = 1
-position = Vector2(-512, 428)
-
-[node name="LavaBubbles2" parent="." instance=ExtResource("13_qdqth")]
-z_index = 1
-position = Vector2(1568, 432)
-
-[node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("40_2iops")
-medium = true
-
-[node name="LavaBubbles4" parent="Node2D" instance=ExtResource("13_qdqth")]
-z_index = 1
-position = Vector2(1984, 432)
-
-[node name="LavaBubbles5" parent="Node2D" instance=ExtResource("13_qdqth")]
-z_index = 1
-position = Vector2(6944, 448)
-
-[node name="LavaBubbles3" parent="Node2D" instance=ExtResource("13_qdqth")]
-z_index = 1
-position = Vector2(1024, 432)
 
 [node name="AudioAreaCave" parent="." instance=ExtResource("41_sish0")]
 
@@ -1566,21 +1573,6 @@ position = Vector2(8688, 304)
 [node name="StaticBodyAlt5" parent="Node2D2" instance=ExtResource("59_1nv1i")]
 position = Vector2(8784, 304)
 
-[node name="Podoboo" parent="." instance=ExtResource("7_tji6w")]
-position = Vector2(1392, 432)
-interval = 1.0
-jumping_height = 320.0
-
-[node name="Podoboo2" parent="." instance=ExtResource("7_tji6w")]
-position = Vector2(1968, 432)
-interval = 1.0
-jumping_height = 320.0
-
-[node name="Podoboo3" parent="." instance=ExtResource("7_tji6w")]
-position = Vector2(6928, 448)
-interval = 1.0
-jumping_height = 320.0
-
 [node name="Thwomp" parent="." instance=ExtResource("10_iot4h")]
 position = Vector2(2782, 100)
 
@@ -1709,8 +1701,8 @@ result = SubResource("Resource_60js1")
 
 [connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="unlock_secret"]
-[connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="warp_split"]
+[connection signal="warp_started" from="Objects/PipeIn3" to="HUD/Label" method="activate"]
 [connection signal="warp_started" from="Objects/PipeIn3" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped"]]
 [connection signal="timeout" from="Marker2D/Timer" to="Marker2D" method="_on_timer_timeout"]
 [connection signal="warp_ended" from="PipeIn2" to="HUD/Label/Node" method="activate"]
