@@ -22,10 +22,12 @@ var level_scene_template: String = "res://stages/extra/expert_mode/otherworld/le
 @export var force_disable_level_save: bool = true
 @export var set_data_to_profile: String
 @export var secret_name: String = "all otherworld levels found"
+@export var secret_id_explicit: String = ""
 @export var no_star_world_until_secret: bool = true
 @export var no_secrets_label: bool = true
 @export var force_warp_to_save_room: bool = false
 @export var force_intro_if_level_1: bool = false
+@export var clear_color_override: bool = true
 
 var is_empty: bool
 var is_blocked: bool
@@ -94,7 +96,8 @@ func _input(event: InputEvent) -> void:
 
 func _update_save() -> void:
 	is_blocked = false
-	label.remove_theme_color_override(&"font_color")
+	if clear_color_override:
+		label.remove_theme_color_override(&"font_color")
 	if level_count.size() <= 1:
 		label._tweak = true
 	
@@ -103,7 +106,10 @@ func _update_save() -> void:
 	var is_not_allowed: bool
 	if secret_name:
 		var secret = SecretsManager.get_secret(secret_name)
-		is_not_allowed = !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret)
+		if secret_id_explicit:
+			is_not_allowed = !secret || (secret is Array && !secret_id_explicit in secret)
+		else:
+			is_not_allowed = !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret)
 	
 	if no_star_world_until_secret && is_not_allowed:
 		return
