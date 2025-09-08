@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=4 uid="uid://bvk2k2mqdrod7"]
+[gd_scene load_steps=86 format=4 uid="uid://bvk2k2mqdrod7"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_a445d"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_iefgj"]
@@ -60,16 +60,7 @@
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="56_5ujhd"]
 [ext_resource type="Script" uid="uid://o6tmgw1htbwk" path="res://stages/extra/world_9_syzx/advanced_edition_node.gd" id="57_jp8s7"]
 [ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="58_0s3vv"]
-
-[sub_resource type="Gradient" id="Gradient_xdoi1"]
-colors = PackedColorArray(1, 1, 0.501961, 1, 1, 0.294118, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_85i1r"]
-gradient = SubResource("Gradient_xdoi1")
-width = 640
-height = 480
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0, 0)
+[ext_resource type="Shader" uid="uid://c1yibfdu766i8" path="res://engine/shaders/hsv_global.gdshader" id="61_2yhhy"]
 
 [sub_resource type="Resource" id="Resource_f7e8g"]
 resource_local_to_scene = true
@@ -203,6 +194,15 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Gradient" id="Gradient_ehahp"]
+colors = PackedColorArray(0, 0.47451, 0.752941, 1, 0.782, 0.8303, 0.92, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sk3ku"]
+gradient = SubResource("Gradient_ehahp")
+width = 640
+height = 480
+fill_to = Vector2(0, 1)
+
 [sub_resource type="Resource" id="Resource_esefy"]
 resource_local_to_scene = true
 script = ExtResource("17_mepcp")
@@ -299,6 +299,22 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 2464, 256, 0, 0, 0, 0, 3312, 256)
 }
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_xdoi1"]
+colors = PackedColorArray(1, 1, 0.501961, 1, 1, 0.294118, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_85i1r"]
+gradient = SubResource("Gradient_xdoi1")
+width = 640
+height = 480
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rqke"]
+shader = ExtResource("61_2yhhy")
+shader_parameter/hue = -0.455
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
 
 [sub_resource type="Resource" id="Resource_hm25q"]
 resource_local_to_scene = true
@@ -416,57 +432,13 @@ horizontal_alignment = 1
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
-texture = SubResource("GradientTexture2D_85i1r")
-centered = false
-
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Node2D" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
 script = ExtResource("10_ikn7k")
 
-[node name="9-1Bg" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
-texture_repeat = 2
-position = Vector2(0, -2)
-scale = Vector2(0.939, 0.939)
-texture = ExtResource("12_no57o")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 8800, 516)
-metadata/_edit_lock_ = true
-
-[node name="GiantClouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
-position = Vector2(64, 96)
-texture = ExtResource("11_d3phb")
-centered = false
-
-[node name="GiantClouds3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
-position = Vector2(1968, 80)
-texture = ExtResource("11_d3phb")
-centered = false
-
-[node name="GiantClouds4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
-position = Vector2(4816, 48)
-texture = ExtResource("11_d3phb")
-centered = false
-
-[node name="GiantClouds5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
-position = Vector2(6224, 160)
-texture = ExtResource("11_d3phb")
-centered = false
-
-[node name="GiantClouds2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
-position = Vector2(7328, 64)
-texture = ExtResource("11_d3phb")
-centered = false
-metadata/_edit_lock_ = true
-
 [node name="SceneriaDrzowatne" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
 position = Vector2(838, 280)
-texture = ExtResource("11_hjxvq")
-
-[node name="SceneriaDrzowatne4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
-position = Vector2(2880, 368)
 texture = ExtResource("11_hjxvq")
 
 [node name="SceneriaDrzowatne6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
@@ -1019,6 +991,59 @@ position = Vector2(5420, 416)
 modulate = Color(1, 0.615686, 0.615686, 1)
 script = ExtResource("57_jp8s7")
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="AdvancedEdition"]
+
+[node name="Sprite2D" type="Sprite2D" parent="AdvancedEdition/ParallaxBackground"]
+position = Vector2(320, 240)
+texture = SubResource("GradientTexture2D_sk3ku")
+script = ExtResource("10_ikn7k")
+maximum = false
+medium = true
+minimum = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="AdvancedEdition/ParallaxBackground"]
+
+[node name="9-1Bg" type="Sprite2D" parent="AdvancedEdition/ParallaxBackground/ParallaxLayer"]
+texture_filter = 2
+texture_repeat = 2
+position = Vector2(0, -2)
+scale = Vector2(0.939, 0.939)
+texture = ExtResource("12_no57o")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 8800, 516)
+script = ExtResource("10_ikn7k")
+metadata/_edit_lock_ = true
+
+[node name="Node2D" type="Node2D" parent="AdvancedEdition/ParallaxBackground/ParallaxLayer"]
+script = ExtResource("10_ikn7k")
+
+[node name="GiantClouds" type="Sprite2D" parent="AdvancedEdition/ParallaxBackground/ParallaxLayer/Node2D"]
+position = Vector2(64, 96)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds3" type="Sprite2D" parent="AdvancedEdition/ParallaxBackground/ParallaxLayer/Node2D"]
+position = Vector2(1968, 80)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds4" type="Sprite2D" parent="AdvancedEdition/ParallaxBackground/ParallaxLayer/Node2D"]
+position = Vector2(4816, 48)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds5" type="Sprite2D" parent="AdvancedEdition/ParallaxBackground/ParallaxLayer/Node2D"]
+position = Vector2(6224, 160)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds2" type="Sprite2D" parent="AdvancedEdition/ParallaxBackground/ParallaxLayer/Node2D"]
+position = Vector2(7328, 64)
+texture = ExtResource("11_d3phb")
+centered = false
+metadata/_edit_lock_ = true
+
 [node name="PlatformPath" parent="AdvancedEdition" instance=ExtResource("12_0m46i")]
 position = Vector2(816, 224)
 
@@ -1144,6 +1169,47 @@ tile_set = ExtResource("58_0s3vv")
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("57_jp8s7")
 inverted = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/ParallaxBackground"]
+texture = SubResource("GradientTexture2D_85i1r")
+centered = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
+material = SubResource("ShaderMaterial_3rqke")
+script = ExtResource("10_ikn7k")
+
+[node name="GiantClouds" type="Sprite2D" parent="Node2D/ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(64, 96)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds3" type="Sprite2D" parent="Node2D/ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(1968, 80)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds4" type="Sprite2D" parent="Node2D/ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(4816, 48)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds5" type="Sprite2D" parent="Node2D/ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(6224, 160)
+texture = ExtResource("11_d3phb")
+centered = false
+
+[node name="GiantClouds2" type="Sprite2D" parent="Node2D/ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(7328, 64)
+texture = ExtResource("11_d3phb")
+centered = false
+metadata/_edit_lock_ = true
 
 [node name="QuestionBlockGreenLui2" parent="Node2D" instance=ExtResource("42_upe4v")]
 position = Vector2(560, 336)
