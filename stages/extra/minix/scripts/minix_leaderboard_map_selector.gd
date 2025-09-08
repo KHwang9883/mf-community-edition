@@ -38,14 +38,16 @@ func _physics_process(delta: float) -> void:
 		map_id += 1
 		if map_id >= len(map_names):
 			map_id = 0
-		Audio.play_1d_sound(SELECT_ENTER)
+		var _sfx = CharacterManager.get_sound_replace(SELECT_ENTER, SELECT_ENTER, "menu_enter", false)
+		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 		_update_map()
 	
 	if Input.is_action_just_pressed("ui_left") && !lb.is_loading:
 		map_id -= 1
 		if map_id < 0:
 			map_id = len(map_names) - 1
-		Audio.play_1d_sound(SELECT_ENTER)
+		var _sfx = CharacterManager.get_sound_replace(SELECT_ENTER, SELECT_ENTER, "menu_enter", false)
+		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 		_update_map()
 	
 	node_2d.position.x = lerp(node_2d.position.x, -(map_id * off_size_x), 20 * delta)

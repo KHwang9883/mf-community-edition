@@ -3,6 +3,7 @@ extends Node2D
 @onready var pipe_timer: Timer = $PipeTimer
 
 const COIN_FROM_PIPE = preload("res://stages/extra/minix/objects/coin_from_pipe.tscn")
+const APPEAR = preload("res://engine/objects/bumping_blocks/_sounds/appear.wav")
 
 
 func _ready() -> void:
@@ -21,7 +22,8 @@ func _on_game_started() -> void:
 
 func _on_pipe_timeout() -> void:
 	position = Vector2(randi_range(80, 560), 528)
-	Audio.play_sound(preload("res://engine/objects/bumping_blocks/_sounds/appear.wav"), self, false)
+	var _sfx = CharacterManager.get_sound_replace(APPEAR, APPEAR, "block_appear", false)
+	Audio.play_sound(_sfx, self, false)
 	
 	var tw = create_tween()
 	tw.tween_property(self, "position:y", 432, 1.5)
