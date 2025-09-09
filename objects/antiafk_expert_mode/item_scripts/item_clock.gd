@@ -12,8 +12,8 @@ func activate() -> bool:
 	
 	var clock = CLOCK.instantiate()
 	Scenes.current_scene.add_child(clock)
-	Data.values.stopwatch = 10.0
 	clock.activate_stopwatch()
+	Data.values.stopwatch = 10.0
 	var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "bonus_activate", false)
 	Audio.play_1d_sound(_sfx, false, {ignore_pause = true})
 	return true
