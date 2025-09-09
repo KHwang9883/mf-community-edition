@@ -242,11 +242,11 @@ func _physics_process(_delta: float) -> void:
 		strelochka.position.x = move_toward(strelochka.position.x, last_player_pos.x - 27, 35 * _delta)
 
 	mariomarker.position.y = mariomarker_init_pos + (moving_group.global_position.y / 8 / (difficulty + 1))
-	if mariomarker.global_position.y < 96:
+	if mariomarker.global_position.y < 112:
 		if player:
 			start_transition()
 		else:
-			mariomarker.global_position.y = 95
+			mariomarker.global_position.y = 111
 	
 	
 	for i in get_tree().get_nodes_in_group(&"kill_oob"):
