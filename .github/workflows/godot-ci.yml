@@ -74,7 +74,7 @@ jobs:
               ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/$PART_ID \
               --data-binary "@$FILE" \
               --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip' \
-              --header 'OC-Total-Length: $FILE_SIZE'
+              --header "OC-Total-Length: ${FILE_SIZE}"
           done
           
           echo "Assembling the chunks"
@@ -82,7 +82,7 @@ jobs:
             -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
             ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
             --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip' \
-            --header 'OC-Total-Length: $FILE_SIZE'
+            --header "OC-Total-Length: ${FILE_SIZE}"
           
           echo "Uploading file: $EXPORT_DIR/Readme.md"
           curl \
