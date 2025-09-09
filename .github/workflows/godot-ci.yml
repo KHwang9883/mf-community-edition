@@ -49,12 +49,12 @@ jobs:
           cp Readme.md windows/Readme.md
           zip -r build_windows.zip windows
           rm -rf windows
-          split -b 80M build_windows.zip part_ -d
+          split -b 80M build_windows.zip part_ -d --verbose
       - name: Upload Files
         run: |
           EXPORT_DIR="$(readlink -f build)"
           FILE_SIZE="$(wc -c < $EXPORT_DIR/build_windows.zip)"
-          FOLDER_UUID="$(uuidgen)"
+          FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
           
           echo "Creating an upload folder: $FOLDER_UUID"
           curl -X MKCOL \
