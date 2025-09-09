@@ -20,7 +20,8 @@ func _physics_process(delta: float) -> void:
 	if _ceiling_disabled:
 		if is_instance_valid(spike_ceiling):
 			spike_ceiling._state = 0
-			spike_ceiling.global_position.y = spike_ceiling.init_pos.y
+			if !_final_disable_ceil:
+				spike_ceiling.global_position.y = spike_ceiling.init_pos.y
 			spike_ceiling.timer.stop()
 	
 	if player_camera_2d.global_position.x > 2176 && !_first_done:
