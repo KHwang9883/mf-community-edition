@@ -8,6 +8,7 @@ env:
   GODOT_VERSION: 4.4.1
   EXPORT_NAME: Mario-Forever-Community-Edition
   PROJECT_PATH: .
+  UPLOAD_FOLDER: MFCE-Builds/Release
 
 jobs:
   export-release:
@@ -40,33 +41,71 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe"' > "$EXPORT_DIR/windows/00. Launch in Recommended Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "$EXPORT_DIR/windows/01. Launch in Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "$EXPORT_DIR/windows/02. Launch in Compatibility Mode (angle).bat"
-          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
+          godot --headless --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
       - name: Linux x64 Build
         run: |
           mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Linux Desktop" "$EXPORT_DIR/linux/$EXPORT_NAME.exe"
+          printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64"' > "$EXPORT_DIR/linux/00. Launch in Recommended Mode.sh"
+          printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" --rendering-driver opengl3' > "$EXPORT_DIR/linux/01. Launch in Compatibility Mode.sh"
+          printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" --rendering-driver opengl3_angle' > "$EXPORT_DIR/linux/02. Launch in Compatibility Mode (angle).sh"
+          chmod +x "$EXPORT_DIR/linux/00. Launch in Recommended Mode.sh"
+          chmod +x "$EXPORT_DIR/linux/01. Launch in Compatibility Mode.sh"
+          chmod +x "$EXPORT_DIR/linux/02. Launch in Compatibility Mode (angle).sh"
+          godot --headless --export-release "Linux Desktop" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
       - name: Prepare For Upload
         run: |
           EXPORT_DIR="$(readlink -f build)"
           echo "MFCE Release Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "$EXPORT_DIR/Readme.md"
           cd $EXPORT_DIR
-          zip -r "${{ env.EXPORT_NAME }}_windows.zip" windows
-          rm -rf $EXPORT_DIR/windows
+          chmod +x "${{ env.EXPORT_NAME }}.x86_64"
+          zip -r windows64.zip windows
+          rm -rf windows
+          split -b 80M windows64.zip windows64_part_ -d --verbose
+          zip -r linux64.zip linux
+          rm -rf linux
+          split -b 80M linux64.zip linux64_part_ -d --verbose
       - name: Upload Files
         run: |
           EXPORT_DIR="$(readlink -f build)"
-          for FILE in $EXPORT_DIR/*
+          for BUILD_FILENAME in windows64 linux64
           do
-            echo "Uploading file: $FILE"
+            FILE_SIZE="$(wc -c < $EXPORT_DIR/$BUILD_FILENAME.zip)"
+            FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
+            
+            printf "File size: $FILE_SIZE"
+            echo "Creating an upload folder: $FOLDER_UUID"
+            curl -X MKCOL \
+              -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+              ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID \
+              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/${BUILD_FILENAME}.zip'
+            
+            LOOP_ID=0
+            PART_ID=""
+            for FILE in $EXPORT_DIR/$BUILD_FILENAME_part_*
+            do
+              LOOP_ID=$((LOOP_ID + 1))
+              PART_ID=$(printf "%05d" "$LOOP_ID")
+              echo "Uploading part $PART_ID: $FILE"
+              curl -X PUT \
+                -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+                ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/$PART_ID \
+                --data-binary "@$FILE" \
+                --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/${BUILD_FILENAME}.zip' \
+                --header "OC-Total-Length: ${FILE_SIZE}"
+            done
+            
+            echo "Assembling the chunks"
+            curl -X MOVE \
+              -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+              ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
+              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/${BUILD_FILENAME}.zip' \
+              --header "OC-Total-Length: ${FILE_SIZE}"
+            
+            echo "Uploading file: $EXPORT_DIR/Readme.md"
             curl \
               -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-              -T "$FILE" \
-              -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/MFCE-Builds/Release/
+              -T "$EXPORT_DIR/Readme.md" \
+              -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/
           done
-#      - name: Upload Artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: windows
-#          path: build/windows
