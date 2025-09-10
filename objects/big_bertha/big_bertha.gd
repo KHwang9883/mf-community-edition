@@ -22,7 +22,7 @@ func _ready() -> void:
 		position += checkpoints_offset[Data.values.checkpoint]
 		reset_physics_interpolation()
 	
-	if !OS.is_debug_build():
+	if !Console.debug_mode:
 		Scenes.current_scene.get_node("HUD/DebugSpd").hide()
 
 
@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	if sprite_node.animation != &"fall":
 		sprite_node.animation = &"default" if !can_eat else &"jump"
 	
-	if OS.is_debug_build():
+	if Console.debug_mode:
 		var hud = Thunder._current_hud
 		if hud:
 			hud.get_node("DebugSpd").text = "%.1f" % [speed.x]

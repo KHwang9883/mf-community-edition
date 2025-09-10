@@ -42,7 +42,7 @@ func check_for_coins() -> void:
 
 
 func _has_collected(ending: bool = false) -> bool:
-	var is_debug: bool = !OS.has_feature("template") && ending
+	var is_debug: bool = Console.debug_mode && ending
 	for i in get_children():
 		if i.is_in_group(&"coin"):
 			if is_debug: print_debug("Coin Check Failed: " + i.name)
