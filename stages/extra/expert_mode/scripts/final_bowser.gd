@@ -175,7 +175,7 @@ func _physics_process(delta: float) -> void:
 		pos_y_on_floor = 320 #global_transform.affine_inverse().basis_xform(global_position).y
 	
 	debug_text.visible = Console.cv.player_stats_shown
-	if OS.is_debug_build() && Input.is_action_just_pressed(&"a_delete"):
+	if Console.debug_mode && Input.is_action_just_pressed(&"a_delete"):
 		health = 11
 	
 	# Old bowser stomping (Tweak)

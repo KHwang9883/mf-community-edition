@@ -601,7 +601,7 @@ func _kevin_touch() -> void:
 
 
 func _debug_print(_args) -> void:
-	if OS.has_feature("template"): return
+	if !Console.debug_mode: return
 	print(_args)
 
 #func _exit_tree() -> void:

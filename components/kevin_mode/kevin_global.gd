@@ -13,7 +13,7 @@ func _ready() -> void:
 	Scenes.scene_ready.connect(patch_mario)
 
 func add_kevin() -> void:
-	if !OS.has_feature("template") && Input.is_action_pressed("a_delete"):
+	if Console.debug_mode && Input.is_action_pressed("a_delete"):
 		activated = true
 	if !activated || Scenes.current_scene.name == 'SaveGameRoom': return
 	var kevin := KEVIN_SCENE.instantiate()
@@ -22,7 +22,7 @@ func add_kevin() -> void:
 	Scenes.current_scene.add_child(kevin)
 
 func patch_mario() -> void:
-	if !OS.has_feature("template") && Input.is_action_pressed("a_delete"):
+	if Console.debug_mode && Input.is_action_pressed("a_delete"):
 		activated = true
 	if Scenes.current_scene.name == "SaveGameRoom": return
 	var fast_respawn: bool = SettingsManager.get_tweak("fast_respawn", false)
