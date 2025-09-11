@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	
 	if !menu_items_controller.focused: return
 	
-	if Input.is_action_just_pressed("ui_right") && !lb.is_loading:
+	if Input.is_action_just_pressed("ui_right") && !lb.is_loading && !lb.old:
 		map_id += 1
 		if map_id >= len(map_names):
 			map_id = 0
@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 		_update_map()
 	
-	if Input.is_action_just_pressed("ui_left") && !lb.is_loading:
+	if Input.is_action_just_pressed("ui_left") && !lb.is_loading && !lb.old:
 		map_id -= 1
 		if map_id < 0:
 			map_id = len(map_names) - 1
