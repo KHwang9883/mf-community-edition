@@ -1,12 +1,17 @@
-[gd_scene load_steps=10 format=4 uid="uid://cwmea1ex8jnpo"]
+[gd_scene load_steps=16 format=4 uid="uid://cwmea1ex8jnpo"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_a335x"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_2xt4g"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_x1e2i"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_3u3st"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_kf2hh"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_02u6v"]
+[ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="9_hla7q"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_lpx5f"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_0g5ea"]
+[ext_resource type="PackedScene" uid="uid://brkhmn6vdf25a" path="res://engine/objects/bumping_blocks/question_block/templates/Poison Mushroom Question Block.tscn" id="10_k01yj"]
+[ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="11_or18c"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="12_6kx5f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6vau2"]
 texture = ExtResource("9_lpx5f")
@@ -20,8 +25,24 @@ physics_layer_0/collision_layer = 112
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_6vau2")
 
+[sub_resource type="Resource" id="Resource_1jwt5"]
+resource_local_to_scene = true
+script = ExtResource("12_6kx5f")
+creation_nodepack = ExtResource("11_or18c")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
 [node name="CamAreas" type="Node2D"]
 script = ExtResource("1_a335x")
+completion_music = ExtResource("2_2xt4g")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_x1e2i")]
 
@@ -40,7 +61,7 @@ offset_bottom = 480.0
 smooth_transition = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAJAAkAAAAAAAAAAAAMAAYAAAAAAAAAAAAPAAMAAAAAAAAAAAASAAAAAAAAAAAAAAAPAPz/AAAAAAAAAAAMAPj/AAAAAAAAAAAQAAMAAAAAAAAAAAARAAMAAAAAAAAAAAALAPj/AAAAAAAAAAAKAPj/AAAAAAAAAAAOAPz/AAAAAAAAAAANAPz/AAAAAAAAAAARAAAAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAJAAkAAAAAAAAAAAAMAAYAAAAAAAAAAAAPAAMAAAAAAAAAAAASAAAAAAAAAAAAAAAPAPz/AAAAAAAAAAAMAPj/AAAAAAAAAAAQAAMAAAAAAAAAAAARAAMAAAAAAAAAAAALAPj/AAAAAAAAAAAKAPj/AAAAAAAAAAAOAPz/AAAAAAAAAAANAPz/AAAAAAAAAAARAAAAAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAUAAwAAAAAAAAAAAAUAAsAAAAAAAAAAAAUAAoAAAAAAAAAAAAUAAkAAAAAAAAAAAAUAAgAAAAAAAAAAAAUAAcAAAAAAAAAAAAUAAYAAAAAAAAAAAAUAAUAAAAAAAAAAAAUAAQAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_3jw50")
 metadata/_edit_lock_ = true
 
@@ -49,3 +70,14 @@ metadata/_edit_lock_ = true
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Objects" type="Node2D" parent="."]
+
+[node name="FinishLine" parent="." instance=ExtResource("9_hla7q")]
+position = Vector2(368, 416)
+
+[node name="QuestionBlockPoisonous" parent="." instance=ExtResource("10_k01yj")]
+position = Vector2(128, 256)
+result = SubResource("Resource_1jwt5")
+
+[node name="QuestionBlockPoisonous2" parent="." instance=ExtResource("10_k01yj")]
+position = Vector2(160, 256)
+result = SubResource("Resource_1jwt5")

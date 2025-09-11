@@ -41,6 +41,9 @@ jobs:
           printf "extends RefCounted\n\nconst DEBUG_ENABLED = true\n" > engine/singletones/nodes/debug/enable_debug.gd
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "$EXPORT_DIR/windows/01. Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "$EXPORT_DIR/windows/02. Compatibility Mode (angle).bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" -- --developer-commands' > "$EXPORT_DIR/windows/03. Debug Mode.bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3 -- --developer-commands' > "$EXPORT_DIR/windows/04. Debug, Compatibility Mode.bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle -- --developer-commands' > "$EXPORT_DIR/windows/05. Debug, Compatibility Mode (angle).bat"
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
       - name: Prepare For Upload
         run: |
