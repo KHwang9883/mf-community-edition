@@ -90,8 +90,9 @@ func progress_secret(id: int = 0, replace_on_complete: bool = true) -> void:
 	SecretsManager.set_secret(secrets[id], new_secret, true, false)
 	if can_notify && show_progress_toast:
 		var _current_progress: int = len(SecretsManager.secrets[secrets[id]])
+		var _display_name = secrets[id] if !toast_text_overrides[id] else toast_text_overrides[id]
 		SecretsManager.queue_achievement(
-			"%s: %d / %d" % [secrets[id], _current_progress, progress_to],
+			"%s: %d / %d" % [_display_name, _current_progress, progress_to],
 			"achievement progress",
 			false
 		)
