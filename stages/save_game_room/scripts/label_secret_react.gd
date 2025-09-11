@@ -3,6 +3,8 @@ extends "res://engine/scenes/save_game_room/scripts/saved_level_label.gd"
 @export var secret_name: String
 @export var secret_progress_id: String
 @export var secret_kevin_name: String
+@export var secret_standalone: String
+@export var secret_kevin_standalone: String
 
 func _ready() -> void:
 	super()

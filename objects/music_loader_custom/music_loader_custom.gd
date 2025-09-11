@@ -1,6 +1,7 @@
 extends "res://engine/objects/core/music_loader/music_loader.gd"
 
 const MUSIC_PITCH_CHANGER = preload("res://objects/music_loader_custom/music_pitch_changer.tscn")
+const PITCH_PREFIXES: Array = ["smw2-", "smw-", "smas-", "smrpg-", "smb-", "smb3-", "save_g"]
 
 @export_category("Tweaks")
 @export var tweaked_completion_music: Resource = preload("res://music/complete_tweaked.ogg")
@@ -81,6 +82,24 @@ func _ready():
 						print("Changing AMIGA pitch of ", _index)
 						var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
 						playback.set_pitch_factor(1.00917)
+			).call_deferred()
+		)
+	
+	if SettingsManager.get_tweak("original_snes_pitch", false):
+		Thunder._connect(music_started, func(_index: int):
+			await Audio.music_started
+			(func():
+				if !channel_id in Audio._music_channels: return
+				if !is_instance_valid(Audio._music_channels[channel_id]): return false
+				if !_snes_pitch_check(Audio._music_channels[channel_id].stream):
+					return
+				
+				if Audio._music_channels[channel_id].stream is AudioStreamMPT:
+					print("Changing SNES pitch of ", _index)
+					var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
+					playback.set_pitch_factor(0.976)
+				else:
+					Audio._music_channels[channel_id].pitch_scale = 0.976
 			).call_deferred()
 		)
 	
@@ -174,6 +193,21 @@ func _fade_in_tweak(player, ind: int) -> void:
 		player.volume_db = -59
 		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
 		Audio.fade_music_1d_player(player, to_vol, 0.5 / Engine.time_scale, Tween.TRANS_CUBIC, false, Tween.EASE_OUT)
+
+
+func _snes_pitch_check(stream: AudioStream) -> bool:
+	if !is_instance_valid(stream): return false
+	var filename: String
+	if stream is AudioStreamSynchronized:
+		filename = stream.get_sync_stream(0).resource_path.get_file().left(6)
+	else:
+		filename = stream.resource_path.get_file().left(6)
+	var _allow: bool
+	for i in PITCH_PREFIXES:
+		if i in filename:
+			_allow = true
+			break
+	return _allow
 
 
 func set_index(ind: int) -> void:
