@@ -59,7 +59,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           echo "MFCE Release Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "$EXPORT_DIR/Readme.md"
           cd $EXPORT_DIR
-          chmod +x "${{ env.EXPORT_NAME }}.x86_64"
+          chmod +x "linux/${{ env.EXPORT_NAME }}.x86_64"
           zip -r windows64.zip windows
           rm -rf windows
           split -b 80M windows64.zip windows64_part_ -d --verbose
