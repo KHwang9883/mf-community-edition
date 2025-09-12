@@ -36,7 +36,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	please_type.visible = true
 	submitting_box.visible = false
 	input_box.visible = true
-	
+	await get_tree().physics_frame
 	line_edit.text = ""
 	line_edit.grab_focus()
 	line_edit.focus_exited.connect(_on_line_edit_focus_exited, CONNECT_ONE_SHOT)
@@ -107,6 +107,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_http_submit(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	print(body.get_string_from_utf8())
+	await get_tree().physics_frame
 	submitting = false
 	
 	dufhdiufsfdoi = true
@@ -131,6 +132,7 @@ func _on_line_edit_focus_exited() -> void:
 	minix_controls.focused = true
 	please_type.visible = false
 	has_errored = false
+	line_edit.text = ""
 
 
 func _submit_fake_record(decrypted_score: int) -> void:

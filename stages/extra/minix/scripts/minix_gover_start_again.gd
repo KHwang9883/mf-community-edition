@@ -2,8 +2,10 @@ extends MenuSelection
 
 @onready var starter: Node2D = $"../../../Node2D"
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+var _started: bool
 
 func _handle_select(mouse_input: bool = false) -> void:
+	if _started: return
 	Audio.stop_all_sounds()
 	super(mouse_input)
 	TransitionManager.transition_middle.connect(func():
@@ -22,6 +24,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	Pause.get_child(0).open_blocked = false
 	SettingsManager.hide_mouse()
 	_start_transition()
+	_started = true
+	get_parent().focused = false
 
 
 func _start_transition() -> void:
