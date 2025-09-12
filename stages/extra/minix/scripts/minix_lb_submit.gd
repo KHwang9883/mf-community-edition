@@ -22,6 +22,7 @@ var is_enabled: bool = true
 var submitting = false
 var has_errored: bool = false
 var dufhdiufsfdoi: bool
+var enter_to_continue_delay: float
 
 func _handle_select(mouse_input: bool = false) -> void:
 	if !is_enabled:
@@ -54,7 +55,13 @@ func _physics_process(delta: float) -> void:
 	
 	if !please_type.visible: return
 	
-	if Input.is_action_just_pressed("ui_cancel") || (enter_to_preview.text == "press enter to continue" && Input.is_action_just_pressed("ui_accept")):
+	enter_to_continue_delay = move_toward(enter_to_continue_delay, 0.0, delta)
+	
+	if Input.is_action_just_pressed("ui_cancel") || (
+		enter_to_preview.text == "press enter to continue" &&
+		Input.is_action_just_pressed("ui_accept") &&
+		enter_to_continue_delay <= 0.0
+	):
 		_on_line_edit_focus_exited()
 		Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
 		_play_sound()
@@ -76,6 +83,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if can_submit && !submitting && Input.is_action_just_pressed("ui_accept"):
+		enter_to_continue_delay = 0.1
 		_play_sound()
 		Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
 		line_edit.release_focus()
@@ -93,26 +101,27 @@ func _physics_process(delta: float) -> void:
 		var is_score_legit: bool = Data.values.score == decrypted_score
 		print(JSON.stringify(data))
 		
+		submitting = true
+		is_enabled = false
+		line_edit.text = ""
+		enter_to_preview.visible = false
+		await get_tree().physics_frame
 		if is_score_legit:
 			var headers = ["Content-Type: application/json"]
 			http_request.request_completed.connect(_on_http_submit, CONNECT_ONE_SHOT)
 			http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 		else:
 			_submit_fake_record(decrypted_score)
-		submitting = true
-		is_enabled = false
-		line_edit.text = ""
-		enter_to_preview.visible = false
 
 
 func _on_http_submit(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	print(body.get_string_from_utf8())
-	await get_tree().physics_frame
 	submitting = false
 	
 	dufhdiufsfdoi = true
 	enter_to_preview.text = "press enter to continue"
 	enter_to_preview.visible = true
+	enter_to_continue_delay = 0.1
 	
 	if response_code != 201:
 		loading.text = "error submitting your score!"

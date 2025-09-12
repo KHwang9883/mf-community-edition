@@ -18,6 +18,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	Audio.stop_music_channel(2, true)
 	SettingsManager.hide_mouse()
 	_start_transition()
+	get_parent().focused = false
 
 
 func _start_transition() -> void:
