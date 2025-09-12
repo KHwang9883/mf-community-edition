@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=4 uid="uid://bsnomo06t84ja"]
+[gd_scene load_steps=79 format=4 uid="uid://bsnomo06t84ja"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_w5q24"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_b7wog"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://boenwoa6312fm" path="res://music/extra/world_9/track0_atmospheric.ogg" id="4_2qc6y"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="4_33fy1"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_sooly"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_w3utf"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_wygae"]
 [ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="5_2qc6y"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_pki1n"]
@@ -471,6 +472,17 @@ jump_to_scene = "res://stages/extra/world_9/map_9.tscn"
 lighting_force_hide_on_start = false
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
+[node name="SecretUnlocker2" parent="." instance=ExtResource("7_mlr4l")]
+secrets = Array[String](["bte world 9 completed", "bte world 9 completed kevin mode"])
+show_progress_toast = false
+progress_by_id = "2"
+progress_to = 5
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_w3utf")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+
 [node name="MusicLoader" parent="." instance=ExtResource("2_flply")]
 script = ExtResource("4_sooly")
 tweaked_completion_music = ExtResource("5_pki1n")
@@ -490,12 +502,6 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_2qc6y")])
-
-[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_mlr4l")]
-secrets = Array[String](["bte world 9 completed"])
-show_progress_toast = false
-progress_by_id = "2"
-progress_to = 5
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.69, 0.69, 0.69, 1)
@@ -1363,4 +1369,4 @@ position = Vector2(0, -496)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
 shape = SubResource("WorldBoundaryShape2D_w3utf")
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]

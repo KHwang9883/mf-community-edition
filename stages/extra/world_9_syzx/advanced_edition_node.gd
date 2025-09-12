@@ -21,3 +21,5 @@ func _ready() -> void:
 	show()
 	tweak_enabled.emit()
 	reset_physics_interpolation()
+	if Input.is_action_pressed(&"ui_page_up"):
+		ProfileManager.current_profile.data.advanced_edition = true

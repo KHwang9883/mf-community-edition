@@ -1,11 +1,13 @@
-[gd_scene load_steps=108 format=4 uid="uid://dvwe7p41ph1mc"]
+[gd_scene load_steps=110 format=4 uid="uid://dvwe7p41ph1mc"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_0rqt2"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_2n0x5"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ivpok"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_82jac"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_l3s7i"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_aa1xd"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_k66st"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_xny5m"]
 [ext_resource type="AudioStream" uid="uid://sde1k277yxks" path="res://music/smw2-underground.ogg" id="5_nq3di"]
 [ext_resource type="AudioStream" uid="uid://j2421xpr613r" path="res://music/extra/world_9_syzx/the_glory.mod" id="6_hnbl2"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_hcexr"]
@@ -537,7 +539,20 @@ script = ExtResource("1_0rqt2")
 completion_music = ExtResource("2_ivpok")
 jump_to_scene = "res://stages/extra/world_9_syzx/map_9.tscn"
 lighting_force_hide_on_start = false
-lighting_show_on_quality = 2
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("3_l3s7i")]
+secrets = Array[String](["syzxchulun world 9", "syzxchulun world 9 kevin mode", "syzxchulun world 9 softendo", "syzxchulun world 9 softendo kevin mode"])
+show_progress_toast = false
+progress_by_id = "2"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker"]
+script = ExtResource("4_xny5m")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+check_for_softendo_mode = true
+softendo_progress_ids = Array[int]([2])
+softendo_progress_secret_mode_ids = Array[int]([3])
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_2n0x5")]
 script = ExtResource("3_82jac")
@@ -1116,6 +1131,22 @@ region_enabled = true
 region_rect = Rect2(0, 0, 8870, 560)
 metadata/_edit_lock_ = true
 
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="Node2D3/ParallaxBackground"]
+visible = false
+motion_mirroring = Vector2(800, 600)
+script = ExtResource("17_4nu11")
+maximum = false
+medium = true
+
+[node name="ColorRect" type="ColorRect" parent="Node2D3/ParallaxBackground/ParallaxLayer4"]
+modulate = Color(1, 1, 1, 0.8)
+material = ExtResource("26_e4626")
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("21_n62u0")
+metadata/_edit_lock_ = true
+
 [node name="TileMapLayer2" type="TileMapLayer" parent="Node2D3"]
 scale = Vector2(0.5, 0.5)
 tile_map_data = PackedByteArray("AACZAQsAAQAAAAAAAQCQARcAAQAAAAAAAQA=")
@@ -1612,3 +1643,7 @@ result = SubResource("Resource_l2v48")
 [node name="QuestionBlock9" parent="." instance=ExtResource("52_sq20p")]
 position = Vector2(4592, 272)
 result = SubResource("Resource_7ksc3")
+
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
+[connection signal="tweak_disabled" from="Node2D3" to="." method="enable_object_lighting"]
+[connection signal="tweak_enabled" from="Node2D3" to="." method="disable_object_lighting"]
