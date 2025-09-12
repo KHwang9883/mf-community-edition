@@ -38,7 +38,12 @@ func _physics_process(delta: float) -> void:
 				enemy.remove_from_group(&"#spawned_by_throw")
 				enemy.queue_free()
 		
-		NodeCreator.prepare_ins_2d(goomba_creation, self).create_2d().call_method(
+		NodeCreator.prepare_ins_2d(goomba_creation, self).call_method(
+			func(enemy: Node):
+				var en_attacked = enemy.get_node_or_null("Body/EnemyAttacked")
+				if en_attacked:
+					en_attacked.stomping_delay_frames = 0.0
+		).create_2d().call_method(
 			func(enemy: Node) -> void:
 				enemy.add_to_group(&"#spawned_by_throw")
 				enemy.life_time = enemy_life_time
