@@ -28,6 +28,9 @@ var level_scene_template: String = "res://stages/extra/expert_mode/otherworld/le
 @export var force_warp_to_save_room: bool = false
 @export var force_intro_if_level_1: bool = false
 @export var clear_color_override: bool = true
+@export var secret_completed: String
+@export var secret_completed_kevin: String
+@export var secret_completed_values: PackedStringArray
 
 var is_empty: bool
 var is_blocked: bool
@@ -98,6 +101,7 @@ func _update_save() -> void:
 	is_blocked = false
 	if clear_color_override:
 		label.remove_theme_color_override(&"font_color")
+		#if secret_completed && (!secret is Array || !secret_id_explicit in secret)
 	if level_count.size() <= 1:
 		label._tweak = true
 	

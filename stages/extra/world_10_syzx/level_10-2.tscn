@@ -1,8 +1,9 @@
-[gd_scene load_steps=87 format=4 uid="uid://bhqmxhiich36e"]
+[gd_scene load_steps=88 format=4 uid="uid://bhqmxhiich36e"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_gipf2"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_x78vy"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_xilgx"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_8vde5"]
 [ext_resource type="AudioStream" uid="uid://diuf7iidscu13" path="res://music/smw-underwater.ogg" id="4_skkpw"]
 [ext_resource type="AudioStream" uid="uid://no8rqi6mwk8c" path="res://music/smw-overworld.ogg" id="5_oi2n7"]
 [ext_resource type="AudioStream" uid="uid://co70gdke0u16k" path="res://music/smb3-underwater.ogg" id="6_8e6xo"]
@@ -307,6 +308,20 @@ script = ExtResource("1_gipf2")
 completion_music = ExtResource("2_x78vy")
 jump_to_scene = "uid://k1rvr1tngf05"
 
+[node name="SecretUnlocker2" parent="." instance=ExtResource("8_f5m7w")]
+secrets = Array[String](["syzxchulun world 10", "syzxchulun world 10 kevin mode", "syzxchulun world 10 advance", "syzxchulun world 10 advance kevin mode"])
+show_progress_toast = false
+progress_by_id = "2"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_8vde5")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+check_for_softendo_mode = true
+softendo_progress_ids = Array[int]([2])
+softendo_progress_secret_mode_ids = Array[int]([3])
+
 [node name="MusicLoader" type="Node" parent="."]
 script = ExtResource("3_xilgx")
 music_var_2 = Array[Resource]([ExtResource("4_skkpw"), ExtResource("5_oi2n7")])
@@ -315,11 +330,6 @@ var_2_volume_db = Array[float]([0.0, 4.0])
 var_3_volume_db = Array[float]([0.0, 4.0])
 music = Array[Resource]([ExtResource("7_05l1l"), ExtResource("5_oi2n7")])
 volume_db = Array[float]([0.0, 4.0])
-
-[node name="SecretUnlocker" parent="." instance=ExtResource("8_f5m7w")]
-secrets = Array[String](["all toad houses found"])
-progress_by_id = "2-2"
-progress_to = 5
 
 [node name="Mario" parent="." instance=ExtResource("9_tooh1")]
 position = Vector2(80, 0)
@@ -1281,6 +1291,7 @@ exists_once = true
 tile_map_data = PackedByteArray("AABFAQsAAgAAAAAAAQCYAA0AAQABAAAAAACYAA4AAQABAAEAAACZAA0AAQABAAAAAACZAA4AAQABAAEAAACaAA0AAQABAAAAAACaAA4AAQABAAEAAACbAA0AAQABAAAAAACbAA4AAQABAAEAAACcAA0AAQABAAAAAACcAA4AAQABAAEAAACdAA0AAQABAAAAAACdAA4AAQABAAEAAACeAA0AAQABAAAAAACeAA4AAQABAAEAAACfAA0AAQABAAAAAACfAA4AAQABAAEAAACgAA0AAQABAAAAAACgAA4AAQABAAEAAAChAA0AAQABAAAAAAChAA4AAQABAAEAAACiAA0AAQABAAAAAACiAA4AAQABAAEAAACjAA0AAQABAAAAAACjAA4AAQABAAEAAAAcAA0AAQABAAAAAAAcAA4AAQABAAEAAAAdAA0AAQACAAAAAAAdAA4AAQACAAEAAAAdAA8AAQACAAEAAAAdABAAAQACAAEAAAAbAA0AAQABAAAAAAAbAA4AAQABAAEAAAAbAAsAAgAAAAAAAAAbAAwAAgAAAAAAAAA=")
 tile_set = ExtResource("12_qg2hw")
 
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="player_enter" from="Area2D" to="Node" method="enable"]
 [connection signal="player_exit" from="Area2D" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D2" to="Node2" method="enable"]

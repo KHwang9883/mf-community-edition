@@ -1,9 +1,10 @@
-[gd_scene load_steps=69 format=4 uid="uid://drn8a6dwa6ywt"]
+[gd_scene load_steps=70 format=4 uid="uid://drn8a6dwa6ywt"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_o3nr6"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_3c416"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_royug"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_sbefw"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_0sxyr"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_4dtwm"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_miere"]
 [ext_resource type="AudioStream" uid="uid://bxbufag6ttv1w" path="res://music/extra/world_9/tims_tune_cut.mod" id="5_ifohn"]
@@ -267,6 +268,16 @@ completion_music = ExtResource("2_royug")
 completion_write_save = false
 jump_to_scene = "res://stages/extra/world_9/map_9_complete.tscn"
 
+[node name="SecretUnlocker2" parent="." instance=ExtResource("7_gbl7p")]
+secrets = Array[String](["bte world 9 completed", "bte world 9 completed kevin mode"])
+progress_by_id = "5"
+progress_to = 5
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_0sxyr")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+
 [node name="MusicLoader" parent="." instance=ExtResource("2_3c416")]
 script = ExtResource("3_sbefw")
 tweaked_completion_music = ExtResource("4_4dtwm")
@@ -287,11 +298,6 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_ifohn")])
 volume_db = Array[float]([-3.0])
-
-[node name="SecretUnlocker" parent="." instance=ExtResource("7_gbl7p")]
-secrets = Array[String](["bte world 9 completed"])
-progress_by_id = "5"
-progress_to = 5
 
 [node name="Mario" parent="." instance=ExtResource("4_miere")]
 position = Vector2(80, 400)
@@ -925,7 +931,7 @@ position = Vector2(11008, 288)
 position = Vector2(5392, 48)
 result = SubResource("Resource_v1n70")
 
-[connection signal="level_completed" from="." to="SecretUnlocker" method="progress_secret"]
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="scroll_stopped" from="Path2D/PathFollow2D" to="TileMapLayer" method="set_process_mode" binds= [4]]
 
 [editable path="Path2D/PathFollow2D/PlatformPathTankFloor"]

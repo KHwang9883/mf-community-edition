@@ -1,8 +1,9 @@
-[gd_scene load_steps=110 format=4 uid="uid://e3qwwofniv8"]
+[gd_scene load_steps=111 format=4 uid="uid://e3qwwofniv8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uk6ge"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_sv5we"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ytm80"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_8m77t"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_hj53k"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_ld3ml"]
 [ext_resource type="AudioStream" uid="uid://5uqbprtu0qb4" path="res://music/extra/world_9/looper231_-_fuel-dump.mod" id="4_yirwi"]
@@ -218,7 +219,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 metadata/_custom_type_script = "uid://chvjy6okoognf"
 
-[sub_resource type="Resource" id="Resource_8m77t"]
+[sub_resource type="Resource" id="Resource_mjhta"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
 creation_fallback_node = ExtResource("28_q4q3a")
@@ -812,6 +813,17 @@ completion_music = ExtResource("2_ytm80")
 jump_to_scene = "uid://pfrmf5yabv63"
 lighting_force_hide_on_start = false
 
+[node name="SecretUnlocker2" parent="." instance=ExtResource("7_gdtnc")]
+secrets = Array[String](["bte world 9 completed", "bte world 9 completed kevin mode"])
+show_progress_toast = false
+progress_by_id = "4"
+progress_to = 5
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_8m77t")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+
 [node name="MusicLoader" parent="." instance=ExtResource("2_sv5we")]
 script = ExtResource("4_hj53k")
 tweaked_completion_music = ExtResource("5_7un8d")
@@ -831,12 +843,6 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_yirwi")])
-
-[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_gdtnc")]
-secrets = Array[String](["bte world 9 completed"])
-show_progress_toast = false
-progress_by_id = "4"
-progress_to = 5
 
 [node name="Mario" parent="." instance=ExtResource("4_ld3ml")]
 position = Vector2(112, 400)
@@ -1876,7 +1882,7 @@ result = SubResource("Resource_oydpa")
 [node name="Brick11" parent="." instance=ExtResource("38_hyv55")]
 position = Vector2(13328, 240)
 max_items = 1
-result = SubResource("Resource_8m77t")
+result = SubResource("Resource_mjhta")
 
 [node name="QuestionBlock2" parent="." instance=ExtResource("39_fd2nv")]
 position = Vector2(272, 144)
@@ -2441,7 +2447,7 @@ offset_bottom = 512.0
 size_flags_vertical = 3
 color = Color(0.470588, 0, 0, 1)
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="died" from="Mario" to="Area2D/Node" method="warped"]
 [connection signal="player_enter" from="Area2D" to="Area2D/Node" method="_player_triggered"]
 [connection signal="player_enter" from="Area2D" to="LavaAnim/AnimationPlayer" method="play" binds= [&"new_animation"]]

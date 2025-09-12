@@ -1,9 +1,11 @@
-[gd_scene load_steps=86 format=4 uid="uid://bvk2k2mqdrod7"]
+[gd_scene load_steps=88 format=4 uid="uid://bvk2k2mqdrod7"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_a445d"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_iefgj"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_urtsj"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_4akwh"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_dkn72"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_4hhxx"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_b17jv"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_x7fb3"]
 [ext_resource type="AudioStream" uid="uid://bo1yufj7ga7ha" path="res://music/interference.mod" id="5_2851b"]
@@ -342,6 +344,20 @@ point_count = 2
 script = ExtResource("1_a445d")
 completion_music = ExtResource("2_urtsj")
 jump_to_scene = "res://stages/extra/world_9_syzx/map_9.tscn"
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("3_4akwh")]
+secrets = Array[String](["syzxchulun world 9", "syzxchulun world 9 kevin mode", "syzxchulun world 9 softendo", "syzxchulun world 9 softendo kevin mode"])
+show_progress_toast = false
+progress_by_id = "1"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker"]
+script = ExtResource("4_4hhxx")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+check_for_softendo_mode = true
+softendo_progress_ids = Array[int]([2])
+softendo_progress_secret_mode_ids = Array[int]([3])
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_iefgj")]
 script = ExtResource("3_dkn72")
@@ -1239,3 +1255,5 @@ position = Vector2(6960, 176)
 z_index = -50
 position = Vector2(7840, 336)
 texture = ExtResource("21_gicp0")
+
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]

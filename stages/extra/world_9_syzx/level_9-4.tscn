@@ -151,17 +151,16 @@ script = ExtResource("1_spmyb")
 completion_music = ExtResource("2_vds5n")
 jump_to_scene = "res://stages/extra/world_9_syzx/map_9_complete.tscn"
 
-[node name="SecretUnlocker" parent="." instance=ExtResource("3_pkojj")]
-secrets = Array[String](["syzx worlds completed", "syzx worlds secret mode", "syzx worlds completed softendo", "syzx worlds secret mode softendo"])
-toast_text_overrides = Array[String](["syzxchulun worlds completed", "syzxchulun worlds kevin mode", "syzxchulun worlds softendo completed", "syzxchulun worlds softendo kevin"])
-progress_by_id = "9"
+[node name="SecretUnlocker2" parent="." instance=ExtResource("3_pkojj")]
+secrets = Array[String](["syzxchulun world 9", "syzxchulun world 9 kevin mode", "syzxchulun world 9 softendo", "syzxchulun world 9 softendo kevin mode"])
+show_progress_toast = false
+progress_by_id = "4"
 progress_to = 4
 
-[node name="UnlockMultiple" type="Node" parent="SecretUnlocker"]
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
 script = ExtResource("4_2ru6i")
 progress_ids = Array[int]([0])
 progress_secret_mode_ids = Array[int]([1])
-progress_reset_on_complete = false
 check_for_softendo_mode = true
 softendo_progress_ids = Array[int]([2])
 softendo_progress_secret_mode_ids = Array[int]([3])
@@ -1100,9 +1099,9 @@ collision_mask = 0
 position = Vector2(4301.5, 208)
 shape = SubResource("RectangleShape2D_4fwgg")
 
-[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="level_completed" from="." to="Parallax2D/Area2D" method="queue_free"]
 [connection signal="level_completed" from="." to="Node" method="_on_finish"]
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="scroll_stopped" from="Path2D/PathFollow2D" to="TileMapLayer" method="set_process_mode" binds= [4]]
 
 [editable path="FlameballLauncher27"]
