@@ -1,4 +1,4 @@
-[gd_scene load_steps=263 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=264 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" uid="uid://db8widi15epm" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -168,6 +168,7 @@
 [ext_resource type="PackedScene" uid="uid://ooj2vullj5a5" path="res://stages/save_game_room/objects/pipe_in_placeholder.tscn" id="143_yxggr"]
 [ext_resource type="Texture2D" uid="uid://dj0o1q1exculv" path="res://gfx/texts/sgr_achievements_angled.png" id="148_wibcd"]
 [ext_resource type="Texture2D" uid="uid://nvgk4qen1dc6" path="res://engine/tilesets/overworld/green_pipe_cut.png" id="157_m16su"]
+[ext_resource type="Script" uid="uid://vvv5faybavva" path="res://stages/main_menu/scripts/update_checker.gd" id="169_7yric"]
 [ext_resource type="Script" uid="uid://c6oa8xfkx61iq" path="res://stages/main_menu/update_modal.gd" id="169_xls2l"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="170_7yric"]
 [ext_resource type="Texture2D" uid="uid://fwa07n7kaesp" path="res://stages/main_menu/textures/update_now.png" id="171_btyue"]
@@ -6095,6 +6096,13 @@ position = Vector2(2304, -656)
 [node name="PipeInPlaceholder6" parent="Garbage" instance=ExtResource("143_yxggr")]
 position = Vector2(2432, -656)
 
+[node name="UpdateChecker" type="Node" parent="."]
+script = ExtResource("169_7yric")
+is_in_main_menu = false
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+timeout = 8.0
+
 [node name="UpdateConfirmModal" type="CanvasLayer" parent="."]
 layer = 127
 
@@ -6111,6 +6119,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("169_xls2l")
+delay_controls = true
 
 [node name="TextureRect" type="TextureRect" parent="UpdateConfirmModal/Control"]
 modulate = Color(1, 1, 1, 0.8)
@@ -6168,6 +6177,7 @@ texture = ExtResource("171_btyue")
 stretch_mode = 3
 script = ExtResource("172_ur33w")
 cancel = false
+update_checker_path = NodePath("../../../../UpdateChecker")
 
 [node name="TextureRect2" type="TextureRect" parent="UpdateConfirmModal/Control/VBoxContainer"]
 layout_mode = 2
@@ -6175,6 +6185,7 @@ size_flags_horizontal = 4
 texture = ExtResource("173_mht4q")
 stretch_mode = 3
 script = ExtResource("172_ur33w")
+update_checker_path = NodePath("../../../../UpdateChecker")
 
 [node name="Node" type="Node" parent="UpdateConfirmModal/Control"]
 script = ExtResource("27_74h1a")

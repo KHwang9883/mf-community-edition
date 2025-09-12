@@ -52,6 +52,8 @@ func _ready() -> void:
 		update_checking.visible = true
 		update_checking.text = "checking for\nupdates..."
 		update_checking.modulate.a = 0.75
+	elif Data.technical_values.get("skip_update_check"):
+		return
 	
 	http_request.request_completed.connect(_on_http_get, CONNECT_ONE_SHOT)
 	http_request.request(url)
@@ -93,10 +95,12 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 			main_menu_controls.set_meta(&"has_update", true)
 			Audio.play_1d_sound(COIN, true, { ignore_pause = true })
 		else:
+			while is_inside_tree() && get_tree().paused:
+				await get_tree().physics_frame
 			Scenes.current_scene.get_node("UpdateConfirmModal/Control").toggle()
 			var _snd = CharacterManager.get_sound_replace(MESSAGE_BLOCK, MESSAGE_BLOCK, "message_box", false)
 			Audio.play_1d_sound(_snd, true, {ignore_pause = true})
-			get_tree().paused = true
+			print("[Update Checker] Displaying an update notice!")
 		
 		if dict.get("open_to", "").begins_with("https://"):
 			url_open = dict.open_to
