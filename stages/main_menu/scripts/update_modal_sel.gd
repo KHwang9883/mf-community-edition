@@ -9,6 +9,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	if cancel:
 		pause.toggle(false)
+		Data.technical_values.skip_update_check = true
 		return
 	
 	OS.shell_open(update_checker.url_open)
