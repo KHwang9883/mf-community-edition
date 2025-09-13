@@ -3,6 +3,7 @@
 extends "res://engine/objects/warps/pipe_in.gd"
 
 const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
+const COLOR_KEVIN := Color("#b16dff")
 
 @export
 var profile_name: String
@@ -101,7 +102,15 @@ func _update_save() -> void:
 	is_blocked = false
 	if clear_color_override:
 		label.remove_theme_color_override(&"font_color")
-		#if secret_completed && (!secret is Array || !secret_id_explicit in secret)
+		if secret_completed:
+			var secr_comp = SecretsManager.get_secret(secret_completed)
+			if (secr_comp is Array && secret_completed_values[_star_sel_level - 1] in secr_comp) || secr_comp && secr_comp is bool:
+				label.add_theme_color_override(&"font_color", Color.LIGHT_GREEN)
+		if secret_completed_kevin:
+			var secr_comp = SecretsManager.get_secret(secret_completed_kevin)
+			if (secr_comp is Array && secret_completed_values[_star_sel_level - 1] in secr_comp) || secr_comp && secr_comp is bool:
+				label.add_theme_color_override(&"font_color", COLOR_KEVIN)
+			
 	if level_count.size() <= 1:
 		label._tweak = true
 	

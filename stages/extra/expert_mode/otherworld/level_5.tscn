@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://m6fc6q47ja5x"]
+[gd_scene load_steps=38 format=4 uid="uid://m6fc6q47ja5x"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uvh6q"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_7bdyo"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_7cvf6"]
 [ext_resource type="Script" uid="uid://dkthq2ycyrv01" path="res://stages/extra/expert_mode/scripts/world_8_music_loop.gd" id="8_41y1a"]
 [ext_resource type="Script" uid="uid://dpx2er7pami53" path="res://stages/extra/expert_mode/otherworld/scripts/level_5_part_loader.gd" id="9_3g4p8"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="9_8bm8e"]
 [ext_resource type="AudioStream" uid="uid://cusrgc7jqf7qy" path="res://music/extra/expert_mode/short-die.ogg" id="9_26qhm"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_ayg6p"]
 [ext_resource type="TileSet" uid="uid://cc4wmng1l7suo" path="res://tilesets/snowland_red/snowland_red.tres" id="12_r5r1s"]
@@ -99,9 +100,15 @@ is_expert_mode = false
 antiafk_enabled = false
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_w3rux")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "5"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker"]
+script = ExtResource("9_8bm8e")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="SecretUnlocker3" parent="." instance=ExtResource("7_w3rux")]
 secrets = Array[String](["otherworld easter eggs"])
@@ -235,8 +242,8 @@ voice_lines = Array[AudioStream]([ExtResource("42_cxhdm")])
 [node name="FinishLine" parent="." instance=ExtResource("53_w3jco")]
 position = Vector2(11072, 1440)
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="level_completed" from="." to="Area2D2/Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="player_enter" from="Area2D2" to="Area2D2/Marker2D" method="activate"]
 [connection signal="life_text_triggered" from="Area2D2/Marker2D" to="HUD/BonusLevelUnlocked" method="activate"]
 [connection signal="message_hidden" from="MessageBlock2" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]

@@ -20,4 +20,3 @@ func _physics_process(delta: float) -> void:
 	
 	parallax_2d.autoscroll.x = speed
 	platform_path_tank_floor.position.x += speed * delta
-	

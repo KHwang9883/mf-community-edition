@@ -1,5 +1,6 @@
 extends "res://engine/scenes/save_game_room/scripts/saved_level_label.gd"
 
+@export var act_as_saved_level_label: bool = true
 @export var secret_name: String
 @export var secret_progress_id: String
 @export var secret_kevin_name: String
@@ -7,7 +8,8 @@ extends "res://engine/scenes/save_game_room/scripts/saved_level_label.gd"
 @export var secret_kevin_standalone: String
 
 func _ready() -> void:
-	super()
+	if act_as_saved_level_label:
+		super()
 	if !_label_ready():
 		remove_theme_color_override.call_deferred(&"font_color")
 

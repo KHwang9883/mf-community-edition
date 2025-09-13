@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=4 uid="uid://ckd7slk0x1qgg"]
+[gd_scene load_steps=117 format=4 uid="uid://ckd7slk0x1qgg"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_tew2m"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_mkev3"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="5_e3eqj"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="6_8g1hp"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="6_lqlrb"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="7_640pv"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_dhkfc"]
 [ext_resource type="Texture2D" uid="uid://c2xfexiy1rnqh" path="res://engine/tilesets/overworld/overworld_classic.png" id="8_465tr"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="9_mt328"]
@@ -298,36 +299,6 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_httlu"]
-resource_local_to_scene = true
-script = ExtResource("22_0pwwp")
-creation_nodepack = ExtResource("26_exwsy")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="Resource" id="Resource_640pv"]
-resource_local_to_scene = true
-script = ExtResource("22_0pwwp")
-creation_nodepack = ExtResource("26_exwsy")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
 [sub_resource type="Resource" id="Resource_mdjea"]
 resource_local_to_scene = true
 script = ExtResource("22_0pwwp")
@@ -404,6 +375,36 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_frktd"]
+resource_local_to_scene = true
+script = ExtResource("22_0pwwp")
+creation_nodepack = ExtResource("26_exwsy")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_2yh1t"]
+resource_local_to_scene = true
+script = ExtResource("22_0pwwp")
+creation_nodepack = ExtResource("26_exwsy")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_h12me"]
 resource_local_to_scene = true
 script = ExtResource("22_0pwwp")
 creation_nodepack = ExtResource("26_exwsy")
@@ -732,9 +733,15 @@ music = Array[Resource]([ExtResource("4_httlu")])
 is_expert_mode = false
 
 [node name="SecretUnlocker2" parent="MusicLoader" instance=ExtResource("5_e3eqj")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "2"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker2"]
+script = ExtResource("7_640pv")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="Mario" parent="." instance=ExtResource("4_xunor")]
 position = Vector2(224, 400)
@@ -1136,7 +1143,7 @@ result = SubResource("Resource_8v5b2")
 [node name="Brick8" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(2672, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_httlu")
+result = SubResource("Resource_mdjea")
 
 [node name="Brick9" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(2672, 240)
@@ -1156,7 +1163,7 @@ position = Vector2(2672, 112)
 [node name="Brick14" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(2704, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_640pv")
+result = SubResource("Resource_5sdse")
 
 [node name="Brick15" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(3408, 304)
@@ -1302,17 +1309,17 @@ position = Vector2(4688, 368)
 [node name="Brick21" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(4144, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_mdjea")
+result = SubResource("Resource_nfmxd")
 
 [node name="Brick22" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(4112, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_5sdse")
+result = SubResource("Resource_cex2y")
 
 [node name="Brick23" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(4176, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_nfmxd")
+result = SubResource("Resource_n1ooj")
 
 [node name="Brick27" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(4464, 272)
@@ -1335,17 +1342,17 @@ position = Vector2(3984, 240)
 [node name="Brick24" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(4016, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_cex2y")
+result = SubResource("Resource_frktd")
 
 [node name="Brick25" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(3984, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_n1ooj")
+result = SubResource("Resource_2yh1t")
 
 [node name="Brick26" parent="." instance=ExtResource("20_0iot2")]
 position = Vector2(4048, 272)
 result_counter_value = 1.0
-result = SubResource("Resource_frktd")
+result = SubResource("Resource_h12me")
 
 [node name="QuestionBlock4" parent="." instance=ExtResource("21_ycwog")]
 position = Vector2(2736, 272)
@@ -1802,8 +1809,8 @@ position = Vector2(8175, 304)
 position = Vector2(9008, 272)
 result = SubResource("Resource_s2c5j")
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker2" method="progress_secret"]
 [connection signal="level_completed" from="." to="HUD/Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="life_text_triggered" from="HUD/Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 
 [editable path="PiranhaPink"]

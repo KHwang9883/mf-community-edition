@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=4 uid="uid://dmf1yqvxy5lyu"]
+[gd_scene load_steps=98 format=4 uid="uid://dmf1yqvxy5lyu"]
 
 [ext_resource type="Script" uid="uid://ccwkn1ocyxgco" path="res://stages/extra/expert_mode/otherworld/scripts/84level_boss.gd" id="1_lcqti"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_07lss"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_iqunu"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="5_slnl4"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="6_wfs5b"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="7_i86ys"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_xemqk"]
 [ext_resource type="AudioStream" uid="uid://cusrgc7jqf7qy" path="res://music/extra/expert_mode/short-die.ogg" id="8_045hh"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_wfs5b"]
@@ -436,9 +437,15 @@ store_inventory = Dictionary[String, int]({
 antiafk_enabled = false
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("6_wfs5b")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "8"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker"]
+script = ExtResource("7_i86ys")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." instance=ExtResource("5_iqunu")]
 position = Vector2(96, 336)
@@ -1399,7 +1406,7 @@ theme_override_font_sizes/font_size = 24
 text = "PRESS JUMP BUTTON..."
 horizontal_alignment = 1
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="view_section_changed" from="CamArea" to="FinalBossCell" method="_on_cam_area_view_section_changed"]
 [connection signal="player_enter" from="Area2D" to="FinalBossCell" method="hud_scroll"]
 [connection signal="player_enter" from="Area2D2" to="FinalBossCell" method="parallax_switch"]

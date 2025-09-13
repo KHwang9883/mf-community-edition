@@ -1,11 +1,13 @@
-[gd_scene load_steps=167 format=4 uid="uid://cmj6qfke5y3hx"]
+[gd_scene load_steps=169 format=4 uid="uid://cmj6qfke5y3hx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yynw0"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_hxm3b"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_qujh4"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_gwjy8"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_ho1ua"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_7njjp"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_a7012"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_bfajh"]
 [ext_resource type="AudioStream" uid="uid://c54m13b157yo7" path="res://engine/scenes/credits/music/credits.mod" id="4_ndnur"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_l0rrj"]
 [ext_resource type="Script" uid="uid://g4dqn5f7y7ns" path="res://stages/extra/human_lab/scripts/jeans_continue_humanlab.gd" id="7_5shsc"]
@@ -729,6 +731,14 @@ completion_music = ExtResource("2_hxm3b")
 jump_to_scene = "res://stages/save_game_room/save_game_room.tscn"
 completion_center_on_player_after_transition = true
 
+[node name="SecretUnlocker" parent="." instance=ExtResource("3_gwjy8")]
+secrets = Array[String](["human lab tower passed", "human lab tower in kevin mode"])
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker"]
+script = ExtResource("4_bfajh")
+normal_ids = Array[int]([0])
+secret_mode_ids = Array[int]([1])
+
 [node name="MusicLoader" parent="." instance=ExtResource("2_qujh4")]
 script = ExtResource("3_ho1ua")
 tweaked_completion_music = ExtResource("4_a7012")
@@ -1326,6 +1336,7 @@ collision_mask = 32
 script = ExtResource("47_6oeew")
 turn_sprite = false
 sprite = NodePath("AnimatedSprite2D2")
+visible_on_screen_notifier = NodePath("")
 gravity_scale = 0.2
 correct_collision = false
 
@@ -1712,6 +1723,7 @@ position = Vector2(437, -10497)
 texture = ExtResource("97_35tyx")
 
 [connection signal="level_completed" from="." to="CamArea" method="_switch_bounds"]
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="view_section_changed" from="CameraArea" to="PlayerCamera2D" method="switch_to_direction" binds= [2]]
 [connection signal="player_enter" from="жидко напукал/Area2D" to="жидко напукал/Area2D/AudioStreamPlayer2D" method="play"]
 [connection signal="player_exit" from="жидко напукал/Area2D" to="жидко напукал/Area2D/AudioStreamPlayer2D" method="stop"]
