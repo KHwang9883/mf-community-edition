@@ -62,10 +62,12 @@ jobs:
           chmod +x "linux/${{ env.EXPORT_NAME }}.x86_64"
           zip -r windows64.zip windows
           rm -rf windows
-          split -b 80M windows64.zip windows64_part_ -d --verbose
+          mkdir -v -p windows64
+          split -b 80M windows64.zip windows64/part_ -d --verbose
           zip -r linux64.zip linux
           rm -rf linux
-          split -b 80M linux64.zip linux64_part_ -d --verbose
+          mkdir -v -p linux64
+          split -b 80M linux64.zip linux64/part_ -d --verbose
       - name: Upload Files
         run: |
           EXPORT_DIR="$(readlink -f build)"
@@ -73,8 +75,9 @@ jobs:
           do
             FILE_SIZE="$(wc -c < $EXPORT_DIR/$BUILD_FILENAME.zip)"
             FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
+            rm -f $EXPORT_DIR/$BUILD_FILENAME.zip
             
-            printf "File size: $FILE_SIZE"
+            printf "File size: $FILE_SIZE\n"
             echo "Creating an upload folder: $FOLDER_UUID"
             curl -X MKCOL \
               -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
@@ -83,7 +86,7 @@ jobs:
             
             LOOP_ID=0
             PART_ID=""
-            for FILE in $EXPORT_DIR/$BUILD_FILENAME_part_*
+            for FILE in $EXPORT_DIR/$BUILD_FILENAME/part_*
             do
               LOOP_ID=$((LOOP_ID + 1))
               PART_ID=$(printf "%05d" "$LOOP_ID")
