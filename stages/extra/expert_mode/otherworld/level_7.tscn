@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=4 uid="uid://dcgw7ivluvpsx"]
+[gd_scene load_steps=163 format=4 uid="uid://dcgw7ivluvpsx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_g6ctx"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_liom3"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_ixtjl"]
 [ext_resource type="AudioStream" uid="uid://coyyqbgo1fy0d" path="res://music/extra/expert_mode/break_out-1739.mod" id="6_4d4jn"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_lonbm"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="8_wxrrj"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_4d4jn"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="10_o3eut"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="11_3hky5"]
@@ -1577,9 +1578,15 @@ music = Array[Resource]([ExtResource("6_4d4jn")])
 volume_db = Array[float]([-4.0])
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("5_de8m0")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "7"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker"]
+script = ExtResource("8_wxrrj")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="SecretUnlocker3" parent="." instance=ExtResource("5_de8m0")]
 secrets = Array[String](["otherworld easter eggs"])
@@ -3111,7 +3118,7 @@ z_index = -20
 position = Vector2(7408, 744)
 texture = ExtResource("73_i5ghj")
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="warp_ended" from="miscellaneous/snickers" to="miscellaneous/Node" method="activate"]
 [connection signal="warp_ended" from="miscellaneous/bounty" to="miscellaneous/Node" method="activate"]
 [connection signal="warp_ended" from="miscellaneous/bounty" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]
@@ -3121,8 +3128,8 @@ texture = ExtResource("73_i5ghj")
 [connection signal="warp_started" from="miscellaneous/PipeIn4" to="texts" method="queue_free"]
 [connection signal="warp_started" from="miscellaneous/PipeIn4" to="miscellaneous/snickers" method="queue_free"]
 [connection signal="warp_started" from="miscellaneous/PipeIn4" to="miscellaneous/bounty" method="queue_free"]
-[connection signal="life_text_triggered" from="miscellaneous/GravityBody2D" to="HUD/BonusLevelUnlocked" method="activate"]
 [connection signal="life_text_triggered" from="miscellaneous/GravityBody2D" to="HUD/BonusLevelUnlocked" method="show"]
+[connection signal="life_text_triggered" from="miscellaneous/GravityBody2D" to="HUD/BonusLevelUnlocked" method="activate"]
 [connection signal="grab_initiated" from="miscellaneous/GravityBody2D/GrabbableModifier" to="miscellaneous/GravityBody2D" method="_on_grab_initiated"]
 [connection signal="grabbed" from="miscellaneous/GravityBody2D/GrabbableModifier" to="miscellaneous/GravityBody2D" method="_on_grabbed"]
 [connection signal="ungrabbed" from="miscellaneous/GravityBody2D/GrabbableModifier" to="miscellaneous/GravityBody2D" method="_on_ungrabbed"]

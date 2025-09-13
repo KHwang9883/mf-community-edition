@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=4 uid="uid://dq27ub5400i4u"]
+[gd_scene load_steps=124 format=4 uid="uid://dq27ub5400i4u"]
 
 [ext_resource type="PackedScene" uid="uid://dxqr6xmj8wu31" path="res://stages/world_1/expert_level_1-1.tscn" id="1_kc8rb"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="2_38ist"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="4_ntdn8"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_q8yqm"]
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="5_5wm8q"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="5_lr2rq"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="6_maq6g"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="7_fvdvu"]
 [ext_resource type="PackedScene" uid="uid://ct8p366bkgxl6" path="res://objects/coin_bonus_level/bonus_level_unlocked.tscn" id="8_2e8vn"]
@@ -1319,9 +1320,15 @@ volume_db = Array[float]([2.0, 4.0])
 is_expert_mode = false
 
 [node name="SecretUnlocker" parent="MusicLoader" index="1" instance=ExtResource("4_q8yqm")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "1"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker" index="0"]
+script = ExtResource("5_lr2rq")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="Mario" parent="." index="3"]
 position = Vector2(80, 16)
@@ -1342,6 +1349,12 @@ tile_set = ExtResource("4_chph8")
 [node name="Layer3" parent="." index="11"]
 use_parent_material = false
 enabled = false
+
+[node name="Sprite2D" parent="." index="12"]
+visible = false
+
+[node name="PurplePipe" parent="Sprite2D" index="0"]
+visible = false
 
 [node name="HarderDesignNode" parent="." index="13"]
 modulate = Color(1, 1, 1, 1)
@@ -2329,8 +2342,8 @@ sound = ExtResource("40_b5iyd")
 position = Vector2(12864, 384)
 script = ExtResource("43_lr2rq")
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="level_completed" from="." to="Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="collided_floor" from="KoopaGreen2" to="KoopaGreen2" method="jump" binds= [-350.0]]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser" method="activate"]
 [connection signal="screen_entered" from="Bowser/VisibleOnScreenNotifier2D" to="Bowser/VisibleOnScreenNotifier2D" method="queue_free"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://dt5mvr4b4ogj8"]
+[gd_scene load_steps=71 format=4 uid="uid://dt5mvr4b4ogj8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_p2acl"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="2_gnmdq"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dnyk0ph5vd52a" path="res://engine/objects/enemies/cheeps/cheep_blue.tscn" id="6_x25me"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="7_ofoha"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="8_7ol3h"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="8_eipiu"]
 [ext_resource type="PackedScene" uid="uid://dvmtgtjgrqsap" path="res://objects/underwater_push_platform/platform_underwater.tscn" id="9_8uk2c"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="9_ylvna"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="10_66a2o"]
@@ -161,9 +162,15 @@ volume_db = Array[float]([0.0, 4.0])
 is_expert_mode = false
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("9_ylvna")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "3"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker"]
+script = ExtResource("8_eipiu")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("9_ylvna")]
 secrets = Array[String](["all toad houses found"])
@@ -904,7 +911,7 @@ text = "jump on
 cheep cheeps"
 vertical_alignment = 1
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D2" to="Area2D2/Marker2D" method="activate"]
 [connection signal="entered_castle" from="Area2D2/Marker2D" to="Area2D2/Marker2D" method="_on_level_completed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=156 format=4 uid="uid://ro5dsj216p7u"]
+[gd_scene load_steps=157 format=4 uid="uid://ro5dsj216p7u"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_x038d"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_yf1xj"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://ctjkq6fsrakou" path="res://music/extra/expert_mode/Cyborgmania.mod" id="5_wkgm6"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_etb60"]
 [ext_resource type="PackedScene" uid="uid://cvigdw7nldify" path="res://objects/antiafk_expert_mode/antiafk_expert_mode.tscn" id="7_v1s5h"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="8_v1s5h"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_wkgm6"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_1c0if"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="10_etb60"]
@@ -592,7 +593,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_v1s5h"]
+[sub_resource type="Resource" id="Resource_k8hwx"]
 resource_local_to_scene = true
 script = ExtResource("18_cux7r")
 creation_nodepack = ExtResource("17_065r7")
@@ -607,7 +608,7 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_k8hwx"]
+[sub_resource type="Resource" id="Resource_7of5i"]
 resource_local_to_scene = true
 script = ExtResource("18_cux7r")
 creation_nodepack = ExtResource("17_065r7")
@@ -775,9 +776,15 @@ music = Array[Resource]([ExtResource("5_wkgm6")])
 volume_db = Array[float]([-3.0])
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("7_etb60")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "6"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker"]
+script = ExtResource("8_v1s5h")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="AntiafkExpertMode" parent="." instance=ExtResource("7_v1s5h")]
 is_expert_mode = false
@@ -1757,12 +1764,12 @@ result = SubResource("Resource_fc11n")
 [node name="Brick" parent="." instance=ExtResource("19_tmf6g")]
 position = Vector2(4160, 112)
 max_items = 15
-result = SubResource("Resource_v1s5h")
+result = SubResource("Resource_k8hwx")
 
 [node name="Brick2" parent="." instance=ExtResource("19_tmf6g")]
 position = Vector2(7248, 176)
 max_items = 15
-result = SubResource("Resource_k8hwx")
+result = SubResource("Resource_7of5i")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 z_index = 1
@@ -2691,8 +2698,8 @@ position = Vector2(13328, 383)
 [node name="Goomba7" parent="." instance=ExtResource("33_mrg2h")]
 position = Vector2(10928, 396)
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="level_completed" from="." to="HUD/Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="life_text_triggered" from="HUD/Marker2D" to="HUD/ExtraGOContinue" method="activate"]
 [connection signal="scripted_move_ended" from="Scripted/Cursor" to="Scripted/Color2" method="show"]
 [connection signal="scripted_move_ended" from="Scripted/Cursor" to="StaticBody2D/CollisionScripted" method="set_disabled" flags=3 binds= [false]]

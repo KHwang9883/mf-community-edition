@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=4 uid="uid://m6fc6q47ja5x"]
+[gd_scene load_steps=119 format=4 uid="uid://m6fc6q47ja5x"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uvh6q"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_7bdyo"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_7cvf6"]
 [ext_resource type="Script" uid="uid://dkthq2ycyrv01" path="res://stages/extra/expert_mode/scripts/world_8_music_loop.gd" id="8_41y1a"]
 [ext_resource type="AudioStream" uid="uid://cusrgc7jqf7qy" path="res://music/extra/expert_mode/short-die.ogg" id="9_26qhm"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="9_eolmk"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_ayg6p"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="12_lw5oq"]
 [ext_resource type="Script" uid="uid://dej6ss6iaybfa" path="res://stages/extra/expert_mode/otherworld/scripts/set_hud_score_red_if_minus.gd" id="14_j1hkf"]
@@ -655,9 +656,15 @@ volume_db = Array[float]([-1.0])
 is_expert_mode = false
 
 [node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("6_8b0sv")]
-secrets = Array[String](["all otherworld levels beaten"])
+secrets = Array[String](["all otherworld levels beaten", "otherworld in kevin mode"])
 progress_by_id = "4"
 progress_to = 8
+
+[node name="UnlockMultiple" type="Node" parent="MusicLoader/SecretUnlocker"]
+script = ExtResource("9_eolmk")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="SecretUnlocker3" parent="." instance=ExtResource("6_8b0sv")]
 secrets = Array[String](["otherworld easter eggs"])
@@ -4060,8 +4067,8 @@ position = Vector2(1440, 368)
 jumping_speed = 150.0
 gravity_scale = 0.5
 
-[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker" method="progress_secret"]
 [connection signal="level_completed" from="." to="Area2D2/Marker2D" method="_on_level_completed"]
+[connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="view_section_changed" from="CameraArea2" to="SecretUnlocker4" method="progress_secret" binds= [0, false]]
 [connection signal="player_enter" from="Sprite2D7/Area2D" to="Sprite2D7/PiranhaHead4" method="reset_physics_interpolation"]
 [connection signal="player_enter" from="Sprite2D7/Area2D" to="Sprite2D7/PiranhaHead4" method="show"]
