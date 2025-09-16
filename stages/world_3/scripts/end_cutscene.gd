@@ -1,7 +1,7 @@
 extends Node
 
-const CASTLE_BRICK = preload("res://stages/world_1/scripts/castle_brick.tscn")
-const CASTLE_SMOKE = preload("res://stages/world_1/scripts/castle_smoke.tscn")
+const CASTLE_BRICK = preload("res://engine/scenes/castle_cutscene/objects/castle_brick.tscn")
+const CASTLE_SMOKE = preload("res://engine/scenes/castle_cutscene/objects/castle_smoke.tscn")
 
 const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 const HURT = preload("res://engine/objects/bosses/bowser/sounds/bowser_hurt.wav")
