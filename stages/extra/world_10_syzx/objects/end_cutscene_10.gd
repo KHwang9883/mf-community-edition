@@ -1,7 +1,7 @@
 extends Node
 
-const CASTLE_BRICK = preload("res://stages/world_1/scripts/castle_brick.tscn")
-const CASTLE_SMOKE = preload("res://stages/world_1/scripts/castle_smoke.tscn")
+const CASTLE_BRICK = preload("res://engine/scenes/castle_cutscene/objects/castle_brick.tscn")
+const CASTLE_SMOKE = preload("res://engine/scenes/castle_cutscene/objects/castle_smoke.tscn")
 const EXPLOSION_NEAREST = preload("res://stages/extra/world_10_syzx/objects/explosion_nearest.tscn")
 
 @onready var player: Player = Thunder._current_player
