@@ -19,6 +19,7 @@ func _ready() -> void:
 	if !is_instance_valid(bob_omb):
 		queue_free()
 		return
+	if !is_inside_tree(): return
 	bob_omb.collision = true
 	bob_omb.gravity_scale = 0.5
 	bob_omb.reparent(Scenes.current_scene)
