@@ -1,9 +1,9 @@
 extends Node
 
-const CASTLE_SMOKE = preload("res://stages/world_6/scripts/castle_smoke_w6.tscn")
+const CASTLE_SMOKE = preload("res://engine/scenes/castle_cutscene/objects/castle_smoke_w6.tscn")
 const BE_HAPPY = preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav")
 const PIPEC = preload("res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav")
-const WCIAGATOR = preload("res://sfx/Wciagator.wav")
+const WCIAGATOR = preload("res://engine/scenes/castle_cutscene/sounds/castle_pipe_suck.wav")
 
 @onready var player: Player = Thunder._current_player
 @onready var castle = $"../Castle"

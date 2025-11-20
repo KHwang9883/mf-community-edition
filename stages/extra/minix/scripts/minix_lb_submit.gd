@@ -83,35 +83,44 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if can_submit && !submitting && Input.is_action_just_pressed("ui_accept"):
-		enter_to_continue_delay = 0.1
-		_play_sound()
-		Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
-		line_edit.release_focus()
-		
-		var data = {
-			"score": Data.values.score,
-			"godlikes": Data.values.godlikes,
-			"time": int(Data.values.lasted),
-			"version": ProjectSettings.get_setting("application/thunder_settings/version", 0), # GAME VERSION
-			"map": starter.map_names[starter.map_id],
-			"username": line_edit.text,
-			"game": "MINIX"
-		}
-		var decrypted_score: int = (score_loader.score_encrypted ^ score_loader.encryption_key) - score_loader.encryption_key
-		var is_score_legit: bool = Data.values.score == decrypted_score
-		print(JSON.stringify(data))
-		
-		submitting = true
-		is_enabled = false
-		line_edit.text = ""
-		enter_to_preview.visible = false
-		await get_tree().physics_frame
-		if is_score_legit:
-			var headers = ["Content-Type: application/json"]
-			http_request.request_completed.connect(_on_http_submit, CONNECT_ONE_SHOT)
-			http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
-		else:
-			_submit_fake_record(decrypted_score)
+		try_submitting_record()
+
+
+func try_submitting_record() -> void:
+	enter_to_continue_delay = 0.1
+	_play_sound()
+	Thunder._disconnect(line_edit.focus_exited, _on_line_edit_focus_exited)
+	line_edit.release_focus()
+	
+	var data = {
+		"score": Data.values.score,
+		"godlikes": Data.values.godlikes,
+		"time": int(Data.values.lasted),
+		"version": ProjectSettings.get_setting("application/thunder_settings/version", 0), # GAME VERSION
+		"map": starter.map_names[starter.map_id],
+		"username": line_edit.text,
+		"game": "MINIX"
+	}
+	var decrypted_score: int = (score_loader.score_encrypted ^ score_loader.encryption_key) - score_loader.encryption_key
+	var is_score_legit: bool = Data.values.score == decrypted_score
+	var is_bad_name: bool = \
+	BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY.any(
+		func(elem):
+			return elem in line_edit.text.to_lower()
+	)
+	print(JSON.stringify(data))
+	
+	submitting = true
+	is_enabled = false
+	line_edit.text = ""
+	enter_to_preview.visible = false
+	await get_tree().physics_frame
+	if is_score_legit && !is_bad_name:
+		var headers = ["Content-Type: application/json"]
+		http_request.request_completed.connect(_on_http_submit, CONNECT_ONE_SHOT)
+		http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
+	else:
+		_submit_fake_record(decrypted_score)
 
 
 func _on_http_submit(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -156,3 +165,6 @@ func _submit_fake_record(decrypted_score: int) -> void:
 	
 	congrats.visible = true
 	loading.visible = false
+
+
+const BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY: Array = ["skibid", "whor", "wh0r", "cum", "assh", "dick", "fuck", "shit", "bitch", "cock", "penis", "puss", "piss", "turd", "porn", "p0rn", "sex", "urine", "nigg", "ni66", "n1gg", "n166", "n i g", "n_i_g", "n.i.g", "n-i-g", "f u c k", "f_u_c_k", "f.u.c.k", "niga", "niger", "twat", "fag", "f4g", "retar", "ritar", "r-tar", "pedo", "negr", "cunt", "anal", "anus", "feet", "foot", "nazi", "facis"]
