@@ -50,6 +50,7 @@ func set_ignited(to: bool, self_ignition: bool = false) -> void:
 	speed.x = 0
 	
 	if abs(self_ignite_after_sec) > 0.0: return
+	if !is_inside_tree(): return
 	await get_tree().create_timer(wait_for_explosion_for_sec, false).timeout
 	sprite_node.play(&"stomp_ignited")
 	_initiate_explosion()
@@ -66,6 +67,7 @@ func fired() -> void:
 
 
 func _initiate_explosion() -> void:
+	if !is_inside_tree(): return
 	get_tree().create_timer(1.0, false).timeout.connect(_explode, CONNECT_ONE_SHOT)
 
 func _explode() -> void:

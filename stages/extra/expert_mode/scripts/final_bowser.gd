@@ -119,6 +119,13 @@ func _create_tile(at: Vector2, dir: int = 1) -> void:
 	tile.reset_physics_interpolation()
 
 
+func bullet_hurt(attacker: StringName) -> void:
+	if tween_hurt: return
+	if attacker == &"iceball" && _bullet_received >= hardness - 1:
+		health -= 4
+	super(attacker)
+
+
 func _physics_process(delta: float) -> void:
 	# Direction
 	if !lock_direction:
