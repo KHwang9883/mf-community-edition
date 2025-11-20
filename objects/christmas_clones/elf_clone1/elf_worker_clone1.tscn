@@ -1,0 +1,288 @@
+[gd_scene load_steps=43 format=3 uid="uid://bs0p7pkrqdk3e"]
+
+[ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_243ha"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_fboxx"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_3sbux"]
+[ext_resource type="PackedScene" uid="uid://dj2b5g2smonyu" path="res://engine/objects/enemies/_dead/enemy_stomped.tscn" id="4_idmvx"]
+[ext_resource type="Script" uid="uid://tjgn3o6ei334" path="res://engine/objects/enemies/human_lab/goomba/scripts/do_stomped_animated.gd" id="5_50fk2"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_yewhl"]
+[ext_resource type="AudioStream" uid="uid://cca42pkmljfbr" path="res://engine/objects/enemies/human_lab/goomba/sfx/stomp.wav" id="7_qv2ch"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_imy6o"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_kbxce"]
+[ext_resource type="AudioStream" uid="uid://cnwriv40miqqd" path="res://engine/objects/enemies/human_lab/goomba/sfx/kick.wav" id="10_xv437"]
+[ext_resource type="Texture2D" uid="uid://dl03kctr38qrl" path="res://christmas_clones/elf_clone1/gfx/clone_body.png" id="11_046jm"]
+[ext_resource type="Texture2D" uid="uid://bfybops5304gm" path="res://christmas_clones/elf_clone1/gfx/CloneElfStomped_01.png" id="12_kn58s"]
+[ext_resource type="Script" uid="uid://dgb818h43gjw4" path="res://engine/objects/enemies/human_lab/goomba/scripts/stomped_animation.gd" id="13_2dq4d"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="14_7bd8m"]
+[ext_resource type="Texture2D" uid="uid://bdveib0o8gao4" path="res://christmas_clones/elf_clone1/gfx/CloneElfKilled_01.png" id="14_66u5s"]
+[ext_resource type="Texture2D" uid="uid://dddw12yvi5rgo" path="res://christmas_clones/elf_clone1/gfx/clone_legs.png" id="16_b2l0k"]
+[ext_resource type="Script" uid="uid://d0ir2qr4v6lu7" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="16_tvhto"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="17_1lpef"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aahbl"]
+size = Vector2(30, 63)
+
+[sub_resource type="Resource" id="Resource_kg3jd"]
+resource_local_to_scene = true
+script = ExtResource("6_yewhl")
+creation_nodepack = ExtResource("4_idmvx")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead")
+}
+custom_script = ExtResource("5_50fk2")
+
+[sub_resource type="Resource" id="Resource_8814w"]
+resource_local_to_scene = true
+script = ExtResource("6_yewhl")
+creation_nodepack = ExtResource("8_imy6o")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/DeadRotating"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("9_kbxce")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7qll"]
+atlas = ExtResource("11_046jm")
+region = Rect2(0, 0, 38, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pmvc"]
+atlas = ExtResource("11_046jm")
+region = Rect2(0, 64, 38, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbn05"]
+atlas = ExtResource("11_046jm")
+region = Rect2(0, 128, 38, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wd5co"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7qll")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_5pmvc")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_t7qll")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_xbn05")
+}],
+"loop": true,
+"name": &"default",
+"speed": 50.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sa645"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_kn58s")
+}],
+"loop": false,
+"name": &"default",
+"speed": 50.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpjb6"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(0, 0, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46no4"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(32, 0, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb6um"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(64, 0, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5mnr"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(96, 0, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ho2kh"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(0, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gig30"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(32, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qclm"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(64, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twdeh"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(96, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bjy8"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(0, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vws5g"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(32, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dv5dw"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(64, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mow6l"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(96, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctp5h"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(0, 27, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm5s6"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(32, 27, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj8y7"]
+atlas = ExtResource("16_b2l0k")
+region = Rect2(64, 27, 32, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7io13"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpjb6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46no4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb6um")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5mnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ho2kh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gig30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qclm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twdeh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bjy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vws5g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dv5dw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mow6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctp5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm5s6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vj8y7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 50.0
+}]
+
+[node name="ElfClone01" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_max_angle = 0.837758
+floor_snap_length = 20.0
+script = ExtResource("1_243ha")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(50, 0)
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_aahbl")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_fboxx")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_aahbl")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_3sbux")
+stomping_creation = SubResource("Resource_kg3jd")
+stomping_scores = 100
+stomping_sound = ExtResource("7_qv2ch")
+killing_creation = SubResource("Resource_8814w")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("10_xv437")
+sound_ignore_pitch_modification = true
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wd5co")
+autoplay = "default"
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+position = Vector2(0, 26)
+sprite_frames = SubResource("SpriteFrames_sa645")
+offset = Vector2(0, -10)
+script = ExtResource("13_2dq4d")
+
+[node name="DeadRotating" type="Sprite2D" parent="Sprite"]
+visible = false
+position = Vector2(0, 1)
+texture = ExtResource("14_66u5s")
+region_rect = Rect2(0, 0, 44, 52)
+script = ExtResource("14_7bd8m")
+
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
+position = Vector2(1, 27)
+sprite_frames = SubResource("SpriteFrames_7io13")
+autoplay = "default"
+script = ExtResource("16_tvhto")
+enemy_center_node = NodePath("../..")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-20, -32, 40, 64)
+script = ExtResource("17_1lpef")
+metadata/_edit_lock_ = true
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

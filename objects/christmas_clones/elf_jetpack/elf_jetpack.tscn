@@ -1,0 +1,114 @@
+[gd_scene load_steps=17 format=3 uid="uid://by7tmvi2xwbrb"]
+
+[ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="1_sl3tu"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_wb8lx"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_e0ewr"]
+[ext_resource type="AudioStream" uid="uid://cn4tlctdajh0o" path="res://objects/christmas_clones/elf_jetpack/sfx/FlyingCoderClone.wav" id="6_2u4tk"]
+[ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="7_0ec2n"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_e2mk8"]
+[ext_resource type="PackedScene" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_f8sem"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_ofbwe"]
+[ext_resource type="Texture2D" uid="uid://beya6lmtntukq" path="res://objects/christmas_clones/elf_jetpack/gfx/Elf.png" id="8_yxhhx"]
+[ext_resource type="Texture2D" uid="uid://do4j68m8des4v" path="res://objects/christmas_clones/gifter_clone/gfx/dead.png" id="9_m8i07"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxfep"]
+size = Vector2(32, 36)
+
+[sub_resource type="Resource" id="Resource_cvupp"]
+resource_local_to_scene = true
+script = ExtResource("5_e0ewr")
+creation_nodepack = ExtResource("7_e2mk8")
+trans_inheritances = 7
+visi_z_index = 1
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_ofbwe")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2expd"]
+atlas = ExtResource("8_yxhhx")
+region = Rect2(0, 0, 36, 69)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqygn"]
+atlas = ExtResource("8_yxhhx")
+region = Rect2(36, 0, 36, 69)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ds46o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2expd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqygn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_soyln"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_m8i07")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ElfJetpack" type="Node2D" groups=["#circle"]]
+script = ExtResource("1_sl3tu")
+amplitude = Vector2(150, 150)
+frequency = 1.0
+sprite_path = NodePath("Sprite")
+metadata/_edit_pinned_properties_ = [&"amplitude", &"frequency"]
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_bxfep")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_wb8lx")
+stomping_creation = SubResource("Resource_cvupp")
+stomping_scores = 100
+stomping_sound = ExtResource("6_2u4tk")
+killing_creation = SubResource("Resource_cvupp")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_2u4tk")
+ice_sprite = NodePath("../../Sprite")
+metadata/_edit_pinned_properties_ = [&"stomping_creation", &"stomping_scores", &"killing_scores"]
+
+[node name="Node" type="Node2D" parent="Body"]
+script = ExtResource("7_0ec2n")
+KEYBOARD_EFFECT = ExtResource("8_f8sem")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_ds46o")
+autoplay = "default"
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+position = Vector2(0, 4)
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_soyln")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
