@@ -18,6 +18,9 @@ var next_page: Label
 @onready var version = ProjectSettings.get_setting("application/thunder_settings/version", 0)
 @onready var prev_page_temp: String = prev_page.text
 @onready var next_page_temp: String
+@onready var lb_status: Label = %LBStatus
+@onready var lb_status_request: HTTPRequest = lb_status.get_node(^"HTTPRequest")
+@onready var lb_status_timer: Timer = lb_status.get_node(^"Timer")
 
 var is_loading = true
 var has_results = false
@@ -25,6 +28,7 @@ var page := 1
 var total_pages: int = 1
 var old = false
 var has_error: bool = false
+var lb_status_checking: bool = true
 
 func _ready() -> void:
 	for i in POOL_SIZE:
@@ -36,6 +40,35 @@ func _ready() -> void:
 	next_page.change_page_by = 1
 	next_page_temp = "go to the next page (%d of %d)"
 	menu_controller.add_child(next_page)
+	
+	await get_tree().create_timer(0.8, true, false, true).timeout
+	if !is_inside_tree(): return
+	Thunder._connect(lb_status_request.request_completed, _on_http_get_status)
+	Thunder._connect(lb_status_timer.timeout, func():
+		if !lb_status_checking:
+			lb_status_timer.stop()
+			return
+		lb_status.visible_characters = wrapi(
+			lb_status.visible_characters + 1, len(lb_status.text) - 3, len(lb_status.text) + 1
+		)
+	)
+	var params = "?page=%d&limit=%d&sortBy=%s&sortType=%s&version=%d" % [page, 1, "score", "desc", version]
+	var err := lb_status_request.request(url + params)
+	if err != OK:
+		Thunder._disconnect(lb_status_request.request_completed, _on_http_get_status)
+		_on_http_get_status(2, 403, [], [])
+
+
+func _on_http_get_status(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	lb_status_checking = false
+	lb_status.visible_ratio = 1.0
+	if result == HTTPRequest.RESULT_SUCCESS && response_code in [200, 302, 304]:
+		lb_status.text = "online"
+		lb_status.add_theme_color_override(&"font_color", Color.html("c0f8c0"))
+	else:
+		lb_status.text = "offline"
+		lb_status.add_theme_color_override(&"font_color", Color.html("f0cdc2"))
+
 
 func _load_records() -> void:
 	is_loading = true
