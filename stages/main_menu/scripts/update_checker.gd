@@ -112,7 +112,7 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 			return
 		if checking_tween: checking_tween.kill()
 		update_checking.modulate.a = 0.75
-		update_checking.text = "no updates found!"
+		update_checking.text = ""
 		get_tree().create_timer(8, true, false, true).timeout.connect(func():
 			checking_tween = update_checking.create_tween()
 			checking_tween.tween_property(update_checking, "modulate:a", 0.0, 1.0)

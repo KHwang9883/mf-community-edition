@@ -445,6 +445,52 @@ minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
 starter_path = NodePath("../../..")
 value = "best"
 
+[node name="VBoxContainer2" type="VBoxContainer" parent="START/Node2D"]
+offset_left = 480.0
+offset_top = 416.0
+offset_right = 640.0
+offset_bottom = 480.0
+alignment = 2
+
+[node name="LB" type="Label" parent="START/Node2D/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 11
+text = "LEADERBOARD:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LBStatus" type="Label" parent="START/Node2D/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme_override_colors/font_color = Color(0.968627, 0.968627, 0.498039, 1)
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("19_qaur8")
+theme_override_font_sizes/font_size = 11
+text = "checking..."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+visible_characters = 11
+visible_characters_behavior = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="START/Node2D/VBoxContainer2/LBStatus"]
+body_size_limit = 8192
+max_redirects = 2
+timeout = 8.0
+
+[node name="Timer" type="Timer" parent="START/Node2D/VBoxContainer2/LBStatus"]
+wait_time = 0.25
+autostart = true
+ignore_time_scale = true
+
 [node name="GAMEOVER" type="Node2D" parent="START"]
 process_mode = 3
 script = ExtResource("22_6vcp0")
