@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cikpb4h7epjxk"]
+
+[ext_resource type="Script" uid="uid://c0bfh8mobga1r" path="res://engine/objects/projectiles/hammer/hammer.gd" id="1_quja1"]
+[ext_resource type="Texture2D" uid="uid://df1v1w53aux18" path="res://objects/christmas_clones/big_elf_presenter/gfx/projectile.png" id="2_quja1"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_j1tvu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vdifp"]
+radius = 11.0
+
+[node name="Present" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+script = ExtResource("1_quja1")
+sprite = NodePath("Texture")
+speed = Vector2(387.5, 0)
+gravity_scale = 0.3
+collision = false
+metadata/_edit_pinned_properties_ = [&"sprite", &"collision"]
+
+[node name="Texture" type="Sprite2D" parent="."]
+texture = ExtResource("2_quja1")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_vdifp")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_j1tvu")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-64, -64, 128, 128)
+metadata/_edit_lock_ = true
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

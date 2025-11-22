@@ -1,0 +1,117 @@
+[gd_scene load_steps=16 format=3 uid="uid://dykltaes4818t"]
+
+[ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_4gk2a"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g4dft"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_m5ls2"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_d01gk"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_t0qcn"]
+[ext_resource type="AudioStream" uid="uid://dgtypbpo8samu" path="res://engine/objects/enemies/human_lab/goomba/sfx/kick2.wav" id="6_8idos"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_jvmuo"]
+[ext_resource type="Texture2D" uid="uid://bhi2hdx16jlwm" path="res://objects/christmas_clones/grinch_jaws/gfx/dead.png" id="8_n121c"]
+[ext_resource type="Texture2D" uid="uid://5sv35d4evmh2" path="res://objects/christmas_clones/grinch_jaws/gfx/common.png" id="9_pgbjl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dr24"]
+size = Vector2(30, 50)
+
+[sub_resource type="Resource" id="Resource_6vsr6"]
+script = ExtResource("5_t0qcn")
+creation_nodepack = ExtResource("3_m5ls2")
+trans_inheritances = 7
+visi_z_index = 3
+custom_vars = {
+"death": NodePath("../../Head#Dead"),
+"death_speed": Vector2(0, -250),
+"fast_death_effect": true
+}
+custom_script = ExtResource("4_d01gk")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b0eaq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_n121c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hg6g"]
+atlas = ExtResource("9_pgbjl")
+region = Rect2(0, 0, 37, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qg83"]
+atlas = ExtResource("9_pgbjl")
+region = Rect2(0, 61, 37, 61)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_so42h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hg6g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qg83")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GrinchJawsClone" type="Node2D"]
+script = ExtResource("1_4gk2a")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(1, -24)
+shape = SubResource("RectangleShape2D_8dr24")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_g4dft")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_6vsr6")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_8idos")
+killing_sound_failed = ExtResource("7_jvmuo")
+ice_sprite = NodePath("../../Sprite")
+ice_fragile = true
+sound_ignore_pitch_modification = true
+
+[node name="Head#Dead" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_b0eaq")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -2
+position = Vector2(-1, -30)
+sprite_frames = SubResource("SpriteFrames_so42h")
+autoplay = "default"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(0.5, -32)
+scale = Vector2(1.55, 3.2)
+metadata/_edit_lock_ = true
+
+[node name="Step" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
