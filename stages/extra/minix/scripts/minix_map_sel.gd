@@ -12,6 +12,7 @@ var tw: Tween
 @onready var selector: MenuSelector = $"../../Selector"
 @onready var selector_2: MenuSelector = $"../../Selector2"
 @onready var scores: VBoxContainer = $"../../VBoxContainer"
+@onready var scores2: VBoxContainer = $"../../VBoxContainer2"
 @onready var color_rect_2: ColorRect = $"../../ColorRect2"
 @onready var enter_to_preview: Label = $"../../EnterToPreview"
 @onready var old_enter_to_preview: String = enter_to_preview.text
@@ -81,6 +82,9 @@ func _toggle_preview(interrupt: bool = false) -> void:
 	tw.tween_property(scores, "position:y",
 		_scores_pos.y + 50 if is_preview else _scores_pos.y, 0.5).set_trans(Tween.TRANS_SINE)
 	tw.tween_property(scores, "modulate:a", 0.0 if is_preview else 1.0, 0.5).set_trans(Tween.TRANS_LINEAR)
+	tw.tween_property(scores2, "position:y",
+		_scores_pos.y + 50 if is_preview else _scores_pos.y, 0.5).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(scores2, "modulate:a", 0.0 if is_preview else 1.0, 0.5).set_trans(Tween.TRANS_LINEAR)
 
 
 func _update_string() -> void:

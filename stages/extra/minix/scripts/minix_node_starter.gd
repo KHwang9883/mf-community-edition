@@ -21,6 +21,7 @@ func _ready() -> void:
 	Scenes.custom_scenes.minix_node = self
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
+	SettingsManager.set_tweak("super_jump_bug", false)
 	
 	#Scenes.current_scene.stage_ready.connect(func():
 		#if "minix_continue" in Data.values:
