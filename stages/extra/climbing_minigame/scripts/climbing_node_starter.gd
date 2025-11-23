@@ -51,6 +51,7 @@ func _on_map_changed_to(_id: int) -> void:
 			if mario:
 				mario.global_position = current_map.get_node("MarioPos").global_position
 				mario.underwater.max_falling_speed_override = 500
+				mario.suit.physics_config.set("swim_max_falling_speed", 500)
 				Data.values.lives = current_map.life_count
 			continue
 		i.position.y = -999999
