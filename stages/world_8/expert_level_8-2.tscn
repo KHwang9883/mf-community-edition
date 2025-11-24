@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=4 uid="uid://7twj61kaqihg"]
+[gd_scene load_steps=80 format=4 uid="uid://7twj61kaqihg"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_rjwuh"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_m3xp8"]
@@ -91,6 +91,19 @@ colors = PackedColorArray(0, 0, 0, 1, 9.04858e-06, 0.661063, 0.875499, 1)
 gradient = SubResource("Gradient_gntxf")
 width = 480
 
+[sub_resource type="Gradient" id="Gradient_r3xdq"]
+colors = PackedColorArray(0.476577, 0.476579, 0.476578, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ppgrm"]
+gradient = SubResource("Gradient_r3xdq")
+width = 240
+height = 240
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.857143, 0.142857)
+metadata/_snap_enabled = true
+metadata/_snap_count = 7
+
 [sub_resource type="Gradient" id="Gradient_ahwkk"]
 colors = PackedColorArray(0.2106, 0.70408, 0.78, 1, 0.2106, 0.67561, 0.78, 0)
 
@@ -130,93 +143,39 @@ scale_curve = SubResource("CurveTexture_tpa6j")
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_nodepack = ExtResource("43_nn8uk")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_ha04j"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_fallback_node = ExtResource("20_qhehv")
 creation_nodepack = ExtResource("38_jau3g")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_novg7"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_fallback_node = ExtResource("20_qhehv")
 creation_nodepack = ExtResource("38_jau3g")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_gntxf"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_nodepack = ExtResource("47_nn8uk")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_avtle"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_nodepack = ExtResource("23_ipgw0")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_r2knk"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_nodepack = ExtResource("23_ipgw0")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [node name="Level8-2" type="Node2D"]
 script = ExtResource("1_rjwuh")
@@ -703,6 +662,33 @@ phase = 267.392
 
 [node name="FinishLine" parent="." instance=ExtResource("38_vjvfn")]
 position = Vector2(7360, 320)
+
+[node name="PointLight2D" type="PointLight2D" parent="FinishLine"]
+position = Vector2(176, -272)
+energy = 0.6
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_ppgrm")
+texture_scale = 0.55
+script = ExtResource("15_ahwkk")
+
+[node name="PointLight2D2" type="PointLight2D" parent="FinishLine"]
+position = Vector2(240, -272)
+energy = 0.6
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_ppgrm")
+texture_scale = 0.55
+script = ExtResource("15_ahwkk")
+
+[node name="PointLight2D3" type="PointLight2D" parent="FinishLine"]
+position = Vector2(16, -15)
+energy = 0.6
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_ppgrm")
+texture_scale = 0.55
+script = ExtResource("15_ahwkk")
 
 [node name="Thwomp5" parent="." instance=ExtResource("41_jau3g")]
 position = Vector2(896, 96)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=4 uid="uid://dvs3d2ernm7m6"]
+[gd_scene load_steps=87 format=4 uid="uid://dvs3d2ernm7m6"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_18jpy"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_tlt33"]
@@ -153,30 +153,12 @@ size = Vector2(32, 448)
 script = ExtResource("26_rnb6j")
 creation_fallback_node = ExtResource("40_0gmih")
 creation_nodepack = ExtResource("41_5uuwc")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_nxfn0"]
 script = ExtResource("26_rnb6j")
 creation_nodepack = ExtResource("25_45fsu")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Gradient" id="Gradient_w5m13"]
 offsets = PackedFloat32Array(0, 0.551948, 1)
@@ -318,6 +300,19 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 64, -6304, 0, 0, 0, 0, 640, -6304)
 }
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_v7k5j"]
+colors = PackedColorArray(0.476577, 0.476579, 0.476578, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8lhk4"]
+gradient = SubResource("Gradient_v7k5j")
+width = 240
+height = 240
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.857143, 0.142857)
+metadata/_snap_enabled = true
+metadata/_snap_count = 7
 
 [sub_resource type="Gradient" id="Gradient_kyugb"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -914,26 +909,50 @@ progress = 160.294
 curve = SubResource("Curve2D_h0cof")
 
 [node name="PlatformPath" parent="Path2D4" instance=ExtResource("20_n73q4")]
-position = Vector2(194.349, -6048)
+position = Vector2(194.3488, -6048)
 progress = 98.3488
 
 [node name="Path2D5" type="Path2D" parent="."]
 curve = SubResource("Curve2D_hyxlc")
 
 [node name="PlatformPath" parent="Path2D5" instance=ExtResource("20_n73q4")]
-position = Vector2(420.442, -6176)
+position = Vector2(420.44202, -6176)
 progress = 100.442
 
 [node name="Path2D6" type="Path2D" parent="."]
 curve = SubResource("Curve2D_elx3w")
 
 [node name="PlatformPath" parent="Path2D6" instance=ExtResource("20_n73q4")]
-position = Vector2(162.349, -6304)
+position = Vector2(162.3488, -6304.0005)
 progress = 98.3488
 
 [node name="FinishLine" parent="." instance=ExtResource("28_vs3by")]
 position = Vector2(320, -8320)
 use_strict_detection_area = true
+
+[node name="PointLight2D" type="PointLight2D" parent="FinishLine"]
+position = Vector2(176, -272)
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_8lhk4")
+texture_scale = 0.55
+script = ExtResource("40_x4r7x")
+
+[node name="PointLight2D2" type="PointLight2D" parent="FinishLine"]
+position = Vector2(240, -272)
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_8lhk4")
+texture_scale = 0.55
+script = ExtResource("40_x4r7x")
+
+[node name="PointLight2D3" type="PointLight2D" parent="FinishLine"]
+position = Vector2(16, -15)
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_8lhk4")
+texture_scale = 0.55
+script = ExtResource("40_x4r7x")
 
 [node name="PipeIn" parent="." instance=ExtResource("37_uc4ui")]
 position = Vector2(96, -7056)
