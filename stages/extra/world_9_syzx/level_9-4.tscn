@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=4 uid="uid://bbvem6ftvskch"]
+[gd_scene load_steps=61 format=4 uid="uid://bbvem6ftvskch"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_spmyb"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i03uk"]
@@ -70,78 +70,46 @@ resource_local_to_scene = true
 script = ExtResource("20_qbtdg")
 creation_fallback_node = ExtResource("18_eg66j")
 creation_nodepack = ExtResource("22_1lpa3")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_86gpk"]
 script = ExtResource("20_qbtdg")
 creation_fallback_node = ExtResource("18_eg66j")
 creation_nodepack = ExtResource("19_dye02")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_sv7hk"]
 resource_local_to_scene = true
 script = ExtResource("20_qbtdg")
 creation_fallback_node = ExtResource("18_eg66j")
 creation_nodepack = ExtResource("22_1lpa3")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_3xhe3"]
 resource_local_to_scene = true
 script = ExtResource("20_qbtdg")
 creation_fallback_node = ExtResource("18_eg66j")
 creation_nodepack = ExtResource("22_1lpa3")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_5xibs"]
 resource_local_to_scene = true
 script = ExtResource("20_qbtdg")
 creation_nodepack = ExtResource("35_onri6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
+
+[sub_resource type="Gradient" id="Gradient_j52a0"]
+colors = PackedColorArray(0.476577, 0.476579, 0.476578, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w1wj0"]
+gradient = SubResource("Gradient_j52a0")
+width = 240
+height = 240
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.857143, 0.142857)
+metadata/_snap_enabled = true
+metadata/_snap_count = 7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4fwgg"]
 size = Vector2(37, 32)
@@ -1088,6 +1056,30 @@ scale = Vector2(-1, 1)
 [node name="FinishLine" parent="." instance=ExtResource("41_w53bg")]
 position = Vector2(7424, 352)
 
+[node name="PointLight2D" type="PointLight2D" parent="FinishLine"]
+position = Vector2(176, -272)
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_w1wj0")
+texture_scale = 0.55
+script = ExtResource("12_41qxf")
+
+[node name="PointLight2D2" type="PointLight2D" parent="FinishLine"]
+position = Vector2(240, -272)
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_w1wj0")
+texture_scale = 0.55
+script = ExtResource("12_41qxf")
+
+[node name="PointLight2D3" type="PointLight2D" parent="FinishLine"]
+position = Vector2(16, -15)
+range_layer_min = -512
+range_layer_max = -1
+texture = SubResource("GradientTexture2D_w1wj0")
+texture_scale = 0.55
+script = ExtResource("12_41qxf")
+
 [node name="Node" type="Node" parent="."]
 script = ExtResource("42_0634j")
 
@@ -1099,9 +1091,9 @@ collision_mask = 0
 position = Vector2(4301.5, 208)
 shape = SubResource("RectangleShape2D_4fwgg")
 
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="level_completed" from="." to="Parallax2D/Area2D" method="queue_free"]
 [connection signal="level_completed" from="." to="Node" method="_on_finish"]
-[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="scroll_stopped" from="Path2D/PathFollow2D" to="TileMapLayer" method="set_process_mode" binds= [4]]
 
 [editable path="FlameballLauncher27"]
