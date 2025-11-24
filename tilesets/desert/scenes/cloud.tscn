@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://vebw8nplxddf"]
+
+[ext_resource type="Texture2D" uid="uid://sbbfh8tigfty" path="res://tilesets/desert/gfx/desert_cloud.png" id="1_fttyb"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="2_gqt7g"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="3_dxmd2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqt7g"]
+atlas = ExtResource("1_fttyb")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxmd2"]
+atlas = ExtResource("1_fttyb")
+region = Rect2(65, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nficy"]
+atlas = ExtResource("1_fttyb")
+region = Rect2(130, 0, 65, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4shef"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqt7g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxmd2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nficy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="Cloud" type="AnimatedSprite2D"]
+z_index = -10
+sprite_frames = SubResource("SpriteFrames_4shef")
+autoplay = "default"
+
+[node name="CloudLightEffect" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+position = Vector2(0, 4)
+texture = ExtResource("2_gqt7g")
+script = ExtResource("3_dxmd2")
