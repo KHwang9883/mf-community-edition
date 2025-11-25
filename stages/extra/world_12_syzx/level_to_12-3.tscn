@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://b6mfuihmxxo3a"]
+[gd_scene load_steps=24 format=4 uid="uid://b81wkvf2ymmg8"]
 
 [ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_iwxtp"]
 [ext_resource type="Script" uid="uid://dlkn3px085yet" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_1fg3c"]
@@ -6,19 +6,20 @@
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_adn2k"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_52f1s"]
 [ext_resource type="TileSet" uid="uid://dafmidvn0tyc1" path="res://tilesets/desert/desert.tres" id="6_b7uor"]
-[ext_resource type="Material" uid="uid://dpwcqva66u2sf" path="res://materials/grayscale.tres" id="7_mudnl"]
+[ext_resource type="Texture2D" uid="uid://pkr7nmyqtyye" path="res://gfx/fancy_graphics/giant_clouds_desert.png" id="8_1fg3c"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_f60lp"]
-[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="9_nfwem"]
 [ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="10_jbifs"]
 [ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="11_b8tys"]
 [ext_resource type="Texture2D" uid="uid://b0ryp7tm1yf0g" path="res://tilesets/desert/gfx/desert_big_clouds.png" id="12_8xr5w"]
+[ext_resource type="Texture2D" uid="uid://csklug1j43wo4" path="res://gfx/fancy_graphics/s_desert_junk_3.png" id="12_adn2k"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="13_6sdim"]
 [ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="14_2feps"]
 [ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="15_kfxoj"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="16_q3dgd"]
 [ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="17_l1xc6"]
 [ext_resource type="Texture2D" uid="uid://chuhop3jwjp17" path="res://tilesets/desert/gfx/desert_pipe_entering_another.png" id="18_1fg3c"]
-[ext_resource type="Shader" uid="uid://dkem0tfr4d5tf" path="res://shaders/mirage_effect.gdshader" id="19_0pc81"]
+[ext_resource type="Shader" path="res://shaders/mirage_effect.gdshader" id="19_0pc81"]
+[ext_resource type="Texture2D" uid="uid://cciw1atc1x2xn" path="res://gfx/fancy_graphics/747.png" id="19_adn2k"]
 
 [sub_resource type="Gradient" id="Gradient_qj5b7"]
 colors = PackedColorArray(1, 0.678431, 0.356863, 1, 1, 1, 1, 1)
@@ -78,14 +79,13 @@ color = Color(1, 0.6784314, 0.35686275, 1)
 
 [node name="Node2D" type="Node2D" parent="ParallaxBackground"]
 z_index = -20
-material = ExtResource("7_mudnl")
 script = ExtResource("8_f60lp")
 
 [node name="GiantClouds3" type="Sprite2D" parent="ParallaxBackground/Node2D"]
-modulate = Color(1, 1, 1, 0.713726)
+modulate = Color(1, 1, 1, 0.78431374)
 use_parent_material = true
-position = Vector2(48, 208)
-texture = ExtResource("9_nfwem")
+position = Vector2(32, 224)
+texture = ExtResource("8_1fg3c")
 
 [node name="PlushySun" type="Sprite2D" parent="ParallaxBackground/Node2D"]
 position = Vector2(512, 48)
@@ -95,6 +95,21 @@ script = ExtResource("11_b8tys")
 [node name="DesertBigClouds4" type="Sprite2D" parent="ParallaxBackground"]
 position = Vector2(323, 288)
 texture = ExtResource("12_8xr5w")
+script = ExtResource("8_f60lp")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Props ( SOFTENDO )3" type="Node2D" parent="ParallaxBackground"]
+modulate = Color(0.8841113, 0.7384797, 0.38024405, 0.8784314)
+z_index = -4
+metadata/_edit_group_ = true
+
+[node name="Palki" type="Sprite2D" parent="ParallaxBackground/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(592, 224)
+texture = ExtResource("12_adn2k")
+script = ExtResource("8_f60lp")
 
 [node name="HUD" parent="." instance=ExtResource("13_6sdim")]
 visible = false
@@ -158,5 +173,16 @@ offset_right = 640.0
 offset_bottom = 480.0
 script = ExtResource("8_f60lp")
 medium = true
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("8_f60lp")
+
+[node name="746" type="Sprite2D" parent="Node2D"]
+position = Vector2(635, 392)
+texture = ExtResource("19_adn2k")
+
+[node name="747" type="Sprite2D" parent="Node2D"]
+position = Vector2(144, 464)
+texture = ExtResource("19_adn2k")
 
 [editable path="Water2"]

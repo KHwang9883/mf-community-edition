@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=4 uid="uid://dlorsembudmcb"]
+[gd_scene load_steps=63 format=4 uid="uid://dlorsembudmcb"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_ine6b"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_b67m8"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ctp30"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_47wnk"]
 [ext_resource type="TileSet" uid="uid://dafmidvn0tyc1" path="res://tilesets/desert/desert.tres" id="11_qj5b7"]
-[ext_resource type="Shader" uid="uid://dkem0tfr4d5tf" path="res://shaders/mirage_effect.gdshader" id="12_50jp6"]
+[ext_resource type="Shader" path="res://shaders/mirage_effect.gdshader" id="12_50jp6"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="13_6e13a"]
 [ext_resource type="PackedScene" uid="uid://vebw8nplxddf" path="res://tilesets/desert/scenes/cloud.tscn" id="16_4fscp"]
 [ext_resource type="Texture2D" uid="uid://crysf21d7vkmq" path="res://gfx/backgrounds/pyramid_bg.png" id="16_cb81b"]
@@ -21,10 +21,15 @@
 [ext_resource type="Script" uid="uid://dy3iegan1yqx6" path="res://stages/extra/world_10_syzx/objects/world_label.gd" id="17_ctp30"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="17_mis3f"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="18_fokwi"]
+[ext_resource type="Texture2D" uid="uid://pkr7nmyqtyye" path="res://gfx/fancy_graphics/giant_clouds_desert.png" id="18_krmy7"]
+[ext_resource type="Texture2D" uid="uid://bhe8oa1nbowmn" path="res://gfx/backgrounds/pyramid_bg_1.png" id="18_y5kqb"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="19_ouow0"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="20_hg4d7"]
+[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="20_hm0vi"]
 [ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="21_fwcw6"]
+[ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="21_juosk"]
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="21_nwdgt"]
+[ext_resource type="Texture2D" uid="uid://csklug1j43wo4" path="res://gfx/fancy_graphics/s_desert_junk_3.png" id="21_y5kqb"]
 [ext_resource type="PackedScene" uid="uid://diu2ipea3k8qy" path="res://engine/objects/enemies/hammer_bros/fire_bro.tscn" id="22_4fscp"]
 [ext_resource type="PackedScene" uid="uid://db68iaq5akgha" path="res://stages/extra/world_12_syzx/objects/platform_path_yellow.tscn" id="23_50jp6"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="24_6e13a"]
@@ -37,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="31_hg4d7"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="32_fwcw6"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="33_fwcw6"]
+[ext_resource type="Texture2D" uid="uid://cciw1atc1x2xn" path="res://gfx/fancy_graphics/747.png" id="39_5wdhq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6e13a"]
 shader = ExtResource("12_50jp6")
@@ -216,6 +222,7 @@ offset_right = 640.0
 offset_bottom = 480.0
 script = ExtResource("13_6e13a")
 medium = true
+metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("11_47wnk")]
 
@@ -247,11 +254,26 @@ metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2(1024, 0)
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(512, 347)
 texture = ExtResource("16_cb81b")
-metadata/_edit_lock_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+visible = false
+position = Vector2(512, 347)
+texture = ExtResource("18_y5kqb")
+script = ExtResource("13_6e13a")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+z_index = -14
+position = Vector2(512, 347)
+texture = ExtResource("18_y5kqb")
+script = ExtResource("13_6e13a")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 metadata/_edit_lock_ = true
@@ -394,6 +416,253 @@ position = Vector2(14752, 41)
 
 [node name="Cloud46" parent="ParallaxBackground/ParallaxLayer2" instance=ExtResource("16_4fscp")]
 position = Vector2(14864, 80)
+
+[node name="Props ( SOFTENDO )" type="Node2D" parent="ParallaxBackground/ParallaxLayer2"]
+modulate = Color(1, 1, 1, 0.49803922)
+z_index = -2
+metadata/_edit_group_ = true
+
+[node name="GiantClouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(144, 272)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(1504, 256)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(3232, 304)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(4688, 256)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(6080, 352)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(7264, 304)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds7" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(8976, 272)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds8" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(10048, 208)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds9" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(11616, 320)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds10" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(12992, 224)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds11" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(14272, 336)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds12" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )"]
+z_index = -12
+position = Vector2(15504, 240)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="Props ( SOFTENDO )2" type="Node2D" parent="ParallaxBackground/ParallaxLayer2"]
+modulate = Color(1, 1, 1, 0.49803922)
+z_index = -4
+metadata/_edit_group_ = true
+
+[node name="GiantClouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(144, 272)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(1504, 256)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(3232, 304)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(4688, 256)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(6080, 352)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(7264, 304)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds7" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(8976, 272)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds8" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(10048, 208)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds9" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(11616, 320)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds10" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(12992, 224)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds11" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(14272, 336)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="GiantClouds12" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )2"]
+z_index = -12
+position = Vector2(15504, 240)
+texture = ExtResource("18_krmy7")
+script = ExtResource("13_6e13a")
+
+[node name="Props ( SOFTENDO )3" type="Node2D" parent="ParallaxBackground/ParallaxLayer2"]
+modulate = Color(0.8901961, 0.73333335, 0.38039216, 0.8784314)
+z_index = -4
+metadata/_edit_group_ = true
+
+[node name="Palki" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(576, 224)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(2272, 272)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(3872, 288)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(5360, 336)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(6832, 304)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(7936, 320)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki7" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(8448, 272)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki8" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(9312, 320)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki9" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(10480, 272)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki10" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(10784, 384)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki11" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(12112, 288)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki12" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(13856, 208)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="Palki13" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Props ( SOFTENDO )3"]
+z_index = -12
+position = Vector2(14848, 208)
+texture = ExtResource("21_y5kqb")
+script = ExtResource("13_6e13a")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.75, 1)
+script = ExtResource("13_6e13a")
+
+[node name="PlushySun" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+z_index = -13
+position = Vector2(768, 112)
+texture = ExtResource("20_hm0vi")
+script = ExtResource("21_juosk")
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -968,5 +1237,88 @@ region_rect = Rect2(0, 0, 256, 16)
 
 [node name="CollisionPolygon2D" parent="Path2D3/PlatformPath/Block2" index="0"]
 polygon = PackedVector2Array(-128, 0, 128, 0, 128, 18, -128, 18)
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("13_6e13a")
+
+[node name="746" type="Sprite2D" parent="Node2D"]
+position = Vector2(459, 391)
+texture = ExtResource("39_5wdhq")
+
+[node name="747" type="Sprite2D" parent="Node2D"]
+position = Vector2(80, 464)
+texture = ExtResource("39_5wdhq")
+
+[node name="748" type="Sprite2D" parent="Node2D"]
+position = Vector2(780, 460)
+texture = ExtResource("39_5wdhq")
+
+[node name="749" type="Sprite2D" parent="Node2D"]
+position = Vector2(1100, 359)
+texture = ExtResource("39_5wdhq")
+
+[node name="751" type="Sprite2D" parent="Node2D"]
+position = Vector2(2832, 464)
+texture = ExtResource("39_5wdhq")
+
+[node name="752" type="Sprite2D" parent="Node2D"]
+position = Vector2(3600, 391)
+texture = ExtResource("39_5wdhq")
+
+[node name="753" type="Sprite2D" parent="Node2D"]
+position = Vector2(3808, 464)
+texture = ExtResource("39_5wdhq")
+
+[node name="754" type="Sprite2D" parent="Node2D"]
+position = Vector2(4048, 464)
+texture = ExtResource("39_5wdhq")
+
+[node name="755" type="Sprite2D" parent="Node2D"]
+position = Vector2(4420, 455)
+texture = ExtResource("39_5wdhq")
+
+[node name="756" type="Sprite2D" parent="Node2D"]
+position = Vector2(5181, 392)
+texture = ExtResource("39_5wdhq")
+
+[node name="757" type="Sprite2D" parent="Node2D"]
+position = Vector2(5775, 391)
+texture = ExtResource("39_5wdhq")
+
+[node name="758" type="Sprite2D" parent="Node2D"]
+position = Vector2(6192, 464)
+texture = ExtResource("39_5wdhq")
+
+[node name="759" type="Sprite2D" parent="Node2D"]
+position = Vector2(6504, 392)
+texture = ExtResource("39_5wdhq")
+
+[node name="760" type="Sprite2D" parent="Node2D"]
+position = Vector2(6944, 448)
+texture = ExtResource("39_5wdhq")
+
+[node name="761" type="Sprite2D" parent="Node2D"]
+position = Vector2(7728, 424)
+texture = ExtResource("39_5wdhq")
+
+[node name="762" type="Sprite2D" parent="Node2D"]
+position = Vector2(8064, 464)
+texture = ExtResource("39_5wdhq")
+
+[node name="763" type="Sprite2D" parent="Node2D"]
+position = Vector2(8576, 464)
+texture = ExtResource("39_5wdhq")
+
+[node name="764" type="Sprite2D" parent="Node2D"]
+position = Vector2(14565, 391)
+texture = ExtResource("39_5wdhq")
+
+[node name="765" type="Sprite2D" parent="Node2D"]
+position = Vector2(14880, 448)
+texture = ExtResource("39_5wdhq")
+
+[node name="750" type="Sprite2D" parent="Node2D"]
+position = Vector2(2304, 464)
+texture = ExtResource("39_5wdhq")
 
 [editable path="Path2D3/PlatformPath"]
