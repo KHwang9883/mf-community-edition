@@ -1,0 +1,162 @@
+[gd_scene load_steps=23 format=4 uid="uid://b6mfuihmxxo3a"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_iwxtp"]
+[ext_resource type="Script" uid="uid://dlkn3px085yet" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_1fg3c"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="3_0pc81"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_adn2k"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_52f1s"]
+[ext_resource type="TileSet" uid="uid://dafmidvn0tyc1" path="res://tilesets/desert/desert.tres" id="6_b7uor"]
+[ext_resource type="Material" uid="uid://dpwcqva66u2sf" path="res://materials/grayscale.tres" id="7_mudnl"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_f60lp"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="9_nfwem"]
+[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="10_jbifs"]
+[ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="11_b8tys"]
+[ext_resource type="Texture2D" uid="uid://b0ryp7tm1yf0g" path="res://tilesets/desert/gfx/desert_big_clouds.png" id="12_8xr5w"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="13_6sdim"]
+[ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="14_2feps"]
+[ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="15_kfxoj"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="16_q3dgd"]
+[ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="17_l1xc6"]
+[ext_resource type="Texture2D" uid="uid://chuhop3jwjp17" path="res://tilesets/desert/gfx/desert_pipe_entering_another.png" id="18_1fg3c"]
+[ext_resource type="Shader" uid="uid://dkem0tfr4d5tf" path="res://shaders/mirage_effect.gdshader" id="19_0pc81"]
+
+[sub_resource type="Gradient" id="Gradient_qj5b7"]
+colors = PackedColorArray(1, 0.678431, 0.356863, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5fsnw"]
+gradient = SubResource("Gradient_qj5b7")
+height = 288
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adn2k"]
+shader = ExtResource("19_0pc81")
+
+[node name="WaterCutscene" type="Node2D"]
+script = ExtResource("1_iwxtp")
+goto_path = "res://stages/extra/world_12_syzx/level_12-3.tscn"
+
+[node name="CutsceneLogic" type="Node" parent="."]
+script = ExtResource("2_1fg3c")
+
+[node name="JumpMarker" type="Marker2D" parent="CutsceneLogic"]
+position = Vector2(320, 416)
+
+[node name="Mario" parent="." instance=ExtResource("3_0pc81")]
+position = Vector2(0, 400)
+gravity_scale = 0.25
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("4_adn2k")
+
+[node name="CamArea" parent="." instance=ExtResource("5_52f1s")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer1" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAALAA8AAQABAAIAAAALAA4AAQABAAEAAAALAA0AAQABAAAAAAAKAA8AAQABAAIAAAAKAA4AAQABAAEAAAAJAA8AAQABAAIAAAAJAA4AAQABAAEAAAAJAA0AAQABAAAAAAAIAA8AAQABAAIAAAAIAA4AAQABAAEAAAAIAA0AAQABAAAAAAAHAA8AAQABAAIAAAAHAA4AAQABAAEAAAAHAA0AAQABAAAAAAAGAA8AAQABAAIAAAAGAA4AAQABAAEAAAAGAA0AAQABAAAAAAAFAA8AAQABAAIAAAAFAA4AAQABAAEAAAAFAA0AAQABAAAAAAAEAA8AAQABAAIAAAAEAA4AAQABAAEAAAAEAA0AAQABAAAAAAADAA8AAQABAAIAAAADAA4AAQABAAEAAAADAA0AAQABAAAAAAACAA8AAQABAAIAAAACAA4AAQABAAEAAAACAA0AAQABAAAAAAABAA8AAQABAAIAAAABAA4AAQABAAEAAAAAAA8AAQABAAIAAAAAAA4AAQABAAEAAAD//w8AAQAAAAIAAAD//w4AAQAAAAEAAAAMAA0AAQABAAAAAAAMAA4AAQABAAEAAAAMAA8AAQABAAIAAAAKAA0AAQABAAAAAAACABAAAgAAAAAADQABAA0AAQABAAAAAAAAAA0AAQABAAAAAAD//w0AAQAAAAAAAAAUAA8AAQACAAIAAAAUAA4AAQACAAEAAAAUAA0AAQACAAAAAAATAA8AAQABAAIAAAATAA4AAQABAAEAAAATAA0AAQABAAAAAAASAA8AAQABAAIAAAASAA4AAQABAAEAAAASAA0AAQABAAAAAAARAA8AAQABAAIAAAARAA4AAQAEAAIAAAARAA0AAQABAAAAAAAQAA8AAQABAAIAAAAQAA4AAQABAAEAAAAQAA0AAQABAAAAAAAPAA8AAQABAAIAAAAPAA4AAQABAAEAAAAPAA0AAQABAAAAAAAOAA8AAQABAAIAAAAOAA4AAQABAAEAAAAOAA0AAQABAAAAAAANAA8AAQABAAIAAAANAA4AAQABAAEAAAANAA0AAQABAAAAAAATAAsABAAAAAAAAAATAAwABAAAAAAAAAACAAwABgAAAAAAAAAEAAsACQAAAAAAAAAKAAoACAAAAAAAAQAJAAwABQAAAAAAAQAIAAwABQAAAAAAAQAHAAwABQAAAAAAAQAGAAwABQAAAAAAAQAMAAwABgAAAAAAAAARAAoAAwAAAAAAAAARAAsAAwAAAAEAAAASAAoAAwABAAAAAAASAAsAAwABAAEAAAAPAAsAAwACAAAAAAAPAAwAAwACAAEAAAAQAAsAAwADAAAAAAAQAAwAAwADAAEAAAARAAwAAwAAAAEAAAASAAwAAwABAAEAAAA=")
+tile_set = ExtResource("6_b7uor")
+navigation_enabled = false
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -100
+position = Vector2(320, 336)
+scale = Vector2(10, 1)
+texture = SubResource("GradientTexture2D_5fsnw")
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/Sprite2D"]
+offset_left = -32.0
+offset_top = -336.0
+offset_right = 32.0
+offset_bottom = -144.0
+color = Color(1, 0.6784314, 0.35686275, 1)
+
+[node name="Node2D" type="Node2D" parent="ParallaxBackground"]
+z_index = -20
+material = ExtResource("7_mudnl")
+script = ExtResource("8_f60lp")
+
+[node name="GiantClouds3" type="Sprite2D" parent="ParallaxBackground/Node2D"]
+modulate = Color(1, 1, 1, 0.713726)
+use_parent_material = true
+position = Vector2(48, 208)
+texture = ExtResource("9_nfwem")
+
+[node name="PlushySun" type="Sprite2D" parent="ParallaxBackground/Node2D"]
+position = Vector2(512, 48)
+texture = ExtResource("10_jbifs")
+script = ExtResource("11_b8tys")
+
+[node name="DesertBigClouds4" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(323, 288)
+texture = ExtResource("12_8xr5w")
+
+[node name="HUD" parent="." instance=ExtResource("13_6sdim")]
+visible = false
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("8_f60lp")
+medium = true
+
+[node name="ChorniyCutsceneSpawner" type="Node" parent="."]
+script = ExtResource("14_2feps")
+
+[node name="Water2" parent="." instance=ExtResource("15_kfxoj")]
+position = Vector2(0, 464)
+disable_collision = true
+
+[node name="WaterMin" parent="Water2" index="0"]
+offset_right = 640.0
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" parent="Water2/WaterMin" index="0"]
+medium = true
+
+[node name="ColorRect" parent="Water2/WaterMin" index="2"]
+medium = true
+
+[node name="WaterMed" parent="Water2" index="1"]
+visible = false
+medium = false
+
+[node name="MediumQualityWater" parent="Water2/WaterMed/Parallax2D" index="0"]
+medium = false
+
+[node name="background3" parent="Water2/WaterMax/Parallax2D" index="0"]
+visible = false
+
+[node name="Sprite2D6" parent="Water2/WaterMax/Parallax2D" index="1"]
+visible = false
+
+[node name="СкрываниеПерехода2" parent="Water2/WaterMax/Parallax2D" index="3"]
+medium = false
+
+[node name="PipeIn2" parent="." instance=ExtResource("16_q3dgd")]
+position = Vector2(470, 384)
+rotation = -1.57079
+warp_direction = 1
+warp_to_scene = "res://stages/extra/world_12_syzx/level_12-3.tscn"
+warping_speed = 50.0
+warping_sound = ExtResource("17_l1xc6")
+warp_disable_smooth_entry = true
+use_circle_transition = true
+
+[node name="GreenPipeEnteringAnother" type="Sprite2D" parent="."]
+position = Vector2(544, 384)
+texture = ExtResource("18_1fg3c")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_adn2k")
+offset_right = 640.0
+offset_bottom = 480.0
+script = ExtResource("8_f60lp")
+medium = true
+
+[editable path="Water2"]
