@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://dsamwh05hnabr"]
+[gd_scene load_steps=74 format=3 uid="uid://dsamwh05hnabr"]
 
 [ext_resource type="Script" uid="uid://dukosa3hw8lff" path="res://stages/save_game_room/scripts/restore_tweaks_from_minix.gd" id="1_0nl34"]
 [ext_resource type="Script" uid="uid://d2esh46nc5aqc" path="res://stages/main_menu/scripts/zoom_camera_transition.gd" id="1_tc10h"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://bg7ig1d27vebf" path="res://stages/main_menu/textures/previews/preview-5.png" id="18_ifdp3"]
 [ext_resource type="Texture2D" uid="uid://bmxjt4y3pjtmy" path="res://stages/main_menu/textures/previews/preview-6.png" id="19_03bli"]
 [ext_resource type="Script" uid="uid://cjgfed106pyjj" path="res://stages/main_menu/scripts/previews.gd" id="20_cmmgj"]
+[ext_resource type="FontFile" uid="uid://c3oddggltfo64" path="res://gfx/fonts/Cyberion-Demo.otf" id="22_h74ns"]
 [ext_resource type="Script" uid="uid://beoncj7kbx3yr" path="res://stages/main_menu/scripts/checkout_new_tweaks.gd" id="25_k3l22"]
 [ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="25_vf7gm"]
 [ext_resource type="Script" uid="uid://bh2tgtr0bnas1" path="res://stages/main_menu/scripts/appearing_modulate.gd" id="26_dffd6"]
@@ -44,7 +45,6 @@
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="30_ccf2u"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="31_uoq2x"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="33_axkr8"]
-[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="34_0xv1c"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="43_qdsgx"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="44_agpdy"]
 [ext_resource type="Texture2D" uid="uid://cb24ytv72ue4t" path="res://engine/scenes/main_menu/textures/restart_cancel.png" id="45_1uype"]
@@ -92,6 +92,13 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="FontVariation" id="FontVariation_102uj"]
+base_font = ExtResource("22_h74ns")
+variation_transform = Transform2D(0.9, 0, 0, 1, 0, 0)
+spacing_glyph = -1
+spacing_top = -1
+spacing_bottom = 1
 
 [sub_resource type="Gradient" id="Gradient_03i18"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -293,29 +300,27 @@ position = Vector2(570, 253)
 texture = ExtResource("26_w72sm")
 script = ExtResource("5_7ehwd")
 
-[node name="UpdateFound" type="Label" parent="General"]
+[node name="UpdateFound" type="RichTextLabel" parent="General"]
 visible = false
 layout_mode = 0
 offset_top = 381.0
 offset_right = 221.0
-offset_bottom = 469.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0.19, 0.843137)
+offset_bottom = 478.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0.19, 0.843137)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("33_axkr8")
-theme_override_font_sizes/font_size = 17
-text = "new update found!
-press %s
-to open in browser"
+theme_override_fonts/normal_font = SubResource("FontVariation_102uj")
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+text = "[color=light_pink]NEW UPDATE FOUND![/color]
+[color=gold]{0}[/color]
+PRESS %s
+TO OPEN IN BROWSER"
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 2
-autowrap_mode = 3
-uppercase = true
-script = ExtResource("34_0xv1c")
-action = "ui_select"
 
 [node name="UpdateChecking" type="Label" parent="General"]
 visible = false
@@ -523,7 +528,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_7o3d3")
 
-[node name="LabelMisterEarl" parent="UpdateConfirmModal/Control" instance=ExtResource("43_qdsgx")]
+[node name="LabelUpdate" parent="UpdateConfirmModal/Control" instance=ExtResource("43_qdsgx")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -533,15 +538,10 @@ offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 26
-text = "A new update is available for
+text = "A new update {0}is available for
 mario forever: community edition!
 
-it is extremely recommended to update,
-as it includes bug fixes, compatibility with
-mario minix leaderboards, and possibly new content.
-
-older versions of the game are not supported, but you can
-continue for now and update later."
+{1}"
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UpdateConfirmModal/Control"]
