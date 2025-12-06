@@ -24,7 +24,12 @@ func _ready() -> void:
 	
 	# Add achievements from old versions
 	old_versions_achievements_patch()
-	
+
+	if !SettingsManager.get_custom_setting("force_enable_deprecated_tweaks", false):
+		if SettingsManager.get_tweak("copyright_free_ost"):
+			SettingsManager.set_tweak("copyright_free_ost", false)
+
+
 func old_versions_achievements_patch() -> void:
 	set_syzx_secret("syzx worlds completed",
 		"syzxchulun world 9",
