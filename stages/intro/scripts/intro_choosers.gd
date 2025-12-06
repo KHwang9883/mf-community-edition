@@ -122,17 +122,17 @@ func _on_game_look_selected(item_index: int, item_node: Control, immediate: bool
 	if immediate: return
 	match item_index:
 		0:
-			bg.get_child(0).texture = preload("res://stages/intro/textures/scr2.png")
-			bg.get_child(1).texture = preload("res://stages/intro/textures/scr4.png")
-			bg.get_child(2).texture = preload("res://stages/intro/textures/scr6.png")
+			bg.get_child(0).texture = load("res://stages/intro/textures/scr2.png")
+			bg.get_child(1).texture = load("res://stages/intro/textures/scr4.png")
+			bg.get_child(2).texture = load("res://stages/intro/textures/scr6.png")
 		1:
-			bg.get_child(0).texture = preload("res://stages/intro/textures/scr1.png")
-			bg.get_child(1).texture = preload("res://stages/intro/textures/scr4.png")
-			bg.get_child(2).texture = preload("res://stages/intro/textures/scr7.png")
+			bg.get_child(0).texture = load("res://stages/intro/textures/scr1.png")
+			bg.get_child(1).texture = load("res://stages/intro/textures/scr4.png")
+			bg.get_child(2).texture = load("res://stages/intro/textures/scr7.png")
 		2:
-			bg.get_child(0).texture = preload("res://stages/intro/textures/scr2.png")
-			bg.get_child(1).texture = preload("res://stages/intro/textures/scr3.png")
-			bg.get_child(2).texture = preload("res://stages/intro/textures/scr5.png")
+			bg.get_child(0).texture = load("res://stages/intro/textures/scr2.png")
+			bg.get_child(1).texture = load("res://stages/intro/textures/scr3.png")
+			bg.get_child(2).texture = load("res://stages/intro/textures/scr5.png")
 
 func look_toggled() -> void:
 	if look_scr_tween && look_scr_tween.is_valid():
