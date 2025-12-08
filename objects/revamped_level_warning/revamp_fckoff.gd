@@ -10,7 +10,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 		return
 	super(mouse_input)
 	
-	var is_new = SettingsManager.get_tweak("remade_levels", true)
+	var is_new = prog._remade_tweak
 	
 	if is_new:
 		prog.selected_new.emit()
