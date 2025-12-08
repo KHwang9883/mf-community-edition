@@ -17,7 +17,8 @@ func _ready() -> void:
 	SettingsManager.settings_saved.connect(_update_text)
 	window.hide()
 	for i in v_box_container.get_children():
-		if !i is Control || !i.visible: continue
+		if !i is Button || !i.visible: continue
+		if i is CheckBox: continue
 		ctrl_buttons.append(i)
 		Thunder._connect(i.pressed, _on_reset_btn_pressed.bind(i.name, i.text))
 
