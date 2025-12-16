@@ -1,72 +1,94 @@
-[gd_scene load_steps=16 format=3 uid="uid://b7hju0uoa1ncd"]
+[gd_scene load_steps=17 format=4 uid="uid://b7hju0uoa1ncd"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_ai04y"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_oh7c7"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_ybmbg"]
-[ext_resource type="Script" uid="uid://bxx54cyd4mjsq" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_6ncly"]
 [ext_resource type="AudioStream" uid="uid://cbbgfaa2sgtg" path="res://stages/extra/new_year_world/music/the_jester.xm" id="5_oh7c7"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_qcxsd"]
-[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_5psee"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_kp33i"]
+[ext_resource type="TileSet" uid="uid://b64c2na1dguy6" path="res://stages/extra/new_year_world/objects/tileset_ny.tres" id="8_dadqq"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_yfjf1"]
-[ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="9_sryoy"]
-[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_on7fv"]
+[ext_resource type="Texture2D" uid="uid://bs57b16ok6fv5" path="res://tilesets/icy_ground/snow_night_forest.png" id="10_egixx"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_rcp62"]
-[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_v0lax"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3kpvw"]
-texture = ExtResource("10_on7fv")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_nn8nd"]
+atlas = ExtResource("10_egixx")
+region = Rect2(232, 136, 16, 16)
 
-[sub_resource type="TileSet" id="TileSet_sdjw2"]
-tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 112
-physics_layer_0/collision_mask = 0
-sources/0 = SubResource("TileSetAtlasSource_3kpvw")
+[sub_resource type="Curve" id="Curve_egixx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.616216, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -7.01374, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_nn8nd"]
+curve = SubResource("Curve_egixx")
+
+[sub_resource type="Curve" id="Curve_ai04y"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.756757, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -13.0691, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_oh7c7"]
+curve = SubResource("Curve_ai04y")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ybmbg"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(7000, 0, 0)
+emission_shape = 3
+emission_box_extents = Vector3(7000, 0, 1)
+angle_min = -45.0
+angle_max = 45.0
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_oh7c7")
+alpha_curve = SubResource("CurveTexture_nn8nd")
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_use_scale = true
 
 [node name="LevelNy3" type="Node2D"]
 script = ExtResource("1_ai04y")
 completion_music = ExtResource("2_oh7c7")
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_ybmbg")]
-script = ExtResource("4_6ncly")
+[node name="MusicLoader" parent="." instance=ExtResource("3_ybmbg")]
 music = Array[Resource]([ExtResource("5_oh7c7")])
 
-[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_qcxsd")]
+[node name="Player" parent="." instance=ExtResource("5_qcxsd")]
 position = Vector2(80, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 12.0
-platform_on_leave = 2
-script = ExtResource("6_5psee")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("7_kp33i")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_yfjf1")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 11008.0
+[node name="CameraArea" parent="." instance=ExtResource("8_yfjf1")]
+offset_right = 14000.0
 offset_bottom = 480.0
-script = ExtResource("9_sryoy")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray(0, 0, 2, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_sdjw2")
+tile_map_data = PackedByteArray("AAAQAAoAAQAIAAMAAAAQAAsAAQAIAAUAAAAQAAwAAQAIAAkAAAARAAkAAQAJAAAAAAARAAoAAQAJAAEAAAARAAsAAQAJAAIAAAARAAwAAQAKAAkAAAADAAwAAQAAAAgAAAAEAAwAAQABAAgAAAAFAAwAAQACAAgAAAAKAAwAAQAAAAcAAAALAAwAAQACAAcAAAAcAA0AAQAEAAAAAAAcAA4AAQAEAAMAAAAcAA8AAQAEAAQAAAAcABAAAQAEAAUAAAAdAA0AAQAFAAAAAAAdAA4AAQAFAAMAAAAdAA8AAQAFAAQAAAAdABAAAQAFAAUAAAAeAA0AAQAFAAAAAAAeAA4AAQAFAAMAAAAeAA8AAQAFAAQAAAAeABAAAQAFAAUAAAAfAA0AAQAFAAAAAAAfAA4AAQAFAAMAAAAfAA8AAQAFAAQAAAAfABAAAQAFAAUAAAAgAA0AAQAFAAAAAAAgAA4AAQAFAAMAAAAgAA8AAQAFAAQAAAAgABAAAQAFAAUAAAAhAA0AAQAFAAAAAAAhAA4AAQAFAAMAAAAhAA8AAQAFAAQAAAAhABAAAQAFAAUAAAAiAA0AAQAFAAAAAAAiAA4AAQAFAAMAAAAiAA8AAQAFAAQAAAAiABAAAQAFAAUAAAAjAA0AAQAFAAAAAAAjAA4AAQAFAAMAAAAjAA8AAQAFAAQAAAAjABAAAQAFAAUAAAAkAA0AAQAFAAAAAAAkAA4AAQAFAAMAAAAkAA8AAQAFAAQAAAAkABAAAQAFAAUAAAAlAA0AAQAFAAAAAAAlAA4AAQAFAAMAAAAlAA8AAQAFAAQAAAAlABAAAQAFAAUAAAAmAA0AAQAFAAAAAAAmAA4AAQAFAAMAAAAmAA8AAQAFAAQAAAAmABAAAQAFAAUAAAAnAA0AAQAFAAAAAAAnAA4AAQAFAAMAAAAnAA8AAQAFAAQAAAAnABAAAQAFAAUAAAAoAA0AAQAFAAAAAAAoAA4AAQAFAAMAAAAoAA8AAQAFAAQAAAAoABAAAQAFAAUAAAApAA0AAQAFAAAAAAApAA4AAQAFAAMAAAApAA8AAQAFAAQAAAApABAAAQAFAAUAAAAqAA0AAQAFAAAAAAAqAA4AAQAFAAMAAAAqAA8AAQAFAAQAAAAqABAAAQAFAAUAAAArAA0AAQAFAAAAAAArAA4AAQAFAAMAAAArAA8AAQAFAAQAAAArABAAAQAFAAUAAAAsAA0AAQAFAAAAAAAsAA4AAQAFAAMAAAAsAA8AAQAFAAQAAAAsABAAAQAFAAUAAAAtAA0AAQAFAAAAAAAtAA4AAQAFAAMAAAAtAA8AAQAFAAQAAAAtABAAAQAFAAUAAAAuAA0AAQAFAAAAAAAuAA4AAQAFAAMAAAAuAA8AAQAFAAQAAAAuABAAAQAFAAUAAAAvAA0AAQAFAAAAAAAvAA4AAQAFAAMAAAAvAA8AAQAFAAQAAAAvABAAAQAFAAUAAAAwAA0AAQAFAAAAAAAwAA4AAQAFAAMAAAAwAA8AAQAFAAQAAAAwABAAAQAFAAUAAAAxAA0AAQAFAAAAAAAxAA4AAQAFAAMAAAAxAA8AAQAFAAQAAAAxABAAAQAFAAUAAAAyAA0AAQAGAAAAAAAyAA4AAQAGAAMAAAAyAA8AAQAGAAQAAAAyABAAAQAGAAUAAAD//w0AAQAEAAAAAAD//w4AAQAEAAMAAAD//w8AAQAEAAQAAAD//xAAAQAEAAUAAAAAAA0AAQAFAAAAAAAAAA4AAQAFAAMAAAAAAA8AAQAFAAQAAAAAABAAAQAFAAUAAAABAA0AAQAFAAAAAAABAA4AAQAAAAMAAAABAA8AAQAFAAQAAAABABAAAQAFAAUAAAACAA0AAQAFAAAAAAACAA4AAQABAAMAAAACAA8AAQAFAAQAAAACABAAAQAFAAUAAAADAA0AAQAFAAAAAAADAA4AAQACAAMAAAADAA8AAQAFAAQAAAADABAAAQAFAAUAAAAEAA0AAQAFAAAAAAAEAA4AAQAFAAMAAAAEAA8AAQAFAAQAAAAEABAAAQAFAAUAAAAFAA0AAQAFAAAAAAAFAA4AAQAFAAMAAAAFAA8AAQAFAAQAAAAFABAAAQAFAAUAAAAGAA0AAQAFAAAAAAAGAA4AAQAFAAMAAAAGAA8AAQAFAAQAAAAGABAAAQAFAAUAAAAHAA0AAQAFAAAAAAAHAA4AAQAFAAMAAAAHAA8AAQAFAAQAAAAHABAAAQAFAAUAAAAIAA0AAQAFAAAAAAAIAA4AAQAFAAMAAAAIAA8AAQAFAAQAAAAIABAAAQAFAAUAAAAJAA0AAQAFAAAAAAAJAA4AAQAAAAUAAAAJAA8AAQAFAAQAAAAJABAAAQAFAAUAAAAKAA0AAQAFAAAAAAAKAA4AAQACAAUAAAAKAA8AAQAFAAQAAAAKABAAAQAFAAUAAAALAA0AAQAFAAAAAAALAA4AAQAFAAMAAAALAA8AAQAFAAQAAAALABAAAQAFAAUAAAAMAA0AAQAFAAAAAAAMAA4AAQAFAAMAAAAMAA8AAQAFAAQAAAAMABAAAQAFAAUAAAANAA0AAQAFAAAAAAANAA4AAQAFAAMAAAANAA8AAQAFAAQAAAANABAAAQAFAAUAAAAOAA0AAQAFAAAAAAAOAA4AAQAFAAMAAAAOAA8AAQAFAAQAAAAOABAAAQAFAAUAAAAPAA0AAQAFAAAAAAAPAA4AAQAFAAMAAAAPAA8AAQAFAAQAAAAPABAAAQAFAAUAAAAQAA0AAQAFAAAAAAAQAA4AAQAAAAUAAAAQAA8AAQAFAAQAAAAQABAAAQAFAAUAAAARAA0AAQAFAAAAAAARAA4AAQABAAUAAAARAA8AAQAFAAQAAAARABAAAQAFAAUAAAASAA0AAQAFAAAAAAASAA4AAQABAAUAAAASAA8AAQAFAAQAAAASABAAAQAFAAUAAAATAA0AAQAFAAAAAAATAA4AAQACAAUAAAATAA8AAQAFAAQAAAATABAAAQAFAAUAAAAUAA0AAQAFAAAAAAAUAA4AAQAFAAMAAAAUAA8AAQAFAAQAAAAUABAAAQAFAAUAAAAVAA0AAQAGAAAAAAAVAA4AAQAGAAMAAAAVAA8AAQAGAAQAAAAVABAAAQAGAAUAAAAeAAwAAQAAAAcAAAAfAAwAAQABAAcAAAAgAAwAAQACAAcAAAArAAkAAQAKAAAAAAArAAoAAQAKAAEAAAArAAsAAQAKAAIAAAArAAwAAQAKAAkAAAAlAAwAAQAIAAkAAAAlAAsAAQAIAAIAAAAlAAoAAQAIAAAAAAA5AA0AAQAEAAAAAAA6AA0AAQAFAAAAAAA7AA0AAQAGAAAAAAA8AAoAAQAAAAAAAAA9AAoAAQABAAAAAAA+AAoAAQACAAAAAAA5AA4AAQAEAAMAAAA5AA8AAQAEAAQAAAA5ABAAAQAEAAUAAAA6AA4AAQAFAAMAAAA6AA8AAQAFAAQAAAA6ABAAAQAFAAUAAAA7AA4AAQAGAAMAAAA7AA8AAQAGAAQAAAA7ABAAAQAGAAUAAAA8AAsAAQAAAAEAAAA9AAsAAQABAAEAAAA+AAsAAQACAAEAAAA8AA4AAQAAAAEAAAA9AA4AAQABAAEAAAA+AA4AAQACAAEAAAA8AA8AAQAAAAEAAAA9AA8AAQABAAEAAAA+AA8AAQACAAEAAAA8ABAAAQAAAAEAAAA9ABAAAQABAAEAAAA+ABAAAQACAAEAAAA8AAwAAQAAAAEAAAA9AAwAAQABAAEAAAA+AAwAAQACAAEAAAA8AA0AAQAAAAEAAAA9AA0AAQABAAEAAAA+AA0AAQACAAEAAAA/AAwAAQAHAAMAAAA/AA0AAQAHAAQAAAA/AA4AAQAHAAUAAAA/AAoAAQAHAAAAAAA/AAsAAQAHAAMAAABAAAwAAQAEAAEAAABBAAwAAQAFAAEAAABCAAwAAQAGAAEAAABAAA0AAQAEAAUAAABBAA0AAQAFAAUAAABCAA0AAQAGAAUAAABAAA4AAQAEAAUAAABBAA4AAQAFAAUAAABCAA4AAQAGAAUAAAA6AAsAAgAAAAAAAAA6AAwAAgAAAAEAAAA7AAsAAgABAAAAAAA7AAwAAgABAAEAAAAmAAsAAgAAAAEAAAAmAAwAAgAAAAEAAAAnAAsAAgABAAEAAAAnAAwAAgABAAEAAAAmAAoAAgAAAAAAAAAnAAoAAgABAAAAAAAaAA0AAgAAAAEAAAAaAA4AAgAAAAEAAAAbAA0AAgABAAEAAAAbAA4AAgABAAEAAAAaAAwAAgAAAAEAAAAbAAwAAgABAAEAAAAaAAsAAgAAAAAAAAAbAAsAAgABAAAAAAAYAA0AAgAAAAAAAAAYAA4AAgAAAAEAAAAZAA0AAgABAAAAAAAZAA4AAgABAAEAAAAYAA8AAgAAAAAAAAAYABAAAgAAAAEAAAAZAA8AAgABAAAAAAAZABAAAgABAAEAAAA=")
+tile_set = ExtResource("8_dadqq")
 metadata/_edit_lock_ = true
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_rcp62")]
-script = ExtResource("12_v0lax")
+[node name="HUD" parent="." instance=ExtResource("11_rcp62")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Snow" type="GPUParticles2D" parent="."]
+amount = 2000
+amount_ratio = 0.5
+texture = SubResource("AtlasTexture_nn8nd")
+lifetime = 5.0
+preprocess = 5.0
+visibility_rect = Rect2(-100, -100, 14000, 200)
+trail_lifetime = 2.7199999999999998
+process_material = SubResource("ParticleProcessMaterial_ybmbg")
 
 [node name="Objects" type="Node2D" parent="."]
