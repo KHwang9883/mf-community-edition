@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=4 uid="uid://c6vw46d1i6464"]
+[gd_scene load_steps=69 format=4 uid="uid://c6vw46d1i6464"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_f3t4r"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_hci3h"]
@@ -49,6 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://dda6sgpdpay3c" path="res://engine/objects/bumping_blocks/question_block/templates/Frog Suit Question Block.tscn" id="46_tuhdb"]
 [ext_resource type="PackedScene" uid="uid://bvyleahhjj28k" path="res://engine/objects/powerups/frog_suit/frog_suit.tscn" id="47_4mcr1"]
 [ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://engine/tilesets/overworld/green_pipe_entering_another.png" id="48_4mcr1"]
+[ext_resource type="Script" uid="uid://btnri3mjxwo5t" path="res://objects/harder_design_node/harder_design_node.gd" id="48_454mw"]
 
 [sub_resource type="Gradient" id="Gradient_ehahp"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -619,15 +620,20 @@ texture = ExtResource("45_tgotf")
 position = Vector2(5976, -728)
 texture = ExtResource("45_tgotf")
 
-[node name="QuestionBlockFrogSuit" parent="." instance=ExtResource("46_tuhdb")]
-position = Vector2(2000, 48)
-result = SubResource("Resource_faqon")
-initially_visible_and_solid = false
-
 [node name="GreenPipeEnteringAnother2" type="Sprite2D" parent="."]
 position = Vector2(7104, -608)
 texture = ExtResource("48_4mcr1")
 flip_h = true
+
+[node name="Node2D" type="Node2D" parent="."]
+modulate = Color(0.45916665, 1, 0.41000003, 1)
+script = ExtResource("48_454mw")
+inverted = true
+
+[node name="QuestionBlockFrogSuit" parent="Node2D" instance=ExtResource("46_tuhdb")]
+position = Vector2(2000, 48)
+result = SubResource("Resource_faqon")
+initially_visible_and_solid = false
 
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 
