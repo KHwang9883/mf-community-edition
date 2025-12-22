@@ -6,7 +6,8 @@ var heat: float
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if is_applied:
+	var is_heated: bool = is_applied && player.warp == Player.Warp.NONE
+	if is_heated:
 		heat = min(heat + 100.0 * delta, 125.0)
 		particles.emitting = heat > 20
 		if heat >= 100.0:
@@ -16,5 +17,5 @@ func _physics_process(delta: float) -> void:
 		particles.emitting = heat > 50
 	else:
 		particles.emitting = false
-	progress_bar.visible = is_applied || heat > 0.0
+	progress_bar.visible = is_heated || heat > 0.0
 	progress_bar.value = heat
