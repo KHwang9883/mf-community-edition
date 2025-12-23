@@ -50,16 +50,23 @@ func try_placing_block() -> void:
 	var item: MCItem = inventory[selected].items.back()
 	if !outline.can_place: return
 	if !is_instance_valid(item.object_ref):
+		inventory[selected].items.pop_back()
+		update_hotbar()
 		return
+	var infdev: bool = Console.cv.get("mc_infinite_tiles", false)
 	match item.type:
 		ItemSlot.OutlineType.BODY, ItemSlot.OutlineType.UNKNOWN:
-			item.object_ref.show()
-			item.object_ref.process_mode = item.item_body.process_mode
+			var referenced_obj: Node2D = item.object_ref
+			#if infdev:
+			#	referenced_obj = referenced_obj.duplicate()
+			#	item.object_ref.add_sibling(referenced_obj)
+			referenced_obj.show()
+			referenced_obj.process_mode = item.item_body.process_mode
 			if item.type == ItemSlot.OutlineType.BODY:
-				item.object_ref.set_deferred("collision_layer", item.item_body.collision_layer)
-			item.object_ref.global_position = outline.outlined_center_pos
-			item.object_ref.reset_physics_interpolation()
-			var body = item.object_ref.get_node_or_null("Body")
+				referenced_obj.set_deferred("collision_layer", item.item_body.collision_layer)
+			referenced_obj.global_position = outline.outlined_center_pos
+			referenced_obj.reset_physics_interpolation()
+			var body = referenced_obj.get_node_or_null("Body")
 			if body:
 				body.process_mode = item.item_body.body_process
 		ItemSlot.OutlineType.TILE_MAP_LAYER:
@@ -77,7 +84,8 @@ func try_placing_block() -> void:
 				object.set_cell(tile_pos, itemtile.source_id, Vector2i.ZERO, itemtile.alt_id)
 		
 	
-	inventory[selected].items.pop_back()
+	if !(infdev && item.type == ItemSlot.OutlineType.TILE_MAP_LAYER):
+		inventory[selected].items.pop_back()
 	update_hotbar()
 
 func pick_block() -> void:

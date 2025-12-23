@@ -13,7 +13,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):
 		Thunder._connect(Scenes.scene_ready, patch_level)
 		patch_level()
-		return Command.ExecuteResult.new("You can now break blocks using the mouse. Press Tab to switch hotbars.")
+		return Command.ExecuteResult.new("You can now break blocks using the mouse. Press Tab to switch hotbars; middle click to drop items.")
 	else:
 		Thunder._disconnect(Scenes.scene_ready, patch_level)
 		for i in get_incoming_connections():
