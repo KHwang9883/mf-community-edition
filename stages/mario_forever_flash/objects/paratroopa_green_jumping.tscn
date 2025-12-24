@@ -1,0 +1,139 @@
+[gd_scene load_steps=23 format=3 uid="uid://c3xlrqjfbegm6"]
+
+[ext_resource type="Script" uid="uid://cnqd1qh1nwbtt" path="res://engine/objects/enemies/paratroopas/paratroopa_jump.gd" id="1_cbpeb"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_0ps1w"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qp3b2"]
+[ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="3_cbpeb"]
+[ext_resource type="Script" uid="uid://jk1chlh3hlmf" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="4_0ps1w"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_b6tpa"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_7j8wc"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_h6rkm"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_7vhx4"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_6abtf"]
+[ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="10_hwlyx"]
+[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="11_ubd6l"]
+[ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="12_dyvs8"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="14_7vhx4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_xeu7s"]
+script = ExtResource("5_b6tpa")
+creation_nodepack = ExtResource("3_cbpeb")
+trans_inheritances = 7
+custom_script = ExtResource("4_0ps1w")
+
+[sub_resource type="Resource" id="Resource_llg06"]
+resource_local_to_scene = true
+script = ExtResource("5_b6tpa")
+creation_nodepack = ExtResource("7_h6rkm")
+trans_inheritances = 7
+visi_z_index = 1
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_7vhx4")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onbvk"]
+atlas = ExtResource("10_hwlyx")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vamrm"]
+atlas = ExtResource("10_hwlyx")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c7ddy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onbvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vamrm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pnlq"]
+atlas = ExtResource("11_ubd6l")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mjhet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4pnlq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="KoopaParatroopaGreenJumping" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_cbpeb")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(75, 0)
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_0ps1w")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_qp3b2")
+stomping_creation = SubResource("Resource_xeu7s")
+stomping_scores = 100
+stomping_sound = ExtResource("6_7j8wc")
+killing_creation = SubResource("Resource_llg06")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("9_6abtf")
+custom_vars = {
+"attachment_killed": NodePath("../../Sprite/Dead")
+}
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_scores"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_c7ddy")
+autoplay = "default"
+
+[node name="Wings" parent="Sprite" instance=ExtResource("12_dyvs8")]
+position = Vector2(-8, -7)
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_mjhet")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+script = ExtResource("14_7vhx4")
+metadata/_edit_lock_ = true
+
+[connection signal="collided_floor" from="." to="." method="jump" binds= [0.0]]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Wings" method="fall"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Wings" method="fall"]

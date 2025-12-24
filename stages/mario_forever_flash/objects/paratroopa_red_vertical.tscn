@@ -1,0 +1,129 @@
+[gd_scene load_steps=21 format=3 uid="uid://b7poe536ajtmd"]
+
+[ext_resource type="Script" uid="uid://c7rfddc57l6oj" path="res://engine/objects/enemies/paratroopas/paratroopa_green.gd" id="1_ux1fa"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qp3b2"]
+[ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="3_gjoi4"]
+[ext_resource type="Script" uid="uid://jk1chlh3hlmf" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="4_0ps1w"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_b6tpa"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_7j8wc"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_h6rkm"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_7vhx4"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_6abtf"]
+[ext_resource type="Texture2D" uid="uid://bd6t46hxy4085" path="res://engine/objects/enemies/koopas/textures/koopa_red.png" id="10_gjoi4"]
+[ext_resource type="Texture2D" uid="uid://dwgb38fjcwjhp" path="res://engine/objects/enemies/koopas/textures/shell_red.png" id="11_0seos"]
+[ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="12_dyvs8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxfep"]
+size = Vector2(32, 36)
+
+[sub_resource type="Resource" id="Resource_0seos"]
+script = ExtResource("5_b6tpa")
+creation_nodepack = ExtResource("3_gjoi4")
+trans_inheritances = 7
+custom_script = ExtResource("4_0ps1w")
+
+[sub_resource type="Resource" id="Resource_llg06"]
+resource_local_to_scene = true
+script = ExtResource("5_b6tpa")
+creation_nodepack = ExtResource("7_h6rkm")
+trans_inheritances = 7
+visi_z_index = 1
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_7vhx4")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irof6"]
+atlas = ExtResource("10_gjoi4")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uumhy"]
+atlas = ExtResource("10_gjoi4")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2kxrq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irof6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uumhy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gljwr"]
+atlas = ExtResource("11_0seos")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dd33w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gljwr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="KoopaParatroopaRedVertical" type="Node2D" groups=["#circle"]]
+script = ExtResource("1_ux1fa")
+amplitude = Vector2(0, 50)
+phase = 95.94832829008176
+frequency = 2.0
+random_phase = true
+sprite_path = NodePath("Sprite")
+metadata/_edit_pinned_properties_ = [&"amplitude", &"random_phase", &"frequency"]
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_bxfep")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_qp3b2")
+stomping_creation = SubResource("Resource_0seos")
+stomping_scores = 100
+stomping_sound = ExtResource("6_7j8wc")
+killing_creation = SubResource("Resource_llg06")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("9_6abtf")
+ice_sprite = NodePath("../../Sprite")
+custom_vars = {
+"attachment_killed": NodePath("../../Sprite/Dead")
+}
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_2kxrq")
+autoplay = "default"
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+position = Vector2(0, 4)
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_dd33w")
+
+[node name="Wings" parent="." instance=ExtResource("12_dyvs8")]
+position = Vector2(-8, -16)
+root_path = NodePath("..")
+parent_path = NodePath("../Sprite")
+metadata/_edit_pinned_properties_ = [&"root_path", &"parent_path"]
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]
