@@ -29,8 +29,8 @@
 [ext_resource type="Script" uid="uid://c8yveggjqci4k" path="res://stages/world_1/scripts/bowser_fake_reveal.gd" id="28_emr0f"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="29_sicr3"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="30_wuong"]
+[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="31_plico"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="31_wb0q4"]
-[ext_resource type="Texture2D" uid="uid://dwtn8cky8tb3l" path="res://engine/objects/enemies/goombas/textures/goomba.png" id="32_vwdae"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="33_8jmql"]
 [ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="34_cqgdw"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="35_8samd"]
@@ -101,22 +101,26 @@ custom_vars = {
 }
 custom_script = ExtResource("30_wuong")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gtr3k"]
-atlas = ExtResource("32_vwdae")
-region = Rect2(0, 0, 31, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_umkjp"]
+atlas = ExtResource("31_plico")
+region = Rect2(96, 0, 32, 28)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ex0mi"]
-atlas = ExtResource("32_vwdae")
-region = Rect2(31, 0, 31, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_jii6k"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_y1e36"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gtr3k")
-}, {
+"texture": SubResource("AtlasTexture_umkjp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kxjx1"]
+animations = [{
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ex0mi")
+"texture": SubResource("AtlasTexture_umkjp")
 }],
 "loop": true,
 "name": &"default",
@@ -899,7 +903,7 @@ creation = SubResource("Resource_b78bc")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Objects/LavaBowser/BowserFakeReveal"]
 visible = false
-sprite_frames = SubResource("SpriteFrames_jii6k")
+sprite_frames = SubResource("SpriteFrames_y1e36")
 
 [node name="LavaBowser2" parent="Objects" instance=ExtResource("27_xy47p")]
 position = Vector2(7472, 464)
@@ -945,7 +949,7 @@ creation = SubResource("Resource_b78bc")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Objects/LavaBowser2/BowserFakeReveal"]
 visible = false
-sprite_frames = SubResource("SpriteFrames_jii6k")
+sprite_frames = SubResource("SpriteFrames_kxjx1")
 
 [node name="BowserTrigger" parent="Objects" node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("33_8jmql")]
 position = Vector2(6784, 240)
