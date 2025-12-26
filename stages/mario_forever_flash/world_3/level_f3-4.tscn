@@ -30,7 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="28_rq6q6"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="29_io2yg"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="30_cx6rx"]
-[ext_resource type="Texture2D" uid="uid://dwtn8cky8tb3l" path="res://engine/objects/enemies/goombas/textures/goomba.png" id="31_f268r"]
+[ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="31_hhxxg"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="32_xl4co"]
 [ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="33_ud056"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="34_oqv4m"]
@@ -113,22 +113,26 @@ custom_vars = {
 }
 custom_script = ExtResource("29_io2yg")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gtr3k"]
-atlas = ExtResource("31_f268r")
-region = Rect2(0, 0, 31, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sslmr"]
+atlas = ExtResource("31_hhxxg")
+region = Rect2(0, 32, 31, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ex0mi"]
-atlas = ExtResource("31_f268r")
-region = Rect2(31, 0, 31, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_jii6k"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_keiwq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gtr3k")
-}, {
+"texture": SubResource("AtlasTexture_sslmr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r3fsc"]
+animations = [{
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ex0mi")
+"texture": SubResource("AtlasTexture_sslmr")
 }],
 "loop": true,
 "name": &"default",
@@ -712,10 +716,10 @@ position = Vector2(2480, 144)
 position = Vector2(2512, 144)
 
 [node name="KoopaParatroopaRedVertical" parent="Objects" instance=ExtResource("25_1fayf")]
-position = Vector2(1776, 208)
+position = Vector2(1776, 311)
 
 [node name="KoopaParatroopaRedVertical2" parent="Objects" instance=ExtResource("25_1fayf")]
-position = Vector2(2192, 176)
+position = Vector2(2192, 279)
 
 [node name="LavaBowser" parent="Objects" instance=ExtResource("26_0l5sa")]
 position = Vector2(6256, 464)
@@ -761,7 +765,7 @@ creation = SubResource("Resource_b78bc")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Objects/LavaBowser/BowserFakeReveal"]
 visible = false
-sprite_frames = SubResource("SpriteFrames_jii6k")
+sprite_frames = SubResource("SpriteFrames_keiwq")
 
 [node name="LavaBowser2" parent="Objects" instance=ExtResource("26_0l5sa")]
 position = Vector2(6736, 464)
@@ -807,7 +811,7 @@ creation = SubResource("Resource_b78bc")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Objects/LavaBowser2/BowserFakeReveal"]
 visible = false
-sprite_frames = SubResource("SpriteFrames_jii6k")
+sprite_frames = SubResource("SpriteFrames_r3fsc")
 
 [node name="BowserTrigger" parent="Objects" node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("32_xl4co")]
 position = Vector2(6048, 176)
