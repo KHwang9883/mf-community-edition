@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwbpp837lpifh"]
+
+[ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="1_fh2gm"]
+[ext_resource type="AudioStream" uid="uid://dgtypbpo8samu" path="res://engine/objects/enemies/human_lab/goomba/sfx/kick2.wav" id="2_xmabt"]
+[ext_resource type="Texture2D" uid="uid://yhjgdvib21k" path="res://objects/christmas_clones/grinch_jaws_head/textures/clone_head.png" id="3_aa4v1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34bs6"]
+atlas = ExtResource("3_aa4v1")
+region = Rect2(0, 0, 34, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5woul"]
+atlas = ExtResource("3_aa4v1")
+region = Rect2(34, 0, 34, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjrjj"]
+atlas = ExtResource("3_aa4v1")
+region = Rect2(68, 0, 34, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v8y1j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34bs6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5woul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjrjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5woul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="JawsHeadClone" instance=ExtResource("1_fh2gm")]
+
+[node name="CollisionShape2D2" parent="Body" index="0"]
+position = Vector2(0.5, 0.5)
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_sound_succeeded = ExtResource("2_xmabt")
+sound_ignore_pitch_modification = true
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2(-3, -4)
+sprite_frames = SubResource("SpriteFrames_v8y1j")
