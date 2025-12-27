@@ -44,4 +44,5 @@ func collect() -> void:
 	
 	Audio.play_sound(pickup_powerup_sound, self, false, {pitch = sound_pitch})
 	player.starman(starman_duration)
+	player._starman_runout_played = false
 	player._starman_faded = true
