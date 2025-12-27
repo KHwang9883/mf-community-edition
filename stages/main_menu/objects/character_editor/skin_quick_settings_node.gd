@@ -45,6 +45,11 @@ const DEFAULT_LINES = {
 	"fireball_bump": null,
 	"starman": preload("res://engine/objects/powerups/super_star/music-starman.it"),
 	"pipe_cutscene": preload("res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav"),
+	"boomerang_spin": preload("res://engine/objects/projectiles/boomerang/sfx/boomerange_flying.wav"),
+	"water_splash_in": null,
+	"water_splash_out": null,
+	"p_switch": preload("res://engine/objects/p_switch/p_switch_music.ogg"),
+	"bonus_run_out": preload("res://engine/objects/p_switch/p_switch_runout.wav"),
 }
 
 var skin_tweaks: Dictionary = {}
