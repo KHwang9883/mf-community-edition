@@ -1,6 +1,7 @@
 extends "res://engine/components/progress_continue/scripts/progress_continue_screen.gd"
 
 @onready var cursed_preview: AnimatedSprite2D = $CursedPreview
+var loop_offset_behavior_script_2: GDScript
 
 func _ready() -> void:
 	if ProfileManager.profiles.has("suspended") && ProfileManager.profiles.suspended.get("executed"):
@@ -29,14 +30,21 @@ func suspended_game_logic() -> void:
 		ProfileManager.current_profile.data.advanced_edition = true
 	
 	if profile.get(&"saved_player_state"):
-		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(CharacterManager.get_suit(
+		var _suit: PlayerSuit = CharacterManager.get_suit(
 			profile.saved_player_state,
 			"Mario" if !!profile.get("saved_profile_data").get("mario_forever_expert") else ""
-		))
+		)
+		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(_suit)
 		state_preview.sprite_frames = suit_frames
+		loop_offset_behavior_script = ByNodeScript.activate_script(
+			LoopOffsetBehaviorScript, state_preview, {suit = _suit.name}
+		)
 		state_preview.play(&"walk")
 		if profile.saved_profile_data.get(&"kevin_mode_enabled"):
 			cursed_preview.sprite_frames = suit_frames
+			loop_offset_behavior_script_2 = ByNodeScript.activate_script(
+				LoopOffsetBehaviorScript, cursed_preview, {suit = _suit.name}
+			)
 			cursed_preview.visible = true
 			cursed_preview.play(&"walk")
 	Scenes.custom_scenes.pause.open_blocked = true
