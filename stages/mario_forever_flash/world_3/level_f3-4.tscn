@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=4 uid="uid://p2vd6ajtirqo"]
+[gd_scene load_steps=77 format=4 uid="uid://p2vd6ajtirqo"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_fqbp3"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_6qngy"]
@@ -47,6 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://diu2ipea3k8qy" path="res://engine/objects/enemies/hammer_bros/fire_bro.tscn" id="45_wtq28"]
 [ext_resource type="PackedScene" uid="uid://isn2o2tyvkf8" path="res://stages/mario_forever_flash/objects/shorter_long_castle_platform.tscn" id="46_61d1h"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="46_hhxxg"]
+[ext_resource type="Script" uid="uid://dj1lojmei1a1t" path="res://stages/mario_forever_flash/scripts/bowser_attack_fireball.gd" id="46_keiwq"]
 [ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://engine/objects/platform/castle_platforms/single_platform.tscn" id="47_bgd67"]
 [ext_resource type="PackedScene" uid="uid://uhf6frao7p1m" path="res://engine/objects/enemies/podoboo/podoboo.tscn" id="48_c4yb2"]
 [ext_resource type="PackedScene" uid="uid://bxbx27ax0ru2" path="res://stages/mario_forever_flash/objects/shorter_castle_platform.tscn" id="48_wtq28"]
@@ -974,11 +975,14 @@ falling_enabled = true
 [node name="Bowser" parent="Objects" instance=ExtResource("38_1i2dr")]
 position = Vector2(6352, 256)
 health = 6
-status_interval = Array[float]([3.0])
-status = Array[StringName]([&"flame"])
+status_interval = Array[float]([3.0, 3.0])
+status = Array[StringName]([&"flame", &"fireball"])
 jumping_chance = 0.12
 speed = Vector2(150, 0)
 gravity_scale = 0.3
+
+[node name="attack_fireball" type="Node" parent="Objects/Bowser"]
+script = ExtResource("46_keiwq")
 
 [node name="BowserEdge" parent="Objects" instance=ExtResource("39_xymlb")]
 position = Vector2(6224, 240)
