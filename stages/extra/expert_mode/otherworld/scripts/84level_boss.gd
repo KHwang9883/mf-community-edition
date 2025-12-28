@@ -1,3 +1,4 @@
+@warning_ignore("missing_tool")
 extends Level
 
 @onready var final_boss_cell = $FinalBossCell
