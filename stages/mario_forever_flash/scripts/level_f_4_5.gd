@@ -49,3 +49,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 					.instantiate()
 					.with_scene(jump_to_scene)
 			)
+	
+	if completion_write_save:
+		ProfileManager.current_profile.data.star_world = true
+		ProfileManager.save_current_profile()

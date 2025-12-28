@@ -16,13 +16,13 @@
 [ext_resource type="Script" uid="uid://cor7d6o1ein1m" path="res://stages/mario_forever_flash/scripts/final_boss_logic.gd" id="14_dtq4j"]
 [ext_resource type="Texture2D" uid="uid://cwc3illfrnkws" path="res://engine/tilesets/castle/gfx/gray_pipe.png" id="15_lcesf"]
 [ext_resource type="PackedScene" uid="uid://b0b8he2bl1o4o" path="res://stages/mario_forever_flash/objects/bowser_lava_fin.tscn" id="17_j4kjs"]
+[ext_resource type="AudioStream" uid="uid://btk1ebe7xufut" path="res://music/extra/mf_flash/smb_last_battle.ogg" id="17_qmgka"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="17_qo6bl"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="18_4w7u5"]
 [ext_resource type="Script" uid="uid://co2tyasfdab1" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_flame.gd" id="21_qmgka"]
 [ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="22_c1rxs"]
 [ext_resource type="Script" uid="uid://cuk2r1fe7ae7n" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_random.gd" id="23_c1rxs"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="31_3sj2s"]
-[ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="32_hbvpu"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="45_38k7u"]
 [ext_resource type="Script" uid="uid://dj1lojmei1a1t" path="res://stages/mario_forever_flash/scripts/bowser_attack_fireball.gd" id="46_xk15y"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="47_74euc"]
@@ -73,7 +73,8 @@ jump_to_scene = "uid://c02ssatbqw8rk"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("2_ifclt")]
-secrets = Array[String](["mario forever flash completed"])
+secrets = Array[String](["mario forever flash completed", "mario forever flash in kevin mode"])
+is_classic_achievement = Array[bool]([false, false])
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_pqdrc")]
 script = ExtResource("4_47gsn")
@@ -194,7 +195,7 @@ position = Vector2(368, 176)
 curve = SubResource("Curve2D_lcesf")
 trigger_bowser = NodePath("../Bowser")
 camera_speed = 75.0
-boss_music = ExtResource("32_hbvpu")
+boss_music = ExtResource("17_qmgka")
 boss_music_fading = false
 
 [node name="Bowser" parent="Objects" instance=ExtResource("45_38k7u")]
@@ -311,5 +312,6 @@ position = Vector2(0, -544)
 shape = SubResource("WorldBoundaryShape2D_oqbgn")
 
 [connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_secret"]
+[connection signal="level_completed" from="." to="SecretUnlocker" method="unlock_with_kevin" binds= [1]]
 [connection signal="timeout" from="Node2D2/Timer" to="Node2D2" method="_on_timer_timeout"]
 [connection signal="health_changed" from="Objects/Bowser" to="Node2D2" method="_on_bowser_health_changed"]
