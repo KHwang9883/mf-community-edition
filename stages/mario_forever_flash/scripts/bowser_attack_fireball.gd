@@ -36,6 +36,7 @@ func middle_attack() -> void:
 				if !projectile_inst: return
 				if bowser.sprite.animation != animation_after:
 					bowser.sprite.play(animation_after)
+					bowser.sprite.speed_scale = 0
 				
 				Audio.play_sound(flame_sound, bowser, false)
 				pos_flame.position.x = pos_flame_x * bowser.facing
@@ -54,4 +55,5 @@ func middle_attack() -> void:
 
 
 func end_attack() -> void:
+	bowser.sprite.speed_scale = 1
 	super()
