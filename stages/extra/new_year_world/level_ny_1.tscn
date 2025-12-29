@@ -1,4 +1,4 @@
-[gd_scene load_steps=163 format=4 uid="uid://nam3v54hbcut"]
+[gd_scene load_steps=166 format=4 uid="uid://nam3v54hbcut"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_sx232"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_qf4x3"]
@@ -77,6 +77,7 @@
 [ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="72_l87rr"]
 [ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="73_hj4sh"]
 [ext_resource type="Texture2D" uid="uid://brocitne70n08" path="res://stages/extra/new_year_world/gfx/ny_lights_fx.png" id="74_pjsgu"]
+[ext_resource type="Script" uid="uid://b7sdlq8wh7rha" path="res://stages/extra/new_year_world/objects/rhythm_sync.gd" id="78_eytbr"]
 
 [sub_resource type="Gradient" id="Gradient_ymw3o"]
 offsets = PackedFloat32Array(0, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85)
@@ -104,13 +105,13 @@ _surfaces = [{
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_k3px7"]
 frames = 4
-frame_0/texture = ExtResource("10_vpq8m")
+frame_0/texture = ExtResource("12_1ydlw")
 frame_0/duration = 0.2
 frame_1/texture = ExtResource("10_vpq8m")
 frame_1/duration = 0.2
-frame_2/texture = ExtResource("11_e3u6x")
+frame_2/texture = ExtResource("12_1ydlw")
 frame_2/duration = 0.2
-frame_3/texture = ExtResource("12_1ydlw")
+frame_3/texture = ExtResource("11_e3u6x")
 frame_3/duration = 0.2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_0iuac"]
@@ -673,6 +674,18 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_q27n5"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l87rr"]
+gradient = SubResource("Gradient_q27n5")
+width = 320
+height = 320
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90000004, 0.2)
+metadata/_snap_enabled = true
+
 [node name="LevelNy1" type="Node2D"]
 script = ExtResource("1_sx232")
 time = 500
@@ -682,7 +695,7 @@ metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_7eaes")]
 music = Array[Resource]([ExtResource("4_vpq8m")])
-play_immediately = false
+volume_db = Array[float]([3.0])
 
 [node name="Player" parent="." instance=ExtResource("5_nuytg")]
 position = Vector2(112, 400)
@@ -693,7 +706,7 @@ script = ExtResource("6_kueng")
 metadata/_edit_lock_ = true
 
 [node name="CameraArea" parent="." instance=ExtResource("7_83xlr")]
-offset_right = 14000.0
+offset_right = 13952.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
@@ -703,7 +716,7 @@ tile_set = ExtResource("8_dia7w")
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
 z_index = -1
-tile_map_data = PackedByteArray("AADgAAwAAQAAAAgAAADhAAwAAQABAAgAAADiAAwAAQACAAgAAAAMAQoAAQAAAAkAAAANAQoAAQABAAkAAAAOAQoAAQACAAkAAABYAQoAAQACAAkAAABXAQoAAQABAAkAAABWAQoAAQABAAkAAABVAQoAAQAAAAkAAABAAAAAAQADAAMAAABAAAEAAQADAAMAAABAAP//AQADAAMAAABAAP7/AQADAAMAAABAAP3/AQADAAMAAABAAPz/AQADAAMAAABAAPv/AQADAAMAAABAAPr/AQADAAMAAABAAPn/AQADAAMAAABAAPj/AQADAAMAAABAAPf/AQADAAMAAABAAPb/AQADAAMAAABAAPX/AQADAAMAAABAAPT/AQADAAMAAABMAAAAAQADAAMAAABMAAEAAQADAAMAAABMAP//AQADAAMAAABMAP7/AQADAAMAAABMAP3/AQADAAMAAABMAPz/AQADAAMAAABMAPv/AQADAAMAAABMAPr/AQADAAMAAABMAPn/AQADAAMAAABMAPj/AQADAAMAAABMAPf/AQADAAMAAABMAPb/AQADAAMAAABMAPX/AQADAAMAAABMAPT/AQADAAMAAABJAAEAAQADAAMAAABJAAAAAQADAAMAAABJAP//AQADAAMAAABGAAEAAQADAAMAAABGAAAAAQADAAMAAABGAP//AQADAAMAAABDAP//AQADAAMAAABDAAAAAQADAAMAAABDAAEAAQADAAMAAACkAQcAAQAIAAYAAACkAQgAAQAIAAcAAACkAQkAAQAKAAcAAACkAQoAAQAKAAgAAACkAQsAAQAKAAkAAACkAQwAAQAIAAkAAACrAQoAAQAJAAMAAACrAQsAAQAJAAUAAACrAQwAAQAJAAkAAADIAAYAAQAJAAAAAADIAAcAAQAJAAIAAADIAAgAAQAJAAkAAACFAAYAAQAKAAAAAACFAAcAAQAKAAIAAACFAAgAAQAJAAkAAACIAAMAAQAKAAMAAACIAAQAAQAKAAQAAACIAAUAAQAKAAQAAACIAAYAAQAKAAIAAACIAAcAAQAIAAkAAACIAAgAAQAKAAkAAACXAP//AQAAAAkAAACYAP//AQABAAkAAACZAP//AQABAAkAAACaAP//AQABAAkAAACbAP//AQACAAkAAACuAAQAAQAJAAMAAACuAAUAAQAJAAQAAACuAAYAAQAJAAQAAACuAAcAAQAJAAQAAACuAAgAAQAJAAUAAACuAAkAAQAKAAkAAACuAAoAAQAIAAkAAACuAAsAAQAIAAkAAACxAAUAAQAJAAMAAACxAAYAAQAJAAQAAACxAAcAAQAJAAQAAACxAAgAAQAJAAUAAACxAAkAAQAKAAkAAACxAAoAAQAIAAkAAACxAAsAAQAIAAkAAAC0AAQAAQAJAAMAAAC0AAUAAQAJAAQAAAC0AAYAAQAJAAQAAAC0AAcAAQAJAAQAAAC0AAgAAQAJAAUAAAC0AAkAAQAKAAkAAAC0AAoAAQAIAAkAAAC0AAsAAQAIAAkAAACdAQYAAQAKAAMAAACdAQcAAQAKAAQAAACdAQgAAQAKAAQAAACdAQkAAQAKAAUAAACdAQoAAQAKAAkAAACdAQsAAQAIAAkAAACdAQwAAQAIAAkAAAA=")
+tile_map_data = PackedByteArray("AADgAAwAAQAAAAgAAADhAAwAAQABAAgAAADiAAwAAQACAAgAAAAMAQoAAQAAAAkAAAANAQoAAQABAAkAAAAOAQoAAQACAAkAAABYAQoAAQACAAkAAABXAQoAAQABAAkAAABWAQoAAQABAAkAAABVAQoAAQAAAAkAAABAAAAAAQADAAMAAABAAAEAAQADAAMAAABAAP//AQADAAMAAABAAP7/AQADAAMAAABAAP3/AQADAAMAAABAAPz/AQADAAMAAABAAPv/AQADAAMAAABAAPr/AQADAAMAAABAAPn/AQADAAMAAABAAPj/AQADAAMAAABAAPf/AQADAAMAAABAAPb/AQADAAMAAABAAPX/AQADAAMAAABAAPT/AQADAAMAAABMAAAAAQADAAMAAABMAAEAAQADAAMAAABMAP//AQADAAMAAABMAP7/AQADAAMAAABMAP3/AQADAAMAAABMAPz/AQADAAMAAABMAPv/AQADAAMAAABMAPr/AQADAAMAAABMAPn/AQADAAMAAABMAPj/AQADAAMAAABMAPf/AQADAAMAAABMAPb/AQADAAMAAABMAPX/AQADAAMAAABMAPT/AQADAAMAAABJAAEAAQADAAMAAABJAAAAAQADAAMAAABJAP//AQADAAMAAABGAAEAAQADAAMAAABGAAAAAQADAAMAAABGAP//AQADAAMAAABDAP//AQADAAMAAABDAAAAAQADAAMAAABDAAEAAQADAAMAAACkAQcAAQAIAAYAAACkAQgAAQAIAAcAAACkAQkAAQAKAAcAAACkAQoAAQAKAAgAAACkAQsAAQAKAAkAAACkAQwAAQAIAAkAAACrAQoAAQAJAAMAAACrAQsAAQAJAAUAAACrAQwAAQAJAAkAAADIAAYAAQAJAAAAAADIAAcAAQAJAAIAAADIAAgAAQAJAAkAAACFAAYAAQAKAAAAAACFAAcAAQAKAAIAAACFAAgAAQAJAAkAAACIAAMAAQAKAAMAAACIAAQAAQAKAAQAAACIAAUAAQAKAAQAAACIAAYAAQAKAAIAAACIAAcAAQAIAAkAAACIAAgAAQAKAAkAAACuAAQAAQAJAAMAAACuAAUAAQAJAAQAAACuAAYAAQAJAAQAAACuAAcAAQAJAAQAAACuAAgAAQAJAAUAAACuAAkAAQAKAAkAAACuAAoAAQAIAAkAAACuAAsAAQAIAAkAAACxAAUAAQAJAAMAAACxAAYAAQAJAAQAAACxAAcAAQAJAAQAAACxAAgAAQAJAAUAAACxAAkAAQAKAAkAAACxAAoAAQAIAAkAAACxAAsAAQAIAAkAAAC0AAQAAQAJAAMAAAC0AAUAAQAJAAQAAAC0AAYAAQAJAAQAAAC0AAcAAQAJAAQAAAC0AAgAAQAJAAUAAAC0AAkAAQAKAAkAAAC0AAoAAQAIAAkAAAC0AAsAAQAIAAkAAACdAQYAAQAKAAMAAACdAQcAAQAKAAQAAACdAQgAAQAKAAQAAACdAQkAAQAKAAUAAACdAQoAAQAKAAkAAACdAQsAAQAIAAkAAACdAQwAAQAIAAkAAAA=")
 tile_set = ExtResource("8_dia7w")
 
 [node name="HUD" parent="." instance=ExtResource("9_lrnkm")]
@@ -802,21 +815,22 @@ metadata/_edit_lock_ = true
 
 [node name="Snow" type="GPUParticles2D" parent="."]
 z_index = -1
-amount = 2000
-amount_ratio = 0.5
+amount = 1000
 texture = SubResource("AtlasTexture_nn8nd")
 lifetime = 5.0
-preprocess = 5.0
+preprocess = 3.0
 visibility_rect = Rect2(-100, -100, 14000, 200)
 trail_lifetime = 2.72
 process_material = SubResource("ParticleProcessMaterial_ybmbg")
+script = ExtResource("61_uqifv")
+medium = true
 
 [node name="ContainerBubblesIce" parent="." instance=ExtResource("39_lsin8")]
 position = Vector2(849, 124)
 sprite = ExtResource("40_0j1k5")
 
 [node name="SignSmallUpsideDown" type="Sprite2D" parent="ContainerBubblesIce"]
-position = Vector2(1, 93)
+position = Vector2(1, 94)
 texture = ExtResource("41_8aat2")
 
 [node name="Label" type="Label" parent="ContainerBubblesIce/SignSmallUpsideDown"]
@@ -1039,7 +1053,7 @@ position = Vector2(2351, 124)
 sprite = ExtResource("49_no00w")
 
 [node name="SignSmallUpsideDown10" type="Sprite2D" parent="ContainerBubblesIce10"]
-position = Vector2(0, 93)
+position = Vector2(0, 94)
 texture = ExtResource("41_8aat2")
 
 [node name="Label" type="Label" parent="ContainerBubblesIce10/SignSmallUpsideDown10"]
@@ -1351,7 +1365,7 @@ position = Vector2(12880, 272)
 
 [node name="House1" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(5296, 197)
 texture = ExtResource("58_ld8kg")
 region_enabled = true
@@ -1359,91 +1373,91 @@ region_rect = Rect2(0, 0, 97, 87)
 
 [node name="House2" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(1040, 371)
 texture = ExtResource("56_t8ome")
 
 [node name="House3" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(2992, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House4" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(6704, 371)
 texture = ExtResource("56_t8ome")
 
 [node name="House5" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(8496, 307)
 texture = ExtResource("56_t8ome")
 
 [node name="House6" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(13392, 371)
 texture = ExtResource("56_t8ome")
 
 [node name="House7" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(5296, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House8" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(6992, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House9" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -5
 position = Vector2(7248, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House10" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(9968, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House11" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(10256, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House12" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -5
 position = Vector2(11056, 264)
 texture = ExtResource("58_ld8kg")
 
 [node name="House13" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(13104, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House14" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(13552, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House15" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(13840, 328)
 texture = ExtResource("58_ld8kg")
 
 [node name="House16" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(6992, 197)
 texture = ExtResource("58_ld8kg")
 region_enabled = true
@@ -1451,7 +1465,7 @@ region_rect = Rect2(0, 0, 97, 87)
 
 [node name="House17" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(10256, 197)
 texture = ExtResource("58_ld8kg")
 region_enabled = true
@@ -1459,7 +1473,7 @@ region_rect = Rect2(0, 0, 97, 87)
 
 [node name="House18" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(13552, 197)
 texture = ExtResource("58_ld8kg")
 region_enabled = true
@@ -1467,7 +1481,7 @@ region_rect = Rect2(0, 0, 97, 87)
 
 [node name="House19" type="Sprite2D" parent="Objects"]
 modulate = Color(0.79607844, 0.7019608, 0.78431374, 1)
-z_index = -1
+z_index = -4
 position = Vector2(6864, 372)
 texture = ExtResource("58_ld8kg")
 region_enabled = true
@@ -1889,116 +1903,6 @@ curve = SubResource("Curve2D_vti70")
 position = Vector2(4208, 352)
 progress = 160.0
 
-[node name="Lantern" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(397, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern2" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(512, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern3" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(1248, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern4" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(2336, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern5" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(3264, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern6" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(4128, 224)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern7" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(4960, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern8" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(5152, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern9" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(5856, 320)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern10" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(6208, 320)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern11" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(6624, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern12" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(7104, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern13" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(8256, 288)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern14" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(8384, 288)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern15" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(9280, 288)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern16" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(10112, 368)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern17" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(10624, 288)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern18" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(12128, 320)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern19" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(12243, 320)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern20" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13184, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern21" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13299, 352)
-texture = ExtResource("72_0j1k5")
-
-[node name="Lantern22" type="Sprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13760, 352)
-texture = ExtResource("72_0j1k5")
-
 [node name="Area2D10" type="Area2D" parent="."]
 script = ExtResource("66_1ydlw")
 
@@ -2024,243 +1928,522 @@ position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
 autoplay = "default"
 
+[node name="ChristmasLights24" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(2992, 256)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+autoplay = "default"
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights24"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
+
 [node name="ChristmasLights2" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(4322, 214)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.79614484
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights2"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights3" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(5296, 343)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.47536612
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights3"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights4" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(5296, 169)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.34167245
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights4"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights5" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(5632, 186)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.21551839
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights5"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights6" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(5727, 187)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.10945126
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights6"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights7" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(6703, 343)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19050846
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights7"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights8" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(6864, 345)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.8378011
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights8"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights9" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(6992, 345)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.77500737
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights9"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights10" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(6992, 170)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.7963389
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights10"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights11" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(7248, 257)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19792429
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights11"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights12" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(8496, 280)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.77588373
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights12"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights13" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(9968, 257)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19792584
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights13"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights14" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(10256, 344)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.41437787
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights14"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights15" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(10256, 170)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.9833418
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights15"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights16" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(11056, 194)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.26237366
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights16"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights17" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(12184, 320)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights17"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights18" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(13105, 257)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.027028395
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights18"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights19" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(13391, 343)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.40625423
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights19"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights23" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(13240, 352)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.6479231
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights23"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights20" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(13553, 344)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19380078
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights20"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights21" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(13552, 171)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.49703094
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights21"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
 
 [node name="ChristmasLights22" type="AnimatedSprite2D" parent="Lights"]
 z_index = -1
 position = Vector2(13840, 258)
 sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.3541744
+autoplay = "default"
 
 [node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights22"]
 material = ExtResource("73_hj4sh")
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
+
+[node name="Lanterns" type="Node2D" parent="."]
+
+[node name="Lantern" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(397, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern2" type="Sprite2D" parent="Lanterns"]
+z_index = -5
+position = Vector2(512, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern2"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern3" type="Sprite2D" parent="Lanterns"]
+z_index = -1
+position = Vector2(1248, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern3"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern4" type="Sprite2D" parent="Lanterns"]
+z_index = -1
+position = Vector2(2336, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern4"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern5" type="Sprite2D" parent="Lanterns"]
+z_index = -1
+position = Vector2(3264, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern5"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern6" type="Sprite2D" parent="Lanterns"]
+z_index = -1
+position = Vector2(4128, 224)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern6"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern7" type="Sprite2D" parent="Lanterns"]
+z_index = -1
+position = Vector2(4960, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern7"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern8" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(5152, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern8"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern9" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(5856, 320)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern9"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern10" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(6208, 320)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern10"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern11" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(6624, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern11"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern12" type="Sprite2D" parent="Lanterns"]
+z_index = -1
+position = Vector2(7104, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern12"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern13" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(8256, 288)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern13"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern14" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(8384, 288)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern14"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern15" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(9280, 288)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern15"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern16" type="Sprite2D" parent="Lanterns"]
+z_index = -1
+position = Vector2(10112, 368)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern16"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern17" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(10624, 288)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern17"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern18" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(12128, 320)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern18"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern19" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(12243, 320)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern19"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern20" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(13184, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern20"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern21" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(13299, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern21"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")
+
+[node name="Lantern22" type="Sprite2D" parent="Lanterns"]
+z_index = -4
+position = Vector2(13760, 352)
+texture = ExtResource("72_0j1k5")
+
+[node name="PointLight2D" type="PointLight2D" parent="Lanterns/Lantern22"]
+position = Vector2(0, -38)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_l87rr")
+script = ExtResource("78_eytbr")

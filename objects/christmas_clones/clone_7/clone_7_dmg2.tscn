@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bdl8bbecuas3p"]
+[gd_scene load_steps=21 format=3 uid="uid://bdl8bbecuas3p"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_ie1ob"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_66akx"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_456ic"]
 [ext_resource type="AudioStream" uid="uid://bntd4n8itvrp" path="res://objects/christmas_clones/clone_7/sfx/Aaaa_auaua4_IceClone.wav" id="10_i1n31"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="11_1mjxu"]
+[ext_resource type="Script" uid="uid://c81y7fgg2obyk" path="res://objects/christmas_clones/clone_7/scripts/ice_debris_effect.gd" id="12_66akx"]
 [ext_resource type="Texture2D" uid="uid://bl85je22aw2m8" path="res://objects/christmas_clones/clone_7/gfx/dmg2.png" id="12_ie1ob"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="13_xijkn"]
 
@@ -108,8 +109,12 @@ killing_creation = SubResource("Resource_8814w")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("10_i1n31")
 killing_sound_failed = ExtResource("11_1mjxu")
+frozen_enabled = false
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Node2D" type="Node2D" parent="Body"]
+script = ExtResource("12_66akx")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wd5co")
@@ -123,4 +128,6 @@ metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node2D" method="create"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node2D" method="create"]

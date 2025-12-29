@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=4 uid="uid://b7hju0uoa1ncd"]
+[gd_scene load_steps=66 format=4 uid="uid://b7hju0uoa1ncd"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_ai04y"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_oh7c7"]
@@ -15,6 +15,7 @@
 [ext_resource type="Shader" uid="uid://c1yibfdu766i8" path="res://engine/shaders/hsv_global.gdshader" id="11_ybmbg"]
 [ext_resource type="Texture2D" uid="uid://cheyle1twxlgw" path="res://stages/extra/new_year_world/gfx/bg-ny-2.png" id="12_6ncly"]
 [ext_resource type="PackedScene" uid="uid://b4113wxkmugrp" path="res://stages/extra/new_year_world/objects/brick_ny.tscn" id="14_5psee"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="15_2s2vi"]
 [ext_resource type="PackedScene" uid="uid://btd4qa0fl8542" path="res://engine/objects/platform/platform_path_cloud.tscn" id="15_kp33i"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="16_yfjf1"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="17_sryoy"]
@@ -193,6 +194,7 @@ trans_inheritances = 7
 
 [node name="LevelNy3" type="Node2D"]
 script = ExtResource("1_ai04y")
+time = 440
 completion_music = ExtResource("2_oh7c7")
 jump_to_scene = "uid://c2cnlo6bnvvqk"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
@@ -339,14 +341,15 @@ position = Vector2(512, 288)
 texture = ExtResource("12_6ncly")
 
 [node name="Snow" type="GPUParticles2D" parent="."]
-amount = 2000
-amount_ratio = 0.5
+amount = 1000
 texture = SubResource("AtlasTexture_nn8nd")
 lifetime = 5.0
-preprocess = 5.0
+preprocess = 3.0
 visibility_rect = Rect2(-100, -100, 14000, 200)
 trail_lifetime = 2.72
 process_material = SubResource("ParticleProcessMaterial_ybmbg")
+script = ExtResource("15_2s2vi")
+medium = true
 
 [node name="Objects" type="Node2D" parent="."]
 
@@ -371,32 +374,32 @@ speed = -170.0
 position = Vector2(7744, 144)
 
 [node name="RotoRed" parent="Objects/RotoCenter" instance=ExtResource("17_sryoy")]
-position = Vector2(-209, 143)
+position = Vector2(264, 95)
 preview = true
 amplitude = Vector2(300, 200)
-phase = 135.00000000076318
+phase = 29.166666667515393
 
 [node name="RotoRed2" parent="Objects/RotoCenter" instance=ExtResource("17_sryoy")]
-position = Vector2(209, -143)
+position = Vector2(-264, -95)
 preview = true
 amplitude = Vector2(300, 200)
-phase = -44.999999999236344
+phase = -150.83333333248427
 
 [node name="RotoCenter2" parent="Objects" instance=ExtResource("16_yfjf1")]
 position = Vector2(8768, 304)
 
 [node name="RotoRed" parent="Objects/RotoCenter2" instance=ExtResource("17_sryoy")]
-position = Vector2(71, 195)
+position = Vector2(-329, -12)
 preview = true
 amplitude = Vector2(330, 200)
-phase = 76.66666666666637
+phase = -177.50000000000057
 frequency = -50.0
 
 [node name="RotoRed2" parent="Objects/RotoCenter2" instance=ExtResource("17_sryoy")]
-position = Vector2(-71, -195)
+position = Vector2(329, 12)
 preview = true
 amplitude = Vector2(330, 200)
-phase = -103.33333333333347
+phase = 2.499999999999705
 frequency = -50.0
 
 [node name="PlatformPathCloud" parent="Objects" instance=ExtResource("15_kp33i")]
@@ -466,10 +469,10 @@ position = Vector2(4288, 336)
 [node name="RotoCenter" parent="Objects/DonutLift5" instance=ExtResource("16_yfjf1")]
 
 [node name="RotoRed" parent="Objects/DonutLift5/RotoCenter" instance=ExtResource("17_sryoy")]
-position = Vector2(-68, 16)
+position = Vector2(34, 61)
 preview = true
 amplitude = Vector2(70, 70)
-phase = 167.50000000055405
+phase = 61.666666667305975
 
 [node name="DonutLift6" parent="Objects" instance=ExtResource("18_kp33i")]
 position = Vector2(4256, 336)
@@ -514,35 +517,35 @@ position = Vector2(5280, 320)
 position = Vector2(1600, 384)
 
 [node name="RotoRed" parent="Objects/RotoCenter3" instance=ExtResource("17_sryoy")]
-position = Vector2(11, 15)
+position = Vector2(-4, 5)
 preview = true
 amplitude_enable = true
-amplitude = Vector2(21.213205, 21.213205)
+amplitude = Vector2(3.8645227, 3.8645227)
 amplitude_changing_speed = 200.0
 amplitude_max = Vector2(150, 150)
-phase = 51.66666666728019
+phase = 127.83333333403156
 frequency = -70.0
 
 [node name="RotoCenter4" parent="Objects" instance=ExtResource("16_yfjf1")]
 position = Vector2(11248, 400)
 
 [node name="RotoRed" parent="Objects/RotoCenter4" instance=ExtResource("17_sryoy")]
-position = Vector2(-60, -80)
+position = Vector2(-92, 39)
 preview = true
 amplitude = Vector2(100, 100)
 amplitude_changing_speed = 200.0
-phase = -125.83333333333417
+phase = 157.99999999999807
 frequency = 70.0
 
 [node name="RotoCenter5" parent="Objects" instance=ExtResource("16_yfjf1")]
 position = Vector2(12560, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter5" instance=ExtResource("17_sryoy")]
-position = Vector2(96, -28)
+position = Vector2(50, 87)
 preview = true
 amplitude = Vector2(100, 100)
 amplitude_changing_speed = 200.0
-phase = -17.166666666195
+phase = 59.00000000055608
 frequency = -70.0
 
 [node name="Brick13" parent="Objects" instance=ExtResource("14_5psee")]
@@ -719,10 +722,10 @@ position = Vector2(5504, 176)
 position = Vector2(5536, 176)
 
 [node name="Coin15" parent="Objects" instance=ExtResource("24_0ym8q")]
-position = Vector2(5568, 176)
+position = Vector2(5472, 176)
 
 [node name="Coin16" parent="Objects" instance=ExtResource("24_0ym8q")]
-position = Vector2(5696, 176)
+position = Vector2(5792, 176)
 
 [node name="Coin17" parent="Objects" instance=ExtResource("24_0ym8q")]
 position = Vector2(5728, 176)
@@ -767,7 +770,7 @@ position = Vector2(496, 288)
 position = Vector2(2576, 384)
 
 [node name="GifterClone2" parent="Objects" instance=ExtResource("28_wsy5q")]
-position = Vector2(4848, 388)
+position = Vector2(4848, 384)
 
 [node name="AngryGrinchJawsClone" parent="Objects" instance=ExtResource("29_bqkaf")]
 position = Vector2(3104, 320)
@@ -827,12 +830,14 @@ hammer_bros_jumping_type = 2
 
 [node name="ChainChomp" parent="Objects" instance=ExtResource("33_0iapd")]
 position = Vector2(5632, 272)
+walking_range = 48.0
 
 [node name="ChainChomp2" parent="Objects" instance=ExtResource("33_0iapd")]
 position = Vector2(10832, 336)
 
 [node name="ChainChomp3" parent="Objects" instance=ExtResource("33_0iapd")]
 position = Vector2(12176, 400)
+walking_range = 32.0
 
 [node name="ChainChomp4" parent="Objects" instance=ExtResource("33_0iapd")]
 position = Vector2(13136, 400)
@@ -876,3 +881,40 @@ amount = 2
 position = Vector2(9504, 160)
 troopa = ExtResource("36_abg0b")
 amount = 2
+
+[node name="ElfJetpack" parent="." instance=ExtResource("36_abg0b")]
+position = Vector2(11536, 192)
+amplitude = Vector2(0, 50)
+frequency = 2.0
+
+[node name="ElfJetpack2" parent="." instance=ExtResource("36_abg0b")]
+position = Vector2(6192, 256)
+amplitude = Vector2(0, 50)
+phase = 86.0
+frequency = 2.0
+
+[node name="ElfJetpack4" parent="." instance=ExtResource("36_abg0b")]
+position = Vector2(5072, 224)
+amplitude = Vector2(0, 50)
+phase = 86.0
+frequency = 2.0
+
+[node name="ElfJetpack6" parent="." instance=ExtResource("36_abg0b")]
+position = Vector2(2960, 240)
+amplitude = Vector2(0, 50)
+phase = 86.0
+frequency = 2.0
+
+[node name="ElfJetpack5" parent="." instance=ExtResource("36_abg0b")]
+position = Vector2(5632, 160)
+amplitude = Vector2(0, 50)
+phase = 86.0
+frequency = 2.0
+
+[node name="ElfJetpack3" parent="." instance=ExtResource("36_abg0b")]
+position = Vector2(6256, 288)
+amplitude = Vector2(0, 50)
+frequency = 2.0
+
+[node name="GifterClone" parent="." instance=ExtResource("28_wsy5q")]
+position = Vector2(12944, 384)
