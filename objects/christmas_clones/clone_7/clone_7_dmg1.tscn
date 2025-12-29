@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bhakfyorbm31t"]
+[gd_scene load_steps=18 format=3 uid="uid://bhakfyorbm31t"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_bnbsu"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_awq1p"]
@@ -7,11 +7,10 @@
 [ext_resource type="Script" uid="uid://tjgn3o6ei334" path="res://engine/objects/enemies/human_lab/goomba/scripts/do_stomped_animated.gd" id="5_cjupj"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_hy4tg"]
 [ext_resource type="AudioStream" uid="uid://8blemeqwal3t" path="res://objects/christmas_clones/clone_7/sfx/Aaaa_auaua3_IceClone.wav" id="7_qtsbe"]
-[ext_resource type="PackedScene" uid="uid://b244ngdvjg4xa" path="res://engine/objects/effects/brick_debris/ice_debris.tscn" id="8_rohjl"]
-[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_f0shc"]
 [ext_resource type="AudioStream" uid="uid://bntd4n8itvrp" path="res://objects/christmas_clones/clone_7/sfx/Aaaa_auaua4_IceClone.wav" id="10_mc22y"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="11_qrpim"]
 [ext_resource type="Texture2D" uid="uid://drp8yfab2gn0" path="res://objects/christmas_clones/clone_7/gfx/dmg1.png" id="12_f1vl8"]
+[ext_resource type="Script" uid="uid://c81y7fgg2obyk" path="res://objects/christmas_clones/clone_7/scripts/ice_debris_effect.gd" id="12_rohjl"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="15_p7xno"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aahbl"]
@@ -26,18 +25,6 @@ custom_vars = {
 "death": NodePath("")
 }
 custom_script = ExtResource("5_cjupj")
-
-[sub_resource type="Resource" id="Resource_awq1p"]
-resource_local_to_scene = true
-script = ExtResource("6_hy4tg")
-creation_nodepack = ExtResource("8_rohjl")
-trans_inheritances = 7
-visi_z_index = 1
-custom_vars = {
-"death": NodePath(""),
-"death_speed": Vector2(0, -250)
-}
-custom_script = ExtResource("9_f0shc")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rohjl"]
 atlas = ExtResource("12_f1vl8")
@@ -104,12 +91,16 @@ killing_immune = {
 &"shell_forced": false,
 &"starman": false
 }
-killing_creation = SubResource("Resource_awq1p")
+killing_creation = null
 killing_scores = 100
 killing_sound_succeeded = ExtResource("10_mc22y")
 killing_sound_failed = ExtResource("11_qrpim")
+frozen_enabled = false
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Node2D" type="Node2D" parent="Body"]
+script = ExtResource("12_rohjl")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wd5co")
@@ -123,4 +114,6 @@ metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node2D" method="create"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node2D" method="create"]

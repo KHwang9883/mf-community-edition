@@ -6,13 +6,13 @@
 [ext_resource type="AudioStream" uid="uid://cn4tlctdajh0o" path="res://objects/christmas_clones/elf_jetpack/sfx/FlyingCoderClone.wav" id="6_2u4tk"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="7_0ec2n"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_e2mk8"]
-[ext_resource type="PackedScene" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_f8sem"]
+[ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_f8sem"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_ofbwe"]
 [ext_resource type="Texture2D" uid="uid://beya6lmtntukq" path="res://objects/christmas_clones/elf_jetpack/gfx/Elf.png" id="8_yxhhx"]
 [ext_resource type="Texture2D" uid="uid://do4j68m8des4v" path="res://objects/christmas_clones/gifter_clone/gfx/dead.png" id="9_m8i07"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxfep"]
-size = Vector2(32, 36)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8sem"]
+size = Vector2(28, 48)
 
 [sub_resource type="Resource" id="Resource_cvupp"]
 resource_local_to_scene = true
@@ -72,8 +72,8 @@ collision_mask = 7
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
 visible = false
-position = Vector2(0, -2)
-shape = SubResource("RectangleShape2D_bxfep")
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_f8sem")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
@@ -99,9 +99,9 @@ metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
-position = Vector2(0, 4)
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_soyln")
+offset = Vector2(0, -4)
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
