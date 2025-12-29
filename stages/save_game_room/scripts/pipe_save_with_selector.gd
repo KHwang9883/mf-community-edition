@@ -1,5 +1,5 @@
 @icon("res://engine/objects/warps/icons/pipe_save.svg")
-@tool
+@warning_ignore("missing_tool")
 extends "res://engine/objects/warps/pipe_in.gd"
 
 const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
@@ -33,6 +33,7 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export var allow_selecting_completed_levels: bool = false
 @export var can_frog_challenge: bool = false
 @export var show_kevin_not_tested_warning: bool = false
+@export var no_applicable_text: bool = false
 
 var deletion_progress: float
 var is_empty: bool
@@ -289,6 +290,7 @@ func _update_reset_labels() -> void:
 		
 		if _star_world:
 			return
+		if no_applicable_text: return
 		
 		var _arr: PackedStringArray = ["warpless", "no hit", "no deaths"]
 		if "died" in _prof:

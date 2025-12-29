@@ -33,7 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="33_iht62"]
 
 [sub_resource type="Gradient" id="Gradient_5x42y"]
-colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.5, 0.5, 0.5, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j6ovo"]
 gradient = SubResource("Gradient_5x42y")
@@ -171,7 +171,7 @@ volume_db = Array[float]([0.0])
 start_from_sec = Array[float]([0.0])
 
 [node name="Mario" parent="." instance=ExtResource("7_fp3qe")]
-position = Vector2(144, 1008)
+position = Vector2(144, 976)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -224,12 +224,14 @@ script = ExtResource("14_wjsgt")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("14_wjsgt")
+medium = true
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="Node2D" parent="."]
+z_index = -100
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer2" type="Parallax2D" parent="ParallaxBackground"]
 visible = false
-motion_scale = Vector2(0, 1)
+scroll_scale = Vector2(0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(640, 0)
@@ -247,8 +249,8 @@ texture = SubResource("GradientTexture1D_83ypb")
 centered = false
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.2, 1)
+[node name="ParallaxLayer" type="Parallax2D" parent="ParallaxBackground"]
+scroll_scale = Vector2(0.2, 1)
 
 [node name="Underground2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color(1, 1, 1, 0.607843)
@@ -259,21 +261,15 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, -64, 9000, 544)
 
-[node name="FancyGraphics" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
-script = ExtResource("14_wjsgt")
-medium = true
-
-[node name="CanvasModulate" type="CanvasModulate" parent="ParallaxBackground/ParallaxLayer/FancyGraphics"]
-visible = false
-color = Color(0.577008, 0.577008, 0.577008, 1)
-
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Layer0" type="TileMapLayer" parent="ParallaxBackground/ParallaxLayer"]
+tile_map_data = PackedByteArray("AAAFACIAAgAAAAAAAQAMACQAAgAAAAAAAQAUACEAAgAAAAAAAQAnACIAAgAAAAAAAQBJACUAAgAAAAAAAQBRACIAAgAAAAAAAQAcACUAAgAAAAAAAQA2ACEAAgAAAAAAAQA/ACEAAgAAAAAAAQAvACYAAgAAAAAAAQA=")
 tile_set = ExtResource("11_45exd")
-format = 2
-layer_0/tile_data = PackedInt32Array(2228229, 2, 65536, 2359308, 2, 65536, 2162708, 2, 65536, 2424861, 2, 65536, 2228263, 2, 65536, 2490414, 2, 65536, 2097206, 2, 65536, 2162755, 2, 65536, 2424905, 2, 65536, 2228305, 2, 65536, 2490462, 2, 65536, 2162788, 2, 65536, 2359410, 2, 65536, 2097275, 2, 65536, 2162819, 2, 65536, 2359438, 2, 65536, 2162842, 2, 65536, 2359467, 2, 65536, 2097328, 2, 65536, 2359491, 2, 65536, 2228433, 2, 65536, 2359521, 2, 65536, 2097391, 2, 65536, 2294013, 2, 65536, 2162960, 2, 65536, 2425118, 2, 65536, 2162981, 2, 65536)
+collision_enabled = false
+navigation_enabled = false
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(800, 600)
+[node name="ParallaxLayer3" type="Parallax2D" parent="ParallaxBackground"]
+scroll_scale = Vector2(0.3, 1)
+repeat_size = Vector2(800, 600)
 script = ExtResource("14_wjsgt")
 medium = true
 
@@ -307,6 +303,14 @@ medium = true
 
 [node name="PointLight2D5" type="PointLight2D" parent="FinishLine"]
 position = Vector2(240, -16)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_en0pk")
+texture_scale = 0.5
+script = ExtResource("14_wjsgt")
+medium = true
+
+[node name="PointLight2D6" type="PointLight2D" parent="FinishLine"]
+position = Vector2(240, -272)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_en0pk")
 texture_scale = 0.5
@@ -555,6 +559,6 @@ offset_right = 6464.0
 offset_bottom = 1184.0
 
 [connection signal="collided_wall" from="Layer2/SpinyRed" to="Layer2/SpinyRed" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@136419" to="Layer2/@CharacterBody2D@136419" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@136420" to="Layer2/@CharacterBody2D@136420" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@136421" to="Layer2/@CharacterBody2D@136421" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@678859" to="Layer2/@CharacterBody2D@678859" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@678860" to="Layer2/@CharacterBody2D@678860" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@678861" to="Layer2/@CharacterBody2D@678861" method="turn_x"]

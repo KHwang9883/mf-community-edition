@@ -1,8 +1,10 @@
-[gd_scene load_steps=76 format=4 uid="uid://cj85t6ittkuqt"]
+[gd_scene load_steps=78 format=4 uid="uid://cj85t6ittkuqt"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_k2w4k"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_n47pu"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_7nob4"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_veanh"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_34lgo"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_s1c3o"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_lbdnp"]
 [ext_resource type="AudioStream" uid="uid://3qvi8cjmipab" path="res://music/extra/world_12_syzx/sunset.ogg" id="6_jriqe"]
@@ -202,6 +204,19 @@ completion_music = ExtResource("2_n47pu")
 jump_to_scene = "uid://bhrmemt36c7fb"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
+[node name="SecretUnlocker2" parent="." instance=ExtResource("3_veanh")]
+secrets = Array[String](["syzxchulun world 12", "syzxchulun world 12 kevin mode", "syzxchulun world 12 advance", "syzxchulun world 12 advance kevin mode"])
+progress_by_id = "2"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_34lgo")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+check_for_softendo_mode = true
+softendo_progress_ids = Array[int]([2])
+softendo_progress_secret_mode_ids = Array[int]([3])
+
 [node name="MusicLoader" parent="." instance=ExtResource("3_7nob4")]
 script = ExtResource("4_s1c3o")
 tweaked_completion_music = ExtResource("5_lbdnp")
@@ -221,7 +236,7 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_jriqe")])
-volume_db = Array[float]([0.0])
+volume_db = Array[float]([-3.0])
 
 [node name="MusicPitchChanger" type="Node" parent="MusicLoader"]
 script = ExtResource("7_kfo3m")
@@ -1298,6 +1313,7 @@ texture = ExtResource("47_tejud")
 position = Vector2(3516, 392)
 texture = ExtResource("47_tejud")
 
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="player_enter" from="Area2D" to="JumpingCheepsGenerator" method="enable"]
 [connection signal="player_exit" from="Area2D" to="JumpingCheepsGenerator" method="disable"]
 

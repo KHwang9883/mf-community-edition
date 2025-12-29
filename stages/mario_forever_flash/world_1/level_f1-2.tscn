@@ -32,7 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="34_it5g7"]
 
 [sub_resource type="Gradient" id="Gradient_5x42y"]
-colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.5, 0.5, 0.5, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j6ovo"]
 gradient = SubResource("Gradient_5x42y")
@@ -152,7 +152,7 @@ volume_db = Array[float]([0.0])
 start_from_sec = Array[float]([0.0])
 
 [node name="Mario" parent="." instance=ExtResource("6_82abj")]
-position = Vector2(112, 1168)
+position = Vector2(112, 976)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -209,12 +209,14 @@ script = ExtResource("13_kuruo")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("13_kuruo")
+medium = true
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="Node2D" parent="."]
+z_index = -100
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer2" type="Parallax2D" parent="ParallaxBackground"]
 visible = false
-motion_scale = Vector2(0, 1)
+scroll_scale = Vector2(0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(640, 0)
@@ -232,8 +234,8 @@ texture = SubResource("GradientTexture1D_83ypb")
 centered = false
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.2, 1)
+[node name="ParallaxLayer" type="Parallax2D" parent="ParallaxBackground"]
+scroll_scale = Vector2(0.2, 1)
 
 [node name="Underground2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color(1, 1, 1, 0.607843)
@@ -245,21 +247,14 @@ region_enabled = true
 region_rect = Rect2(0, -16, 9000, 496)
 metadata/_edit_lock_ = true
 
-[node name="FancyGraphics" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
-script = ExtResource("13_kuruo")
-medium = true
-
-[node name="CanvasModulate" type="CanvasModulate" parent="ParallaxBackground/ParallaxLayer/FancyGraphics"]
-visible = false
-color = Color(0.577008, 0.577008, 0.577008, 1)
-
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Layer0" type="TileMapLayer" parent="ParallaxBackground/ParallaxLayer"]
+tile_map_data = PackedByteArray("AAAHACQAAgAAAAAAAQAVACIAAgAAAAAAAQAlACQAAgAAAAAAAQA2ACEAAgAAAAAAAQBMACUAAgAAAAAAAQBaACIAAgAAAAAAAQBoACUAAgAAAAAAAQB2ACIAAgAAAAAAAQCIACUAAgAAAAAAAQA=")
 tile_set = ExtResource("10_xf6hx")
-format = 2
-layer_0/tile_data = PackedInt32Array(2359303, 2, 65536, 2228245, 2, 65536, 2359333, 2, 65536, 2162742, 2, 65536, 2424908, 2, 65536, 2228314, 2, 65536, 2424936, 2, 65536, 2228342, 2, 65536, 2424968, 2, 65536)
+navigation_enabled = false
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(800, 600)
+[node name="ParallaxLayer3" type="Parallax2D" parent="ParallaxBackground"]
+scroll_scale = Vector2(0.3, 1)
+repeat_size = Vector2(800, 600)
 script = ExtResource("13_kuruo")
 medium = true
 
@@ -341,10 +336,14 @@ position = Vector2(2976, 1312)
 [node name="PlatformPath" parent="." instance=ExtResource("25_e3u22")]
 position = Vector2(1632, 1248)
 falling_enabled = true
+falling_acceleration = 15.0
+falling_delay = 0.5
 
 [node name="PlatformPath2" parent="." instance=ExtResource("25_e3u22")]
 position = Vector2(1856, 1248)
 falling_enabled = true
+falling_acceleration = 15.0
+falling_delay = 0.5
 
 [node name="Grass" parent="." instance=ExtResource("28_4hs3q")]
 position = Vector2(336, 1395)
@@ -885,14 +884,14 @@ position = Vector2(1104, 1296)
 result = SubResource("Resource_dl5lh")
 
 [connection signal="collided_wall" from="Layer2/Goomba" to="Layer2/Goomba" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95565" to="Layer2/@CharacterBody2D@95565" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95566" to="Layer2/@CharacterBody2D@95566" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95567" to="Layer2/@CharacterBody2D@95567" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95568" to="Layer2/@CharacterBody2D@95568" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671418" to="Layer2/@CharacterBody2D@671418" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671419" to="Layer2/@CharacterBody2D@671419" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671420" to="Layer2/@CharacterBody2D@671420" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671421" to="Layer2/@CharacterBody2D@671421" method="turn_x"]
 [connection signal="collided_wall" from="Layer2/KoopaGreen" to="Layer2/KoopaGreen" method="turn_x"]
 [connection signal="collided_wall" from="Layer2/KoopaRed" to="Layer2/KoopaRed" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95569" to="Layer2/@CharacterBody2D@95569" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95570" to="Layer2/@CharacterBody2D@95570" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95571" to="Layer2/@CharacterBody2D@95571" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95572" to="Layer2/@CharacterBody2D@95572" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@95573" to="Layer2/@CharacterBody2D@95573" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671422" to="Layer2/@CharacterBody2D@671422" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671423" to="Layer2/@CharacterBody2D@671423" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671424" to="Layer2/@CharacterBody2D@671424" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671425" to="Layer2/@CharacterBody2D@671425" method="turn_x"]
+[connection signal="collided_wall" from="Layer2/@CharacterBody2D@671426" to="Layer2/@CharacterBody2D@671426" method="turn_x"]
