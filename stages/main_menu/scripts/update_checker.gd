@@ -9,9 +9,9 @@ const game_key: String = "Mario_Forever_Community_Edition_Update"
 # update is checked here
 const url: String = \
 
-#"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
+"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
 
-"https://gist.githubusercontent.com/jue131/eab20a1ed3661d92106f298ba78aedad/raw/beta_mfce_update_check.json"
+#"https://gist.githubusercontent.com/jue131/eab20a1ed3661d92106f298ba78aedad/raw/beta_mfce_update_check.json"
 
 # url to open to when an update is available
 var url_open: String = "https://gist.github.com/jue131/f7ad31818af19fa91b5175cb67340529"
