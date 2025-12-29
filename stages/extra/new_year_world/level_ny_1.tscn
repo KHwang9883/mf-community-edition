@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=4 uid="uid://nam3v54hbcut"]
+[gd_scene load_steps=163 format=4 uid="uid://nam3v54hbcut"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_sx232"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_qf4x3"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://2y34qm7ige01" path="res://stages/extra/new_year_world/gfx/bg_forest_3.png" id="14_e3u6x"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="17_ow6uw"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="18_8aat2"]
+[ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="27_pjsgu"]
 [ext_resource type="PackedScene" uid="uid://bs0p7pkrqdk3e" path="res://objects/christmas_clones/elf_clone1/elf_worker_clone1.tscn" id="30_fhdx6"]
 [ext_resource type="PackedScene" uid="uid://cmaq3nxte2w8g" path="res://objects/christmas_clones/gifter_clone/gifter_clone_b.tscn" id="31_vpq8m"]
 [ext_resource type="PackedScene" uid="uid://dykltaes4818t" path="res://objects/christmas_clones/grinch_jaws/grinch_jaws_clone.tscn" id="32_e3u6x"]
@@ -74,6 +75,8 @@
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="71_q27n5"]
 [ext_resource type="Texture2D" uid="uid://di7n46afxdwxv" path="res://stages/extra/new_year_world/gfx/Lantern.png" id="72_0j1k5"]
 [ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="72_l87rr"]
+[ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="73_hj4sh"]
+[ext_resource type="Texture2D" uid="uid://brocitne70n08" path="res://stages/extra/new_year_world/gfx/ny_lights_fx.png" id="74_pjsgu"]
 
 [sub_resource type="Gradient" id="Gradient_ymw3o"]
 offsets = PackedFloat32Array(0, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85)
@@ -623,6 +626,9 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3px7"]
+size = Vector2(2560, 781)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0j1k5"]
 atlas = ExtResource("71_lsin8")
 region = Rect2(0, 0, 111, 64)
@@ -645,8 +651,27 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3px7"]
-size = Vector2(2560, 781)
+[sub_resource type="AtlasTexture" id="AtlasTexture_eytbr"]
+atlas = ExtResource("74_pjsgu")
+region = Rect2(0, 0, 164, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q27n5"]
+atlas = ExtResource("74_pjsgu")
+region = Rect2(0, 88, 164, 88)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l87rr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eytbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q27n5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
 
 [node name="LevelNy1" type="Node2D"]
 script = ExtResource("1_sx232")
@@ -657,6 +682,7 @@ metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_7eaes")]
 music = Array[Resource]([ExtResource("4_vpq8m")])
+play_immediately = false
 
 [node name="Player" parent="." instance=ExtResource("5_nuytg")]
 position = Vector2(112, 400)
@@ -775,6 +801,7 @@ region_rect = Rect2(0, 0, 1024, 48)
 metadata/_edit_lock_ = true
 
 [node name="Snow" type="GPUParticles2D" parent="."]
+z_index = -1
 amount = 2000
 amount_ratio = 0.5
 texture = SubResource("AtlasTexture_nn8nd")
@@ -874,7 +901,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("42_a38tr")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "gifter
 clone b"
 horizontal_alignment = 1
@@ -892,13 +919,13 @@ texture = ExtResource("41_8aat2")
 
 [node name="Label" type="Label" parent="ContainerBubblesIce5/SignSmallUpsideDown5"]
 offset_left = -46.0
-offset_top = -10.0
+offset_top = -11.0
 offset_right = 46.0
-offset_bottom = 44.0
+offset_bottom = 43.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("42_a38tr")
+theme_override_fonts/font = ExtResource("27_pjsgu")
 theme_override_font_sizes/font_size = 10
 text = "gifter clone
 mod j"
@@ -917,9 +944,9 @@ texture = ExtResource("41_8aat2")
 
 [node name="Label" type="Label" parent="ContainerBubblesIce6/SignSmallUpsideDown6"]
 offset_left = -46.0
-offset_top = -10.0
+offset_top = -11.0
 offset_right = 46.0
-offset_bottom = 44.0
+offset_bottom = 43.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
@@ -1862,143 +1889,6 @@ curve = SubResource("Curve2D_vti70")
 position = Vector2(4208, 352)
 progress = 160.0
 
-[node name="ChristmasLights" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(453, 352)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.8360421
-
-[node name="ChristmasLights2" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(4322, 214)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.79614484
-
-[node name="ChristmasLights3" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(5296, 343)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.47536612
-
-[node name="ChristmasLights4" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(5296, 169)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.34167245
-
-[node name="ChristmasLights5" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(5632, 186)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.21551839
-
-[node name="ChristmasLights6" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(5727, 187)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.10945126
-
-[node name="ChristmasLights7" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(6703, 343)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19050846
-
-[node name="ChristmasLights8" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(6864, 345)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.8378011
-
-[node name="ChristmasLights9" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(6992, 345)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.77500737
-
-[node name="ChristmasLights10" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(6992, 170)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.7963389
-
-[node name="ChristmasLights11" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(7248, 257)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19792429
-
-[node name="ChristmasLights12" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(8496, 280)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.77588373
-
-[node name="ChristmasLights13" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(9968, 257)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19792584
-
-[node name="ChristmasLights14" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(10256, 344)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.41437787
-
-[node name="ChristmasLights15" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(10256, 170)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.9833418
-
-[node name="ChristmasLights16" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(11056, 194)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.26237366
-
-[node name="ChristmasLights17" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(12184, 320)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-
-[node name="ChristmasLights18" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13105, 257)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.027028395
-
-[node name="ChristmasLights19" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13391, 343)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.40625423
-
-[node name="ChristmasLights23" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13240, 352)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.6479231
-
-[node name="ChristmasLights20" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13553, 344)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.19380078
-
-[node name="ChristmasLights21" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13552, 171)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.49703094
-
-[node name="ChristmasLights22" type="AnimatedSprite2D" parent="Objects"]
-z_index = -1
-position = Vector2(13840, 258)
-sprite_frames = SubResource("SpriteFrames_hj4sh")
-frame_progress = 0.3541744
-
 [node name="Lantern" type="Sprite2D" parent="Objects"]
 z_index = -1
 position = Vector2(397, 352)
@@ -2119,3 +2009,258 @@ shape = SubResource("RectangleShape2D_k3px7")
 
 [node name="Node" type="Node" parent="Area2D10"]
 script = ExtResource("67_rvq61")
+
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(453, 352)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+autoplay = "default"
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+autoplay = "default"
+
+[node name="ChristmasLights2" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(4322, 214)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.79614484
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights2"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights3" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(5296, 343)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.47536612
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights3"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights4" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(5296, 169)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.34167245
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights4"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights5" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(5632, 186)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.21551839
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights5"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights6" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(5727, 187)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.10945126
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights6"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights7" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(6703, 343)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.19050846
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights7"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights8" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(6864, 345)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.8378011
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights8"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights9" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(6992, 345)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.77500737
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights9"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights10" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(6992, 170)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.7963389
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights10"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights11" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(7248, 257)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.19792429
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights11"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights12" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(8496, 280)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.77588373
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights12"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights13" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(9968, 257)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.19792584
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights13"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights14" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(10256, 344)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.41437787
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights14"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights15" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(10256, 170)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.9833418
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights15"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights16" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(11056, 194)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.26237366
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights16"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights17" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(12184, 320)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights17"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights18" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(13105, 257)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.027028395
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights18"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights19" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(13391, 343)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.40625423
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights19"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights23" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(13240, 352)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.6479231
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights23"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights20" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(13553, 344)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.19380078
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights20"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights21" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(13552, 171)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.49703094
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights21"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
+
+[node name="ChristmasLights22" type="AnimatedSprite2D" parent="Lights"]
+z_index = -1
+position = Vector2(13840, 258)
+sprite_frames = SubResource("SpriteFrames_hj4sh")
+frame_progress = 0.3541744
+
+[node name="ChristmasLights" type="AnimatedSprite2D" parent="Lights/ChristmasLights22"]
+material = ExtResource("73_hj4sh")
+position = Vector2(2, 0)
+sprite_frames = SubResource("SpriteFrames_l87rr")
