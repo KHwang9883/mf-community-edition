@@ -1,8 +1,10 @@
-[gd_scene load_steps=83 format=4 uid="uid://df4ckyjimfnpu"]
+[gd_scene load_steps=85 format=4 uid="uid://df4ckyjimfnpu"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_7som5"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_84ee6"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_douyy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_rqvp8"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_072vr"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_da1t1"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_0lu52"]
 [ext_resource type="AudioStream" uid="uid://cxearnku7s8cs" path="res://music/extra/world_12_syzx/12-3.ogg" id="5_pgmot"]
@@ -199,6 +201,19 @@ time = 600
 completion_music = ExtResource("2_84ee6")
 jump_to_scene = "uid://bhrmemt36c7fb"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="SecretUnlocker2" parent="." instance=ExtResource("3_douyy")]
+secrets = Array[String](["syzxchulun world 12", "syzxchulun world 12 kevin mode", "syzxchulun world 12 advance", "syzxchulun world 12 advance kevin mode"])
+progress_by_id = "3"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_072vr")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+check_for_softendo_mode = true
+softendo_progress_ids = Array[int]([2])
+softendo_progress_secret_mode_ids = Array[int]([3])
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_rqvp8")]
 script = ExtResource("4_da1t1")
@@ -1566,6 +1581,7 @@ visible = false
 [node name="СкрываниеПерехода2" parent="Water2/WaterMax/Parallax2D" index="3"]
 medium = false
 
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="tweak_enabled" from="AdvancedEdition_Hard" to="BlueCheepCheeps" method="activate"]
 [connection signal="tweak_enabled" from="AdvancedEdition_Hard" to="YellowCheepCheeps" method="activate"]
 

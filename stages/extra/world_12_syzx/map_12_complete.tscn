@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://c2vwu2n5rx5t3"]
+
+[ext_resource type="PackedScene" uid="uid://443hynmdu5so" path="res://stages/world_1/map_1_complete.tscn" id="1_2c3ef"]
+[ext_resource type="Texture2D" uid="uid://cm4havsld8lo8" path="res://gfx/map/world_names/world_9.png" id="2_hlgso"]
+[ext_resource type="Texture2D" uid="uid://ch0oca57bj4cu" path="res://gfx/map/world_names/world_10.png" id="3_hij6b"]
+[ext_resource type="Texture2D" uid="uid://bvber2eno7iti" path="res://gfx/map/world_names/world_12.png" id="4_r8x71"]
+[ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="5_hpxpc"]
+[ext_resource type="Texture2D" uid="uid://bhyq5cbc8i6ld" path="res://stages/extra/secrets/gfx/syzxchulun.png" id="6_158gq"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="7_t2m1j"]
+[ext_resource type="Texture2D" uid="uid://71122widk1g8" path="res://stages/extra/world_12_syzx/objects/custom_map_by_syzx_team.png" id="8_r8x71"]
+[ext_resource type="Texture2D" uid="uid://bb05kwgnyd1e8" path="res://gfx/map/maps/map12.png" id="9_r8x71"]
+[ext_resource type="Script" uid="uid://cpbjc7dmw7me5" path="res://stages/extra/world_9_syzx/advanced_ed_map.gd" id="10_wd7ta"]
+[ext_resource type="Texture2D" uid="uid://c4v26dw385wll" path="res://gfx/map/maps/map10-advance-complete.png" id="11_0ator"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uylys"]
+atlas = ExtResource("5_hpxpc")
+region = Rect2(95, 171, 97, 81)
+filter_clip = true
+
+[node name="Map-complete" instance=ExtResource("1_2c3ef")]
+goto_scene = "res://stages/save_game_room/save_game_room.tscn"
+world_name = "12"
+
+[node name="Bg" parent="." index="1"]
+position = Vector2(-224, 0)
+
+[node name="WorldText2" parent="GUI" index="1"]
+texture = ExtResource("2_hlgso")
+
+[node name="BounceMarker" parent="GUI/WorldText2" index="0"]
+position = Vector2(0, 178)
+
+[node name="Sprite2D" parent="GUI/WorldText2" index="1"]
+position = Vector2(-48, 0)
+texture = ExtResource("3_hij6b")
+region_enabled = true
+region_rect = Rect2(0, 0, 218, 70)
+
+[node name="AnimatedSprite2D" parent="GUI/WorldText2/Sprite2D" index="0"]
+position = Vector2(48, 48)
+
+[node name="Sprite2D2" type="Sprite2D" parent="GUI/WorldText2/Sprite2D" index="1"]
+position = Vector2(153, -3)
+texture = ExtResource("4_r8x71")
+region_enabled = true
+region_rect = Rect2(216, 0, 91, 66)
+
+[node name="World2" parent="GUI/WorldText2" index="2"]
+position = Vector2(-18, 0)
+
+[node name="FancyNumber" parent="GUI/WorldText2/World2" index="0"]
+position = Vector2(127, 0)
+texture = SubResource("AtlasTexture_uylys")
+
+[node name="AnimatedSprite2D" parent="GUI/WorldText2/World2" index="1"]
+position = Vector2(19, 43)
+
+[node name="Syzxchulun" type="Sprite2D" parent="GUI" index="2"]
+z_index = -1
+position = Vector2(548, 30)
+texture = ExtResource("6_158gq")
+script = ExtResource("7_t2m1j")
+
+[node name="Syzxchulun2" type="Sprite2D" parent="GUI" index="3"]
+visible = false
+z_index = -1
+position = Vector2(550, 40)
+texture = ExtResource("8_r8x71")
+script = ExtResource("7_t2m1j")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Map1-cumplete" parent="." index="3"]
+position = Vector2(-1520, 16)
+texture = ExtResource("9_r8x71")
+centered = false
+script = ExtResource("10_wd7ta")
+advance_map = ExtResource("11_0ator")
+
+[node name="GwiazdkowyMapowy" parent="Node2D" index="0"]
+position = Vector2(320, 112)
