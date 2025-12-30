@@ -1,9 +1,11 @@
-[gd_scene load_steps=168 format=4 uid="uid://nam3v54hbcut"]
+[gd_scene load_steps=170 format=4 uid="uid://nam3v54hbcut"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_sx232"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_qf4x3"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_7eaes"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_soduh"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_l87rr"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_no00w"]
 [ext_resource type="AudioStream" uid="uid://dbse42h4h6u1h" path="res://music/extra/new_year/SouthParkRally_Track7.it" id="4_vpq8m"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_248gf"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_nuytg"]
@@ -694,6 +696,17 @@ time = 500
 completion_music = ExtResource("2_qf4x3")
 jump_to_scene = "uid://c2cnlo6bnvvqk"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="SecretUnlocker2" parent="." instance=ExtResource("3_soduh")]
+secrets = Array[String](["xmas laboratory completed", "xmas laboratory in kevin mode"])
+show_progress_toast = false
+progress_by_id = "1"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_no00w")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_7eaes")]
 script = ExtResource("4_l87rr")
@@ -2466,3 +2479,5 @@ position = Vector2(0, -38)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_l87rr")
 script = ExtResource("78_eytbr")
+
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]

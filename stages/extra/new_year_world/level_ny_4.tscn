@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://duyp2h5p4mrxn"]
+[gd_scene load_steps=87 format=4 uid="uid://duyp2h5p4mrxn"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_0s1uj"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_p6pgi"]
@@ -54,6 +54,7 @@
 [ext_resource type="PackedScene" uid="uid://bs0p7pkrqdk3e" path="res://objects/christmas_clones/elf_clone1/elf_worker_clone1.tscn" id="45_je1v5"]
 [ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://engine/objects/platform/castle_platforms/single_platform.tscn" id="46_5gj00"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="52_nnjrl"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="55_auctm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4johv"]
 atlas = ExtResource("9_5n5nn")
@@ -428,7 +429,7 @@ completion_music = ExtResource("2_p6pgi")
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="SecretUnlocker2" parent="." instance=ExtResource("3_iy3sg")]
-secrets = Array[String](["syzxchulun world 10", "syzxchulun world 10 kevin mode", "syzxchulun world 10 advance", "syzxchulun world 10 advance kevin mode"])
+secrets = Array[String](["xmas laboratory completed", "xmas laboratory in kevin mode"])
 progress_by_id = "4"
 progress_to = 4
 
@@ -436,9 +437,6 @@ progress_to = 4
 script = ExtResource("4_auctm")
 progress_ids = Array[int]([0])
 progress_secret_mode_ids = Array[int]([1])
-check_for_softendo_mode = true
-softendo_progress_ids = Array[int]([2])
-softendo_progress_secret_mode_ids = Array[int]([3])
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_0s1uj")]
 tweaked_completion_music = ExtResource("4_p6pgi")
@@ -485,6 +483,8 @@ script = ExtResource("11_l1r51")
 metadata/_edit_lock_ = true
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
+drag_vertical_enabled = true
+drag_bottom_margin = 0.0
 editor_draw_screen = false
 script = ExtResource("7_3k3m6")
 metadata/_edit_lock_ = true
@@ -492,7 +492,11 @@ metadata/_edit_lock_ = true
 [node name="CameraArea" parent="." instance=ExtResource("8_g8fap")]
 offset_right = 7552.0
 offset_bottom = 480.0
-metadata/_edit_lock_ = true
+
+[node name="CameraArea2" parent="." instance=ExtResource("8_g8fap")]
+offset_top = 960.0
+offset_right = 2880.0
+offset_bottom = 1440.0
 
 [node name="TileMapLayerBG" type="TileMapLayer" parent="."]
 modulate = Color(0.37036446, 0.3703645, 0.37036446, 1)
@@ -1825,6 +1829,12 @@ texture = SubResource("GradientTexture2D_udyms")
 offset = Vector2(0, 8)
 script = ExtResource("52_nnjrl")
 
+[node name="PipeIn" parent="." instance=ExtResource("55_auctm")]
+position = Vector2(7120, 272)
+rotation = -1.5707964
+warp_direction = 1
+
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="finished" from="Node2D/LavaBubbles" to="Node2D/LavaBubbles" method="queue_free"]
 [connection signal="finished" from="Node2D/LavaBubbles4" to="Node2D/LavaBubbles4" method="queue_free"]
 [connection signal="finished" from="Node2D/LavaBubbles5" to="Node2D/LavaBubbles5" method="queue_free"]
