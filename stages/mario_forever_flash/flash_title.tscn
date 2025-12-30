@@ -1,0 +1,174 @@
+[gd_scene load_steps=22 format=4 uid="uid://dst0ant7dfquw"]
+
+[ext_resource type="Script" uid="uid://cnus1noarwkl2" path="res://stages/mario_forever_flash/scripts/flash_title_stage.gd" id="1_2faxt"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_o7x2i"]
+[ext_resource type="AudioStream" uid="uid://jbc1wyx6o6ho" path="res://music/extra/mf_flash/smb_title.ogg" id="3_whtbv"]
+[ext_resource type="FontFile" uid="uid://cyijqik15r3me" path="res://gfx/fonts/QUANTUM.TTF" id="5_riaju"]
+[ext_resource type="Script" uid="uid://cvwo33bpa3jfn" path="res://stages/extra/minix/scripts/minix_end_sel.gd" id="6_i3np0"]
+[ext_resource type="Texture2D" uid="uid://dij13d6s4ntw6" path="res://stages/mario_forever_flash/gfx/logo2.png" id="14_qwdf3"]
+[ext_resource type="Texture2D" uid="uid://b8ibdeohblstu" path="res://stages/mario_forever_flash/gfx/gorkaboshya.png" id="15_7dahk"]
+[ext_resource type="Texture2D" uid="uid://rqtuyj0sgxpv" path="res://stages/mario_forever_flash/gfx/bigoblako1.png" id="16_2faxt"]
+[ext_resource type="Texture2D" uid="uid://c2yn5pg8ksr6r" path="res://stages/mario_forever_flash/gfx/bigoblako3.png" id="17_dy4cx"]
+[ext_resource type="Texture2D" uid="uid://c0us0avgvncph" path="res://stages/mario_forever_flash/gfx/bigoblako2.png" id="18_6kljp"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="19_7dahk"]
+[ext_resource type="Texture2D" uid="uid://bh0u2706kgv5c" path="res://stages/mario_forever_flash/gfx/bigoblako4.png" id="19_gb7ap"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="20_2faxt"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="20_wbdc4"]
+[ext_resource type="Script" uid="uid://b6p871suo5jkl" path="res://engine/components/ui/generic/menu_selection.gd" id="21_g5f5h"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="23_r2ald"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="24_gbxlo"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="25_wiaet"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="28_gjvb0"]
+
+[sub_resource type="Gradient" id="Gradient_wou6p"]
+offsets = PackedFloat32Array(0.240602, 0.443609)
+colors = PackedColorArray(0, 0.6, 0.8, 1, 0.0666667, 1, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8wxn5"]
+gradient = SubResource("Gradient_wou6p")
+width = 480
+
+[node name="FlashTitle" type="Node2D"]
+script = ExtResource("1_2faxt")
+goto_scene = "res://stages/mario_forever_flash/world_1/map_f1.tscn"
+disable_pause_menu = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_o7x2i")]
+music = Array[Resource]([ExtResource("3_whtbv")])
+channel_id = 2
+volume_db = Array[float]([-2.0])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="Controls" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 397.0
+offset_right = 640.0
+offset_bottom = 468.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+script = ExtResource("20_wbdc4")
+focused = false
+
+[node name="Start" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.129412, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_riaju")
+theme_override_font_sizes/font_size = 18
+text = "Start Game"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("21_g5f5h")
+
+[node name="Start5" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_riaju")
+theme_override_font_sizes/font_size = 18
+text = "Exit"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("6_i3np0")
+
+[node name="Selector" type="AnimatedSprite2D" parent="."]
+position = Vector2(256, 320)
+script = ExtResource("23_r2ald")
+smooth_speed = 0.4
+position_padding = 20
+position_paddings_array = Array[float]([0.0, 0.0, 0.0])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+position = Vector2(0, -2)
+sprite_frames = ExtResource("24_gbxlo")
+script = ExtResource("25_wiaet")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("28_gjvb0")
+menu_items_controller_path = NodePath("../Controls")
+
+[node name="Logo2" type="Sprite2D" parent="."]
+position = Vector2(304.00003, 176.00002)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("14_qwdf3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, 240)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_8wxn5")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="HillLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.02, 0)
+motion_mirroring = Vector2(1728, 0)
+
+[node name="Gorkaboshya" type="Sprite2D" parent="ParallaxBackground/HillLayer"]
+position = Vector2(483, 306)
+texture = ExtResource("15_7dahk")
+
+[node name="Gorkaboshya2" type="Sprite2D" parent="ParallaxBackground/HillLayer"]
+position = Vector2(1200, 424)
+texture = ExtResource("15_7dahk")
+
+[node name="CloudLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.02, 0)
+motion_mirroring = Vector2(2368, 0)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Bigoblako1" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(765, 139)
+texture = ExtResource("16_2faxt")
+
+[node name="Bigoblako3" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(1389, 347)
+texture = ExtResource("17_dy4cx")
+
+[node name="Bigoblako2" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(2045, 211)
+texture = ExtResource("18_6kljp")
+
+[node name="Bigoblako4" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(197, 323)
+texture = ExtResource("19_gb7ap")
+
+[node name="GroundLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(640, 0)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="ParallaxBackground/GroundLayer"]
+tile_map_data = PackedByteArray("AAAAAAwAAAABAAEAAAABAAwAAAABAAEAAAACAAwAAAABAAEAAAADAAwAAAABAAEAAAAEAAwAAAABAAEAAAAAAAsAAAABAAAAAAABAAsAAAABAAAAAAACAAsAAAABAAAAAAADAAsAAAABAAAAAAAEAAsAAAABAAAAAAAFAAsAAAABAAAAAAAGAAsAAAABAAAAAAAHAAsAAAABAAAAAAAIAAsAAAABAAAAAAAJAAsAAAABAAAAAAAKAAsAAAABAAAAAAALAAsAAAABAAAAAAAMAAsAAAABAAAAAAANAAsAAAABAAAAAAAOAAsAAAABAAAAAAAPAAsAAAABAAAAAAAQAAsAAAABAAAAAAARAAsAAAABAAAAAAASAAsAAAABAAAAAAATAAsAAAABAAAAAAATAAwAAAABAAEAAAASAAwAAAABAAEAAAARAAwAAAABAAEAAAAQAAwAAAABAAEAAAAPAAwAAAABAAEAAAAOAAwAAAABAAEAAAANAAwAAAABAAEAAAAMAAwAAAABAAEAAAALAAwAAAABAAEAAAAKAAwAAAABAAEAAAAJAAwAAAABAAEAAAAIAAwAAAABAAEAAAAHAAwAAAABAAEAAAAGAAwAAAABAAEAAAAFAAwAAAABAAEAAAAAAA0AAAABAAEAAAABAA0AAAABAAEAAAACAA0AAAABAAEAAAADAA0AAAABAAEAAAAEAA0AAAABAAEAAAAFAA0AAAABAAEAAAAGAA0AAAABAAEAAAAHAA0AAAABAAEAAAAIAA0AAAABAAEAAAAJAA0AAAABAAEAAAAKAA0AAAABAAEAAAALAA0AAAABAAEAAAAMAA0AAAABAAEAAAANAA0AAAABAAEAAAAOAA0AAAABAAEAAAAPAA0AAAABAAEAAAAQAA0AAAABAAEAAAARAA0AAAABAAEAAAASAA0AAAABAAEAAAATAA0AAAABAAEAAAATAA8AAAABAAIAAAASAA8AAAABAAIAAAARAA8AAAABAAIAAAAQAA8AAAABAAIAAAAPAA8AAAABAAIAAAAOAA8AAAABAAIAAAANAA8AAAABAAIAAAAMAA8AAAABAAIAAAALAA8AAAABAAIAAAAKAA8AAAABAAIAAAAJAA8AAAABAAIAAAAIAA8AAAABAAIAAAAHAA8AAAABAAIAAAAGAA8AAAABAAIAAAAFAA8AAAABAAIAAAAEAA8AAAABAAIAAAADAA8AAAABAAIAAAACAA8AAAABAAIAAAABAA8AAAABAAIAAAAAAA8AAAABAAIAAAAAAA4AAAABAAEAAAABAA4AAAABAAEAAAACAA4AAAABAAEAAAADAA4AAAABAAEAAAAEAA4AAAABAAEAAAAFAA4AAAABAAEAAAAGAA4AAAABAAEAAAAHAA4AAAABAAEAAAAIAA4AAAABAAEAAAAJAA4AAAABAAEAAAAKAA4AAAABAAEAAAALAA4AAAABAAEAAAAMAA4AAAABAAEAAAANAA4AAAABAAEAAAAOAA4AAAABAAEAAAAPAA4AAAABAAEAAAAQAA4AAAABAAEAAAARAA4AAAABAAEAAAASAA4AAAABAAEAAAATAA4AAAABAAEAAAA=")
+tile_set = ExtResource("20_2faxt")
+
+[node name="MarioSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(320, 320)
+sprite_frames = ExtResource("19_7dahk")
+animation = &"walk"
+
+[connection signal="selected" from="Controls" to="Selector" method="handle_selection"]
+[connection signal="selected" from="Controls" to="Node" method="handle_selection"]
+[connection signal="menu_selected" from="Controls/Start" to="." method="start_selected"]
