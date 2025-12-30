@@ -48,22 +48,25 @@ offset_bottom = 480.0
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="Controls" type="VBoxContainer" parent="."]
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+
+[node name="Controls" type="VBoxContainer" parent="MenuLayer"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = 397.0
-offset_right = 640.0
-offset_bottom = 468.0
+offset_left = -320.0
+offset_top = -83.0
+offset_right = 320.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 7
 script = ExtResource("20_wbdc4")
 focused = false
 
-[node name="Start" type="Label" parent="Controls"]
+[node name="Start" type="Label" parent="MenuLayer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.129412, 1)
@@ -75,7 +78,7 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("21_g5f5h")
 
-[node name="Start5" type="Label" parent="Controls"]
+[node name="Start5" type="Label" parent="MenuLayer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
@@ -87,21 +90,21 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("6_i3np0")
 
-[node name="Selector" type="AnimatedSprite2D" parent="."]
+[node name="Selector" type="AnimatedSprite2D" parent="MenuLayer"]
 position = Vector2(256, 320)
 script = ExtResource("23_r2ald")
 smooth_speed = 0.4
 position_padding = 20
 position_paddings_array = Array[float]([0.0, 0.0, 0.0])
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MenuLayer/Selector"]
 position = Vector2(0, -2)
 sprite_frames = ExtResource("24_gbxlo")
 script = ExtResource("25_wiaet")
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("28_gjvb0")
-menu_items_controller_path = NodePath("../Controls")
+menu_items_controller_path = NodePath("../MenuLayer/Controls")
 
 [node name="Logo2" type="Sprite2D" parent="."]
 position = Vector2(304.00003, 176.00002)
@@ -169,6 +172,6 @@ position = Vector2(320, 320)
 sprite_frames = ExtResource("19_7dahk")
 animation = &"walk"
 
-[connection signal="selected" from="Controls" to="Selector" method="handle_selection"]
-[connection signal="selected" from="Controls" to="Node" method="handle_selection"]
-[connection signal="menu_selected" from="Controls/Start" to="." method="start_selected"]
+[connection signal="selected" from="MenuLayer/Controls" to="MenuLayer/Selector" method="handle_selection"]
+[connection signal="selected" from="MenuLayer/Controls" to="Node" method="handle_selection"]
+[connection signal="menu_selected" from="MenuLayer/Controls/Start" to="." method="start_selected"]

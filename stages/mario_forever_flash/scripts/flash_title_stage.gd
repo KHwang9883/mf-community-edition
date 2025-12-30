@@ -5,8 +5,8 @@ extends Stage2D
 @onready var node_2d: Node2D = $ParallaxBackground/Node2D
 #@onready var label: Label = $ParallaxBackground/Label
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
-@onready var controls: MenuItemsController = $Controls
-@onready var selector: MenuSelector = $Selector
+@onready var controls: MenuItemsController = $MenuLayer/Controls
+@onready var selector: MenuSelector = $MenuLayer/Selector
 
 const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
 
