@@ -1,13 +1,15 @@
-[gd_scene load_steps=55 format=4 uid="uid://by4i1hp1bh6hu"]
+[gd_scene load_steps=57 format=4 uid="uid://by4i1hp1bh6hu"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uib43"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_jelsy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_dhuvo"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_iw236"]
 [ext_resource type="AudioStream" uid="uid://bieifaja5c8e4" path="res://music/extra/new_year/abra-1.mod" id="4_su60h"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_h0l75"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_msy3x"]
-[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_it1fd"]
 [ext_resource type="Texture2D" uid="uid://dlpig80pyid53" path="res://stages/extra/new_year_world/gfx/ny2/bridge_ny.png" id="8_s8rkb"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ugp4l"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_w88mg"]
 [ext_resource type="Texture2D" uid="uid://bs57b16ok6fv5" path="res://tilesets/icy_ground/snow_night_forest.png" id="9_uib43"]
 [ext_resource type="Texture2D" uid="uid://d22383p562ngu" path="res://stages/extra/new_year_world/gfx/ny2/mountain_bg.png" id="10_gw8vn"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_d3pvj"]
@@ -152,6 +154,23 @@ jump_to_scene = "uid://c2cnlo6bnvvqk"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_dhuvo")]
+script = ExtResource("4_iw236")
+tweaked_completion_music = ExtResource("5_h0l75")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_su60h")])
 volume_db = Array[float]([-1.0])
 
@@ -160,7 +179,7 @@ position = Vector2(80, 400)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
-script = ExtResource("7_it1fd")
+script = ExtResource("8_w88mg")
 metadata/_edit_lock_ = true
 
 [node name="CameraArea" parent="." instance=ExtResource("8_ugp4l")]
@@ -193,7 +212,7 @@ amount = 1100
 texture = SubResource("AtlasTexture_jelsy")
 lifetime = 5.0
 preprocess = 3.0
-visibility_rect = Rect2(-100, -100, 14500, 200)
+visibility_rect = Rect2(-100, 0, 14500, 480)
 trail_lifetime = 2.72
 process_material = SubResource("ParticleProcessMaterial_w1u0q")
 script = ExtResource("11_i0ehe")
@@ -667,10 +686,10 @@ metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="RotoRed" parent="Enemies/RotoCenter" instance=ExtResource("29_hiqdl")]
-position = Vector2(-79, 61)
+position = Vector2(46, -89)
 preview = true
 amplitude = Vector2(100, 100)
-phase = 147.50000000000233
+phase = -57.49999999999767
 frequency = 300.0
 
 [node name="ElfJetpack13" parent="Enemies" instance=ExtResource("21_gfp3q")]

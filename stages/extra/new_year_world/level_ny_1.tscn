@@ -1,13 +1,15 @@
-[gd_scene load_steps=166 format=4 uid="uid://nam3v54hbcut"]
+[gd_scene load_steps=168 format=4 uid="uid://nam3v54hbcut"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_sx232"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_qf4x3"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_7eaes"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_l87rr"]
 [ext_resource type="AudioStream" uid="uid://dbse42h4h6u1h" path="res://music/extra/new_year/SouthParkRally_Track7.it" id="4_vpq8m"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_248gf"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_nuytg"]
-[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="6_kueng"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_83xlr"]
 [ext_resource type="TileSet" uid="uid://b64c2na1dguy6" path="res://stages/extra/new_year_world/objects/tileset_ny.tres" id="8_dia7w"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_soduh"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="9_lrnkm"]
 [ext_resource type="Texture2D" uid="uid://capd7pyi3rpul" path="res://stages/extra/new_year_world/gfx/bg_clouds.png" id="10_f87ba"]
 [ext_resource type="Texture2D" uid="uid://b06d80hy5s0l0" path="res://stages/extra/new_year_world/gfx/bg_stars0.png" id="10_vpq8m"]
@@ -694,6 +696,23 @@ jump_to_scene = "uid://c2cnlo6bnvvqk"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_7eaes")]
+script = ExtResource("4_l87rr")
+tweaked_completion_music = ExtResource("5_248gf")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("4_vpq8m")])
 volume_db = Array[float]([3.0])
 
@@ -702,7 +721,7 @@ position = Vector2(112, 400)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
-script = ExtResource("6_kueng")
+script = ExtResource("8_soduh")
 metadata/_edit_lock_ = true
 
 [node name="CameraArea" parent="." instance=ExtResource("7_83xlr")]
@@ -819,7 +838,7 @@ amount = 1000
 texture = SubResource("AtlasTexture_nn8nd")
 lifetime = 5.0
 preprocess = 3.0
-visibility_rect = Rect2(-100, -100, 14000, 200)
+visibility_rect = Rect2(-100, 0, 14000, 480)
 trail_lifetime = 2.72
 process_material = SubResource("ParticleProcessMaterial_ybmbg")
 script = ExtResource("61_uqifv")
