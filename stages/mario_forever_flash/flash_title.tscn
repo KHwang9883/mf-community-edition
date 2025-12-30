@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://dst0ant7dfquw"]
+[gd_scene load_steps=27 format=4 uid="uid://dst0ant7dfquw"]
 
 [ext_resource type="Script" uid="uid://cnus1noarwkl2" path="res://stages/mario_forever_flash/scripts/flash_title_stage.gd" id="1_2faxt"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_o7x2i"]
@@ -13,7 +13,10 @@
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="19_7dahk"]
 [ext_resource type="Texture2D" uid="uid://bh0u2706kgv5c" path="res://stages/mario_forever_flash/gfx/bigoblako4.png" id="19_gb7ap"]
 [ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="20_2faxt"]
+[ext_resource type="Material" uid="uid://c17r7oabypbcx" path="res://objects/chorniy_mario/grayscale.tres" id="20_6kljp"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="20_dy4cx"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="20_wbdc4"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="21_6kljp"]
 [ext_resource type="Script" uid="uid://b6p871suo5jkl" path="res://engine/components/ui/generic/menu_selection.gd" id="21_g5f5h"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="23_r2ald"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="24_gbxlo"]
@@ -27,6 +30,13 @@ colors = PackedColorArray(0, 0.6, 0.8, 1, 0.0666667, 1, 0.988235, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_8wxn5"]
 gradient = SubResource("Gradient_wou6p")
 width = 480
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gb7ap"]
+load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
+
+[sub_resource type="Curve" id="Curve_8wxn5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
+point_count = 3
 
 [node name="FlashTitle" type="Node2D"]
 script = ExtResource("1_2faxt")
@@ -77,6 +87,7 @@ text = "Start Game"
 horizontal_alignment = 1
 uppercase = true
 script = ExtResource("21_g5f5h")
+selected_sound = null
 
 [node name="Start5" type="Label" parent="MenuLayer/Controls"]
 layout_mode = 2
@@ -171,6 +182,43 @@ tile_set = ExtResource("20_2faxt")
 position = Vector2(320, 320)
 sprite_frames = ExtResource("19_7dahk")
 animation = &"walk"
+
+[node name="KevinSprite" type="AnimatedSprite2D" parent="."]
+material = ExtResource("20_6kljp")
+position = Vector2(208, 320)
+sprite_frames = ExtResource("19_7dahk")
+animation = &"walk"
+
+[node name="Stars" type="CPUParticles2D" parent="KevinSprite"]
+modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+position = Vector2(0, 16)
+amount = 24
+texture = SubResource("CompressedTexture2D_gb7ap")
+lifetime = 0.5
+draw_order = 1
+emission_shape = 1
+emission_sphere_radius = 24.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_8wxn5")
+script = ExtResource("20_dy4cx")
+medium = true
+metadata/_edit_lock_ = true
+
+[node name="CloudLightEffect" type="Sprite2D" parent="KevinSprite"]
+self_modulate = Color(0, 0, 0, 0)
+position = Vector2(0, 16)
+scale = Vector2(2, 2)
+texture = ExtResource("21_6kljp")
+script = ExtResource("20_dy4cx")
+metadata/_edit_lock_ = true
 
 [connection signal="selected" from="MenuLayer/Controls" to="MenuLayer/Selector" method="handle_selection"]
 [connection signal="selected" from="MenuLayer/Controls" to="Node" method="handle_selection"]
