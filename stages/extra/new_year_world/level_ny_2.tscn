@@ -1,9 +1,11 @@
-[gd_scene load_steps=57 format=4 uid="uid://by4i1hp1bh6hu"]
+[gd_scene load_steps=59 format=4 uid="uid://by4i1hp1bh6hu"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_uib43"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_jelsy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_dhuvo"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_w88mg"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_iw236"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_l8u2b"]
 [ext_resource type="AudioStream" uid="uid://bieifaja5c8e4" path="res://music/extra/new_year/abra-1.mod" id="4_su60h"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_h0l75"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_msy3x"]
@@ -152,6 +154,17 @@ time = 440
 completion_music = ExtResource("2_jelsy")
 jump_to_scene = "uid://c2cnlo6bnvvqk"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="SecretUnlocker2" parent="." instance=ExtResource("3_w88mg")]
+secrets = Array[String](["xmas laboratory completed", "xmas laboratory in kevin mode"])
+show_progress_toast = false
+progress_by_id = "2"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_l8u2b")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_dhuvo")]
 script = ExtResource("4_iw236")
@@ -686,10 +699,10 @@ metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="RotoRed" parent="Enemies/RotoCenter" instance=ExtResource("29_hiqdl")]
-position = Vector2(46, -89)
+position = Vector2(95, 30)
 preview = true
 amplitude = Vector2(100, 100)
-phase = -57.49999999999767
+phase = 22.50000000000233
 frequency = 300.0
 
 [node name="ElfJetpack13" parent="Enemies" instance=ExtResource("21_gfp3q")]
@@ -751,3 +764,5 @@ position = Vector2(13168, 304)
 result = SubResource("Resource_cupov")
 initially_visible_and_solid = false
 exists_once = true
+
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]

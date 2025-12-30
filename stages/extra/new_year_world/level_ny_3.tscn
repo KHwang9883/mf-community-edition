@@ -1,9 +1,11 @@
-[gd_scene load_steps=68 format=4 uid="uid://b7hju0uoa1ncd"]
+[gd_scene load_steps=70 format=4 uid="uid://b7hju0uoa1ncd"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_ai04y"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_oh7c7"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_022fh"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_ybmbg"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_8gij2"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_jwoe3"]
 [ext_resource type="AudioStream" uid="uid://cbbgfaa2sgtg" path="res://music/extra/new_year/the_jester.xm" id="5_oh7c7"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_qcxsd"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_vl4hm"]
@@ -201,6 +203,17 @@ completion_music = ExtResource("2_oh7c7")
 jump_to_scene = "uid://c2cnlo6bnvvqk"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
+[node name="SecretUnlocker2" parent="." instance=ExtResource("3_022fh")]
+secrets = Array[String](["xmas laboratory completed", "xmas laboratory in kevin mode"])
+show_progress_toast = false
+progress_by_id = "3"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
+script = ExtResource("4_jwoe3")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+
 [node name="MusicLoader" parent="." instance=ExtResource("3_ybmbg")]
 script = ExtResource("4_8gij2")
 tweaked_completion_music = ExtResource("5_vl4hm")
@@ -393,34 +406,34 @@ speed = -170.0
 position = Vector2(7744, 144)
 
 [node name="RotoRed" parent="Objects/RotoCenter" instance=ExtResource("17_sryoy")]
-position = Vector2(-166, -166)
+position = Vector2(-279, -74)
 preview = true
 amplitude = Vector2(300, 200)
-phase = -122.999999999121
+phase = -157.66666666578877
 frequency = 40.0
 
 [node name="RotoRed2" parent="Objects/RotoCenter" instance=ExtResource("17_sryoy")]
-position = Vector2(166, 166)
+position = Vector2(279, 74)
 preview = true
 amplitude = Vector2(300, 200)
-phase = 57.00000000087836
+phase = 22.333333334210273
 frequency = 40.0
 
 [node name="RotoCenter2" parent="Objects" instance=ExtResource("16_yfjf1")]
 position = Vector2(8768, 304)
 
 [node name="RotoRed" parent="Objects/RotoCenter2" instance=ExtResource("17_sryoy")]
-position = Vector2(-68, 196)
+position = Vector2(-240, 137)
 preview = true
 amplitude = Vector2(330, 200)
-phase = 101.24999999999893
+phase = 135.91666666666717
 frequency = -40.0
 
 [node name="RotoRed2" parent="Objects/RotoCenter2" instance=ExtResource("17_sryoy")]
-position = Vector2(68, -196)
+position = Vector2(240, -137)
 preview = true
 amplitude = Vector2(330, 200)
-phase = -78.75000000000006
+phase = -44.08333333333187
 frequency = -40.0
 
 [node name="PlatformPathCloud" parent="Objects" instance=ExtResource("15_kp33i")]
@@ -490,10 +503,10 @@ position = Vector2(4288, 336)
 [node name="RotoCenter" parent="Objects/DonutLift5" instance=ExtResource("16_yfjf1")]
 
 [node name="RotoRed" parent="Objects/DonutLift5/RotoCenter" instance=ExtResource("17_sryoy")]
-position = Vector2(50, 49)
+position = Vector2(-70, -1)
 preview = true
 amplitude = Vector2(70, 70)
-phase = 45.000000000669104
+phase = -178.33333333266273
 
 [node name="DonutLift6" parent="Objects" instance=ExtResource("18_kp33i")]
 position = Vector2(4256, 336)
@@ -538,35 +551,35 @@ position = Vector2(5280, 320)
 position = Vector2(1600, 384)
 
 [node name="RotoRed" parent="Objects/RotoCenter3" instance=ExtResource("17_sryoy")]
-position = Vector2(-106, 55)
+position = Vector2(105, 68)
 preview = true
 amplitude_enable = true
-amplitude = Vector2(117.00165, 117.00165)
+amplitude = Vector2(127.279274, 127.279274)
 amplitude_changing_speed = 200.0
 amplitude_max = Vector2(150, 150)
-phase = 151.16666666739428
+phase = 31.8333333340622
 frequency = -70.0
 
 [node name="RotoCenter4" parent="Objects" instance=ExtResource("16_yfjf1")]
 position = Vector2(11248, 400)
 
 [node name="RotoRed" parent="Objects/RotoCenter4" instance=ExtResource("17_sryoy")]
-position = Vector2(-69, 73)
+position = Vector2(-30, -96)
 preview = true
 amplitude = Vector2(100, 100)
 amplitude_changing_speed = 200.0
-phase = 134.66666666666492
+phase = -106.00000000000075
 frequency = 70.0
 
 [node name="RotoCenter5" parent="Objects" instance=ExtResource("16_yfjf1")]
 position = Vector2(12560, 432)
 
 [node name="RotoRed" parent="Objects/RotoCenter5" instance=ExtResource("17_sryoy")]
-position = Vector2(11, 99)
+position = Vector2(81, -59)
 preview = true
 amplitude = Vector2(100, 100)
 amplitude_changing_speed = 200.0
-phase = 82.33333333391903
+phase = -36.999999999413056
 frequency = -70.0
 
 [node name="Brick13" parent="Objects" instance=ExtResource("14_5psee")]
@@ -939,3 +952,5 @@ frequency = 2.0
 
 [node name="GifterClone" parent="." instance=ExtResource("28_wsy5q")]
 position = Vector2(12944, 384)
+
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
