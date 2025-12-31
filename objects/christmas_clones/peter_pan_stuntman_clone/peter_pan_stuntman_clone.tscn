@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://byhvxkn86dpgv"]
+
+[ext_resource type="PackedScene" uid="uid://bw7f131nc4fhf" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.tscn" id="1_gujlm"]
+[ext_resource type="AudioStream" uid="uid://dr3xbqpapvbeb" path="res://engine/objects/enemies/human_lab/bullet_bill/sfx/stomp.wav" id="2_m15uk"]
+[ext_resource type="Texture2D" uid="uid://cx82smx0ouhge" path="res://objects/christmas_clones/peter_pan_stuntman_clone/textures/image.png" id="3_3l4xc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k2gec"]
+size = Vector2(44, 20)
+
+[node name="BulletBill" instance=ExtResource("1_gujlm")]
+
+[node name="CollisionShape2D" parent="Body" index="0"]
+visible = false
+shape = SubResource("RectangleShape2D_k2gec")
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_sound = ExtResource("2_m15uk")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"starman": false
+}
+killing_sound_succeeded = ExtResource("2_m15uk")
+sound_ignore_pitch_modification = true
+
+[node name="Sprite" parent="." index="2"]
+position = Vector2(0, -6)
+texture = ExtResource("3_3l4xc")
