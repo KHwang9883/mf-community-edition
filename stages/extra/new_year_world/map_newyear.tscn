@@ -9,12 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="5_iuk4s"]
 [ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="6_m78mg"]
 [ext_resource type="Script" uid="uid://w38wmhi8lagh" path="res://engine/scenes/map/scripts/map_camera.gd" id="7_aqcxx"]
-[ext_resource type="Texture2D" uid="uid://cii4pifncqrgp" path="res://gfx/map/world_names/world_1.png" id="8_45xs6"]
+[ext_resource type="Texture2D" uid="uid://lphdnew5hwhv" path="res://gfx/map/maps/map_ny.png" id="7_uxo7t"]
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="9_1swuq"]
 [ext_resource type="Script" uid="uid://dr3vhptgbru6r" path="res://engine/scenes/map/scripts/world_text.gd" id="9_cbwey"]
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="10_p1qxo"]
 [ext_resource type="Texture2D" uid="uid://h5k1m7htt20h" path="res://engine/scenes/map/textures/press_start.png" id="11_lh2xn"]
 [ext_resource type="Script" uid="uid://dxfohdq1ugjpj" path="res://engine/scenes/map/scripts/start_text.gd" id="12_q8fbq"]
+[ext_resource type="Texture2D" uid="uid://denlr3r7ksgo0" path="res://gfx/map/world_names/chirstmas_lab_map_text.png" id="13_b40j4"]
 [ext_resource type="Script" uid="uid://v61jbnq007mi" path="res://engine/scenes/map/scripts/marker_space.gd" id="13_gw222"]
 [ext_resource type="Texture2D" uid="uid://cyx06gn10n78x" path="res://engine/scenes/map/textures/debug.png" id="14_3cfri"]
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="15_fjn58"]
@@ -25,7 +26,6 @@
 [ext_resource type="Script" uid="uid://bgq4yksu7kl5m" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="19_7oyet"]
 [ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="20_ux3kc"]
 [ext_resource type="PackedScene" uid="uid://dgyfu1v14ewiu" path="res://engine/scenes/map/quality_dots.tscn" id="21_ms8c7"]
-[ext_resource type="PackedScene" uid="uid://r6db0501lsxu" path="res://objects/bonus_level_map_button/bonus_level_click_on_me.tscn" id="32_3yvi1"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_yn7eq")
@@ -61,16 +61,21 @@ region_rect = Rect2(0, 0, 3333, 480)
 region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
+[node name="Map1" type="Sprite2D" parent="."]
+position = Vector2(8, 0)
+texture = ExtResource("7_uxo7t")
+centered = false
+
 [node name="Player" parent="." instance=ExtResource("5_iuk4s")]
 z_index = 5
 z_as_relative = false
-position = Vector2(-9, 298)
+position = Vector2(-8, 312)
 dots = ExtResource("6_m78mg")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 limit_left = 0
 limit_top = 0
-limit_right = 1000
+limit_right = 1775
 limit_bottom = 480
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
@@ -89,15 +94,15 @@ metadata/_edit_lock_ = true
 
 [node name="WorldText" type="Sprite2D" parent="GUI2"]
 self_modulate = Color(1, 1, 1, 0)
-position = Vector2(320, -64)
-texture = ExtResource("8_45xs6")
+position = Vector2(320, 16)
+texture = ExtResource("13_b40j4")
 script = ExtResource("9_cbwey")
 
 [node name="BounceMarker" type="Marker2D" parent="GUI2/WorldText"]
 position = Vector2(0, 146)
 
 [node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
-texture = ExtResource("8_45xs6")
+texture = ExtResource("13_b40j4")
 
 [node name="MarioIcon" type="Sprite2D" parent="GUI2"]
 position = Vector2(581, 436)
@@ -144,34 +149,89 @@ metadata/_edit_lock_ = true
 [node name="MapPlayerMarker" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(-9, 298)
+position = Vector2(-8, 312)
 script = ExtResource("16_husms")
 
 [node name="MapPlayerMarker2" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(85, 298)
+position = Vector2(96, 312)
 script = ExtResource("16_husms")
 level = "uid://nam3v54hbcut"
 
 [node name="MapPlayerMarker3" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(357, 298)
+position = Vector2(96, 272)
 script = ExtResource("16_husms")
-level = "uid://by4i1hp1bh6hu"
 
 [node name="MapPlayerMarker4" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(637, 296)
+position = Vector2(544, 272)
 script = ExtResource("16_husms")
-level = "uid://b7hju0uoa1ncd"
 
 [node name="MapPlayerMarker5" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(888, 296)
+position = Vector2(544, 312)
+script = ExtResource("16_husms")
+level = "uid://by4i1hp1bh6hu"
+
+[node name="MapPlayerMarker6" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(768, 312)
+script = ExtResource("16_husms")
+level = "uid://by4i1hp1bh6hu"
+
+[node name="MapPlayerMarker7" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(768, 216)
+script = ExtResource("16_husms")
+
+[node name="MapPlayerMarker8" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(952, 216)
+script = ExtResource("16_husms")
+
+[node name="MapPlayerMarker9" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(952, 312)
+script = ExtResource("16_husms")
+
+[node name="MapPlayerMarker10" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1144, 312)
+script = ExtResource("16_husms")
+level = "uid://b7hju0uoa1ncd"
+
+[node name="MapPlayerMarker11" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1144, 256)
+script = ExtResource("16_husms")
+
+[node name="MapPlayerMarker12" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1632, 256)
+script = ExtResource("16_husms")
+
+[node name="MapPlayerMarker13" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1632, 312)
+script = ExtResource("16_husms")
+
+[node name="MapPlayerMarker14" type="Marker2D" parent="MarkerSpace"]
+show_behind_parent = true
+z_as_relative = false
+position = Vector2(1696, 312)
 script = ExtResource("16_husms")
 level = "uid://duyp2h5p4mrxn"
 
@@ -180,7 +240,3 @@ script = ExtResource("18_gc6bd")
 
 [node name="QualityDots" parent="Node2D" instance=ExtResource("21_ms8c7")]
 dot_offset = Vector2(5, 4)
-
-[node name="BonusLevelClickOnMe" parent="." instance=ExtResource("32_3yvi1")]
-position = Vector2(-272, 411)
-bonus_level_path = "res://stages/extra/click_bonus_game/maps/bonus_level-1.tscn"
