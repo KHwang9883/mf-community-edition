@@ -5,7 +5,7 @@ on:
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 
 env:
-  GODOT_VERSION: 4.4.1
+  GODOT_VERSION: 4.5.1
   EXPORT_NAME: Mario-Forever-Community-Edition
   PROJECT_PATH: .
   UPLOAD_FOLDER: MFCE-Builds/Release
@@ -15,14 +15,12 @@ jobs:
     name: Release Export
     runs-on: ubuntu-24.04  # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
     container:
-      image: jue13/godot-ci:4.4.1
+      image: jue13/godot-ci:4.5.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: Set WINEPREFIX
-        run: echo WINEPREFIX=/root/.wine >> "$GITHUB_ENV"
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -53,7 +51,7 @@ jobs:
           chmod +x "$EXPORT_DIR/linux/00. Launch in Recommended Mode.sh"
           chmod +x "$EXPORT_DIR/linux/01. Launch in Compatibility Mode.sh"
           chmod +x "$EXPORT_DIR/linux/02. Launch in Compatibility Mode (angle).sh"
-          godot --headless --export-release "Linux/X11" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
+          godot --headless --export-release "Linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
       - name: Prepare For Upload
         run: |
           EXPORT_DIR="$(readlink -f build)"
@@ -82,7 +80,7 @@ jobs:
             curl -X MKCOL \
               -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
               ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID \
-              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/${BUILD_FILENAME}.zip'
+              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/$BUILD_FILENAME.zip'
             
             LOOP_ID=0
             PART_ID=""
@@ -95,7 +93,7 @@ jobs:
                 -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
                 ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/$PART_ID \
                 --data-binary "@$FILE" \
-                --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/${BUILD_FILENAME}.zip' \
+                --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/$BUILD_FILENAME.zip' \
                 --header "OC-Total-Length: ${FILE_SIZE}"
             done
             
@@ -103,7 +101,7 @@ jobs:
             curl -X MOVE \
               -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
               ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
-              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/${BUILD_FILENAME}.zip' \
+              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/$BUILD_FILENAME.zip' \
               --header "OC-Total-Length: ${FILE_SIZE}"
             
             echo "Uploading file: $EXPORT_DIR/Readme.md"

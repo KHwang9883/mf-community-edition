@@ -376,11 +376,13 @@ func scr3_babah() -> void:
 	_launch_tiny_tiles(Vector2(4000, 304), 4, 48, -18)
 	
 @onready var scr4_node_2d: Node2D = $Scripted4/Node2D
+@onready var scr4_area_col: CollisionShape2D = $Scripted4/Node2D/Area2D2/CollisionShape2D
 
 func scr4() -> void:
 	_launch_tiny_tiles(Vector2(1280, 292), 4, 24)
 	Audio.play_1d_sound(_stun, false)
 	Audio.play_1d_sound(_break, false)
+	scr4_area_col.set_deferred("disabled", false)
 	for i in 2:
 		var _expl = EXPLOSION_TANK.instantiate()
 		if i == 0:

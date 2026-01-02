@@ -10,6 +10,9 @@ var cooldown: float = 0
 @onready var color_rect: ColorRect = $ColorRect
 @onready var color_picker: ColorPickerButton = $Window/VBoxContainer/HBoxContainer2/ColorPickerButton
 
+func _ready() -> void:
+	color_picker.picker_created.connect(_on_picker_created, CONNECT_ONE_SHOT)
+
 func _handle_focused(focus) -> void:
 	super(focus)
 	if !focus: return
@@ -54,3 +57,9 @@ func _on_button_pressed() -> void:
 		_quick_node.skin_tweaks[powerup_name][submenu_name][tweak_name] = color_picker.color.to_html()
 	else:
 		_quick_node.skin_tweaks[powerup_name][tweak_name] = color_picker.color.to_html()
+
+
+func _on_picker_created() -> void:
+	var colorpick = color_picker.get_popup()
+	var win_scale = SettingsManager.get_ui_scale(colorpick)
+	SettingsManager.scale_window(colorpick, win_scale)

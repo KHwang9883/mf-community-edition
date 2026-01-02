@@ -29,12 +29,18 @@ func _on_reset_btn_pressed(what: String, text: String) -> void:
 	if what in ["Tweaks", "Settings"]:
 		confirmation_dialog.dialog_text += "\nThe game will be restarted."
 	confirmation_dialog.show()
+	var win_scale = SettingsManager.get_ui_scale(confirmation_dialog)
+	SettingsManager.scale_window(confirmation_dialog, win_scale)
+	confirmation_dialog.move_to_center()
 	confirmation_dialog.grab_focus()
 
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	
 	window.show()
+	var win_scale = SettingsManager.get_ui_scale(window)
+	SettingsManager.scale_window(window, win_scale)
+	window.move_to_center()
 	window.grab_focus()
 
 func _physics_process(delta: float) -> void:

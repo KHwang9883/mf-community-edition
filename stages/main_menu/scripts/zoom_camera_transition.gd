@@ -41,3 +41,7 @@ func _ready() -> void:
 		main_menu_controls.focused = true
 		menu_initiated.emit()
 	)
+
+func _physics_process(delta: float) -> void:
+	if Input.mouse_mode == Input.MOUSE_MODE_HIDDEN:
+		SettingsManager.show_mouse()
