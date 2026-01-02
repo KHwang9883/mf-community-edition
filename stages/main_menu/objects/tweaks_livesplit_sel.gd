@@ -26,6 +26,9 @@ func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	
 	window.show()
+	var win_scale = SettingsManager.get_ui_scale(window)
+	SettingsManager.scale_window(window, win_scale)
+	window.move_to_center()
 
 func update_checkboxes() -> void:
 	%cb_enabled.button_pressed = bool(config.get("enabled", false))

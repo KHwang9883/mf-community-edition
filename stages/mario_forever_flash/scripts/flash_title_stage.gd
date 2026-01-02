@@ -1,3 +1,4 @@
+@warning_ignore("missing_tool")
 extends Stage2D
 
 @export var goto_scene: String
