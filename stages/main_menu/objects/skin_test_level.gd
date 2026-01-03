@@ -44,17 +44,17 @@ func _exit_tree() -> void:
 	Data.values.lives = 4
 	Data.values.score = 0
 	Console.cv.item_display_shown = false
+	if 98 in Audio._music_channels && is_instance_valid(Audio._music_channels[98]):
+		Audio._music_channels[98].queue_free()
 
 func restart() -> void:
 	Scenes.current_scene.queue_free()
-	if 98 in Audio._music_channels && is_instance_valid(Audio._music_channels[98]):
-		Audio._music_channels[98].queue_free()
 	if !Scenes._current_scene_buffer || Scenes._current_scene_buffer.resource_path != scene_file_path:
 		Scenes._current_scene_buffer = load(scene_file_path)
 	Scenes.current_scene = Scenes._current_scene_buffer.instantiate()
 	add_sibling.call_deferred(Scenes.current_scene)
 	get_tree().paused = false
-	Scenes.scene_ready.emit()
+	#Scenes.scene_ready.emit()
 
 
 func _on_player_died() -> void:
