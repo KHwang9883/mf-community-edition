@@ -1,6 +1,6 @@
 extends GeneralMovementBody2D
 
-@export var creation: InstancePowerup
+@export var creation: InstanceNode2D
 @export var hp: int = 3
 @export var break_sound = preload("res://objects/gift_box/sounds/present_break.wav")
 @export var score: int = 100
@@ -19,7 +19,10 @@ func stomp() -> void:
 		hp -= 1
 		_shake()
 	else:
-		enemy_attacked.stomping_creation = creation
+		if creation.has_method(&"prepare"):
+			enemy_attacked.stomping_creation = creation.prepare()
+		else:
+			enemy_attacked.stomping_creation = creation
 		enemy_attacked.stomping_sound = break_sound
 		enemy_attacked.stomping_scores = score
 		queue_free()
