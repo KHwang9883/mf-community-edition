@@ -1,10 +1,8 @@
-[gd_scene load_steps=146 format=4 uid="uid://duyp2h5p4mrxn"]
+[gd_scene load_steps=144 format=4 uid="uid://duyp2h5p4mrxn"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_0s1uj"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_p6pgi"]
 [ext_resource type="PackedScene" uid="uid://b636po6fa0tfj" path="res://objects/music_loader_custom/music_loader_custom.tscn" id="3_0s1uj"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_iy3sg"]
-[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_auctm"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_p6pgi"]
 [ext_resource type="AudioStream" uid="uid://dp3umblhp2ry1" path="res://music/extra/new_year/crystal_chamber.mptm" id="5_p6pgi"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_vg5ni"]
@@ -649,17 +647,9 @@ func _no_checkp() -> void:
 script = ExtResource("1_0s1uj")
 time = -1
 completion_music = ExtResource("2_p6pgi")
+completion_write_save = false
+jump_to_scene = "uid://cq6ta77e8gb4g"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
-
-[node name="SecretUnlocker2" parent="." instance=ExtResource("3_iy3sg")]
-secrets = Array[String](["xmas laboratory completed", "xmas laboratory in kevin mode"])
-progress_by_id = "4"
-progress_to = 4
-
-[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2"]
-script = ExtResource("4_auctm")
-progress_ids = Array[int]([0])
-progress_secret_mode_ids = Array[int]([1])
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_0s1uj")]
 tweaked_completion_music = ExtResource("4_p6pgi")
@@ -1106,30 +1096,38 @@ script = ExtResource("11_l1r51")
 
 [node name="ThwompCloneChilly" parent="." instance=ExtResource("30_br760")]
 position = Vector2(-192, 176)
+platform_on_leave = 0
 
 [node name="ThwompCloneChilly2" parent="." instance=ExtResource("30_br760")]
 position = Vector2(992, 192)
+platform_on_leave = 0
 
 [node name="ThwompCloneChilly6" parent="." instance=ExtResource("30_br760")]
 position = Vector2(656, 928)
+platform_on_leave = 0
 trigger_area = Rect2(-80, -32, 160, 336)
 
 [node name="ThwompCloneChilly7" parent="." instance=ExtResource("30_br760")]
 position = Vector2(1968, 1024)
+platform_on_leave = 0
 trigger_area = Rect2(-80, -32, 160, 336)
 
 [node name="ThwompCloneChilly8" parent="." instance=ExtResource("30_br760")]
 position = Vector2(2464, 896)
+platform_on_leave = 0
 trigger_area = Rect2(-80, -32, 160, 336)
 
 [node name="ThwompCloneChilly3" parent="." instance=ExtResource("30_br760")]
 position = Vector2(2544, 224)
+platform_on_leave = 0
 
 [node name="ThwompCloneChilly4" parent="." instance=ExtResource("30_br760")]
 position = Vector2(4160, 192)
+platform_on_leave = 0
 
 [node name="ThwompCloneChilly5" parent="." instance=ExtResource("30_br760")]
 position = Vector2(5776, 128)
+platform_on_leave = 0
 
 [node name="Coin" parent="." instance=ExtResource("28_krbxf")]
 position = Vector2(240, 368)
@@ -2911,7 +2909,7 @@ amplitude = Vector2(0, 100)
 frequency = 1.5
 
 [node name="ElfJetpack10" parent="." instance=ExtResource("42_ppt6b")]
-position = Vector2(368, 1824)
+position = Vector2(384, 1824)
 amplitude = Vector2(0, 100)
 phase = 156.62
 frequency = 1.5
@@ -2923,13 +2921,14 @@ curve = SubResource("Curve2D_r25ad")
 position = Vector2(192, 2112)
 
 [node name="PlatformPath4" parent="Path2D10" instance=ExtResource("58_rcc1w")]
-position = Vector2(286.72, 1936)
+position = Vector2(282.72, 1936)
 progress = 206.72
-h_offset = -112.0
+h_offset = -116.0
 v_offset = -176.0
 
 [node name="ElfClone07" parent="." instance=ExtResource("45_je1v5")]
 position = Vector2(592, 1728)
+slide = true
 
 [node name="ElfClone11" parent="." instance=ExtResource("45_je1v5")]
 position = Vector2(2624, 1856)
@@ -3262,7 +3261,6 @@ use_blur_transition = true
 [node name="Node" type="Node" parent="PipeIn4"]
 script = SubResource("GDScript_ha6qy")
 
-[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="finished" from="Node2D/LavaBubbles" to="Node2D/LavaBubbles" method="queue_free"]
 [connection signal="finished" from="Node2D/LavaBubbles4" to="Node2D/LavaBubbles4" method="queue_free"]
 [connection signal="finished" from="Node2D/LavaBubbles5" to="Node2D/LavaBubbles5" method="queue_free"]
