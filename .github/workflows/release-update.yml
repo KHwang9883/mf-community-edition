@@ -69,44 +69,85 @@ jobs:
       - name: Upload Files
         run: |
           EXPORT_DIR="$(readlink -f build)"
-          for BUILD_FILENAME in windows64 linux64
+          
+          
+          FILE_SIZE="$(wc -c < $EXPORT_DIR/windows64.zip)"
+          FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
+          rm -f $EXPORT_DIR/windows64.zip
+          
+          printf "File size: $FILE_SIZE\n"
+          echo "Creating an upload folder: $FOLDER_UUID"
+          curl -X MKCOL \
+            -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+            ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID \
+            --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/windows64.zip'
+          
+          LOOP_ID=0
+          PART_ID=""
+          for FILE in $EXPORT_DIR/windows64/part_*
           do
-            FILE_SIZE="$(wc -c < $EXPORT_DIR/$BUILD_FILENAME.zip)"
-            FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
-            rm -f $EXPORT_DIR/$BUILD_FILENAME.zip
-            
-            printf "File size: $FILE_SIZE\n"
-            echo "Creating an upload folder: $FOLDER_UUID"
-            curl -X MKCOL \
+            LOOP_ID=$((LOOP_ID + 1))
+            PART_ID=$(printf "%05d" "$LOOP_ID")
+            echo "Uploading part $PART_ID: $FILE"
+            curl -X PUT \
               -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-              ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID \
-              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/$BUILD_FILENAME.zip'
-            
-            LOOP_ID=0
-            PART_ID=""
-            for FILE in $EXPORT_DIR/$BUILD_FILENAME/part_*
-            do
-              LOOP_ID=$((LOOP_ID + 1))
-              PART_ID=$(printf "%05d" "$LOOP_ID")
-              echo "Uploading part $PART_ID: $FILE"
-              curl -X PUT \
-                -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-                ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/$PART_ID \
-                --data-binary "@$FILE" \
-                --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/$BUILD_FILENAME.zip' \
-                --header "OC-Total-Length: ${FILE_SIZE}"
-            done
-            
-            echo "Assembling the chunks"
-            curl -X MOVE \
-              -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-              ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
-              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/$BUILD_FILENAME.zip' \
+              ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/$PART_ID \
+              --data-binary "@$FILE" \
+              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/windows64.zip' \
               --header "OC-Total-Length: ${FILE_SIZE}"
-            
-            echo "Uploading file: $EXPORT_DIR/Readme.md"
-            curl \
-              -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-              -T "$EXPORT_DIR/Readme.md" \
-              -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/
           done
+          
+          echo "Assembling the chunks"
+          curl -X MOVE \
+            -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+            ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
+            --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/windows64.zip' \
+            --header "OC-Total-Length: ${FILE_SIZE}"
+          
+          echo "Uploading file: $EXPORT_DIR/Readme.md"
+          curl \
+            -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+            -T "$EXPORT_DIR/Readme.md" \
+            -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/
+          
+          
+          
+          FILE_SIZE="$(wc -c < $EXPORT_DIR/linux64.zip)"
+          FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
+          rm -f $EXPORT_DIR/linux64.zip
+          
+          printf "File size: $FILE_SIZE\n"
+          echo "Creating an upload folder: $FOLDER_UUID"
+          curl -X MKCOL \
+            -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+            ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID \
+            --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/linux64.zip'
+          
+          LOOP_ID=0
+          PART_ID=""
+          for FILE in $EXPORT_DIR/linux64/part_*
+          do
+            LOOP_ID=$((LOOP_ID + 1))
+            PART_ID=$(printf "%05d" "$LOOP_ID")
+            echo "Uploading part $PART_ID: $FILE"
+            curl -X PUT \
+              -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+              ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/$PART_ID \
+              --data-binary "@$FILE" \
+              --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/linux64.zip' \
+              --header "OC-Total-Length: ${FILE_SIZE}"
+          done
+          
+          echo "Assembling the chunks"
+          curl -X MOVE \
+            -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+            ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
+            --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/linux64.zip' \
+            --header "OC-Total-Length: ${FILE_SIZE}"
+          
+          echo "Uploading file: $EXPORT_DIR/Readme.md"
+          curl \
+            -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
+            -T "$EXPORT_DIR/Readme.md" \
+            -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/
+
