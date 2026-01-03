@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://byxa02i3qu85d"]
+[gd_scene load_steps=32 format=3 uid="uid://byxa02i3qu85d"]
 
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="1_hu1t2"]
 [ext_resource type="Script" uid="uid://d152pdpbptiaw" path="res://objects/thwomp_chilly/thwomp_chilly.gd" id="2_a4qeh"]
@@ -6,6 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://qmlfixsihevw" path="res://objects/human_lab_2/worker_clone/sfx/laugh.wav" id="3_tyyjw"]
 [ext_resource type="Texture2D" uid="uid://b6j0nhi0jfa2g" path="res://objects/thwomp_clone_chilly/texture_r.png" id="5_7ogn3"]
 [ext_resource type="Script" uid="uid://ba41rcq5njlq5" path="res://objects/thwomp_clone_chilly/sprite_r.gd" id="6_yqd47"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqd47"]
+size = Vector2(36, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tyyjw"]
 atlas = ExtResource("3_o0tqx")
@@ -202,6 +205,18 @@ script = ExtResource("2_a4qeh")
 laughing_sound = ExtResource("3_tyyjw")
 max_falling_speed = 2400.0
 
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_yqd47")
+
+[node name="Body" parent="." index="1"]
+visible = true
+
+[node name="CollisionShape2D" parent="Body" index="0"]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_yqd47")
+
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_immune = {
 "beetroot": true,
@@ -209,6 +224,7 @@ killing_immune = {
 "fireball": true,
 "hammer": false,
 "iceball": true,
+"iceblock": true,
 "shell": true,
 "shell_defence": 99
 }
