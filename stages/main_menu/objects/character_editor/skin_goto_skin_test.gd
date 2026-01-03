@@ -1,5 +1,7 @@
 extends MenuSelection
 
+const test_scene_path = "res://stages/main_menu/objects/skin_test_level.tscn"
+
 @onready var valu = get_node_or_null(^"Value")
 var _timer: float
 @onready var skin_room: CanvasLayer = $"../../SkinRoom"
@@ -19,13 +21,14 @@ func _physics_process(delta: float) -> void:
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	
-	var test_scene_path = "res://stages/main_menu/objects/skin_test_level.tscn"
-	var buffer: PackedScene
-	if Scenes._current_scene_buffer && Scenes._current_scene_buffer.resource_path == test_scene_path:
-		buffer = Scenes._current_scene_buffer
-	else:
-		buffer = load(test_scene_path)
-	var room = buffer.instantiate()
+	#var buffer: PackedScene
+	#var already_loaded: bool
+	if !(Scenes._current_scene_buffer && Scenes._current_scene_buffer.resource_path == test_scene_path):
+		#buffer = Scenes._current_scene_buffer
+		#already_loaded = true
+	#else:
+		Scenes._current_scene_buffer = load(test_scene_path)
+	var room = Scenes._current_scene_buffer.instantiate()
 	
 	Data.reset_all_values()
 	
@@ -46,7 +49,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	Data.technical_values.temp_f4_key = SettingsManager.get_tweak("f4_keybind", false)
 	SettingsManager.set_tweak("f4_keybind", false)
 	Scenes.current_scene = room
-	Scenes._current_scene_buffer = buffer
+	#if !already_loaded:
+	#	Scenes._current_scene_buffer = buffer
 	Thunder._connect(Scenes.scene_changed, skin_room._on_scene_changed, CONNECT_DEFERRED)
 	Thunder._connect(skin_room.get_node("SVC/SV").child_exiting_tree, skin_room._on_child_exit, CONNECT_ONE_SHOT)
 
