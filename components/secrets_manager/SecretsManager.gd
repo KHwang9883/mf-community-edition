@@ -245,16 +245,3 @@ func set_save_icon():
 
 func is_console_enabled() -> bool:
 	return SettingsManager.get_tweak("console_enabled", false) || Console.command_executed || _has_cheated
-
-
-func _disable_tilemap_optimizations() -> void:
-	if !is_instance_valid(Scenes.current_scene) || !Scenes.current_scene.is_inside_tree(): return
-	for node in Scenes.current_scene.get_children():
-		for node2 in node.get_children():
-			for node3 in node2.get_children():
-				if node3 is TileMapLayer:
-					node3.physics_quadrant_size = 1
-			if node2 is TileMapLayer:
-				node2.physics_quadrant_size = 1
-		if node is TileMapLayer:
-			node.physics_quadrant_size = 1

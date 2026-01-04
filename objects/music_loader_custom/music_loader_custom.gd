@@ -32,8 +32,6 @@ const PITCH_PREFIXES: Array = ["smw2-", "smw-", "smas-", "smrpg-", "smb-", "smb3
 var current_music: Array[Resource]
 
 func _ready():
-	SecretsManager._disable_tilemap_optimizations.call_deferred()
-	
 	# Achievements!
 	var _level = Scenes.current_scene
 	if _level is Level && ("res://stages/world_" in _level.jump_to_scene || "res://stages/cutscenes/ending" in _level.jump_to_scene):
