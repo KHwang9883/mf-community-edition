@@ -5,7 +5,7 @@ on:
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 
 env:
-  GODOT_VERSION: 4.5.1
+  GODOT_VERSION: 4.4.1
   EXPORT_NAME: Mario-Forever-Community-Edition
   PROJECT_PATH: .
   UPLOAD_FOLDER: MFCE-Builds/Release
@@ -15,12 +15,14 @@ jobs:
     name: Release Export
     runs-on: ubuntu-24.04  # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
     container:
-      image: jue13/godot-ci:4.5.1
+      image: jue13/godot-ci:4.4.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Set WINEPREFIX
+        run: echo WINEPREFIX=/root/.wine >> "$GITHUB_ENV"
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
