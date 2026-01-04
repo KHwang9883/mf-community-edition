@@ -11,7 +11,7 @@ var cooldown: float = 0
 @onready var color_picker: ColorPickerButton = $Window/VBoxContainer/HBoxContainer2/ColorPickerButton
 
 func _ready() -> void:
-	color_picker.picker_created.connect(_on_picker_created, CONNECT_ONE_SHOT)
+	color_picker.pressed.connect(_on_picker_created)
 
 func _handle_focused(focus) -> void:
 	super(focus)
@@ -60,6 +60,13 @@ func _on_button_pressed() -> void:
 
 
 func _on_picker_created() -> void:
+	await get_tree().process_frame
+	var colorpick = color_picker.get_popup()
+	_set_scale()
+	Thunder._connect(colorpick.size_changed, _set_scale, CONNECT_ONE_SHOT)
+
+func _set_scale() -> void:
 	var colorpick = color_picker.get_popup()
 	var win_scale = SettingsManager.get_ui_scale(colorpick)
-	SettingsManager.scale_window(colorpick, win_scale)
+	SettingsManager.scale_window(colorpick, win_scale, false, true)
+	
