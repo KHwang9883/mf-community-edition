@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://cjr18gnh17oo5"]
+[gd_scene load_steps=63 format=4 uid="uid://cjr18gnh17oo5"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_pnngi"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_sp3ix"]
@@ -38,8 +38,10 @@
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="36_plppw"]
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="37_ueim8"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="39_3sjwc"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="40_c7es5"]
 [ext_resource type="PackedScene" uid="uid://c3xlrqjfbegm6" path="res://stages/mario_forever_flash/objects/paratroopa_green_jumping.tscn" id="40_sp3ix"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="41_2mvpy"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="41_xjx5m"]
 [ext_resource type="Texture2D" uid="uid://0tpaqykpg8jr" path="res://stages/mario_forever_flash/gfx/desertbg.png" id="42_7outp"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="42_c7es5"]
 [ext_resource type="Texture2D" uid="uid://d7bguquxitp5" path="res://engine/tilesets/overworld/tree_short.png" id="43_2mvpy"]
@@ -207,25 +209,61 @@ resource_local_to_scene = true
 script = ExtResource("29_ppsc6")
 creation_fallback_node = ExtResource("27_m237l")
 creation_nodepack = ExtResource("28_ybfn2")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_2mvpy"]
 resource_local_to_scene = true
 script = ExtResource("29_ppsc6")
 creation_nodepack = ExtResource("31_gtcvf")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_c7es5"]
 resource_local_to_scene = true
 script = ExtResource("29_ppsc6")
 creation_nodepack = ExtResource("31_gtcvf")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_xjx5m"]
 resource_local_to_scene = true
 script = ExtResource("29_ppsc6")
 creation_nodepack = ExtResource("47_sp3ix")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Gradient" id="Gradient_sp3ix"]
 offsets = PackedFloat32Array(0.240602, 0.443609)
@@ -576,6 +614,36 @@ position = Vector2(2640, 240)
 [node name="FinishLine" parent="Objects" instance=ExtResource("39_3sjwc")]
 position = Vector2(6336, 416)
 
+[node name="LightEffect" type="Sprite2D" parent="Objects/FinishLine"]
+z_index = -10
+position = Vector2(176, -268)
+texture = ExtResource("40_c7es5")
+script = ExtResource("41_xjx5m")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect2" type="Sprite2D" parent="Objects/FinishLine"]
+z_index = -10
+position = Vector2(240, -268)
+texture = ExtResource("40_c7es5")
+script = ExtResource("41_xjx5m")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect3" type="Sprite2D" parent="Objects/FinishLine"]
+z_index = -10
+position = Vector2(16, -13)
+texture = ExtResource("40_c7es5")
+script = ExtResource("41_xjx5m")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
 [node name="KoopaParatroopaGreenJumping" parent="Objects" instance=ExtResource("40_sp3ix")]
 position = Vector2(1264, 304)
 
@@ -629,8 +697,8 @@ region_rect = Rect2(0, 0, 5632, 74)
 metadata/_edit_lock_ = true
 
 [node name="Gorkaboshya" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(5023.952, 292.5)
-scale = Vector2(1.0959095, 1.0942857)
+position = Vector2(5023.95, 292.5)
+scale = Vector2(1.09591, 1.09429)
 texture = ExtResource("44_xjx5m")
 
 [node name="Gorkaboshya2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]

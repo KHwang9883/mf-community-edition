@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=4 uid="uid://bieoly3btgmjl"]
+[gd_scene load_steps=64 format=4 uid="uid://bieoly3btgmjl"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_j4mh1"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_d4204"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_w5w88"]
 [ext_resource type="AudioStream" uid="uid://dw8cjsn5ky1c4" path="res://music/extra/mf_flash/smb-overworld.ogg" id="5_cxpvq"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="6_c3xwk"]
-[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_duc14"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_v7bsa"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_mv7wq"]
 [ext_resource type="Texture2D" uid="uid://bj33k7j0mswhb" path="res://engine/tilesets/rockland/gfx/rockland.png" id="9_f7yrf"]
 [ext_resource type="Texture2D" uid="uid://c2xfexiy1rnqh" path="res://engine/tilesets/overworld/overworld_classic.png" id="10_io2rg"]
@@ -31,6 +31,8 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="31_jnn76"]
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="32_g2nnc"]
 [ext_resource type="PackedScene" uid="uid://cexk2yxt5uemn" path="res://engine/objects/bumping_blocks/question_block/templates/Star Question Block.tscn" id="33_e04s4"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="34_v7bsa"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="35_0mo64"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="35_ndjek"]
 [ext_resource type="PackedScene" uid="uid://cvssxd6p0i644" path="res://stages/mario_forever_flash/objects/flash_lakitu.tscn" id="37_2cerm"]
 [ext_resource type="PackedScene" uid="uid://brkhmn6vdf25a" path="res://engine/objects/bumping_blocks/question_block/templates/Poison Mushroom Question Block.tscn" id="38_yst1k"]
@@ -318,7 +320,7 @@ position = Vector2(176, 240)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
-script = ExtResource("7_duc14")
+script = ExtResource("7_v7bsa")
 metadata/_edit_lock_ = true
 
 [node name="CameraArea" parent="." instance=ExtResource("8_mv7wq")]
@@ -592,6 +594,36 @@ position = Vector2(976, 400)
 [node name="FinishLine" parent="Objects" instance=ExtResource("39_hokci")]
 position = Vector2(7456, 416)
 
+[node name="LightEffect" type="Sprite2D" parent="Objects/FinishLine"]
+z_index = -2
+position = Vector2(176, -268)
+texture = ExtResource("34_v7bsa")
+script = ExtResource("35_0mo64")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect2" type="Sprite2D" parent="Objects/FinishLine"]
+z_index = -2
+position = Vector2(240, -268)
+texture = ExtResource("34_v7bsa")
+script = ExtResource("35_0mo64")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect3" type="Sprite2D" parent="Objects/FinishLine"]
+z_index = -2
+position = Vector2(16, -13)
+texture = ExtResource("34_v7bsa")
+script = ExtResource("35_0mo64")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
 [node name="QuestionBlockPoisonous" parent="Objects" instance=ExtResource("38_yst1k")]
 position = Vector2(688, 272)
 result = SubResource("Resource_72lxf")
@@ -671,30 +703,38 @@ position = Vector2(3280, 272)
 
 [node name="KoopaParatroopaRedVertical2" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(3408, 368)
+phase = 309.053
 
 [node name="KoopaParatroopaRedVertical3" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(3504, 304)
+phase = 247.76
 
 [node name="KoopaParatroopaRedVertical4" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(3600, 240)
+phase = 156.235
 
 [node name="KoopaParatroopaRedVertical5" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(3728, 336)
+phase = 296.78
 
 [node name="KoopaParatroopaRedVertical6" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(3856, 400)
 
 [node name="KoopaParatroopaRedVertical7" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(3920, 240)
+phase = 47.3055
 
 [node name="KoopaParatroopaRedVertical8" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(4080, 368)
+phase = 352.703
 
 [node name="KoopaParatroopaRedVertical9" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(4144, 208)
+phase = 329.87
 
 [node name="KoopaParatroopaRedVertical10" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(4240, 272)
+phase = 344.559
 
 [node name="Coin39" parent="Objects" instance=ExtResource("31_jnn76")]
 position = Vector2(4432, 272)
@@ -764,6 +804,7 @@ position = Vector2(6800, 208)
 
 [node name="KoopaParatroopaRedVertical11" parent="Objects" instance=ExtResource("46_larua")]
 position = Vector2(4432, 368)
+phase = 58.4738
 
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 
