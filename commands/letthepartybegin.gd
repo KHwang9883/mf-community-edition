@@ -24,6 +24,7 @@ func patch_level() -> void:
 	if Scenes.get_tree().get_node_count_in_group(&"the_goomba_spawner") > 0:
 		return
 	var spawner = GOOMBA_PARTY_SPAWNER.instantiate()
-	if "human_lab" in Scenes.current_scene.scene_file_path:
+	var scene_path: String = Scenes.current_scene.scene_file_path
+	if "human_lab" in scene_path || "level_ny_" in scene_path:
 		spawner.spawned_enemy = preload("res://objects/human_lab_2/goomba_clone/goomba_clone.tscn")
 	Scenes.current_scene.add_child(spawner)
