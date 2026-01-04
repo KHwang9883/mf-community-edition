@@ -18,6 +18,7 @@ var label_text_pointer: int = 0
 @onready var screen_camera: Camera2D = $Camera2D
 var decoration_offset: float = 586.0
 var tw_scroll: Tween
+var started: bool
 
 func _ready() -> void:
 	if !KevinGlobal.activated and is_instance_valid(kevin_sprite):
@@ -50,6 +51,8 @@ func _menu_fade_in() -> void:
 
 func start_selected() -> void:
 	if !controls.focused: return
+	if started: return
+	started = true
 	controls.focused = false
 	var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
 	Audio.play_1d_sound(_sfx)
@@ -96,6 +99,7 @@ func _set_obj_position(reset_interp: bool = false) -> void:
 		game_logo.reset_physics_interpolation()
 
 func _input(event: InputEvent) -> void:
+	if started: return
 	if !controls.focused and event.is_action_pressed("ui_accept", true):
 		if is_instance_valid(tw_scroll):
 			tw_scroll.kill()
