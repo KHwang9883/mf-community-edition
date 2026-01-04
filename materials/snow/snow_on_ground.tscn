@@ -1,5 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://dkgkpbuei0vrj"]
 
+[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="1_aykkj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a27iy"]
+region = Rect2(232, 136, 16, 16)
+
 [sub_resource type="Curve" id="Curve_5uw8h"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.31868, 0.0, 0, 0]
 point_count = 2
@@ -27,20 +32,14 @@ scale_max = 0.75
 scale_curve = SubResource("CurveTexture_yomsu")
 alpha_curve = SubResource("CurveTexture_qd1xh")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a27iy"]
-region = Rect2(232, 136, 16, 16)
-
-[sub_resource type="Resource" id="Resource_vue6a"]
-metadata/__load_path__ = "res://particles/snow/snow_on_ground.gd"
-
 [node name="SnowOnGround" type="GPUParticles2D"]
 z_index = 5
 position = Vector2(0, 16)
 emitting = false
 amount = 6
-process_material = SubResource("ParticleProcessMaterial_eyn2w")
 texture = SubResource("AtlasTexture_a27iy")
-script = SubResource("Resource_vue6a")
+process_material = SubResource("ParticleProcessMaterial_eyn2w")
+script = ExtResource("1_aykkj")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 16)
