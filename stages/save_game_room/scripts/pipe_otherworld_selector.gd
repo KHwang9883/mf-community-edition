@@ -5,6 +5,15 @@ extends "res://engine/objects/warps/pipe_in.gd"
 const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
 const COLOR_KEVIN := Color("#b16dff")
 
+const message_warning_no_secrets: String = """warning!
+
+one or more console cheat commands or a console tweak has been activated. 
+you will not be able to get achievements in this session.
+try warping again to proceed.
+if you believe this is a mistake, please restart the game.
+
+"""
+
 @export
 var profile_name: String
 @export
@@ -35,6 +44,7 @@ var level_scene_template: String = "res://stages/extra/expert_mode/otherworld/le
 
 var is_empty: bool
 var is_blocked: bool
+var cheat_warned: bool
 
 var _star_world: bool = true
 var _star_sel_world: int = 1
@@ -42,6 +52,7 @@ var _star_sel_level: int = 1
 
 @onready var label: Label = $Label
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
+@onready var message_block_2: AnimatableBody2D = %MessageBlock2
 
 signal save_deleted
 
@@ -74,8 +85,17 @@ func _physics_process(delta: float) -> void:
 		_update_save()
 		_update_reset_labels()
 	
-	if !is_blocked:
+	var console_enabled: bool = SecretsManager.is_console_enabled()
+	if !is_blocked && (cheat_warned || !console_enabled):
 		_warp_initiator()
+	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
+		player.up_down = 0
+		if !cheat_warned && console_enabled:
+			message_block_2.message = (
+				message_warning_no_secrets
+			)
+			message_block_2.show_message()
+			cheat_warned = true
 
 	if !_on_warp: return
 	_warping_process(delta)

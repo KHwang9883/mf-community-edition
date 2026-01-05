@@ -9,7 +9,7 @@ one or more console cheat commands have been activated in this save, affecting y
 try warping again to proceed."""
 const message_warning_forced_save: String = """warning!
 
-one or more console cheat commands or a console tweak has been activated. the "cv_forcesave" command is active, making this save permanently ineligible for achievements until it is reset.
+one or more console cheat commands or a console tweak has been activated. the "cv_forcesave" command is active, which would make this save permanently ineligible for achievements until it is reset.
 try warping again to proceed.
 if you believe this is a mistake, please restart the game.
 
@@ -201,6 +201,9 @@ func _update_save() -> void:
 		if !world_numbers.is_empty():
 			label._tweak = true
 			label.set_world_numbers(world_numbers)
+	
+	if prof && prof.data.get("executed"):
+		label.add_theme_color_override(&"font_color", "#ff6060")
 	
 	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
 		cursed_pipe.visible = true
