@@ -26,6 +26,9 @@ func suspended_game_logic() -> void:
 	label_text += profile.title_level
 	level_label.text = label_text
 	
+	if profile.saved_profile_data.get("executed"):
+		level_label.add_theme_color_override(&"font_color", "#ff6060")
+	
 	if profile.get(&"advanced_edition"):
 		ProfileManager.current_profile.data.advanced_edition = true
 	
