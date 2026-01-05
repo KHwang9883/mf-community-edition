@@ -69,7 +69,9 @@ func _flash() -> void:
 	tw.tween_callback(text_tw)
 
 func text_tw() -> void:
+	label.modulate.a = 0.0
 	var tw = create_tween().set_loops(len(credits_text))
+	tw.tween_property(label, "modulate:a", 0.0, 0.2)
 	tw.tween_callback(func():
 		label.text = credits_text[_label_index]
 		_label_index += 1
@@ -77,9 +79,10 @@ func text_tw() -> void:
 			label.add_theme_font_size_override(&"font_size", 32)
 	)
 	tw.tween_property(label, "modulate:a", 1.0, 0.2)
-	tw.tween_interval(5.0)
-	tw.tween_property(label, "modulate:a", 0.0, 0.2)
+	tw.tween_interval(5.0 * Engine.time_scale)
 	await tw.finished
+	Audio.stop_music_channel(1, true)
+	await get_tree().create_timer(2.0, false, true).timeout
 	Scenes.current_scene.end()
 
 func run_while(callable: Callable, repeat_delay: float) -> void:
