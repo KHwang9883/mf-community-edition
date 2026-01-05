@@ -41,6 +41,7 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe"' > "$EXPORT_DIR/windows/00. Launch in Recommended Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "$EXPORT_DIR/windows/01. Launch in Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "$EXPORT_DIR/windows/02. Launch in Compatibility Mode (angle).bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --main-pack mfce-skin-editor.pck' > "$EXPORT_DIR/windows/Launch MFCE Skin Editor.bat"
           godot --headless --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
       - name: Linux x64 Build
         run: |
@@ -50,10 +51,21 @@ jobs:
           printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64"' > "$EXPORT_DIR/linux/00. Launch in Recommended Mode.sh"
           printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" --rendering-driver opengl3' > "$EXPORT_DIR/linux/01. Launch in Compatibility Mode.sh"
           printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" --rendering-driver opengl3_angle' > "$EXPORT_DIR/linux/02. Launch in Compatibility Mode (angle).sh"
+          printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" --main-pack mfce-skin-editor.pck' > "$EXPORT_DIR/linux/Launch MFCE Skin Editor.sh"
           chmod +x "$EXPORT_DIR/linux/00. Launch in Recommended Mode.sh"
           chmod +x "$EXPORT_DIR/linux/01. Launch in Compatibility Mode.sh"
           chmod +x "$EXPORT_DIR/linux/02. Launch in Compatibility Mode (angle).sh"
           godot --headless --export-release "Linux/X11" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
+      - name: Checkout Skins
+        uses: actions/checkout@v4
+        with:
+          repository: meteo-dream/bundled-mfce-skins
+          path: bundled
+      - name: Copy Skins
+        run: |
+          rm bundled/LICENSE
+          cp -rv bundled/* build/windows
+          cp -rv bundled/* build/linux
       - name: Prepare For Upload
         run: |
           EXPORT_DIR="$(readlink -f build)"

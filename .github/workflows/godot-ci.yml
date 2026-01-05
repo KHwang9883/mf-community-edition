@@ -45,12 +45,18 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3 -- --developer-commands' > "$EXPORT_DIR/windows/04. Debug, Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle -- --developer-commands' > "$EXPORT_DIR/windows/05. Debug, Compatibility Mode (angle).bat"
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
+      - name: Checkout Skins
+        uses: actions/checkout@v4
+        with:
+          repository: meteo-dream/bundled-mfce-skins
+          path: build/windows
       - name: Prepare For Upload
         run: |
           EXPORT_DIR="$(readlink -f build)"
           echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "$EXPORT_DIR/Readme.md"
           cd $EXPORT_DIR
           cp Readme.md windows/Readme.md
+          rm windows/LICENSE
           zip -r build_windows.zip windows
           rm -rf windows
           split -b 80M build_windows.zip part_ -d --verbose

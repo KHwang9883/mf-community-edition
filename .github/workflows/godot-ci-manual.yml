@@ -35,6 +35,11 @@ jobs:
           cd $PROJECT_PATH
           echo "nightly-linux\n${{ github.sha }}" > stages/main_menu/version-text.txt
           godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
+      - name: Checkout Skins
+        uses: actions/checkout@v4
+        with:
+          repository: meteo-dream/bundled-mfce-skins
+          path: build/linux
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
