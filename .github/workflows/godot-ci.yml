@@ -20,6 +20,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Checkout Skins
+        uses: actions/checkout@v4
+        with:
+          repository: meteo-dream/bundled-mfce-skins
+          path: build/windows
       - name: Set WINEPREFIX
         run: echo WINEPREFIX=/root/.wine >> "$GITHUB_ENV"
       - name: Setup
@@ -34,7 +39,6 @@ jobs:
           godot --headless --verbose --import
       - name: Windows Build
         run: |
-          mkdir -v -p build/windows
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           echo "nightly-win64\n${{ github.sha }}" > stages/main_menu/version-text.txt
@@ -45,11 +49,6 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3 -- --developer-commands' > "$EXPORT_DIR/windows/04. Debug, Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle -- --developer-commands' > "$EXPORT_DIR/windows/05. Debug, Compatibility Mode (angle).bat"
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
-      - name: Checkout Skins
-        uses: actions/checkout@v4
-        with:
-          repository: meteo-dream/bundled-mfce-skins
-          path: build/windows
       - name: Prepare For Upload
         run: |
           EXPORT_DIR="$(readlink -f build)"
