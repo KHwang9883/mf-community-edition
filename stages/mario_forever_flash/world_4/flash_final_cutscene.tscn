@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=4 uid="uid://c02ssatbqw8rk"]
+[gd_scene load_steps=22 format=4 uid="uid://c02ssatbqw8rk"]
 
 [ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_kdstd"]
 [ext_resource type="AudioStream" uid="uid://dptj743hown0f" path="res://music/extra/mf_flash/smb_world_clear.ogg" id="2_2hmrn"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_rkvn8"]
 [ext_resource type="AudioStream" uid="uid://dg1tby6sa6uq6" path="res://music/extra/mf_flash/smb_ending.ogg" id="3_keswn"]
 [ext_resource type="Script" uid="uid://cprpns68ayjyp" path="res://stages/mario_forever_flash/scripts/cutscene_final.gd" id="4_vbtfi"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="5_rkvn8"]
@@ -14,14 +15,16 @@
 [ext_resource type="Texture2D" uid="uid://ckfb3opqbapyi" path="res://engine/tilesets/overworld/tree_tall.png" id="11_xey5n"]
 [ext_resource type="Texture2D" uid="uid://cllwxneolsm1s" path="res://stages/mario_forever_flash/gfx/peach_hug.png" id="12_rkvn8"]
 
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_rhyof"]
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_vbtfi"]
+
 [sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_eu6mk"]
 loop = false
 fade_time = 0.0
 stream_count = 2
 stream_0 = ExtResource("2_2hmrn")
 stream_1 = ExtResource("3_keswn")
-
-[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_vbtfi"]
 
 [sub_resource type="Gradient" id="Gradient_rhyof"]
 offsets = PackedFloat32Array(0, 0.2, 1)
@@ -46,9 +49,13 @@ width = 480
 script = ExtResource("1_kdstd")
 goto_path = "uid://sc0thhgcvq0g"
 fade_out_focus_on_player = false
-intro_music = SubResource("AudioStreamPlaylist_eu6mk")
+intro_music = SubResource("AudioStreamWAV_rhyof")
 transition_sound = SubResource("AudioStreamWAV_vbtfi")
 metadata/_custom_type_script = "uid://bwpe24nufpj37"
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_rkvn8")]
+music = Array[Resource]([SubResource("AudioStreamPlaylist_eu6mk")])
+can_pause = true
 
 [node name="CutsceneLogic" type="Node" parent="."]
 script = ExtResource("4_vbtfi")
