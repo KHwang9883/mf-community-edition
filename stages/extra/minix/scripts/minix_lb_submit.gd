@@ -167,4 +167,4 @@ func _submit_fake_record(decrypted_score: int) -> void:
 	loading.visible = false
 
 
-const BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY: Array = ["skibid", "whor", "wh0r", "cum", "assh", "dick", "fuck", "shit", "bitch", "cock", "penis", "puss", "piss", "turd", "porn", "p0rn", "sex", "urine", "nigg", "ni66", "n1gg", "n166", "n i g", "n_i_g", "n.i.g", "n-i-g", "f u c k", "f_u_c_k", "f.u.c.k", "niga", "niger", "twat", "fag", "f4g", "retar", "ritar", "r-tar", "pedo", "negr", "cunt", "anal", "anus", "feet", "foot", "nazi", "facis"]
+const BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY: Array = ["skibid", "whor", "wh0r", "cum", "assh", "dick", "fuck", "bitch", "cock", "penis", "puss", "piss", "turd", "porn", "p0rn", "sex", "urine", "nigg", "ni66", "n1gg", "n166", "n i g", "n_i_g", "n.i.g", "n-i-g", "f u c k", "f_u_c_k", "f.u.c.k", "niga", "niger", "twat", "fag", "f4g", "retar", "ritar", "r-tar", "pedo", "negr", "cunt", "anus", "nazi", "facis"]

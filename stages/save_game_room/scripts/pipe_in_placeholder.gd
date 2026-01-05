@@ -24,7 +24,7 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_label()
 		return
-	if !player: return
+	if !is_instance_valid(player): return
 	_warp_initiator()
 
 
@@ -48,6 +48,7 @@ func _warp_initiator() -> void:
 		warp_started.emit()
 		await get_tree().physics_frame
 		_on_warp = false
+		player = null
 
 
 func _label() -> void:

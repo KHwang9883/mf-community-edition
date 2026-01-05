@@ -11,3 +11,5 @@ serafimgws"""
 to play the revamped version, select "play recommended". (default)
 
 to play the original/classic version, select "play original"."""
+
+@export var recommended_button: bool = false

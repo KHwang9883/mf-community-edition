@@ -14,6 +14,7 @@ var controls_blocked: bool
 @onready var revamp_warning: CanvasLayer = $".."
 @onready var text: Label = $CanvasLayer/Box/Texture/Text
 @onready var box: Node2D = $CanvasLayer/Box
+@onready var texture_rect: TextureRect = $VBoxContainer/TextureRect
 
 signal popped
 signal closed
@@ -26,6 +27,10 @@ func _ready() -> void:
 		revamp_warning.revamp_first_part_text,
 		revamp_warning.revamp_second_part_text
 	])
+	if !revamp_warning.recommended_button:
+		var _rvp_texture: AtlasTexture = texture_rect.texture.duplicate(true)
+		_rvp_texture.region = Rect2(0, 192, 250, 30)
+		texture_rect.texture = _rvp_texture
 
 
 func toggle(force_close: bool = false) -> void:
