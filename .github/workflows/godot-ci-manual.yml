@@ -20,6 +20,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Checkout Skins
+        uses: actions/checkout@v4
+        with:
+          repository: meteo-dream/bundled-mfce-skins
+          path: build/linux
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -30,16 +35,10 @@ jobs:
           godot --headless --verbose --import
       - name: Linux Build
         run: |
-          mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           echo "nightly-linux\n${{ github.sha }}" > stages/main_menu/version-text.txt
           godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
-      - name: Checkout Skins
-        uses: actions/checkout@v4
-        with:
-          repository: meteo-dream/bundled-mfce-skins
-          path: build/linux
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
