@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://dvaq1owb3rmtx"]
+
+[ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_fircp"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_vtuac"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_7lvsy"]
+[ext_resource type="Script" uid="uid://dg05dt7ucxid7" path="res://engine/objects/enemies/bullet_bill/bill/bill_gets_killed.gd" id="4_qcotb"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_gh8gh"]
+[ext_resource type="AudioStream" uid="uid://cbsdmg6jvtbbo" path="res://objects/human_lab_2/stuntmans/bullet_bill_fusion/sfx/BillcadeurSpada.wav" id="6_vtuac"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_2jsuq"]
+[ext_resource type="AudioStream" uid="uid://di8s86a7ho4b3" path="res://objects/human_lab_2/stuntmans/bullet_bill_fusion/sfx/AAA_MAUPALPKA2.wav" id="7_7lvsy"]
+[ext_resource type="Texture2D" uid="uid://3r7yjbsnrhtm" path="res://objects/human_lab_2/stuntmans/bullet_bill_fusion/gfx/Untitled.png" id="9_qcotb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vwemg"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k2gec"]
+size = Vector2(44, 20)
+
+[sub_resource type="Resource" id="Resource_d54bi"]
+script = ExtResource("5_gh8gh")
+creation_nodepack = ExtResource("3_7lvsy")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite")
+}
+custom_script = ExtResource("4_qcotb")
+
+[node name="BillStuntmanClone" type="CharacterBody2D"]
+script = ExtResource("1_fircp")
+look_at_player = true
+sprite = NodePath("Sprite")
+visible_on_screen_notifier = NodePath("VisibleOnScreenNotifier2D2")
+speed = Vector2(325, 0)
+collision = false
+metadata/_custom_type_script = "uid://co5dvlw7m0osv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_vwemg")
+disabled = true
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_k2gec")
+debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_vtuac")
+center_node = NodePath("..")
+stomping_creation = SubResource("Resource_d54bi")
+stomping_scores = 100
+stomping_sound = ExtResource("6_vtuac")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"starman": false
+}
+killing_creation = SubResource("Resource_d54bi")
+killing_scores = 100
+killing_can_combo = false
+killing_sound_succeeded = ExtResource("7_7lvsy")
+killing_sound_failed = ExtResource("7_2jsuq")
+sound_ignore_pitch_modification = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("9_qcotb")
+
+[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-256, -256, 512, 512)
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D2" to="." method="queue_free"]

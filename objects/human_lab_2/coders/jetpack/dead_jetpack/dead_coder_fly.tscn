@@ -1,0 +1,193 @@
+[gd_scene load_steps=19 format=3 uid="uid://cr5kn0pwf3lo2"]
+
+[ext_resource type="Script" uid="uid://dalbx57u5hlgi" path="res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.gd" id="1_74w4c"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_4ck2j"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_7c7sb"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_yxnsw"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_avcrq"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_rdu8f"]
+[ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_4swss"]
+[ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="8_ewbi1"]
+[ext_resource type="Texture2D" uid="uid://mapnany1gi8g" path="res://objects/human_lab_2/coders/jetpack/dead_jetpack/gfx/tmp.png" id="8_trxq7"]
+[ext_resource type="Texture2D" uid="uid://cf5828npf0yv1" path="res://objects/human_lab_2/coders/jetpack/dead_jetpack/gfx/ded.png" id="9_ewbi1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6snl"]
+size = Vector2(28, 32)
+
+[sub_resource type="GDScript" id="GDScript_vf6wq"]
+script/source = "extends Resource
+
+## A kind of [Resource] that stores a [PackedScene], whose root is a [Node2D], that you need to add[br]
+##
+## You need to call [method NodeCreator.prepare_ins_2d] and input the resource as the first parameter to instantiate
+## and create the node packed in [member creation_nodepack]
+
+@export_category(\"InstanceNode2D\")
+@export_group(\"Creation\",\"creation_\")
+## The [Node2D] you have packed as the root, also the instance you are going to add via [method NodeCreator.prepare_ins_2d]
+@export var creation_nodepack: PackedScene
+## When [method NodeCreator.NodeCreation.create_2d] is called for this instance, ticking this will force creation as a sibling, rather than directly under current scene node.
+@export var creation_force_sibling: bool = false
+@export_group(\"Transform\",\"trans_\")
+## The offset of the created, related to its [member Node2D.global_transform]
+@export var trans_offset: Vector2
+## The flags for transform properties that you want the created to inherit
+@export_flags(\"inherit_rotation\",\"inherit_scale\",\"inherit_skew\") var trans_inheritances: int
+## [member Node2D.global_rotation] of the created, if [code]inherit_rotation[/code] ticked, it will rotate from the creator's
+@export var trans_rotation: float
+## [member Node2D.global_scale] of the created, if [code]inherit_scale[/code] ticked, it will be scaled by the creator's
+@export var trans_scale: Vector2 = Vector2.ONE
+## [member Node2D.global_skew] of the created, if [code]inherit_skew[/code] ticked, it will be sheared from the creator's
+@export var trans_skew: float
+@export_group(\"Visibility\",\"visi_\")
+## [member CanvasItem.visible] of the created
+@export var visi_z_index: int
+## [member CanvasItem.z_as_relative] of the created
+@export var visi_z_as_relative: bool = true
+## [member CanvasItem.y_sort_enabled] of the created
+@export var visi_y_sort_enabled: bool
+@export_group(\"Extension\")
+## Custom variables for [member custom_script]
+@export var custom_vars: Dictionary
+## Custom script executed when [method NodeCreator.execute_instance_script] is called
+@export var custom_script: GDScript
+
+
+func _report_resource() -> void:
+	printerr(\"[Report] The error happened on: \" + str(get_rid()) + \", with path:\" + resource_path)
+"
+
+[sub_resource type="Resource" id="2"]
+resource_local_to_scene = true
+script = SubResource("GDScript_vf6wq")
+creation_nodepack = ExtResource("3_7c7sb")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("4_yxnsw")
+
+[sub_resource type="Resource" id="Resource_kqoge"]
+resource_local_to_scene = true
+script = SubResource("GDScript_vf6wq")
+creation_nodepack = ExtResource("3_7c7sb")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("4_yxnsw")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0utb"]
+atlas = ExtResource("8_trxq7")
+region = Rect2(0, 0, 53, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brm6s"]
+atlas = ExtResource("8_trxq7")
+region = Rect2(53, 0, 53, 64)
+
+[sub_resource type="SpriteFrames" id="5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0utb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_brm6s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ewbi1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="JetpackCoderSkull" type="Node2D" groups=["#circle"]]
+script = ExtResource("1_74w4c")
+amplitude = Vector2(0, 50)
+random_phase = true
+frequency = 2.0
+sprite_path = NodePath("Sprite")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_c6snl")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_4ck2j")
+stomping_creation = SubResource("2")
+stomping_scores = 100
+stomping_sound = ExtResource("6_avcrq")
+killing_immune = {
+&"beetroot": false,
+&"boomerang": false,
+&"fireball": false,
+&"hammer": false,
+&"head": false,
+&"iceball": false,
+&"iceblock": false,
+&"shell": false,
+&"shell_defence": 0,
+&"shell_forced": false,
+&"starman": false
+}
+killing_creation = SubResource("Resource_kqoge")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_rdu8f")
+
+[node name="Node" type="Node2D" parent="Body"]
+script = ExtResource("8_ewbi1")
+KEYBOARD_EFFECT = ExtResource("8_4swss")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("5")
+autoplay = "default"
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+position = Vector2(2, -22)
+rotation = 3.14159
+sprite_frames = SubResource("6")
+offset = Vector2(0, -20)
+flip_v = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
