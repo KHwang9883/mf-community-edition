@@ -1,0 +1,126 @@
+[gd_scene load_steps=17 format=3 uid="uid://devi2fiu5hequ"]
+
+[ext_resource type="Script" uid="uid://c7rfddc57l6oj" path="res://engine/objects/enemies/paratroopas/paratroopa_green.gd" id="1_nnqyv"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_es3no"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_3ckih"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="5_ivj1h"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_mc3fu"]
+[ext_resource type="AudioStream" uid="uid://dq352it8co5tq" path="res://objects/human_lab_2/coders/jetpack/deluxe/sfx/ohnomyjetpackpolish.wav" id="6_yd0u0"]
+[ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="7_e3yc2"]
+[ext_resource type="Texture2D" uid="uid://dm4xydgqraf13" path="res://objects/human_lab_2/coders/jetpack/deluxe/gfx/Deluxe.png" id="8_pq3qf"]
+[ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_tg17y"]
+[ext_resource type="Texture2D" uid="uid://xxt7uwxrp1wq" path="res://objects/human_lab_2/coders/coder_polish_clone/gfx/dead.png" id="9_s3wpe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxfep"]
+size = Vector2(32, 36)
+
+[sub_resource type="Resource" id="Resource_nghi6"]
+resource_local_to_scene = true
+script = ExtResource("4_3ckih")
+creation_nodepack = ExtResource("5_ivj1h")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("6_mc3fu")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_318ld"]
+atlas = ExtResource("8_pq3qf")
+region = Rect2(0, 0, 31, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl8aw"]
+atlas = ExtResource("8_pq3qf")
+region = Rect2(31, 0, 31, 63)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_82uh0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_318ld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl8aw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x6d0m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_s3wpe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="DeluxeJetpack" type="Node2D" groups=["#circle"]]
+script = ExtResource("1_nnqyv")
+amplitude = Vector2(50, 0)
+phase = 10.5033
+frequency = 2.0
+random_phase = true
+sprite_path = NodePath("Sprite")
+facing_method = 1
+metadata/_edit_pinned_properties_ = [&"amplitude", &"facing_method"]
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_bxfep")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_es3no")
+stomping_creation = SubResource("Resource_nghi6")
+stomping_scores = 100
+stomping_sound = ExtResource("6_yd0u0")
+killing_creation = SubResource("Resource_nghi6")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_yd0u0")
+ice_sprite = NodePath("../../Sprite")
+custom_vars = {
+"attachment_killed": NodePath("../../Sprite/Dead")
+}
+metadata/_edit_pinned_properties_ = [&"stomping_creation"]
+
+[node name="Node" type="Node2D" parent="Body"]
+script = ExtResource("7_e3yc2")
+KEYBOARD_EFFECT = ExtResource("8_tg17y")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_82uh0")
+autoplay = "default"
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+position = Vector2(0, 4)
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_x6d0m")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]

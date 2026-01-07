@@ -1,0 +1,125 @@
+[gd_scene load_steps=16 format=3 uid="uid://b8u2k0g6e7i4x"]
+
+[ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_1m518"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_kpfs8"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_i3lx8"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_imfe7"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_122ng"]
+[ext_resource type="AudioStream" uid="uid://dw3ui5pq5aws1" path="res://new_clones/jaws/viking/Aaaa_auaua5wiking.wav" id="6_q1b0f"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_4abrq"]
+[ext_resource type="Texture2D" uid="uid://dx1hqtkb464ec" path="res://new_clones/jaws/viking/wasabi_jaws_clone.png" id="8_q1b0f"]
+[ext_resource type="Texture2D" uid="uid://d18luvqaqkkq8" path="res://new_clones/jaws/viking/texture.png" id="9_q1kyk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dr24"]
+size = Vector2(30, 53)
+
+[sub_resource type="Resource" id="Resource_6vsr6"]
+script = ExtResource("5_122ng")
+creation_nodepack = ExtResource("3_i3lx8")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Head#Dead"),
+"death_speed": Vector2(0, -250),
+"fast_death_effect": true
+}
+custom_script = ExtResource("4_imfe7")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b0eaq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_q1b0f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynh1c"]
+atlas = ExtResource("9_q1kyk")
+region = Rect2(0, 0, 48, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skmwc"]
+atlas = ExtResource("9_q1kyk")
+region = Rect2(0, 58, 48, 58)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_so42h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynh1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skmwc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="VikingJaws" type="Node2D"]
+script = ExtResource("1_1m518")
+range_in_pipe = 0.0
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -26.5)
+shape = SubResource("RectangleShape2D_8dr24")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_kpfs8")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_6vsr6")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_q1b0f")
+killing_sound_failed = ExtResource("7_4abrq")
+ice_sprite = NodePath("../../Sprite")
+ice_fragile = true
+sound_ignore_pitch_modification = true
+
+[node name="Head#Dead" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_b0eaq")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -2
+position = Vector2(0, -29)
+sprite_frames = SubResource("SpriteFrames_so42h")
+autoplay = "default"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(0.5, -32)
+scale = Vector2(1.55, 3.2)
+metadata/_edit_lock_ = true
+
+[node name="Step" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]

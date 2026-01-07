@@ -1,0 +1,204 @@
+[gd_scene load_steps=23 format=3 uid="uid://cawubvo83vigr"]
+
+[ext_resource type="Script" uid="uid://dpmoq7qeco0q6" path="res://objects/human_lab_2/swimming/cheep_and_bubbles.gd" id="1_u0mpa"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_vftcr"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_dle0f"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_lr463"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_vmbnm"]
+[ext_resource type="AudioStream" uid="uid://bh3it6mhed0ub" path="res://objects/human_lab_2/swimming/starclosed_clone/sfx/starclosed.wav" id="6_u0mpa"]
+[ext_resource type="Texture2D" uid="uid://5uhngr1wsi5r" path="res://objects/human_lab_2/swimming/starclosed_clone/gfx/starclosed_clone.png" id="7_oyia8"]
+[ext_resource type="Texture2D" uid="uid://cy77w0rodh6t4" path="res://objects/human_lab_2/swimming/starclosed_clone/gfx/starclosed_clone_defeated.png" id="8_y6tbi"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="9_bk3se"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="9_uyqdt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_urkew"]
+size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
+size = Vector2(28, 28)
+
+[sub_resource type="Resource" id="Resource_0wfa5"]
+resource_local_to_scene = true
+script = ExtResource("5_vmbnm")
+creation_nodepack = ExtResource("3_dle0f")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, 0),
+"gravity_scale": 0.25,
+"max_falling_speed": 300.0
+}
+custom_script = ExtResource("4_lr463")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oamh3"]
+size = Vector2(2, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ld6j4"]
+atlas = ExtResource("7_oyia8")
+region = Rect2(0, 0, 57, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iw1cl"]
+atlas = ExtResource("7_oyia8")
+region = Rect2(57, 0, 57, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84khv"]
+atlas = ExtResource("7_oyia8")
+region = Rect2(114, 0, 57, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqruh"]
+atlas = ExtResource("7_oyia8")
+region = Rect2(171, 0, 57, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10pb0"]
+atlas = ExtResource("7_oyia8")
+region = Rect2(228, 0, 57, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sppj"]
+atlas = ExtResource("7_oyia8")
+region = Rect2(285, 0, 57, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_34jvi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ld6j4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iw1cl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84khv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqruh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10pb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sppj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xb076"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_y6tbi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="StarClosedClone" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("1_u0mpa")
+turn_x_enabled = false
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(50, 0)
+metadata/_edit_pinned_properties_ = [&"sprite", &"look_at_player", &"speed"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(2, -1)
+scale = Vector2(1.68, 1)
+shape = SubResource("RectangleShape2D_urkew")
+disabled = true
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(2, -1)
+scale = Vector2(1.76, 1)
+shape = SubResource("RectangleShape2D_8v3i3")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_vftcr")
+stomping_creation = SubResource("Resource_0wfa5")
+stomping_scores = 100
+stomping_sound = ExtResource("6_u0mpa")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_0wfa5")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_u0mpa")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
+
+[node name="SwimX" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_oamh3")
+target_position = Vector2(0, 0)
+max_results = 1
+collision_mask = 128
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="SwimY" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_oamh3")
+target_position = Vector2(0, 0)
+max_results = 1
+collision_mask = 128
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_34jvi")
+autoplay = "default"
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_xb076")
+script = ExtResource("9_bk3se")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(3.8147e-06, 3.8147e-06)
+scale = Vector2(2, 2)
+rect = Rect2(-24, -24, 48, 48)
+script = ExtResource("9_uyqdt")
+metadata/_edit_lock_ = true
+
+[node name="Interval" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(5, -17)
+
+[connection signal="collided_ceiling" from="." to="." method="turn_y"]
+[connection signal="collided_floor" from="." to="." method="turn_y"]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
+[connection signal="timeout" from="Interval" to="." method="_cheep_swimming"]

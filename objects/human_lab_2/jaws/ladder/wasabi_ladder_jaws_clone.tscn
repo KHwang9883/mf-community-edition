@@ -1,0 +1,170 @@
+[gd_scene load_steps=22 format=3 uid="uid://cjp426n068ub"]
+
+[ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_4wxuq"]
+[ext_resource type="AudioStream" uid="uid://dh03g7f5qopaq" path="res://objects/human_lab_2/jaws/wasabi/sfx/j.wav" id="2_2os1r"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_poyjb"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="3_hwonu"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_tawvf"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_2os1r"]
+[ext_resource type="Script" uid="uid://c0j62sxsdu1lp" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="5_1h1cp"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_hwonu"]
+[ext_resource type="AudioStream" uid="uid://dgtypbpo8samu" path="res://engine/objects/enemies/human_lab/goomba/sfx/kick2.wav" id="6_1h1cp"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_ibvxf"]
+[ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="8_qmn52"]
+[ext_resource type="PackedScene" uid="uid://v5u0wu46fiw4" path="res://objects/human_lab_2/jaws/ladder/gfx/ladder.tscn" id="9_6j1uf"]
+[ext_resource type="Texture2D" uid="uid://h4yx0nidy2uc" path="res://objects/human_lab_2/jaws/ladder/gfx/wwasabi_jaws_clone.png" id="13_ibvxf"]
+[ext_resource type="Texture2D" uid="uid://bkmn8c7wpq4dg" path="res://objects/human_lab_2/jaws/ladder/gfx/wasabi.png" id="14_qmn52"]
+
+[sub_resource type="Resource" id="Resource_i5haj"]
+script = ExtResource("5_hwonu")
+creation_nodepack = ExtResource("3_hwonu")
+creation_force_sibling = false
+trans_offset = Vector2(0, -32)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4g34j"]
+size = Vector2(30, 144)
+
+[sub_resource type="Resource" id="Resource_fvcap"]
+script = ExtResource("5_hwonu")
+creation_nodepack = ExtResource("3_tawvf")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Head#Dead"),
+"death_speed": Vector2(0, -250),
+"fast_death_effect": true
+}
+custom_script = ExtResource("4_2os1r")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vyrc6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_ibvxf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6j1uf"]
+atlas = ExtResource("14_qmn52")
+region = Rect2(0, 0, 35, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_le5kl"]
+atlas = ExtResource("14_qmn52")
+region = Rect2(35, 0, 35, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ym01l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6j1uf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_le5kl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="WasabiLadderJawsClone" type="Node2D"]
+self_modulate = Color(1, 1, 1, 0.121569)
+script = ExtResource("1_4wxuq")
+stay_in_pipe_at_first = false
+stretching_speed = 60.0
+stretching_length = 172.0
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("2_2os1r"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.18",
+"projectile_offscreen_time": 3.0,
+"projectile_remove_from_top": false,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
+custom_script = ExtResource("5_1h1cp")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_4g34j")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_poyjb")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 99,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_fvcap")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_1h1cp")
+killing_sound_failed = ExtResource("7_ibvxf")
+ice_sprite = NodePath("../../Sprite")
+ice_fragile = true
+metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
+
+[node name="Node" type="Node2D" parent="Body"]
+position = Vector2(0, -25)
+script = ExtResource("8_qmn52")
+KEYBOARD_EFFECT = ExtResource("9_6j1uf")
+
+[node name="Head#Dead" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(1, -32)
+sprite_frames = SubResource("SpriteFrames_vyrc6")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -2
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_ym01l")
+autoplay = "default"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -64, 32, 192)
+metadata/_edit_lock_ = true
+
+[node name="Step" type="Timer" parent="."]
+one_shot = true
+
+[node name="Fire" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]

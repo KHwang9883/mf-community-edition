@@ -1,12 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://by7tmvi2xwbrb"]
+[gd_scene load_steps=19 format=3 uid="uid://by7tmvi2xwbrb"]
 
 [ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="1_sl3tu"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_wb8lx"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_e0ewr"]
-[ext_resource type="AudioStream" uid="uid://cn4tlctdajh0o" path="res://objects/christmas_clones/elf_jetpack/sfx/FlyingCoderClone.wav" id="6_2u4tk"]
+[ext_resource type="AudioStream" uid="uid://cn4tlctdajh0o" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/FlyingCoderClone.wav" id="6_2u4tk"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="7_0ec2n"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_e2mk8"]
-[ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_f8sem"]
+[ext_resource type="Script" uid="uid://ctggojyi618up" path="res://engine/objects/enemies/_dead/enemy_killed.gd" id="8_f8sem"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_ofbwe"]
 [ext_resource type="Texture2D" uid="uid://beya6lmtntukq" path="res://objects/christmas_clones/elf_jetpack/gfx/Elf.png" id="8_yxhhx"]
 [ext_resource type="Texture2D" uid="uid://do4j68m8des4v" path="res://objects/christmas_clones/gifter_clone/gfx/dead.png" id="9_m8i07"]
@@ -18,13 +18,35 @@ size = Vector2(28, 48)
 resource_local_to_scene = true
 script = ExtResource("5_e0ewr")
 creation_nodepack = ExtResource("7_e2mk8")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
 visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("8_ofbwe")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_77qh6"]
+
+[sub_resource type="PackedScene" id="PackedScene_qdcl6"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("JetpackEffect", "CharacterBody2D", "collision_layer", "collision_mask", "script", "default_speed_x_min", "default_speed_x_max", "turn_sprite", "sprite", "speed", "gravity_dir_rotation", "gravity_scale", "max_falling_speed", "collision", "Sprite2D", "Sprite2D", "texture"),
+"node_count": 2,
+"node_paths": [NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 12, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 10, 8, 11, 9, 12, 10, 13, 11, 0, 1073741824, 0, 15, 14, -1, 1, 16, 12, 0),
+"variants": [0, 0, ExtResource("8_f8sem"), 100.0, 250.0, false, NodePath("Sprite2D"), Vector2(125, -300), false, 0.5, 1000.0, false, SubResource("CompressedTexture2D_77qh6")],
+"version": 3
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2expd"]
 atlas = ExtResource("8_yxhhx")
@@ -91,7 +113,7 @@ metadata/_edit_pinned_properties_ = [&"stomping_creation", &"stomping_scores", &
 
 [node name="Node" type="Node2D" parent="Body"]
 script = ExtResource("7_0ec2n")
-KEYBOARD_EFFECT = ExtResource("8_f8sem")
+KEYBOARD_EFFECT = SubResource("PackedScene_qdcl6")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
@@ -108,9 +130,9 @@ metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]

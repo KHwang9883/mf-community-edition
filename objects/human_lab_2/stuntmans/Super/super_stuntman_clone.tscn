@@ -1,0 +1,139 @@
+[gd_scene load_steps=20 format=3 uid="uid://bpimffcn0er7d"]
+
+[ext_resource type="Script" uid="uid://p43dcfy4c317" path="res://engine/objects/enemies/bullet_bill/bill/missile_bill.gd" id="1_mw64c"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_fqcea"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_7g274"]
+[ext_resource type="Script" uid="uid://dg05dt7ucxid7" path="res://engine/objects/enemies/bullet_bill/bill/bill_gets_killed.gd" id="4_85t3g"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_chgq0"]
+[ext_resource type="AudioStream" uid="uid://dfokxgjqgtw78" path="res://objects/human_lab_2/stuntmans/Super/sfx/AAA_SUPERCASCADEURSPADA.wav" id="6_fqcea"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_0xoyg"]
+[ext_resource type="AudioStream" uid="uid://byhrbg85t1yji" path="res://objects/human_lab_2/stuntmans/Super/sfx/AAA_MAUPOLSUPER2.wav" id="7_7g274"]
+[ext_resource type="Texture2D" uid="uid://dxl2q6kq16yjw" path="res://objects/human_lab_2/stuntmans/Super/gfx/super_stuntman_clone.png" id="8_mw64c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vwemg"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k2gec"]
+size = Vector2(44, 20)
+
+[sub_resource type="Resource" id="Resource_d54bi"]
+script = ExtResource("5_chgq0")
+creation_nodepack = ExtResource("3_7g274")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite")
+}
+custom_script = ExtResource("4_85t3g")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqcea"]
+atlas = ExtResource("8_mw64c")
+region = Rect2(0, 0, 58, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g274"]
+atlas = ExtResource("8_mw64c")
+region = Rect2(58, 0, 58, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85t3g"]
+atlas = ExtResource("8_mw64c")
+region = Rect2(116, 0, 58, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chgq0"]
+atlas = ExtResource("8_mw64c")
+region = Rect2(174, 0, 58, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ho3w1"]
+atlas = ExtResource("8_mw64c")
+region = Rect2(232, 0, 58, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xoyg"]
+atlas = ExtResource("8_mw64c")
+region = Rect2(290, 0, 58, 35)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_35rr1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqcea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g274")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85t3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chgq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ho3w1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xoyg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="SuperStuntmanClone" type="CharacterBody2D"]
+script = ExtResource("1_mw64c")
+look_at_player = true
+sprite = NodePath("Sprite")
+visible_on_screen_notifier = NodePath("VisibleOnScreenNotifier2D2")
+speed = Vector2(195, 0)
+collision = false
+metadata/_custom_type_script = "uid://co5dvlw7m0osv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_vwemg")
+disabled = true
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_k2gec")
+debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_fqcea")
+stomping_creation = SubResource("Resource_d54bi")
+stomping_scores = 100
+stomping_sound = ExtResource("6_fqcea")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_d54bi")
+killing_scores = 100
+killing_can_combo = false
+killing_sound_succeeded = ExtResource("7_7g274")
+killing_sound_failed = ExtResource("7_0xoyg")
+sound_ignore_pitch_modification = true
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_35rr1")
+autoplay = "default"
+
+[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-256, -256, 512, 512)
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D2" to="." method="queue_free"]

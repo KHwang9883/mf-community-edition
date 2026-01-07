@@ -1,0 +1,118 @@
+[gd_scene load_steps=17 format=3 uid="uid://xyt43i847r8c"]
+
+[ext_resource type="PackedScene" uid="uid://c8mms5q7m2lk7" path="res://engine/objects/enemies/cheeps/cheep_red.tscn" id="1_uqedp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_qse7k"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_i5lw7"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_44l7m"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="5_f64ky"]
+[ext_resource type="Texture2D" uid="uid://t3eiw8ppwgpn" path="res://objects/human_lab_2/swimming/mech_chaser_mod_g/gfx/chaser_clone_mod_g.png" id="6_h0rys"]
+[ext_resource type="Script" uid="uid://dv848mnowxwrl" path="res://objects/human_lab_2/swimming/sprite_dyn_rotation.gd" id="7_w5knu"]
+[ext_resource type="Texture2D" uid="uid://b5qmm827aqg4x" path="res://objects/human_lab_2/swimming/mech_chaser_mod_g/gfx/image.png" id="8_fygye"]
+
+[sub_resource type="Resource" id="Resource_tm8dl"]
+resource_local_to_scene = true
+script = ExtResource("4_44l7m")
+creation_nodepack = ExtResource("2_qse7k")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0),
+"gravity_scale": 0.25,
+"max_falling_speed": 300.0
+}
+custom_script = ExtResource("3_i5lw7")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1e0g5"]
+atlas = ExtResource("6_h0rys")
+region = Rect2(0, 0, 57, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2n6p"]
+atlas = ExtResource("6_h0rys")
+region = Rect2(57, 0, 57, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_petwa"]
+atlas = ExtResource("6_h0rys")
+region = Rect2(114, 0, 57, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1jer"]
+atlas = ExtResource("6_h0rys")
+region = Rect2(171, 0, 57, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1c8nu"]
+atlas = ExtResource("6_h0rys")
+region = Rect2(228, 0, 57, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfx7w"]
+atlas = ExtResource("6_h0rys")
+region = Rect2(285, 0, 57, 45)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aoa4j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1e0g5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2n6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_petwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1jer")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1c8nu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nfx7w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MechChaserCloneModG" instance=ExtResource("1_uqedp")]
+type = 3
+always_unstompable = true
+turn_sprite = false
+metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_tm8dl")
+stomping_scores = 200
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": false,
+"shell_defence": 1,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_tm8dl")
+killing_scores = 200
+killing_sound_failed = ExtResource("5_f64ky")
+metadata/_edit_pinned_properties_ = [&"killing_immune"]
+
+[node name="Sprite" parent="." index="4"]
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_aoa4j")
+script = ExtResource("7_w5knu")
+track_mod = 2
+use_smoothness = true
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="Killed" type="Sprite2D" parent="Sprite" index="0"]
+visible = false
+texture = ExtResource("8_fygye")

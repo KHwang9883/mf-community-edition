@@ -1,0 +1,147 @@
+[gd_scene load_steps=18 format=3 uid="uid://ft6y0d6u2lof"]
+
+[ext_resource type="Script" uid="uid://c33gl1lvxuxr1" path="res://engine/objects/enemies/spinies/spiny_egg.gd" id="1_y4okg"]
+[ext_resource type="PackedScene" uid="uid://bg6dfwcm27o8m" path="res://new_clones/clone_3_a_model_c.tscn" id="2_y4okg"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_7jtse"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="4_m82r0"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="5_fl1ob"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_qb0ud"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_whjxa"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_v5k6x"]
+[ext_resource type="Texture2D" uid="uid://d4hqfa8mron3c" path="res://new_clones/cloneegg.png" id="9_rcf6f"]
+[ext_resource type="Texture2D" uid="uid://d047hjlssdbnw" path="res://new_clones/KnightCloneCapeDead.png" id="10_o36f7"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="11_luhg5"]
+
+[sub_resource type="Resource" id="Resource_ci6ko"]
+script = ExtResource("3_7jtse")
+creation_nodepack = ExtResource("2_y4okg")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+metadata/_custom_type_script = "uid://bm81fg3h4j8sj"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnevv"]
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wnvj"]
+radius = 16.0
+
+[sub_resource type="Resource" id="Resource_2cclf"]
+resource_local_to_scene = true
+script = ExtResource("3_7jtse")
+creation_nodepack = ExtResource("6_qb0ud")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 2
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Killed"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("7_whjxa")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ax740"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_rcf6f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3cd5"]
+size = Vector2(32, 31)
+
+[node name="Clone3ACapeEgg" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_y4okg")
+spiny_creation = SubResource("Resource_ci6ko")
+sprite = NodePath("Sprite")
+gravity_scale = 0.2
+max_falling_speed = 500.0
+metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
+shape = SubResource("CircleShape2D_gnevv")
+disabled = true
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("4_m82r0")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("CircleShape2D_0wnvj")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("5_fl1ob")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+&"beetroot": false,
+&"boomerang": false,
+&"fireball": false,
+&"hammer": false,
+&"head": true,
+&"iceball": false,
+&"iceblock": false,
+&"shell": false,
+&"shell_defence": 0,
+&"shell_forced": false,
+&"starman": false
+}
+killing_creation = SubResource("Resource_2cclf")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("8_v5k6x")
+custom_vars = {
+"attachment_killed": NodePath(""),
+"attachment_stomped": NodePath("")
+}
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, 0)
+sprite_frames = SubResource("SpriteFrames_ax740")
+autoplay = "default"
+
+[node name="Killed" type="Sprite2D" parent="Sprite"]
+visible = false
+texture = ExtResource("10_o36f7")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-128, -128, 256, 256)
+script = ExtResource("11_luhg5")
+metadata/_edit_lock_ = true
+
+[node name="SolidChecker" type="Area2D" parent="."]
+visible = false
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+shape = SubResource("RectangleShape2D_j3cd5")
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Killed" method="show"]
