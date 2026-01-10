@@ -1,7 +1,7 @@
 extends GeneralMovementBody2D
 
 const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
-const GOOMBA_VOLCANO_DEAD = preload("res://objects/volcano/goomba_volcano/goomba_volcano_dead.tscn")
+@export var GOOMBA_VOLCANO_DEAD = preload("res://objects/volcano/goomba_volcano/goomba_volcano_dead.tscn")
 
 @export var hp: int = 1
 @export var score: int = 100
