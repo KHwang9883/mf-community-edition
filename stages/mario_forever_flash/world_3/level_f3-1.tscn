@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://dwfuneffjukyk"]
+[gd_scene load_steps=56 format=4 uid="uid://dwfuneffjukyk"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_f2tdq"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_5jkat"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cyrq625tllkaw" path="res://music/smb-underground.ogg" id="5_3rqsi"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="6_r3x0n"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_cxj3q"]
+[ext_resource type="AudioStream" uid="uid://do2m1kc1sidik" path="res://music/extra/mf_flash/smb1_player_down.ogg" id="7_dw64l"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_dqvtr"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="9_rdkhx"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="10_7n8nf"]
@@ -88,32 +89,77 @@ region = Rect2(224, 16, 31, 32)
 resource_local_to_scene = true
 script = ExtResource("22_4kpx7")
 creation_nodepack = ExtResource("24_1tdsd")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_cbucs"]
 resource_local_to_scene = true
 script = ExtResource("22_4kpx7")
 creation_nodepack = ExtResource("21_fqx63")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_63mpk"]
 resource_local_to_scene = true
 script = ExtResource("22_4kpx7")
 creation_nodepack = ExtResource("21_fqx63")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_dl5lh"]
 resource_local_to_scene = true
 script = ExtResource("22_4kpx7")
 creation_fallback_node = ExtResource("25_8ua3b")
 creation_nodepack = ExtResource("26_lub2c")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_iv6q2"]
 resource_local_to_scene = true
 script = ExtResource("22_4kpx7")
 creation_nodepack = ExtResource("38_m4ts1")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Curve2D" id="Curve2D_xbhcm"]
 bake_interval = 25.0
@@ -161,6 +207,7 @@ start_from_sec = Array[float]([0.0])
 
 [node name="Mario" parent="." instance=ExtResource("6_r3x0n")]
 position = Vector2(80, 976)
+death_music_override = ExtResource("7_dw64l")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -730,7 +777,7 @@ position = Vector2(4352, 1248)
 
 [node name="PiranhaPink3" parent="." instance=ExtResource("32_k1cd4")]
 position = Vector2(2176, 1088)
-rotation = -3.1415882
+rotation = -3.14159
 
 [node name="HammerBro" parent="." instance=ExtResource("35_63mpk")]
 position = Vector2(720, 1232)
@@ -748,7 +795,7 @@ hammer_bros_jumping_type = 2
 
 [node name="PiranhaGreen" parent="." instance=ExtResource("37_4fhb2")]
 position = Vector2(4160, 1312)
-rotation = 3.1415882
+rotation = 3.14159
 
 [node name="QuestionBlock7" parent="." instance=ExtResource("23_1h0ja")]
 position = Vector2(3504, 1136)
@@ -798,27 +845,3 @@ speed = 75.0
 loop_backwards = false
 warp_objects_on_end = false
 smooth_enabled = false
-
-[connection signal="collided_wall" from="Layer2/Goomba" to="Layer2/Goomba" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639148" to="Layer2/@CharacterBody2D@639148" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639149" to="Layer2/@CharacterBody2D@639149" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639150" to="Layer2/@CharacterBody2D@639150" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639160" to="Layer2/@CharacterBody2D@639160" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639161" to="Layer2/@CharacterBody2D@639161" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/SpinyRed" to="Layer2/SpinyRed" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639162" to="Layer2/@CharacterBody2D@639162" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639163" to="Layer2/@CharacterBody2D@639163" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639164" to="Layer2/@CharacterBody2D@639164" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639165" to="Layer2/@CharacterBody2D@639165" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639166" to="Layer2/@CharacterBody2D@639166" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639167" to="Layer2/@CharacterBody2D@639167" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639168" to="Layer2/@CharacterBody2D@639168" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/KoopaRed" to="Layer2/KoopaRed" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639171" to="Layer2/@CharacterBody2D@639171" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639172" to="Layer2/@CharacterBody2D@639172" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639173" to="Layer2/@CharacterBody2D@639173" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639174" to="Layer2/@CharacterBody2D@639174" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639175" to="Layer2/@CharacterBody2D@639175" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639176" to="Layer2/@CharacterBody2D@639176" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639177" to="Layer2/@CharacterBody2D@639177" method="turn_x"]
-[connection signal="collided_wall" from="Layer2/@CharacterBody2D@639200" to="Layer2/@CharacterBody2D@639200" method="turn_x"]

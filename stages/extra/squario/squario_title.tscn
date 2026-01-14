@@ -1,0 +1,228 @@
+[gd_scene load_steps=28 format=4 uid="uid://dfkin5aca3u0"]
+
+[ext_resource type="Script" uid="uid://cnus1noarwkl2" path="res://stages/mario_forever_flash/scripts/flash_title_stage.gd" id="1_e27qq"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_cqjae"]
+[ext_resource type="AudioStream" uid="uid://jbc1wyx6o6ho" path="res://music/extra/mf_flash/smb_title.ogg" id="3_qndlp"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="4_jcljo"]
+[ext_resource type="FontFile" uid="uid://cyijqik15r3me" path="res://gfx/fonts/QUANTUM.TTF" id="5_yhvcq"]
+[ext_resource type="Script" uid="uid://b6p871suo5jkl" path="res://engine/components/ui/generic/menu_selection.gd" id="6_12ip2"]
+[ext_resource type="Script" uid="uid://cvwo33bpa3jfn" path="res://stages/extra/minix/scripts/minix_end_sel.gd" id="7_xd5t0"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="8_avwyq"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="9_f8eba"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="10_2rjf2"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="11_gth45"]
+[ext_resource type="Texture2D" uid="uid://ljsgiak83pud" path="res://stages/extra/squario/gfx/logo.png" id="12_n1pxa"]
+[ext_resource type="Texture2D" uid="uid://b8ibdeohblstu" path="res://stages/mario_forever_flash/gfx/gorkaboshya.png" id="13_botjh"]
+[ext_resource type="Texture2D" uid="uid://rqtuyj0sgxpv" path="res://stages/mario_forever_flash/gfx/bigoblako1.png" id="14_mg0fd"]
+[ext_resource type="Texture2D" uid="uid://c2yn5pg8ksr6r" path="res://stages/mario_forever_flash/gfx/bigoblako3.png" id="15_ha6b7"]
+[ext_resource type="Texture2D" uid="uid://c0us0avgvncph" path="res://stages/mario_forever_flash/gfx/bigoblako2.png" id="16_xsl6y"]
+[ext_resource type="Texture2D" uid="uid://bh0u2706kgv5c" path="res://stages/mario_forever_flash/gfx/bigoblako4.png" id="17_or1yi"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="18_dt4ny"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="19_uoo6y"]
+[ext_resource type="Script" uid="uid://cmfpbhlesrn6h" path="res://stages/extra/minix/animated_sprite_2d.gd" id="20_hi0ld"]
+[ext_resource type="Material" uid="uid://c17r7oabypbcx" path="res://objects/chorniy_mario/grayscale.tres" id="21_ah75i"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="22_0kcxk"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="23_ti1e4"]
+
+[sub_resource type="Gradient" id="Gradient_wou6p"]
+offsets = PackedFloat32Array(0.240602, 0.443609)
+colors = PackedColorArray(0, 0.6, 0.8, 1, 0.0666667, 1, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8wxn5"]
+gradient = SubResource("Gradient_wou6p")
+width = 480
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gb7ap"]
+load_path = "res://.godot/imported/cp_star.png-8aad299551c69fcc1fb6b6d3d28cbf85.ctex"
+
+[sub_resource type="Curve" id="Curve_8wxn5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
+point_count = 3
+
+[node name="FlashTitle" type="Node2D"]
+script = ExtResource("1_e27qq")
+goto_scene = "res://stages/mario_forever_flash/world_1/map_f1.tscn"
+disable_pause_menu = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_cqjae")]
+music = Array[Resource]([ExtResource("3_qndlp")])
+channel_id = 2
+volume_db = Array[float]([-2.0])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+
+[node name="Controls" type="VBoxContainer" parent="MenuLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -83.0
+offset_right = 320.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+script = ExtResource("4_jcljo")
+focused = false
+
+[node name="Start" type="Label" parent="MenuLayer/Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.129412, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_yhvcq")
+theme_override_font_sizes/font_size = 18
+text = "Start Game"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("6_12ip2")
+selected_sound = null
+
+[node name="Start5" type="Label" parent="MenuLayer/Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_yhvcq")
+theme_override_font_sizes/font_size = 18
+text = "Exit"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("7_xd5t0")
+
+[node name="Selector" type="AnimatedSprite2D" parent="MenuLayer"]
+position = Vector2(256, 320)
+script = ExtResource("8_avwyq")
+smooth_speed = 0.4
+position_padding = 20
+position_paddings_array = Array[float]([0.0, 0.0, 0.0])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MenuLayer/Selector"]
+position = Vector2(0, -2)
+sprite_frames = ExtResource("9_f8eba")
+script = ExtResource("10_2rjf2")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("11_gth45")
+menu_items_controller_path = NodePath("../MenuLayer/Controls")
+
+[node name="Logo2" type="Sprite2D" parent="."]
+position = Vector2(304, 240)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("12_n1pxa")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, 240)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_8wxn5")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="HillLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.02, 0)
+motion_mirroring = Vector2(1728, 0)
+
+[node name="Gorkaboshya" type="Sprite2D" parent="ParallaxBackground/HillLayer"]
+position = Vector2(483, 306)
+texture = ExtResource("13_botjh")
+
+[node name="Gorkaboshya2" type="Sprite2D" parent="ParallaxBackground/HillLayer"]
+position = Vector2(1200, 424)
+texture = ExtResource("13_botjh")
+
+[node name="CloudLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.02, 0)
+motion_mirroring = Vector2(2368, 0)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Bigoblako1" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(765, 139)
+texture = ExtResource("14_mg0fd")
+
+[node name="Bigoblako3" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(1389, 347)
+texture = ExtResource("15_ha6b7")
+
+[node name="Bigoblako2" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(2045, 211)
+texture = ExtResource("16_xsl6y")
+
+[node name="Bigoblako4" type="Sprite2D" parent="ParallaxBackground/CloudLayer"]
+position = Vector2(197, 323)
+texture = ExtResource("17_or1yi")
+
+[node name="GroundLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(640, 0)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="ParallaxBackground/GroundLayer"]
+tile_map_data = PackedByteArray("AAAAAAwAAAABAAEAAAABAAwAAAABAAEAAAACAAwAAAABAAEAAAADAAwAAAABAAEAAAAEAAwAAAABAAEAAAAAAAsAAAABAAAAAAABAAsAAAABAAAAAAACAAsAAAABAAAAAAADAAsAAAABAAAAAAAEAAsAAAABAAAAAAAFAAsAAAABAAAAAAAGAAsAAAABAAAAAAAHAAsAAAABAAAAAAAIAAsAAAABAAAAAAAJAAsAAAABAAAAAAAKAAsAAAABAAAAAAALAAsAAAABAAAAAAAMAAsAAAABAAAAAAANAAsAAAABAAAAAAAOAAsAAAABAAAAAAAPAAsAAAABAAAAAAAQAAsAAAABAAAAAAARAAsAAAABAAAAAAASAAsAAAABAAAAAAATAAsAAAABAAAAAAATAAwAAAABAAEAAAASAAwAAAABAAEAAAARAAwAAAABAAEAAAAQAAwAAAABAAEAAAAPAAwAAAABAAEAAAAOAAwAAAABAAEAAAANAAwAAAABAAEAAAAMAAwAAAABAAEAAAALAAwAAAABAAEAAAAKAAwAAAABAAEAAAAJAAwAAAABAAEAAAAIAAwAAAABAAEAAAAHAAwAAAABAAEAAAAGAAwAAAABAAEAAAAFAAwAAAABAAEAAAAAAA0AAAABAAEAAAABAA0AAAABAAEAAAACAA0AAAABAAEAAAADAA0AAAABAAEAAAAEAA0AAAABAAEAAAAFAA0AAAABAAEAAAAGAA0AAAABAAEAAAAHAA0AAAABAAEAAAAIAA0AAAABAAEAAAAJAA0AAAABAAEAAAAKAA0AAAABAAEAAAALAA0AAAABAAEAAAAMAA0AAAABAAEAAAANAA0AAAABAAEAAAAOAA0AAAABAAEAAAAPAA0AAAABAAEAAAAQAA0AAAABAAEAAAARAA0AAAABAAEAAAASAA0AAAABAAEAAAATAA0AAAABAAEAAAATAA8AAAABAAIAAAASAA8AAAABAAIAAAARAA8AAAABAAIAAAAQAA8AAAABAAIAAAAPAA8AAAABAAIAAAAOAA8AAAABAAIAAAANAA8AAAABAAIAAAAMAA8AAAABAAIAAAALAA8AAAABAAIAAAAKAA8AAAABAAIAAAAJAA8AAAABAAIAAAAIAA8AAAABAAIAAAAHAA8AAAABAAIAAAAGAA8AAAABAAIAAAAFAA8AAAABAAIAAAAEAA8AAAABAAIAAAADAA8AAAABAAIAAAACAA8AAAABAAIAAAABAA8AAAABAAIAAAAAAA8AAAABAAIAAAAAAA4AAAABAAEAAAABAA4AAAABAAEAAAACAA4AAAABAAEAAAADAA4AAAABAAEAAAAEAA4AAAABAAEAAAAFAA4AAAABAAEAAAAGAA4AAAABAAEAAAAHAA4AAAABAAEAAAAIAA4AAAABAAEAAAAJAA4AAAABAAEAAAAKAA4AAAABAAEAAAALAA4AAAABAAEAAAAMAA4AAAABAAEAAAANAA4AAAABAAEAAAAOAA4AAAABAAEAAAAPAA4AAAABAAEAAAAQAA4AAAABAAEAAAARAA4AAAABAAEAAAASAA4AAAABAAEAAAATAA4AAAABAAEAAAA=")
+tile_set = ExtResource("18_dt4ny")
+
+[node name="MarioSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(320, 320)
+sprite_frames = ExtResource("19_uoo6y")
+animation = &"walk"
+script = ExtResource("20_hi0ld")
+
+[node name="KevinSprite" type="AnimatedSprite2D" parent="."]
+material = ExtResource("21_ah75i")
+position = Vector2(208, 320)
+sprite_frames = ExtResource("19_uoo6y")
+animation = &"walk"
+script = ExtResource("20_hi0ld")
+
+[node name="Stars" type="CPUParticles2D" parent="KevinSprite"]
+modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+position = Vector2(0, 16)
+amount = 24
+texture = SubResource("CompressedTexture2D_gb7ap")
+lifetime = 0.5
+draw_order = 1
+emission_shape = 1
+emission_sphere_radius = 24.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_8wxn5")
+script = ExtResource("22_0kcxk")
+medium = true
+metadata/_edit_lock_ = true
+
+[node name="CloudLightEffect" type="Sprite2D" parent="KevinSprite"]
+self_modulate = Color(0, 0, 0, 0)
+position = Vector2(0, 16)
+scale = Vector2(2, 2)
+texture = ExtResource("23_ti1e4")
+script = ExtResource("22_0kcxk")
+metadata/_edit_lock_ = true
+
+[connection signal="selected" from="MenuLayer/Controls" to="MenuLayer/Selector" method="handle_selection"]
+[connection signal="selected" from="MenuLayer/Controls" to="Node" method="handle_selection"]
+[connection signal="menu_selected" from="MenuLayer/Controls/Start" to="." method="start_selected"]
