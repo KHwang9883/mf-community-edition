@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://de0bbee316sww"]
+[gd_scene load_steps=49 format=4 uid="uid://de0bbee316sww"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_ifhm4"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_5kduk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="5_q63kv"]
 [ext_resource type="AudioStream" uid="uid://dw8cjsn5ky1c4" path="res://music/extra/mf_flash/smb-overworld.ogg" id="6_am5pp"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_300an"]
+[ext_resource type="AudioStream" uid="uid://do2m1kc1sidik" path="res://music/extra/mf_flash/smb1_player_down.ogg" id="7_am5pp"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_8st1y"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_dr4bq"]
 [ext_resource type="TileSet" uid="uid://cc4wmng1l7suo" path="res://tilesets/snowland_red/snowland_red.tres" id="10_d7mtg"]
@@ -110,14 +111,14 @@ region = Rect2(232, 136, 16, 16)
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.616216, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -7.01374, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_q63kv"]
+[sub_resource type="CurveTexture" id="CurveTexture_300an"]
 curve = SubResource("Curve_jkrhd")
 
 [sub_resource type="Curve" id="Curve_am5pp"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.756757, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -13.0691, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_300an"]
+[sub_resource type="CurveTexture" id="CurveTexture_8st1y"]
 curve = SubResource("Curve_am5pp")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8st1y"]
@@ -135,8 +136,8 @@ initial_velocity_max = 100.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.1
 scale_max = 0.4
-scale_curve = SubResource("CurveTexture_300an")
-alpha_curve = SubResource("CurveTexture_q63kv")
+scale_curve = SubResource("CurveTexture_8st1y")
+alpha_curve = SubResource("CurveTexture_300an")
 collision_mode = 1
 collision_friction = 1.0
 collision_bounce = 0.0
@@ -172,6 +173,7 @@ volume_db = Array[float]([4.0])
 
 [node name="Mario" parent="." instance=ExtResource("7_300an")]
 position = Vector2(176, 304)
+death_music_override = ExtResource("7_am5pp")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
@@ -511,24 +513,3 @@ visibility_rect = Rect2(-50, 0, 8000, 480)
 trail_lifetime = 2.72
 process_material = SubResource("ParticleProcessMaterial_8st1y")
 script = ExtResource("32_jkrhd")
-
-[connection signal="collided_wall" from="TileMapLayer/SpinyRed" to="TileMapLayer/SpinyRed" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240321" to="TileMapLayer/@CharacterBody2D@240321" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240322" to="TileMapLayer/@CharacterBody2D@240322" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240323" to="TileMapLayer/@CharacterBody2D@240323" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240324" to="TileMapLayer/@CharacterBody2D@240324" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240325" to="TileMapLayer/@CharacterBody2D@240325" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240326" to="TileMapLayer/@CharacterBody2D@240326" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240327" to="TileMapLayer/@CharacterBody2D@240327" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240328" to="TileMapLayer/@CharacterBody2D@240328" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240329" to="TileMapLayer/@CharacterBody2D@240329" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240330" to="TileMapLayer/@CharacterBody2D@240330" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240331" to="TileMapLayer/@CharacterBody2D@240331" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240332" to="TileMapLayer/@CharacterBody2D@240332" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240333" to="TileMapLayer/@CharacterBody2D@240333" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240346" to="TileMapLayer/@CharacterBody2D@240346" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240347" to="TileMapLayer/@CharacterBody2D@240347" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240348" to="TileMapLayer/@CharacterBody2D@240348" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/Goomba" to="TileMapLayer/Goomba" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240364" to="TileMapLayer/@CharacterBody2D@240364" method="turn_x"]
-[connection signal="collided_wall" from="TileMapLayer/@CharacterBody2D@240365" to="TileMapLayer/@CharacterBody2D@240365" method="turn_x"]
