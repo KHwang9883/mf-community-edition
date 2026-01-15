@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bswhg0mu4dho2"]
+
+[ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="1_d4qax"]
+[ext_resource type="Texture2D" uid="uid://uejrjui7n1cg" path="res://engine/tilesets/underground/gfx/blue_hard_block.png" id="2_fc6pw"]
+[ext_resource type="Material" uid="uid://dy4beiutf7356" path="res://stages/extra/world_u/objects/electric_block/electric_block.tres" id="2_ibwuh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmdrb"]
+size = Vector2(28, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_83umb"]
+size = Vector2(30, 32)
+
+[node name="ElectricBlock" type="AnimatableBody2D"]
+collision_layer = 112
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_rmdrb")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_d4qax")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("RectangleShape2D_83umb")
+debug_color = Color(0.976471, 0.152941, 0, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.7, 0.7, 0.7, 1)
+material = ExtResource("2_ibwuh")
+texture = ExtResource("2_fc6pw")
