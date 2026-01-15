@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cs8qcm3hsw0jp"]
+[gd_scene load_steps=37 format=3 uid="uid://cs8qcm3hsw0jp"]
 
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_d1oeo"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_vtoyu"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="11_uio2q"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="12_f55ab"]
 [ext_resource type="Texture2D" uid="uid://cii4pifncqrgp" path="res://gfx/map/world_names/world_1.png" id="13_it8vg"]
-[ext_resource type="Script" uid="uid://dr3vhptgbru6r" path="res://engine/scenes/map/scripts/world_text.gd" id="14_su3l1"]
+[ext_resource type="Script" uid="uid://bvyxlps8huru1" path="res://stages/extra/world_u/scripts/world_u_text.gd" id="14_d1oeo"]
 [ext_resource type="Texture2D" uid="uid://e6esbfn1tnks" path="res://gfx/map/world_names/world_u.png" id="15_0ttlr"]
 [ext_resource type="Texture2D" uid="uid://cri6ax5vkgp6w" path="res://gfx/fancy_graphics/world_texts/MARIO_WORLD_bigger.png" id="16_ai278"]
 [ext_resource type="Texture2D" uid="uid://dwoyn71da5et2" path="res://gfx/fancy_graphics/world_texts/u.png" id="17_4w0mo"]
@@ -35,6 +35,9 @@
 [ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="33_03lsi"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="34_x2csa"]
 [ext_resource type="PackedScene" uid="uid://r6db0501lsxu" path="res://objects/bonus_level_map_button/bonus_level_click_on_me.tscn" id="35_ivbf3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtoyu"]
+size = Vector2(264, 54)
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_d1oeo")
@@ -103,13 +106,20 @@ script = ExtResource("12_f55ab")
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(320, -64)
 texture = ExtResource("13_it8vg")
-script = ExtResource("14_su3l1")
+script = ExtResource("14_d1oeo")
 
 [node name="BounceMarker" type="Marker2D" parent="GUI2/WorldText"]
 position = Vector2(0, 146)
 
-[node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
+[node name="Area2D" type="Area2D" parent="GUI2/WorldText"]
+position = Vector2(-320, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GUI2/WorldText/Area2D"]
 visible = false
+position = Vector2(317.5, -65.5)
+shape = SubResource("RectangleShape2D_vtoyu")
+
+[node name="Sprite2D" type="Sprite2D" parent="GUI2/WorldText"]
 texture = ExtResource("15_0ttlr")
 script = ExtResource("12_f55ab")
 maximum = false
