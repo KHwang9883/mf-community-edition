@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=4 uid="uid://c331pwxgwbrjx"]
+[gd_scene load_steps=78 format=4 uid="uid://c331pwxgwbrjx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5eepq"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_axx3d"]
@@ -43,7 +43,8 @@
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="38_7emh4"]
 [ext_resource type="Texture2D" uid="uid://3f6efhfdu374" path="res://engine/tilesets/overworld/fence.png" id="39_g2j6e"]
 [ext_resource type="Texture2D" uid="uid://tiv68dh8d47" path="res://gfx/texts/signs/no_yellow_cheep.png" id="41_pr8by"]
-[ext_resource type="Script" uid="uid://cvsag36dg6aar" path="res://stages/extra/world_u/scripts/no_yellow_cheep.gd" id="42_bkune"]
+[ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="41_wrvok"]
+[ext_resource type="Script" uid="uid://cvsag36dg6aar" path="res://stages/extra/world_u/scripts/area_enemy_killer.gd" id="42_bkune"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="45_otf1l"]
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="46_otf1l"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="47_ddedx"]
@@ -151,7 +152,7 @@ point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_xjn5t"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 2416, 272, 0, 0, 0, 0, 2416, 432)
+"points": PackedVector2Array(0, 0, 0, 0, 2416, 304, 0, 0, 0, 0, 2416, 432)
 }
 point_count = 2
 
@@ -1481,6 +1482,7 @@ position = Vector2(1088, 192)
 
 [node name="CheepYellow" parent="." instance=ExtResource("24_wytki")]
 position = Vector2(1328, 368)
+tracking_speed = 62.5
 
 [node name="Whirlpool" parent="." instance=ExtResource("26_kcqd1")]
 offset_left = 1872.0
@@ -1669,7 +1671,7 @@ curve = SubResource("Curve2D_xjn5t")
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D6"]
 position = Vector2(2416, 368)
 rotation = 1.5708
-progress = 96.0
+progress = 64.0
 rotates = false
 cubic_interp = false
 loop = false
@@ -1684,7 +1686,7 @@ sync_to_physics = false
 [node name="PathFollow2D2" type="PathFollow2D" parent="Path2D6"]
 position = Vector2(2768, 336)
 rotation = 1.5708
-progress = 64.0
+progress = 32.0
 h_offset = 352.0
 rotates = false
 cubic_interp = false
@@ -1808,35 +1810,98 @@ appear_collectable = 0.0
 [node name="RotoCenter" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(8112, 400)
 
+[node name="RotoRed" parent="RotoCenter" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+amplitude_enable = true
+amplitude_changing_speed = 333.0
+phase = 90.0
+frequency = -50.0
+
 [node name="RotoCenter2" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(8272, 240)
+
+[node name="RotoRed" parent="RotoCenter2" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -50.0
 
 [node name="RotoCenter3" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(8496, 144)
 
+[node name="RotoRed" parent="RotoCenter3" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -50.0
+
 [node name="RotoCenter4" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(8560, 336)
+
+[node name="RotoRed" parent="RotoCenter4" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -50.0
 
 [node name="RotoCenter5" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(8880, 400)
 
+[node name="RotoRed" parent="RotoCenter5" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -50.0
+
 [node name="RotoCenter6" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(9040, 336)
+
+[node name="RotoRed" parent="RotoCenter6" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+amplitude_enable = true
+amplitude_changing_speed = 333.0
+phase = 90.0
+frequency = -50.0
 
 [node name="RotoCenter7" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(9136, 80)
 
+[node name="RotoRed" parent="RotoCenter7" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+amplitude_enable = true
+amplitude_changing_speed = 333.0
+phase = 90.0
+frequency = -50.0
+
 [node name="RotoCenter8" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(9296, 304)
+
+[node name="RotoRed" parent="RotoCenter8" instance=ExtResource("41_wrvok")]
+position = Vector2(0, -150)
+phase = -90.0
+frequency = -50.0
 
 [node name="RotoCenter9" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(9488, 240)
 
+[node name="RotoRed" parent="RotoCenter9" instance=ExtResource("41_wrvok")]
+position = Vector2(-150, 0)
+amplitude_enable = true
+amplitude_changing_speed = 333.0
+phase = -180.0
+frequency = -50.0
+
 [node name="RotoCenter10" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(9808, 176)
 
+[node name="RotoRed" parent="RotoCenter10" instance=ExtResource("41_wrvok")]
+position = Vector2(0, 150)
+phase = 90.0
+frequency = -50.0
+
 [node name="RotoCenter11" parent="." instance=ExtResource("37_h0lwu")]
 position = Vector2(9936, 304)
+
+[node name="RotoRed" parent="RotoCenter11" instance=ExtResource("41_wrvok")]
+position = Vector2(-150, 0)
+phase = -180.0
+frequency = -50.0
 
 [node name="KoopaParatroopaGreen" parent="." instance=ExtResource("38_7emh4")]
 position = Vector2(10672, 288)
@@ -1943,7 +2008,7 @@ script = ExtResource("32_bcldk")
 only_once = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D6"]
-position = Vector2(10224, 224)
+position = Vector2(10544, 224)
 shape = SubResource("RectangleShape2D_hsbgx")
 
 [node name="Area2D7" type="Area2D" parent="."]
