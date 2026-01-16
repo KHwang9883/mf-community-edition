@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=4 uid="uid://cm3jxvq0eanra"]
+[gd_scene load_steps=81 format=4 uid="uid://cm3jxvq0eanra"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_v4eq1"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_pyfsa"]
@@ -51,6 +51,7 @@
 [ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="48_5e3t2"]
 [ext_resource type="PackedScene" uid="uid://diu2ipea3k8qy" path="res://engine/objects/enemies/hammer_bros/fire_bro.tscn" id="49_6p1hk"]
 [ext_resource type="PackedScene" uid="uid://cawvmevhto1k3" path="res://engine/objects/enemies/paratroopas/paratroopa_circle_generator.tscn" id="50_5e3t2"]
+[ext_resource type="PackedScene" uid="uid://bxbx27ax0ru2" path="res://stages/mario_forever_flash/objects/shorter_castle_platform.tscn" id="52_a8llp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6l6av"]
 texture = ExtResource("11_4hv0y")
@@ -294,6 +295,48 @@ size = Vector2(192, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s18g1"]
 size = Vector2(32, 576)
+
+[sub_resource type="Curve2D" id="Curve2D_ns3te"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 6272, 352, 0, 0, 0, 0, 6080, 352)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_u7x03"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 6688, 160, 0, 0, 0, 0, 6432, 160)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_a8llp"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 7232, 288, 0, 0, 0, 0, 7008, 288)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_laqvd"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 6784, -16, 0, 0, 0, 0, 6784, 496)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_0tfih"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 7648, 192, 0, 0, 0, 0, 7552, 288)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_x0liq"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 7904, 192, 0, 0, 0, 0, 7712, 384)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_66imv"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 8128, 160, 0, 0, 0, 0, 7904, 384)
+}
+point_count = 2
 
 [node name="LevelU-4E" type="Node2D"]
 script = ExtResource("1_v4eq1")
@@ -736,11 +779,11 @@ trigger_area = Rect2(-80, -96, 160, 512)
 
 [node name="Thwomp4" parent="." instance=ExtResource("29_855lv")]
 position = Vector2(7744, 32)
-trigger_area = Rect2(-80, -32, 160, 512)
+trigger_area = Rect2(-80, -128, 160, 608)
 
 [node name="Thwomp5" parent="." instance=ExtResource("29_855lv")]
 position = Vector2(8352, 32)
-trigger_area = Rect2(-80, -32, 160, 512)
+trigger_area = Rect2(-80, -128, 160, 608)
 
 [node name="Checkpoint" parent="." instance=ExtResource("30_855lv")]
 position = Vector2(4816, 321)
@@ -1132,6 +1175,9 @@ position = Vector2(6896, 1104)
 
 [node name="PipeIn9" parent="." instance=ExtResource("31_g8kut")]
 position = Vector2(6080, 1328)
+warp_to_scene = "uid://bx3ofe2gag7wo"
+warping_sound = ExtResource("34_hy4ps")
+use_blur_transition = true
 
 [node name="KoopaParatroopaCircleGenerator" parent="." instance=ExtResource("50_5e3t2")]
 position = Vector2(8622, 1184)
@@ -1139,10 +1185,136 @@ position = Vector2(8622, 1184)
 [node name="KoopaParatroopaCircleGenerator2" parent="." instance=ExtResource("50_5e3t2")]
 position = Vector2(8142, 1024)
 
+[node name="KoopaParatroopaCircleGenerator3" parent="." instance=ExtResource("50_5e3t2")]
+position = Vector2(7824, 1184)
+
+[node name="KoopaParatroopaCircleGenerator4" parent="." instance=ExtResource("50_5e3t2")]
+position = Vector2(7504, 1216)
+
 [node name="LifeMushroom" parent="." instance=ExtResource("23_d3rxn")]
 process_mode = 4
 visible = false
 position = Vector2(1509, 892)
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ns3te")
+
+[node name="PlatformPath" parent="Path2D" instance=ExtResource("52_a8llp")]
+position = Vector2(6144, 352)
+progress = 128.0
+speed = 100.0
+smooth_enabled = false
+
+[node name="PlatformPath2" parent="Path2D" instance=ExtResource("52_a8llp")]
+position = Vector2(6368, 256)
+progress = 64.0
+h_offset = 160.0
+v_offset = -96.0
+speed = 100.0
+smooth_enabled = false
+
+[node name="Path2D2" type="Path2D" parent="."]
+curve = SubResource("Curve2D_u7x03")
+
+[node name="PlatformPath" parent="Path2D2" instance=ExtResource("52_a8llp")]
+position = Vector2(6592, 160)
+progress = 96.0
+speed = 100.0
+smooth_enabled = false
+
+[node name="Path2D3" type="Path2D" parent="."]
+curve = SubResource("Curve2D_a8llp")
+
+[node name="PlatformPath" parent="Path2D3" instance=ExtResource("52_a8llp")]
+position = Vector2(7136, 288)
+progress = 96.0
+speed = 100.0
+smooth_enabled = false
+
+[node name="PlatformPath2" parent="Path2D3" instance=ExtResource("52_a8llp")]
+position = Vector2(8320, 288)
+progress = 96.0
+h_offset = 1184.0
+speed = 100.0
+smooth_enabled = false
+
+[node name="Path2D4" type="Path2D" parent="."]
+curve = SubResource("Curve2D_laqvd")
+
+[node name="PlatformPath" parent="Path2D4" instance=ExtResource("52_a8llp")]
+position = Vector2(6784, 128)
+progress = 144.0
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="PlatformPath3" parent="Path2D4" instance=ExtResource("52_a8llp")]
+position = Vector2(6848, 0)
+progress = 16.0
+h_offset = 64.0
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="PlatformPath2" parent="Path2D4" instance=ExtResource("52_a8llp")]
+position = Vector2(6784, 384)
+progress = 400.0
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="PlatformPath4" parent="Path2D4" instance=ExtResource("52_a8llp")]
+position = Vector2(6848, 256)
+progress = 272.0
+h_offset = 64.0
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="PlatformPath5" parent="Path2D4" instance=ExtResource("52_a8llp")]
+position = Vector2(7360, 64)
+progress = 80.0
+h_offset = 576.0
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="Path2D5" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0tfih")
+
+[node name="PlatformPath" parent="Path2D5" instance=ExtResource("52_a8llp")]
+position = Vector2(7584.36, 255.64)
+progress = 90.0
+speed = 50.0
+smooth_enabled = false
+
+[node name="Path2D6" type="Path2D" parent="."]
+curve = SubResource("Curve2D_x0liq")
+
+[node name="PlatformPath" parent="Path2D6" instance=ExtResource("52_a8llp")]
+position = Vector2(7776.01, 319.986)
+progress = 181.0
+speed = 50.0
+smooth_enabled = false
+
+[node name="Path2D7" type="Path2D" parent="."]
+curve = SubResource("Curve2D_66imv")
+
+[node name="PlatformPath" parent="Path2D7" instance=ExtResource("52_a8llp")]
+position = Vector2(7935.82, 352.177)
+progress = 271.78
+speed = 50.0
+smooth_enabled = false
 
 [connection signal="warp_ended" from="PipeIn2" to="PoisonMushroomWings3" method="activate"]
 [connection signal="warp_ended" from="PipeIn2" to="LifeMushroom" method="show"]
