@@ -1,0 +1,103 @@
+[gd_scene load_steps=20 format=4 uid="uid://bewj85ncy1c3k"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_pbdui"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_xo72q"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_t4din"]
+[ext_resource type="Script" uid="uid://bxx54cyd4mjsq" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_ujpv3"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_ip8b1"]
+[ext_resource type="AudioStream" uid="uid://cg5yrockdva1i" path="res://music/extra/world_u/koopas_road.ogg" id="5_ywv5m"]
+[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_epra8"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_ywv5m"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_1474t"]
+[ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="9_qd2p2"]
+[ext_resource type="TileSet" uid="uid://bgdkv8m3grmin" path="res://engine/tilesets/castle/castle_tileset.tres" id="10_ip8b1"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_m47xb"]
+[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_duft3"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="13_epra8"]
+[ext_resource type="Texture2D" uid="uid://dmwfhcgla7av" path="res://engine/tilesets/castle/gfx/BGCastleVertical.png" id="14_ywv5m"]
+[ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://engine/objects/platform/castle_platforms/single_platform.tscn" id="15_1474t"]
+[ext_resource type="Texture2D" uid="uid://c7madb3fe540" path="res://tilesets/castle/gfx/bowser_portrait.png" id="16_qd2p2"]
+[ext_resource type="PackedScene" uid="uid://ce40twtgpwpra" path="res://stages/extra/expert_mode/objects/8_3_lava/lava_patch.tscn" id="18_1474t"]
+
+[sub_resource type="Curve2D" id="Curve2D_6dv7o"]
+
+[node name="LevelU-4-2E" type="Node2D"]
+script = ExtResource("1_pbdui")
+completion_music = ExtResource("2_xo72q")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_t4din")]
+script = ExtResource("4_ujpv3")
+music = Array[Resource]([ExtResource("5_ywv5m")])
+start_from_sec = Array[float]([0.34])
+
+[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_ip8b1")]
+position = Vector2(320, 4896)
+collision_mask = 16
+slide_on_ceiling = false
+floor_max_angle = 0.837758
+floor_snap_length = 12.0
+platform_on_leave = 2
+script = ExtResource("6_epra8")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_ywv5m")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_1474t")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 5000.0
+script = ExtResource("9_qd2p2")
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAJAAAAAwAAAAEAAAAKAAAAAwABAAEAAAAJAAEAAwAAAAEAAAAKAAEAAwABAAEAAAAJAAIAAwAAAAEAAAAKAAIAAwABAAEAAAAJAAMAAwAAAAEAAAAKAAMAAwABAAEAAAAJAAQAAwAAAAIAAAAKAAQAAwABAAIAAAAHAAsAAAAAAAAAAAAIAAsAAAABAAAAAAALAAsAAAAAAAAAAAAMAAsAAAABAAAAAAAEAAsAAAABAAAAAAADAAsAAAAAAAAAAAA=")
+tile_set = ExtResource("10_ip8b1")
+navigation_enabled = false
+
+[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_m47xb")]
+script = ExtResource("12_duft3")
+
+[node name="World" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 329.0
+offset_bottom = 49.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 3
+theme_override_fonts/font = ExtResource("13_epra8")
+text = "WORLD
+U-4"
+horizontal_alignment = 1
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+z_index = -100
+repeat_size = Vector2(0, 960)
+metadata/_edit_lock_ = true
+
+[node name="BgCastleVertical" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(368, 480)
+texture = ExtResource("14_ywv5m")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6dv7o")
+
+[node name="PlatformPath" parent="Path2D" instance=ExtResource("15_1474t")]
+position = Vector2(32, 48)
+
+[node name="BowserPortrait" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(192, 4784)
+texture = ExtResource("16_qd2p2")
+
+[node name="Sprite2D" parent="." instance=ExtResource("18_1474t")]
+position = Vector2(16, 4960)
