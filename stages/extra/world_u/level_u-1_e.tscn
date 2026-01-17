@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=4 uid="uid://bqhsfaligvxbm"]
+[gd_scene load_steps=59 format=4 uid="uid://bqhsfaligvxbm"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_f68tr"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_klqys"]
@@ -40,6 +40,7 @@
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="39_wm32k"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="40_s4wsa"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="41_xalfh"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="42_oavvh"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="42_q5c6l"]
 
 [sub_resource type="Gradient" id="Gradient_slprf"]
@@ -134,6 +135,8 @@ custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g0bec"]
 size = Vector2(16, 32)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2yv3x"]
 
 [node name="LevelU1" type="Node2D"]
 script = ExtResource("1_f68tr")
@@ -885,3 +888,9 @@ shape = SubResource("RectangleShape2D_g0bec")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(4840, 1360)
 shape = SubResource("RectangleShape2D_g0bec")
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("42_oavvh")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(0, -544)
+shape = SubResource("WorldBoundaryShape2D_2yv3x")

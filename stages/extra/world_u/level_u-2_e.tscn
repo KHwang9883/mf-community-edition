@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://573d3aceegfy"]
+[gd_scene load_steps=77 format=4 uid="uid://573d3aceegfy"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_l8f7t"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_awvqy"]
@@ -57,7 +57,9 @@
 [ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="55_5f58x"]
 [ext_resource type="Texture2D" uid="uid://bua1q7c81k8o6" path="res://stages/extra/world_u/gfx/u-2_signs.png" id="55_awvqy"]
 [ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="56_8hv0f"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="57_yetqa"]
 [ext_resource type="Texture2D" uid="uid://blu37ehc8pkws" path="res://stages/extra/world_u/gfx/medium_starland_tree.png" id="58_1rth5"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="59_lxasv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_68wr5"]
 texture = ExtResource("14_5h8lg")
@@ -185,6 +187,8 @@ custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h88yu"]
 size = Vector2(480, 32)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_yetqa"]
 
 [node name="LevelU-2-1E" type="Node2D"]
 script = ExtResource("1_l8f7t")
@@ -1292,6 +1296,39 @@ position = Vector2(10960, 336)
 [node name="FinishLine" parent="." instance=ExtResource("55_5f58x")]
 position = Vector2(11520, 416)
 
+[node name="LightEffect3" type="Sprite2D" parent="FinishLine"]
+modulate = Color(0.803922, 0.831373, 0.831373, 0.435294)
+z_index = -2
+position = Vector2(176, -268)
+texture = ExtResource("57_yetqa")
+script = ExtResource("23_5thhg")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect4" type="Sprite2D" parent="FinishLine"]
+modulate = Color(0.803922, 0.831373, 0.831373, 0.435294)
+z_index = -2
+position = Vector2(240, -268)
+texture = ExtResource("57_yetqa")
+script = ExtResource("23_5thhg")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect5" type="Sprite2D" parent="FinishLine"]
+modulate = Color(0.803922, 0.831373, 0.831373, 0.435294)
+z_index = -2
+position = Vector2(16, -13)
+texture = ExtResource("57_yetqa")
+script = ExtResource("23_5thhg")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
 [node name="Water" parent="." instance=ExtResource("56_8hv0f")]
 visible = false
 position = Vector2(10016, 464)
@@ -1333,6 +1370,12 @@ medium = false
 z_index = -10
 position = Vector2(10160, 368)
 texture = ExtResource("58_1rth5")
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("59_lxasv")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(0, 720)
+shape = SubResource("WorldBoundaryShape2D_yetqa")
 
 [connection signal="player_enter" from="Area2D2" to="Water" method="show"]
 
