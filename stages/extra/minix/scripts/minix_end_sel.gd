@@ -14,7 +14,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 			TransitionManager.current_transition.paused = true
 			Scenes.goto_scene(ProjectSettings.get("application/thunder_settings/save_game_room_path"))
 			Scenes.scene_ready.connect(func():
-				TransitionManager.current_transition.on(Thunder._current_player)
+				TransitionManager.current_transition.on(Thunder._current_player, false, true)
 				if !Thunder._current_player:
 					TransitionManager.current_transition.paused = false
 				get_tree().paused = false

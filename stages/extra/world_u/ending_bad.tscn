@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://bx3ofe2gag7wo"]
+[gd_scene load_steps=27 format=4 uid="uid://bx3ofe2gag7wo"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_lrkg6"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_h5nnx"]
@@ -6,14 +6,12 @@
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_lrkg6"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_e6t7b"]
 [ext_resource type="AudioStream" uid="uid://dvjer3bl0ftxm" path="res://music/extra/world_u/smw-brinstar.ogg" id="5_kobl0"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_vuoht"]
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="6_5s353"]
-[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_b7vtr"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_7k7xj"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ighpt"]
-[ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="9_f1o20"]
 [ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="10_rpp14"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_8ls0j"]
-[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_kobl0"]
 [ext_resource type="Texture2D" uid="uid://r73jhhrgt172" path="res://engine/tilesets/overworld/tree_taller.png" id="13_e6t7b"]
 [ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://engine/tilesets/rockland/gfx/big_clouds.png" id="14_b7vtr"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="14_vuoht"]
@@ -46,36 +44,41 @@ jump_to_scene = "uid://bnramfqpb04af"
 falling_below_screen_action = 2
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
-[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_txp3p")]
+[node name="MusicLoader" parent="." instance=ExtResource("3_txp3p")]
 script = ExtResource("4_lrkg6")
+tweaked_completion_music = ExtResource("5_vuoht")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_kobl0")])
 volume_db = Array[float]([4.0])
 
 [node name="SecretUnlocker" parent="." instance=ExtResource("6_5s353")]
 secrets = Array[String](["world u completed"])
 
-[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_e6t7b")]
+[node name="Player" parent="." instance=ExtResource("5_e6t7b")]
 position = Vector2(112, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 12.0
-platform_on_leave = 2
-script = ExtResource("6_b7vtr")
-gravity_scale = 1.0
-max_falling_speed = 500.0
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
 script = ExtResource("7_7k7xj")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_ighpt")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." instance=ExtResource("8_ighpt")]
 offset_right = 640.0
 offset_bottom = 480.0
-script = ExtResource("9_f1o20")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -83,8 +86,7 @@ tile_map_data = PackedByteArray("AAACAA0AAAABAAAAAAAUAA8AAAABAAIAAAAUAA4AAAABAAE
 tile_set = ExtResource("10_rpp14")
 navigation_enabled = false
 
-[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_8ls0j")]
-script = ExtResource("12_kobl0")
+[node name="HUD" parent="." instance=ExtResource("11_8ls0j")]
 
 [node name="World" type="Label" parent="HUD"]
 anchors_preset = -1
