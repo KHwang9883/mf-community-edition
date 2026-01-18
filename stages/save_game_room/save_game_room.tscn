@@ -1,4 +1,4 @@
-[gd_scene load_steps=277 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=279 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" uid="uid://db8widi15epm" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -1257,6 +1257,16 @@ _data = {
 &"fade": SubResource("Animation_5mfmq"),
 &"init": SubResource("Animation_agpdy")
 }
+
+[sub_resource type="Gradient" id="Gradient_5x42y"]
+colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s8ahf"]
+gradient = SubResource("Gradient_5x42y")
+width = 640
+height = 176
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
 
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_yuddw")
@@ -6713,6 +6723,7 @@ autoplay = "RESET"
 position = Vector2(3392, -688)
 warp_to_scene = "uid://cs8qcm3hsw0jp"
 use_circle_transition = true
+circle_closing_speed = 0.05
 
 [node name="Sprite2D7" parent="." instance=ExtResource("183_s8ahf")]
 z_index = -6
@@ -6721,6 +6732,14 @@ position = Vector2(3728, -873)
 [node name="LampBroken" parent="." instance=ExtResource("184_q1wvk")]
 z_index = -6
 position = Vector2(3344, -873)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(3520, -906)
+blend_mode = 1
+range_z_max = -1
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_s8ahf")
+script = ExtResource("12_smei1")
 
 [connection signal="selected" from="CanvasLayer2/KevinControl/VBoxContainer" to="CanvasLayer2/KevinControl/Selector" method="handle_selection"]
 [connection signal="selected" from="CanvasLayer2/KevinControl/VBoxContainer" to="CanvasLayer2/KevinControl/Node" method="handle_selection"]
