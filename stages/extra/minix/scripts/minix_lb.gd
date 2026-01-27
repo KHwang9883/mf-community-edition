@@ -6,8 +6,8 @@ const POOL_SIZE = 100
 #var _record_pool := []
 var _index: int
 
-#var url: String = "https://mfce.rnx.su/api/records"
-var url: String = "http://127.0.0.1:3000/api/records"
+var url: String = "https://mfce.rnx.su/api/records"
+#var url: String = "http://127.0.0.1:3000/api/records"
 var map_load_name = "all maps"
 
 @onready var http_request: HTTPRequest = $HTTPRequest
