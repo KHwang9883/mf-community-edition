@@ -18,5 +18,5 @@ func _physics_process(_delta: float) -> void:
 	visible = !lb.has_results
 	menu_items_controller.control_forward = "ui_down" if lb.has_results else "ui_text_delete_all_to_right"
 	menu_items_controller.control_backward = "ui_up" if lb.has_results else "ui_text_delete_all_to_right"
-	start.visible = lb.has_results || lb.has_error
-	start_2.visible = lb.has_results || lb.has_error
+	start.visible = !lb.is_loading && !lb.has_error
+	start_2.visible = !lb.is_loading && !lb.has_error

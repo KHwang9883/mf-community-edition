@@ -11,6 +11,17 @@ func _ready() -> void:
 	_suit_pause_tweak = false
 
 
+func _physics_process(delta: float) -> void:
+	super(delta)
+	if ignore_input: return
+	if is_underwater:
+		if up_down > 0.5:
+			speed.y += 150 * delta * abs(up_down)
+		elif up_down < -0.5:
+			speed.y -= 75 * delta * abs(up_down)
+		
+
+
 func hurt(tags: Dictionary = {}, callable = null) -> void:
 	if !suit:
 		return
