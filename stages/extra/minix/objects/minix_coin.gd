@@ -34,3 +34,7 @@ func collect_bump() -> void:
 	_play_sound()
 	parent.queue_free()
 	
+
+func _physics_process(delta: float) -> void:
+	if abs(parent.speed.x) < 10:
+		parent.speed.x = 50
