@@ -70,7 +70,7 @@ func _on_map_changed_to(_id: int) -> void:
 			if mario:
 				mario.global_position = current_map.get_node("MarioPos").global_position
 				mario.reset_physics_interpolation()
-				mario.underwater.max_falling_speed_override = 500
+				mario.suit.physics_config.set("swim_max_falling_speed", 500)
 				mario.lives = current_map.life_count
 			continue
 		i.position.y = -999999
@@ -102,6 +102,23 @@ func start_game() -> void:
 func _music() -> void:
 	var map: MinixMap = current_map if current_music_from_map == -1 else map_paths[current_music_from_map]
 	var music_loader = map.get_node("MusicLoader")
-	if map.start_again_on_replay || !_continued:
-		music_loader.index = randi_range(0, len(music_loader.current_music) - 1)
-		music_loader.play_buffered()
+	if !(map.start_again_on_replay || !_continued): return
+	
+	var _prev_pool: Array = Data.technical_values.get("_minix_random_music_pool", [])
+	var _prev_map: String = Data.technical_values.get("_minix_last_map", "")
+	var new_random: int = -1
+	
+	if _prev_map != map.map_name || _prev_pool.is_empty():
+		var music_pool: Array = []
+		music_pool.resize(len(music_loader.current_music))
+		for i in len(music_pool):
+			music_pool[i] = i
+		_prev_pool = music_pool
+		Data.technical_values._minix_last_map = map.map_name
+	
+	new_random = _prev_pool.pop_at(_prev_pool.find(randi_range(0, len(_prev_pool))))
+		
+	Data.technical_values._minix_random_music_pool = _prev_pool
+	
+	music_loader.index = new_random
+	music_loader.play_buffered()

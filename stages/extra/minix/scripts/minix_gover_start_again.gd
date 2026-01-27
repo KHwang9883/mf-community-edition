@@ -7,6 +7,7 @@ var _started: bool
 func _handle_select(mouse_input: bool = false) -> void:
 	if _started: return
 	Audio.stop_all_sounds()
+	Audio.stop_music_channel(1, true)
 	super(mouse_input)
 	TransitionManager.transition_middle.connect(func():
 		TransitionManager.current_transition.paused = true
