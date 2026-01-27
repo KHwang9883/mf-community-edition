@@ -1,27 +1,20 @@
 extends Node
 
-#const url: String = "https://mfce.rnx.su/api/version"
-#const url_open: String = "https://rnx.su/s/M4WNbNdDw2rAb8Y" # TODO: Change before release
-#const url: String = "http://localhost:3000/api/version"
+const url: String = "https://mfce.rnx.su/api/version"
+#const url: String = "http://127.0.0.1:3000/api/version/v2"
 
 # this is a verification key to ensure we got correct data
-const game_key: String = "Mario_Forever_Community_Edition_Update"
-# update is checked here
-const url: String = \
-
-"https://gist.githubusercontent.com/jue131/97f2819963beea97ed93739fbe57af17/raw/update_check.json"
-
-#"https://gist.githubusercontent.com/jue131/eab20a1ed3661d92106f298ba78aedad/raw/beta_mfce_update_check.json"
+const game_key: String = "MFCE"
 
 # url to open to when an update is available
-var url_open: String = "https://gist.github.com/jue131/f7ad31818af19fa91b5175cb67340529"
+var url_open: String
 
-const WHY_TO_UPDATE: String = "it is extremely recommended to update,
-as it includes bug fixes, compatibility with
-mario minix leaderboards, and possibly new content.
-
-older versions of the game are not supported, but you can
-continue for now and update later."
+#const WHY_TO_UPDATE: String = "it is extremely recommended to update,
+#as it includes bug fixes, compatibility with
+#mario minix leaderboards, and possibly new content.
+#
+#older versions of the game are not supported, but you can
+#continue for now and update later."
 
 const COIN = preload("res://sfx/clear.wav")
 const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block/message_block.wav")
@@ -63,17 +56,21 @@ func _ready() -> void:
 		return
 	
 	http_request.request_completed.connect(_on_http_get, CONNECT_ONE_SHOT)
-	http_request.request(url)
+	http_request.request(url + "?gameName=" + game_key + "&version=" + str(version))
 
 
 func _on_http_get(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var dict: Dictionary = {}
 	
+	if response_code == 204:
+		_checking_not_found()
+		return
+	
 	if result == HTTPRequest.RESULT_SUCCESS:
 		print(response_code)
-		var body_res = body.get_string_from_utf8()
+		var body_res = JSON.parse_string(body.get_string_from_utf8())
 		if body_res:
-			dict = JSON.parse_string(body_res)
+			dict = body_res
 	else:
 		print("[Update Check Error] Result:", result, " Response Code: ", response_code)
 		if is_in_main_menu:
@@ -83,73 +80,59 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 	if !dict || !dict is Dictionary:
 		return _checking_throw_error()
 	print(dict)
-	if dict.get("game_name", "") != game_key:
+	if dict.get("gameName", "") != game_key:
 		return _checking_throw_error()
 	if !("version" in dict && typeof(dict.version) == TYPE_FLOAT):
 		return _checking_throw_error()
 	
-	if dict.version > version:
-		if checking_tween: checking_tween.kill()
+	if checking_tween: checking_tween.kill()
+	
+	has_update = true
+	var version_text: String = dict.get("versionPretty", "")
+	var why_to_update: String = dict.get("whyToUpdate", "")
+	
+	if is_in_main_menu:
+		update_checking.visible = false
+		update_found.visible = true
 		
-		has_update = true
-		var version_text: String = dict.get("version_text", "")
-		var why_to_update: String = dict.get("why_to_update", WHY_TO_UPDATE)
+		var _tw = update_found.create_tween().set_loops().set_trans(Tween.TRANS_SINE)
+		_tw.tween_property(update_found, ^"modulate:a", 0.4, 0.3)
+		_tw.tween_property(update_found, ^"modulate:a", 1, 0.3)
 		
-		if is_in_main_menu:
-			update_checking.visible = false
-			update_found.visible = true
-			
-			var _tw = update_found.create_tween().set_loops().set_trans(Tween.TRANS_SINE)
-			_tw.tween_property(update_found, ^"modulate:a", 0.4, 0.3)
-			_tw.tween_property(update_found, ^"modulate:a", 1, 0.3)
-			
-			var _template = update_found.text.format([version_text])
-			var _events: Array[InputEvent] = InputMap.action_get_events(&"ui_select")
-			var _event: String = "space"
-			var _temp: String
-			for i in _events:
-				if i is InputEventKey:
-					_temp = i.as_text().get_slice(' (', 0) + ' button'
-					#if SettingsManager.device_keyboard:
-					_event = _temp
-					break
-				if _temp: _event = _temp
-			
-			update_found.text = _template % [_event]
-			
-			main_menu_controls.set_meta(&"has_update", true)
-			Audio.play_1d_sound(COIN, true, { ignore_pause = true })
-		else:
-			while is_inside_tree() && get_tree().paused:
-				await get_tree().physics_frame
-			Scenes.current_scene.get_node("UpdateConfirmModal/Control").toggle()
-			
-			var _snd = CharacterManager.get_sound_replace(MESSAGE_BLOCK, MESSAGE_BLOCK, "message_box", false)
-			Audio.play_1d_sound(_snd, true, {ignore_pause = true})
-			print("[Update Checker] Displaying an update notice!")
+		var _template = update_found.text.format([version_text])
+		var _events: Array[InputEvent] = InputMap.action_get_events(&"ui_select")
+		var _event: String = "space"
+		var _temp: String
+		for i in _events:
+			if i is InputEventKey:
+				_temp = i.as_text().get_slice(' (', 0) + ' button'
+				#if SettingsManager.device_keyboard:
+				_event = _temp
+				break
+			if _temp: _event = _temp
 		
+		update_found.text = _template % [_event]
 		
-		var _lb_upd: Label = Scenes.current_scene.get_node("UpdateConfirmModal/Control/LabelUpdate")
-		_lb_upd.text = _lb_upd.text.format([
-			("(" + version_text + ") " if version_text else ""),
-			why_to_update
-		])
-		
-		if dict.get("open_to", "").begins_with("https://"):
-			url_open = dict.open_to
-		found_update.emit()
+		main_menu_controls.set_meta(&"has_update", true)
+		Audio.play_1d_sound(COIN, true, { ignore_pause = true })
 	else:
-		if !is_in_main_menu:
-			Data.technical_values.skip_update_check = true
-			print("[Update Checker] No updates found")
-			return
-		if checking_tween: checking_tween.kill()
-		update_checking.modulate.a = 0.75
-		update_checking.text = ""
-		get_tree().create_timer(8, true, false, true).timeout.connect(func():
-			checking_tween = update_checking.create_tween()
-			checking_tween.tween_property(update_checking, "modulate:a", 0.0, 1.0)
-		)
+		while is_inside_tree() && get_tree().paused:
+			await get_tree().physics_frame
+		Scenes.current_scene.get_node("UpdateConfirmModal/Control").toggle()
+		
+		var _snd = CharacterManager.get_sound_replace(MESSAGE_BLOCK, MESSAGE_BLOCK, "message_box", false)
+		Audio.play_1d_sound(_snd, true, {ignore_pause = true})
+		print("[Update Checker] Displaying an update notice!")
+	
+	
+	var _lb_upd: Label = Scenes.current_scene.get_node("UpdateConfirmModal/Control/LabelUpdate")
+	_lb_upd.text = _lb_upd.text.format([
+		("(" + version_text + ") " if version_text else ""),
+		why_to_update
+	])
+	
+	url_open = dict.get("openTo", "")
+	found_update.emit()
 
 
 func _checking_throw_error() -> void:
@@ -157,6 +140,20 @@ func _checking_throw_error() -> void:
 	if checking_tween: checking_tween.kill()
 	update_checking.modulate.a = 0.9
 	update_checking.text = "error!\nplease check for a new version manually. join discord for more information."
+
+
+func _checking_not_found() -> void:
+	if !is_in_main_menu:
+		Data.technical_values.skip_update_check = true
+		print("[Update Checker] No updates found")
+		return
+	if checking_tween: checking_tween.kill()
+	update_checking.modulate.a = 0.75
+	update_checking.text = ""
+	get_tree().create_timer(8, true, false, true).timeout.connect(func():
+		checking_tween = update_checking.create_tween()
+		checking_tween.tween_property(update_checking, "modulate:a", 0.0, 1.0)
+	)
 
 
 func _physics_process(delta: float) -> void:
