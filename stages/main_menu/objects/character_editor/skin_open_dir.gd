@@ -33,7 +33,7 @@ func _handle_right_click() -> void:
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	if is_docs:
-		OS.shell_open("https://gist.github.com/jue131/e425619bc898df9feaa56cde6588216e")
+		OS.shell_open("https://marioforever.space/topic/66/skin-pack-guide")
 		return
 	
 	var _dir := SkinsManager.base_dir
