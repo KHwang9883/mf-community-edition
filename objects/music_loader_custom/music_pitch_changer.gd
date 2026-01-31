@@ -5,13 +5,13 @@ extends Node
 @export var only_for_soundtrack_var: Array[bool] = [true, true, true, true]
 
 @onready var _snd_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
-@onready var _pitch_tweak: bool = SettingsManager.get_tweak("copyright_free_ost", true)
+@onready var _pitch_tweak: bool = SettingsManager.get_tweak("copyright_free_ost", false)
 @onready var _channel_id: int = $"..".channel_id
 var _idx: int
 
 func _ready() -> void:
-	if !_pitch_tweak: return
-	$"..".music_started.connect(_on_music_started)
+	if _pitch_tweak || SettingsManager.get_tweak("pitch_music_everywhere", false):
+		$"..".music_started.connect(_on_music_started)
 
 func _on_music_started(index: int) -> void:
 	_idx = -1
