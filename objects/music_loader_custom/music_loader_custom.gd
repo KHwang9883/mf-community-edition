@@ -1,7 +1,7 @@
 extends "res://engine/objects/core/music_loader/music_loader.gd"
 
 const MUSIC_PITCH_CHANGER = preload("res://objects/music_loader_custom/music_pitch_changer.tscn")
-const PITCH_PREFIXES: Array = ["smw2-", "smw-", "smas-", "smrpg-", "smb-", "smb3-", "save_g"]
+const PITCH_PREFIXES: Array = ["smw2-", "smw-", "smas-", "smrpg-", "smb-", "smb3-", "save_g", "smb_", "smb1"]
 
 @export_category("Tweaks")
 @export var tweaked_completion_music: Resource = preload("res://music/complete_tweaked.ogg")
