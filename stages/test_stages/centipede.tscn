@@ -1,0 +1,112 @@
+[gd_scene load_steps=15 format=4 uid="uid://bde81ehjeguur"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_1qm1u"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_yqbhe"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_ha5i3"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_tlep2"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_lvt4x"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_e0lmb"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_4fuov"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_7jlm5"]
+[ext_resource type="PackedScene" uid="uid://c02e27qkcrmvw" path="res://engine/objects/centipede/centipede.tscn" id="13_58f1b"]
+[ext_resource type="PackedScene" uid="uid://dvcxbvtn34x5w" path="res://engine/objects/centipede/centipede_pathpoints.tscn" id="14_tlep2"]
+[ext_resource type="PackedScene" uid="uid://dpli8hxnleju4" path="res://engine/objects/centipede/centipede_pathpoint.tscn" id="15_p2dtv"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ueyeq"]
+texture = ExtResource("10_4fuov")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_gbbv2"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_ueyeq")
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_lvt4x"]
+
+[node name="Centipede" type="Node2D"]
+script = ExtResource("1_1qm1u")
+completion_music = ExtResource("2_yqbhe")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" parent="." instance=ExtResource("3_ha5i3")]
+
+[node name="Player" parent="." instance=ExtResource("5_tlep2")]
+position = Vector2(80, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_lvt4x")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("8_e0lmb")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAAAAA0AAAAAAAAAAAABAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAvAA0AAAAAAAAAAAAwAA0AAAAAAAAAAAAxAA0AAAAAAAAAAAAyAA0AAAAAAAAAAAAzAA0AAAAAAAAAAAA0AA0AAAAAAAAAAAA1AA0AAAAAAAAAAAA2AA0AAAAAAAAAAAA3AA0AAAAAAAAAAAA4AA0AAAAAAAAAAAA5AA0AAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_gbbv2")
+navigation_enabled = false
+
+[node name="HUD" parent="." instance=ExtResource("11_7jlm5")]
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="Centipedes" type="Node2D" parent="."]
+
+[node name="Centipede2" parent="Centipedes" instance=ExtResource("13_58f1b")]
+position = Vector2(720, 288)
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_type = 1
+
+[node name="Centipede3" parent="Centipedes" instance=ExtResource("13_58f1b")]
+position = Vector2(720, 288)
+moving_sound = SubResource("AudioStreamWAV_lvt4x")
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_type = 1
+
+[node name="Centipede4" parent="Centipedes" instance=ExtResource("13_58f1b")]
+position = Vector2(720, 288)
+moving_sound = SubResource("AudioStreamWAV_lvt4x")
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_type = 1
+
+[node name="Centipede5" parent="Centipedes" instance=ExtResource("13_58f1b")]
+position = Vector2(720, 288)
+moving_sound = SubResource("AudioStreamWAV_lvt4x")
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_type = 1
+
+[node name="Centipede" parent="Centipedes" instance=ExtResource("13_58f1b")]
+position = Vector2(720, 288)
+moving_sound = SubResource("AudioStreamWAV_lvt4x")
+centipede_pathpoints_path = NodePath("../../CentipedePathpoints")
+trigger_type = 1
+
+[node name="CentipedePathpoints" parent="." instance=ExtResource("14_tlep2")]
+
+[node name="CentipedePathpoint" parent="CentipedePathpoints" instance=ExtResource("15_p2dtv")]
+position = Vector2(720, 288)
+
+[node name="CentipedePathpoint2" parent="CentipedePathpoints" instance=ExtResource("15_p2dtv")]
+position = Vector2(720, 96)
+
+[node name="CentipedePathpoint3" parent="CentipedePathpoints" instance=ExtResource("15_p2dtv")]
+position = Vector2(976, 96)
+
+[node name="CentipedePathpoint4" parent="CentipedePathpoints" instance=ExtResource("15_p2dtv")]
+position = Vector2(976, 352)
+
+[node name="CentipedePathpoint5" parent="CentipedePathpoints" instance=ExtResource("15_p2dtv")]
+position = Vector2(848, 352)
+
+[node name="CentipedePathpoint6" parent="CentipedePathpoints" instance=ExtResource("15_p2dtv")]
+position = Vector2(848, 288)
+
+[node name="CentipedePathpoint7" parent="CentipedePathpoints" instance=ExtResource("15_p2dtv")]
+position = Vector2(720, 288)
