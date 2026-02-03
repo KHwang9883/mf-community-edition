@@ -1,10 +1,10 @@
 extends GeneralMovementBody2D
 
-const STOMPED_CREATION = preload("res://objects/human_lab_2/mutant_clone/stomped_resource.tres")
-const KICK_A = preload("res://objects/human_lab_2/mutant_clone/sfx/kick_a.ogg")
-const KICK_B = preload("res://objects/human_lab_2/mutant_clone/sfx/kick_b.ogg")
-const STOMP_A = preload("res://objects/human_lab_2/mutant_clone/sfx/stomp_a.ogg")
-const STOMP_B = preload("res://objects/human_lab_2/mutant_clone/sfx/stomp_b.ogg")
+const STOMPED_CREATION = preload("res://objects/human_lab_2/ramireys/mutant_clone/stomped_resource.tres")
+const KICK_A = preload("res://objects/human_lab_2/ramireys/mutant_clone/sfx/kick_a.ogg")
+const KICK_B = preload("res://objects/human_lab_2/ramireys/mutant_clone/sfx/kick_b.ogg")
+const STOMP_A = preload("res://objects/human_lab_2/ramireys/mutant_clone/sfx/stomp_a.ogg")
+const STOMP_B = preload("res://objects/human_lab_2/ramireys/mutant_clone/sfx/stomp_b.ogg")
 
 var stomped: int
 
