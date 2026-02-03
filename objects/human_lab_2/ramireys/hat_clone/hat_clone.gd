@@ -1,7 +1,7 @@
 extends GeneralMovementBody2D
 
 const STOMP = preload("res://engine/objects/enemies/_sounds/stomp.wav")
-const STOMP_HAT = preload("res://objects/human_lab_2/hat_clone/sfx/stomp.wav")
+const STOMP_HAT = preload("res://objects/human_lab_2/ramireys/hat_clone/sfx/stomp.wav")
 
 @export var stomping_creation: InstanceNode2D
 @export var lying_time_sec: float = 3.0
