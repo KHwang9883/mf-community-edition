@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://icyonybjc853"]
+
+[ext_resource type="Script" uid="uid://byperubak86hh" path="res://objects/human_lab_2/ramireys/manager_clone/manager_projectile.gd" id="1_81gdw"]
+[ext_resource type="Texture2D" uid="uid://cac22kacn60vd" path="res://objects/human_lab_2/ramireys/manager_clone/gfx/bullet.png" id="2_3soir"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_8gxnq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjbes"]
+radius = 6.0
+
+[node name="ManagerProjectile" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("1_81gdw")
+belongs_to = 1
+turn_sprite = false
+sprite = NodePath("Sprite2D")
+speed = Vector2(308, 0)
+gravity_dir_rotation = false
+collision = false
+auto_update_up_direction = false
+correct_collision = false
+metadata/_custom_type_script = "uid://c02v00eossjgn"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3soir")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_bjbes")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_bjbes")
+target_position = Vector2(0, 0)
+max_results = 16
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_8gxnq")
+is_reflectable = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-32, -32, 64, 64)
+
+[connection signal="damaged_player" from="Attack" to="." method="queue_free"]
+[connection signal="damaged_player_failed" from="Attack" to="." method="queue_free"]
+[connection signal="killed_notify" from="Attack" to="." method="queue_free"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

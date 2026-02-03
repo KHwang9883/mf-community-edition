@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://dj8yhdaft8a1w"]
+
+[ext_resource type="Script" uid="uid://l2v7fiuurrhn" path="res://engine/objects/bumping_blocks/brick/brick.gd" id="1_lhpfe"]
+[ext_resource type="Material" uid="uid://doj82gjccefei" path="res://materials/grayscale_half.tres" id="1_x4l8m"]
+[ext_resource type="SpriteFrames" uid="uid://bkrdwg2xxodgg" path="res://engine/objects/bumping_blocks/brick/brick.tres" id="2_gspm5"]
+[ext_resource type="PackedScene" uid="uid://10jvatq6mqhk" path="res://stages/extra/world_u/objects/brick_debris_halfgray.tscn" id="3_gvk0m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2x2nd"]
+size = Vector2(32, 32)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_xwmjy"]
+cull_mode = 1
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[node name="Brick" type="AnimatableBody2D" groups=["brick"]]
+material = ExtResource("1_x4l8m")
+disable_mode = 1
+collision_layer = 112
+sync_to_physics = false
+script = ExtResource("1_lhpfe")
+debris_effect = ExtResource("3_gvk0m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_2x2nd")
+
+[node name="Sprites" type="Node2D" parent="."]
+process_mode = 1
+use_parent_material = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites"]
+occluder = SubResource("OccluderPolygon2D_xwmjy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+use_parent_material = true
+sprite_frames = ExtResource("2_gspm5")
+
+[node name="ItemDisplayer" type="Sprite2D" parent="Sprites"]
+position = Vector2(8, 8)
+scale = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-16, -16, 32, 32)
+metadata/_edit_lock_ = true
