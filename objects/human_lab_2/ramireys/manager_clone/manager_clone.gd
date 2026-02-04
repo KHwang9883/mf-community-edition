@@ -1,7 +1,7 @@
 extends GeneralMovementBody2D
 
-const ATTACK = preload("res://objects/human_lab_2/manager_clone/sfx/attack.ogg")
-const MANAGER_PROJECTILE = preload("res://objects/human_lab_2/manager_clone/manager_projectile.tscn")
+const ATTACK = preload("res://objects/human_lab_2/ramireys/manager_clone/sfx/attack.ogg")
+const MANAGER_PROJECTILE = preload("res://objects/human_lab_2/ramireys/manager_clone/manager_projectile.tscn")
 
 @onready var timer: Timer = $Timer
 @onready var timer_shooting: Timer = $TimerShooting
