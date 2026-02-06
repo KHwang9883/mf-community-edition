@@ -1,9 +1,8 @@
-[gd_scene load_steps=77 format=4 uid="uid://orxsnqgan0f7"]
+[gd_scene load_steps=76 format=4 uid="uid://orxsnqgan0f7"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_s6y5m"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ciea7"]
-[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_gst0p"]
-[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_02dl1"]
+[ext_resource type="PackedScene" uid="uid://b636po6fa0tfj" path="res://objects/music_loader_custom/music_loader_custom.tscn" id="3_yn3el"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_3vw5m"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_m3tim"]
 [ext_resource type="AudioStream" uid="uid://dkoehh476anic" path="res://music/extra/human_lab_2/super_mario_bros.mod" id="7_nupf8"]
@@ -62,6 +61,8 @@ colors = PackedColorArray(0.815299, 0.208944, 0.21867, 1, 1, 0.785726, 0.516154,
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_i0tjs"]
 gradient = SubResource("Gradient_iuig2")
+width = 640
+height = 480
 fill_to = Vector2(0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ey4cq"]
@@ -285,8 +286,7 @@ script = ExtResource("1_s6y5m")
 time = -1
 completion_music = ExtResource("2_ciea7")
 
-[node name="MusicLoader" parent="." instance=ExtResource("3_gst0p")]
-script = ExtResource("4_02dl1")
+[node name="MusicLoader" parent="." instance=ExtResource("3_yn3el")]
 tweaked_completion_music = ExtResource("5_3vw5m")
 ignore_fade_in_tweak = false
 music_var_1 = Array[Resource]([])
@@ -304,7 +304,6 @@ boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("7_nupf8")])
-volume_db = Array[float]([6.0])
 
 [node name="Player" parent="." instance=ExtResource("7_m3tim")]
 position = Vector2(80, 400)
@@ -329,12 +328,8 @@ metadata/_edit_lock_ = true
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
-position = Vector2(320, 241)
-scale = Vector2(10, 7.5)
+position = Vector2(320, 240)
 texture = SubResource("GradientTexture2D_i0tjs")
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(3136, 0)
 
 [node name="softendo" type="Node2D" parent="."]
 script = ExtResource("41_bsu84")
@@ -577,15 +572,11 @@ material = SubResource("ShaderMaterial_qo02a")
 position = Vector2(3280, 296)
 texture = ExtResource("44_m8snh")
 
-[node name="Props" type="Node2D" parent="."]
-
-[node name="signs" type="Node2D" parent="Props"]
-
-[node name="Sign" type="Sprite2D" parent="Props/signs"]
+[node name="Sign" type="Sprite2D" parent="."]
 position = Vector2(64, 362)
 texture = ExtResource("18_jkag1")
 
-[node name="Label" type="Label" parent="Props/signs/Sign"]
+[node name="Label" type="Label" parent="Sign"]
 offset_left = -54.0
 offset_top = -57.0
 offset_right = 38.0
