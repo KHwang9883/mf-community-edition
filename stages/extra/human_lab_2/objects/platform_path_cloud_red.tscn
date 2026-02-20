@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://gye8ric3c1gn"]
+
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_ngnvp"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_41ewi"]
+[ext_resource type="Texture2D" uid="uid://bcp0vhj0l88vq" path="res://stages/extra/human_lab_2/gfx/cloud_platform_red.png" id="3_sq0un"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_is10x"]
+atlas = ExtResource("3_sq0un")
+region = Rect2(0, 0, 127, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbvup"]
+atlas = ExtResource("3_sq0un")
+region = Rect2(127, 0, 127, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sw2f5"]
+atlas = ExtResource("3_sq0un")
+region = Rect2(254, 0, 127, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh2w4"]
+atlas = ExtResource("3_sq0un")
+region = Rect2(381, 0, 127, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gc88a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_is10x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbvup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sw2f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh2w4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PlatformPathCloud" type="PathFollow2D"]
+rotates = false
+cubic_interp = false
+loop = false
+script = ExtResource("1_ngnvp")
+sprite = NodePath("Block/Sprite2D")
+
+[node name="Block" type="AnimatableBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_41ewi")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
+visible = false
+polygon = PackedVector2Array(-64, 0, 63, 0, 63, 32, -64, 32)
+one_way_collision = true
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Block"]
+position = Vector2(-1, 16)
+sprite_frames = SubResource("SpriteFrames_gc88a")
+autoplay = "default"
+
+[node name="Block2" type="AnimatableBody2D" parent="."]
+collision_layer = 96
+collision_mask = 0
+script = ExtResource("2_41ewi")
+correction_on_player_falling = false
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block2"]
+visible = false
+polygon = PackedVector2Array(-64, 0, 63, 0, 63, 32, -64, 32)
+one_way_collision = true
