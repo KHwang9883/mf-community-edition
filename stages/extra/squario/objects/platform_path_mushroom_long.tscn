@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://pqxjblli3lot"]
+
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_mwoxi"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_q868n"]
+[ext_resource type="Texture2D" uid="uid://cepoldp06hfix" path="res://stages/extra/squario/gfx/squario_platform_part.png" id="3_6rgiu"]
+
+[node name="PlatformPath" type="PathFollow2D"]
+rotates = false
+cubic_interp = false
+loop = false
+script = ExtResource("1_mwoxi")
+falling_acceleration = 15.0
+falling_delay = 0.5
+sprite = NodePath("Block/Sprite2D")
+
+[node name="Block" type="AnimatableBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_q868n")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
+visible = false
+polygon = PackedVector2Array(-64, 0, 64, 0, 64, 18, -64, 18)
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Block"]
+texture_repeat = 2
+position = Vector2(0, 8)
+texture = ExtResource("3_6rgiu")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 16)
+
+[node name="Block2" type="AnimatableBody2D" parent="."]
+visible = false
+collision_layer = 96
+collision_mask = 0
+script = ExtResource("2_q868n")
+correction_on_player_falling = false
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block2"]
+visible = false
+polygon = PackedVector2Array(-64, 0, 64, 0, 64, 18, -64, 18)
+one_way_collision = true
