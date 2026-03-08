@@ -3364,54 +3364,6 @@ visible = false
 texture = ExtResource("56_aniok")
 offset = Vector2(0, 32)
 
-[node name="PipeNewYear2" parent="ScriptedEvents" instance=ExtResource("14_lrr3l")]
-position = Vector2(1024, -656)
-script = ExtResource("90_shqf7")
-profile_name = "debug"
-level_count = {
-1: 4
-}
-secret_level_values = Array[Resource]([])
-map_scene_template = "res://stages/extra/squario/world_1/map_s1.tscn"
-level_scene_template = "res://stages/extra/squario/world_1/level_s1-{1}.tscn"
-reset_node_path = NodePath("../../CanvasLayer/Reset2")
-force_disable_level_save = true
-set_data_to_profile = ""
-secret_name = ""
-secret_id_explicit = ""
-no_star_world_until_secret = false
-no_secrets_label = true
-force_warp_to_save_room = false
-force_intro_if_level_1 = false
-clear_color_override = false
-secret_completed = ""
-secret_completed_kevin = ""
-secret_completed_values = PackedStringArray()
-warp_to_scene = "uid://dksheyqcyr2em"
-use_circle_transition = true
-circle_closing_speed = 0.05
-circle_focus_on_player = false
-circle_center_after_middle = true
-metadata/_edit_group_ = true
-
-[node name="Label" type="Label" parent="ScriptedEvents/PipeNewYear2"]
-z_index = -6
-offset_left = -63.0
-offset_top = -88.0
-offset_right = 65.0
-offset_bottom = -43.0
-theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
-text = "SQUARIO
-WORLD 1-%s"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-script = ExtResource("129_hhyol")
-empty_text = "SQUARIO"
-
 [node name="PipeIn5" parent="ScriptedEvents" instance=ExtResource("21_qg33c")]
 position = Vector2(768, -656)
 script = ExtResource("54_c84ba")
@@ -3458,6 +3410,55 @@ flash"
 metadata/_edit_use_anchors_ = true
 
 [node name="CursedPipe" type="Sprite2D" parent="ScriptedEvents/PipeIn5"]
+visible = false
+texture = ExtResource("56_aniok")
+offset = Vector2(0, 32)
+
+[node name="PipeIn6" parent="ScriptedEvents" instance=ExtResource("21_qg33c")]
+position = Vector2(1024, -656)
+script = ExtResource("54_c84ba")
+profile_name = "mf_squario"
+level_count = {
+1: 4,
+2: 4,
+3: 4,
+4: 4
+}
+map_scene_template = "res://stages/extra/squario/world_{0}/map_s{0}.tscn"
+level_scene_template = "res://stages/extra/squario/world_{0}/level_s{0}-{1}.tscn"
+reset_node_path = NodePath("../../CanvasLayer/Reset")
+kevin_label_path = NodePath("../../KevinLayer/KevinActivationLabel")
+force_disable_level_save = true
+set_data_to_profile = ""
+allow_selecting_worlds = false
+allow_selecting_completed_levels = false
+can_frog_challenge = false
+show_kevin_not_tested_warning = false
+no_applicable_text = true
+warp_to_scene = "uid://dfkin5aca3u0"
+use_circle_transition = true
+circle_closing_speed = 0.05
+circle_focus_on_player = false
+
+[node name="Label" type="Label" parent="ScriptedEvents/PipeIn6"]
+z_index = -6
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -51.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "squario world
+%s"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("15_pr6di")
+empty_text = "squario worlds"
+metadata/_edit_use_anchors_ = true
+
+[node name="CursedPipe" type="Sprite2D" parent="ScriptedEvents/PipeIn6"]
 visible = false
 texture = ExtResource("56_aniok")
 offset = Vector2(0, 32)
@@ -7042,11 +7043,12 @@ metadata/_edit_lock_ = true
 [connection signal="player_exit" from="ScriptedEvents/PipeOtherworld" to="CanvasLayer/Reset2" method="_on_pipe_save_player_exit"]
 [connection signal="player_enter" from="ScriptedEvents/PipeNewYear" to="CanvasLayer/Reset2" method="_player_enter_centered"]
 [connection signal="player_exit" from="ScriptedEvents/PipeNewYear" to="CanvasLayer/Reset2" method="_on_pipe_save_player_exit"]
-[connection signal="player_enter" from="ScriptedEvents/PipeNewYear2" to="CanvasLayer/Reset2" method="_player_enter_centered"]
-[connection signal="player_exit" from="ScriptedEvents/PipeNewYear2" to="CanvasLayer/Reset2" method="_on_pipe_save_player_exit"]
 [connection signal="body_entered" from="ScriptedEvents/PipeIn5" to="CanvasLayer/Reset" method="_player_enter_centered" unbinds=1]
 [connection signal="body_exited" from="ScriptedEvents/PipeIn5" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
 [connection signal="warp_started" from="ScriptedEvents/PipeIn5" to="Node" method="skip_continue_save"]
+[connection signal="body_entered" from="ScriptedEvents/PipeIn6" to="CanvasLayer/Reset" method="_player_enter_centered" unbinds=1]
+[connection signal="body_exited" from="ScriptedEvents/PipeIn6" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="warp_started" from="ScriptedEvents/PipeIn6" to="Node" method="skip_continue_save"]
 [connection signal="body_entered" from="ScriptedEvents/MFFlashUnlocked/PipeIn" to="CanvasLayer/Reset" method="_player_enter_centered" unbinds=1]
 [connection signal="body_exited" from="ScriptedEvents/MFFlashUnlocked/PipeIn" to="CanvasLayer/Reset" method="_on_pipe_save_player_exit" unbinds=1]
 [connection signal="warp_started" from="ScriptedEvents/MFFlashUnlocked/PipeIn" to="Node" method="skip_continue_save"]
