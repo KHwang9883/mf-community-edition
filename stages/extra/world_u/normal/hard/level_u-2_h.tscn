@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=4 uid="uid://qr2a6h3fw6yv"]
+[gd_scene load_steps=80 format=4 uid="uid://qr2a6h3fw6yv"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5b5qm"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_0suf6"]
@@ -18,7 +18,9 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="16_iwgdy"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="17_db0k1"]
 [ext_resource type="Texture2D" uid="uid://004nqqw4ioqu" path="res://stages/extra/world_u/gfx/starland_bg.png" id="18_3hhbd"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="18_xtuwn"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://engine/tilesets/underground/gfx/underground.png" id="19_7f4t6"]
+[ext_resource type="Script" uid="uid://ck8etkhldnph8" path="res://stages/world_1/scripts/text_secret_passage.gd" id="19_q36p7"]
 [ext_resource type="PackedScene" uid="uid://bhf308l61p72i" path="res://tilesets/underground/scenes/lamp_broken.tscn" id="20_eb26w"]
 [ext_resource type="PackedScene" uid="uid://cex5bahi2ueay" path="res://engine/tilesets/starland/scenes/starland_hill.tscn" id="21_n8cjw"]
 [ext_resource type="Texture2D" uid="uid://3f6efhfdu374" path="res://engine/tilesets/overworld/fence.png" id="22_oobpg"]
@@ -300,6 +302,25 @@ theme_override_fonts/font = ExtResource("17_db0k1")
 text = "WORLD
 U-2"
 horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="HUD"]
+offset_left = 217.0
+offset_top = -22.0
+offset_right = 423.0
+offset_bottom = -7.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("18_xtuwn")
+theme_override_font_sizes/font_size = 12
+text = "WELCOME BACK TO 2014!!!"
+horizontal_alignment = 1
+script = ExtResource("19_q36p7")
+tween_to = 224
+action_after_sec = 3.0
+change_scene = "res://stages/extra/world_u/normal/hard/extralevel_hard.tscn"
+circle_transition_center_on_player = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 z_index = -100
@@ -1475,7 +1496,11 @@ offset_right = 8000.0
 offset_bottom = 1312.0
 rotation = -3.14159
 
+[node name="PipeIn3" parent="." instance=ExtResource("37_qs06j")]
+position = Vector2(800, 1360)
+
 [connection signal="player_enter" from="Area2D2" to="Water" method="show"]
+[connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
 
 [editable path="Lava"]
 [editable path="Water"]
