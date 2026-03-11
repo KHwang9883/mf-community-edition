@@ -1,12 +1,14 @@
-[gd_scene load_steps=85 format=4 uid="uid://csw6yvn72v1ik"]
+[gd_scene load_steps=87 format=4 uid="uid://csw6yvn72v1ik"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_aoarn"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ykvcy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_1duyc"]
-[ext_resource type="AudioStream" uid="uid://dnlo0h6tf5pn4" path="res://music/extra/world_u/secret_extralevels/abra1.mod" id="4_cm25b"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_bbwpv"]
+[ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_maofm"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_smnd8"]
-[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_w5a8o"]
+[ext_resource type="AudioStream" uid="uid://bs2tujgc67d1r" path="res://music/smw2-flower-garden.ogg" id="6_bbwpv"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_33wpv"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_maofm"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="8_mssfw"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="9_1rpsu"]
 [ext_resource type="Texture2D" uid="uid://c2xfexiy1rnqh" path="res://engine/tilesets/overworld/overworld_classic.png" id="9_xg2oj"]
@@ -792,7 +794,24 @@ completion_write_save_path_override = "res://stages/extra/world_u/level_u-2_e.ts
 jump_to_scene = "uid://cs8qcm3hsw0jp"
 
 [node name="MusicLoader" parent="." instance=ExtResource("3_1duyc")]
-music = Array[Resource]([ExtResource("4_cm25b")])
+script = ExtResource("4_bbwpv")
+tweaked_completion_music = ExtResource("5_maofm")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
+music = Array[Resource]([ExtResource("6_bbwpv")])
 volume_db = Array[float]([0.0])
 start_from_sec = Array[float]([0.0])
 
@@ -801,7 +820,7 @@ position = Vector2(112, 400)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 editor_draw_screen = false
-script = ExtResource("7_w5a8o")
+script = ExtResource("8_maofm")
 metadata/_edit_lock_ = true
 
 [node name="CameraArea" parent="." instance=ExtResource("8_33wpv")]
