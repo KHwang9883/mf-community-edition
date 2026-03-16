@@ -1,0 +1,342 @@
+[gd_scene load_steps=43 format=3 uid="uid://c17j25qcgodop"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_gonnr"]
+[ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_vlcvf"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_eoml6"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_taib7"]
+[ext_resource type="AudioStream" uid="uid://dw8cjsn5ky1c4" path="res://music/extra/mf_flash/smb-overworld.ogg" id="5_0xas1"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="6_ilcsd"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="7_x5uxu"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_l4mlr"]
+[ext_resource type="TileSet" uid="uid://dn48opfbxswx6" path="res://stages/extra/squario/tilesets/overworld_squario.tres" id="9_s8xsu"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_01hln"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_jiwoj"]
+[ext_resource type="Texture2D" uid="uid://capox44qjrpf" path="res://stages/extra/squario/gfx/squario_spikedhill.png" id="12_mlkwp"]
+[ext_resource type="Texture2D" uid="uid://dyfawvtcx11co" path="res://stages/extra/squario/gfx/squario_spikedhill_big.png" id="13_ag8jk"]
+[ext_resource type="Texture2D" uid="uid://c2yn5pg8ksr6r" path="res://stages/mario_forever_flash/gfx/bigoblako3.png" id="14_tootx"]
+[ext_resource type="Texture2D" uid="uid://c7sa1ubctnelh" path="res://stages/mario_forever_flash/gfx/bigoblako6.png" id="15_cjfy4"]
+[ext_resource type="Texture2D" uid="uid://dsk62nnkro6a4" path="res://stages/mario_forever_flash/gfx/bigoblako5.png" id="16_654e3"]
+[ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="17_jgtnu"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="18_pnhv7"]
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="19_w4vf4"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="20_rdtvs"]
+[ext_resource type="PackedScene" uid="uid://dfm7d4qtja67b" path="res://engine/objects/core/finish_line/finish_line.tscn" id="21_7s6g5"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="22_3uxf2"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="23_pa7ro"]
+[ext_resource type="PackedScene" uid="uid://5ssr5jwpsldi" path="res://engine/objects/bumping_blocks/question_block/templates/Coin Question Block.tscn" id="24_kpjpq"]
+[ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="25_4xuaq"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="26_ju5uh"]
+[ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="27_n7t4q"]
+[ext_resource type="Texture2D" uid="uid://d7bguquxitp5" path="res://engine/tilesets/overworld/tree_short.png" id="28_8qu3q"]
+[ext_resource type="Texture2D" uid="uid://0n8xl3a1xnpc" path="res://stages/extra/squario/gfx/squario_treetop_tall.png" id="29_a1wqe"]
+[ext_resource type="Texture2D" uid="uid://c3ccyreeo3e4o" path="res://stages/extra/squario/gfx/squario_treetop.png" id="30_a7e7k"]
+[ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="31_doeiw"]
+[ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="32_s2yum"]
+[ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="33_kb63o"]
+[ext_resource type="Texture2D" uid="uid://e0p2dxjupiyh" path="res://stages/extra/squario/layouts/3.png" id="34_lwngi"]
+
+[sub_resource type="Gradient" id="Gradient_wou6p"]
+offsets = PackedFloat32Array(0.240602, 0.443609)
+colors = PackedColorArray(0, 0.6, 0.8, 1, 0.0666667, 1, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_84j5q"]
+gradient = SubResource("Gradient_wou6p")
+width = 480
+
+[sub_resource type="Resource" id="Resource_br5ys"]
+script = ExtResource("20_rdtvs")
+creation_fallback_node = ExtResource("18_pnhv7")
+creation_nodepack = ExtResource("18_pnhv7")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_5kkmf"]
+resource_local_to_scene = true
+script = ExtResource("20_rdtvs")
+creation_nodepack = ExtResource("18_pnhv7")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_0nlpb"]
+resource_local_to_scene = true
+script = ExtResource("20_rdtvs")
+creation_nodepack = ExtResource("18_pnhv7")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_obqsy"]
+resource_local_to_scene = true
+script = ExtResource("20_rdtvs")
+creation_fallback_node = ExtResource("26_ju5uh")
+creation_nodepack = ExtResource("27_n7t4q")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_22dw4"]
+resource_local_to_scene = true
+script = ExtResource("20_rdtvs")
+creation_fallback_node = ExtResource("26_ju5uh")
+creation_nodepack = ExtResource("27_n7t4q")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_t5xa2"]
+resource_local_to_scene = true
+script = ExtResource("20_rdtvs")
+creation_nodepack = ExtResource("32_s2yum")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[node name="LevelS4-2" type="Node2D"]
+script = ExtResource("1_gonnr")
+time = 320
+completion_music = ExtResource("2_vlcvf")
+jump_to_scene = "uid://dksheyqcyr2em"
+completion_music_delay_sec = 7.0
+metadata/_edit_lock_ = true
+metadata/_edit_horizontal_guides_ = [-56.0]
+
+[node name="MusicLoader" parent="." instance=ExtResource("3_eoml6")]
+script = ExtResource("4_taib7")
+tweaked_completion_music = ExtResource("2_vlcvf")
+ignore_fade_in_tweak = false
+music_var_1 = Array[Resource]([])
+music_var_2 = Array[Resource]([])
+music_var_3 = Array[Resource]([])
+var_1_volume_db = Array[float]([0.0])
+var_1_start_from_sec = Array[float]([0.0])
+var_2_volume_db = Array[float]([0.0])
+var_2_start_from_sec = Array[float]([0.0])
+var_3_volume_db = Array[float]([0.0])
+var_3_start_from_sec = Array[float]([0.0])
+boss_music_var_1 = null
+boss_music_var_2 = null
+boss_music_var_3 = null
+boss_music_volume_db = Array[float]([0.0])
+boss_music_start_from_sec = Array[float]([0.0])
+music = Array[Resource]([ExtResource("5_0xas1")])
+volume_db = Array[float]([4.0])
+
+[node name="Mario" parent="." instance=ExtResource("6_ilcsd")]
+position = Vector2(112, 432)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_x5uxu")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("8_l4mlr")]
+offset_right = 5344.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_set = ExtResource("9_s8xsu")
+
+[node name="Layer1" type="TileMapLayer" parent="."]
+z_index = -1
+use_parent_material = true
+position = Vector2(15, 6)
+tile_set = ExtResource("9_s8xsu")
+
+[node name="HUD" parent="." instance=ExtResource("10_01hln")]
+
+[node name="World" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.2
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 329.0
+offset_bottom = 49.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 3
+theme_override_fonts/font = ExtResource("11_jiwoj")
+text = "WORLD
+4-2"
+horizontal_alignment = 1
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_84j5q")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.375, 0)
+
+[node name="SquarioSpikedhill" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(-240, 448)
+texture = ExtResource("12_mlkwp")
+
+[node name="SquarioSpikedhillBig" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(-464, 120)
+texture = ExtResource("13_ag8jk")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.85, 0)
+
+[node name="Bigoblako3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(-152, 1104)
+texture = ExtResource("14_tootx")
+
+[node name="Bigoblako6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(40, 688)
+texture = ExtResource("15_cjfy4")
+flip_h = true
+
+[node name="Bigoblako5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(-328, 248)
+texture = ExtResource("16_654e3")
+
+[node name="KoopaGreen" parent="." instance=ExtResource("17_jgtnu")]
+position = Vector2(-136, 200)
+
+[node name="Coin17" parent="." instance=ExtResource("18_pnhv7")]
+position = Vector2(-136, 272)
+
+[node name="Brick4" parent="." instance=ExtResource("19_w4vf4")]
+position = Vector2(-104, 272)
+
+[node name="Brick29" parent="." instance=ExtResource("19_w4vf4")]
+position = Vector2(-104, 176)
+max_items = 5
+result = SubResource("Resource_br5ys")
+
+[node name="FinishLine" parent="." instance=ExtResource("21_7s6g5")]
+position = Vector2(4832, 448)
+
+[node name="LightEffect" type="Sprite2D" parent="FinishLine"]
+z_index = -10
+position = Vector2(176, -268)
+texture = ExtResource("22_3uxf2")
+script = ExtResource("23_pa7ro")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect2" type="Sprite2D" parent="FinishLine"]
+z_index = -10
+position = Vector2(240, -268)
+texture = ExtResource("22_3uxf2")
+script = ExtResource("23_pa7ro")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect3" type="Sprite2D" parent="FinishLine"]
+z_index = -10
+position = Vector2(16, -13)
+texture = ExtResource("22_3uxf2")
+script = ExtResource("23_pa7ro")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="QuestionBlock17" parent="." instance=ExtResource("24_kpjpq")]
+position = Vector2(-72, 208)
+result = SubResource("Resource_5kkmf")
+initially_visible_and_solid = false
+
+[node name="QuestionBlock11" parent="." instance=ExtResource("24_kpjpq")]
+position = Vector2(-72, 272)
+result = SubResource("Resource_0nlpb")
+
+[node name="QuestionBlockFireFlower3" parent="." instance=ExtResource("25_4xuaq")]
+position = Vector2(-72, 240)
+result = SubResource("Resource_obqsy")
+
+[node name="QuestionBlockFireFlower4" parent="." instance=ExtResource("25_4xuaq")]
+position = Vector2(-104, 240)
+result = SubResource("Resource_22dw4")
+initially_visible_and_solid = false
+
+[node name="TreeShort2" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(-104, 416)
+texture = ExtResource("28_8qu3q")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+
+[node name="SquarioTreetopTall" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(-104, 368)
+texture = ExtResource("29_a1wqe")
+
+[node name="SquarioTreetop" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(-136, 384)
+texture = ExtResource("30_a7e7k")
+
+[node name="QuestionBlockLife" parent="." instance=ExtResource("31_doeiw")]
+position = Vector2(-104, 208)
+result = SubResource("Resource_t5xa2")
+initially_visible_and_solid = false
+exists_once = true
+
+[node name="Goomba" parent="." instance=ExtResource("33_kb63o")]
+position = Vector2(-136, 232)
+
+[node name="0" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.568627)
+z_index = -11
+position = Vector2(5056, 1184)
+scale = Vector2(1.281, 1.281)
+texture = ExtResource("34_lwngi")
