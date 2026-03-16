@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dei6r5m7c65gp"]
+[gd_scene load_steps=35 format=3 uid="uid://dei6r5m7c65gp"]
 
 [ext_resource type="PackedScene" uid="uid://bxyjgsiel1kgl" path="res://engine/scenes/map/complete_template.tscn" id="1_e2rpu"]
 [ext_resource type="Texture2D" uid="uid://xrar7on56a01" path="res://gfx/map/world_names/world_2.png" id="2_nww6d"]
@@ -7,10 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://cri6ax5vkgp6w" path="res://gfx/fancy_graphics/world_texts/MARIO_WORLD_bigger.png" id="5_f050q"]
 [ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="6_xgpvs"]
 [ext_resource type="SpriteFrames" uid="uid://bg3rkune5k0d" path="res://gfx/fancy_graphics/world_texts/map_complete.tres" id="7_ew5ul"]
-[ext_resource type="Texture2D" uid="uid://r4ikh3phpgk5" path="res://stages/mario_forever_flash/gfx/map2.png" id="8_onps0"]
+[ext_resource type="Texture2D" uid="uid://b52ptgnlmfd3q" path="res://stages/extra/squario/gfx/SquarioW2.png" id="8_u83fy"]
 [ext_resource type="Texture2D" uid="uid://bs2o17gts83u2" path="res://gfx/fancy_graphics/gwiazdkowy_mapowy.png" id="9_dls7i"]
 [ext_resource type="Script" uid="uid://bgq4yksu7kl5m" path="res://gfx/fancy_graphics/scripts/map_star_bg.gd" id="10_yxbx2"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="11_qs32d"]
+[ext_resource type="Texture2D" uid="uid://kcqdqc5x0fji" path="res://stages/extra/squario/gfx/squario_cloud.png" id="12_rgsgb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uckvt"]
 atlas = ExtResource("4_tnrw8")
@@ -137,6 +138,35 @@ atlas = ExtResource("6_xgpvs")
 region = Rect2(62, 0, 60, 83)
 filter_clip = true
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_se2vm"]
+atlas = ExtResource("12_rgsgb")
+region = Rect2(0, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vu0xu"]
+atlas = ExtResource("12_rgsgb")
+region = Rect2(64, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bqv5"]
+atlas = ExtResource("12_rgsgb")
+region = Rect2(128, 0, 64, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ud3w5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_se2vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vu0xu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bqv5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
 [node name="Map-complete" instance=ExtResource("1_e2rpu")]
 goto_scene = "res://stages/save_game_room/save_game_room.tscn"
 world_name = "2"
@@ -183,8 +213,8 @@ autoplay = "default"
 offset = Vector2(0, 24)
 
 [node name="Map2-complete" type="Sprite2D" parent="." index="3"]
-position = Vector2(-400, 48)
-texture = ExtResource("8_onps0")
+position = Vector2(-400, 88)
+texture = ExtResource("8_u83fy")
 centered = false
 
 [node name="Node2D" type="Node2D" parent="." index="4"]
@@ -195,5 +225,18 @@ position = Vector2(320, 64)
 texture = ExtResource("9_dls7i")
 script = ExtResource("10_yxbx2")
 
-[node name="MapCloud10" parent="Node2D" index="1" instance=ExtResource("11_qs32d")]
-position = Vector2(64, 64)
+[node name="MapCloud4" parent="." index="5" instance=ExtResource("11_qs32d")]
+position = Vector2(52, 130)
+sprite_frames = SubResource("SpriteFrames_ud3w5")
+
+[node name="MapCloud5" parent="." index="6" instance=ExtResource("11_qs32d")]
+position = Vector2(212, 106)
+sprite_frames = SubResource("SpriteFrames_ud3w5")
+
+[node name="MapCloud6" parent="." index="7" instance=ExtResource("11_qs32d")]
+position = Vector2(364, 122)
+sprite_frames = SubResource("SpriteFrames_ud3w5")
+
+[node name="MapCloud7" parent="." index="8" instance=ExtResource("11_qs32d")]
+position = Vector2(492, 138)
+sprite_frames = SubResource("SpriteFrames_ud3w5")
