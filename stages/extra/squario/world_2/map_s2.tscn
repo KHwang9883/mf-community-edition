@@ -1,12 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://ddbu0q7g7qb8m"]
+[gd_scene load_steps=39 format=3 uid="uid://ddbu0q7g7qb8m"]
 
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_mwgxy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_jadis"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_pyaq5"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="4_673db"]
-[ext_resource type="AudioStream" uid="uid://b18swkll2jpt0" path="res://music/extra/mf_flash/CHAOS1.XM" id="5_26v6h"]
+[ext_resource type="AudioStream" uid="uid://d0j67wkhewsxy" path="res://music/extra/squario/raising_hell.mod" id="5_2gbm8"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="6_gshqr"]
-[ext_resource type="Texture2D" uid="uid://r4ikh3phpgk5" path="res://stages/mario_forever_flash/gfx/map2.png" id="7_u3fj8"]
+[ext_resource type="Texture2D" uid="uid://b52ptgnlmfd3q" path="res://stages/extra/squario/gfx/SquarioW2.png" id="7_2gbm8"]
 [ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="8_3ql07"]
 [ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="9_qt071"]
 [ext_resource type="Script" uid="uid://w38wmhi8lagh" path="res://engine/scenes/map/scripts/map_camera.gd" id="10_3rgt4"]
@@ -32,11 +32,41 @@
 [ext_resource type="Texture2D" uid="uid://o7g45tfg2ic8" path="res://gfx/fancy_graphics/Bowsert.png" id="30_p7kq5"]
 [ext_resource type="Script" uid="uid://n5h4u52s50vi" path="res://gfx/fancy_graphics/scripts/map_bowser.gd" id="31_lohg3"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="32_7ceg2"]
+[ext_resource type="Texture2D" uid="uid://kcqdqc5x0fji" path="res://stages/extra/squario/gfx/squario_cloud.png" id="33_uuus0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_en6vd"]
 atlas = ExtResource("17_n60da")
 region = Rect2(62, 0, 60, 83)
 filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_se2vm"]
+atlas = ExtResource("33_uuus0")
+region = Rect2(0, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vu0xu"]
+atlas = ExtResource("33_uuus0")
+region = Rect2(64, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bqv5"]
+atlas = ExtResource("33_uuus0")
+region = Rect2(128, 0, 64, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ugju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_se2vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vu0xu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bqv5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_mwgxy")
@@ -61,7 +91,7 @@ boss_music_var_2 = null
 boss_music_var_3 = null
 boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
-music = Array[Resource]([ExtResource("5_26v6h")])
+music = Array[Resource]([ExtResource("5_2gbm8")])
 
 [node name="Bg" type="Sprite2D" parent="."]
 texture = ExtResource("6_gshqr")
@@ -72,13 +102,13 @@ region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
 [node name="Map2" type="Sprite2D" parent="."]
-position = Vector2(533, 256)
-texture = ExtResource("7_u3fj8")
+position = Vector2(520, 192)
+texture = ExtResource("7_2gbm8")
 
 [node name="Player" parent="." instance=ExtResource("8_3ql07")]
 z_index = 5
 z_as_relative = false
-position = Vector2(-15, 196)
+position = Vector2(-16, 249)
 dots = ExtResource("9_qt071")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -173,67 +203,39 @@ metadata/_edit_lock_ = true
 [node name="MapPlayerMarker9" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(0, 196)
+position = Vector2(-14, 251)
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(73, 196)
+position = Vector2(58, 251)
 script = ExtResource("28_nm4nf")
 level = "uid://b3r22rg2xo81h"
 
 [node name="MapPlayerMarker4" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(283, 196)
+position = Vector2(248, 250)
 script = ExtResource("28_nm4nf")
 level = "uid://umo10tk8l1t1"
 
 [node name="MapPlayerMarker5" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(283, 176)
+position = Vector2(248, 200)
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker7" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(412, 176)
-script = ExtResource("28_nm4nf")
-
-[node name="MapPlayerMarker8" type="Marker2D" parent="MarkerSpace"]
-show_behind_parent = true
-z_as_relative = false
-position = Vector2(412, 141)
-rotation = -1.57068
-script = ExtResource("28_nm4nf")
-
-[node name="MapPlayerMarker12" type="Marker2D" parent="MarkerSpace"]
-show_behind_parent = true
-z_as_relative = false
-position = Vector2(495, 141)
-rotation = -1.57068
-script = ExtResource("28_nm4nf")
-
-[node name="MapPlayerMarker13" type="Marker2D" parent="MarkerSpace"]
-show_behind_parent = true
-z_as_relative = false
-position = Vector2(495, 176)
-rotation = -1.57068
-script = ExtResource("28_nm4nf")
-
-[node name="MapPlayerMarker14" type="Marker2D" parent="MarkerSpace"]
-show_behind_parent = true
-z_as_relative = false
-position = Vector2(564, 176)
-rotation = -1.57068
+position = Vector2(656, 200)
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker15" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(564, 195)
+position = Vector2(656, 250)
 rotation = -1.57068
 script = ExtResource("28_nm4nf")
 level = "uid://bkfiujwiw00sd"
@@ -241,62 +243,49 @@ level = "uid://bkfiujwiw00sd"
 [node name="MapPlayerMarker10" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(620, 195)
+position = Vector2(681, 250)
 rotation = -1.57068
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker16" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(620, 374)
+position = Vector2(681, 216)
 rotation = -1.57068
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker17" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(736, 374)
+position = Vector2(816, 216)
 rotation = -1.57068
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker18" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(736, 304)
+position = Vector2(816, 238)
 rotation = -1.57068
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker19" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(800, 304)
+position = Vector2(912, 238)
 rotation = -1.57068
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker20" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(800, 355)
+position = Vector2(912.001, 251.001)
 rotation = -1.57068
-script = ExtResource("28_nm4nf")
-
-[node name="MapPlayerMarker21" type="Marker2D" parent="MarkerSpace"]
-show_behind_parent = true
-z_as_relative = false
-position = Vector2(928, 355)
-rotation = -1.57068
-script = ExtResource("28_nm4nf")
-
-[node name="MapPlayerMarker22" type="Marker2D" parent="MarkerSpace"]
-show_behind_parent = true
-z_as_relative = false
-position = Vector2(928.245, 371)
 script = ExtResource("28_nm4nf")
 
 [node name="MapPlayerMarker23" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
 z_as_relative = false
-position = Vector2(960, 371)
+position = Vector2(952.001, 251.001)
 script = ExtResource("28_nm4nf")
 level = "uid://d3itvifoggvwt"
 
@@ -307,18 +296,34 @@ script = ExtResource("12_5gcpk")
 dot_offset = Vector2(5, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-position = Vector2(993, 359)
+position = Vector2(1000, 240)
 texture = ExtResource("30_p7kq5")
 script = ExtResource("31_lohg3")
 
-[node name="MapCloud" parent="Node2D" instance=ExtResource("32_7ceg2")]
-position = Vector2(464, 64)
+[node name="MapCloud" parent="." instance=ExtResource("32_7ceg2")]
+position = Vector2(32, 120)
+sprite_frames = SubResource("SpriteFrames_3ugju")
 
-[node name="MapCloud4" parent="Node2D" instance=ExtResource("32_7ceg2")]
-position = Vector2(608, 112)
+[node name="MapCloud2" parent="." instance=ExtResource("32_7ceg2")]
+position = Vector2(168, 104)
+sprite_frames = SubResource("SpriteFrames_3ugju")
 
-[node name="MapCloud2" parent="Node2D" instance=ExtResource("32_7ceg2")]
-position = Vector2(96, 80)
+[node name="MapCloud3" parent="." instance=ExtResource("32_7ceg2")]
+position = Vector2(272, 120)
+sprite_frames = SubResource("SpriteFrames_3ugju")
 
-[node name="MapCloud3" parent="Node2D" instance=ExtResource("32_7ceg2")]
-position = Vector2(256, 64)
+[node name="MapCloud4" parent="." instance=ExtResource("32_7ceg2")]
+position = Vector2(472, 128)
+sprite_frames = SubResource("SpriteFrames_3ugju")
+
+[node name="MapCloud5" parent="." instance=ExtResource("32_7ceg2")]
+position = Vector2(632, 104)
+sprite_frames = SubResource("SpriteFrames_3ugju")
+
+[node name="MapCloud6" parent="." instance=ExtResource("32_7ceg2")]
+position = Vector2(784, 120)
+sprite_frames = SubResource("SpriteFrames_3ugju")
+
+[node name="MapCloud7" parent="." instance=ExtResource("32_7ceg2")]
+position = Vector2(912, 136)
+sprite_frames = SubResource("SpriteFrames_3ugju")
