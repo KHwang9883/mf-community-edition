@@ -1,0 +1,194 @@
+[gd_scene load_steps=29 format=3 uid="uid://b3wah7pyrfxya"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_5jm18"]
+[ext_resource type="Script" uid="uid://dlkn3px085yet" path="res://engine/scripts/classes/level_cutscene/cutscenes/cave_cutscene.gd" id="2_ihf63"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="3_673f4"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_ywwct"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_v8064"]
+[ext_resource type="TileSet" uid="uid://dwm3dyd221p03" path="res://stages/extra/squario/tilesets/squario_snowland.tres" id="6_cxrr4"]
+[ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://engine/objects/effects/wide_clouds_moving/texture.png" id="7_wgmqp"]
+[ext_resource type="Script" uid="uid://cg3pyfbjfcydc" path="res://engine/objects/effects/wide_clouds_moving/wide_clouds_moving.gd" id="8_lqta4"]
+[ext_resource type="Texture2D" uid="uid://mvkw15e5th5q" path="res://stages/extra/squario/gfx/white_pipe_entering_another.png" id="9_n02ss"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="10_tfy0u"]
+[ext_resource type="AudioStream" uid="uid://b76ae2v10akqg" path="res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav" id="11_lspqu"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="12_bvj0a"]
+[ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="13_lnxwm"]
+[ext_resource type="Texture2D" uid="uid://c4aj10ycv5wqn" path="res://stages/extra/squario/gfx/squario_snowbg.png" id="14_qnoc7"]
+[ext_resource type="Texture2D" uid="uid://d7bguquxitp5" path="res://engine/tilesets/overworld/tree_short.png" id="16_0x5w0"]
+[ext_resource type="Texture2D" uid="uid://dr68n8va66blv" path="res://stages/extra/squario/gfx/squario_snow_treetop_tall.png" id="16_bmor2"]
+[ext_resource type="Texture2D" uid="uid://di51rjvuyd67f" path="res://stages/extra/squario/gfx/squario_snow_treetop.png" id="17_okb0x"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="18_dfk8w"]
+[ext_resource type="Texture2D" uid="uid://bs57b16ok6fv5" path="res://tilesets/icy_ground/snow_night_forest.png" id="19_4w7jq"]
+[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="20_rxp7n"]
+
+[sub_resource type="Gradient" id="Gradient_webwm"]
+offsets = PackedFloat32Array(0.240602, 0.443609)
+colors = PackedColorArray(0.113725, 0.247059, 0.439216, 1, 0.054902, 0.133333, 0.247059, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vr2uv"]
+gradient = SubResource("Gradient_webwm")
+width = 480
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujjo0"]
+atlas = ExtResource("19_4w7jq")
+region = Rect2(232, 136, 16, 16)
+
+[sub_resource type="Curve" id="Curve_10xqa"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.616216, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -7.01374, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_nn8nd"]
+curve = SubResource("Curve_10xqa")
+
+[sub_resource type="Curve" id="Curve_52qgw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.756757, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -13.0691, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_oh7c7"]
+curve = SubResource("Curve_52qgw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_62r54"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(5240, 0, 0)
+emission_shape = 3
+emission_box_extents = Vector3(5240, 0, 1)
+angle_min = -45.0
+angle_max = 45.0
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_oh7c7")
+alpha_curve = SubResource("CurveTexture_nn8nd")
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_use_scale = true
+
+[node name="CaveCutscene" type="Node2D"]
+script = ExtResource("1_5jm18")
+
+[node name="CutsceneLogic" type="Node" parent="."]
+script = ExtResource("2_ihf63")
+
+[node name="Mario" parent="." instance=ExtResource("3_673f4")]
+position = Vector2(0, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("4_ywwct")
+
+[node name="CamArea" parent="." instance=ExtResource("5_v8064")]
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="TileMap3" type="TileMap" parent="."]
+tile_set = ExtResource("6_cxrr4")
+format = 2
+layer_0/tile_data = PackedInt32Array(983059, 393227, 3, 917523, 11, 1, 851987, 393227, 0, 983058, 65547, 0, 917522, 327691, 5, 851986, 65547, 2, 983057, 65547, 0, 917521, 327691, 5, 851985, 65547, 2, 983056, 65547, 0, 917520, 327691, 5, 851984, 65547, 2, 983055, 65547, 0, 917519, 327691, 5, 851983, 65547, 2, 983054, 65547, 0, 917518, 327691, 5, 851982, 65547, 2, 983053, 65547, 0, 917517, 327691, 5, 851981, 65547, 2, 983052, 65547, 0, 917516, 327691, 5, 851980, 65547, 2, 983051, 65547, 0, 917515, 327691, 5, 851979, 65547, 2, 983050, 65547, 0, 917514, 327691, 5, 851978, 65547, 2, 983049, 65547, 0, 917513, 327691, 5, 851977, 65547, 2, 983048, 65547, 0, 917512, 327691, 5, 851976, 65547, 2, 983047, 65547, 0, 917511, 327691, 5, 851975, 65547, 2, 983046, 65547, 0, 917510, 327691, 5, 851974, 65547, 2, 983045, 65547, 0, 917509, 327691, 5, 851973, 65547, 2, 983044, 65547, 0, 917508, 327691, 5, 851972, 65547, 2, 983043, 65547, 0, 917507, 327691, 5, 851971, 65547, 2, 983042, 65547, 0, 917506, 327691, 5, 851970, 65547, 2, 983041, 65547, 0, 917505, 327691, 5, 851969, 65547, 2, 983040, 65547, 0, 917504, 327691, 5, 851968, 65547, 2, 1048575, 196619, 3, 983039, 131083, 1, 917503, 196619, 0, 720915, 1, 0, 655379, 1, 0, 720911, 131075, 0, 786447, 131075, 1, 720912, 196611, 0, 786448, 196611, 1, 589841, 3, 0, 655377, 3, 1, 589842, 65539, 0, 655378, 65539, 1, 720913, 3, 1, 720914, 65539, 1, 786449, 3, 1, 786450, 65539, 1, 786443, 12, 0, 786442, 12, 0, 786441, 12, 0, 786440, 12, 0, 786439, 12, 0)
+layer_1/name = "Layer1"
+layer_1/tile_data = PackedInt32Array(786437, 2, 917504)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+z_index = 25
+texture_repeat = 2
+position = Vector2(320, 0)
+texture = ExtResource("7_wgmqp")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("8_lqta4")
+speed = 100.0
+
+[node name="GreenPipeEnteringAnother" type="Sprite2D" parent="."]
+position = Vector2(544, 384)
+texture = ExtResource("9_n02ss")
+
+[node name="PipeIn" parent="." instance=ExtResource("10_tfy0u")]
+position = Vector2(470, 384)
+rotation = -1.57079
+warp_direction = 1
+warp_to_scene = "uid://bpaxjfsegsljr"
+warping_speed = 50.0
+warping_sound = ExtResource("11_lspqu")
+warp_disable_smooth_entry = true
+use_circle_transition = true
+
+[node name="HUD" parent="." instance=ExtResource("12_bvj0a")]
+visible = false
+
+[node name="ChorniyCutsceneSpawner" type="Node" parent="."]
+script = ExtResource("13_lnxwm")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_vr2uv")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.85, 0)
+
+[node name="Starland" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture_repeat = 2
+position = Vector2(0, 160)
+texture = ExtResource("14_qnoc7")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 15024, 337)
+metadata/_edit_lock_ = true
+
+[node name="TreeShort2" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(440, 400)
+texture = ExtResource("16_0x5w0")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+
+[node name="SquarioTreetopTall" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(160, 320)
+texture = ExtResource("16_bmor2")
+
+[node name="TreeShort6" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(160, 400)
+texture = ExtResource("16_0x5w0")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+
+[node name="TreeShort7" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(160, 368)
+texture = ExtResource("16_0x5w0")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+
+[node name="SquarioTreetop3" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(440, 368)
+texture = ExtResource("17_okb0x")
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("18_dfk8w")
+medium = true
+
+[node name="Snow" type="GPUParticles2D" parent="Node2D"]
+amount = 1000
+texture = SubResource("AtlasTexture_ujjo0")
+lifetime = 5.0
+preprocess = 3.0
+visibility_rect = Rect2(0, 0, 12000, 480)
+trail_lifetime = 2.72
+process_material = SubResource("ParticleProcessMaterial_62r54")
+script = ExtResource("20_rxp7n")
