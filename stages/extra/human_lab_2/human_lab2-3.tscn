@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=4 uid="uid://wd60b1c1pt21"]
+[gd_scene load_steps=118 format=4 uid="uid://wd60b1c1pt21"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_43gxv"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_44411"]
@@ -16,10 +16,13 @@
 [ext_resource type="Texture2D" uid="uid://b8nk2hemt3jpg" path="res://tilesets/overworld_red/gfx/pipe_red.png" id="14_adshu"]
 [ext_resource type="Texture2D" uid="uid://btd1k5t3kdxua" path="res://stages/extra/human_lab_2/gfx/brown_underground.png" id="15_vp5od"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="16_lwcvt"]
+[ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="16_wwtrk"]
+[ext_resource type="Script" uid="uid://cnn6muchpcx7x" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="17_dby80"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="17_snfhi"]
 [ext_resource type="PackedScene" uid="uid://g6ed3enqcx1d" path="res://engine/objects/enemies/human_lab/bullet_bill/bullet_bill_clone.tscn" id="18_qhlgv"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="19_sf7t2"]
 [ext_resource type="Texture2D" uid="uid://cinosbf4fs2wr" path="res://gfx/misc/launcher-middle-rounded.png" id="20_25v51"]
+[ext_resource type="Texture2D" uid="uid://o2ddww4bfwsj" path="res://gfx/fancy_graphics/wooden_beams.png" id="21_4yyg8"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="25_8fgwu"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="27_q6d5u"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="28_njxts"]
@@ -105,6 +108,16 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 112
 physics_layer_0/collision_mask = 0
 sources/1 = SubResource("TileSetAtlasSource_68wr5")
+
+[sub_resource type="Gradient" id="Gradient_xmmi1"]
+colors = PackedColorArray(0, 0, 0, 1, 0.620167, 0.620167, 0.620167, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i3dg5"]
+gradient = SubResource("Gradient_xmmi1")
+width = 640
+height = 176
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
 
 [sub_resource type="Resource" id="Resource_ts5lb"]
 script = ExtResource("19_sf7t2")
@@ -748,9 +761,18 @@ collision_enabled = false
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 1
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0, 1)
-motion_mirroring = Vector2(640, 0)
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(800, 600)
+script = ExtResource("25_8fgwu")
+medium = true
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer3"]
+material = ExtResource("16_wwtrk")
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("17_dby80")
+metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("16_lwcvt")]
 
@@ -770,6 +792,13 @@ theme_override_fonts/font = ExtResource("17_snfhi")
 text = "WORLD
 U-2"
 horizontal_alignment = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="HUD"]
+position = Vector2(320, 86)
+blend_mode = 1
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3dg5")
+script = ExtResource("25_8fgwu")
 
 [node name="Parallax2D2" type="Parallax2D" parent="."]
 z_index = -100
@@ -796,11 +825,69 @@ region_enabled = true
 region_rect = Rect2(32, 0, 1024, 512)
 metadata/_edit_lock_ = true
 
+[node name="FancyGraphics" type="Node2D" parent="Parallax2D2"]
+script = ExtResource("25_8fgwu")
+medium = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Parallax2D2/FancyGraphics"]
+color = Color(0.577008, 0.577008, 0.577008, 1)
+
 [node name="Node2D2" type="Node2D" parent="."]
 z_index = -50
 script = ExtResource("25_8fgwu")
 metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
+
+[node name="WoodenBeams" type="Sprite2D" parent="Node2D2"]
+position = Vector2(1528, 1184)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams2" type="Sprite2D" parent="Node2D2"]
+position = Vector2(664, 1176)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams3" type="Sprite2D" parent="Node2D2"]
+position = Vector2(768, 1912)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams4" type="Sprite2D" parent="Node2D2"]
+position = Vector2(3200, 1136)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams5" type="Sprite2D" parent="Node2D2"]
+position = Vector2(6320, 1160)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams8" type="Sprite2D" parent="Node2D2"]
+position = Vector2(6896, 1144)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams9" type="Sprite2D" parent="Node2D2"]
+position = Vector2(7520, 1144)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams6" type="Sprite2D" parent="Node2D2"]
+position = Vector2(6992, 1896)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams7" type="Sprite2D" parent="Node2D2"]
+position = Vector2(6576, 1896)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams10" type="Sprite2D" parent="Node2D2"]
+position = Vector2(1368, 1848)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams11" type="Sprite2D" parent="Node2D2"]
+position = Vector2(2048, 1832)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams12" type="Sprite2D" parent="Node2D2"]
+position = Vector2(2952, 1888)
+texture = ExtResource("21_4yyg8")
+
+[node name="WoodenBeams13" type="Sprite2D" parent="Node2D2"]
+position = Vector2(4112, 1904)
+texture = ExtResource("21_4yyg8")
 
 [node name="BulletLauncher" parent="." instance=ExtResource("27_q6d5u")]
 position = Vector2(880, 1328)
@@ -3007,3 +3094,8 @@ shape = SubResource("RectangleShape2D_wwtrk")
 
 [node name="Node" type="Node" parent="Area2D22"]
 script = ExtResource("71_rmr8x")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.587751, 0.587751, 0.58775, 1)
+script = ExtResource("25_8fgwu")
+medium = true
