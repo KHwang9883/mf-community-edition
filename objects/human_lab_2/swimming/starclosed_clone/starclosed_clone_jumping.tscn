@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://xfqhvk7602vy"]
+[gd_scene load_steps=21 format=3 uid="uid://xfqhvk7602vy"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_0ya2n"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_t2442"]
@@ -8,6 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://bh3it6mhed0ub" path="res://objects/human_lab_2/swimming/starclosed_clone/sfx/starclosed.wav" id="6_nqudj"]
 [ext_resource type="Texture2D" uid="uid://5uhngr1wsi5r" path="res://objects/human_lab_2/swimming/starclosed_clone/gfx/starclosed_clone.png" id="8_fgo0c"]
 [ext_resource type="Script" uid="uid://dv848mnowxwrl" path="res://objects/human_lab_2/swimming/sprite_dyn_rotation.gd" id="9_fgo0c"]
+[ext_resource type="Texture2D" uid="uid://cy77w0rodh6t4" path="res://objects/human_lab_2/swimming/starclosed_clone/gfx/starclosed_clone_defeated.png" id="9_savmg"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="10_pl7gd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
 size = Vector2(32, 32)
@@ -26,7 +28,7 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Sprite"),
+"death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, 0)
 }
 custom_script = ExtResource("4_cip2b")
@@ -75,6 +77,17 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uvs8g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1q6rj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_savmg")
 }],
 "loop": true,
 "name": &"default",
@@ -130,6 +143,12 @@ metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &
 sprite_frames = SubResource("SpriteFrames_y2abq")
 autoplay = "default"
 script = ExtResource("9_fgo0c")
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_1q6rj")
+script = ExtResource("10_pl7gd")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
