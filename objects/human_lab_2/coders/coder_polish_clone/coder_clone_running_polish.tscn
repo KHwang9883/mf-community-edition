@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://dybhtmus71y38"]
+[gd_scene load_steps=15 format=3 uid="uid://dybhtmus71y38"]
 
 [ext_resource type="PackedScene" uid="uid://vrjw4l81t48g" path="res://engine/objects/enemies/human_lab/koopa_troopa/coder_clone_running.tscn" id="1_561q1"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_hhkb1"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_xlnsc"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_r4bmt"]
 [ext_resource type="Texture2D" uid="uid://bwkirjjyle3br" path="res://objects/human_lab_2/coders/coder_polish_clone/gfx/running.png" id="5_28il0"]
+[ext_resource type="Texture2D" uid="uid://xxt7uwxrp1wq" path="res://objects/human_lab_2/coders/coder_polish_clone/gfx/dead.png" id="6_2ylxn"]
 [ext_resource type="AudioStream" uid="uid://masuqdu2sg0s" path="res://objects/human_lab_2/coders/coder_polish_clone/sfx/AAA_Klawiatura2.wav" id="6_a0ui8"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="7_qjopr"]
 
 [sub_resource type="Resource" id="Resource_kv03d"]
 resource_local_to_scene = true
@@ -21,7 +23,7 @@ visi_z_index = 1
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Sprite"),
+"death": NodePath("../../Sprite/Dead2"),
 "death_speed": Vector2(0, 0)
 }
 custom_script = ExtResource("3_xlnsc")
@@ -55,8 +57,18 @@ animations = [{
 "speed": 50.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_vjbka"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_2ylxn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="CoderCloneRunningPolish" instance=ExtResource("1_561q1")]
-platform_on_leave = 2
 
 [node name="EnemyAttacked" parent="Body" index="0"]
 stomping_creation = SubResource("Resource_kv03d")
@@ -64,6 +76,12 @@ killing_creation = SubResource("Resource_kv03d")
 
 [node name="Sprite" parent="." index="3"]
 sprite_frames = SubResource("SpriteFrames_xx33o")
+
+[node name="Dead2" type="AnimatedSprite2D" parent="Sprite" index="1"]
+visible = false
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_vjbka")
+script = ExtResource("7_qjopr")
 
 [node name="AudioStreamPlayer2D" parent="." index="6"]
 stream = ExtResource("6_a0ui8")
