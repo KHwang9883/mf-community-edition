@@ -2,7 +2,7 @@
 extends MapPlayerMarker
 
 @onready var malpka = $Malpka
-const MALPKA = preload("res://objects/map_player_marker_emalpka/malpka.wav")
+@export var MALPKA = preload("res://objects/map_player_marker_emalpka/malpka.wav")
 var activated: bool = false
 
 var counter: float = 0

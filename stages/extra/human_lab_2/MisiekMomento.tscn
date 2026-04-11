@@ -1,0 +1,223 @@
+[gd_scene load_steps=33 format=4 uid="uid://cog7mr3pfav7l"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_edu1p"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_vt0bx"]
+[ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="3_tvtjq"]
+[ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="4_13ev2"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_n67dw"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="6_fd00u"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_6l68u"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="8_ub3tl"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="9_y5ya8"]
+[ext_resource type="PackedScene" uid="uid://c04nfubtnylae" path="res://stages/extra/human_lab_2/objects/misiek_task_control.tscn" id="10_ifeyr"]
+[ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://engine/objects/effects/wide_clouds_moving/texture.png" id="11_ogpne"]
+[ext_resource type="Script" uid="uid://cg3pyfbjfcydc" path="res://engine/objects/effects/wide_clouds_moving/wide_clouds_moving.gd" id="12_cuhpk"]
+[ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://engine/objects/effects/wide_clouds_moving/texture_alpha.png" id="13_i8fv4"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="14_r4i0t"]
+[ext_resource type="PackedScene" uid="uid://dbpihjuw0gc01" path="res://engine/objects/bumping_blocks/question_block/templates/Beetroot Question Block.tscn" id="15_tsbb6"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="16_7p8fu"]
+[ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="17_a3ioq"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="18_76abx"]
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="19_ys0nc"]
+[ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="21_18lhw"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="22_7ngyi"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="23_aosp0"]
+[ext_resource type="Texture2D" uid="uid://b1eidf0c7348v" path="res://gfx/fancy_graphics/sceneria_drzowatne.png" id="24_6p0ui"]
+[ext_resource type="Script" uid="uid://b3k3km6quqqa2" path="res://stages/world_4/scripts/emalpka_checker.gd" id="25_8p8w2"]
+[ext_resource type="Script" uid="uid://80j6k8i6dr13" path="res://stages/extra/secrets/scripts/goompa_party_killer.gd" id="26_858fk"]
+[ext_resource type="PackedScene" uid="uid://bpdl22ol10045" path="res://engine/objects/enemies/human_lab/koopa_bro/big_human_clone_b.tscn" id="26_u6xa4"]
+[ext_resource type="PackedScene" uid="uid://ewc6ha84pdi5" path="res://objects/christmas_clones/clone_7/clone_7.tscn" id="27_u6xa4"]
+
+[sub_resource type="Gradient" id="Gradient_yisdg"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pm23x"]
+gradient = SubResource("Gradient_yisdg")
+width = 480
+
+[sub_resource type="Resource" id="Resource_r8bc1"]
+resource_local_to_scene = true
+script = ExtResource("18_76abx")
+creation_fallback_node = ExtResource("16_7p8fu")
+creation_nodepack = ExtResource("17_a3ioq")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x50b1"]
+size = Vector2(32, 384)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rhu3d"]
+
+[node name="EmalpkaMomento" type="Node2D"]
+script = ExtResource("1_edu1p")
+time = 150
+completion_music = ExtResource("2_vt0bx")
+jump_to_scene = "uid://vrcvq5215e4b"
+
+[node name="MusicLoader" type="Node" parent="."]
+script = ExtResource("3_tvtjq")
+music = Array[Resource]([ExtResource("4_13ev2")])
+volume_db = Array[float]([3.0])
+
+[node name="Mario" parent="." instance=ExtResource("5_n67dw")]
+position = Vector2(80, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("6_fd00u")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." instance=ExtResource("7_6l68u")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAACAA0AAAABAAAAAAATAA8AAAABAAIAAAATAA4AAAABAAEAAAATAA0AAAABAAAAAAASAA8AAAABAAIAAAASAA4AAAABAAEAAAASAA0AAAABAAAAAAARAA8AAAABAAIAAAARAA4AAAABAAEAAAARAA0AAAABAAAAAAAQAA8AAAABAAIAAAAQAA4AAAABAAEAAAAQAA0AAAABAAAAAAAPAA8AAAABAAIAAAAPAA4AAAABAAEAAAAPAA0AAAABAAAAAAAOAA8AAAABAAIAAAAOAA4AAAABAAEAAAAOAA0AAAABAAAAAAANAA8AAAABAAIAAAANAA4AAAABAAEAAAANAA0AAAABAAAAAAAMAA8AAAABAAIAAAAMAA4AAAABAAEAAAAMAA0AAAABAAAAAAALAA8AAAABAAIAAAALAA4AAAABAAEAAAALAA0AAAABAAAAAAAKAA8AAAABAAIAAAAKAA4AAAABAAEAAAAKAA0AAAABAAAAAAAJAA8AAAABAAIAAAAJAA4AAAABAAEAAAAJAA0AAAABAAAAAAAIAA8AAAABAAIAAAAIAA4AAAABAAEAAAAIAA0AAAABAAAAAAAHAA8AAAABAAIAAAAHAA4AAAABAAEAAAAHAA0AAAABAAAAAAAGAA8AAAABAAIAAAAGAA4AAAABAAEAAAAGAA0AAAABAAAAAAAFAA8AAAABAAIAAAAFAA4AAAABAAEAAAAFAA0AAAABAAAAAAAEAA8AAAABAAIAAAAEAA4AAAABAAEAAAAEAA0AAAABAAAAAAADAA8AAAABAAIAAAADAA4AAAABAAEAAAADAA0AAAABAAAAAAACAA8AAAABAAIAAAACAA4AAAABAAEAAAABAA8AAAABAAIAAAABAA4AAAABAAEAAAABAA0AAAABAAAAAAAAAA8AAAAAAAIAAAAAAA4AAAAAAAEAAAAAAA0AAAAAAAAAAAD//w8AAQAAAAAAAAD//w4AAQAAAAAAAAD//w0AAQAAAAAAAAD//wwAAQAAAAAAAAD//wsAAQAAAAAAAAD//woAAQAAAAAAAAD//wkAAQAAAAAAAAD//wgAAQAAAAAAAAD//wcAAQAAAAAAAAD//wYAAQAAAAAAAAD//wUAAQAAAAAAAAD//wQAAQAAAAAAAAD//wMAAQAAAAAAAAD//wIAAQAAAAAAAAD//wEAAQAAAAAAAAD//wAAAQAAAAAAAAD/////AQAAAAAAAAD///7/AQAAAAAAAAD///3/AQAAAAAAAAD///z/AQAAAAAAAAD///v/AQAAAAAAAAD///r/AQAAAAAAAAAUAA8AAAACAAIAAAAUAA4AAAACAAEAAAAUAA0AAAACAAAAAAAUAAAAAQAAAAAAAAAUAP//AQAAAAAAAAAUAP7/AQAAAAAAAAAUAP3/AQAAAAAAAAAUAPz/AQAAAAAAAAAUAPv/AQAAAAAAAAAUAPr/AQAAAAAAAAAUAPn/AQAAAAAAAAD///n/AQAAAAAAAAD///j/AQAAAAAAAAD///f/AQAAAAAAAAD///b/AQAAAAAAAAAAAPb/AQAAAAAAAAABAPb/AQAAAAAAAAACAPb/AQAAAAAAAAADAPb/AQAAAAAAAAAEAPb/AQAAAAAAAAAFAPb/AQAAAAAAAAAGAPb/AQAAAAAAAAAHAPb/AQAAAAAAAAAIAPb/AQAAAAAAAAAJAPb/AQAAAAAAAAAKAPb/AQAAAAAAAAALAPb/AQAAAAAAAAAMAPb/AQAAAAAAAAANAPb/AQAAAAAAAAAOAPb/AQAAAAAAAAAPAPb/AQAAAAAAAAAQAPb/AQAAAAAAAAARAPb/AQAAAAAAAAASAPb/AQAAAAAAAAATAPb/AQAAAAAAAAAUAPb/AQAAAAAAAAAUAPf/AQAAAAAAAAAUAPj/AQAAAAAAAAABAAYAAgAAAAAAAgAFAAQAAgAAAAAAAgAMAAwAAgAAAAAAAwALAAIAAgAAAAAAAgASAAMAAgAAAAAAAgAWAA0AAQAAAAAAAAAVAA0AAQAAAAAAAAAVAAAAAQAAAAAAAAAWAAAAAQAAAAAAAAAXAA0AAQAAAAAAAAAYAA0AAQAAAAAAAAAYAAAAAQAAAAAAAAAXAAAAAQAAAAAAAAAZAA0AAQAAAAAAAAAZAAwAAQAAAAAAAAAZAAsAAQAAAAAAAAAZAAoAAQAAAAAAAAAZAAkAAQAAAAAAAAAZAAgAAQAAAAAAAAAZAAcAAQAAAAAAAAAZAAYAAQAAAAAAAAAZAAUAAQAAAAAAAAAZAAQAAQAAAAAAAAAZAAMAAQAAAAAAAAAZAAIAAQAAAAAAAAAZAAEAAQAAAAAAAAAZAAAAAQAAAAAAAAA=")
+tile_set = ExtResource("8_ub3tl")
+
+[node name="Layer1" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAAKAA0AAgAAAAAACAAQAAwAAgAAAAAABwARAAwAAgAAAAAABwASAAwAAgAAAAAABwATAAwAAgAAAAAABwA=")
+tile_set = ExtResource("8_ub3tl")
+
+[node name="HUD" parent="." instance=ExtResource("9_y5ya8")]
+
+[node name="TaskControl" parent="HUD" instance=ExtResource("10_ifeyr")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_pm23x")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+position = Vector2(320, 16)
+texture = ExtResource("11_ogpne")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("12_cuhpk")
+
+[node name="TextureAlpha" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/Sprite2D"]
+position = Vector2(0, 32)
+texture = ExtResource("13_i8fv4")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 32)
+script = ExtResource("14_r4i0t")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 25
+texture_repeat = 2
+position = Vector2(320, 0)
+texture = ExtResource("11_ogpne")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("12_cuhpk")
+speed = 100.0
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="QuestionBlockBeetroot" parent="." instance=ExtResource("15_tsbb6")]
+position = Vector2(48, 240)
+result = SubResource("Resource_r8bc1")
+initially_visible_and_solid = false
+
+[node name="Brick" parent="." instance=ExtResource("19_ys0nc")]
+position = Vector2(432, 272)
+
+[node name="Brick8" parent="." instance=ExtResource("19_ys0nc")]
+position = Vector2(400, 272)
+
+[node name="Brick9" parent="." instance=ExtResource("19_ys0nc")]
+position = Vector2(368, 272)
+
+[node name="Brick2" parent="." instance=ExtResource("19_ys0nc")]
+position = Vector2(464, 272)
+
+[node name="Brick3" parent="." instance=ExtResource("19_ys0nc")]
+position = Vector2(496, 272)
+
+[node name="Brick4" parent="." instance=ExtResource("19_ys0nc")]
+position = Vector2(528, 272)
+
+[node name="Brick5" parent="." instance=ExtResource("19_ys0nc")]
+position = Vector2(560, 272)
+
+[node name="HammerBroJumpMarker" parent="." instance=ExtResource("21_18lhw")]
+position = Vector2(352, 224)
+
+[node name="HammerBroJumpMarker2" parent="." instance=ExtResource("21_18lhw")]
+position = Vector2(352, 384)
+
+[node name="Coin" parent="." instance=ExtResource("22_7ngyi")]
+position = Vector2(208, 240)
+
+[node name="Coin2" parent="." instance=ExtResource("22_7ngyi")]
+position = Vector2(208, 208)
+
+[node name="Coin4" parent="." instance=ExtResource("22_7ngyi")]
+position = Vector2(208, 304)
+
+[node name="Coin5" parent="." instance=ExtResource("22_7ngyi")]
+position = Vector2(208, 272)
+
+[node name="Coin3" parent="." instance=ExtResource("22_7ngyi")]
+position = Vector2(208, 176)
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -60
+script = ExtResource("14_r4i0t")
+
+[node name="GiantClouds3" type="Sprite2D" parent="Node2D"]
+position = Vector2(560, 200)
+texture = ExtResource("23_aosp0")
+metadata/_edit_lock_ = true
+
+[node name="Sceneria Drzowatne" type="Sprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.607843)
+position = Vector2(240, 304)
+texture = ExtResource("24_6p0ui")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("25_8p8w2")
+enemies = Array[NodePath]([NodePath("../BigHumanCloneB"), NodePath("../Mrozone")])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(656, 224)
+shape = SubResource("RectangleShape2D_x50b1")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("26_858fk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 592)
+shape = SubResource("WorldBoundaryShape2D_rhu3d")
+
+[node name="BigHumanCloneB" parent="." instance=ExtResource("26_u6xa4")]
+position = Vector2(504, 232)
+
+[node name="Mrozone" parent="." instance=ExtResource("27_u6xa4")]
+position = Vector2(536, 384)
