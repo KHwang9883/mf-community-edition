@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://bj4v7y1ejl7wc"]
+[gd_scene load_steps=88 format=4 uid="uid://bj4v7y1ejl7wc"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_00qvl"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_pf3is"]
@@ -37,7 +37,9 @@
 [ext_resource type="Texture2D" uid="uid://dbysvvbn2nr4l" path="res://engine/objects/enemies/human_lab/container/textures/clones/cascadeur.png" id="29_nqq2v"]
 [ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="34_uduht"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="35_1ubmy"]
+[ext_resource type="PackedScene" uid="uid://b84orv5gcw2h7" path="res://objects/name_node/name_node.tscn" id="35_ixwpr"]
 [ext_resource type="PackedScene" uid="uid://dor0tmdd8itya" path="res://tilesets/overworld_green/scenes/grass.tscn" id="36_bbs2h"]
+[ext_resource type="Script" uid="uid://cp4xamvr25vij" path="res://objects/name_node/name_node.gd" id="36_chs7e"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="37_ire83"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="38_se21n"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="39_dngmd"]
@@ -886,11 +888,15 @@ uppercase = true
 position = Vector2(848, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label" type="Label" parent="Objects/signs/SignSmallUpsideDown"]
-offset_left = -46.0
-offset_top = -12.0
-offset_right = 46.0
-offset_bottom = 42.0
+[node name="NameNode" parent="Objects/signs/SignSmallUpsideDown" instance=ExtResource("35_ixwpr")]
+position = Vector2(-848, -218)
+inverted = true
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown/NameNode"]
+offset_left = 802.0
+offset_top = 206.0
+offset_right = 894.0
+offset_bottom = 260.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
@@ -901,15 +907,53 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="NameNode2" parent="Objects/signs/SignSmallUpsideDown" instance=ExtResource("35_ixwpr")]
+position = Vector2(-848, -218)
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown/NameNode2"]
+offset_left = 802.0
+offset_top = 203.0
+offset_right = 894.0
+offset_bottom = 257.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "RAMIREY"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown/NameNode2"]
+offset_left = 802.0
+offset_top = 206.0
+offset_right = 894.0
+offset_bottom = 260.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "
+V0.2"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="SignSmallUpsideDown2" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(1040, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown2"]
-offset_left = -46.0
-offset_top = -11.0
-offset_right = 46.0
-offset_bottom = 43.0
+[node name="NameNode" parent="Objects/signs/SignSmallUpsideDown2" instance=ExtResource("35_ixwpr")]
+position = Vector2(-848, -218)
+inverted = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown2/NameNode"]
+offset_left = 802.0
+offset_top = 207.0
+offset_right = 894.0
+offset_bottom = 261.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
@@ -922,11 +966,48 @@ vertical_alignment = 1
 uppercase = true
 metadata/_edit_use_anchors_ = true
 
+[node name="NameNode2" parent="Objects/signs/SignSmallUpsideDown2" instance=ExtResource("35_ixwpr")]
+position = Vector2(-848, -218)
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown2/NameNode2"]
+offset_left = 802.0
+offset_top = 203.0
+offset_right = 894.0
+offset_bottom = 257.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "PITI"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown2/NameNode2"]
+offset_left = 813.0
+offset_top = 214.0
+offset_right = 913.0
+offset_bottom = 268.0
+scale = Vector2(0.72, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "SYSTEM FAILURE"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="SignSmallUpsideDown3" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(1136, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown3"]
+[node name="NameNode" parent="Objects/signs/SignSmallUpsideDown3" instance=ExtResource("35_ixwpr")]
+inverted = true
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown3/NameNode"]
 offset_left = -46.0
 offset_top = -11.0
 offset_right = 46.0
@@ -942,15 +1023,53 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="NameNode2" parent="Objects/signs/SignSmallUpsideDown3" instance=ExtResource("35_ixwpr")]
+position = Vector2(-848, -218)
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown3/NameNode2"]
+offset_left = 802.0
+offset_top = 205.0
+offset_right = 894.0
+offset_bottom = 259.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "JAKOO"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown3/NameNode2"]
+offset_left = 887.0
+offset_top = 195.0
+offset_right = 979.0
+offset_bottom = 249.0
+rotation = 1.57079
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 19
+text = ")"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="SignSmallUpsideDown4" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(2096, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown4"]
-offset_left = -46.0
-offset_top = -12.0
-offset_right = 46.0
-offset_bottom = 42.0
+[node name="Node2D" type="Node2D" parent="Objects/signs/SignSmallUpsideDown4"]
+script = ExtResource("36_chs7e")
+inverted = true
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown4/Node2D"]
+offset_left = -45.0
+offset_top = -11.0
+offset_right = 47.0
+offset_bottom = 43.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
@@ -960,12 +1079,37 @@ text = "mutant"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Node2D2" type="Node2D" parent="Objects/signs/SignSmallUpsideDown4"]
+script = ExtResource("36_chs7e")
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown4/Node2D2"]
+offset_left = -45.0
+offset_top = -11.0
+offset_right = 47.0
+offset_bottom = 43.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "DON-ZOOLO
+& KMP"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [node name="SignSmallUpsideDown5" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(2192, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown5"]
+[node name="Node2D2" type="Node2D" parent="Objects/signs/SignSmallUpsideDown5"]
+script = ExtResource("36_chs7e")
+inverted = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown5/Node2D2"]
 offset_left = -46.0
 offset_top = -11.0
 offset_right = 46.0
@@ -973,19 +1117,75 @@ offset_bottom = 43.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_fonts/font = ExtResource("34_uduht")
 theme_override_font_sizes/font_size = 11
-text = "zorro
-clone"
+text = "ZORRO
+CLONE"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Node2D" type="Node2D" parent="Objects/signs/SignSmallUpsideDown5"]
+script = ExtResource("36_chs7e")
+
+[node name="Label4" type="Label" parent="Objects/signs/SignSmallUpsideDown5/Node2D"]
+offset_left = -56.0
+offset_top = -19.0
+offset_right = 55.0
+offset_bottom = 35.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "MIGUEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label5" type="Label" parent="Objects/signs/SignSmallUpsideDown5/Node2D"]
+offset_left = -56.0
+offset_top = -10.0
+offset_right = 55.0
+offset_bottom = 44.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 8
+text = "(zorro)"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label6" type="Label" parent="Objects/signs/SignSmallUpsideDown5/Node2D"]
+offset_left = -56.0
+offset_top = -1.0
+offset_right = 55.0
+offset_bottom = 53.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 8
+text = "(mode on)"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [node name="SignSmallUpsideDown6" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(2288, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown6"]
+[node name="Node2D2" type="Node2D" parent="Objects/signs/SignSmallUpsideDown6"]
+script = ExtResource("36_chs7e")
+inverted = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown6/Node2D2"]
 offset_left = -46.0
 offset_top = -11.0
 offset_right = 46.0
@@ -1000,8 +1200,9 @@ text = "star-closed
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+metadata/_edit_use_anchors_ = true
 
-[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown6"]
+[node name="Label4" type="Label" parent="Objects/signs/SignSmallUpsideDown6/Node2D2"]
 offset_left = -46.0
 offset_top = -11.0
 offset_right = 46.0
@@ -1016,16 +1217,58 @@ clone"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Node2D" type="Node2D" parent="Objects/signs/SignSmallUpsideDown6"]
+script = ExtResource("36_chs7e")
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown6/Node2D"]
+offset_left = -46.0
+offset_top = -8.0
+offset_right = 46.0
+offset_bottom = 46.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 16
+text = "FETT
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown6/Node2D"]
+offset_left = -54.0
+offset_top = -10.0
+offset_right = 57.0
+offset_bottom = 44.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "
+(BOBBA FET)"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [node name="SignSmallUpsideDown7" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(2384, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown7"]
+[node name="Node2D" type="Node2D" parent="Objects/signs/SignSmallUpsideDown7"]
+script = ExtResource("36_chs7e")
+inverted = true
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown7/Node2D"]
 offset_left = -46.0
-offset_top = -12.0
+offset_top = -11.0
 offset_right = 46.0
-offset_bottom = 42.0
+offset_bottom = 43.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/outline_size = 5
@@ -1035,12 +1278,52 @@ text = "clone 3/a"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Node2D2" type="Node2D" parent="Objects/signs/SignSmallUpsideDown7"]
+script = ExtResource("36_chs7e")
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown7/Node2D2"]
+offset_left = -65.0
+offset_top = -9.0
+offset_right = 27.0
+offset_bottom = 45.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 8
+text = "SIR"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="Objects/signs/SignSmallUpsideDown7/Node2D2"]
+offset_left = -8.0
+offset_top = -4.0
+offset_right = 84.0
+offset_bottom = 50.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "ARTUS
+"
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [node name="SignSmallUpsideDown8" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(2480, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown8"]
+[node name="Node2D" type="Node2D" parent="Objects/signs/SignSmallUpsideDown8"]
+script = ExtResource("36_chs7e")
+inverted = true
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown8/Node2D"]
 offset_left = -46.0
 offset_top = -11.0
 offset_right = 46.0
@@ -1057,11 +1340,34 @@ vertical_alignment = 1
 uppercase = true
 metadata/_edit_use_anchors_ = true
 
+[node name="Node2D2" type="Node2D" parent="Objects/signs/SignSmallUpsideDown8"]
+script = ExtResource("36_chs7e")
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown8/Node2D2"]
+offset_left = -46.0
+offset_top = -11.0
+offset_right = 46.0
+offset_bottom = 43.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "MISIEK"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
 [node name="SignSmallUpsideDown9" type="Sprite2D" parent="Objects/signs"]
 position = Vector2(2576, 218)
 texture = ExtResource("22_n1lgl")
 
-[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown9"]
+[node name="Node2D" type="Node2D" parent="Objects/signs/SignSmallUpsideDown9"]
+script = ExtResource("36_chs7e")
+inverted = true
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown9/Node2D"]
 offset_left = -46.0
 offset_top = -11.0
 offset_right = 46.0
@@ -1073,6 +1379,26 @@ theme_override_fonts/font = ExtResource("27_ayka0")
 theme_override_font_sizes/font_size = 11
 text = "stuntman
 clone 2/a"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Node2D2" type="Node2D" parent="Objects/signs/SignSmallUpsideDown9"]
+script = ExtResource("36_chs7e")
+
+[node name="Label2" type="Label" parent="Objects/signs/SignSmallUpsideDown9/Node2D2"]
+offset_left = -46.0
+offset_top = -11.0
+offset_right = 46.0
+offset_bottom = 43.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("27_ayka0")
+theme_override_font_sizes/font_size = 11
+text = "MISIEK
+KAL-EL"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
