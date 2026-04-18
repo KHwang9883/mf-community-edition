@@ -1,0 +1,321 @@
+[gd_scene load_steps=22 format=3 uid="uid://co7vhp6p7qmc6"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_kj87j"]
+[ext_resource type="Texture2D" uid="uid://pqru70qgq86x" path="res://stages/extra/human_lab_2/gfx/orangecastle_bg.png" id="2_ndjqy"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="3_dy7x3"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_lw5vo"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_526xe"]
+[ext_resource type="Script" uid="uid://cwbm6l7ypsmry" path="res://stages/world_1/scripts/end_cutscene_lava.gd" id="6_52y3m"]
+[ext_resource type="Texture2D" uid="uid://slko3wvmggiw" path="res://stages/extra/human_lab_2/gfx/red_castle_tileset.png" id="8_ltlqc"]
+[ext_resource type="PackedScene" uid="uid://dr8gmbe4ssnbp" path="res://stages/extra/human_lab_2/objects/1-4_red_castle_platform.tscn" id="10_le50e"]
+[ext_resource type="Script" uid="uid://b60w6hvmspdar" path="res://stages/world_1/objects/1_4_castle_brick.gd" id="10_p0n8x"]
+[ext_resource type="Texture2D" uid="uid://b4bidw2kq5wd" path="res://tilesets/castle/gfx/gray_platform_bg.png" id="11_aqest"]
+[ext_resource type="PackedScene" uid="uid://b6m3vdfct02ke" path="res://stages/extra/human_lab_2/objects/1-4_red_castle_brick.tscn" id="11_xmxmx"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="12_t7ajq"]
+[ext_resource type="PackedScene" uid="uid://cn8grkane7ypq" path="res://stages/extra/human_lab_2/objects/1-4_red_castle_brick_small.tscn" id="12_ytesc"]
+[ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="13_yd5oi"]
+
+[sub_resource type="Gradient" id="Gradient_iuig2"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.85098, 0.188235, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6f6pr"]
+gradient = SubResource("Gradient_iuig2")
+width = 640
+height = 508
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_4nwue"]
+colors = PackedColorArray(0.847059, 0, 0, 1, 1, 0.85098, 0.627451, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n7u3q"]
+gradient = SubResource("Gradient_4nwue")
+width = 640
+height = 480
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_87us1"]
+colors = PackedColorArray(0.847059, 0, 0, 1, 1, 0.85098, 0.627451, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q74mx"]
+gradient = SubResource("Gradient_87us1")
+width = 640
+height = 224
+fill_to = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_victr"]
+normal = Vector2(0, 1)
+
+[node name="LavaEndCutscene" type="Node2D"]
+script = ExtResource("1_kj87j")
+goto_path = "uid://d6hmgwygxciq"
+intro_music = null
+transition_sound = null
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="ParallaxBackground"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxBackground"]
+modulate = Color(1, 1, 1, 0.694118)
+z_index = -999
+position = Vector2(320, 254)
+texture = SubResource("GradientTexture2D_6f6pr")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxBackground"]
+z_index = -1000
+position = Vector2(320, 240)
+texture = SubResource("GradientTexture2D_n7u3q")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxBackground"]
+z_index = -998
+position = Vector2(13152, 112)
+scale = Vector2(2.1, 1)
+texture = SubResource("GradientTexture2D_q74mx")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground/ParallaxBackground"]
+motion_mirroring = Vector2(2047, 0)
+
+[node name="BgCastle" type="Sprite2D" parent="ParallaxBackground/ParallaxBackground/ParallaxLayer"]
+position = Vector2(1024, 240)
+texture = ExtResource("2_ndjqy")
+region_rect = Rect2(0, -16, 1023, 512)
+metadata/_edit_lock_ = true
+
+[node name="BgCastle2" type="Sprite2D" parent="ParallaxBackground/ParallaxBackground/ParallaxLayer"]
+position = Vector2(1024, 511.6)
+scale = Vector2(1, 5)
+texture = ExtResource("2_ndjqy")
+region_enabled = true
+region_rect = Rect2(0, 460, 2048, 15)
+metadata/_edit_lock_ = true
+
+[node name="Mario2" parent="." instance=ExtResource("3_dy7x3")]
+position = Vector2(320, 496)
+gravity_scale = 0.1
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 480
+script = ExtResource("4_lw5vo")
+
+[node name="CamArea" parent="." instance=ExtResource("5_526xe")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("6_52y3m")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="StaticBody2D44" type="StaticBody2D" parent="Node2D" groups=["1-4_castle"]]
+position = Vector2(449, 342)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("10_p0n8x")
+rotate_fixed = -15.0
+
+[node name="GrayPlatformBg3" type="Sprite2D" parent="Node2D/StaticBody2D44"]
+modulate = Color(0.607843, 0.607843, 0.607843, 1)
+z_index = -1
+position = Vector2(-27.0293, -32.0293)
+rotation = 0.785398
+texture = ExtResource("8_ltlqc")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(96, 96, 32, 16)
+
+[node name="GrayPlatformBg4" type="Sprite2D" parent="Node2D/StaticBody2D44"]
+modulate = Color(0.607843, 0.607843, 0.607843, 1)
+z_index = -1
+position = Vector2(-5.0293, -10.0293)
+rotation = 0.785398
+texture = ExtResource("8_ltlqc")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(96, 96, 32, 16)
+
+[node name="GrayPlatformBg5" type="Sprite2D" parent="Node2D/StaticBody2D44"]
+modulate = Color(0.607843, 0.607843, 0.607843, 1)
+z_index = -1
+position = Vector2(16.9707, 11.9707)
+rotation = 0.785398
+texture = ExtResource("8_ltlqc")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(96, 96, 32, 16)
+
+[node name="GrayPlatformBg6" type="Sprite2D" parent="Node2D/StaticBody2D44"]
+modulate = Color(0.607843, 0.607843, 0.607843, 1)
+z_index = -1
+position = Vector2(38.9707, 33.9707)
+rotation = 0.785398
+texture = ExtResource("8_ltlqc")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(96, 96, 32, 16)
+
+[node name="GrayPlatformBg7" type="Sprite2D" parent="Node2D/StaticBody2D44"]
+modulate = Color(0.607843, 0.607843, 0.607843, 1)
+z_index = -1
+position = Vector2(61, 55.9999)
+rotation = 0.785398
+texture = ExtResource("8_ltlqc")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(96, 96, 32, 16)
+
+[node name="StaticBody2D43" type="StaticBody2D" parent="Node2D" groups=["1-4_castle"]]
+visible = false
+position = Vector2(432, 336)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("10_p0n8x")
+rotate_fixed = -15.0
+
+[node name="GrayPlatformBg" type="Sprite2D" parent="Node2D/StaticBody2D43"]
+z_index = -1
+texture = ExtResource("11_aqest")
+
+[node name="GrayPlatformBg2" type="Sprite2D" parent="Node2D/StaticBody2D43"]
+z_index = -1
+position = Vector2(56, 57)
+texture = ExtResource("11_aqest")
+
+[node name="StaticBody2D45" parent="Node2D" instance=ExtResource("10_le50e")]
+position = Vector2(272, 296)
+
+[node name="StaticBody2D47" parent="Node2D" instance=ExtResource("10_le50e")]
+position = Vector2(464, 296)
+
+[node name="StaticBody2D46" parent="Node2D" instance=ExtResource("10_le50e")]
+position = Vector2(368, 296)
+
+[node name="StaticBody2D48" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(544, 304)
+delay = 0.4
+
+[node name="StaticBody2D49" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(608, 304)
+delay = 0.7
+
+[node name="StaticBody2D50" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(672, 304)
+delay = 0.8
+
+[node name="StaticBody2D66" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(640, 112)
+delay = 0.6
+
+[node name="StaticBody2D67" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(672, 80)
+delay = 0.6
+
+[node name="StaticBody2D69" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(640, 48)
+delay = 0.6
+
+[node name="StaticBody2D72" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(608, 16)
+delay = 0.6
+
+[node name="StaticBody2D75" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(576, -16)
+delay = 0.6
+
+[node name="StaticBody2D74" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(640, -16)
+delay = 0.6
+
+[node name="StaticBody2D71" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(672, 16)
+delay = 0.6
+
+[node name="StaticBody2D68" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(608, 80)
+delay = 0.6
+
+[node name="StaticBody2D70" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(576, 48)
+delay = 0.6
+
+[node name="StaticBody2D73" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(544, 16)
+delay = 0.6
+
+[node name="StaticBody2D76" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(512, -16)
+delay = 0.6
+
+[node name="StaticBody2D51" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(576, 336)
+delay = 0.4
+
+[node name="StaticBody2D52" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(640, 336)
+delay = 0.7
+
+[node name="StaticBody2D53" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(544, 368)
+
+[node name="StaticBody2D54" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(608, 368)
+delay = 0.4
+
+[node name="StaticBody2D55" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(672, 368)
+delay = 0.7
+
+[node name="StaticBody2D56" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(576, 400)
+
+[node name="StaticBody2D57" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(640, 400)
+delay = 0.4
+
+[node name="StaticBody2D58" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(544, 432)
+
+[node name="StaticBody2D59" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(608, 432)
+
+[node name="StaticBody2D60" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(672, 432)
+delay = 0.4
+
+[node name="StaticBody2D61" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(576, 464)
+
+[node name="StaticBody2D62" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(640, 464)
+
+[node name="StaticBody2D63" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(544, 496)
+
+[node name="StaticBody2D64" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(608, 496)
+
+[node name="StaticBody2D65" parent="Node2D" instance=ExtResource("11_xmxmx")]
+position = Vector2(672, 496)
+
+[node name="StaticBody2D3" parent="Node2D" instance=ExtResource("12_ytesc")]
+position = Vector2(528, 336)
+
+[node name="StaticBody2D4" parent="Node2D" instance=ExtResource("12_ytesc")]
+position = Vector2(528, 400)
+
+[node name="StaticBody2D5" parent="Node2D" instance=ExtResource("12_ytesc")]
+position = Vector2(528, 464)
+
+[node name="AudioAreaCave" parent="." instance=ExtResource("12_t7ajq")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave"]
+position = Vector2(0, 528)
+shape = SubResource("WorldBoundaryShape2D_victr")
+
+[node name="ChorniyCutsceneSpawner" type="Node" parent="."]
+script = ExtResource("13_yd5oi")

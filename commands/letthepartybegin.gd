@@ -25,6 +25,6 @@ func patch_level() -> void:
 		return
 	var spawner = GOOMBA_PARTY_SPAWNER.instantiate()
 	var scene_path: String = Scenes.current_scene.scene_file_path
-	if "human_lab" in scene_path || "level_ny_" in scene_path || "extralevel_easy" in scene_path || "extralevel_normal" in scene_path:
+	if "human_lab" in scene_path || "level_ny_" in scene_path || "extralevel_easy" in scene_path || "extralevel_normal" in scene_path || "MisiekMomento" in scene_path:
 		spawner.spawned_enemy = preload("res://objects/human_lab_2/ramireys/goomba_clone/goomba_clone.tscn")
 	Scenes.current_scene.add_child(spawner)

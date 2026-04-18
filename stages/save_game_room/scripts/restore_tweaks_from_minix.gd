@@ -11,6 +11,7 @@ func _ready() -> void:
 	Data.technical_values.erase("special_otherworld_candy")
 	Data.technical_values.erase("saved_lives")
 	Data.technical_values.erase("otherworld_lvl_1")
+	Data.technical_values.erase("clones_names")
 	Data.technical_values.custom_saved_values = {}
 	Scenes.custom_scenes.game_over.custom_resume_scene = ""
 	
