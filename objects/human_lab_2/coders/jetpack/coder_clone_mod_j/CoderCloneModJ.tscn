@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://br8y44axymrsp"]
+[gd_scene load_steps=20 format=3 uid="uid://br8y44axymrsp"]
 
 [ext_resource type="Script" uid="uid://c7rfddc57l6oj" path="res://engine/objects/enemies/paratroopas/paratroopa_green.gd" id="1_0fbpl"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_sxftd"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_q0i32"]
 [ext_resource type="AudioStream" uid="uid://cn4tlctdajh0o" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/FlyingCoderClone.wav" id="6_dvuym"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="7_33wte"]
+[ext_resource type="AudioStream" uid="uid://m3fb62sh1nho" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/JetpackImpact.wav" id="7_nifuw"]
 [ext_resource type="Texture2D" uid="uid://bn588vi6xp2jg" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/gfx/Untitled.png" id="8_jmnfg"]
 [ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_nifuw"]
 [ext_resource type="Texture2D" uid="uid://x1b1vqu024vr" path="res://engine/objects/enemies/human_lab/koopa_troopa/textures/clone_dead.png" id="9_tfehd"]
@@ -32,6 +33,20 @@ custom_vars = {
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("4_8jal2")
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_cnv3i"]
+stream_count = 2
+stream_0/stream = ExtResource("6_dvuym")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("7_nifuw")
+stream_1/volume = 0.0
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_rofyu"]
+stream_count = 2
+stream_0/stream = ExtResource("6_dvuym")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("7_nifuw")
+stream_1/volume = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drjfb"]
 atlas = ExtResource("8_jmnfg")
@@ -89,10 +104,10 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 script = ExtResource("2_sxftd")
 stomping_creation = SubResource("Resource_llg06")
 stomping_scores = 100
-stomping_sound = ExtResource("6_dvuym")
+stomping_sound = SubResource("AudioStreamSynchronized_cnv3i")
 killing_creation = SubResource("Resource_llg06")
 killing_scores = 100
-killing_sound_succeeded = ExtResource("6_dvuym")
+killing_sound_succeeded = SubResource("AudioStreamSynchronized_rofyu")
 ice_sprite = NodePath("../../Sprite")
 sound_ignore_pitch_modification = true
 custom_vars = {
