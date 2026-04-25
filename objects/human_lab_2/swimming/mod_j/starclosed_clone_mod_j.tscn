@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bjfopvbcjtcxl"]
+[gd_scene load_steps=25 format=3 uid="uid://bjfopvbcjtcxl"]
 
 [ext_resource type="Script" uid="uid://dpmoq7qeco0q6" path="res://objects/human_lab_2/swimming/cheep_and_bubbles.gd" id="1_o84qh"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qwlxo"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_5de6f"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_lpsnh"]
 [ext_resource type="AudioStream" uid="uid://bh3it6mhed0ub" path="res://objects/human_lab_2/swimming/starclosed_clone/sfx/starclosed.wav" id="6_v0vd8"]
+[ext_resource type="AudioStream" uid="uid://m3fb62sh1nho" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/JetpackImpact.wav" id="7_fu5df"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="7_qwlxo"]
 [ext_resource type="Texture2D" uid="uid://cy77w0rodh6t4" path="res://objects/human_lab_2/swimming/starclosed_clone/gfx/starclosed_clone_defeated.png" id="8_5pm8i"]
 [ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_n1lvn"]
@@ -40,6 +41,20 @@ custom_vars = {
 "max_falling_speed": 300.0
 }
 custom_script = ExtResource("4_5de6f")
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_r2ieg"]
+stream_count = 2
+stream_0/stream = ExtResource("6_v0vd8")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("7_fu5df")
+stream_1/volume = 0.0
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_dghfo"]
+stream_count = 2
+stream_0/stream = ExtResource("6_v0vd8")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("7_fu5df")
+stream_1/volume = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oamh3"]
 size = Vector2(2, 2)
@@ -108,7 +123,7 @@ shape = SubResource("RectangleShape2D_8v3i3")
 script = ExtResource("2_qwlxo")
 stomping_creation = SubResource("Resource_0wfa5")
 stomping_scores = 100
-stomping_sound = ExtResource("6_v0vd8")
+stomping_sound = SubResource("AudioStreamSynchronized_r2ieg")
 killing_immune = {
 "beetroot": false,
 "boomerang": false,
@@ -122,7 +137,7 @@ killing_immune = {
 }
 killing_creation = SubResource("Resource_0wfa5")
 killing_scores = 100
-killing_sound_succeeded = ExtResource("6_v0vd8")
+killing_sound_succeeded = SubResource("AudioStreamSynchronized_dghfo")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
 [node name="Node" type="Node2D" parent="Body"]
