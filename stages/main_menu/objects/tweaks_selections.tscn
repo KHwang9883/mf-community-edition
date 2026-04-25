@@ -12,10 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://bx5gyo8oph1s6" path="res://stages/main_menu/textures/check-mark-check.png" id="5_fjyvq"]
 [ext_resource type="Script" uid="uid://dqc77o8dntkty" path="res://stages/main_menu/scripts/tweak_skin_selector.gd" id="6_n68nh"]
 [ext_resource type="FontVariation" uid="uid://c5ust2bgtp407" path="res://gfx/fonts/tweaks_font_var.tres" id="10_5c803"]
-[ext_resource type="Script" uid="uid://bwktlrsg21fm" path="res://stages/main_menu/objects/reset_data_sel.gd" id="10_jksls"]
 [ext_resource type="Script" uid="uid://2entf8cb3cyx" path="res://stages/main_menu/objects/tweaks_livesplit_sel.gd" id="10_mnbbt"]
 [ext_resource type="Script" uid="uid://dp3dqrsu0l7xe" path="res://stages/main_menu/scripts/tweak_quality.gd" id="12_4kuwt"]
 [ext_resource type="Script" uid="uid://cb2expjn6ur1r" path="res://stages/main_menu/scripts/console_patch.gd" id="12_4rgcr"]
+[ext_resource type="PackedScene" uid="uid://4kptc8pap1ig" path="res://stages/main_menu/objects/reset_data.tscn" id="12_u65r8"]
 [ext_resource type="Script" uid="uid://dr6gtqawbcqp4" path="res://stages/main_menu/scripts/tweak_cursor_custom.gd" id="12_w1vvf"]
 [ext_resource type="Script" uid="uid://cfvboxlqatxd7" path="res://stages/main_menu/objects/character_editor/skin_suit_global_tweaks_sel.gd" id="15_1r2gn"]
 [ext_resource type="Script" uid="uid://b0ffisgrr6san" path="res://stages/main_menu/objects/character_editor/skin_quick_settings_node.gd" id="15_h1dcq"]
@@ -774,118 +774,8 @@ to enable saving with the console, use \"cv_forcesave\" and \"cv_forcesave_suspe
 [node name="Node" type="Node" parent="Tweaks/HBoxContainer18"]
 script = ExtResource("12_4rgcr")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Tweaks"]
+[node name="HBoxContainer2" parent="Tweaks" instance=ExtResource("12_u65r8")]
 layout_mode = 2
-script = ExtResource("10_jksls")
-
-[node name="Label" type="Label" parent="Tweaks/HBoxContainer2"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.792157, 0.792157, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
-theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 1
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("10_5c803")
-theme_override_font_sizes/font_size = 22
-text = "reset data..."
-uppercase = true
-
-[node name="Window" type="Window" parent="Tweaks/HBoxContainer2"]
-disable_3d = true
-title = "Reset Data..."
-initial_position = 2
-size = Vector2i(320, 290)
-visible = false
-min_size = Vector2i(300, 290)
-
-[node name="Control" type="PanelContainer" parent="Tweaks/HBoxContainer2/Window"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_hccet")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tweaks/HBoxContainer2/Window/Control"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 6
-
-[node name="SavePipes" type="Button" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Reset all save pipes"
-
-[node name="Achievements" type="Button" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Reset all achievements"
-
-[node name="Tweaks" type="Button" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Reset tweaks to default"
-
-[node name="Settings" type="Button" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Reset settings to default"
-
-[node name="Minix" type="Button" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Reset local Minix scores"
-
-[node name="HBoxContainer2" type="VBoxContainer" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 10
-
-[node name="enabled" type="CheckBox" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/HBoxContainer2"]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "I understand that resetting this data can be irreversible."
-autowrap_mode = 2
-
-[node name="CloseBtn" type="Button" parent="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(96, 0)
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 10
-shortcut = SubResource("Shortcut_mnbbt")
-text = "Close"
-
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="Tweaks/HBoxContainer2"]
-disable_3d = true
-initial_position = 2
-size = Vector2i(300, 120)
-wrap_controls = false
-ok_button_text = "Yes"
-dialog_text = "Really %s?"
-cancel_button_text = "No"
-
-[node name="Value" type="Label" parent="Tweaks/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.435294)
-theme_override_colors/font_outline_color = Color(0, 0, 0.329412, 1)
-theme_override_constants/line_spacing = 1
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("4_u65r8")
-theme_override_font_sizes/font_size = 22
-text = "press %s"
-uppercase = true
 
 [node name="Exit2" type="HBoxContainer" parent="Tweaks"]
 layout_mode = 2
@@ -2546,11 +2436,6 @@ action = "a_delete"
 [connection signal="pressed" from="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2/ApplyBtn" to="Tweaks/TweakLiveSplitSel" method="_on_apply_btn_pressed"]
 [connection signal="pressed" from="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2/CloseBtn" to="Tweaks/TweakLiveSplitSel" method="_on_window_close_requested"]
 [connection signal="pressed" from="Tweaks/TweakLiveSplitSel/Window/Control/VBoxContainer/HBoxContainer2/Reconnect" to="Tweaks/TweakLiveSplitSel" method="_on_reconnect_pressed"]
-[connection signal="close_requested" from="Tweaks/HBoxContainer2/Window" to="Tweaks/HBoxContainer2" method="_on_close_btn_pressed"]
-[connection signal="toggled" from="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/HBoxContainer2/enabled" to="Tweaks/HBoxContainer2" method="_on_checkbox_toggled"]
-[connection signal="pressed" from="Tweaks/HBoxContainer2/Window/Control/VBoxContainer/HBoxContainer2/CloseBtn" to="Tweaks/HBoxContainer2" method="_on_close_btn_pressed"]
-[connection signal="canceled" from="Tweaks/HBoxContainer2/ConfirmationDialog" to="Tweaks/HBoxContainer2" method="_on_confirmation_dialog_canceled"]
-[connection signal="confirmed" from="Tweaks/HBoxContainer2/ConfirmationDialog" to="Tweaks/HBoxContainer2" method="_on_confirmation_dialog_confirmed"]
 [connection signal="selected" from="Gameplay" to="Selector2" method="handle_selection"]
 [connection signal="selected" from="Gameplay" to="Camera2D" method="handle_selection"]
 [connection signal="selected" from="Aesthetic" to="Selector3" method="handle_selection"]
