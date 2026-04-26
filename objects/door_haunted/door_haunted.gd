@@ -3,9 +3,9 @@ extends Area2D
 signal player_enter
 signal player_exit
 
-const BOO_CIRCLE = preload("res://objects/boo/koopa_paratroopa_circle_generator.tscn")
+const BOO_CIRCLE = preload("res://engine/objects/enemies/boo/boo_circle_generator.tscn")
 const SMOKE = preload("res://engine/objects/effects/smoke/smoke.tscn")
-const BOO_2 = preload("res://objects/boo/boo2.wav")
+const BOO_2 = preload("res://engine/objects/enemies/boo/sounds/boo2.wav")
 
 var player
 var activated: bool

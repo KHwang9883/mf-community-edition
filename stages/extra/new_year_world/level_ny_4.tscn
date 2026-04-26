@@ -28,7 +28,7 @@
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="25_w0mi7"]
 [ext_resource type="Texture2D" uid="uid://dbcy47sluunl4" path="res://gfx/misc/ice_roto_center.png" id="26_cb8ug"]
 [ext_resource type="Shader" uid="uid://erh4rhsoly5d" path="res://engine/objects/bumping_blocks/switch_block/shaders/hsv.gdshader" id="26_ym0hh"]
-[ext_resource type="PackedScene" uid="uid://wqjbkgomnnv0" path="res://objects/icicle/icicle.tscn" id="27_4johv"]
+[ext_resource type="PackedScene" uid="uid://wqjbkgomnnv0" path="res://engine/objects/enemies/icicle/icicle.tscn" id="27_4johv"]
 [ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="27_nnjrl"]
 [ext_resource type="PackedScene" uid="uid://h4vtt6taalpu" path="res://objects/ice_water/ice_water_area.tscn" id="28_cb8ug"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="28_krbxf"]
@@ -64,7 +64,6 @@
 [ext_resource type="Material" uid="uid://cwwy5x5gqv5mx" path="res://engine/shaders/add_effect.tres" id="60_8dlrr"]
 [ext_resource type="Texture2D" uid="uid://brocitne70n08" path="res://stages/extra/new_year_world/gfx/ny_lights_fx.png" id="61_7cc4h"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="62_pukdc"]
-[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="64_u416j"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="65_a5cfx"]
 [ext_resource type="Texture2D" uid="uid://bbc3tx7dapbrk" path="res://engine/objects/signs/arrowsignR.png" id="66_38f5w"]
 [ext_resource type="PackedScene" uid="uid://cmaq3nxte2w8g" path="res://objects/christmas_clones/gifter_clone/gifter_clone_b.tscn" id="67_u416j"]
@@ -623,8 +622,52 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="GDScript" id="GDScript_07gfi"]
+script/source = "extends Resource
+class_name InstanceNode2D
+
+## A kind of [Resource] that stores a [PackedScene], whose root is a [Node2D], that you need to add[br]
+##
+## You need to call [method NodeCreator.prepare_ins_2d] and input the resource as the first parameter to instantiate
+## and create the node packed in [member creation_nodepack]
+
+@export_category(\"InstanceNode2D\")
+@export_group(\"Creation\",\"creation_\")
+## The [Node2D] you have packed as the root, also the instance you are going to add via [method NodeCreator.prepare_ins_2d]
+@export var creation_nodepack: PackedScene
+## When [method NodeCreator.NodeCreation.create_2d] is called for this instance, ticking this will force creation as a sibling, rather than directly under current scene node.
+@export var creation_force_sibling: bool = false
+@export_group(\"Transform\",\"trans_\")
+## The offset of the created, related to its [member Node2D.global_transform]
+@export var trans_offset: Vector2
+## The flags for transform properties that you want the created to inherit
+@export_flags(\"inherit_rotation\",\"inherit_scale\",\"inherit_skew\") var trans_inheritances: int
+## [member Node2D.global_rotation] of the created, if [code]inherit_rotation[/code] ticked, it will rotate from the creator's
+@export var trans_rotation: float
+## [member Node2D.global_scale] of the created, if [code]inherit_scale[/code] ticked, it will be scaled by the creator's
+@export var trans_scale: Vector2 = Vector2.ONE
+## [member Node2D.global_skew] of the created, if [code]inherit_skew[/code] ticked, it will be sheared from the creator's
+@export var trans_skew: float
+@export_group(\"Visibility\",\"visi_\")
+## [member CanvasItem.visible] of the created
+@export var visi_z_index: int
+## [member CanvasItem.z_as_relative] of the created
+@export var visi_z_as_relative: bool = true
+## [member CanvasItem.y_sort_enabled] of the created
+@export var visi_y_sort_enabled: bool
+@export_group(\"Extension\")
+## Custom variables for [member custom_script]
+@export var custom_vars: Dictionary
+## Custom script executed when [method NodeCreator.execute_instance_script] is called
+@export var custom_script: GDScript
+
+
+func _report_resource() -> void:
+	printerr(\"[Report] The error happened on: \" + str(get_rid()) + \", with path:\" + resource_path)
+"
+
 [sub_resource type="Resource" id="Resource_i5haj"]
-script = ExtResource("64_u416j")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("52_ulygq")
 creation_force_sibling = false
 trans_offset = Vector2(0, -28)
@@ -728,7 +771,7 @@ animations = [{
 }]
 
 [sub_resource type="Resource" id="Resource_oobvo"]
-script = ExtResource("64_u416j")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("69_fmd8h")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)

@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="25_44v8s"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="25_wqc6x"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="26_8xpwt"]
-[ext_resource type="PackedScene" uid="uid://cgd12vgjptxo6" path="res://objects/jumping_goomba/jumping_goomba.tscn" id="27_43fum"]
+[ext_resource type="PackedScene" uid="uid://cgd12vgjptxo6" path="res://engine/objects/enemies/goombas/goomba_jumping.tscn" id="27_43fum"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="27_ihons"]
 [ext_resource type="PackedScene" uid="uid://b4mt8vkaqn8of" path="res://objects/falling_t_platform/falling_t_platform.tscn" id="29_bo8if"]
 [ext_resource type="PackedScene" uid="uid://b25tawn45ki10" path="res://objects/roto_quater/roto_quarter.tscn" id="29_navt8"]
@@ -40,7 +40,6 @@
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="33_w5omk"]
 [ext_resource type="PackedScene" uid="uid://dpef5gdwicyhf" path="res://engine/objects/projectiles/hammer/hammer.tscn" id="35_5kts6"]
 [ext_resource type="Script" uid="uid://fdxatwkqrg77" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="36_c7e6h"]
-[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="37_to0v0"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="38_6wng6"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="38_k0v1j"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="40_i2155"]
@@ -95,8 +94,52 @@ fill_to = Vector2(0.857143, 0.142857)
 metadata/_snap_enabled = true
 metadata/_snap_count = 7
 
+[sub_resource type="GDScript" id="GDScript_07gfi"]
+script/source = "extends Resource
+class_name InstanceNode2D
+
+## A kind of [Resource] that stores a [PackedScene], whose root is a [Node2D], that you need to add[br]
+##
+## You need to call [method NodeCreator.prepare_ins_2d] and input the resource as the first parameter to instantiate
+## and create the node packed in [member creation_nodepack]
+
+@export_category(\"InstanceNode2D\")
+@export_group(\"Creation\",\"creation_\")
+## The [Node2D] you have packed as the root, also the instance you are going to add via [method NodeCreator.prepare_ins_2d]
+@export var creation_nodepack: PackedScene
+## When [method NodeCreator.NodeCreation.create_2d] is called for this instance, ticking this will force creation as a sibling, rather than directly under current scene node.
+@export var creation_force_sibling: bool = false
+@export_group(\"Transform\",\"trans_\")
+## The offset of the created, related to its [member Node2D.global_transform]
+@export var trans_offset: Vector2
+## The flags for transform properties that you want the created to inherit
+@export_flags(\"inherit_rotation\",\"inherit_scale\",\"inherit_skew\") var trans_inheritances: int
+## [member Node2D.global_rotation] of the created, if [code]inherit_rotation[/code] ticked, it will rotate from the creator's
+@export var trans_rotation: float
+## [member Node2D.global_scale] of the created, if [code]inherit_scale[/code] ticked, it will be scaled by the creator's
+@export var trans_scale: Vector2 = Vector2.ONE
+## [member Node2D.global_skew] of the created, if [code]inherit_skew[/code] ticked, it will be sheared from the creator's
+@export var trans_skew: float
+@export_group(\"Visibility\",\"visi_\")
+## [member CanvasItem.visible] of the created
+@export var visi_z_index: int
+## [member CanvasItem.z_as_relative] of the created
+@export var visi_z_as_relative: bool = true
+## [member CanvasItem.y_sort_enabled] of the created
+@export var visi_y_sort_enabled: bool
+@export_group(\"Extension\")
+## Custom variables for [member custom_script]
+@export var custom_vars: Dictionary
+## Custom script executed when [method NodeCreator.execute_instance_script] is called
+@export var custom_script: GDScript
+
+
+func _report_resource() -> void:
+	printerr(\"[Report] The error happened on: \" + str(get_rid()) + \", with path:\" + resource_path)
+"
+
 [sub_resource type="Resource" id="Resource_i5haj"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("42_gumhl")
 creation_force_sibling = false
 trans_offset = Vector2(0, -28)
@@ -110,7 +153,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_iubp8"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("35_5kts6")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
@@ -128,7 +171,7 @@ custom_vars = {
 custom_script = ExtResource("36_c7e6h")
 
 [sub_resource type="Resource" id="Resource_6oa5f"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("42_gumhl")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
@@ -146,7 +189,7 @@ custom_vars = {
 custom_script = ExtResource("36_c7e6h")
 
 [sub_resource type="Resource" id="Resource_7x1r5"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("42_gumhl")
 creation_force_sibling = false
 trans_offset = Vector2(0, -28)
@@ -160,7 +203,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_81y0w"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("35_5kts6")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
@@ -178,7 +221,7 @@ custom_vars = {
 custom_script = ExtResource("36_c7e6h")
 
 [sub_resource type="Resource" id="Resource_7clff"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("35_5kts6")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
@@ -196,7 +239,7 @@ custom_vars = {
 custom_script = ExtResource("36_c7e6h")
 
 [sub_resource type="Resource" id="Resource_56kn8"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("42_gumhl")
 creation_force_sibling = false
 trans_offset = Vector2(0, -28)
@@ -210,7 +253,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_cqxuo"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("42_gumhl")
 creation_force_sibling = false
 trans_offset = Vector2(0, -28)
@@ -224,7 +267,7 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_64rq1"]
-script = ExtResource("37_to0v0")
+script = SubResource("GDScript_07gfi")
 creation_nodepack = ExtResource("42_gumhl")
 creation_force_sibling = false
 trans_offset = Vector2(0, -28)

@@ -1,4 +1,4 @@
-extends "res://objects/goomba_bro/goomba_bro.gd"
+extends "res://engine/objects/enemies/hammer_bros/goomba_bro.gd"
 
 func _physics_process(delta: float) -> void:
 	super(delta)
