@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=4 uid="uid://duyp2h5p4mrxn"]
+[gd_scene load_steps=138 format=4 uid="uid://duyp2h5p4mrxn"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_0s1uj"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_p6pgi"]
@@ -53,9 +53,7 @@
 [ext_resource type="PackedScene" uid="uid://buy0ydrei5tfq" path="res://tilesets/snowland_red/scenes/spike_snow.tscn" id="45_5gj00"]
 [ext_resource type="PackedScene" uid="uid://bs0p7pkrqdk3e" path="res://objects/christmas_clones/elf_clone1/elf_worker_clone1.tscn" id="45_je1v5"]
 [ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://engine/objects/platform/castle_platforms/single_platform.tscn" id="46_5gj00"]
-[ext_resource type="AudioStream" uid="uid://dh03g7f5qopaq" path="res://objects/human_lab_2/jaws/wasabi/sfx/j.wav" id="51_f4850"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="52_nnjrl"]
-[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="52_ulygq"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="55_auctm"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="56_51xb5"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="57_rcc1w"]
@@ -71,6 +69,7 @@
 [ext_resource type="PackedScene" uid="uid://byhvxkn86dpgv" path="res://objects/christmas_clones/peter_pan_stuntman_clone/peter_pan_stuntman_clone.tscn" id="69_fmd8h"]
 [ext_resource type="Texture2D" uid="uid://davuuhdbsock" path="res://engine/objects/signs/arrowsignU.png" id="69_kmwf2"]
 [ext_resource type="PackedScene" uid="uid://cawvmevhto1k3" path="res://engine/objects/enemies/paratroopas/paratroopa_circle_generator.tscn" id="70_exq5y"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="70_fmd8h"]
 [ext_resource type="PackedScene" uid="uid://isn2o2tyvkf8" path="res://stages/mario_forever_flash/objects/shorter_long_castle_platform.tscn" id="71_oobvo"]
 [ext_resource type="PackedScene" uid="uid://cyxh76mdfvwim" path="res://objects/christmas_clones/big_elf_presenter/big_elf_presenter.tscn" id="72_g3uoi"]
 [ext_resource type="PackedScene" uid="uid://bl6y0yhdvjrab" path="res://engine/objects/bumping_blocks/switch_block/switch_block.tscn" id="73_iqu80"]
@@ -622,64 +621,6 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="GDScript" id="GDScript_07gfi"]
-script/source = "extends Resource
-class_name InstanceNode2D
-
-## A kind of [Resource] that stores a [PackedScene], whose root is a [Node2D], that you need to add[br]
-##
-## You need to call [method NodeCreator.prepare_ins_2d] and input the resource as the first parameter to instantiate
-## and create the node packed in [member creation_nodepack]
-
-@export_category(\"InstanceNode2D\")
-@export_group(\"Creation\",\"creation_\")
-## The [Node2D] you have packed as the root, also the instance you are going to add via [method NodeCreator.prepare_ins_2d]
-@export var creation_nodepack: PackedScene
-## When [method NodeCreator.NodeCreation.create_2d] is called for this instance, ticking this will force creation as a sibling, rather than directly under current scene node.
-@export var creation_force_sibling: bool = false
-@export_group(\"Transform\",\"trans_\")
-## The offset of the created, related to its [member Node2D.global_transform]
-@export var trans_offset: Vector2
-## The flags for transform properties that you want the created to inherit
-@export_flags(\"inherit_rotation\",\"inherit_scale\",\"inherit_skew\") var trans_inheritances: int
-## [member Node2D.global_rotation] of the created, if [code]inherit_rotation[/code] ticked, it will rotate from the creator's
-@export var trans_rotation: float
-## [member Node2D.global_scale] of the created, if [code]inherit_scale[/code] ticked, it will be scaled by the creator's
-@export var trans_scale: Vector2 = Vector2.ONE
-## [member Node2D.global_skew] of the created, if [code]inherit_skew[/code] ticked, it will be sheared from the creator's
-@export var trans_skew: float
-@export_group(\"Visibility\",\"visi_\")
-## [member CanvasItem.visible] of the created
-@export var visi_z_index: int
-## [member CanvasItem.z_as_relative] of the created
-@export var visi_z_as_relative: bool = true
-## [member CanvasItem.y_sort_enabled] of the created
-@export var visi_y_sort_enabled: bool
-@export_group(\"Extension\")
-## Custom variables for [member custom_script]
-@export var custom_vars: Dictionary
-## Custom script executed when [method NodeCreator.execute_instance_script] is called
-@export var custom_script: GDScript
-
-
-func _report_resource() -> void:
-	printerr(\"[Report] The error happened on: \" + str(get_rid()) + \", with path:\" + resource_path)
-"
-
-[sub_resource type="Resource" id="Resource_i5haj"]
-script = SubResource("GDScript_07gfi")
-creation_nodepack = ExtResource("52_ulygq")
-creation_force_sibling = false
-trans_offset = Vector2(0, -28)
-trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
 [sub_resource type="Resource" id="Resource_w2lj5"]
 resource_local_to_scene = true
 script = ExtResource("31_82ks7")
@@ -770,8 +711,36 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="Resource" id="Resource_oobvo"]
-script = SubResource("GDScript_07gfi")
+[sub_resource type="Resource" id="Resource_c1t5x"]
+script = ExtResource("70_fmd8h")
+creation_nodepack = ExtResource("69_fmd8h")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_modk0"]
+script = ExtResource("70_fmd8h")
+creation_nodepack = ExtResource("69_fmd8h")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_pf4tr"]
+script = ExtResource("70_fmd8h")
 creation_nodepack = ExtResource("69_fmd8h")
 creation_force_sibling = false
 trans_offset = Vector2(0, 0)
@@ -1244,59 +1213,29 @@ script = ExtResource("11_l1r51")
 [node name="ThwompCloneChilly2" parent="." instance=ExtResource("30_br760")]
 position = Vector2(992, 192)
 platform_on_leave = 0
-gravity_dir = null
-gravity_dir_rotation = Vector2(0, 1)
-collision = null
-auto_update_up_direction = null
-subtick_max_horizontal_corrections_amount = null
 
 [node name="ThwompCloneChilly6" parent="." instance=ExtResource("30_br760")]
 position = Vector2(672, 928)
 platform_on_leave = 0
 trigger_area = Rect2(-100, -32, 200, 336)
-gravity_dir = null
-gravity_dir_rotation = Vector2(0, 1)
-collision = null
-auto_update_up_direction = null
-subtick_max_horizontal_corrections_amount = null
 
 [node name="ThwompCloneChilly7" parent="." instance=ExtResource("30_br760")]
 position = Vector2(1984, 1024)
 platform_on_leave = 0
 trigger_area = Rect2(-100, -32, 200, 336)
-gravity_dir = null
-gravity_dir_rotation = Vector2(0, 1)
-collision = null
-auto_update_up_direction = null
-subtick_max_horizontal_corrections_amount = null
 
 [node name="ThwompCloneChilly8" parent="." instance=ExtResource("30_br760")]
 position = Vector2(2464, 896)
 platform_on_leave = 0
-gravity_dir = null
-gravity_dir_rotation = Vector2(0, 1)
-collision = null
-auto_update_up_direction = null
-subtick_max_horizontal_corrections_amount = null
 
 [node name="ThwompCloneChilly3" parent="." instance=ExtResource("30_br760")]
 position = Vector2(2560, 224)
 platform_on_leave = 0
 trigger_area = Rect2(-100, -100, 200, 480)
-gravity_dir = null
-gravity_dir_rotation = Vector2(0, 1)
-collision = null
-auto_update_up_direction = null
-subtick_max_horizontal_corrections_amount = null
 
 [node name="ThwompCloneChilly4" parent="." instance=ExtResource("30_br760")]
 position = Vector2(4160, 192)
 platform_on_leave = 0
-gravity_dir = null
-gravity_dir_rotation = Vector2(0, 1)
-collision = null
-auto_update_up_direction = null
-subtick_max_horizontal_corrections_amount = null
 
 [node name="Coin" parent="." instance=ExtResource("28_krbxf")]
 position = Vector2(240, 368)
@@ -1637,11 +1576,6 @@ position = Vector2(1584, 208)
 [node name="ThwompCloneChilly5" parent="." instance=ExtResource("30_br760")]
 position = Vector2(5792, 128)
 platform_on_leave = 0
-gravity_dir = null
-gravity_dir_rotation = Vector2(0, 1)
-collision = null
-auto_update_up_direction = null
-subtick_max_horizontal_corrections_amount = null
 
 [node name="Brick" parent="." instance=ExtResource("29_br760")]
 position = Vector2(304, 272)
@@ -2084,21 +2018,6 @@ hammer_bros_jumping_type = 1
 
 [node name="AngryGrinchJawsClone" parent="." instance=ExtResource("41_ppt6b")]
 position = Vector2(128, 1280)
-custom_vars = {
-"attack_amount": 1,
-"attack_interval": 0.2,
-"attack_sound": ExtResource("51_f4850"),
-"attack_thrower": SubResource("Resource_i5haj"),
-"attack_times": 3,
-"projectile_collision": false,
-"projectile_gravity_scale": "0.2",
-"projectile_integer_speed": false,
-"projectile_offscreen_time": 3.0,
-"projectile_remove_from_top": true,
-"projectile_speed_correction": true,
-"projectile_speed_max": Vector2(200, -550),
-"projectile_speed_min": Vector2(-200, -250)
-}
 
 [node name="PeppermintJawsClone" parent="." instance=ExtResource("44_ym0hh")]
 position = Vector2(5440, 448)
@@ -3295,7 +3214,7 @@ autoplay = "default"
 
 [node name="BulletLauncher4" parent="." instance=ExtResource("62_pukdc")]
 position = Vector2(816, 1712)
-bullet_bill = SubResource("Resource_oobvo")
+bullet_bill = SubResource("Resource_c1t5x")
 metadata/_edit_group_ = true
 
 [node name="BulletBillBase" parent="BulletLauncher4" instance=ExtResource("65_a5cfx")]
@@ -3306,7 +3225,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BulletLauncher5" parent="." instance=ExtResource("62_pukdc")]
 position = Vector2(1232, 1904)
-bullet_bill = SubResource("Resource_oobvo")
+bullet_bill = SubResource("Resource_modk0")
 metadata/_edit_group_ = true
 
 [node name="BulletBillBase" parent="BulletLauncher5" instance=ExtResource("65_a5cfx")]
@@ -3316,7 +3235,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BulletLauncher6" parent="." instance=ExtResource("62_pukdc")]
 position = Vector2(2384, 1776)
-bullet_bill = SubResource("Resource_oobvo")
+bullet_bill = SubResource("Resource_pf4tr")
 metadata/_edit_group_ = true
 
 [node name="BulletBillBase" parent="BulletLauncher6" instance=ExtResource("65_a5cfx")]
