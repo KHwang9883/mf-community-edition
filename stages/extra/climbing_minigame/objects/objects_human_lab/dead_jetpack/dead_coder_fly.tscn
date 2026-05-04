@@ -1,15 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://cr5kn0pwf3lo2"]
+[gd_scene load_steps=18 format=3 uid="uid://cr5kn0pwf3lo2"]
 
 [ext_resource type="Script" uid="uid://dalbx57u5hlgi" path="res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.gd" id="1_74w4c"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_4ck2j"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_7c7sb"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_yxnsw"]
-[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_avcrq"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_rdu8f"]
+[ext_resource type="AudioStream" uid="uid://m3fb62sh1nho" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/JetpackImpact.wav" id="5_rxdlf"]
 [ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_4swss"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="8_ewbi1"]
-[ext_resource type="Texture2D" uid="uid://mapnany1gi8g" path="res://objects/human_lab_2/coders/jetpack/dead_jetpack/gfx/tmp.png" id="8_trxq7"]
-[ext_resource type="Texture2D" uid="uid://cf5828npf0yv1" path="res://objects/human_lab_2/coders/jetpack/dead_jetpack/gfx/ded.png" id="9_ewbi1"]
+[ext_resource type="Texture2D" uid="uid://mapnany1gi8g" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/gfx/tmp.png" id="8_trxq7"]
+[ext_resource type="Texture2D" uid="uid://cf5828npf0yv1" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/gfx/ded.png" id="9_ewbi1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c6snl"]
 size = Vector2(28, 32)
@@ -67,7 +66,7 @@ trans_inheritances = 7
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0
-visi_z_index = 1
+visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
@@ -148,7 +147,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 script = ExtResource("2_4ck2j")
 stomping_creation = SubResource("2")
 stomping_scores = 100
-stomping_sound = ExtResource("6_avcrq")
+stomping_sound = ExtResource("5_rxdlf")
 killing_immune = {
 &"beetroot": false,
 &"boomerang": false,
@@ -164,7 +163,7 @@ killing_immune = {
 }
 killing_creation = SubResource("Resource_kqoge")
 killing_scores = 100
-killing_sound_succeeded = ExtResource("7_rdu8f")
+killing_sound_succeeded = ExtResource("5_rxdlf")
 
 [node name="Node" type="Node2D" parent="Body"]
 script = ExtResource("8_ewbi1")
@@ -189,5 +188,3 @@ flip_v = true
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]

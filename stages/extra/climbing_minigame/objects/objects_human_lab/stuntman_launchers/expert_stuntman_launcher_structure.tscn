@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://bth1ui3lpdym8"]
+
+[ext_resource type="Script" uid="uid://cy3juimfkwdtc" path="res://stages/extra/climbing_minigame/objects/bullet_launcher_structure/bullet_launcher_structure.gd" id="1_rjv7y"]
+[ext_resource type="PackedScene" uid="uid://iwrxr2jacojf" path="res://objects/accelerating_bill/ac_bullet_launcher.tscn" id="2_og6dg"]
+[ext_resource type="PackedScene" uid="uid://bp46tygwqhopp" path="res://objects/human_lab_2/stuntmans/flash/flash_stuntman_clone.tscn" id="3_mwfip"]
+[ext_resource type="PackedScene" uid="uid://gjtv8kclx2xi" path="res://objects/accelerating_bill/ac_bullet_launcher_base.tscn" id="3_toeae"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_e0oa6"]
+[ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="4_f1pyh"]
+
+[sub_resource type="Resource" id="Resource_50ekd"]
+script = ExtResource("4_e0oa6")
+creation_nodepack = ExtResource("3_mwfip")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_402i8"]
+size = Vector2(32, 32)
+
+[node name="BulletLauncherStructure" type="Node2D"]
+script = ExtResource("1_rjv7y")
+
+[node name="AcceleratingBillLauncher" parent="." instance=ExtResource("2_og6dg")]
+position = Vector2(-1, -48)
+bullet_bill = SubResource("Resource_50ekd")
+first_shooting_delay = 0.6
+
+[node name="AcceleratingBillLauncherBase" parent="." instance=ExtResource("3_toeae")]
+position = Vector2(0, -32)
+region_rect = Rect2(0, 0, 33, 64)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 112
+collision_mask = 0
+
+[node name="CastleTileset" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(0, 16)
+texture = ExtResource("4_f1pyh")
+region_enabled = true
+region_rect = Rect2(64, 0, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_402i8")
