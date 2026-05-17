@@ -14,7 +14,7 @@ func _physics_process(delta):
 	if counter > 0.1 && Thunder.view.is_getting_closer(self, 32):
 		counter = 0.0
 		var explo = EXPLOSION_TANK.instantiate()
-		Scenes.current_scene.add_child(explo)
 		explo.global_position = global_position + randi_range(-32, 32) * Vector2.ONE
+		Scenes.current_scene.add_child(explo)
 	if position.y > 700: modulate.a -= delta
 	if modulate.a <= 0.0: queue_free()
