@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://d3itvifoggvwt"]
+[gd_scene load_steps=69 format=4 uid="uid://d3itvifoggvwt"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_t2ekn"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_bcxqf"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="13_w8muu"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="15_nqbn4"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="16_w1upg"]
+[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="17_0swgc"]
 [ext_resource type="Material" uid="uid://bqbnhvliq3s32" path="res://engine/shaders/add_unshaded_effect.tres" id="17_v2va1"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="18_ptsle"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="19_hp58f"]
@@ -65,6 +66,16 @@ colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_cxhyf"]
 gradient = SubResource("Gradient_sobna")
+
+[sub_resource type="Gradient" id="Gradient_oe5u5"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oe5u5"]
+gradient = SubResource("Gradient_oe5u5")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
 
 [sub_resource type="Resource" id="Resource_cxhyf"]
 script = ExtResource("24_um7ou")
@@ -342,6 +353,66 @@ position = Vector2(136, 64)
 phase = 25.12
 frequency = 100.0
 
+[node name="LavaBubbles" parent="." instance=ExtResource("17_0swgc")]
+position = Vector2(1576, 464)
+
+[node name="LavaBubbles2" parent="." instance=ExtResource("17_0swgc")]
+position = Vector2(1992, 464)
+
+[node name="LavaBubbles3" parent="." instance=ExtResource("17_0swgc")]
+position = Vector2(2288, 464)
+
+[node name="LavaBubbles4" parent="." instance=ExtResource("17_0swgc")]
+position = Vector2(1136, 464)
+
+[node name="LavaBubbles5" parent="." instance=ExtResource("17_0swgc")]
+position = Vector2(400, 464)
+
+[node name="Podoboo" parent="." instance=ExtResource("27_56tqw")]
+position = Vector2(400, 464)
+interval = 1.5
+jumping_height = 270.0
+
+[node name="PodobooVolcanoLauncher" parent="." instance=ExtResource("42_pc17p")]
+position = Vector2(1136, 464)
+launch_initial_delay = 0.3
+launch_delay = 2.0
+launch_interval = 0.2
+launch_amount = 4
+podoboo_jumping_height = 320
+podoboo_min_speed = -1
+podoboo_max_speed = 1
+
+[node name="PodobooVolcanoLauncher2" parent="." instance=ExtResource("42_pc17p")]
+position = Vector2(1576, 464)
+launch_initial_delay = 0.3
+launch_delay = 2.0
+launch_interval = 0.21
+launch_amount = 6
+podoboo_jumping_height = 320
+podoboo_min_speed = -1
+podoboo_max_speed = 1
+
+[node name="PodobooVolcanoLauncher3" parent="." instance=ExtResource("42_pc17p")]
+position = Vector2(1992, 464)
+launch_initial_delay = 0.3
+launch_delay = 2.0
+launch_interval = 0.21
+launch_amount = 3
+podoboo_jumping_height = 320
+podoboo_min_speed = -1
+podoboo_max_speed = 1
+
+[node name="PodobooVolcanoLauncher4" parent="." instance=ExtResource("42_pc17p")]
+position = Vector2(2288, 464)
+launch_initial_delay = 0.2
+launch_delay = 0.2
+launch_interval = 0.2
+launch_amount = 1
+podoboo_jumping_height = 96
+podoboo_min_speed = -3
+podoboo_max_speed = 3
+
 [node name="Lava7" parent="." instance=ExtResource("18_ptsle")]
 z_index = -31
 offset_left = 320.0
@@ -569,6 +640,66 @@ region_rect = Rect2(4, 0, 60, 64)
 position = Vector2(6014, 448)
 texture = SubResource("GradientTexture2D_cxhyf")
 
+[node name="LavaHeat11" type="Sprite2D" parent="."]
+position = Vector2(286, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat14" type="Sprite2D" parent="."]
+position = Vector2(926, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat16" type="Sprite2D" parent="."]
+position = Vector2(1374, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat12" type="Sprite2D" parent="."]
+position = Vector2(514, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+flip_h = true
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat15" type="Sprite2D" parent="."]
+position = Vector2(1378, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+flip_h = true
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat17" type="Sprite2D" parent="."]
+position = Vector2(1790, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat18" type="Sprite2D" parent="."]
+position = Vector2(1794, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+flip_h = true
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat19" type="Sprite2D" parent="."]
+position = Vector2(2206, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat20" type="Sprite2D" parent="."]
+position = Vector2(2210, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+flip_h = true
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat22" type="Sprite2D" parent="."]
+position = Vector2(6014, 400)
+texture = SubResource("GradientTexture2D_oe5u5")
+region_rect = Rect2(10, 0, 54, 64)
+
+[node name="LavaHeat21" type="Sprite2D" parent="."]
+position = Vector2(2370, 432)
+texture = SubResource("GradientTexture2D_oe5u5")
+flip_h = true
+region_rect = Rect2(10, 0, 54, 64)
+
 [node name="QuestionBlock10" parent="." instance=ExtResource("21_rypqc")]
 position = Vector2(752, 208)
 result = SubResource("Resource_cxhyf")
@@ -605,11 +736,6 @@ position = Vector2(5488, 240)
 result = SubResource("Resource_ef1ll")
 initially_visible_and_solid = false
 exists_once = true
-
-[node name="Podoboo" parent="." instance=ExtResource("27_56tqw")]
-position = Vector2(400, 464)
-interval = 1.5
-jumping_height = 270.0
 
 [node name="LavaBowser" parent="." instance=ExtResource("28_jmo7f")]
 position = Vector2(6064, 432)
@@ -747,46 +873,6 @@ boss_music = ExtResource("39_yufls")
 [node name="Checkpoint" parent="." instance=ExtResource("40_berog")]
 position = Vector2(4288, 256)
 
-[node name="PodobooVolcanoLauncher" parent="." instance=ExtResource("42_pc17p")]
-position = Vector2(1136, 464)
-launch_initial_delay = 0.3
-launch_delay = 2.0
-launch_interval = 0.2
-launch_amount = 4
-podoboo_jumping_height = 320
-podoboo_min_speed = -1
-podoboo_max_speed = 1
-
-[node name="PodobooVolcanoLauncher2" parent="." instance=ExtResource("42_pc17p")]
-position = Vector2(1576, 464)
-launch_initial_delay = 0.3
-launch_delay = 2.0
-launch_interval = 0.21
-launch_amount = 6
-podoboo_jumping_height = 320
-podoboo_min_speed = -1
-podoboo_max_speed = 1
-
-[node name="PodobooVolcanoLauncher3" parent="." instance=ExtResource("42_pc17p")]
-position = Vector2(1992, 464)
-launch_initial_delay = 0.3
-launch_delay = 2.0
-launch_interval = 0.21
-launch_amount = 3
-podoboo_jumping_height = 320
-podoboo_min_speed = -1
-podoboo_max_speed = 1
-
-[node name="PodobooVolcanoLauncher4" parent="." instance=ExtResource("42_pc17p")]
-position = Vector2(2288, 464)
-launch_initial_delay = 0.2
-launch_delay = 0.2
-launch_interval = 0.2
-launch_amount = 1
-podoboo_jumping_height = 96
-podoboo_min_speed = -3
-podoboo_max_speed = 3
-
 [node name="PlatformPath" parent="." instance=ExtResource("44_fy265")]
 position = Vector2(1152, 320)
 loop_backwards = false
@@ -802,6 +888,8 @@ loop_backwards = false
 warp_objects_on_end = false
 smooth_enabled = false
 falling_enabled = true
+falling_acceleration = 15.0
+falling_delay = 0.5
 
 [node name="PlatformPath3" parent="." instance=ExtResource("45_53hmh")]
 position = Vector2(2000, 320)
@@ -809,6 +897,8 @@ loop_backwards = false
 warp_objects_on_end = false
 smooth_enabled = false
 falling_enabled = true
+falling_acceleration = 15.0
+falling_delay = 0.5
 
 [node name="PiranhaPink" parent="." instance=ExtResource("46_da6ux")]
 position = Vector2(2496, 352)

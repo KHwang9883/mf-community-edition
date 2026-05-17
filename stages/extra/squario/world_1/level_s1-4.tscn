@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=4 uid="uid://c0o3bdii3v8v5"]
+[gd_scene load_steps=62 format=4 uid="uid://c0o3bdii3v8v5"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_cj45g"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_jw05v"]
@@ -37,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="38_k7jbr"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="39_cbup5"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="40_j8sma"]
+[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="41_ckecq"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="41_uocd4"]
 [ext_resource type="AudioStream" uid="uid://bjxgnmvy3r7cs" path="res://music/smas-bowser.ogg" id="42_y452x"]
 [ext_resource type="PackedScene" uid="uid://ddwxc43m3q1c6" path="res://engine/objects/core/checkpoint/checkpoint.tscn" id="43_bw1ve"]
@@ -58,6 +59,16 @@ colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_cxhyf"]
 gradient = SubResource("Gradient_sobna")
+
+[sub_resource type="Gradient" id="Gradient_6v2wa"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ckecq"]
+gradient = SubResource("Gradient_6v2wa")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
 
 [sub_resource type="Resource" id="Resource_cxhyf"]
 script = ExtResource("27_eb53c")
@@ -215,7 +226,7 @@ boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("5_4mtui")])
 
 [node name="Player" parent="." instance=ExtResource("6_x1fp2")]
-position = Vector2(48, 208)
+position = Vector2(48, 240)
 death_music_override = ExtResource("7_la8tq")
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
@@ -549,15 +560,30 @@ metadata/_edit_lock_ = true
 position = Vector2(350, 480)
 texture = SubResource("GradientTexture2D_cxhyf")
 
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
+
 [node name="LavaHeat2" type="Sprite2D" parent="."]
 position = Vector2(544, 480)
 rotation = 3.14159
 scale = Vector2(1, -1)
 texture = SubResource("GradientTexture2D_cxhyf")
 
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat2"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
+
 [node name="LavaHeat3" type="Sprite2D" parent="."]
 position = Vector2(606, 480)
 texture = SubResource("GradientTexture2D_cxhyf")
+
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat3"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
 
 [node name="LavaHeat4" type="Sprite2D" parent="."]
 position = Vector2(802, 480)
@@ -565,17 +591,37 @@ rotation = 3.14159
 scale = Vector2(1, -1)
 texture = SubResource("GradientTexture2D_cxhyf")
 
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat4"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
+
 [node name="LavaHeat5" type="Sprite2D" parent="."]
 position = Vector2(1502, 480)
 texture = SubResource("GradientTexture2D_cxhyf")
+
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat5"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
 
 [node name="LavaHeat7" type="Sprite2D" parent="."]
 position = Vector2(1726, 480)
 texture = SubResource("GradientTexture2D_cxhyf")
 
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat7"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
+
 [node name="LavaHeat9" type="Sprite2D" parent="."]
 position = Vector2(5534, 448)
 texture = SubResource("GradientTexture2D_cxhyf")
+
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat9"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
 
 [node name="LavaHeat13" type="Sprite2D" parent="."]
 position = Vector2(5984, 480)
@@ -587,17 +633,21 @@ rotation = -3.14159
 scale = Vector2(1, -1)
 texture = SubResource("GradientTexture2D_cxhyf")
 
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat6"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
+
 [node name="LavaHeat8" type="Sprite2D" parent="."]
 position = Vector2(1954, 480)
 rotation = -3.14159
 scale = Vector2(1, -1)
 texture = SubResource("GradientTexture2D_cxhyf")
 
-[node name="LavaHeat14" type="Sprite2D" parent="."]
-position = Vector2(6816, 480)
-rotation = -3.14159
-scale = Vector2(1, -1)
-texture = SubResource("GradientTexture2D_cxhyf")
+[node name="LavaHeat21" type="Sprite2D" parent="LavaHeat8"]
+position = Vector2(0, -48)
+texture = SubResource("GradientTexture2D_ckecq")
+region_rect = Rect2(10, 0, 54, 64)
 
 [node name="QuestionBlock10" parent="." instance=ExtResource("24_lw152")]
 position = Vector2(1680, 208)
@@ -777,9 +827,19 @@ position = Vector2(6224, 240)
 [node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("41_uocd4")]
 position = Vector2(5376, 208)
 curve = SubResource("Curve2D_n44j3")
+trigger_area = Rect2(0, -128, 32, 800)
 trigger_bowser = NodePath("../Bowser")
 camera_speed = 75.0
 boss_music = ExtResource("42_y452x")
 
 [node name="Checkpoint" parent="." instance=ExtResource("43_bw1ve")]
-position = Vector2(4760, 288)
+position = Vector2(3856, 448)
+
+[node name="LavaBubbles" parent="." instance=ExtResource("41_ckecq")]
+position = Vector2(688, 464)
+
+[node name="LavaBubbles2" parent="." instance=ExtResource("41_ckecq")]
+position = Vector2(1584, 464)
+
+[node name="LavaBubbles3" parent="." instance=ExtResource("41_ckecq")]
+position = Vector2(1840, 464)
