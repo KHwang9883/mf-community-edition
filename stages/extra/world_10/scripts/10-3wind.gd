@@ -4,6 +4,7 @@ extends Node
 @export_range(0, 1, 0.001, "or_greater", "suffix:x") var snow_recovery_accumulation_rate: float = 0.005
 @export_range(0, 1, 0.001, "or_greater", "suffix:x") var snow_recovery_decumulation_each_jump: float = 0.1
 
+const SNOW_BREAK = preload("res://stages/extra/world_10/sfx/snow_break.wav")
 const PLAYER_PHYSICS: Array[StringName] = [
 	&"walk_max_walking_speed",
 	&"walk_max_running_speed",
@@ -27,7 +28,7 @@ var jumped: bool = false
 
 @onready var _par: Player = get_parent()
 @onready var _snow_cover: Sprite2D = $"../SnowCover"
-@onready var _snow_particle: GPUParticles2D = $"../SnowParticle"
+@onready var _snow_particle: GPUParticles2D = $"../../SnowParticle"
 
 
 func _ready() -> void:
@@ -41,8 +42,7 @@ func _physics_process(delta: float) -> void:
 		return
 	if _par.completed:
 		snow_cover_accumulation = move_toward(snow_cover_accumulation, 0, 0.2 * delta)
-	if !_par:
-		return
+	
 	if !is_zero_approx(wind_speed):
 		var mv := Vector2.RIGHT * wind_speed * delta
 		var kc := KinematicCollision2D.new()
@@ -58,13 +58,15 @@ func _physics_process(delta: float) -> void:
 			acc *= 0.5
 		snow_cover_accumulation = move_toward(snow_cover_accumulation, 1, 0.0 if !_par.is_on_floor() else acc * delta)
 	
+	_snow_particle.global_position = _par.global_position
+	
 	if jumped && _par.is_on_floor():
 		jumped = false
 	if _par.jumped && !jumped && snow_cover_accumulation > 0:
 		jumped = true
 		snow_cover_accumulation = clamp(snow_cover_accumulation - snow_recovery_decumulation_each_jump, 0, 1)
 		if _snow_particle.visible && snow_cover_accumulation > 0.1:
-			Audio.play_1d_sound(preload("res://stages/extra/world_10/sfx/snow_break.wav"))
+			Audio.play_1d_sound(SNOW_BREAK)
 			for i in 4:
 				_snow_particle.emit_particle(_snow_particle.global_transform, Vector2.RIGHT.rotated(-PARTICLE_VELOCITY_ROTATIONS[i]) * randf_range(50, 200), Color.WHITE, Color.WHITE, GPUParticles2D.EMIT_FLAG_POSITION | GPUParticles2D.EMIT_FLAG_VELOCITY)
 	_par.set_meta(&"not_slidable", snow_cover_accumulation > 0.2)
