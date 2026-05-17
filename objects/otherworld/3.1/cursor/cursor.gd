@@ -3,7 +3,6 @@ extends Node2D
 signal scripted_move_ended
 signal scripted_move_waiting
 
-const BOO_SOUND = preload("res://objects/boo/boo1.wav")
 const SMOKE = preload("res://engine/objects/effects/smoke/smoke.tscn")
 
 @export var speed: float = 50
@@ -58,12 +57,3 @@ func _physics_process(delta: float) -> void:
 	else:
 		sprite.play(&"default")
 		
-
-func _from_bumping_block() -> void:
-	Audio.play_sound(BOO_SOUND, self)
-	position += Vector2(0, -24).rotated(global_rotation)
-	z_index += 2
-	
-	var smoke = SMOKE.instantiate()
-	Scenes.current_scene.add_child(smoke)
-	smoke.global_position = global_position
