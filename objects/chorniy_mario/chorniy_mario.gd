@@ -95,7 +95,7 @@ func _physics_process(delta: float) -> void:
 		return
 	if warp_invinc_timer > 0: warp_invinc_timer -= delta * 50
 	
-	if !appear_triggered && (is_instance_valid(mario) && !mario_pos.is_equal_approx(mario.global_position) ):
+	if !appear_triggered && (is_instance_valid(mario) && mario_pos.distance_squared_to(mario.global_position) > 4 ):
 		appear_triggered = true
 		get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
 			visible = false
