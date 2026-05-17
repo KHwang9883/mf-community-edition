@@ -53,3 +53,9 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	if completion_write_save:
 		ProfileManager.current_profile.data.star_world = true
 		ProfileManager.save_current_profile()
+	if !(SecretsManager.is_console_enabled() && !Console.cv.can_save_suspended_with_console):
+		if (
+			ProfileManager.profiles.has("suspended") &&
+			ProfileManager.profiles.suspended.data.saved_profile == ProfileManager.current_profile.name
+		):
+			ProfileManager.delete_profile(&"suspended")
