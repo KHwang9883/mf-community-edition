@@ -10,6 +10,8 @@ const status_sounds: Array[AudioStream] = [
 	preload("res://stages/extra/minix/status/status_final.wav")
 ]
 
+@onready var minix_score_loader: Node = $"../../MinixScoreLoader"
+
 var tw: Tween = null
 var _offset: float = 0.0
 
@@ -91,6 +93,7 @@ func _init_godlike() -> void:
 	if !"godlikes" in Data.values:
 		Data.values.godlikes = 0
 	Data.values.godlikes += 1
+	minix_score_loader._on_godlike_added()
 	if godlike_bool: return
 	godlike_bool = true
 	

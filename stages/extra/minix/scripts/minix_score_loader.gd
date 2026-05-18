@@ -2,6 +2,7 @@ extends Node
 
 const score_path: String = "user://minigames.thss"
 const encryption_key: int = 0xdeadbeef
+const gl_key: int = 0x4baddadf
 
 @export var load_values_on_start: bool = true
 
@@ -16,6 +17,7 @@ var default_score_values: Dictionary = {
 }
 var score_values: Dictionary = default_score_values.duplicate(true)
 var score_encrypted: int
+var gl_encrypted: int
 
 @onready var node_2d: Node2D = $"../START/Node2D"
 
@@ -108,3 +110,6 @@ func _on_score_added(scr: int) -> void:
 	score_encrypted = (score_decrypted + scr) ^ encryption_key
 	# enc, dec
 	#prints(score_encrypted, (score_encrypted ^ encryption_key) - encryption_key)
+
+func _on_godlike_added() -> void:
+	gl_encrypted

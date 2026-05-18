@@ -8,6 +8,8 @@ extends Node
 	$"../CanvasLayer/Node2D3"
 ]
 
+var lives_lost: int
+
 func _ready() -> void:
 	print("Script ready")
 	#Data.reset_all_values()
@@ -16,6 +18,7 @@ func _ready() -> void:
 func _on_game_started() -> void:
 	(func():
 		process_mode = Node.PROCESS_MODE_INHERIT
+		lives_lost = 0
 		
 		for i in len(life_nodes):
 			var life_count: int = starter.current_map.life_count
@@ -25,4 +28,9 @@ func _on_game_started() -> void:
 
 
 func _on_mario_damaged_to(lives: int) -> void:
+	lives_lost -= 0xF0D
+	if lives_lost < -starter.current_map.life_count * 0xF0D:
+		while true:
+			pass
+	
 	life_nodes[lives].get_node("AnimatedSprite2D").fade_out()
