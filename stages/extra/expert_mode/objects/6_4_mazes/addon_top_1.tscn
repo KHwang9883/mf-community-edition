@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://mex0huuul2ge"]
+[gd_scene load_steps=14 format=4 uid="uid://mex0huuul2ge"]
 
 [ext_resource type="TileSet" uid="uid://co4kwf1fb2y5i" path="res://tilesets/castle/castle_tileset.tres" id="1_7iem2"]
 [ext_resource type="Texture2D" uid="uid://c7nrslfgsidtm" path="res://engine/objects/enemies/spikes/textures/spike_castle.png" id="2_hvety"]
@@ -9,6 +9,16 @@
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="7_1p2f6"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="8_8xka3"]
 [ext_resource type="PackedScene" uid="uid://crb8jkwa0r1dl" path="res://engine/objects/enemies/spinies/spiny_iron.tscn" id="9_onlor"]
+
+[sub_resource type="Gradient" id="Gradient_7iem2"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hvety"]
+gradient = SubResource("Gradient_7iem2")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
 
 [sub_resource type="Gradient" id="Gradient_42xtm"]
 colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
@@ -28,7 +38,7 @@ metadata/_snap_enabled = true
 tile_map_data = PackedByteArray("AAC3AAgAAAACAAAAAAC3AAkAAAACAAAAAAC3AAoAAAACAAAAAAC3AAsAAAACAAAAAAC3AAwAAAACAAAAAAC3AA0AAAABAAIAAAC3AA4AAAABAAEAAADEAAAAAAAAAAAAAADEAP//AAACAAAAAADEAP7/AAACAAAAAADEAP3/AAACAAAAAADEAPz/AAACAAAAAADEAPv/AAACAAAAAADEAPr/AAACAAAAAADEAPn/AAACAAAAAADEAPj/AAACAAAAAADEAPf/AAACAAAAAAC3AAQAAAACAAAAAAC3AAUAAAACAAAAAAC3AAYAAAACAAAAAAC3AAcAAAACAAAAAAC3AAMAAAACAAAAAADFAAAAAAABAAAAAADGAAAAAAAAAAAAAADHAAAAAAABAAAAAADFAAEAAAAAAAAAAADGAAEAAAABAAAAAADEAAEAAAACAAAAAADHAAEAAAACAAAAAADHAPf/AAACAAAAAADHAPj/AAACAAAAAADHAPn/AAACAAAAAADHAPr/AAACAAAAAADHAPv/AAACAAAAAADHAPz/AAACAAAAAADHAP3/AAACAAAAAADHAP7/AAACAAAAAADHAP//AAACAAAAAAC9AAAAAAABAAAAAAC9AAEAAAAAAAAAAAC+AAAAAAAAAAAAAAC+AAEAAAABAAAAAAC/AAAAAAABAAAAAAC/AAEAAAACAAAAAAC8APf/AAACAAAAAAC8APj/AAACAAAAAAC8APn/AAACAAAAAAC8APr/AAACAAAAAAC8APv/AAACAAAAAAC8APz/AAACAAAAAAC8AP3/AAACAAAAAAC8AP7/AAACAAAAAAC8AP//AAACAAAAAAC8AAAAAAAAAAAAAAC8AAEAAAACAAAAAAC/APf/AAACAAAAAAC/APj/AAACAAAAAAC/APn/AAACAAAAAAC/APr/AAACAAAAAAC/APv/AAACAAAAAAC/APz/AAACAAAAAAC/AP3/AAACAAAAAAC/AP7/AAACAAAAAAC/AP//AAACAAAAAADBAAcAAwAAAAAAAADBAAgAAwAAAAEAAADCAAcAAwABAAAAAADCAAgAAwABAAEAAADBAAkAAwAAAAEAAADCAAkAAwABAAEAAADBAAoAAwAAAAEAAADCAAoAAwABAAEAAADBAAsAAwAAAAEAAADCAAsAAwABAAEAAADBAAwAAwAAAAEAAADCAAwAAwABAAEAAADBAA0AAAACAAEAAADCAA0AAAABAAEAAADBAA4AAAACAAMAAADCAA4AAAADAAMAAAC2AA0AAAAAAAIAAAC2AA4AAAAAAAEAAADKAA0AAAADAAIAAADKAA4AAAADAAEAAADJAA0AAAACAAIAAADJAA4AAAACAAEAAADAAAoAAAACAAAAAADDAAoAAAACAAAAAADOAAIAAAACAAAAAADOAAEAAAACAAAAAADOAAAAAAACAAAAAADOAP//AAACAAAAAADOAP7/AAACAAAAAADOAP3/AAACAAAAAADOAPz/AAACAAAAAADOAPv/AAACAAAAAADOAPr/AAACAAAAAADOAPn/AAACAAAAAADOAPj/AAACAAAAAADOAPf/AAACAAAAAADNAPf/AAACAAAAAADMAPf/AAACAAAAAADLAPf/AAACAAAAAADKAPf/AAACAAAAAADJAPf/AAACAAAAAADIAPf/AAACAAAAAAA=")
 tile_set = ExtResource("1_7iem2")
 
-[node name="SpikeCastle" type="Sprite2D" parent="."]
+[node name="SpikeCastle3" type="Sprite2D" parent="."]
 texture_repeat = 2
 position = Vector2(5840, 352)
 rotation = 1.5708
@@ -36,6 +46,23 @@ texture = ExtResource("2_hvety")
 flip_v = true
 region_enabled = true
 region_rect = Rect2(0, 0, 128, 32)
+
+[node name="SpikeCastle" type="Sprite2D" parent="."]
+clip_children = 1
+texture_repeat = 2
+position = Vector2(5840, 352)
+rotation = 1.5708
+texture = ExtResource("2_hvety")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 32)
+
+[node name="LavaHeat14" type="Sprite2D" parent="SpikeCastle"]
+position = Vector2(48, 0)
+rotation = -1.5708
+texture = SubResource("GradientTexture2D_hvety")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
 
 [node name="SpikeCastle2" type="Sprite2D" parent="."]
 texture_repeat = 2
@@ -108,3 +135,22 @@ script = ExtResource("8_8xka3")
 
 [node name="SpinyIron" parent="." instance=ExtResource("9_onlor")]
 position = Vector2(6574, 240)
+
+[node name="LavaHeat14" type="Sprite2D" parent="."]
+position = Vector2(6208, 400)
+texture = SubResource("GradientTexture2D_hvety")
+region_enabled = true
+region_rect = Rect2(0, 0, 54, 32)
+
+[node name="LavaHeat15" type="Sprite2D" parent="."]
+position = Vector2(6208, 400)
+texture = SubResource("GradientTexture2D_hvety")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 54, 32)
+
+[node name="LavaHeat16" type="Sprite2D" parent="."]
+position = Vector2(5872, 400)
+texture = SubResource("GradientTexture2D_hvety")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)

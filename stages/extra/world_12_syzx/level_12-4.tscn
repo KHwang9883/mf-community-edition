@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=4 uid="uid://beq5u00f32j45"]
+[gd_scene load_steps=94 format=4 uid="uid://beq5u00f32j45"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_0liw3"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_f4pki"]
@@ -340,6 +340,16 @@ scale_min = 2.0
 scale_max = 2.0
 color = Color(1.565, 0.94476, 0, 1)
 alpha_curve = SubResource("CurveTexture_36e81")
+
+[sub_resource type="Gradient" id="Gradient_36e81"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bvye2"]
+gradient = SubResource("Gradient_36e81")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
 
 [node name="Level124" type="Node2D"]
 script = ExtResource("1_0liw3")
@@ -1386,6 +1396,17 @@ lifetime = 5.0
 visibility_rect = Rect2(1.37305, 1.69946, 5753.91, 856.302)
 process_material = SubResource("ParticleProcessMaterial_36e81")
 script = ExtResource("57_36e81")
+
+[node name="LavaHeat34" type="Sprite2D" parent="."]
+position = Vector2(5152, 3184)
+texture = SubResource("GradientTexture2D_bvye2")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="LavaHeat35" type="Sprite2D" parent="."]
+position = Vector2(5696, 3184)
+texture = SubResource("GradientTexture2D_bvye2")
+flip_h = true
+region_rect = Rect2(0, 0, 32, 32)
 
 [connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="player_enter" from="Area2D" to="PlayerCamera2D/Node" method="activate"]
