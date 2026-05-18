@@ -1,4 +1,4 @@
-[gd_scene load_steps=155 format=4 uid="uid://dq8wkmsiqduwx"]
+[gd_scene load_steps=160 format=4 uid="uid://dq8wkmsiqduwx"]
 
 [ext_resource type="Script" uid="uid://by7oafruhi7h4" path="res://stages/world_1/scripts/level_1_4.gd" id="1_qnmtc"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_xgbaw"]
@@ -46,7 +46,6 @@
 [ext_resource type="Texture2D" uid="uid://b4wbjvprni38v" path="res://engine/objects/enemies/lakitus/textures/lakitu.png" id="39_5lt67"]
 [ext_resource type="Texture2D" uid="uid://0kdlt7lc7g6d" path="res://gfx/sign/sign_small_upside_down.png" id="39_dr8p7"]
 [ext_resource type="Script" uid="uid://b60w6hvmspdar" path="res://stages/world_1/objects/1_4_castle_brick.gd" id="40_7dwok"]
-[ext_resource type="Script" uid="uid://btnri3mjxwo5t" path="res://objects/harder_design_node/harder_design_node.gd" id="40_n34fk"]
 [ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="41_2jcq4"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="42_mr3wq"]
 [ext_resource type="Script" uid="uid://cp4xamvr25vij" path="res://objects/name_node/name_node.gd" id="43_ff6c2"]
@@ -242,6 +241,36 @@ height = 32
 [sub_resource type="AtlasTexture" id="AtlasTexture_l7r26"]
 atlas = ExtResource("31_n3eee")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Gradient" id="Gradient_xyt6v"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ft6p5"]
+gradient = SubResource("Gradient_xyt6v")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_o4ow1"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bv5tm"]
+gradient = SubResource("Gradient_o4ow1")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_q2d3a"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w44o8"]
+gradient = SubResource("Gradient_q2d3a")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
 
 [sub_resource type="Resource" id="Resource_1df1h"]
 resource_local_to_scene = true
@@ -1293,6 +1322,12 @@ position = Vector2(11232, 304)
 [node name="StaticBody2D41" parent="Node2D2" instance=ExtResource("33_nhg14")]
 position = Vector2(11264, 400)
 
+[node name="LavaHeat14" type="Sprite2D" parent="Node2D2/StaticBody2D41"]
+position = Vector2(16, 0)
+texture = SubResource("GradientTexture2D_ft6p5")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
 [node name="StaticBody2D42" parent="Node2D2" instance=ExtResource("33_nhg14")]
 position = Vector2(11296, 368)
 
@@ -1323,6 +1358,13 @@ position = Vector2(11904, 368)
 [node name="StaticBody2D51" parent="Node2D2" instance=ExtResource("33_nhg14")]
 position = Vector2(11872, 400)
 
+[node name="LavaHeat14" type="Sprite2D" parent="Node2D2/StaticBody2D51"]
+position = Vector2(-16, 0)
+texture = SubResource("GradientTexture2D_bv5tm")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
 [node name="StaticBody2D52" parent="Node2D2" instance=ExtResource("33_nhg14")]
 position = Vector2(11904, 432)
 
@@ -1335,6 +1377,11 @@ position = Vector2(11936, 464)
 [node name="StaticBody2D" parent="." instance=ExtResource("34_ucbxm")]
 position = Vector2(11376, 400)
 
+[node name="LavaHeat14" type="Sprite2D" parent="StaticBody2D"]
+texture = SubResource("GradientTexture2D_w44o8")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
 [node name="StaticBody2D2" parent="." instance=ExtResource("34_ucbxm")]
 position = Vector2(11376, 336)
 
@@ -1343,6 +1390,12 @@ position = Vector2(11888, 336)
 
 [node name="StaticBody2D4" parent="." instance=ExtResource("34_ucbxm")]
 position = Vector2(11888, 400)
+
+[node name="LavaHeat14" type="Sprite2D" parent="StaticBody2D4"]
+texture = SubResource("GradientTexture2D_w44o8")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
 
 [node name="Container" type="Sprite2D" parent="."]
 modulate = Color(0.501961, 0.501961, 0.501961, 1)
@@ -1917,7 +1970,7 @@ position = Vector2(0, 94)
 texture = ExtResource("39_dr8p7")
 
 [node name="Node2D2" type="Node2D" parent="Container28/SignSmallUpsideDown7"]
-script = ExtResource("40_n34fk")
+script = ExtResource("43_ff6c2")
 inverted = true
 
 [node name="Label3" type="Label" parent="Container28/SignSmallUpsideDown7/Node2D2"]
@@ -1938,7 +1991,7 @@ uppercase = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Node2D" type="Node2D" parent="Container28/SignSmallUpsideDown7"]
-script = ExtResource("40_n34fk")
+script = ExtResource("43_ff6c2")
 
 [node name="Label4" type="Label" parent="Container28/SignSmallUpsideDown7/Node2D"]
 offset_left = -56.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=4 uid="uid://bvucqvgiu82r2"]
+[gd_scene load_steps=124 format=4 uid="uid://bvucqvgiu82r2"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yi20g"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_5acq5"]
@@ -691,6 +691,16 @@ height = 180
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_yi20g"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5acq5"]
+gradient = SubResource("Gradient_yi20g")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
 metadata/_snap_enabled = true
 
 [node name="Level3-1" type="Node2D"]
@@ -1917,12 +1927,19 @@ script = ExtResource("29_64uml")
 [node name="PipeIn2" parent="." instance=ExtResource("19_fhsuf")]
 position = Vector2(3072, 432)
 
+[node name="LavaHeat15" type="Sprite2D" parent="."]
+position = Vector2(3248, 400)
+texture = SubResource("GradientTexture2D_5acq5")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
 [connection signal="completed_with_star_rain" from="Node2D" to="SecretUnlocker" method="unlock_secret" binds= [1]]
 [connection signal="coin_checked_success" from="CoinChecker" to="SecretUnlocker" method="progress_secret"]
 [connection signal="player_enter" from="Area2D" to="ParallaxBackground/ParallaxLayer2/StarSky" method="disappear"]
 [connection signal="tried_to_enter" from="PipeIn" to="SecretUnlockerOther2" method="tried_to_warp"]
 [connection signal="warp_started" from="PipeIn" to="HUD/Label" method="activate"]
-[connection signal="warp_started" from="PipeIn2" to="HUD/ExpWorld7Warp" method="warp_split"]
 [connection signal="warp_started" from="PipeIn2" to="HUD/ExpWorld7Warp" method="activate"]
-[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped", true]]
+[connection signal="warp_started" from="PipeIn2" to="HUD/ExpWorld7Warp" method="warp_split"]
 [connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="unlock_secret" binds= [2]]
+[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped", true]]

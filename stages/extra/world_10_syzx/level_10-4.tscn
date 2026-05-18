@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=4 uid="uid://rshcgbjp1qe8"]
+[gd_scene load_steps=84 format=4 uid="uid://rshcgbjp1qe8"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_xk0re"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_4vmq4"]
@@ -289,6 +289,16 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_vwjgx"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8nkk5"]
+gradient = SubResource("Gradient_vwjgx")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
 
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_xk0re")
@@ -1095,5 +1105,16 @@ falling_enabled = true
 z_index = -21
 position = Vector2(14322, 115)
 texture = ExtResource("48_gsquf")
+
+[node name="LavaHeat34" type="Sprite2D" parent="."]
+position = Vector2(14784, 400)
+texture = SubResource("GradientTexture2D_8nkk5")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="LavaHeat35" type="Sprite2D" parent="."]
+position = Vector2(15328, 400)
+texture = SubResource("GradientTexture2D_8nkk5")
+flip_h = true
+region_rect = Rect2(0, 0, 32, 32)
 
 [connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=4 uid="uid://bwyuvtyce0so0"]
+[gd_scene load_steps=64 format=4 uid="uid://bwyuvtyce0so0"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_morq1"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_jqfyc"]
@@ -166,6 +166,16 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="Gradient" id="Gradient_w60jp"]
+colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_alh14"]
+gradient = SubResource("Gradient_w60jp")
+height = 32
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
 
 [node name="Level3-4" type="Node2D"]
 script = ExtResource("1_morq1")
@@ -574,5 +584,16 @@ sprite_frames = SubResource("SpriteFrames_afcor")
 [node name="QuestionBlock13" parent="HarderDesignNode" instance=ExtResource("17_je73a")]
 position = Vector2(400, 208)
 result = SubResource("Resource_yfouj")
+
+[node name="LavaHeat14" type="Sprite2D" parent="."]
+position = Vector2(11680, 400)
+texture = SubResource("GradientTexture2D_alh14")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="LavaHeat15" type="Sprite2D" parent="."]
+position = Vector2(12224, 400)
+texture = SubResource("GradientTexture2D_alh14")
+flip_h = true
+region_rect = Rect2(0, 0, 32, 32)
 
 [connection signal="bowser_triggered" from="BowserTrigger" to="." method="disable_object_lighting"]
