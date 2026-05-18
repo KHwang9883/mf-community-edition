@@ -102,7 +102,10 @@ func try_submitting_record() -> void:
 		"game": "MINIX"
 	}
 	var decrypted_score: int = (score_loader.score_encrypted ^ score_loader.encryption_key) - score_loader.encryption_key
+	var decrypted_gl: int = (score_loader.score_encrypted ^ score_loader.encryption_key) - score_loader.encryption_key
+	
 	var is_score_legit: bool = Data.values.score == decrypted_score
+	var is_gl_legit: bool = Data.values.godlikes == decrypted_gl
 	var is_bad_name: bool = \
 	BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY.any(
 		func(elem):
@@ -167,4 +170,4 @@ func _submit_fake_record(decrypted_score: int) -> void:
 	loading.visible = false
 
 
-const BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY: Array = ["skibid", "whor", "wh0r", "cum", "assh", "dick", "fuck", "bitch", "cock", "penis", "puss", "porn", "p0rn", "sex", "urine", "urina", "nigg", "ni66", "n1gg", "n166", "n i g", "n_i_g", "n.i.g", "n-i-g", "n i b", "n_i_b", "n.i.b", "n-i-b", "f u c k", "f_u_c_k", "f.u.c.k", "f-u-c-k", "fucc", "niga", "niger", "nibb", "niber", "niba", "twat", "fag", "f4g", "reetar", "retar", "ritar", "r-tar", "pedo", "negr", "cunt", "anus", "nazi", "facis"]
+const BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY: Array = ["skibid", "whor", "wh0r", "cum", "assh", "dick", "fuck", "bitch", "cock", "penis", "puss", "porn", "p0rn", "sex", "urine", "urina", "nigg", "ni66", "n1gg", "n166", "n i g", "n_i_g", "n.i.g", "n-i-g", "n i b", "n_i_b", "n.i.b", "n-i-b", "f u c k", "f_u_c_k", "f.u.c.k", "f-u-c-k", "fucc", "niga", "niger", "nibb", "niber", "niba", "twat", "fag", "f4g", "reetar", "retar", "ritar", "r-tar", "pedo", "negr", "cunt", "anus", "nazi", "facis", "testic", "shkibid"]
