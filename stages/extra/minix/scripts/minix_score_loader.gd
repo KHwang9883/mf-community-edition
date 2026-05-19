@@ -17,7 +17,10 @@ var default_score_values: Dictionary = {
 }
 var score_values: Dictionary = default_score_values.duplicate(true)
 var score_encrypted: int
-var gl_encrypted: int
+var gl_encrypted: PackedByteArray
+var time_encrypted: PackedByteArray
+var gl_crack: bool
+var time_crack: bool
 
 @onready var node_2d: Node2D = $"../START/Node2D"
 
@@ -111,5 +114,11 @@ func _on_score_added(scr: int) -> void:
 	# enc, dec
 	#prints(score_encrypted, (score_encrypted ^ encryption_key) - encryption_key)
 
-func _on_godlike_added() -> void:
-	gl_encrypted
+func _on_godlike_added(godlikes: int) -> void:
+	if !gl_encrypted.is_empty():
+		var _hash = str(godlikes - 1).md5_buffer()
+		if _hash != gl_encrypted:
+			#print("g")
+			gl_crack = true
+			
+	gl_encrypted = str(godlikes).md5_buffer()

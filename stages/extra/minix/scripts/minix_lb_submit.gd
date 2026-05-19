@@ -102,10 +102,12 @@ func try_submitting_record() -> void:
 		"game": "MINIX"
 	}
 	var decrypted_score: int = (score_loader.score_encrypted ^ score_loader.encryption_key) - score_loader.encryption_key
-	var decrypted_gl: int = (score_loader.score_encrypted ^ score_loader.encryption_key) - score_loader.encryption_key
+	var gl_hash: PackedByteArray = str(Data.values.godlikes).md5_buffer()
+	var time_hash: PackedByteArray = str(Data.values.lasted).md5_buffer()
 	
 	var is_score_legit: bool = Data.values.score == decrypted_score
-	var is_gl_legit: bool = Data.values.godlikes == decrypted_gl
+	var is_gl_legit: bool = score_loader.gl_encrypted == gl_hash && !score_loader.gl_crack
+	var is_time_legit: bool = score_loader.time_encrypted == time_hash && !score_loader.time_crack
 	var is_bad_name: bool = \
 	BAD_WORD_LIST_THIS_MIGHT_BE_DANGEROUS_SO_PLEASE__DO_NOT_READ_THE_CONTENTS_OF_THIS_ARRAY.any(
 		func(elem):
@@ -118,12 +120,13 @@ func try_submitting_record() -> void:
 	line_edit.text = ""
 	enter_to_preview.visible = false
 	await get_tree().physics_frame
-	if is_score_legit && !is_bad_name:
+	if is_score_legit && is_gl_legit && is_time_legit && !is_bad_name:
 		var headers = ["Content-Type: application/json"]
 		http_request.request_completed.connect(_on_http_submit, CONNECT_ONE_SHOT)
 		http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 	else:
-		_submit_fake_record(decrypted_score)
+		print("%s %s %s %s" % [is_score_legit, is_gl_legit, is_time_legit, is_bad_name])
+		_submit_fake_record()
 
 
 func _on_http_submit(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -156,8 +159,7 @@ func _on_line_edit_focus_exited() -> void:
 	line_edit.text = ""
 
 
-func _submit_fake_record(decrypted_score: int) -> void:
-	print("%d,%d" % [Data.values.score, decrypted_score])
+func _submit_fake_record() -> void:
 	await get_tree().create_timer(0.1, true, false, true).timeout
 	submitting = false
 	
