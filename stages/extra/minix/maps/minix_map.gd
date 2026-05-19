@@ -61,11 +61,11 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_page_up"):
 		timer.wait_time = 0.4
-	if Input.is_action_just_pressed("ui_page_down"):
-		var enemy = load("res://stages/extra/minix/objects/koopa_shell_green_minix.tscn").instantiate()
-		enemy.position = Vector2(608, 384)
-		Scenes.current_scene.add_child.call_deferred(enemy)
-		enemy.status_swap.call_deferred(false)
+	#if Input.is_action_just_pressed("ui_page_down"):
+		#var enemy = load("res://stages/extra/minix/objects/koopa_shell_green_minix.tscn").instantiate()
+		#enemy.position = Vector2(608, 384)
+		#Scenes.current_scene.add_child.call_deferred(enemy)
+		#enemy.status_swap.call_deferred(false)
 
 
 func _on_timeout() -> void:
@@ -77,7 +77,16 @@ func _on_coin_timer_timeout() -> void:
 	Data.add_score(1)
 	if !"lasted" in Data.values:
 		Data.values.lasted = 0
-	Data.values.lasted = ";" + str(int(Data.values.lasted) + 1) + "q"
+	Data.values.lasted = int(Data.values.lasted) + 1
+	
+	var score_loader = Scenes.custom_scenes.minix_node.minix_score_loader
+	if !score_loader.time_encrypted.is_empty():
+		var _hash = str(Data.values.lasted - 1).md5_buffer()
+		if _hash != score_loader.time_encrypted:
+			#print("t")
+			score_loader.time_crack = true
+	
+	score_loader.time_encrypted = str(Data.values.lasted).md5_buffer()
 
 
 func pick_random_marker() -> Vector2:
