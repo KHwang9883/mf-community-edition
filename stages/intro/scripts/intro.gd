@@ -13,6 +13,7 @@ var cacher
 
 func _ready() -> void:
 	SettingsManager.enable_shortcut_scene_change_keys = false
+	print("[Startup] Game Version %s" % [ProjectSettings.get_setting("application/config/version")])
 	print("[Startup] Preparing to compile shaders...")
 	if "--no-shader-precompile" in OS.get_cmdline_user_args():
 		print("[Startup] Found a flag in cmdline arguments, skipping compilation.")
