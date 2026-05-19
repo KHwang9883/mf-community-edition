@@ -23,7 +23,7 @@ var snow_cover_accumulation: float = 0:
 				32, remap(snow_cover_accumulation, 0, 1, 0, 32)
 			)
 			_snow_cover.offset.y = remap(snow_cover_accumulation, 0, 1, 16, 0)
-			_snow_cover.modulate.a = snow_cover_accumulation
+			_snow_cover.modulate.a = remap(snow_cover_accumulation, 0, 1, 0.4, 1.0)
 var jumped: bool = false
 
 @onready var _par: Player = get_parent()
@@ -36,6 +36,8 @@ func _ready() -> void:
 	SettingsManager.settings_updated.connect(func() -> void:
 		_snow_particle.visible = SettingsManager.get_quality() > SettingsManager.QUALITY.MIN
 	)
+	_par.jumped_signal.connect(_on_player_jumped)
+
 
 func _physics_process(delta: float) -> void:
 	if !_par || _par.warp != Player.Warp.NONE:
@@ -60,21 +62,36 @@ func _physics_process(delta: float) -> void:
 	
 	_snow_particle.global_position = _par.global_position
 	
-	if jumped && _par.is_on_floor():
-		jumped = false
-	if _par.jumped && !jumped && snow_cover_accumulation > 0:
-		jumped = true
-		snow_cover_accumulation = clamp(snow_cover_accumulation - snow_recovery_decumulation_each_jump, 0, 1)
-		if _snow_particle.visible && snow_cover_accumulation > 0.1:
-			Audio.play_1d_sound(SNOW_BREAK)
-			for i in 4:
-				_snow_particle.emit_particle(_snow_particle.global_transform, Vector2.RIGHT.rotated(-PARTICLE_VELOCITY_ROTATIONS[i]) * randf_range(50, 200), Color.WHITE, Color.WHITE, GPUParticles2D.EMIT_FLAG_POSITION | GPUParticles2D.EMIT_FLAG_VELOCITY)
 	_par.set_meta(&"not_slidable", snow_cover_accumulation > 0.2)
 
 	for i in PLAYER_PHYSICS:
 		if !_par.config_buffer || (!i in _par.config_buffer):
 			continue
-		_par.suit.physics_config[i] = _par.config_buffer[i] *  clampf(1 - snow_cover_accumulation, 0.0 if i != &"jump_speed" else 0.1, 1.0)
+		_par.suit.physics_config[i] = _par.config_buffer[i] * clampf(
+			1 - snow_cover_accumulation,
+			0.0 if i != &"jump_speed" else 0.1,
+			1.0
+		)
+
+
+func _on_player_jumped() -> void:
+	if snow_cover_accumulation <= 0:
+		return
+	
+	if _snow_particle.visible && snow_cover_accumulation > 0.1:
+		Audio.play_1d_sound(SNOW_BREAK)
+		for i in 4:
+			_snow_particle.emit_particle(
+				_snow_particle.global_transform,
+				Vector2.RIGHT.rotated(-PARTICLE_VELOCITY_ROTATIONS[i]) * randf_range(50, 200),
+				Color.WHITE, Color.WHITE,
+				GPUParticles2D.EMIT_FLAG_POSITION | GPUParticles2D.EMIT_FLAG_VELOCITY
+			)
+	
+	snow_cover_accumulation = clamp(snow_cover_accumulation - snow_recovery_decumulation_each_jump, 0, 1)
+	if snow_cover_accumulation <= 0.1:
+		snow_cover_accumulation = 0
+
 
 func _snow_cover_accumulation_changed() -> void:
 	pass
