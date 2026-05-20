@@ -225,7 +225,7 @@ func save_secrets() -> void:
 	_save_queued = true
 
 
-func game_saved() -> void:
+func game_saved(prof_name: String = "") -> void:
 	if ProfileManager.current_profile.name == "debug":
 		return
 	if _tween_game_save && _tween_game_save.is_valid():
@@ -238,9 +238,9 @@ func game_saved() -> void:
 
 func set_save_icon():
 	if SettingsManager.get_tweak("save_icon", false):
-		Thunder._connect(ProfileManager.current_profile_saved, game_saved)
+		Thunder._connect(ProfileManager.profile_data_saved_user_display, game_saved)
 	else:
-		Thunder._disconnect(ProfileManager.current_profile_saved, game_saved)
+		Thunder._disconnect(ProfileManager.profile_data_saved_user_display, game_saved)
 
 
 func is_console_enabled() -> bool:

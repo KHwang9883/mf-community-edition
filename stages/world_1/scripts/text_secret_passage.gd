@@ -47,6 +47,7 @@ func trigger_transition() -> void:
 	if save_to_profile_as_current_world:
 		ProfileManager.current_profile.data.current_world = goto_scene
 		ProfileManager.save_current_profile()
+		ProfileManager.profile_data_saved_user_display.emit(ProfileManager.current_profile.name)
 	else:
 		Data.values.skip_progress_continue = skip_suspended_profile_save
 	
