@@ -65,6 +65,8 @@ func start_selected() -> void:
 	await tw.finished
 	
 	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+	if ProfileManager.current_profile && "current_world" in ProfileManager.current_profile.data:
+		goto_scene = ProfileManager.current_profile.data.current_world
 	
 	if !_crossfade:
 		TransitionManager.accept_transition(

@@ -30,6 +30,8 @@ const PITCH_PREFIXES: Array = ["smw2-", "smw-", "smas-", "smrpg-", "smb-", "smb3
 @export var boss_music_start_from_sec: Array[float] = [0.0]
 
 var current_music: Array[Resource]
+var is_squario: bool
+var bgm_tweak: int
 
 func _ready():
 	# Achievements!
@@ -110,10 +112,14 @@ func _ready():
 		_level.DEFAULT_COMPLETION = tweaked_completion_music
 	
 	var scene_path: String = _level.scene_file_path
-	var is_squario: bool = _level is Level && "/extra/squario" in scene_path
-	var bgm_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
+	is_squario = _level is Level && "/extra/squario" in scene_path
+	bgm_tweak = SettingsManager.get_tweak("bgm_as_in_version", 0)
 	if is_squario:
 		bgm_tweak = int(SettingsManager.get_tweak("squario_music", 1))
+		if bgm_tweak == 2:
+			music_var_2 = music_var_1
+			boss_music_var_2 = boss_music_var_1
+			var_2_volume_db = var_1_volume_db
 		if SecretsManager.has_meta(&"squario_lvl_complete"):
 			_level.completion_music = SecretsManager.get_meta(&"squario_lvl_complete")
 			_level.DEFAULT_COMPLETION = _level.completion_music
@@ -135,6 +141,8 @@ func _bgm_tweak(which: int) -> bool:
 			bowser_trigger.boss_music_volume = boss_music_volume_db[which - 1]
 		if len(boss_music_start_from_sec) > which - 1:
 			bowser_trigger.boss_music_start_from_sec = boss_music_start_from_sec[which - 1]
+		if is_squario && bgm_tweak == 1:
+			bowser_trigger.boss_music_subsong = 1
 	if get("music_var_" + str(which)).size() > 0:
 		current_music = get("music_var_" + str(which)).duplicate()
 		volume_db = get("var_%s_volume_db" % str(which)).duplicate()
@@ -149,11 +157,14 @@ func _change_music(ind: int, ch_id: int) -> void:
 		current_music[ind],
 		ch_id,
 		{
-			"ignore_pause": !can_pause, 
-			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
-			"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0
+			&"ignore_pause": !can_pause, 
+			&"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
+			&"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0,
+			&"subsong": subsong[ind] if subsong.size() >= ind else 0,
 		}
 	]
+	if is_squario && bgm_tweak == 1:
+		options[2].subsong = 1
 	if play_immediately:
 		music_started.emit(ind)
 		var _trans = TransitionManager.current_transition
@@ -198,7 +209,7 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 func _fade_in_tweak(player, ind: int) -> void:
 	if !SettingsManager.get_tweak("bgm_fade_in_bug_emulation", false):
 		return
-	await get_tree().create_timer(0.017, true, false, true).timeout
+	await get_tree().create_timer(0.015, true, false, true).timeout
 	if ind == 0 && !ignore_fade_in_tweak && is_instance_valid(player):
 		player.volume_db = -59
 		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
