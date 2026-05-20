@@ -21,6 +21,7 @@ func throw_to_scene() -> void:
 	SecretsManager.set_secret("story mode completed", true)
 	ProfileManager.current_profile.data.star_world = true
 	ProfileManager.save_current_profile()
+	ProfileManager.profile_data_saved_user_display.emit(ProfileManager.current_profile.name)
 	if !(SecretsManager.is_console_enabled() && !Console.cv.can_save_suspended_with_console):
 		if (
 			ProfileManager.profiles.has("suspended") &&
