@@ -34,6 +34,7 @@ var level_scene_template: String = "res://stages/world_{0}/level_{0}-{1}.tscn"
 @export var can_frog_challenge: bool = false
 @export var show_kevin_not_tested_warning: bool = false
 @export var no_applicable_text: bool = false
+@export var always_has_intro: bool = false
 
 var deletion_progress: float
 var is_empty: bool
@@ -261,8 +262,10 @@ func pass_warp() -> void:
 			Data.values.map_force_go_next = true
 	
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
-		warp_to_scene = ProfileManager.current_profile.data.current_world
-		print("Starting from: %s" % set_data_to_profile)
+		if !always_has_intro:
+			warp_to_scene = ProfileManager.current_profile.data.current_world
+		
+		print("Starting from: %s" % ProfileManager.current_profile.data.current_world)
 	Data.values.skip_progress_continue = true
 	# Activate Kevin in saved pipe on enter
 	if is_cursed:

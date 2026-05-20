@@ -33,6 +33,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4rwb"]
 size = Vector2(64, 32)
 
+[sub_resource type="Curve2D" id="Curve2D_lcesf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -48, 32)
+}
+point_count = 1
+
 [sub_resource type="Gradient" id="Gradient_7ds2w"]
 colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
 
@@ -45,12 +51,6 @@ height = 32
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
 metadata/_snap_enabled = true
-
-[sub_resource type="Curve2D" id="Curve2D_lcesf"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -48, 32)
-}
-point_count = 1
 
 [sub_resource type="Gradient" id="Gradient_qyxaw"]
 colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
@@ -186,6 +186,14 @@ texture = ExtResource("15_lcesf")
 region_enabled = true
 region_rect = Rect2(0, 32, 64, 64)
 
+[node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("31_3sj2s")]
+position = Vector2(368, 176)
+curve = SubResource("Curve2D_lcesf")
+trigger_bowser = NodePath("../Objects/Bowser")
+camera_speed = 75.0
+boss_music = ExtResource("17_qmgka")
+boss_music_fading = false
+
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="LavaHeat" type="Sprite2D" parent="Objects"]
@@ -209,14 +217,6 @@ position = Vector2(640, 480)
 texture = SubResource("GradientTexture2D_cxhyf")
 flip_h = true
 region_rect = Rect2(10, 0, 54, 64)
-
-[node name="BowserTrigger" parent="Objects" node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("31_3sj2s")]
-position = Vector2(368, 176)
-curve = SubResource("Curve2D_lcesf")
-trigger_bowser = NodePath("../Bowser")
-camera_speed = 75.0
-boss_music = ExtResource("17_qmgka")
-boss_music_fading = false
 
 [node name="Bowser" parent="Objects" instance=ExtResource("45_38k7u")]
 position = Vector2(544, 320)

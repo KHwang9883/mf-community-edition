@@ -1,6 +1,6 @@
 extends MenuSelection
 
-const Choicers = ["smb", "squario"]
+const Choicers = ["smb", "squario", "squario extended"]
 
 @onready var squario_mus: int = SettingsManager.get_tweak("squario_music", 1)
 @onready var music_loader: Node = $"../../../MusicLoader"
@@ -14,10 +14,10 @@ func _ready() -> void:
 
 
 func update_music() -> void:
-	if squario_mus == 1:
-		music_loader.index = 1
+	if squario_mus > 0 && squario_mus < 3:
+		music_loader.index = squario_mus
 		music_loader.play_buffered()
-		start_5.text = init_text % Choicers[1]
+		start_5.text = init_text % Choicers[squario_mus]
 		if !SecretsManager.has_meta(&"squario_lvl_complete"):
 			squario_lvl_complete = load("res://music/extra/squario/levelcomplete.mp3")
 			SecretsManager.set_meta(&"squario_lvl_complete", squario_lvl_complete)
@@ -30,22 +30,21 @@ func update_music() -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if focused && controls.focused:
-		if Input.is_action_just_pressed(&"ui_left") || Input.is_action_just_pressed(&"ui_right"):
+		if Input.is_action_just_pressed(&"ui_left"):
 			_play_sound()
-			toggle()
+			toggle(-1)
+		elif Input.is_action_just_pressed(&"ui_right"):
+			_play_sound()
+			toggle(+1)
 
 
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
-	toggle()
+	toggle(+1)
 
 
-func toggle() -> void:
-	if squario_mus == 1:
-		SettingsManager.set_tweak("squario_music", 0)
-		squario_mus = 0
-	else:
-		SettingsManager.set_tweak("squario_music", 1)
-		squario_mus = 1
+func toggle(by: int) -> void:
+	squario_mus = wrapi(squario_mus + by, 0, 3)
+	SettingsManager.set_tweak("squario_music", squario_mus)
 	update_music()
 	SettingsManager.save_tweaks()
