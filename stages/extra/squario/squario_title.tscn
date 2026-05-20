@@ -1,12 +1,14 @@
-[gd_scene load_steps=28 format=4 uid="uid://dfkin5aca3u0"]
+[gd_scene load_steps=30 format=4 uid="uid://dfkin5aca3u0"]
 
 [ext_resource type="Script" uid="uid://cnus1noarwkl2" path="res://stages/mario_forever_flash/scripts/flash_title_stage.gd" id="1_e27qq"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_cqjae"]
 [ext_resource type="AudioStream" uid="uid://jbc1wyx6o6ho" path="res://music/extra/mf_flash/smb_title.ogg" id="3_qndlp"]
+[ext_resource type="AudioStream" uid="uid://2lrvxq2wot0v" path="res://music/extra/squario/mus7.mp3" id="4_auujj"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="4_jcljo"]
 [ext_resource type="FontFile" uid="uid://cyijqik15r3me" path="res://gfx/fonts/QUANTUM.TTF" id="5_yhvcq"]
 [ext_resource type="Script" uid="uid://b6p871suo5jkl" path="res://engine/components/ui/generic/menu_selection.gd" id="6_12ip2"]
 [ext_resource type="Script" uid="uid://cvwo33bpa3jfn" path="res://stages/extra/minix/scripts/minix_end_sel.gd" id="7_xd5t0"]
+[ext_resource type="Script" uid="uid://b07ok684cyaeu" path="res://stages/extra/squario/scripts/squario_music_sel.gd" id="8_4ag53"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="8_avwyq"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="9_f8eba"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="10_2rjf2"]
@@ -45,8 +47,9 @@ goto_scene = "res://stages/extra/squario/world_1/map_s1.tscn"
 disable_pause_menu = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_cqjae")]
-music = Array[Resource]([ExtResource("3_qndlp")])
+music = Array[Resource]([ExtResource("3_qndlp"), ExtResource("4_auujj")])
 channel_id = 2
+play_immediately = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -79,7 +82,7 @@ focused = false
 [node name="Start" type="Label" parent="MenuLayer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.129412, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.0745098, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_yhvcq")
 theme_override_font_sizes/font_size = 18
@@ -92,19 +95,19 @@ selected_sound = null
 [node name="Start5" type="Label" parent="MenuLayer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.0745098, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_yhvcq")
 theme_override_font_sizes/font_size = 18
-text = "music: smb"
+text = "music: %s"
 horizontal_alignment = 1
 uppercase = true
-script = ExtResource("7_xd5t0")
+script = ExtResource("8_4ag53")
 
 [node name="Start6" type="Label" parent="MenuLayer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.12549, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.0745098, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_yhvcq")
 theme_override_font_sizes/font_size = 18

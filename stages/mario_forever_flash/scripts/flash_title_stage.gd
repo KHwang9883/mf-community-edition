@@ -98,11 +98,15 @@ func _set_obj_position(reset_interp: bool = false) -> void:
 		mario_sprite.reset_physics_interpolation()
 		game_logo.reset_physics_interpolation()
 
+
 func _input(event: InputEvent) -> void:
 	if started: return
 	if !controls.focused and event.is_action_pressed("ui_accept", true):
 		if is_instance_valid(tw_scroll):
 			tw_scroll.kill()
 			decoration_offset = 0.0
+			_set_obj_position(true)
 		_menu_fade_in()
+		await get_tree().physics_frame
+		await get_tree().physics_frame
 		controls.focused = true
