@@ -1,9 +1,10 @@
-[gd_scene load_steps=84 format=4 uid="uid://chw3orke0w74w"]
+[gd_scene load_steps=87 format=4 uid="uid://chw3orke0w74w"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_ur2qa"]
 [ext_resource type="AudioStream" uid="uid://crvta6brv8cka" path="res://music/extra/mf_flash/smb1_course_clear.ogg" id="2_ao1gp"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_kmg06"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_vroie"]
+[ext_resource type="AudioStream" uid="uid://ca3yvshjc6y40" path="res://music/extra/squario/mus1.mp3" id="5_o5s36"]
 [ext_resource type="AudioStream" uid="uid://dw8cjsn5ky1c4" path="res://music/extra/mf_flash/smb-overworld.ogg" id="5_q1sof"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="6_skb7t"]
 [ext_resource type="AudioStream" uid="uid://do2m1kc1sidik" path="res://music/extra/mf_flash/smb1_player_down.ogg" id="7_owf4m"]
@@ -50,6 +51,7 @@
 [ext_resource type="PackedScene" uid="uid://capmpij0bjip4" path="res://stages/mario_forever_flash/objects/smb_super_star.tscn" id="48_o5s36"]
 [ext_resource type="PackedScene" uid="uid://c3xlrqjfbegm6" path="res://stages/mario_forever_flash/objects/paratroopa_green_jumping.tscn" id="50_hg6cg"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="51_o5s36"]
+[ext_resource type="Script" uid="uid://ch0cwqwmftt2i" path="res://stages/extra/squario/scripts/area_powerup_no_correction.gd" id="52_lfmaa"]
 
 [sub_resource type="Gradient" id="Gradient_5e802"]
 offsets = PackedFloat32Array(0.240602, 0.443609)
@@ -475,6 +477,9 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6cg"]
+size = Vector2(64, 32)
+
 [node name="LevelS3-3" type="Node2D"]
 script = ExtResource("1_ur2qa")
 time = 320
@@ -486,7 +491,7 @@ completion_music_delay_sec = 7.0
 script = ExtResource("4_vroie")
 tweaked_completion_music = ExtResource("2_ao1gp")
 ignore_fade_in_tweak = false
-music_var_1 = Array[Resource]([])
+music_var_1 = Array[Resource]([ExtResource("5_o5s36")])
 music_var_2 = Array[Resource]([])
 music_var_3 = Array[Resource]([])
 var_1_volume_db = Array[float]([0.0])
@@ -1935,3 +1940,15 @@ scale = Vector2(1, 0.5)
 texture = ExtResource("35_2eriu")
 region_enabled = true
 region_rect = Rect2(0, 32, 64, 32)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("52_lfmaa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1504, 336)
+shape = SubResource("RectangleShape2D_hg6cg")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

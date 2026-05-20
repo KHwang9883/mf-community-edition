@@ -78,7 +78,8 @@ func _ready():
 				if !is_instance_valid(Audio._music_channels[channel_id]): return
 				
 				if Audio._music_channels[channel_id].stream is AudioStreamMPT:
-					if Audio._music_channels[channel_id].stream.resource_path.ends_with(".mod"):
+					var _res_path: String = Audio._music_channels[channel_id].stream.resource_path
+					if _res_path.ends_with(".mod") || "u_feel_it" in _res_path:
 						print("Changing AMIGA pitch of ", _index)
 						var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
 						playback.set_pitch_factor(1.00917)
@@ -104,11 +105,20 @@ func _ready():
 		)
 	
 	# Soundtrack Stuff
-	if SettingsManager.get_tweak("alt_completion_music", false) && Scenes.current_scene is Level:
-		Scenes.current_scene.completion_music = tweaked_completion_music
-		Scenes.current_scene.DEFAULT_COMPLETION = tweaked_completion_music
+	if SettingsManager.get_tweak("alt_completion_music", false) && _level is Level:
+		_level.completion_music = tweaked_completion_music
+		_level.DEFAULT_COMPLETION = tweaked_completion_music
 	
+	var scene_path: String = _level.scene_file_path
+	var is_squario: bool = _level is Level && "/extra/squario" in scene_path
 	var bgm_tweak: int = SettingsManager.get_tweak("bgm_as_in_version", 0)
+	if is_squario:
+		bgm_tweak = int(SettingsManager.get_tweak("squario_music", 1))
+		if SecretsManager.has_meta(&"squario_lvl_complete"):
+			_level.completion_music = SecretsManager.get_meta(&"squario_lvl_complete")
+			_level.DEFAULT_COMPLETION = _level.completion_music
+			_level.completion_music_delay_sec = 3.0
+	
 	if bgm_tweak >= 1 && bgm_tweak <= 3:
 		var _set: bool = _bgm_tweak(bgm_tweak)
 		if _set:
