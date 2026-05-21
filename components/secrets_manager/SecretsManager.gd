@@ -226,7 +226,7 @@ func save_secrets() -> void:
 
 
 func game_saved(prof_name: String = "") -> void:
-	if ProfileManager.current_profile.name == "debug":
+	if prof_name == "debug":
 		return
 	if _tween_game_save && _tween_game_save.is_valid():
 		_tween_game_save.kill()

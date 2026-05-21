@@ -247,6 +247,9 @@ func pass_warp() -> void:
 	if ProfileManager.current_profile.data.get("lives") && is_cursed:
 		Data.values.lives = ProfileManager.current_profile.data.lives
 		print("Lives changed to %d." % Data.values.lives)
+	if is_cursed:
+		Data.values.deaths = ProfileManager.current_profile.data.get_or_add("deaths", 0)
+		print("Deaths set to %d." % Data.values.deaths)
 	target = null
 	if _star_world || allow_selecting_worlds:
 		if _star_sel_level && _star_sel_world:
