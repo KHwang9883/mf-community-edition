@@ -186,7 +186,8 @@ func _physics_process(delta: float) -> void:
 	if (
 		Input.is_action_pressed(&"m_attack") || Input.is_action_pressed(&"ui_accept") ||
 		Input.is_action_pressed(&"m_extra") || Input.is_action_pressed(&"ui_select") ||
-		Input.is_action_pressed(&"m_jump") || Input.is_action_pressed(&"m_run")
+		Input.is_action_pressed(&"m_jump") || Input.is_action_pressed(&"m_run") ||
+		Input.is_action_pressed(&"ui_cancel")
 	):
 		_fade_out(true)
 
