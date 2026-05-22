@@ -400,6 +400,8 @@ func finish() -> void:
 	unlocker.unlock_secret(0)
 	unlocker.unlock_if(["warped"], 1)
 	ProfileManager.current_profile.data.star_world = true
+	ProfileManager.current_profile.data.power_completed = Thunder._current_player_state.get(&"name")
+	
 	ProfileManager.save_current_profile()
 	if !(SecretsManager.is_console_enabled() && !Console.cv.can_save_suspended_with_console):
 		if (

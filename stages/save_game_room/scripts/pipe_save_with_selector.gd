@@ -289,29 +289,58 @@ func _update_reset_labels() -> void:
 		reset_node.unlock.visible = (_star_world || allow_selecting_worlds) && len(level_count) > 1
 	reset_node.unlock2.visible = _star_world
 	reset_node.secrets.visible = false
+	reset_node.deaths.visible = false
 	
-	if profile_name in ProfileManager.profiles:
-		var _prof = ProfileManager.profiles[profile_name].data
-		if _prof.get("executed"):
-			reset_node.secrets.text = "not applicable for any achievement, please reset"
+	if !profile_name in ProfileManager.profiles:
+		return
+	
+	var _prof: Dictionary = ProfileManager.profiles[profile_name].data
+	if !_prof:
+		return
+	
+	if is_cursed:
+		if !"deaths" in _prof && "lives" in _prof && _prof.lives < 0:
+			ProfileManager.profiles[profile_name].data.deaths = abs(_prof.lives)
+		reset_node.deaths.visible = true
+		reset_node.deaths.text = "deaths: %d" % _prof.get("deaths", 0)
+	
+	if _prof.get("executed"):
+		reset_node.secrets.text = "not applicable for any achievement, please reset"
+		reset_node.secrets.visible = true
+		return
+	
+	if no_applicable_text: return
+	var _arr: PackedStringArray = ["warpless", "no hit", "no death"]
+	if "died" in _prof:
+		_arr.remove_at(2)
+	if "damaged" in _prof:
+		_arr.remove_at(1)
+	if "warped" in _prof:
+		_arr.remove_at(0)
+	
+	if _star_world:
+		if _prof.get("frog_challenged"):
+			reset_node.secrets.text = "award certificate: frog challenge completed!!"
+			if !_prof.get("warped", false):
+				reset_node.secrets.text += " warpless?! outstanding!"
 			reset_node.secrets.visible = true
 			return
 		
-		if _star_world:
-			return
-		if no_applicable_text: return
+		#var power_compl: String = _prof.get("power_completed", "") as String
+		#if power_compl:
+			#power_compl = power_compl.replacen("ball", "")
+			#_arr.append("in " + power_compl + " suit")
 		
-		var _arr: PackedStringArray = ["warpless", "no hit", "no deaths"]
-		if "died" in _prof:
-			_arr.remove_at(2)
-		if "damaged" in _prof:
-			_arr.remove_at(1)
-		if "warped" in _prof:
-			_arr.remove_at(0)
 		if _arr.is_empty():
 			return
-		reset_node.secrets.text = "applicable for %s" % ", ".join(_arr)
+		reset_node.secrets.text = "cleared %s" % ", ".join(_arr)
 		reset_node.secrets.visible = true
+		return
+	
+	if _arr.is_empty():
+		return
+	reset_node.secrets.text = "applicable for %s" % ", ".join(_arr)
+	reset_node.secrets.visible = true
 
 
 func block_pure_pipe() -> void:

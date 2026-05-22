@@ -8,6 +8,7 @@ extends "res://engine/scenes/save_game_room/scripts/reset.gd"
 @onready var unlock: Label = get_node_or_null(^"VBoxContainer/Unlock")
 @onready var unlock2: Label = get_node_or_null(^"VBoxContainer/Unlock2")
 @onready var secrets: Label = get_node_or_null(^"VBoxContainer/Secrets")
+@onready var deaths: Label = get_node_or_null(^"VBoxContainer/Deaths")
 
 func _ready() -> void:
 	super()
