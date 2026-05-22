@@ -35,39 +35,60 @@ var bgm_tweak: int
 
 func _ready():
 	# Achievements!
-	var _level = Scenes.current_scene
-	if _level is Level && ("res://stages/world_" in _level.jump_to_scene || "res://stages/cutscenes/ending" in _level.jump_to_scene):
-		(func():
-			var pl = Thunder._current_player
-			var _i: int = 0
-			while !is_instance_valid(pl) && _i < 200:
-				await get_tree().physics_frame
-				_i += 1
-			
-			var frog_failed: Callable = (func():
-				if !Data.values.get("frog_challenge", false):
-					return
-				SecretsManager.show_failure("frog challenge failed!")
-				Data.values.erase("frog_challenge")
-			)
-			pl.damaged.connect(func():
-				if Data.values.get("frog_challenge", false) && ProfileManager.current_profile.data.get("damaged", false):
-					frog_failed.call()
-					#SecretsManager.show_failure("no hit run is now invalid!", "achievement failed")
-				ProfileManager.current_profile.data.damaged = true
-			)
-			pl.died.connect(func():
-				if Data.values.get("frog_challenge", false):
-					frog_failed.call()
-					#SecretsManager.show_failure("no deaths run is now invalid!", "achievement failed")
-				ProfileManager.current_profile.data.died = true
-			)
-			if Data.values.get("frog_challenge", false):
-				if !Thunder._current_player.no_movement && Thunder._current_player.suit.name != &"frog":
-					frog_failed.call()
-				pl.suit_changed.connect(frog_failed.unbind(1))
-		).call_deferred()
+	_ready_achievements()
 	
+	# --- Tweaks stuff ---
+	_ready_mus_tweaks()
+	
+	# Soundtrack Stuff
+	_ready_mus_hacks()
+	
+	super()
+
+
+func _ready_achievements() -> void:
+	if ProfileManager.current_profile.data.get("star_world"):
+		return
+	var _level = Scenes.current_scene
+	if !_level is Level: return
+	if !"res://stages/world_" in _level.jump_to_scene && !"res://stages/cutscenes/ending" in _level.jump_to_scene:
+		return
+	
+	(func():
+		var pl = Thunder._current_player
+		var _i: int = 0
+		while !is_instance_valid(pl) && _i < 200:
+			await get_tree().physics_frame
+			_i += 1
+			if _i >= 199:
+				return
+		
+		var frog_failed: Callable = (func():
+			if !Data.values.get("frog_challenge", false):
+				return
+			SecretsManager.show_failure("frog challenge failed!")
+			Data.values.erase("frog_challenge")
+		)
+		pl.damaged.connect(func():
+			if Data.values.get("frog_challenge", false) && ProfileManager.current_profile.data.get("damaged", false):
+				frog_failed.call()
+				#SecretsManager.show_failure("no hit run is now invalid!", "achievement failed")
+			ProfileManager.current_profile.data.damaged = true
+		)
+		pl.died.connect(func():
+			if Data.values.get("frog_challenge", false):
+				frog_failed.call()
+				#SecretsManager.show_failure("no deaths run is now invalid!", "achievement failed")
+			ProfileManager.current_profile.data.died = true
+		)
+		if Data.values.get("frog_challenge", false):
+			if !Thunder._current_player.no_movement && Thunder._current_player.suit.name != &"frog":
+				frog_failed.call()
+			pl.suit_changed.connect(frog_failed.unbind(1))
+	).call_deferred()
+
+
+func _ready_mus_tweaks() -> void:
 	if SettingsManager.get_tweak("pitch_music_everywhere", false) && !has_node("MusicPitchChanger"):
 		var _pitch_changer = MUSIC_PITCH_CHANGER.instantiate()
 		add_child(_pitch_changer, true)
@@ -105,8 +126,10 @@ func _ready():
 					Audio._music_channels[channel_id].pitch_scale = 0.976
 			).call_deferred()
 		)
-	
-	# Soundtrack Stuff
+
+
+func _ready_mus_hacks() -> void:
+	var _level = Scenes.current_scene
 	if SettingsManager.get_tweak("alt_completion_music", false) && _level is Level:
 		_level.completion_music = tweaked_completion_music
 		_level.DEFAULT_COMPLETION = tweaked_completion_music
@@ -128,9 +151,8 @@ func _ready():
 	if bgm_tweak >= 1 && bgm_tweak <= 3:
 		var _set: bool = _bgm_tweak(bgm_tweak)
 		if _set:
-			super(); return
+			return
 	current_music = music.duplicate()
-	super()
 
 
 func _bgm_tweak(which: int) -> bool:
