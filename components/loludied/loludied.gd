@@ -88,6 +88,8 @@ func _physics_process(delta: float) -> void:
 			Thunder._current_player_state = null
 			Thunder._current_player_state_path = ""
 			ProfileManager.current_profile.data.lives = Data.values.lives
+			Data.values.deaths = Data.values.get_or_add("deaths", 0) + 1
+			ProfileManager.current_profile.data.deaths = Data.values.deaths
 			if !ProfileManager.current_profile.name.begins_with(&"debug"):
 				ProfileManager.save_current_profile()
 	else:

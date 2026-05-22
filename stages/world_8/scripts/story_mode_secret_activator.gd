@@ -11,4 +11,6 @@ func perform_checks_and_unlock() -> void:
 		secret_unlocker.unlock_if(["damaged"], 4)
 	if Data.values.get("frog_challenge", false):
 		secret_unlocker.unlock_if(["died"], 5)
+		ProfileManager.current_profile.data.frog_challenged = true
+	ProfileManager.current_profile.data.power_completed = Thunder._current_player_state.get("name")
 	

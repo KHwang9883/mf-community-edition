@@ -50,7 +50,16 @@ func suspended_game_logic() -> void:
 			)
 			cursed_preview.visible = true
 			cursed_preview.play(&"walk")
+			var actual_profile = ProfileManager.profiles.get(profile.get(&"saved_profile"))
+			if actual_profile && actual_profile.data.get(&"lives"):
+				profile.saved_profile_data.lives = actual_profile.data.lives
+				profile.saved_values.lives = actual_profile.data.lives
+			if actual_profile && actual_profile.data.get(&"deaths"):
+				profile.saved_profile_data.deaths = actual_profile.data.deaths
+				profile.saved_values.deaths = actual_profile.data.deaths
+				profile.saved_profile_data.died = true
 	Scenes.custom_scenes.pause.open_blocked = true
+	
 	
 	animation_player.play(&"init")
 	toggle()
