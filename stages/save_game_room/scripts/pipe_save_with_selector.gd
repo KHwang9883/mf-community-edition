@@ -186,9 +186,16 @@ func _update_save() -> void:
 	label.remove_theme_color_override(&"font_color")
 	
 	var prof = ProfileManager.profiles.get(profile_name)
+	
+	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
+		cursed_pipe.visible = true
+		is_cursed = true
+	
 	if prof && prof.data.get("star_world"):
 		_star_world = prof.data.star_world
-		label.add_theme_color_override(&"font_color", Color.LIGHT_GREEN)
+		label.add_theme_color_override(
+			&"font_color", Color.LIGHT_GREEN if !is_cursed else Color("#b16dff")
+		)
 		var wnumbers: Array
 		if prof.data.get("star_numbers"):
 			wnumbers = prof.data.star_numbers.split("-")
@@ -205,10 +212,6 @@ func _update_save() -> void:
 	
 	if prof && prof.data.get("executed"):
 		label.add_theme_color_override(&"font_color", "#ff6060")
-	
-	if prof && &"kevin_mode_enabled" in prof.data && prof.data.kevin_mode_enabled:
-		cursed_pipe.visible = true
-		is_cursed = true
 	
 	if KevinGlobal.activated:
 		block_pure_pipe.call_deferred()
@@ -303,6 +306,8 @@ func _update_reset_labels() -> void:
 			ProfileManager.profiles[profile_name].data.deaths = abs(_prof.lives)
 		reset_node.deaths.visible = true
 		reset_node.deaths.text = "deaths: %d" % _prof.get("deaths", 0)
+		if "deaths_completed" in _prof:
+			reset_node.deaths.text += " (completed with %d)" % _prof.get("deaths_completed")
 	
 	if _prof.get("executed"):
 		reset_node.secrets.text = "not applicable for any achievement, please reset"

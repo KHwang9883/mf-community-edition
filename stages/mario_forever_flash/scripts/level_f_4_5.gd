@@ -50,6 +50,9 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 					.with_scene(jump_to_scene)
 			)
 	
+	if KevinGlobal.activated && !"deaths_completed" in ProfileManager.current_profile.data:
+		ProfileManager.current_profile.data.deaths_completed = Data.values.get("deaths")
+	
 	if completion_write_save:
 		ProfileManager.current_profile.data.star_world = true
 		ProfileManager.save_current_profile()
