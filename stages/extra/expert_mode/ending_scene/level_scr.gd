@@ -401,6 +401,8 @@ func finish() -> void:
 	unlocker.unlock_if(["warped"], 1)
 	ProfileManager.current_profile.data.star_world = true
 	ProfileManager.current_profile.data.power_completed = Thunder._current_player_state.get(&"name")
+	if KevinGlobal.activated && !"deaths_completed" in ProfileManager.current_profile.data:
+		ProfileManager.current_profile.data.deaths_completed = Data.values.get("deaths")
 	
 	ProfileManager.save_current_profile()
 	if !(SecretsManager.is_console_enabled() && !Console.cv.can_save_suspended_with_console):
