@@ -1,14 +1,24 @@
-[gd_scene load_steps=28 format=3 uid="uid://bys6mri84qhko"]
+[gd_scene load_steps=52 format=3 uid="uid://bys6mri84qhko"]
 
-[ext_resource type="PackedScene" uid="uid://clnvxc3co85ls" path="res://engine/objects/enemies/human_lab/koopa_troopa/coder_clone.tscn" id="1_b3k6f"]
+[ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_m5enx"]
 [ext_resource type="PackedScene" uid="uid://dybhtmus71y38" path="res://objects/human_lab_2/coders/coder_polish_clone/coder_clone_running_polish.tscn" id="2_agaij"]
 [ext_resource type="AudioStream" uid="uid://7fw7ittva81p" path="res://objects/human_lab_2/coders/coder_polish_clone/sfx/AAA_Klawiatura1.wav" id="2_ban3p"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_lkqqo"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ssohh"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_grcmx"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_vgf3m"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_kun7n"]
 [ext_resource type="Texture2D" uid="uid://nfcn63a0e7r5" path="res://objects/human_lab_2/coders/coder_polish_clone/gfx/idle.png" id="7_qyqhc"]
 [ext_resource type="Texture2D" uid="uid://xxt7uwxrp1wq" path="res://objects/human_lab_2/coders/coder_polish_clone/gfx/dead.png" id="8_5wwto"]
 [ext_resource type="Script" uid="uid://dndad55mbpai0" path="res://engine/objects/enemies/enemy_edge_turner.gd" id="9_b2tkn"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_gtyor"]
+[ext_resource type="Script" uid="uid://bcjc58mk35e4o" path="res://engine/objects/enemies/human_lab/koopa_troopa/scripts/keyboard_effect.gd" id="10_g14dw"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="13_r3e1r"]
+[ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs.png" id="14_xw74b"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="15_5gpao"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xa3qa"]
+size = Vector2(32, 63)
 
 [sub_resource type="Resource" id="Resource_47uaw"]
 script = ExtResource("4_kun7n")
@@ -163,32 +173,199 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="DELUXE" instance=ExtResource("1_b3k6f")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_80lua"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(0, 0, 32, 9)
 
-[node name="Collision" parent="Body" index="0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pedk1"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(32, 0, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpt5f"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(64, 0, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qulyd"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(96, 0, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdc8f"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(0, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5ilw"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(32, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3w8w"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(64, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2l2c"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(96, 9, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahh2d"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(0, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5i6h8"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(32, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2xlo"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(64, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ik7x"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(96, 18, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0kv8"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(0, 27, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chwp2"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(32, 27, 32, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxb57"]
+atlas = ExtResource("14_xw74b")
+region = Rect2(64, 27, 32, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_12g0q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80lua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pedk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpt5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qulyd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdc8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a5ilw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3w8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2l2c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahh2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5i6h8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2xlo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ik7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0kv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chwp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxb57")
+}],
+"loop": true,
+"name": &"default",
+"speed": 50.0
+}]
+
+[node name="DELUXE" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_max_angle = 0.837758
+floor_snap_length = 20.0
+platform_on_leave = 2
+script = ExtResource("1_m5enx")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(50, 0)
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_xa3qa")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_ssohh")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_xa3qa")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_grcmx")
 stomping_creation = SubResource("Resource_47uaw")
+stomping_scores = 100
 stomping_sound = ExtResource("2_ban3p")
 killing_creation = SubResource("Resource_ww16n")
+killing_scores = 100
 killing_sound_succeeded = ExtResource("2_ban3p")
+killing_sound_failed = ExtResource("9_gtyor")
+ice_sprite = NodePath("../../Sprite")
+sound_ignore_pitch_modification = true
 
-[node name="Sprite" parent="." index="2"]
+[node name="Node" type="Node2D" parent="Body"]
+script = ExtResource("10_g14dw")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_6uh84")
+autoplay = "default"
 
-[node name="Dead" parent="Sprite" index="0"]
-sprite_frames = SubResource("SpriteFrames_twmg6")
-
-[node name="ActiveNOGI" parent="Sprite" index="1"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
-script = null
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_twmg6")
+script = ExtResource("13_r3e1r")
 
-[node name="Turner" type="RayCast2D" parent="." index="4"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+z_index = -1
+position = Vector2(0, 30)
+sprite_frames = SubResource("SpriteFrames_12g0q")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("15_5gpao")
+metadata/_edit_lock_ = true
+
+[node name="Turner" type="RayCast2D" parent="."]
 visible = false
 position = Vector2(16, 27)
 target_position = Vector2(0, 8)
 collision_mask = 32
 hit_from_inside = true
 script = ExtResource("9_b2tkn")
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
