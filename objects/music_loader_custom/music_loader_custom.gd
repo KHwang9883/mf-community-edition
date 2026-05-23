@@ -135,7 +135,7 @@ func _ready_mus_hacks() -> void:
 		_level.DEFAULT_COMPLETION = tweaked_completion_music
 	
 	var scene_path: String = _level.scene_file_path
-	is_squario = _level is Level && "/extra/squario" in scene_path
+	is_squario = _level is Stage2D && "/extra/squario" in scene_path
 	bgm_tweak = SettingsManager.get_tweak("bgm_as_in_version", 0)
 	if is_squario:
 		bgm_tweak = int(SettingsManager.get_tweak("squario_music", 1))
@@ -143,7 +143,7 @@ func _ready_mus_hacks() -> void:
 			music_var_2 = music_var_1
 			boss_music_var_2 = boss_music_var_1
 			var_2_volume_db = var_1_volume_db
-		if SecretsManager.has_meta(&"squario_lvl_complete"):
+		if _level is Level && SecretsManager.has_meta(&"squario_lvl_complete"):
 			_level.completion_music = SecretsManager.get_meta(&"squario_lvl_complete")
 			_level.DEFAULT_COMPLETION = _level.completion_music
 			_level.completion_music_delay_sec = 3.0
