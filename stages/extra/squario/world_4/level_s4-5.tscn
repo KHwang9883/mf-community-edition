@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://c2alkppdqkix6"]
+[gd_scene load_steps=45 format=4 uid="uid://c2alkppdqkix6"]
 
 [ext_resource type="Script" uid="uid://dk2de1n04byji" path="res://stages/mario_forever_flash/scripts/level_f_4_5.gd" id="1_gbu0v"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_a8kw4"]
@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="19_msrk4"]
 [ext_resource type="Script" uid="uid://dj1lojmei1a1t" path="res://stages/mario_forever_flash/scripts/bowser_attack_fireball.gd" id="20_tkcoo"]
 [ext_resource type="Script" uid="uid://cuk2r1fe7ae7n" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_random.gd" id="23_32733"]
+[ext_resource type="Script" uid="uid://co2tyasfdab1" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_flame.gd" id="23_shd7d"]
+[ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="24_uugwo"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="24_vgi0w"]
 [ext_resource type="PackedScene" uid="uid://b0b8he2bl1o4o" path="res://stages/mario_forever_flash/objects/bowser_lava_fin.tscn" id="25_g5iv0"]
 [ext_resource type="Texture2D" uid="uid://7py2qr5hp3ao" path="res://stages/extra/squario/gfx/squario_fincastle_bg.png" id="26_018wu"]
@@ -238,7 +240,13 @@ execute_times_per_attack = 6
 
 [node name="attack_random" type="Node" parent="Bowser"]
 script = ExtResource("23_32733")
-attacks = Array[String](["flame", "fireball"])
+attacks = Array[String](["flames2", "fireball"])
+
+[node name="attack_flames2" type="Node" parent="Bowser"]
+script = ExtResource("23_shd7d")
+projectile_inst = ExtResource("24_uugwo")
+flame_delay = 1.7
+metadata/_edit_pinned_properties_ = [&"projectile_inst"]
 
 [node name="BowserEdge" parent="." instance=ExtResource("24_vgi0w")]
 position = Vector2(120, 240)
