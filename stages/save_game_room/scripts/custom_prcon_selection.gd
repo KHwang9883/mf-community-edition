@@ -11,6 +11,7 @@ confirm once again to proceed."""
 @onready var message_block_2: AnimatableBody2D = Scenes.current_scene.get_node("MessageBlock2")
 @onready var progress_continue: Control = $"../.."
 @onready var texture_rect: TextureRect = $"../../../TextureRect"
+@onready var squario_mus: int = SettingsManager.get_tweak("squario_music", 1)
 
 
 func _handle_select(mouse_input: bool = false) -> void:
@@ -35,6 +36,10 @@ func _handle_select(mouse_input: bool = false) -> void:
 		print("Game session marked as cheated")
 	if !!prog.profile.get("saved_profile_data").get("mario_forever_expert"):
 		progress_skipper.mario_forever_advance(true)
+	if prog.profile.get("saved_profile") && "squario" in prog.profile.saved_profile:
+		if squario_mus > 0 && !SecretsManager.has_meta(&"squario_lvl_complete"):
+			var squario_lvl_complete = load("res://music/extra/squario/levelcomplete.mp3")
+			SecretsManager.set_meta(&"squario_lvl_complete", squario_lvl_complete)
 	
 	super(mouse_input)
 	
