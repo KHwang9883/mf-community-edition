@@ -16,7 +16,7 @@ func _ready() -> void:
 		label.text = original_text
 	
 	if hidden_on_init:
-		label.text = "<hidden achievement>"
+		label.text = "<achievement locked>"
 
 func show_hidden() -> void:
 	await get_tree().physics_frame
