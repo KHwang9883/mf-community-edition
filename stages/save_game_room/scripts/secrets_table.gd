@@ -33,19 +33,24 @@ func _ready() -> void:
 				toggler = labels[i]
 				break
 		
-		achievements_number += max(1, achievement.progress_to)
+		var adds_up: int = achievement.progress_to
+		if achievement.count_for_percent_as_one:
+			adds_up = 1
+		achievements_number += max(1, adds_up)
+		
 		var secr = SecretsManager.secrets.get(achievement.secret_id)
 		if typeof(secr) == TYPE_BOOL && secr == true:
 			toggle_yes(toggler)
-			achievements_unlocked += max(1, achievement.progress_to)
+			achievements_unlocked += max(1, adds_up)
 		elif typeof(secr) == TYPE_ARRAY && len(secr) >= achievement.progress_to:
 			toggle_yes(toggler)
-			achievements_unlocked += max(1, achievement.progress_to)
+			achievements_unlocked += max(1, adds_up)
 		else:
 			not_done = true
 			if typeof(secr) == TYPE_ARRAY && len(secr) > 0:
 				toggler.text = "no, %d" % len(secr)
-				achievements_unlocked += len(secr)
+				if !achievement.count_for_percent_as_one:
+					achievements_unlocked += len(secr)
 	
 	if !not_done:
 		all_achievements_done.emit()

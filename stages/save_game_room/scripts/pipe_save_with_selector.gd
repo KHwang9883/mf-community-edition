@@ -306,8 +306,8 @@ func _update_reset_labels() -> void:
 			ProfileManager.profiles[profile_name].data.deaths = abs(_prof.lives)
 		reset_node.deaths.visible = true
 		reset_node.deaths.text = "deaths: %d" % _prof.get("deaths", 0)
-		if "deaths_completed" in _prof:
-			reset_node.deaths.text += " (completed with %d)" % _prof.get("deaths_completed")
+		if _prof.get("deaths_completed"):
+			reset_node.deaths.text += " (completed with %d)" % _prof.get("deaths_completed", 0)
 	
 	if _prof.get("executed"):
 		reset_node.secrets.text = "not applicable for any achievement, please reset"
