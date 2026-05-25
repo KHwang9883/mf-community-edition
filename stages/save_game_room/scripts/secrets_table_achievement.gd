@@ -4,6 +4,7 @@ extends HBoxContainer
 @export var progress_to: int = 0
 @export var replace_with_kevin: bool = false
 @export var hidden_on_init: bool = false
+@export var count_for_percent_as_one: bool = false
 
 var original_text: String
 
