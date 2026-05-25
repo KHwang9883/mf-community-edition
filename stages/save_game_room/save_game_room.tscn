@@ -1,4 +1,4 @@
-[gd_scene load_steps=286 format=4 uid="uid://sc0thhgcvq0g"]
+[gd_scene load_steps=287 format=4 uid="uid://sc0thhgcvq0g"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_yuddw"]
 [ext_resource type="Script" uid="uid://db8widi15epm" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_daqfu"]
@@ -163,6 +163,7 @@
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://engine/objects/bumping_blocks/message_block/message_block.tscn" id="115_nqbov"]
 [ext_resource type="Script" uid="uid://crkert7xdwe0j" path="res://stages/save_game_room/scripts/achievement_pager.gd" id="117_btyue"]
 [ext_resource type="Script" uid="uid://gxt6safn8vkx" path="res://stages/save_game_room/scripts/pipe_skip_tween.gd" id="119_ur33w"]
+[ext_resource type="PackedScene" uid="uid://ckcy2nk2urb4f" path="res://stages/save_game_room/objects/achievements_ce_p3.tscn" id="125_4dwkg"]
 [ext_resource type="Texture2D" uid="uid://c8hv4q5tiekro" path="res://gfx/sign/arrow_left.png" id="125_p8qum"]
 [ext_resource type="Texture2D" uid="uid://bgvmhpdvcdrpp" path="res://gfx/sign/sign_minix_welcome.png" id="127_tmf5d"]
 [ext_resource type="Script" uid="uid://bv7yjtyu01w7u" path="res://stages/save_game_room/scripts/label_secret_react.gd" id="129_hhyol"]
@@ -4798,27 +4799,63 @@ circle_center_after_middle = true
 [node name="text blah blah" parent="Objects" instance=ExtResource("111_nv03d")]
 
 [node name="text blah blah2" parent="Objects" instance=ExtResource("112_a7xao")]
+offset_left = -601.0
+offset_right = -169.0
 
 [node name="text blah blah3" parent="Objects" instance=ExtResource("113_4fflf")]
-offset_top = -952.0
-offset_bottom = -604.0
+offset_left = -608.0
+offset_top = -1408.0
+offset_right = -176.0
+offset_bottom = -1056.0
+
+[node name="text blah blah4" parent="Objects" instance=ExtResource("125_4dwkg")]
+offset_left = -1120.0
+offset_top = -1408.0
+offset_right = -704.0
+offset_bottom = -1060.0
+
+[node name="Label3" type="Label" parent="Objects"]
+offset_left = -128.0
+offset_top = -784.0
+offset_right = -32.0
+offset_bottom = -768.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "PAGE 1 / 3"
+horizontal_alignment = 1
+uppercase = true
 
 [node name="Label8" type="Label" parent="Objects"]
-offset_left = -528.0
+offset_left = -592.0
 offset_top = -989.0
-offset_right = -112.0
+offset_right = -176.0
 offset_bottom = -957.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 28
-text = "ACHIEVEMENTS (community edition, part 1)"
+text = "ACHIEVEMENTS (community edition)"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="LabelPercent" type="Label" parent="Objects"]
+offset_left = -1216.0
+offset_top = -928.0
+offset_right = -704.0
+offset_bottom = -880.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 32
+text = "%.2f%%"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
 [node name="AchievementPager" type="Node2D" parent="Objects"]
-position = Vector2(0, -944)
 script = ExtResource("117_btyue")
 
 [node name="LeftPager" type="AnimatableBody2D" parent="Objects/AchievementPager"]
@@ -4828,6 +4865,7 @@ collision_mask = 0
 script = ExtResource("26_0gpca")
 active = false
 bump_sound = ExtResource("76_1aubp")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AchievementPager/LeftPager"]
 shape = SubResource("RectangleShape2D_fsiml")
@@ -4845,6 +4883,7 @@ collision_layer = 112
 collision_mask = 0
 script = ExtResource("26_0gpca")
 bump_sound = ExtResource("76_1aubp")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AchievementPager/RightPager"]
 shape = SubResource("RectangleShape2D_fsiml")
@@ -5490,20 +5529,6 @@ difficulty"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Label3" type="Label" parent="Scenery/Node2D"]
-offset_left = -128.0
-offset_top = -1728.0
-offset_right = -32.0
-offset_bottom = -1696.0
-theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
-text = "SCROLL
-pages"
-horizontal_alignment = 1
-uppercase = true
-
 [node name="Node2D2" type="Node2D" parent="Scenery"]
 script = ExtResource("10_cgryk")
 amplitude = Vector2(0, 15)
@@ -5590,14 +5615,14 @@ uppercase = true
 
 [node name="Label25" type="Label" parent="Scenery"]
 offset_left = -1216.0
-offset_top = -989.0
+offset_top = -976.0
 offset_right = -704.0
-offset_bottom = -957.0
+offset_bottom = -944.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 28
-text = "ACHIEVEMENTS (community edition, part 2)"
+text = "TOTAL ACHIEVEMENT PROGRESS:"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
