@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=4 uid="uid://csw6yvn72v1ik"]
+[gd_scene load_steps=89 format=4 uid="uid://csw6yvn72v1ik"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_aoarn"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ykvcy"]
@@ -7,7 +7,9 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_maofm"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_smnd8"]
 [ext_resource type="AudioStream" uid="uid://bs2tujgc67d1r" path="res://music/smw2-flower-garden.ogg" id="6_bbwpv"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_1jx4p"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_33wpv"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="8_ks07o"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_maofm"]
 [ext_resource type="PackedScene" uid="uid://b7tkooebfam48" path="res://engine/objects/bumping_blocks/question_block/templates/Fire Flower Question Block.tscn" id="8_mssfw"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="9_1rpsu"]
@@ -780,10 +782,10 @@ _data = {
 point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8nalh"]
-size = Vector2(2720, 781)
+size = Vector2(736, 781)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8rx6p"]
-size = Vector2(992, 781)
+size = Vector2(736, 781)
 
 [node name="WorldUExtraLevelEasy" type="Node2D"]
 editor_description = "Enter map scene path in the \"Jump to Scene\" property here."
@@ -814,6 +816,17 @@ boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_bbwpv")])
 volume_db = Array[float]([0.0])
 start_from_sec = Array[float]([0.0])
+
+[node name="SecretUnlocker" parent="." instance=ExtResource("7_1jx4p")]
+secrets = Array[String](["world u secret levels finished", "world u secret levels in kevin mode"])
+progress_by_id = "human lab 1.2"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker"]
+script = ExtResource("8_ks07o")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." instance=ExtResource("5_smnd8")]
 position = Vector2(112, 400)
@@ -1077,11 +1090,10 @@ position = Vector2(2320, 400)
 position = Vector2(2352, 264)
 
 [node name="GrassBush" parent="." instance=ExtResource("32_0tkbc")]
-z_index = -1
+z_index = -3
 position = Vector2(304, 400)
 
 [node name="GrassBush2" parent="." instance=ExtResource("32_0tkbc")]
-z_index = -1
 position = Vector2(1552, 400)
 
 [node name="QuestionBlock3" parent="." instance=ExtResource("22_jatlb")]
@@ -1110,8 +1122,8 @@ curve = SubResource("Curve2D_hanp6")
 [node name="PlatformPath" parent="Path2D" instance=ExtResource("33_amy62")]
 position = Vector2(16, -264)
 
-[node name="Checkpoint" parent="Path2D" instance=ExtResource("34_t1244")]
-position = Vector2(3472, -8)
+[node name="Checkpoint" parent="." instance=ExtResource("34_t1244")]
+position = Vector2(6416, 384)
 
 [node name="Brick" parent="." instance=ExtResource("34_bmhgb")]
 position = Vector2(3216, 304)
@@ -1213,6 +1225,7 @@ curve = SubResource("Curve2D_ab2ro")
 position = Vector2(5296, 352)
 
 [node name="GrassBush4" parent="." instance=ExtResource("32_0tkbc")]
+z_index = -6
 position = Vector2(3792, 400)
 
 [node name="Clone03" parent="." instance=ExtResource("24_l7fxa")]
@@ -1440,7 +1453,7 @@ position = Vector2(11552, 416)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(12016, 240)
+position = Vector2(12024, 240)
 texture = ExtResource("41_vve3l")
 
 [node name="GrassBush3" parent="." instance=ExtResource("32_0tkbc")]
@@ -1552,7 +1565,7 @@ position = Vector2(-1344, 0)
 script = ExtResource("48_bopn2")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D10"]
-position = Vector2(1392, 192)
+position = Vector2(2256, 192)
 shape = SubResource("RectangleShape2D_8nalh")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Area2D10"]
@@ -1561,3 +1574,5 @@ shape = SubResource("RectangleShape2D_8rx6p")
 
 [node name="Node" type="Node" parent="Area2D10"]
 script = ExtResource("49_1k26s")
+
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]

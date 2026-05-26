@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=4 uid="uid://cs1xbwy3mu70e"]
+[gd_scene load_steps=87 format=4 uid="uid://cs1xbwy3mu70e"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_shvp8"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_6wqvc"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_7umdf"]
 [ext_resource type="AudioStream" uid="uid://dvjer3bl0ftxm" path="res://music/extra/world_u/smw-brinstar.ogg" id="6_vt6xc"]
 [ext_resource type="AudioStream" uid="uid://c7pyddl2w766u" path="res://music/extra/world_u/smw-vanilla.ogg" id="7_7iqmo"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_mrgs2"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_vlqtj"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_0al6v"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_r42xg"]
@@ -65,6 +66,7 @@
 [ext_resource type="PackedScene" uid="uid://kc2ukyx68s2q" path="res://engine/objects/enemies/podoboo/podoboo_volcano_launcher.tscn" id="61_mlcl7"]
 [ext_resource type="PackedScene" uid="uid://ckyn5cs2orvjm" path="res://engine/objects/platform/block_platforms/platform_overworld_blocks.tscn" id="62_87ny1"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://engine/tilesets/underground/gfx/purple_pipe.png" id="65_2oyct"]
+[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="67_eedmn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_68wr5"]
 texture = ExtResource("14_7lrtj")
@@ -99,6 +101,9 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 112
 physics_layer_0/collision_mask = 0
 sources/1 = SubResource("TileSetAtlasSource_68wr5")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jh5j3"]
+size = Vector2(10016, 96)
 
 [sub_resource type="Gradient" id="Gradient_1shqf"]
 colors = PackedColorArray(0.701961, 0, 0, 0, 0.701961, 0, 0, 0.607843)
@@ -156,9 +161,6 @@ custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1d44c"]
 size = Vector2(74, 74)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jh5j3"]
-size = Vector2(10016, 96)
 
 [sub_resource type="Gradient" id="Gradient_2oyct"]
 colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392157, 0.00392157, 1)
@@ -240,6 +242,11 @@ boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_vt6xc"), ExtResource("7_7iqmo")])
 volume_db = Array[float]([4.0, 3.0])
 
+[node name="SecretUnlocker" parent="." instance=ExtResource("8_mrgs2")]
+secrets = Array[String](["world u secret levels found"])
+progress_by_id = "human lab remix?"
+progress_to = 4
+
 [node name="Player" parent="." instance=ExtResource("8_vlqtj")]
 position = Vector2(320, 400)
 
@@ -295,6 +302,23 @@ navigation_enabled = false
 tile_map_data = PackedByteArray("AABHAQ4AAAABAAEAAABHAQ0AAAABAAAAAABGAQ4AAAABAAEAAABGAQ0AAAABAAAAAABFAQ4AAAABAAEAAABFAQ0AAAABAAAAAABEAQ4AAAABAAEAAABEAQ0AAAABAAAAAABDAQ4AAAABAAEAAABDAQ0AAAABAAAAAABCAQ4AAAABAAEAAABCAQ0AAAABAAAAAABBAQ4AAAABAAEAAABBAQ0AAAABAAAAAABAAQ4AAAABAAEAAABAAQ0AAAABAAAAAAA/AQ4AAAABAAEAAAA/AQ0AAAABAAAAAAA+AQ4AAAABAAEAAAA+AQ0AAAABAAAAAAA9AQ4AAAABAAEAAAA9AQ0AAAABAAAAAAA8AQ4AAAABAAEAAAA8AQ0AAAABAAAAAAA7AQ4AAAAAAAEAAAA7AQ0AAAAAAAAAAABIAQ4AAAABAAEAAABIAQ0AAAABAAAAAABMAQ4AAAABAAEAAABMAQ0AAAABAAAAAABLAQ4AAAABAAEAAABLAQ0AAAABAAAAAABKAQ4AAAABAAEAAABKAQ0AAAABAAAAAABJAQ4AAAABAAEAAABJAQ0AAAABAAAAAABNAQ0AAAACAAAAAABNAQ4AAAACAAEAAABNAQ8AAAACAAEAAABaAQ4AAAABAAEAAABaAQ0AAwADAAAAAABZAQ4AAAABAAEAAABZAQ0AAAABAAAAAABYAQ4AAAABAAEAAABYAQ0AAAABAAAAAABXAQ4AAAABAAEAAABXAQ0AAAABAAAAAABWAQ4AAAABAAEAAABWAQ0AAAABAAAAAABVAQ4AAAABAAEAAABVAQ0AAAABAAAAAABUAQ8AAAAAAAEAAABUAQ4AAAAAAAEAAABUAQ0AAAAAAAAAAABbAQ0AAAABAAAAAABcAQ0AAAACAAAAAABcAQ4AAAACAAEAAABcAQ8AAAACAAEAAABbAQ4AAAABAAEAAAB3AQ4AAAABAAEAAAB3AQ0AAAABAAAAAAB2AQ4AAAABAAEAAAB2AQ0AAAABAAAAAAB1AQ4AAAABAAEAAAB1AQ0AAAABAAAAAAB0AQ4AAAABAAEAAAB0AQ0AAAABAAAAAABzAQ4AAAABAAEAAABzAQ0AAAABAAAAAAByAQ4AAAABAAEAAAByAQ0AAAABAAAAAABxAQ4AAAABAAEAAABxAQ0AAAABAAAAAABwAQ4AAAABAAEAAABwAQ0AAAABAAAAAABvAQ4AAAABAAEAAABvAQ0AAAABAAAAAABuAQ4AAAABAAEAAABuAQ0AAAABAAAAAABtAQ4AAAABAAEAAABtAQ0AAAABAAAAAABsAQ4AAAABAAEAAABsAQ0AAAABAAAAAABrAQ4AAAABAAEAAABrAQ0AAAABAAAAAABqAQ4AAAABAAEAAABqAQ0AAAABAAAAAABpAQ4AAAABAAEAAABpAQ0AAAABAAAAAABoAQ4AAAABAAEAAABoAQ0AAAABAAAAAABnAQ4AAAABAAEAAABnAQ0AAAABAAAAAABmAQ4AAAABAAEAAABmAQ0AAAABAAAAAABlAQ4AAAABAAEAAABlAQ0AAAABAAAAAABkAQ4AAAABAAEAAABkAQ0AAAABAAAAAABjAQ8AAAAAAAEAAABjAQ4AAAAAAAEAAABjAQ0AAAAAAAAAAAB9AQ4AAAACAAEAAAB9AQ0AAAACAAAAAAB8AQ4AAAABAAEAAAB8AQ0AAAABAAAAAAB7AQ4AAAABAAEAAAB7AQ0AAAABAAAAAAB6AQ4AAAABAAEAAAB6AQ0AAAABAAAAAAB5AQ4AAAABAAEAAAB5AQ0AAAABAAAAAAB4AQ4AAAABAAEAAAB4AQ0AAAABAAAAAAB+AQwAAAAAAAEAAAB+AQsAAAAAAAEAAAB+AQoAAAAAAAEAAAB+AQkAAAAAAAEAAAB+AQgAAAAAAAEAAAB+AQcAAAAAAAEAAAB+AQYAAAAAAAEAAAB+AQUAAAAAAAEAAAB+AQQAAAAAAAEAAAB+AQMAAAAAAAEAAAB+AQIAAAAAAAEAAAB+AQEAAAAAAAEAAAB+AQAAAAAAAAEAAAB+AQ0AAAAAAAEAAAB+AQ4AAAAAAAEAAABaAQwAAwAAAAEAAAB0AQsAAwAEAAAAAAA=")
 tile_set = ExtResource("15_grfjo")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, 960)
+collision_layer = 112
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(5008, 48)
+shape = SubResource("RectangleShape2D_jh5j3")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture_repeat = 2
+texture = ExtResource("40_lj5af")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10016, 96)
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 1
 
@@ -340,7 +364,7 @@ horizontal_alignment = 1
 script = ExtResource("19_a7lnx")
 tween_to = 224
 action_after_sec = 3.0
-change_scene = "res://stages/extra/world_u/_normal/extralevel_normal.tscn"
+change_scene = "res://stages/extra/world_u/hidden/extralevel_3.tscn"
 circle_transition_center_on_player = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
@@ -686,23 +710,6 @@ shape = SubResource("RectangleShape2D_1d44c")
 
 [node name="Marker2D" type="Marker2D" parent="Area2D2"]
 position = Vector2(432, 1312)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(0, 960)
-collision_layer = 112
-collision_mask = 0
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(5008, 48)
-shape = SubResource("RectangleShape2D_jh5j3")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
-texture_repeat = 2
-texture = ExtResource("40_lj5af")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 10016, 96)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2(5008, 960)
@@ -1756,8 +1763,18 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
+[node name="LavaBubbles" parent="." instance=ExtResource("67_eedmn")]
+position = Vector2(9200, 1392)
+
+[node name="LavaBubbles2" parent="." instance=ExtResource("67_eedmn")]
+position = Vector2(8176, 1392)
+
+[node name="LavaBubbles3" parent="." instance=ExtResource("67_eedmn")]
+position = Vector2(7120, 1392)
+
 [connection signal="player_enter" from="Area2D2" to="Water" method="show"]
 [connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
+[connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="progress_secret" binds= [0, false]]
 
 [editable path="Lava"]
 [editable path="Water"]

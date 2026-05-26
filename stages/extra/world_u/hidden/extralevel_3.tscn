@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://1q37nq8ymo5u"]
+[gd_scene load_steps=72 format=4 uid="uid://1q37nq8ymo5u"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_poni4"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_267by"]
@@ -6,7 +6,9 @@
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_1l0i6"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_wfpyr"]
 [ext_resource type="AudioStream" uid="uid://cho5lvtydv1wq" path="res://music/extra/world_u/secret_extralevels/one_fine_day_PAL_M_Mix.ogg" id="6_2ypkm"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_b2558"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_i8lp2"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="8_4bsjn"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_7188i"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_pthhc"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_1odyd"]
@@ -78,11 +80,11 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uiyhl"]
-size = Vector2(2720, 781)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7188i"]
+size = Vector2(1072, 781)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ysg3s"]
-size = Vector2(992, 781)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b2558"]
+size = Vector2(768, 781)
 
 [sub_resource type="Resource" id="Resource_qnm6h"]
 resource_local_to_scene = true
@@ -247,6 +249,17 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_2ypkm")])
 
+[node name="SecretUnlocker" parent="." instance=ExtResource("7_b2558")]
+secrets = Array[String](["world u secret levels finished", "world u secret levels in kevin mode"])
+progress_by_id = "human lab remix?"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker"]
+script = ExtResource("8_4bsjn")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+progress_reset_on_complete = false
+
 [node name="Mario" parent="." instance=ExtResource("7_i8lp2")]
 position = Vector2(76, 400)
 
@@ -256,7 +269,7 @@ script = ExtResource("8_7188i")
 metadata/_edit_lock_ = true
 
 [node name="CameraArea" parent="." instance=ExtResource("9_pthhc")]
-offset_right = 9280.0
+offset_right = 9408.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
@@ -1631,17 +1644,16 @@ position = Vector2(9104, -112)
 result = SubResource("Resource_40ouo")
 
 [node name="Area2D10" type="Area2D" parent="."]
-visible = false
 position = Vector2(-1344, 0)
 script = ExtResource("49_ubqpp")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D10"]
-position = Vector2(1408, 192)
-shape = SubResource("RectangleShape2D_uiyhl")
+position = Vector2(2232, 192)
+shape = SubResource("RectangleShape2D_7188i")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Area2D10"]
 position = Vector2(3968, 176)
-shape = SubResource("RectangleShape2D_ysg3s")
+shape = SubResource("RectangleShape2D_b2558")
 
 [node name="Node" type="Node" parent="Area2D10"]
 script = ExtResource("50_l7bgb")
@@ -1649,6 +1661,7 @@ script = ExtResource("50_l7bgb")
 [node name="Rain" parent="." instance=ExtResource("51_1y2rp")]
 position = Vector2(-1344, 0)
 amount = 1600
+preprocess = 2.0
 visibility_rect = Rect2(0, 0, 11000, 960)
 sound_only_in_visible_rect = false
 
@@ -1801,3 +1814,5 @@ position = Vector2(1136, 240)
 texture = ExtResource("55_j7lk8")
 region_enabled = true
 region_rect = Rect2(41, 79, 8, 32)
+
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]

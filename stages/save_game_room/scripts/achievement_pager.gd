@@ -4,7 +4,10 @@ extends Node2D
 @onready var left_pager: StaticBumpingBlock = $LeftPager
 @onready var right_pager: StaticBumpingBlock = $RightPager
 @onready var pipes: Array[VBoxContainer] = [
-	$"../text blah blah2", $"../text blah blah3", $"../text blah blah4"
+	$"../text blah blah2",
+	$"../text blah blah3",
+	$"../text blah blah4",
+	$"../text blah blah5",
 ]
 @onready var classic_page: VBoxContainer = $"../text blah blah"
 
@@ -12,7 +15,7 @@ extends Node2D
 @onready var label_percent: Label = $"../LabelPercent"
 
 var page: int = 0
-var total_pages: int = 3
+var total_pages: int = 4
 var tw: Tween
 var completion: float
 
@@ -29,10 +32,16 @@ func _ready() -> void:
 	right_pager.bumped.connect(right_bumped)
 	await get_tree().physics_frame
 	if !is_inside_tree(): return
+	var total_achievements: int = 0
+	var total_unlocked: int = 0
 	for i in pipes:
-		completion += i.get_percentage()
-	completion += classic_page.get_percentage()
-	completion *= 25
+		total_achievements += i.achievements_number
+		total_unlocked += i.achievements_unlocked
+		prints("%d / %d" % [i.achievements_unlocked, i.achievements_number])
+	total_achievements += classic_page.achievements_number
+	total_unlocked += classic_page.achievements_unlocked
+	completion = (float(total_unlocked) / float(total_achievements)) * 100.0
+	print("completion: %.2f%%" % completion)
 	label_percent.text %= completion
 
 
