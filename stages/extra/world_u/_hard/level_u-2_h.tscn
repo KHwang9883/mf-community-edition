@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://qr2a6h3fw6yv"]
+[gd_scene load_steps=90 format=4 uid="uid://qr2a6h3fw6yv"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5b5qm"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_0suf6"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dvjer3bl0ftxm" path="res://music/extra/world_u/smw-brinstar.ogg" id="6_h7gm8"]
 [ext_resource type="AudioStream" uid="uid://c7pyddl2w766u" path="res://music/extra/world_u/smw-vanilla.ogg" id="7_1tkm7"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_hdndj"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_yjlyp"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_xucbg"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_e03xc"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="11_hvwp7"]
@@ -260,6 +261,11 @@ boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_h7gm8"), ExtResource("7_1tkm7")])
 volume_db = Array[float]([4.0, 3.0])
 
+[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("8_yjlyp")]
+secrets = Array[String](["world u secret levels found"])
+progress_by_id = "world 9 - 1 revamped"
+progress_to = 4
+
 [node name="Player" parent="." instance=ExtResource("8_hdndj")]
 position = Vector2(320, 400)
 
@@ -360,7 +366,7 @@ horizontal_alignment = 1
 script = ExtResource("19_q36p7")
 tween_to = 224
 action_after_sec = 3.0
-change_scene = "res://stages/extra/world_u/_hard/extralevel_hard.tscn"
+change_scene = "res://stages/extra/world_u/hidden/extralevel_4.tscn"
 circle_transition_center_on_player = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
@@ -1848,6 +1854,7 @@ region_rect = Rect2(32, 0, 32, 32)
 
 [connection signal="player_enter" from="Area2D2" to="Water" method="show"]
 [connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
+[connection signal="warp_started" from="PipeIn3" to="MusicLoader/SecretUnlocker" method="progress_secret" binds= [0, false]]
 
 [editable path="Lava"]
 [editable path="Water"]

@@ -41,6 +41,8 @@ var level_scene_template: String = "res://stages/extra/expert_mode/otherworld/le
 @export var secret_completed: String
 @export var secret_completed_kevin: String
 @export var secret_completed_values: PackedStringArray
+@export var level_lock_explain: String = "level locked! find a passage in expert mode worlds!"
+@export var level_unlock_explain: String = "you have found this level in expert %s"
 
 var is_empty: bool
 var is_blocked: bool
@@ -197,8 +199,8 @@ func _update_reset_labels() -> void:
 		return
 	var secret = SecretsManager.get_secret(secret_name)
 	if !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret):
-		reset_node.secrets.text = "level locked! find a passage in expert mode worlds!"
+		reset_node.secrets.text = level_lock_explain
 	else:
-		reset_node.secrets.text = "you have found this level in expert %s" % secret_level_values[_star_sel_level - 1]
+		reset_node.secrets.text = level_unlock_explain % secret_level_values[_star_sel_level - 1]
 	
 		

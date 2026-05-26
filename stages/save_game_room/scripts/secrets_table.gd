@@ -34,23 +34,23 @@ func _ready() -> void:
 				break
 		
 		var adds_up: int = achievement.progress_to
-		if achievement.count_for_percent_as_one:
-			adds_up = 1
-		achievements_number += max(1, adds_up)
+		#if achievement.count_for_percent_as_one:
+		#	adds_up = 1
+		achievements_number += max(3, adds_up)
 		
 		var secr = SecretsManager.secrets.get(achievement.secret_id)
 		if typeof(secr) == TYPE_BOOL && secr == true:
 			toggle_yes(toggler)
-			achievements_unlocked += max(1, adds_up)
+			achievements_unlocked += max(3, adds_up)
 		elif typeof(secr) == TYPE_ARRAY && len(secr) >= achievement.progress_to:
 			toggle_yes(toggler)
-			achievements_unlocked += max(1, adds_up)
+			achievements_unlocked += max(3, adds_up)
 		else:
 			not_done = true
 			if typeof(secr) == TYPE_ARRAY && len(secr) > 0:
 				toggler.text = "no, %d" % len(secr)
-				if !achievement.count_for_percent_as_one:
-					achievements_unlocked += len(secr)
+				#if !achievement.count_for_percent_as_one:
+				achievements_unlocked += len(secr)
 	
 	if !not_done:
 		all_achievements_done.emit()
@@ -89,6 +89,6 @@ func paginator_play_animation() -> void:
 	visible = true
 
 
-func get_percentage() -> float:
-	prints("%d / %d" % [achievements_unlocked, achievements_number])
-	return float(achievements_unlocked) / float(achievements_number)
+#func get_percentage() -> float:
+	#prints("%d / %d" % [achievements_unlocked, achievements_number])
+	#return float(achievements_unlocked) / float(achievements_number)
