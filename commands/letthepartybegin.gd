@@ -1,6 +1,13 @@
 extends Command
 
 const GOOMBA_PARTY_SPAWNER = preload("res://objects/goomba_party_spawner/goomba_party_spawner.tscn")
+const SCENE_PATHS: Array[StringName] = [
+	&"human_lab",
+	&"level_ny_",
+	&"_u/hidden/extralevel_2",
+	&"_u/hidden/extralevel_3",
+	&"MisiekMomento",
+]
 
 static func register() -> Command:
 	return new().set_name("letthepartybegin").set_description("Make every level a Goomba Party!!!")
@@ -25,6 +32,8 @@ func patch_level() -> void:
 		return
 	var spawner = GOOMBA_PARTY_SPAWNER.instantiate()
 	var scene_path: String = Scenes.current_scene.scene_file_path
-	if "human_lab" in scene_path || "level_ny_" in scene_path || "extralevel_easy" in scene_path || "extralevel_normal" in scene_path || "MisiekMomento" in scene_path:
+	if SCENE_PATHS.any(func(path: StringName):
+		return path in scene_path
+	):
 		spawner.spawned_enemy = preload("res://objects/human_lab_2/ramireys/goomba_clone/goomba_clone.tscn")
 	Scenes.current_scene.add_child(spawner)
