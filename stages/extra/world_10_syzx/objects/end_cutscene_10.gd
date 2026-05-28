@@ -12,7 +12,7 @@ const EXPLOSION_NEAREST = preload("res://stages/extra/world_10_syzx/objects/expl
 @onready var brick37: StaticBumpingBlock = $"../Brick37"
 @onready var castle_small: Sprite2D = $"../CastleSmall"
 @onready var thwomp: CharacterBody2D = $"../Thwomp"
-
+@onready var audio_listener_2d: AudioListener2D = $"../AudioListener2D"
 
 var _player_speed: float = 0.0
 var _moving: bool = false
@@ -33,7 +33,9 @@ func _ready() -> void:
 	_moving = true
 	await get_tree().create_timer(3.5, false).timeout
 	
+	audio_listener_2d.make_current()
 	thwomp._step = 1
+	thwomp._origin = thwomp.global_position
 	thwomp.speed.y = 1
 	_speeding = 1
 	_destroying = true
