@@ -1,5 +1,7 @@
 extends "res://engine/objects/detectors/player_detection.gd"
 
+signal player_respawned
+
 @export var id: int = 0
 @export var set_timer: int = 0
 @export_range(-1.0, 1.0) var set_direction: int = 0
@@ -29,6 +31,7 @@ func _ready() -> void:
 		Thunder._current_player.global_position = marker_2d.global_position
 		Thunder._current_player.reset_physics_interpolation()
 		Thunder._current_camera.teleport()
+		player_respawned.emit()
 		if set_timer > 0:
 			(func():
 				Data.values.time = set_timer

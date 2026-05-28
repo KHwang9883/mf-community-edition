@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://573d3aceegfy"]
+[gd_scene load_steps=86 format=4 uid="uid://573d3aceegfy"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_l8f7t"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_awvqy"]
@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_yetqa"]
 [ext_resource type="AudioStream" uid="uid://dvjer3bl0ftxm" path="res://music/extra/world_u/smw-brinstar.ogg" id="6_wa777"]
 [ext_resource type="AudioStream" uid="uid://c7pyddl2w766u" path="res://music/extra/world_u/smw-vanilla.ogg" id="7_h2ury"]
-[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_5p6js"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_ywlu2"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_eevos"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_ygph4"]
@@ -19,9 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="16_0ywn7"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="17_w8ciq"]
 [ext_resource type="Texture2D" uid="uid://004nqqw4ioqu" path="res://stages/extra/world_u/gfx/starland_bg.png" id="18_w1snf"]
-[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="18_ywlu2"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://engine/tilesets/underground/gfx/underground.png" id="19_e4tfx"]
-[ext_resource type="Script" uid="uid://ck8etkhldnph8" path="res://stages/world_1/scripts/text_secret_passage.gd" id="19_eevos"]
 [ext_resource type="PackedScene" uid="uid://bhf308l61p72i" path="res://tilesets/underground/scenes/lamp_broken.tscn" id="20_q1luj"]
 [ext_resource type="PackedScene" uid="uid://cex5bahi2ueay" path="res://engine/tilesets/starland/scenes/starland_hill.tscn" id="21_ck8ny"]
 [ext_resource type="Texture2D" uid="uid://3f6efhfdu374" path="res://engine/tilesets/overworld/fence.png" id="22_38c5g"]
@@ -262,11 +259,6 @@ boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_wa777"), ExtResource("7_h2ury")])
 volume_db = Array[float]([4.0, 3.0])
 
-[node name="SecretUnlocker" parent="MusicLoader" instance=ExtResource("8_5p6js")]
-secrets = Array[String](["world u secret levels found"])
-progress_by_id = "human lab remix?"
-progress_to = 4
-
 [node name="Player" parent="." instance=ExtResource("8_ywlu2")]
 position = Vector2(320, 400)
 
@@ -314,7 +306,7 @@ tile_set = ExtResource("13_h8ct0")
 navigation_enabled = false
 
 [node name="TileMapLayerRedPipes" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAACACEAAQAAAAEAAAADACEAAQABAAEAAAACACIAAQAAAAEAAAADACIAAQABAAEAAAACACMAAQAAAAEAAAADACMAAQABAAEAAAACACQAAQAAAAEAAAADACQAAQABAAEAAAACACUAAQAAAAIAAAADACUAAQABAAIAAAACACsAAQAAAAEAAAACACwAAQAAAAEAAAADACsAAQABAAEAAAADACwAAQABAAEAAAACACoAAQAAAAAAAAADACoAAQABAAAAAAANACIAAQAAAAEAAAANACMAAQAAAAIAAAAOACIAAQABAAEAAAAOACMAAQABAAIAAAANACEAAQAAAAEAAAAOACEAAQABAAEAAAAYACMAAQAAAAAAAAAYACQAAQAAAAEAAAAZACMAAQABAAAAAAAZACQAAQABAAEAAAAlACMAAQAAAAAAAAAlACQAAQAAAAEAAAAmACMAAQABAAAAAAAmACQAAQABAAEAAAA6ACMAAQAAAAIAAAA7ACMAAQABAAIAAAA6ACIAAQAAAAEAAAA7ACIAAQABAAEAAAA6ACEAAQAAAAEAAAA7ACEAAQABAAEAAABBACQAAQAAAAAAAABBACUAAQAAAAEAAABCACQAAQABAAAAAABCACUAAQABAAEAAAB2ACMAAQAAAAAAAAB2ACQAAQAAAAEAAAB2ACUAAQAAAAIAAAB3ACMAAQABAAAAAAB3ACQAAQABAAEAAAB3ACUAAQABAAIAAACPACUAAQAAAAAAAACPACYAAQAAAAEAAACQACUAAQABAAAAAACQACYAAQABAAEAAACPACoAAQAAAAAAAACPACsAAQAAAAEAAACQACoAAQABAAAAAACQACsAAQABAAEAAACPACwAAQAAAAEAAACQACwAAQABAAEAAACIACEAAQAAAAEAAACIACIAAQAAAAIAAACJACEAAQABAAEAAACJACIAAQABAAIAAAC2ACMAAQAAAAAAAAC2ACQAAQAAAAEAAAC3ACMAAQABAAAAAAC3ACQAAQABAAEAAAAsAScAAQAAAAAAAAAsASgAAQAAAAEAAAAtAScAAQABAAAAAAAtASgAAQABAAEAAAAuAScAAQAAAAAAAAAuASgAAQAAAAEAAAAvAScAAQABAAAAAAAvASgAAQABAAEAAAA1ASQAAQAAAAEAAAA1ASUAAQAAAAIAAAA2ASQAAQABAAEAAAA2ASUAAQABAAIAAAA1ASMAAQAAAAEAAAA2ASMAAQABAAEAAAA1ASIAAQAAAAEAAAA2ASIAAQABAAEAAAA1ASEAAQAAAAEAAAA2ASEAAQABAAEAAACRACsAAQAAAAAAAACRACwAAQAAAAEAAACSACsAAQABAAAAAACSACwAAQABAAEAAAA=")
+tile_map_data = PackedByteArray("AAACACEAAQAAAAEAAAADACEAAQABAAEAAAACACIAAQAAAAEAAAADACIAAQABAAEAAAACACMAAQAAAAEAAAADACMAAQABAAEAAAACACQAAQAAAAEAAAADACQAAQABAAEAAAACACUAAQAAAAIAAAADACUAAQABAAIAAAACACsAAQAAAAEAAAACACwAAQAAAAEAAAADACsAAQABAAEAAAADACwAAQABAAEAAAACACoAAQAAAAAAAAADACoAAQABAAAAAAANACIAAQAAAAEAAAANACMAAQAAAAIAAAAOACIAAQABAAEAAAAOACMAAQABAAIAAAANACEAAQAAAAEAAAAOACEAAQABAAEAAAAYACMAAQAAAAAAAAAYACQAAQAAAAEAAAAZACMAAQABAAAAAAAZACQAAQABAAEAAAAlACMAAQAAAAAAAAAlACQAAQAAAAEAAAAmACMAAQABAAAAAAAmACQAAQABAAEAAAA6ACMAAQAAAAIAAAA7ACMAAQABAAIAAAA6ACIAAQAAAAEAAAA7ACIAAQABAAEAAAA6ACEAAQAAAAEAAAA7ACEAAQABAAEAAABBACQAAQAAAAAAAABBACUAAQAAAAEAAABCACQAAQABAAAAAABCACUAAQABAAEAAAB2ACMAAQAAAAAAAAB2ACQAAQAAAAEAAAB2ACUAAQAAAAIAAAB3ACMAAQABAAAAAAB3ACQAAQABAAEAAAB3ACUAAQABAAIAAACPACUAAQAAAAAAAACPACYAAQAAAAEAAACQACUAAQABAAAAAACQACYAAQABAAEAAACPACoAAQAAAAAAAACPACsAAQAAAAEAAACQACoAAQABAAAAAACQACsAAQABAAEAAACPACwAAQAAAAEAAACQACwAAQABAAEAAACIACEAAQAAAAEAAACIACIAAQAAAAIAAACJACEAAQABAAEAAACJACIAAQABAAIAAAC2ACMAAQAAAAAAAAC2ACQAAQAAAAEAAAC3ACMAAQABAAAAAAC3ACQAAQABAAEAAAAsAScAAQAAAAAAAAAsASgAAQAAAAEAAAAtAScAAQABAAAAAAAtASgAAQABAAEAAAAuAScAAQAAAAAAAAAuASgAAQAAAAEAAAAvAScAAQABAAAAAAAvASgAAQABAAEAAAA1ASQAAQAAAAEAAAA1ASUAAQAAAAIAAAA2ASQAAQABAAEAAAA2ASUAAQABAAIAAAA1ASMAAQAAAAEAAAA2ASMAAQABAAEAAAA1ASIAAQAAAAEAAAA2ASIAAQABAAEAAAA1ASEAAQAAAAEAAAA2ASEAAQABAAEAAAA=")
 tile_set = SubResource("TileSet_xpueu")
 navigation_enabled = false
 
@@ -350,25 +342,6 @@ theme_override_fonts/font = ExtResource("17_w8ciq")
 text = "WORLD
 U-2"
 horizontal_alignment = 1
-
-[node name="Label" type="Label" parent="HUD"]
-offset_left = 217.0
-offset_top = -22.0
-offset_right = 423.0
-offset_bottom = -7.0
-pivot_offset = Vector2(103, 16)
-theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
-theme_override_constants/line_spacing = 1
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("18_ywlu2")
-theme_override_font_sizes/font_size = 12
-text = "COULD IT BE A HUMAN LAB?"
-horizontal_alignment = 1
-script = ExtResource("19_eevos")
-tween_to = 224
-action_after_sec = 3.0
-change_scene = "res://stages/extra/world_u/hidden/extralevel_2.tscn"
-circle_transition_center_on_player = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 z_index = -100
@@ -1505,9 +1478,6 @@ texture = ExtResource("58_1rth5")
 position = Vector2(0, 720)
 shape = SubResource("WorldBoundaryShape2D_yetqa")
 
-[node name="PipeIn3" parent="." instance=ExtResource("37_tv02p")]
-position = Vector2(4672, 1360)
-
 [node name="PipeSnow" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(104, 1048)
@@ -1749,8 +1719,6 @@ region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
 [connection signal="player_enter" from="Area2D2" to="Water" method="show"]
-[connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
-[connection signal="warp_started" from="PipeIn3" to="MusicLoader/SecretUnlocker" method="progress_secret" binds= [0, false]]
 
 [editable path="Lava"]
 [editable path="Water"]
