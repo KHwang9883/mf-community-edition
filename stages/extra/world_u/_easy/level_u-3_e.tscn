@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=4 uid="uid://c331pwxgwbrjx"]
+[gd_scene load_steps=91 format=4 uid="uid://c331pwxgwbrjx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5eepq"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_axx3d"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dvjer3bl0ftxm" path="res://music/extra/world_u/smw-brinstar.ogg" id="7_xjn5t"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_3cg2y"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_e7dq4"]
+[ext_resource type="PackedScene" uid="uid://dw54kg4ssaj3o" path="res://objects/otherworld/secret_otherworld_unlocker_choicer.tscn" id="9_4ub73"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="9_5qoc8"]
 [ext_resource type="Texture2D" uid="uid://bw6tt0msakat6" path="res://engine/tilesets/underground/gfx/underground.png" id="10_gi4o3"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_38ifa"]
@@ -19,7 +20,9 @@
 [ext_resource type="Script" uid="uid://cyhn01wi001ly" path="res://engine/objects/enemies/cheeps/cheep_generator.gd" id="14_71j6m"]
 [ext_resource type="PackedScene" uid="uid://7p86qw2ptq4o" path="res://stages/extra/world_10_syzx/platform_path_blue.tscn" id="15_gi4o3"]
 [ext_resource type="PackedScene" uid="uid://cnmr741v7d8q4" path="res://stages/extra/world_u/objects/cheep_green_slow.tscn" id="15_xtefr"]
+[ext_resource type="FontFile" uid="uid://8het0yea87eq" path="res://gfx/fonts/tahomabd.ttf" id="16_lue6h"]
 [ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="17_6fkxs"]
+[ext_resource type="Script" uid="uid://ck8etkhldnph8" path="res://stages/world_1/scripts/text_secret_passage.gd" id="17_u2vjs"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="18_pdx2b"]
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://engine/objects/bumping_blocks/question_block/templates/blue/Blue Coin Question Block.tscn" id="19_6fkxs"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="20_38ifa"]
@@ -56,6 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://o2ddww4bfwsj" path="res://gfx/fancy_graphics/wooden_beams.png" id="53_n88df"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://engine/tilesets/underground/gfx/purple_pipe.png" id="55_6rbll"]
 [ext_resource type="PackedScene" uid="uid://c7ecw05iivkki" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_cheep_green.tscn" id="56_eonmc"]
+[ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="60_uqsb4"]
 
 [sub_resource type="Gradient" id="Gradient_bribe"]
 colors = PackedColorArray(0.0646965, 0.0646965, 0.0646965, 1, 0, 0, 0.25098, 1)
@@ -246,6 +250,13 @@ music = Array[Resource]([ExtResource("6_3cg2y"), ExtResource("6_3cg2y"), ExtReso
 volume_db = Array[float]([0.0, 0.0, 4.0])
 start_from_sec = Array[float]([0.4, 108.52, 0.0])
 
+[node name="SecretUnlockerOther" parent="." instance=ExtResource("9_4ub73")]
+you_found_text = "a hidden level"
+progress_to_int = 4
+secrets = Array[String](["world u secret levels found"])
+show_progress_toast = false
+progress_by_id = "human lab 1.2"
+
 [node name="Player" parent="." instance=ExtResource("5_oh0y2")]
 position = Vector2(48, 128)
 
@@ -298,6 +309,25 @@ theme_override_fonts/font = ExtResource("9_5qoc8")
 text = "WORLD
 U-3"
 horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="HUD"]
+offset_left = 217.0
+offset_top = -22.0
+offset_right = 423.0
+offset_bottom = -7.0
+pivot_offset = Vector2(103, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/line_spacing = 1
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("16_lue6h")
+theme_override_font_sizes/font_size = 12
+text = "COULD IT BE A HUMAN LAB?"
+horizontal_alignment = 1
+script = ExtResource("17_u2vjs")
+tween_to = 224
+action_after_sec = 3.0
+change_scene = "res://stages/extra/world_u/hidden/extralevel_2.tscn"
+circle_transition_center_on_player = true
 
 [node name="Parallax2D2" type="Parallax2D" parent="."]
 z_index = -100
@@ -2256,6 +2286,10 @@ position = Vector2(4857, 277)
 z_index = 1
 position = Vector2(4697, 277)
 
+[node name="PipeIn3" parent="." instance=ExtResource("33_ymnl1")]
+position = Vector2(7072, 240)
+script = ExtResource("60_uqsb4")
+
 [connection signal="collected" from="Forcer" to="Forcer" method="queue_free"]
 [connection signal="collected" from="Forcer2" to="Forcer2" method="queue_free"]
 [connection signal="player_enter" from="Area2D" to="Node" method="disable"]
@@ -2263,9 +2297,13 @@ position = Vector2(4697, 277)
 [connection signal="player_enter" from="Area2D2" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D4" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D4" to="Water3" method="hide"]
+[connection signal="player_respawned" from="Area2D4" to="Node" method="disable"]
+[connection signal="player_respawned" from="Area2D4" to="Water3" method="hide"]
 [connection signal="player_enter" from="Area2D6" to="." method="disable_object_lighting"]
 [connection signal="player_enter" from="Area2D7" to="." method="disable_object_lighting"]
 [connection signal="player_enter" from="Area2D7" to="CanvasModulate" method="hide"]
+[connection signal="tried_to_enter" from="PipeIn3" to="SecretUnlockerOther" method="tried_to_warp"]
+[connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
 
 [editable path="Water3"]
 [editable path="Checkpoint"]
