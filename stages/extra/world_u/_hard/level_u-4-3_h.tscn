@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://buodt1efdgryt"]
+[gd_scene load_steps=46 format=4 uid="uid://buodt1efdgryt"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_0qi51"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_gtv5l"]
@@ -12,8 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_sds2c"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="13_41u8e"]
 [ext_resource type="Texture2D" uid="uid://bm62kwqcqdgkl" path="res://engine/tilesets/castle/gfx/BGCastle.png" id="14_lmd6e"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="14_ogd63"]
 [ext_resource type="Texture2D" uid="uid://cyetrjnc0k5oh" path="res://engine/tilesets/castle/gfx/bowser_portrait.png" id="15_41u8e"]
 [ext_resource type="Texture2D" uid="uid://bc5mvxbgcpnua" path="res://stages/extra/world_u/objects/boss/evil_portrait.png" id="15_lmd6e"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="15_qup62"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="15_sds2c"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://engine/objects/bumping_blocks/question_block/templates/gray/Gray Coin Question Block.tscn" id="16_h6f8f"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="17_ogd63"]
@@ -21,10 +23,11 @@
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="18_qup62"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="19_q5s8f"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="21_lmd6e"]
+[ext_resource type="Script" uid="uid://cwueb01l430hj" path="res://stages/extra/world_u/objects/boss/bowser_attack_shoot_poison.gd" id="21_sds2c"]
 
 [sub_resource type="Curve2D" id="Curve2D_41u8e"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -4, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 12, 0)
 }
 point_count = 1
 
@@ -113,6 +116,9 @@ animations = [{
 "speed": 33.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ogd63"]
+size = Vector2(124, 158)
+
 [sub_resource type="Gradient" id="Gradient_rft62"]
 colors = PackedColorArray(0, 0, 0, 0.792157, 0, 0, 0, 0)
 
@@ -158,9 +164,13 @@ normal = Vector2(1, 0)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wgb7l"]
 normal = Vector2(-1, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sds2c"]
+size = Vector2(768, 16)
+
 [node name="LevelU-4-3H" type="Node2D"]
 script = ExtResource("1_0qi51")
 completion_music = ExtResource("2_gtv5l")
+game_over_continue_scene_override = "uid://db7h6tk2cydeb"
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 metadata/_edit_vertical_guides_ = [2000.0]
 
@@ -177,12 +187,12 @@ metadata/_edit_lock_ = true
 [node name="BowserTrigger" parent="." node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("5_wgb7l")]
 position = Vector2(1284, 240)
 curve = SubResource("Curve2D_41u8e")
-trigger_area = Rect2(0, -32, 32, 544)
+trigger_area = Rect2(-6, -32, 40, 544)
 trigger_bowser = NodePath("../BowserPoison")
 boss_music = ExtResource("7_41u8e")
 
 [node name="CameraArea" parent="." instance=ExtResource("8_wgb7l")]
-offset_right = 1588.0
+offset_right = 1586.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
@@ -221,6 +231,23 @@ sprite_frames = SubResource("SpriteFrames_ieccf")
 autoplay = "default"
 centered = false
 
+[node name="Body" type="Area2D" parent="BowserPortraitLeft"]
+collision_layer = 2
+collision_mask = 5
+
+[node name="EnemyAttacked" type="Node" parent="BowserPortraitLeft/Body"]
+script = ExtResource("14_ogd63")
+stomping_enabled = false
+stomping_instakillable = true
+stomping_standard = Vector2(0, 0)
+killing_enabled = false
+killing_can_combo = false
+killing_sound_succeeded = ExtResource("15_qup62")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BowserPortraitLeft/Body"]
+position = Vector2(67, 84)
+shape = SubResource("RectangleShape2D_ogd63")
+
 [node name="BowserPortraitRight" type="Sprite2D" parent="."]
 position = Vector2(1444, 64)
 texture = ExtResource("15_41u8e")
@@ -232,6 +259,23 @@ position = Vector2(36, 0)
 sprite_frames = SubResource("SpriteFrames_ieccf")
 autoplay = "default"
 centered = false
+
+[node name="Body" type="Area2D" parent="BowserPortraitRight"]
+collision_layer = 2
+collision_mask = 5
+
+[node name="EnemyAttacked" type="Node" parent="BowserPortraitRight/Body"]
+script = ExtResource("14_ogd63")
+stomping_enabled = false
+stomping_instakillable = true
+stomping_standard = Vector2(0, 0)
+killing_enabled = false
+killing_can_combo = false
+killing_sound_succeeded = ExtResource("15_qup62")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BowserPortraitRight/Body"]
+position = Vector2(67, 84)
+shape = SubResource("RectangleShape2D_ogd63")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -281,12 +325,29 @@ position = Vector2(2000, 0)
 shape = SubResource("WorldBoundaryShape2D_wgb7l")
 
 [node name="BowserPoison" parent="." instance=ExtResource("18_mtcol")]
-position = Vector2(1280, -112)
+position = Vector2(1280, -192)
+status_interval = Array[float]([0.85])
+
+[node name="attack_shoot" type="Node" parent="BowserPoison"]
+script = ExtResource("21_sds2c")
 
 [node name="BowserEdge" parent="." instance=ExtResource("21_lmd6e")]
-position = Vector2(1600, 144)
+position = Vector2(1632, 144)
 
 [node name="BowserEdge2" parent="." instance=ExtResource("21_lmd6e")]
-position = Vector2(928, 144)
+position = Vector2(896, 144)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1264, 40)
+shape = SubResource("RectangleShape2D_sds2c")
+metadata/_edit_lock_ = true
 
 [connection signal="bowser_triggered" from="BowserTrigger" to="BowserPoison" method="activate"]
+[connection signal="killed_succeeded_by" from="BowserPortraitLeft/Body/EnemyAttacked" to="BowserPoison" method="painting_hurt"]
+[connection signal="killed_succeeded_by" from="BowserPortraitRight/Body/EnemyAttacked" to="BowserPoison" method="painting_hurt"]
+[connection signal="body_entered" from="Area2D" to="BowserPoison" method="_on_area_2d_body_entered"]

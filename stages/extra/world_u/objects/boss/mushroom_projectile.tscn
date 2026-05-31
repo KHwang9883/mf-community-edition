@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://dmpgcrk2wdn84"]
+
+[ext_resource type="Script" uid="uid://dofq6jxytu6lx" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.gd" id="1_v48yf"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_mtdsw"]
+[ext_resource type="Texture2D" uid="uid://2nahs8sqdrc" path="res://engine/objects/powerups/poisonous_mushroom/texture.png" id="3_bx1u0"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_ev1ba"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_70umx"]
+size = Vector2(30, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekaoo"]
+atlas = ExtResource("3_bx1u0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0chs"]
+atlas = ExtResource("3_bx1u0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1jdnw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekaoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0chs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PoisonousMushroom" type="CharacterBody2D" groups=["end_level_sequence"]]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_max_angle = 0.837758
+floor_snap_length = 20.0
+script = ExtResource("1_v48yf")
+appear_distance = 0.0
+appear_visible = 0.0
+appear_collectable = 0.0
+speed = Vector2(100, 0)
+gravity_scale = 10.0
+max_falling_speed = 250.0
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_70umx")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_mtdsw")
+stomping_enabled = false
+killing_enabled = false
+killing_immune = {
+"head": false
+}
+turn_into_coin_on_level_end = false
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1jdnw")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-32, -32, 64, 64)
+script = ExtResource("4_ev1ba")
+metadata/_edit_lock_ = true
+
+[connection signal="collided" from="." to="." method="_on_level_end"]
