@@ -52,7 +52,7 @@ var _walking_move_distance: float
 var _bullet_received: float
 
 @onready var sprite: AnimatedSprite2D = $Sprite
-@onready var skull: AnimatedSprite2D = $Skull
+@onready var skull: AnimatedSprite2D = $BaseSprite/Skull
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 @onready var debug_text: Label = $Debug
@@ -71,7 +71,9 @@ var hud: CanvasLayer
 var step: int
 var step_1_timer: float
 var step_2_counter: float
-var step_5_dir: int = 1
+var step_5_dir: int = 0
+var step_5_timer: float = 0
+var portraits_active: bool
 
 
 func _ready() -> void:
@@ -115,14 +117,23 @@ func _physics_process(delta: float) -> void:
 	# Movement
 	if !lock_movement:
 		_movement(delta)
-	elif speed.x != 0:
+	elif speed.x != 0 && step != 4:
 		_speed = abs(speed.x)
 		vel_set_x(0)
 	
+	if Console.debug_mode:
+		if Input.is_action_just_pressed(&"ui_page_down"):
+			step = 3
+			speed.y = -62.5 * 2.0
+			tween_status = null
+			$attack_shoot.end_attack()
+			lock_movement = true
+			step_1_timer = 0
+	
 	match step:
-		1:
+		1, 6:
 			step_1_timer += delta
-			if step_1_timer > 14.85:
+			if step_1_timer > 14.75 && step == 1:
 				step = 2
 				tween_status = null
 				$attack_shoot.end_attack()
@@ -157,35 +168,53 @@ func _physics_process(delta: float) -> void:
 			if position.y < -100 && pl:
 				var pl_pos: Vector2 = pl.position
 				var moving_pos: Vector2 = Vector2(
-					(640 - pl_pos.x) * (pl_pos.x - position.x) / (pl_pos.y - position.y) + pl_pos.y
+					(640 - pl_pos.y) * (pl_pos.x - position.x) / (pl_pos.y - position.y) + pl_pos.x
 				, 640)
 				var dir = global_position.direction_to(moving_pos).angle()
 				speed = Vector2(62.5 * 5.0, 0).rotated(dir)
+				prints(moving_pos, dir, speed)
 				position.y = -100
 				step = 4
 		4:
 			var pl: Player = Thunder._current_player
 			if position.y > 548 && pl:
 				position.y = 548
+				position.x = pl.global_position.x
 				speed = Vector2.ZERO
 				step = 5
+				portraits_active = true
 				Audio.play_1d_sound(LAUGHING, false)
 				var tw = create_tween().set_parallel()
 				tw.tween_property(bowser_portrait_left.get_child(0), "modulate:a", 1.0, 0.5)
 				tw.tween_property(bowser_portrait_right.get_child(0), "modulate:a", 1.0, 0.5)
 				bowser_portrait_left.get_node("Body/EnemyAttacked").stomping_enabled = true
-				bowser_portrait_left.get_node("Body/EnemyAttacked").killing_enabled = true
 				bowser_portrait_right.get_node("Body/EnemyAttacked").stomping_enabled = true
-				bowser_portrait_right.get_node("Body/EnemyAttacked").killing_enabled = true
 		5:
-			if bowser_portrait_left.position.y < 288:
-				bowser_portrait_left.position.y += delta * 93.75
-				bowser_portrait_right.position.y += delta * 93.75
+			step_5_timer += delta
+			if step_5_timer > 3:
+				speed.y = -62.5 * 2.0
+				if position.y < -100 + 35:
+					lock_movement = false
+					speed.y = 0
+					_speed = 156.25
+					position.y = -100 + 35
+					step = 6
+	
+	if portraits_active:
+		if bowser_portrait_left.position.y < 288:
+			bowser_portrait_left.position.y += delta * 93.75
+			bowser_portrait_right.position.y += delta * 93.75
+		else:
+			if step_5_dir == 0:
+				bowser_portrait_left.get_node("Body/EnemyAttacked").killing_enabled = true
+				bowser_portrait_right.get_node("Body/EnemyAttacked").killing_enabled = true
 				step_5_dir = 1
-			else:
-				bowser_portrait_right.position.x -= delta * 62.5 * step_5_dir
-				bowser_portrait_left.position.x += delta * 62.5 * step_5_dir
-				
+			bowser_portrait_right.position.x -= delta * 62.5 * step_5_dir
+			bowser_portrait_left.position.x += delta * 62.5 * step_5_dir
+			if bowser_portrait_left.position.x >= 1488 && step_5_dir == 1:
+				step_5_dir = -1
+			elif bowser_portrait_left.position.x <= 912 && step_5_dir == -1:
+				step_5_dir = 1
 	
 	# Physics
 	motion_process(delta)
@@ -309,7 +338,7 @@ func die(corpse_intro: bool = true) -> void:
 	bowser_portrait_left.get_node("Body/EnemyAttacked").killing_enabled = false
 	bowser_portrait_right.get_node("Body/EnemyAttacked").stomping_enabled = false
 	bowser_portrait_right.get_node("Body/EnemyAttacked").killing_enabled = false
-	var tw = create_tween().set_parallel()
+	var tw = bowser_portrait_left.create_tween().set_parallel()
 	tw.tween_property(bowser_portrait_left.get_child(0), "modulate:a", 0.0, 0.5)
 	tw.tween_property(bowser_portrait_right.get_child(0), "modulate:a", 0.0, 0.5)
 	
@@ -327,9 +356,15 @@ func die(corpse_intro: bool = true) -> void:
 		func(cps: Node2D) -> void:
 			var spr: AnimatedSprite2D = sprite.duplicate()
 			cps.add_child(spr)
+			var spr2: Sprite2D = $BaseSprite.duplicate()
+			cps.add_child(spr2)
+			spr2.get_node("Skull").animation = "default"
 			spr.modulate.a = 1.0
 			spr.speed_scale = 1
 			spr.play.call_deferred(&"death")
+			if portraits_active:
+				bowser_portrait_left.follow = cps
+				bowser_portrait_right.follow = cps
 			cps.add_child.call_deferred(collision_shape.duplicate())
 			var _sfx2 = CharacterManager.get_sound_replace(falling_sound, falling_sound, "bowser_fall", false)
 			cps.falling_sound = _sfx2
