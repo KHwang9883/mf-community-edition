@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://dxhlt61wx6aet"]
+[gd_scene load_steps=90 format=4 uid="uid://dxhlt61wx6aet"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_rss2m"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ros8f"]
@@ -57,6 +57,8 @@
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="55_qdxar"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="56_klh4u"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://engine/tilesets/underground/gfx/purple_pipe.png" id="57_1od2j"]
+[ext_resource type="PackedScene" uid="uid://t1hrujsae7se" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_boss_cheep.tscn" id="58_k0rql"]
+[ext_resource type="PackedScene" uid="uid://rcl10mn0l8xo" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_cheep_green_n.tscn" id="59_5c5uj"]
 
 [sub_resource type="Gradient" id="Gradient_bribe"]
 colors = PackedColorArray(0.0646965, 0.0646965, 0.0646965, 1, 0, 0, 0.25098, 1)
@@ -248,7 +250,7 @@ volume_db = Array[float]([0.0, 0.0, 4.0])
 start_from_sec = Array[float]([0.0, 108.52, 0.0])
 
 [node name="Player" parent="." instance=ExtResource("8_u02n5")]
-position = Vector2(48, 128)
+position = Vector2(48, 80)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -1863,8 +1865,6 @@ monitorable = false
 position = Vector2(528, 304)
 shape = SubResource("RectangleShape2D_6dxs4")
 
-[node name="BossActivator" type="Node" parent="."]
-
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("35_ph62h")
 only_once = true
@@ -2349,13 +2349,39 @@ texture = ExtResource("57_1od2j")
 region_enabled = true
 region_rect = Rect2(0, 32, 64, 32)
 
+[node name="BigCheep" parent="." instance=ExtResource("58_k0rql")]
+position = Vector2(5808, 240)
+health = 8
+attack_interval = 0.75
+attack_speed = Vector2(218.75, 0)
+death_speed = 200.0
+
+[node name="CheepGreen" parent="." instance=ExtResource("59_5c5uj")]
+position = Vector2(4683, 272)
+
+[node name="CheepGreen2" parent="." instance=ExtResource("59_5c5uj")]
+position = Vector2(4843, 272)
+
+[node name="CheepGreen3" parent="." instance=ExtResource("59_5c5uj")]
+position = Vector2(5003, 272)
+
+[node name="CheepGreen4" parent="." instance=ExtResource("59_5c5uj")]
+position = Vector2(5163, 272)
+
 [connection signal="collected" from="Forcer" to="Forcer" method="queue_free"]
+[connection signal="collected" from="Forcer" to="BigCheep" method="_on_forcer_collected"]
 [connection signal="collected" from="Forcer2" to="Forcer2" method="queue_free"]
+[connection signal="collected" from="Forcer2" to="BigCheep" method="activate"]
 [connection signal="player_enter" from="Area2D" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D3" to="Node" method="enable"]
 [connection signal="player_enter" from="Area2D2" to="Node" method="disable"]
+[connection signal="player_warped_to_pipe_out" from="PipeIn" to="ElectricBlocks" method="queue_free"]
+[connection signal="warp_started" from="PipeIn" to="BigCheep" method="queue_free"]
 [connection signal="player_enter" from="Area2D4" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D4" to="Water3" method="hide"]
+[connection signal="player_respawned" from="Area2D4" to="Node" method="disable"]
+[connection signal="player_respawned" from="Area2D4" to="ElectricBlocks" method="queue_free"]
+[connection signal="player_respawned" from="Area2D4" to="Water3" method="hide"]
 [connection signal="player_enter" from="Area2D6" to="." method="disable_object_lighting"]
 [connection signal="player_enter" from="Area2D7" to="." method="disable_object_lighting"]
 [connection signal="player_enter" from="Area2D7" to="CanvasModulate" method="hide"]

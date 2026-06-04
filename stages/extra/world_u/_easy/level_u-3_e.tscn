@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=4 uid="uid://c331pwxgwbrjx"]
+[gd_scene load_steps=92 format=4 uid="uid://c331pwxgwbrjx"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_5eepq"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_axx3d"]
@@ -58,8 +58,9 @@
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="52_sk3gq"]
 [ext_resource type="Texture2D" uid="uid://o2ddww4bfwsj" path="res://gfx/fancy_graphics/wooden_beams.png" id="53_n88df"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://engine/tilesets/underground/gfx/purple_pipe.png" id="55_6rbll"]
-[ext_resource type="PackedScene" uid="uid://c7ecw05iivkki" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_cheep_green.tscn" id="56_eonmc"]
+[ext_resource type="PackedScene" uid="uid://c7ecw05iivkki" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_cheep_green_e.tscn" id="56_eonmc"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="60_uqsb4"]
+[ext_resource type="PackedScene" uid="uid://t1hrujsae7se" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_boss_cheep.tscn" id="61_4ub73"]
 
 [sub_resource type="Gradient" id="Gradient_bribe"]
 colors = PackedColorArray(0.0646965, 0.0646965, 0.0646965, 1, 0, 0, 0.25098, 1)
@@ -258,7 +259,7 @@ show_progress_toast = false
 progress_by_id = "human lab 1.2"
 
 [node name="Player" parent="." instance=ExtResource("5_oh0y2")]
-position = Vector2(48, 128)
+position = Vector2(48, 80)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -1803,8 +1804,6 @@ monitorable = false
 position = Vector2(528, 304)
 shape = SubResource("RectangleShape2D_6dxs4")
 
-[node name="BossActivator" type="Node" parent="."]
-
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("32_bcldk")
 only_once = true
@@ -2287,14 +2286,22 @@ position = Vector2(4697, 277)
 position = Vector2(7072, 240)
 script = ExtResource("60_uqsb4")
 
+[node name="BigCheep" parent="." instance=ExtResource("61_4ub73")]
+position = Vector2(5808, 240)
+
 [connection signal="collected" from="Forcer" to="Forcer" method="queue_free"]
+[connection signal="collected" from="Forcer" to="BigCheep" method="_on_forcer_collected"]
 [connection signal="collected" from="Forcer2" to="Forcer2" method="queue_free"]
+[connection signal="collected" from="Forcer2" to="BigCheep" method="activate"]
 [connection signal="player_enter" from="Area2D" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D3" to="Node" method="enable"]
 [connection signal="player_enter" from="Area2D2" to="Node" method="disable"]
+[connection signal="player_warped_to_pipe_out" from="PipeIn" to="ElectricBlocks" method="queue_free"]
+[connection signal="warp_started" from="PipeIn" to="BigCheep" method="queue_free"]
 [connection signal="player_enter" from="Area2D4" to="Node" method="disable"]
 [connection signal="player_enter" from="Area2D4" to="Water3" method="hide"]
 [connection signal="player_respawned" from="Area2D4" to="Node" method="disable"]
+[connection signal="player_respawned" from="Area2D4" to="ElectricBlocks" method="queue_free"]
 [connection signal="player_respawned" from="Area2D4" to="Water3" method="hide"]
 [connection signal="player_enter" from="Area2D6" to="." method="disable_object_lighting"]
 [connection signal="player_enter" from="Area2D7" to="." method="disable_object_lighting"]
