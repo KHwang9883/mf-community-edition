@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://bewj85ncy1c3k"]
+[gd_scene load_steps=56 format=4 uid="uid://bewj85ncy1c3k"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_pbdui"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_xo72q"]
@@ -149,6 +149,14 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_2h8vc"]
+offsets = PackedFloat32Array(0, 0.551948, 1)
+colors = PackedColorArray(0.517647, 0, 0, 1, 0.567762, 0, 0, 0.896104, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bx10j"]
+gradient = SubResource("Gradient_2h8vc")
+fill_from = Vector2(1, 1)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ibmbn"]
 
@@ -533,6 +541,21 @@ range_layer_min = -512
 texture = SubResource("GradientTexture2D_0uhe2")
 offset = Vector2(0, 8)
 script = ExtResource("29_ikfsb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Rising"]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = 10
+position = Vector2(320, -48)
+scale = Vector2(10, 3.5)
+texture = SubResource("GradientTexture2D_bx10j")
+script = ExtResource("28_yew1m")
+
+[node name="PointLight2D" type="PointLight2D" parent="Rising/Sprite2D"]
+visible = false
+position = Vector2(0, 82.2857)
+scale = Vector2(1, 3.85714)
+energy = 1.5
+texture = SubResource("GradientTexture2D_bx10j")
 
 [node name="Spike" parent="." instance=ExtResource("24_aer1l")]
 z_index = -1
