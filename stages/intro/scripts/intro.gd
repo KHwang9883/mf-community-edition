@@ -1,6 +1,6 @@
 extends Control
 
-const SHADER_CACHER = preload("res://stages/intro/shader_cacher.tscn")
+const SHADER_OPTIMIZER = preload("res://engine/components/shader_optimizer/shader_optimizer.tscn")
 const TWEAK_PRESETS = preload("res://stages/intro/tweak_presets.tscn")
 
 @onready var disclaimer: TextureRect = $CenterContainer/TextureRect
@@ -8,7 +8,6 @@ const TWEAK_PRESETS = preload("res://stages/intro/tweak_presets.tscn")
 @onready var text: Label = $Text
 
 var loading_finished: bool = false
-var loading_init: bool = false
 var cacher
 
 func _ready() -> void:
@@ -17,22 +16,15 @@ func _ready() -> void:
 	print("[Startup] Preparing to compile shaders...")
 	if "--no-shader-precompile" in OS.get_cmdline_user_args():
 		print("[Startup] Found a flag in cmdline arguments, skipping compilation.")
-		loading_init = true
+		display_disclaimer()
 		return
 		
 	await get_tree().create_timer(0.6, false, true, false).timeout
 	print("[Startup] Compiling shaders...")
-	cacher = SHADER_CACHER.instantiate()
+	cacher = SHADER_OPTIMIZER.instantiate()
+	cacher.complete.connect(display_disclaimer)
 	Scenes.current_scene.add_child(cacher)
 	Thunder.reorder_top(cacher)
-	loading_init = true
-
-
-func _physics_process(delta: float) -> void:
-	if loading_init && !loading_finished:
-		loading_finished = true
-		print("[Startup] Waiting for a bit..")
-		get_tree().create_timer(0.4, false, true, false).timeout.connect(display_disclaimer)
 
 
 func display_disclaimer() -> void:
