@@ -1,5 +1,6 @@
 name: "godot-ci export"
-on: push
+on:
+  workflow_dispatch:
 
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 
@@ -12,7 +13,7 @@ env:
 jobs:
   export-windows:
     name: Windows Export
-    runs-on: ubuntu-24.04  # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
+    runs-on: ubuntu-24.04 # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
     container:
       image: jue13/godot-ci:4.4.1
     steps:
@@ -65,13 +66,13 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           FILE_SIZE="$(wc -c < $EXPORT_DIR/build_windows.zip)"
           FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
-          
+
           echo "Creating an upload folder: $FOLDER_UUID"
           curl -X MKCOL \
             -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
             ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID \
             --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip'
-          
+
           LOOP_ID=0
           PART_ID=""
           for FILE in $EXPORT_DIR/part_*
@@ -86,19 +87,20 @@ jobs:
               --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip' \
               --header "OC-Total-Length: ${FILE_SIZE}"
           done
-          
+
           echo "Assembling the chunks"
           curl -X MOVE \
             -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
             ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
             --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip' \
             --header "OC-Total-Length: ${FILE_SIZE}"
-          
+
           echo "Uploading file: $EXPORT_DIR/Readme.md"
           curl \
             -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
             -T "$EXPORT_DIR/Readme.md" \
             -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/
+
 #      - name: Upload Artifact
 #        uses: actions/upload-artifact@v4
 #        with:
