@@ -1,4 +1,4 @@
-[gd_scene load_steps=188 format=3 uid="uid://bffho8gu8hyga"]
+[gd_scene format=3 uid="uid://bffho8gu8hyga"]
 
 [ext_resource type="Script" uid="uid://ct6tka05uai57" path="res://stages/extra/world_of_stupidity/following_poison_mushroom/following_poison_mushroom.gd" id="1_u84ds"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_a3fit"]
@@ -17,15 +17,8 @@ size = Vector2(94, 56)
 resource_local_to_scene = true
 script = ExtResource("5_v0noq")
 creation_nodepack = ExtResource("3_lg25i")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -1260,12 +1253,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ptqew")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 60.0
 }]
 
-[node name="PoisonousMushroom" type="CharacterBody2D"]
+[node name="PoisonousMushroom" type="CharacterBody2D" unique_id=1162570287]
 collision_layer = 4
 collision_mask = 0
 floor_constant_speed = true
@@ -1275,20 +1268,20 @@ script = ExtResource("1_u84ds")
 gravity_scale = 0.5
 collision = false
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=678483545]
 visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_lg25i")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1785669077]
 collision_layer = 4
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=446297671]
 shape = SubResource("RectangleShape2D_lg25i")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1725743662]
 script = ExtResource("2_a3fit")
 stomping_enabled = false
 killing_immune = {
@@ -1304,12 +1297,12 @@ killing_sound_succeeded = ExtResource("3_y26q7")
 killing_sound_failed = ExtResource("4_lg25i")
 frozen_enabled = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2116136856]
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_okoe3")
 autoplay = "default"
 
-[node name="LabelMisterEarl" parent="." instance=ExtResource("9_gv6ij")]
+[node name="LabelMisterEarl" parent="." unique_id=818596587 instance=ExtResource("9_gv6ij")]
 offset_left = -64.0
 offset_top = -56.0
 offset_right = 64.0

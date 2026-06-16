@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://1e08fcsocgei"]
+[gd_scene format=3 uid="uid://1e08fcsocgei"]
 
 [ext_resource type="Script" uid="uid://dalbx57u5hlgi" path="res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.gd" id="1"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2"]
@@ -18,15 +18,7 @@ size = Vector2(28, 32)
 resource_local_to_scene = true
 script = ExtResource("3")
 creation_nodepack = ExtResource("4")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, 0)
@@ -37,15 +29,7 @@ custom_script = ExtResource("5")
 resource_local_to_scene = true
 script = ExtResource("3")
 creation_nodepack = ExtResource("4")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -69,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_klmas")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -84,28 +68,28 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_we88c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="KoopaParatroopaSkull" type="Node2D" groups=["#circle"]]
+[node name="KoopaParatroopaSkull" type="Node2D" unique_id=719325292 groups=["#circle"]]
 script = ExtResource("1")
 amplitude = Vector2(0, 50)
 random_phase = true
 frequency = 2.0
 sprite_path = NodePath("Sprite")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=37201378]
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1309739693]
 visible = false
 shape = SubResource("RectangleShape2D_c6snl")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=194936823]
 script = ExtResource("2")
 stomping_creation = SubResource("2")
 stomping_scores = 100
@@ -127,21 +111,21 @@ killing_creation = SubResource("Resource_kqoge")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("7_b8ifk")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=578051398]
 position = Vector2(0, -8)
 sprite_frames = SubResource("5")
 autoplay = "default"
 
-[node name="Wings" parent="Sprite" instance=ExtResource("8")]
+[node name="Wings" parent="Sprite" unique_id=1286633229 instance=ExtResource("8")]
 position = Vector2(-8, -9)
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=47916946]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("6")
 offset = Vector2(0, -20)
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

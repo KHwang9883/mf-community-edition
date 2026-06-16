@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cdt1wt8ask1pi"]
+[gd_scene format=3 uid="uid://cdt1wt8ask1pi"]
 
 [ext_resource type="Script" uid="uid://c33gl1lvxuxr1" path="res://engine/objects/enemies/spinies/spiny_egg.gd" id="1_v6ptd"]
 [ext_resource type="PackedScene" uid="uid://dxqjmbtsadabq" path="res://engine/objects/enemies/human_lab/spiny/clone_spiny.tscn" id="2_ydxml"]
@@ -15,16 +15,7 @@
 [sub_resource type="Resource" id="Resource_ci6ko"]
 script = ExtResource("3_s8u2g")
 creation_nodepack = ExtResource("2_ydxml")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 metadata/_custom_type_script = "uid://bm81fg3h4j8sj"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gnevv"]
@@ -37,15 +28,8 @@ radius = 16.0
 resource_local_to_scene = true
 script = ExtResource("3_s8u2g")
 creation_nodepack = ExtResource("6_6nivb")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 2
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Killed"),
 "death_speed": Vector2(0, -250)
@@ -58,7 +42,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_523nx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -66,7 +50,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j3cd5"]
 size = Vector2(32, 31)
 
-[node name="Clone3AEgg" type="CharacterBody2D"]
+[node name="Clone3AEgg" type="CharacterBody2D" unique_id=1230930765]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -78,23 +62,23 @@ gravity_scale = 0.2
 max_falling_speed = 500.0
 metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1598685676]
 position = Vector2(-1, 1)
 shape = SubResource("CircleShape2D_gnevv")
 disabled = true
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1705326701]
 visible = false
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("4_kwtrx")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=510064031]
 shape = SubResource("CircleShape2D_0wnvj")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=129768619]
 script = ExtResource("5_5n3tq")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -119,27 +103,27 @@ custom_vars = {
 }
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=14888095]
 position = Vector2(-2, 0)
 sprite_frames = SubResource("SpriteFrames_ax740")
 autoplay = "default"
 
-[node name="Killed" type="Sprite2D" parent="Sprite"]
+[node name="Killed" type="Sprite2D" parent="Sprite" unique_id=160837626]
 visible = false
 texture = ExtResource("10_j1fbo")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=824622441]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-128, -128, 256, 256)
 script = ExtResource("11_8r3we")
 metadata/_edit_lock_ = true
 
-[node name="SolidChecker" type="Area2D" parent="."]
+[node name="SolidChecker" type="Area2D" parent="." unique_id=1762740952]
 visible = false
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker" unique_id=454186775]
 shape = SubResource("RectangleShape2D_j3cd5")
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]

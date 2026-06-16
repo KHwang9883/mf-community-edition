@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bpimffcn0er7d"]
+[gd_scene format=3 uid="uid://bpimffcn0er7d"]
 
 [ext_resource type="Script" uid="uid://p43dcfy4c317" path="res://engine/objects/enemies/bullet_bill/bill/missile_bill.gd" id="1_mw64c"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_fqcea"]
@@ -19,15 +19,7 @@ size = Vector2(44, 20)
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("5_chgq0")
 creation_nodepack = ExtResource("3_7g274")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite")
 }
@@ -78,12 +70,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0xoyg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 20.0
 }]
 
-[node name="SuperStuntmanClone" type="CharacterBody2D"]
+[node name="SuperStuntmanClone" type="CharacterBody2D" unique_id=309394615]
 script = ExtResource("1_mw64c")
 look_at_player = true
 sprite = NodePath("Sprite")
@@ -92,21 +84,21 @@ speed = Vector2(195, 0)
 collision = false
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1209816216]
 visible = false
 shape = SubResource("CircleShape2D_vwemg")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=811059956]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1178570056]
 visible = false
 shape = SubResource("RectangleShape2D_k2gec")
 debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=337292351]
 script = ExtResource("2_fqcea")
 stomping_creation = SubResource("Resource_d54bi")
 stomping_scores = 100
@@ -126,11 +118,11 @@ killing_sound_succeeded = ExtResource("7_7g274")
 killing_sound_failed = ExtResource("7_0xoyg")
 sound_ignore_pitch_modification = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=54386486]
 sprite_frames = SubResource("SpriteFrames_35rr1")
 autoplay = "default"
 
-[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="." unique_id=163029508]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-256, -256, 512, 512)
 

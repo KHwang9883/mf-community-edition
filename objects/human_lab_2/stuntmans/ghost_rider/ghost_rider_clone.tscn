@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b5g0a3ibqfqks"]
+[gd_scene format=3 uid="uid://b5g0a3ibqfqks"]
 
 [ext_resource type="Script" uid="uid://b0wo58k8yhusr" path="res://objects/volcano/bullet_bill_perdit/scripts/bullet_bill_perdit.gd" id="1_rhi7v"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_i3vfs"]
@@ -19,15 +19,7 @@ size = Vector2(32, 28)
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("5_txmu7")
 creation_nodepack = ExtResource("3_sorf8")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite")
 }
@@ -79,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aga3v")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 10.0
 }, {
@@ -90,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d6aaq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"firing",
 "speed": 20.0
 }]
@@ -101,7 +93,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_lkhn6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -109,7 +101,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j3lai"]
 size = Vector2(80, 10)
 
-[node name="GhostRiderClone" type="CharacterBody2D"]
+[node name="GhostRiderClone" type="CharacterBody2D" unique_id=1339916527]
 script = ExtResource("1_rhi7v")
 look_at_player = true
 sprite = NodePath("Sprite")
@@ -117,21 +109,21 @@ speed = Vector2(195, 0)
 collision = false
 metadata/_edit_pinned_properties_ = [&"collision", &"speed"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1928586959]
 visible = false
 shape = SubResource("RectangleShape2D_s4qhu")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=668164298]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1787300128]
 visible = false
 shape = SubResource("RectangleShape2D_s4qhu")
 debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1746961624]
 script = ExtResource("2_i3vfs")
 stomping_creation = SubResource("Resource_d54bi")
 stomping_scores = 100
@@ -151,13 +143,13 @@ killing_sound_failed = ExtResource("8_11cx4")
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1964111632]
 position = Vector2(-24, 0)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_ee7p8")
 script = ExtResource("10_k6mte")
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1202656528]
 position = Vector2(24, 0)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_ee7p8")
@@ -165,30 +157,30 @@ flip_v = true
 script = ExtResource("10_k6mte")
 to_dir = -1
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1668210406]
 sprite_frames = SubResource("SpriteFrames_vndfw")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1107242524]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-256, -256, 512, 512)
 metadata/_edit_lock_ = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1021455428]
 position = Vector2(41, 0)
 collision_layer = 0
 script = ExtResource("12_keiwx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=380852024]
 position = Vector2(-56, 0)
 shape = SubResource("RectangleShape2D_j3lai")
 
-[node name="Area2D2" type="Area2D" parent="."]
+[node name="Area2D2" type="Area2D" parent="." unique_id=1099500312]
 position = Vector2(-41, 0)
 collision_layer = 0
 script = ExtResource("12_keiwx")
 to_dir = -1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=1425891884]
 position = Vector2(56, 0)
 shape = SubResource("RectangleShape2D_j3lai")
 

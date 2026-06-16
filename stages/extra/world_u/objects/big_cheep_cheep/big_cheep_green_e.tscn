@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c7ecw05iivkki"]
+[gd_scene format=3 uid="uid://c7ecw05iivkki"]
 
 [ext_resource type="Script" uid="uid://c7wcbmd5pnq1n" path="res://engine/objects/enemies/cheeps/cheep.gd" id="1_baiew"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_4b62h"]
@@ -21,15 +21,7 @@ size = Vector2(56, 56)
 resource_local_to_scene = true
 script = ExtResource("4_ny5g2")
 creation_nodepack = ExtResource("2_4b62h")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -68,7 +60,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kbdr6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 14.0
 }]
@@ -113,7 +105,7 @@ animations = [{
 "duration": 8.0,
 "texture": SubResource("AtlasTexture_cf2bf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 15.0
 }, {
@@ -121,12 +113,12 @@ animations = [{
 "duration": 6.0,
 "texture": SubResource("AtlasTexture_cf2bf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }]
 
-[node name="CheepGreen" type="CharacterBody2D"]
+[node name="CheepGreen" type="CharacterBody2D" unique_id=1687314272]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_baiew")
@@ -137,20 +129,20 @@ sprite = NodePath("Sprite")
 speed = Vector2(207.5, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=722743996]
 visible = false
 shape = SubResource("RectangleShape2D_cf2bf")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1938404961]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=551200928]
 visible = false
 shape = SubResource("RectangleShape2D_x3s32")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1331125591]
 script = ExtResource("2_cf2bf")
 stomping_creation = SubResource("Resource_sl1dd")
 stomping_scores = 100
@@ -170,7 +162,7 @@ killing_creation = SubResource("Resource_sl1dd")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("7_u0x83")
 
-[node name="SwimX" type="ShapeCast2D" parent="."]
+[node name="SwimX" type="ShapeCast2D" parent="." unique_id=308169061]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -179,7 +171,7 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="SwimY" type="ShapeCast2D" parent="."]
+[node name="SwimY" type="ShapeCast2D" parent="." unique_id=17086179]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -188,12 +180,12 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=284440885]
 sprite_frames = SubResource("SpriteFrames_si7kv")
 autoplay = "default"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprite"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprite" unique_id=76111737]
 sprite_frames = SubResource("SpriteFrames_yw4h4")
 autoplay = "default"
 offset = Vector2(22, -4)
@@ -202,7 +194,7 @@ enemy_center_node = NodePath("../..")
 idle_offset = Vector2(22, 4)
 walk_offset = Vector2(22, 4)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1328001261]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(3.8147e-06, 3.8147e-06)
 scale = Vector2(2, 2)
@@ -211,7 +203,7 @@ script = ExtResource("9_kbdr6")
 new_rect = Rect2(-256, -256, 512, 512)
 metadata/_edit_lock_ = true
 
-[node name="Interval" type="Timer" parent="."]
+[node name="Interval" type="Timer" parent="." unique_id=1667152428]
 process_callback = 0
 autostart = true
 

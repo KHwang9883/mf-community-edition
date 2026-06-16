@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6jebmtmr1aap"]
+[gd_scene format=3 uid="uid://c6jebmtmr1aap"]
 
 [ext_resource type="Script" uid="uid://by7gipkqo3nr2" path="res://objects/volcano/bob_omb/bob_omb.gd" id="1_qjs3i"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ugdyl"]
@@ -18,22 +18,15 @@ size = Vector2(30, 28)
 resource_local_to_scene = true
 script = ExtResource("4_veo6d")
 creation_nodepack = ExtResource("5_upc6f")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../AnimatedSprite2D"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("6_78ihw")
 
-[node name="BobOmb" type="CharacterBody2D"]
+[node name="BobOmb" type="CharacterBody2D" unique_id=1484182629]
 collision_layer = 2
 collision_mask = 32
 floor_max_angle = 0.837758
@@ -44,22 +37,22 @@ sprite = NodePath("AnimatedSprite2D")
 speed = Vector2(50, 0)
 gravity_scale = 0.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=550009510]
 visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_rmo40")
 
-[node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
+[node name="Body" type="Area2D" parent="." unique_id=2136472469 groups=["#lava_body"]]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_ugdyl")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=2085030783]
 visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_rmo40")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=209650219]
 script = ExtResource("3_c5kan")
 stomping_scores = 100
 stomping_sound = ExtResource("4_y5ksf")
@@ -80,11 +73,11 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("5_s0c2v")
 killing_sound_failed = ExtResource("5_s0c2v")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=90846540]
 sprite_frames = ExtResource("4_dacjj")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=13010649]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("6_ylo6x")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dg7vn8nh7e4tx"]
+[gd_scene format=3 uid="uid://dg7vn8nh7e4tx"]
 
 [ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_g4p2g"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qb51g"]
@@ -16,15 +16,8 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_fvcap"]
 script = ExtResource("5_f5m8v")
 creation_nodepack = ExtResource("3_k6o7d")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 3
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Head"),
 "death_speed": Vector2(0, -250),
@@ -63,26 +56,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1tsmm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaGreen" type="Node2D"]
+[node name="PiranhaGreen" type="Node2D" unique_id=303419108]
 self_modulate = Color(1, 1, 1, 0.121569)
 script = ExtResource("1_g4p2g")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=913179274]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=606875881]
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_64hdc")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1991385765]
 script = ExtResource("2_qb51g")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -102,24 +95,24 @@ killing_sound_succeeded = ExtResource("6_c40lm")
 killing_sound_failed = ExtResource("7_vs3hk")
 metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
 
-[node name="Head" type="AnimatedSprite2D" parent="."]
+[node name="Head" type="AnimatedSprite2D" parent="." unique_id=587751468]
 z_index = -2
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_qyyhh")
 autoplay = "default"
 metadata/_edit_group_ = true
 
-[node name="Stem" type="Sprite2D" parent="Head"]
+[node name="Stem" type="Sprite2D" parent="Head" unique_id=1551995287]
 position = Vector2(0, 24)
 texture = ExtResource("8_c7kmd")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1955928071]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(0.5, -24)
 scale = Vector2(1.55, 2.4)
 metadata/_edit_lock_ = true
 
-[node name="Step" type="Timer" parent="."]
+[node name="Step" type="Timer" parent="." unique_id=760071324]
 one_shot = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

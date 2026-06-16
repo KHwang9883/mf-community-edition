@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://jur00a2pfxys"]
+[gd_scene format=3 uid="uid://jur00a2pfxys"]
 
 [ext_resource type="Script" uid="uid://c6w1nbixlxmb6" path="res://objects/buster_beetle/buster_beetle.gd" id="1_xqu64"]
 [ext_resource type="Texture2D" uid="uid://5sfuy6gngddm" path="res://objects/buster_beetle/textures.png" id="2_20aqc"]
@@ -35,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3e5j5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }, {
@@ -49,7 +49,7 @@ animations = [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_1drwr")
 }],
-"loop": false,
+"loop": 0,
 "name": &"pick",
 "speed": 8.0
 }, {
@@ -57,7 +57,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1drwr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"throw",
 "speed": 5.0
 }]
@@ -69,15 +69,7 @@ size = Vector2(32, 32)
 resource_local_to_scene = true
 script = ExtResource("6_n1opg")
 creation_nodepack = ExtResource("4_ukqbs")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -88,22 +80,14 @@ custom_script = ExtResource("6_dce3g")
 resource_local_to_scene = true
 script = ExtResource("6_n1opg")
 creation_nodepack = ExtResource("4_ukqbs")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("6_dce3g")
 
-[node name="BusterBeetle" type="CharacterBody2D"]
+[node name="BusterBeetle" type="CharacterBody2D" unique_id=327893460]
 collision_layer = 2
 collision_mask = 32
 floor_max_angle = 0.837758
@@ -114,26 +98,26 @@ sprite = NodePath("Sprite")
 speed = Vector2(100, 0)
 gravity_scale = 0.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=638106568]
 visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_e2fdq")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=588174434]
 sprite_frames = SubResource("SpriteFrames_mnc2r")
 autoplay = "default"
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1302574169]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_i51ft")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1189483941]
 visible = false
 shape = SubResource("RectangleShape2D_o5vk1")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=604444188]
 script = ExtResource("3_kce3i")
 stomping_creation = SubResource("Resource_lxtuf")
 stomping_scores = 100
@@ -143,7 +127,7 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("8_hbtye")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=648296584]
 visible = false
 position = Vector2(-8, 0)
 target_position = Vector2(-6, 0)
@@ -151,7 +135,7 @@ collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="RayCast2D2" type="RayCast2D" parent="."]
+[node name="RayCast2D2" type="RayCast2D" parent="." unique_id=346204911]
 visible = false
 position = Vector2(8, 0)
 target_position = Vector2(6, 0)
@@ -159,7 +143,7 @@ collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1605109921]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("10_blun0")

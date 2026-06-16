@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://jmg1hgnk2ebq"]
+[gd_scene format=3 uid="uid://jmg1hgnk2ebq"]
 
 [ext_resource type="Script" uid="uid://cbqckadhk6aqq" path="res://objects/volcano/bob_omb/explosion/explosion_area.gd" id="1_cgx3v"]
 [ext_resource type="Texture2D" uid="uid://d2syl74yiymom" path="res://objects/volcano/bob_omb/explosion/explosion.png" id="2_5aod7"]
@@ -37,7 +37,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nw1s8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 30.0
 }]
@@ -48,20 +48,20 @@ radius = 64.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_0j8al"]
 radius = 64.0
 
-[node name="ExplosionArea" type="Area2D"]
+[node name="ExplosionArea" type="Area2D" unique_id=1679880590]
 collision_mask = 17
 script = ExtResource("1_cgx3v")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1739193340]
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2at77")
 autoplay = "default"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=681750477]
 polygon = PackedVector2Array(-64, 16, -64, -16, -48, -48, -16, -64, 16, -64, 48, -48, 64, -16, 64, 16, 48, 48, 16, 64, -16, 64, -48, 48)
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=148543015]
 shape = SubResource("CircleShape2D_1dq63")
 target_position = Vector2(0, 0)
 max_results = 8
@@ -71,15 +71,15 @@ script = ExtResource("3_6r6ww")
 killer_type = &"hammer"
 trigger_enemy_failed_signal = false
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1297307801]
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1614704662]
 shape = SubResource("CircleShape2D_0j8al")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1594090065]
 script = ExtResource("5_ugnes")
 stomping_standard = Vector2(0, 0)
 stomping_scores = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://n8snywgamu2c"]
+[gd_scene format=3 uid="uid://n8snywgamu2c"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_j10d6"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_pda07"]
@@ -24,30 +24,13 @@ size = Vector2(34, 61.5)
 [sub_resource type="Resource" id="Resource_fnuo0"]
 script = ExtResource("5_dlcl4")
 creation_nodepack = ExtResource("4_8u1dr")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_rdh2n"]
 resource_local_to_scene = true
 script = ExtResource("5_dlcl4")
 creation_nodepack = ExtResource("7_d0np4")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -71,7 +54,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cr8qv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 4.0
 }]
@@ -82,7 +65,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_x6g2n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -195,12 +178,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gxb57")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
 
-[node name="RESTORE" type="CharacterBody2D"]
+[node name="RESTORE" type="CharacterBody2D" unique_id=1916704116]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_j10d6")
@@ -210,24 +193,24 @@ speed = Vector2(75, 0)
 gravity_scale = 0.5
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
-[node name="Collision2" type="CollisionShape2D" parent="."]
+[node name="Collision2" type="CollisionShape2D" parent="." unique_id=2068310539]
 visible = false
 position = Vector2(0, -4.75)
 shape = SubResource("RectangleShape2D_b3oop")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=439700747]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_pda07")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=887625148]
 visible = false
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_b3oop")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1654363425]
 script = ExtResource("3_x6g2n")
 stomping_creation = SubResource("Resource_fnuo0")
 stomping_scores = 100
@@ -239,21 +222,21 @@ killing_sound_failed = ExtResource("9_8efqy")
 ice_sprite = NodePath("../../Sprite")
 sound_ignore_pitch_modification = true
 
-[node name="Node" type="Node2D" parent="Body"]
+[node name="Node" type="Node2D" parent="Body" unique_id=599930851]
 script = ExtResource("10_hrjk7")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2018184873]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_l6v3r")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=1207409387]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_o8c0w")
 script = ExtResource("13_hf501")
 
-[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" unique_id=2042291650]
 z_index = -1
 position = Vector2(0, 30)
 sprite_frames = SubResource("SpriteFrames_25axu")
@@ -262,13 +245,13 @@ script = ExtResource("15_aryx4")
 enemy_center_node = NodePath("../..")
 walk_offset = Vector2(-5, 0)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=2080632581]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -32, 32, 48)
 script = ExtResource("16_4uaii")
 metadata/_edit_lock_ = true
 
-[node name="Turner" type="RayCast2D" parent="."]
+[node name="Turner" type="RayCast2D" parent="." unique_id=1800467646]
 visible = false
 position = Vector2(16, 27)
 target_position = Vector2(0, 8)

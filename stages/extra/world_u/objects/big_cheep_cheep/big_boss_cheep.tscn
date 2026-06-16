@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://t1hrujsae7se"]
+[gd_scene format=3 uid="uid://t1hrujsae7se"]
 
 [ext_resource type="Script" uid="uid://bo010wi23x7ol" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_boss_cheep.gd" id="1_n3nsu"]
 [ext_resource type="Script" uid="uid://bd8lyhmdqx8um" path="res://engine/objects/bosses/bowser/bowser_body.gd" id="2_n3ouu"]
@@ -36,7 +36,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kbdr6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 14.0
 }]
@@ -81,7 +81,7 @@ animations = [{
 "duration": 8.0,
 "texture": SubResource("AtlasTexture_cf2bf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 15.0
 }, {
@@ -89,25 +89,25 @@ animations = [{
 "duration": 6.0,
 "texture": SubResource("AtlasTexture_cf2bf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }]
 
-[node name="BigCheep" type="CharacterBody2D"]
+[node name="BigCheep" type="CharacterBody2D" unique_id=304629862]
 script = ExtResource("1_n3nsu")
 metadata/_custom_type_script = "uid://ng3vu4qwreu5"
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1351797287]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_n3ouu")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1112644342]
 visible = false
 shape = SubResource("RectangleShape2D_cfu8p")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=86458947]
 script = ExtResource("3_n3nsu")
 stomping_instakillable = true
 stomping_standard = Vector2(0, 0)
@@ -131,7 +131,7 @@ turn_into_coin_on_level_end = false
 frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_player_jumping_max", &"killing_sound_succeeded"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1502334751]
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_cfu8p")
@@ -140,13 +140,13 @@ speed_scale = 0.7
 flip_h = true
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprite"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprite" unique_id=483200445]
 sprite_frames = SubResource("SpriteFrames_miff7")
 autoplay = "default"
 offset = Vector2(-22, -4)
 flip_h = true
 
-[node name="LaunchPos" type="Marker2D" parent="."]
+[node name="LaunchPos" type="Marker2D" parent="." unique_id=1408793867]
 position = Vector2(-56, 40)
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="hurt" binds= [false]]

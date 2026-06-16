@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cpry7e0wkso3f"]
+[gd_scene format=3 uid="uid://cpry7e0wkso3f"]
 
 [ext_resource type="Script" uid="uid://dn5boetww74ob" path="res://objects/gift_box/gift_box.gd" id="1_gd2vt"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_a3x17"]
@@ -98,12 +98,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7qpda")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="GiftBox" type="CharacterBody2D"]
+[node name="GiftBox" type="CharacterBody2D" unique_id=309659356]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -113,22 +113,22 @@ look_at_player = true
 sprite = NodePath("Sprite")
 gravity_scale = 0.5
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=2008217085]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=2115443241]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_a3x17")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=947757142]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1841354565]
 script = ExtResource("3_mbdoj")
 stomping_hurtable = false
 stomping_creation = null
@@ -142,15 +142,15 @@ killing_can_combo = false
 frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=540783423]
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_1e01p")
 
-[node name="Dead" type="Sprite2D" parent="Sprite"]
+[node name="Dead" type="Sprite2D" parent="Sprite" unique_id=1402469865]
 visible = false
 texture = ExtResource("12_w1xb7")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=84905144]
 rect = Rect2(-16, -16, 32, 32)
 show_rect = false
 script = ExtResource("13_ll18y")

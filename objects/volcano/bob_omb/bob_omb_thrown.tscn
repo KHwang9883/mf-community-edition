@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://t0fln5p3thw"]
+[gd_scene format=3 uid="uid://t0fln5p3thw"]
 
 [ext_resource type="Script" uid="uid://d0h45om8q7phf" path="res://objects/volcano/bob_omb/bob_omb_thrown.gd" id="1_jt4xs"]
 [ext_resource type="PackedScene" uid="uid://dtif4woe8inub" path="res://objects/volcano/bob_omb/explosion/explosion_player_dmg_only.tscn" id="2_sg4e8"]
@@ -19,15 +19,8 @@ size = Vector2(30, 28)
 resource_local_to_scene = true
 script = ExtResource("7_3784p")
 creation_nodepack = ExtResource("5_2c8g6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../AnimatedSprite2D"),
 "death_speed": Vector2(0, -250)
@@ -37,7 +30,7 @@ custom_script = ExtResource("6_sg33l")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_viehu"]
 size = Vector2(32, 31)
 
-[node name="BobOmb" type="CharacterBody2D"]
+[node name="BobOmb" type="CharacterBody2D" unique_id=1126923257]
 collision_layer = 2
 collision_mask = 32
 floor_max_angle = 0.837758
@@ -50,23 +43,23 @@ speed = Vector2(75, 0)
 gravity_scale = 0.25
 max_falling_speed = 500.0
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1577251204]
 visible = false
 shape = SubResource("RectangleShape2D_rmo40")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=71681346]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_viehu")
 solid = false
 turn_back = false
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=2093451968]
 visible = false
 shape = SubResource("RectangleShape2D_rmo40")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=939869350]
 script = ExtResource("3_sg4e8")
 stomping_standard = Vector2(0, 0)
 stomping_scores = 100
@@ -88,23 +81,23 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("8_102ui")
 killing_sound_failed = ExtResource("8_102ui")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=216928930]
 sprite_frames = ExtResource("9_omsdp")
 animation = &"self_ignite"
 autoplay = "self_ignite"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=562078355]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("10_4ike0")
 metadata/_edit_lock_ = true
 
-[node name="SolidChecker" type="Area2D" parent="."]
+[node name="SolidChecker" type="Area2D" parent="." unique_id=1147710199]
 visible = false
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker" unique_id=1682653496]
 shape = SubResource("RectangleShape2D_viehu")
 
 [connection signal="killed_failed" from="Body/EnemyAttacked" to="." method="fired"]

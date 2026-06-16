@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dfyh40qn3b0lp"]
+[gd_scene format=3 uid="uid://dfyh40qn3b0lp"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_lei8i"]
 [ext_resource type="Texture2D" uid="uid://c4ka53gh2wyai" path="res://stages/extra/minix/objects/coin_walking.png" id="2_t6v7p"]
@@ -78,7 +78,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vqjia")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -86,7 +86,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gufxr"]
 size = Vector2(20, 28)
 
-[node name="CoinFromPipe" type="CharacterBody2D"]
+[node name="CoinFromPipe" type="CharacterBody2D" unique_id=278141264]
 scale = Vector2(1e-05, 1e-05)
 collision_layer = 0
 collision_mask = 0
@@ -94,32 +94,31 @@ script = ExtResource("1_lei8i")
 turn_sprite = false
 life_time = 3.0
 sprite = NodePath("Sprite")
-visible_on_screen_notifier = NodePath("VisibleOnScreenNotifier2D")
 gravity_scale = 0.1
 collision = false
 correct_collision = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=102600424]
 position = Vector2(1, 2)
 sprite_frames = SubResource("SpriteFrames_crne8")
 autoplay = "default"
 speed_scale = 10.0
 
-[node name="Dead" type="Sprite2D" parent="Sprite"]
+[node name="Dead" type="Sprite2D" parent="Sprite" unique_id=1144117889]
 visible = false
 texture = ExtResource("3_nms4q")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=2067116846]
 collision_layer = 0
 collision_mask = 0
 monitorable = false
 script = ExtResource("4_c2l4l")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1135606799]
 position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_gufxr")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1716383833]
 rect = Rect2(-40, -40, 80, 80)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
