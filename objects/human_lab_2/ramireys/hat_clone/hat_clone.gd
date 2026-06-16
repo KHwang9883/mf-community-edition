@@ -26,6 +26,7 @@ func get_stomped() -> void:
 		queue_free.call_deferred()
 		return
 	is_lying = true
+	enemy_attacked.stomping_offset.y = 16
 	Audio.play_sound(STOMP_HAT, self, false)
 	sprite_node.play("lying")
 	active_nogi.stop()
