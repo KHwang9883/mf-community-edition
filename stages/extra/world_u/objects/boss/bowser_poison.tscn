@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://6kcivk4xm2l2"]
+[gd_scene format=3 uid="uid://6kcivk4xm2l2"]
 
 [ext_resource type="Script" uid="uid://dgop5tmben234" path="res://stages/extra/world_u/objects/boss/bowser_poison.gd" id="1_s1pdr"]
 [ext_resource type="Script" uid="uid://bd8lyhmdqx8um" path="res://engine/objects/bosses/bowser/bowser_body.gd" id="5_bgykb"]
@@ -48,7 +48,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wa123")
 }],
-"loop": true,
+"loop": 1,
 "name": &"death",
 "speed": 20.0
 }, {
@@ -65,7 +65,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iq0t6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -73,7 +73,7 @@ animations = [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_uic60")
 }],
-"loop": false,
+"loop": 0,
 "name": &"flame_on",
 "speed": 10.0
 }]
@@ -124,7 +124,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s1pdr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }, {
@@ -135,7 +135,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iru46")
 }],
-"loop": true,
+"loop": 1,
 "name": &"flame_loop",
 "speed": 10.0
 }, {
@@ -152,7 +152,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vt653")
 }],
-"loop": false,
+"loop": 0,
 "name": &"flame_on",
 "speed": 10.0
 }, {
@@ -166,7 +166,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0hmru")
 }],
-"loop": false,
+"loop": 0,
 "name": &"flame_pre",
 "speed": 10.0
 }]
@@ -288,7 +288,7 @@ size = Vector2(44, 32)
 [sub_resource type="CircleShape2D" id="CircleShape2D_6p27x"]
 radius = 46.0
 
-[node name="BowserPoison" type="CharacterBody2D" groups=["#bowser"]]
+[node name="BowserPoison" type="CharacterBody2D" unique_id=1895587439 groups=["#bowser"]]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -303,18 +303,18 @@ speed = Vector2(156.25, 0)
 collision = false
 correct_collision = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1204220871]
 visible = false
 position = Vector2(0, 39)
 shape = SubResource("RectangleShape2D_iru46")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2029143719]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_0ddoy")
 autoplay = "default"
 offset = Vector2(3, 0)
 
-[node name="Debug" type="Label" parent="."]
+[node name="Debug" type="Label" parent="." unique_id=1222669091]
 visible = false
 offset_left = -64.0
 offset_top = 32.0
@@ -324,62 +324,60 @@ theme_override_constants/line_spacing = -4
 text = "t: %6.2f
 run: %s, lup: %d"
 
-[node name="PosFlame" type="Marker2D" parent="."]
+[node name="PosFlame" type="Marker2D" parent="." unique_id=1314605884]
 position = Vector2(0, 42)
 
-[node name="attack_flame" type="Node" parent="."]
+[node name="attack_flame" type="Node" parent="." unique_id=1355234433]
 script = ExtResource("5_puokb")
 
-[node name="BaseSprite" type="Sprite2D" parent="."]
+[node name="BaseSprite" type="Sprite2D" parent="." unique_id=1954355135]
 position = Vector2(0, 44)
 texture = ExtResource("14_pkykf")
 
-[node name="Skull" type="AnimatedSprite2D" parent="BaseSprite"]
+[node name="Skull" type="AnimatedSprite2D" parent="BaseSprite" unique_id=195009694]
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_kkccc")
 autoplay = "default"
 
-[node name="WingR" type="Sprite2D" parent="BaseSprite"]
+[node name="WingR" type="Sprite2D" parent="BaseSprite" unique_id=811333304]
 position = Vector2(61, -18)
 texture = ExtResource("8_iq0t6")
 hframes = 4
 
-[node name="WingL" type="Sprite2D" parent="BaseSprite"]
+[node name="WingL" type="Sprite2D" parent="BaseSprite" unique_id=1998382415]
 position = Vector2(-61, -18)
 texture = ExtResource("8_iq0t6")
 flip_h = true
 hframes = 4
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_s1pdr")
-}
-autoplay = "moving"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=256554889]
+libraries/ = SubResource("AnimationLibrary_s1pdr")
+autoplay = &"moving"
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1360498614]
 visible = false
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("5_bgykb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=41613140]
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_pkykf")
 
-[node name="CollisionPolygon" type="CollisionPolygon2D" parent="Body"]
+[node name="CollisionPolygon" type="CollisionPolygon2D" parent="Body" unique_id=1147771353]
 position = Vector2(-62, 32)
 polygon = PackedVector2Array(-27, -50, -14, -50, 26, -16, 17, 8, 17, 24, 1, 24, -10, 15, -27, -9)
 
-[node name="CollisionPolygon2" type="CollisionPolygon2D" parent="Body"]
+[node name="CollisionPolygon2" type="CollisionPolygon2D" parent="Body" unique_id=1625943919]
 position = Vector2(62, 32)
 scale = Vector2(-1, 1)
 polygon = PackedVector2Array(-27, -50, -14, -50, 26, -16, 17, 8, 17, 24, 1, 24, -10, 15, -27, -9)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body" unique_id=897900005]
 position = Vector2(0, 45)
 shape = SubResource("CircleShape2D_6p27x")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=425048063]
 script = ExtResource("6_i5nms")
 stomping_instakillable = true
 stomping_standard = Vector2(0, 0)

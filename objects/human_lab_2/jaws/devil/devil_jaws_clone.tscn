@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b8d52rf3i10nm"]
+[gd_scene format=3 uid="uid://b8d52rf3i10nm"]
 
 [ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_swl5l"]
 [ext_resource type="AudioStream" uid="uid://ofka7tivkywh" path="res://objects/human_lab_2/jaws/devil/sfx/d.wav" id="2_tgbf0"]
@@ -16,16 +16,8 @@
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("4_6rnyd")
 creation_nodepack = ExtResource("3_c5lrn")
-creation_force_sibling = false
 trans_offset = Vector2(0, -28)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
 size = Vector2(30, 50)
@@ -33,15 +25,8 @@ size = Vector2(30, 50)
 [sub_resource type="Resource" id="Resource_hukh6"]
 script = ExtResource("4_6rnyd")
 creation_nodepack = ExtResource("7_jgmj8")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 3
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Head#Dead"),
 "death_speed": Vector2(0, -250),
@@ -55,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_ynbsd")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -77,7 +62,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7o8mc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
@@ -92,7 +77,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="DevilJawsClone" type="Node2D"]
+[node name="DevilJawsClone" type="Node2D" unique_id=297540915]
 script = ExtResource("1_swl5l")
 custom_vars = {
 "attack_amount": 1,
@@ -111,17 +96,17 @@ custom_vars = {
 }
 custom_script = ExtResource("5_u4ahy")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=202983811]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=703635388]
 position = Vector2(0, -25)
 shape = SubResource("RectangleShape2D_64hdc")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1156148852]
 script = ExtResource("6_6eewa")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -144,31 +129,31 @@ ice_fragile = true
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation"]
 
-[node name="Head#Dead" type="AnimatedSprite2D" parent="."]
+[node name="Head#Dead" type="AnimatedSprite2D" parent="." unique_id=923172233]
 visible = false
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_eik5r")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1917905877]
 z_index = -2
 position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_6buyf")
 autoplay = "default"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1174263876]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(2.38419e-07, -32)
 scale = Vector2(1.6, 3.2)
 metadata/_edit_lock_ = true
 
-[node name="Step" type="Timer" parent="."]
+[node name="Step" type="Timer" parent="." unique_id=1083739115]
 one_shot = true
 
-[node name="Fire" type="Timer" parent="."]
+[node name="Fire" type="Timer" parent="." unique_id=972204602]
 one_shot = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=884101617]
 position = Vector2(0, -32)
 blend_mode = 2
 range_layer_min = -100

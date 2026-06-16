@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://cdtlj55qt731w"]
+[gd_scene format=3 uid="uid://cdtlj55qt731w"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_51ox0"]
 [ext_resource type="Script" uid="uid://b7y7vbaiap3tv" path="res://stages/extra/minix/scripts/minix_score_loader.gd" id="2_0osd1"]
@@ -73,58 +73,17 @@
 
 [sub_resource type="Resource" id="Resource_hhd4i"]
 script = ExtResource("10_5y4lf")
-walk_initial_speed = 50.0
-walk_acceleration = 312.5
-walk_deceleration = 312.5
 walk_crouch_deceleration = 625.0
-walk_turning_acce = 1250.0
-walk_max_walking_speed = 175.0
-walk_max_running_speed = 350.0
-walk_running_grace_time = 0.05
-walk_slow_walk_speed = 68.75
-underwater_walk_max_walking_speed = 175.0
-underwater_walk_max_running_speed = 175.0
-jump_speed = 700.0
-jump_buff_static = 1000.0
-jump_buff_dynamic = 1250.0
-jump_stomp_multiplicator = 1.0
-jump_coyote_time_sec = 0.05
 swim_speed = 300.0
-swim_out_speed = 450.0
 swim_max_speed = 300.0
-swim_max_falling_speed = 150.0
-swim_gravity_scale = 0.1
-climb_speed = 150.0
-slide_max_speed = 450.0
 slide_acceleration = 468.75
 slide_deceleration = 468.75
-stuck_recovery_speed = 60.0
-animation_walking_speed = 1.5
 animation_max_walking_speed = 5.0
-animation_min_walking_speed = 1.0
-sound_jump = [ExtResource("13_e7wuu")]
-sound_swim = [ExtResource("15_oeo15")]
-sound_skid = [ExtResource("14_yww2b")]
 
 [sub_resource type="Resource" id="Resource_d010u"]
 script = ExtResource("14_wvkve")
-name = &"small"
-type = 0
-appearing_time_sec = 1.0
 physics_config = SubResource("Resource_hhd4i")
-physics_behavior = ExtResource("11_7ix8m")
 physics_crouchable = false
-physics_shaper = ExtResource("16_abh1r")
-physics_shaper_crouch = ExtResource("16_abh1r")
-animation_sprites = ExtResource("9_u0fod")
-animation_behavior = ExtResource("8_fxpd5")
-animation_underwater_bubble_offset = Vector2(0, -20)
-behavior_crouch_reflect_fireballs = false
-grab_behavior = ExtResource("10_6pg6p")
-extra_vars = {}
-sound_hurt = ExtResource("19_p41j8")
-sound_death = ExtResource("18_p4blw")
-sound_pitch = 1.0
 
 [sub_resource type="FontVariation" id="FontVariation_prh3k"]
 base_font = ExtResource("19_qaur8")
@@ -160,7 +119,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nogej")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
@@ -189,7 +148,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5teqj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -215,7 +174,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("29_ecoly")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 0.0
 }]
@@ -223,30 +182,30 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_22gor"]
 size = Vector2(832, 32)
 
-[node name="Minix" type="Node2D"]
+[node name="Minix" type="Node2D" unique_id=2073006222]
 script = ExtResource("1_51ox0")
 time = -1
 completion_music = ExtResource("2_yhhf6")
 metadata/_edit_lock_ = true
 
-[node name="MinixScoreLoader" type="Node" parent="."]
+[node name="MinixScoreLoader" type="Node" parent="." unique_id=361312486]
 script = ExtResource("2_0osd1")
 
-[node name="MusicLoaderIntro" parent="." instance=ExtResource("2_m1mir")]
+[node name="MusicLoaderIntro" parent="." unique_id=2029783939 instance=ExtResource("2_m1mir")]
 music = Array[Resource]([ExtResource("3_gkuoc")])
 channel_id = 0
 play_immediately = false
 stop_all_music_on_start = false
 volume_db = Array[float]([-3.0])
 
-[node name="Mario" parent="." instance=ExtResource("4_t3gk0")]
+[node name="Mario" parent="." unique_id=1081522649 instance=ExtResource("4_t3gk0")]
 position = Vector2(336, 400)
 script = ExtResource("5_sdtbj")
 suit = SubResource("Resource_d010u")
 death_music_override = ExtResource("14_405ip")
 death_wait_time = -1.0
 
-[node name="PlayerCamera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=2104201525]
 limit_left = 0
 limit_top = 0
 limit_right = 640
@@ -258,32 +217,32 @@ enable_left_border_death = false
 enable_right_border_death = false
 metadata/_edit_lock_ = true
 
-[node name="START" type="CanvasLayer" parent="."]
+[node name="START" type="CanvasLayer" parent="." unique_id=1012964972]
 layer = 2
 
-[node name="Node2D2" type="Node2D" parent="START"]
+[node name="Node2D2" type="Node2D" parent="START" unique_id=599010270]
 
-[node name="Node2D" type="Node2D" parent="START"]
+[node name="Node2D" type="Node2D" parent="START" unique_id=1939522555]
 script = ExtResource("18_5csdc")
 
-[node name="ColorRect" type="ColorRect" parent="START/Node2D"]
+[node name="ColorRect" type="ColorRect" parent="START/Node2D" unique_id=790271445]
 offset_right = 640.0
 offset_bottom = 480.0
 color = Color(1, 1, 1, 0.313726)
 metadata/_edit_lock_ = true
 
-[node name="ColorRect2" type="ColorRect" parent="START/Node2D"]
+[node name="ColorRect2" type="ColorRect" parent="START/Node2D" unique_id=826075471]
 offset_top = 24.0
 offset_right = 640.0
 offset_bottom = 277.0
 color = Color(1, 1, 1, 0.376471)
 metadata/_edit_lock_ = true
 
-[node name="MinixLogo" type="Sprite2D" parent="START/Node2D/ColorRect2"]
+[node name="MinixLogo" type="Sprite2D" parent="START/Node2D/ColorRect2" unique_id=931139122]
 position = Vector2(320, 126)
 texture = ExtResource("23_tw8fd")
 
-[node name="MinixControls" type="VBoxContainer" parent="START/Node2D"]
+[node name="MinixControls" type="VBoxContainer" parent="START/Node2D" unique_id=1897541473]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -299,7 +258,7 @@ script = ExtResource("17_n5uqm")
 focused = false
 control_sound = ExtResource("18_tkk1b")
 
-[node name="Start" type="Label" parent="START/Node2D/MinixControls"]
+[node name="Start" type="Label" parent="START/Node2D/MinixControls" unique_id=757357411]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -310,12 +269,12 @@ text = "START THE FIGHT!"
 horizontal_alignment = 1
 script = ExtResource("20_p8cyh")
 
-[node name="Start2" type="CenterContainer" parent="START/Node2D/MinixControls"]
+[node name="Start2" type="CenterContainer" parent="START/Node2D/MinixControls" unique_id=1930030232]
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("23_611ee")
 
-[node name="Label" type="Label" parent="START/Node2D/MinixControls/Start2"]
+[node name="Label" type="Label" parent="START/Node2D/MinixControls/Start2" unique_id=137733004]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -326,12 +285,12 @@ text = "map: %s"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Start4" type="CenterContainer" parent="START/Node2D/MinixControls"]
+[node name="Start4" type="CenterContainer" parent="START/Node2D/MinixControls" unique_id=1720751696]
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("15_tekh0")
 
-[node name="Label" type="Label" parent="START/Node2D/MinixControls/Start4"]
+[node name="Label" type="Label" parent="START/Node2D/MinixControls/Start4" unique_id=987621786]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -342,7 +301,7 @@ text = "in-game music: %s"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Start3" type="Label" parent="START/Node2D/MinixControls"]
+[node name="Start3" type="Label" parent="START/Node2D/MinixControls" unique_id=1067026688]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.752941, 0.972549, 0.752941, 1)
@@ -355,7 +314,7 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("27_eovx5")
 
-[node name="Start5" type="Label" parent="START/Node2D/MinixControls"]
+[node name="Start5" type="Label" parent="START/Node2D/MinixControls" unique_id=1399606661]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -367,7 +326,7 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("24_qi125")
 
-[node name="EnterToPreview" type="Label" parent="START/Node2D"]
+[node name="EnterToPreview" type="Label" parent="START/Node2D" unique_id=600837947]
 offset_top = 453.0
 offset_right = 640.0
 offset_bottom = 467.0
@@ -381,13 +340,13 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("18_a20ym")
 
-[node name="Selector" type="AnimatedSprite2D" parent="START/Node2D"]
+[node name="Selector" type="AnimatedSprite2D" parent="START/Node2D" unique_id=527862776]
 position = Vector2(243, 292)
 script = ExtResource("24_5v6a1")
 smooth_speed = 0.4
 position_paddings_array = Array[float]([0.0, 0.0, 0.0])
 
-[node name="Start" type="Label" parent="START/Node2D/Selector"]
+[node name="Start" type="Label" parent="START/Node2D/Selector" unique_id=517000363]
 offset_left = -31.0
 offset_top = -7.0
 offset_right = -9.0
@@ -401,14 +360,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("26_d7paj")
 
-[node name="Selector2" type="AnimatedSprite2D" parent="START/Node2D"]
+[node name="Selector2" type="AnimatedSprite2D" parent="START/Node2D" unique_id=1568594573]
 position = Vector2(395, 292)
 script = ExtResource("24_5v6a1")
 smooth_speed = 0.4
 position_side = 1
 position_paddings_array = Array[float]([0.0, 0.0, 0.0])
 
-[node name="Start" type="Label" parent="START/Node2D/Selector2"]
+[node name="Start" type="Label" parent="START/Node2D/Selector2" unique_id=686599568]
 offset_left = 9.0
 offset_top = -7.0
 offset_right = 31.0
@@ -423,7 +382,7 @@ vertical_alignment = 1
 script = ExtResource("26_d7paj")
 left_side = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="START/Node2D"]
+[node name="VBoxContainer" type="VBoxContainer" parent="START/Node2D" unique_id=927839208]
 offset_left = 16.0
 offset_top = 416.0
 offset_right = 208.0
@@ -431,11 +390,11 @@ offset_bottom = 480.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="START/Node2D/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="START/Node2D/VBoxContainer" unique_id=366051120]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Start" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer"]
+[node name="Start" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer" unique_id=2125779083]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
 theme_override_constants/outline_size = 8
@@ -445,7 +404,7 @@ text = "LAST SCORE:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="score" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer"]
+[node name="score" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer" unique_id=1740096338]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -460,10 +419,10 @@ minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
 starter_path = NodePath("../../..")
 value = "last"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="START/Node2D/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="START/Node2D/VBoxContainer" unique_id=1649973949]
 layout_mode = 2
 
-[node name="Start" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer2"]
+[node name="Start" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer2" unique_id=42173770]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
 theme_override_constants/outline_size = 8
@@ -473,7 +432,7 @@ text = "BEST SCORE:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="score" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer2"]
+[node name="score" type="Label" parent="START/Node2D/VBoxContainer/HBoxContainer2" unique_id=2141773583]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -488,14 +447,14 @@ minix_score_loader_path = NodePath("../../../../../MinixScoreLoader")
 starter_path = NodePath("../../..")
 value = "best"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="START/Node2D"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="START/Node2D" unique_id=2093181947]
 offset_left = 480.0
 offset_top = 416.0
 offset_right = 640.0
 offset_bottom = 480.0
 alignment = 2
 
-[node name="LB" type="Label" parent="START/Node2D/VBoxContainer2"]
+[node name="LB" type="Label" parent="START/Node2D/VBoxContainer2" unique_id=1305821016]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
@@ -507,7 +466,7 @@ text = "LEADERBOARD:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LBStatus" type="Label" parent="START/Node2D/VBoxContainer2"]
+[node name="LBStatus" type="Label" parent="START/Node2D/VBoxContainer2" unique_id=97780396]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -524,27 +483,27 @@ uppercase = true
 visible_characters = 11
 visible_characters_behavior = 1
 
-[node name="HTTPRequest" type="HTTPRequest" parent="START/Node2D/VBoxContainer2/LBStatus"]
+[node name="HTTPRequest" type="HTTPRequest" parent="START/Node2D/VBoxContainer2/LBStatus" unique_id=938002791]
 body_size_limit = 8192
 max_redirects = 4
 timeout = 8.0
 
-[node name="Timer" type="Timer" parent="START/Node2D/VBoxContainer2/LBStatus"]
+[node name="Timer" type="Timer" parent="START/Node2D/VBoxContainer2/LBStatus" unique_id=1385810645]
 wait_time = 0.25
 autostart = true
 ignore_time_scale = true
 
-[node name="GAMEOVER" type="Node2D" parent="START"]
+[node name="GAMEOVER" type="Node2D" parent="START" unique_id=295319961]
 process_mode = 3
 script = ExtResource("22_6vcp0")
 
-[node name="ColorRect" type="ColorRect" parent="START/GAMEOVER"]
+[node name="ColorRect" type="ColorRect" parent="START/GAMEOVER" unique_id=1808775992]
 offset_right = 640.0
 offset_bottom = 480.0
 color = Color(1, 1, 1, 0.313726)
 metadata/_edit_lock_ = true
 
-[node name="congratulations" type="Label" parent="START/GAMEOVER"]
+[node name="congratulations" type="Label" parent="START/GAMEOVER" unique_id=1396541582]
 offset_left = 160.0
 offset_top = 48.0
 offset_right = 480.0
@@ -570,7 +529,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="score" type="Label" parent="START/GAMEOVER"]
+[node name="score" type="Label" parent="START/GAMEOVER" unique_id=245826935]
 offset_left = 160.0
 offset_top = 69.0
 offset_right = 480.0
@@ -585,7 +544,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="godlikes" type="Label" parent="START/GAMEOVER"]
+[node name="godlikes" type="Label" parent="START/GAMEOVER" unique_id=161932957]
 offset_left = 160.0
 offset_top = 120.0
 offset_right = 480.0
@@ -600,7 +559,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="lasted" type="Label" parent="START/GAMEOVER"]
+[node name="lasted" type="Label" parent="START/GAMEOVER" unique_id=111169685]
 offset_top = 171.0
 offset_right = 640.0
 offset_bottom = 185.0
@@ -614,7 +573,7 @@ text = "%d min, %d sec"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="MapLabel" type="Label" parent="START/GAMEOVER"]
+[node name="MapLabel" type="Label" parent="START/GAMEOVER" unique_id=1134690118]
 offset_top = 222.0
 offset_right = 640.0
 offset_bottom = 236.0
@@ -628,7 +587,7 @@ text = "%s"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="MinixControls" type="VBoxContainer" parent="START/GAMEOVER"]
+[node name="MinixControls" type="VBoxContainer" parent="START/GAMEOVER" unique_id=1371021862]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -644,7 +603,7 @@ script = ExtResource("17_n5uqm")
 focused = false
 control_sound = ExtResource("18_tkk1b")
 
-[node name="PlayAgain" type="Label" parent="START/GAMEOVER/MinixControls"]
+[node name="PlayAgain" type="Label" parent="START/GAMEOVER/MinixControls" unique_id=1201695883]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -655,7 +614,7 @@ text = "PLAY AGAIN!"
 horizontal_alignment = 1
 script = ExtResource("23_qc8bc")
 
-[node name="ViewLeaderboard" type="Label" parent="START/GAMEOVER/MinixControls"]
+[node name="ViewLeaderboard" type="Label" parent="START/GAMEOVER/MinixControls" unique_id=1538879575]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.752941, 0.972549, 0.752941, 1)
@@ -669,7 +628,7 @@ uppercase = true
 script = ExtResource("27_eovx5")
 gameover = true
 
-[node name="Submit" type="Label" parent="START/GAMEOVER/MinixControls"]
+[node name="Submit" type="Label" parent="START/GAMEOVER/MinixControls" unique_id=1775919507]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.94, 0.803073, 0.7614, 1)
@@ -682,7 +641,7 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("35_c4vlj")
 
-[node name="SwitchMap" type="Label" parent="START/GAMEOVER/MinixControls"]
+[node name="SwitchMap" type="Label" parent="START/GAMEOVER/MinixControls" unique_id=178751138]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -694,7 +653,7 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("23_ptb2v")
 
-[node name="QuitToMF" type="Label" parent="START/GAMEOVER/MinixControls"]
+[node name="QuitToMF" type="Label" parent="START/GAMEOVER/MinixControls" unique_id=844339354]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0.12549, 0.12549, 0.501961, 1)
@@ -706,12 +665,12 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("24_qi125")
 
-[node name="Selector" type="AnimatedSprite2D" parent="START/GAMEOVER"]
+[node name="Selector" type="AnimatedSprite2D" parent="START/GAMEOVER" unique_id=1098209008]
 script = ExtResource("24_5v6a1")
 smooth_speed = 0.4
 position_paddings_array = Array[float]([0.0, 0.0, 0.0])
 
-[node name="Start" type="Label" parent="START/GAMEOVER/Selector"]
+[node name="Start" type="Label" parent="START/GAMEOVER/Selector" unique_id=1155362773]
 offset_left = -31.0
 offset_top = -7.0
 offset_right = -9.0
@@ -725,13 +684,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("26_d7paj")
 
-[node name="Selector2" type="AnimatedSprite2D" parent="START/GAMEOVER"]
+[node name="Selector2" type="AnimatedSprite2D" parent="START/GAMEOVER" unique_id=492605590]
 script = ExtResource("24_5v6a1")
 smooth_speed = 0.4
 position_side = 1
 position_paddings_array = Array[float]([0.0, 0.0, 0.0])
 
-[node name="Start" type="Label" parent="START/GAMEOVER/Selector2"]
+[node name="Start" type="Label" parent="START/GAMEOVER/Selector2" unique_id=2094701363]
 offset_left = 9.0
 offset_top = -7.0
 offset_right = 31.0
@@ -746,32 +705,32 @@ vertical_alignment = 1
 script = ExtResource("26_d7paj")
 left_side = false
 
-[node name="PleaseType" type="Node2D" parent="START/GAMEOVER"]
+[node name="PleaseType" type="Node2D" parent="START/GAMEOVER" unique_id=571644782]
 visible = false
 position = Vector2(320, 417)
 
-[node name="InputBox" type="Node2D" parent="START/GAMEOVER/PleaseType"]
+[node name="InputBox" type="Node2D" parent="START/GAMEOVER/PleaseType" unique_id=622220684]
 
-[node name="ColorRect2" type="ColorRect" parent="START/GAMEOVER/PleaseType/InputBox"]
+[node name="ColorRect2" type="ColorRect" parent="START/GAMEOVER/PleaseType/InputBox" unique_id=1658519931]
 offset_left = -320.0
 offset_top = -33.0
 offset_right = 320.0
 offset_bottom = 33.0
 color = Color(1, 1, 1, 0.376471)
 
-[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/InputBox"]
+[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/InputBox" unique_id=139671368]
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("36_7xloy")
 
-[node name="LineEdit" type="LineEdit" parent="START/GAMEOVER/PleaseType/InputBox"]
+[node name="LineEdit" type="LineEdit" parent="START/GAMEOVER/PleaseType/InputBox" unique_id=1063634078]
 offset_left = -148.0
 offset_top = -4.0
 offset_right = 148.0
 offset_bottom = 22.0
-theme_override_colors/caret_color = Color(0, 0, 0.513726, 1)
-theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0.596078, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.596078, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
+theme_override_colors/caret_color = Color(0, 0, 0.513726, 1)
 theme_override_constants/outline_size = 8
 theme_override_constants/caret_width = 2
 theme_override_fonts/font = ExtResource("37_eqh8x")
@@ -784,7 +743,7 @@ flat = true
 caret_blink = true
 caret_force_displayed = true
 
-[node name="SwitchMap" type="Label" parent="START/GAMEOVER/PleaseType/InputBox"]
+[node name="SwitchMap" type="Label" parent="START/GAMEOVER/PleaseType/InputBox" unique_id=297468976]
 offset_left = -192.0
 offset_top = -20.0
 offset_right = 192.0
@@ -798,21 +757,21 @@ text = "please type your name:"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Submitting" type="Node2D" parent="START/GAMEOVER/PleaseType"]
+[node name="Submitting" type="Node2D" parent="START/GAMEOVER/PleaseType" unique_id=72001505]
 position = Vector2(-320, -417)
 
-[node name="ColorRect" type="ColorRect" parent="START/GAMEOVER/PleaseType/Submitting"]
+[node name="ColorRect" type="ColorRect" parent="START/GAMEOVER/PleaseType/Submitting" unique_id=137852518]
 offset_right = 640.0
 offset_bottom = 480.0
 color = Color(1, 1, 1, 0.313726)
 metadata/_edit_lock_ = true
 
-[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/Submitting"]
+[node name="BG" type="Sprite2D" parent="START/GAMEOVER/PleaseType/Submitting" unique_id=1034840613]
 position = Vector2(320, 240)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("36_7xloy")
 
-[node name="Loading" type="Label" parent="START/GAMEOVER/PleaseType/Submitting"]
+[node name="Loading" type="Label" parent="START/GAMEOVER/PleaseType/Submitting" unique_id=2084955571]
 offset_left = 128.0
 offset_top = 223.0
 offset_right = 512.0
@@ -828,7 +787,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="congrats" type="Label" parent="START/GAMEOVER/PleaseType/Submitting"]
+[node name="congrats" type="Label" parent="START/GAMEOVER/PleaseType/Submitting" unique_id=550024047]
 visible = false
 offset_left = 128.0
 offset_top = 214.0
@@ -845,7 +804,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="congrats2" type="Label" parent="START/GAMEOVER/PleaseType/Submitting/congrats"]
+[node name="congrats2" type="Label" parent="START/GAMEOVER/PleaseType/Submitting/congrats" unique_id=1965558458]
 layout_mode = 0
 offset_left = -1.0
 offset_top = 22.0
@@ -861,7 +820,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="EnterToPreview" type="Label" parent="START/GAMEOVER/PleaseType"]
+[node name="EnterToPreview" type="Label" parent="START/GAMEOVER/PleaseType" unique_id=393481982]
 offset_left = -320.0
 offset_top = 38.0
 offset_right = 320.0
@@ -876,26 +835,26 @@ horizontal_alignment = 1
 uppercase = true
 script = ExtResource("18_a20ym")
 
-[node name="HTTPRequest" type="HTTPRequest" parent="START/GAMEOVER/PleaseType"]
+[node name="HTTPRequest" type="HTTPRequest" parent="START/GAMEOVER/PleaseType" unique_id=1167738143]
 timeout = 5.0
 
-[node name="Leaderboard" type="Node2D" parent="START"]
+[node name="Leaderboard" type="Node2D" parent="START" unique_id=324412176]
 process_mode = 3
 visible = false
 script = ExtResource("39_vib0e")
 
-[node name="ColorRect" type="ColorRect" parent="START/Leaderboard"]
+[node name="ColorRect" type="ColorRect" parent="START/Leaderboard" unique_id=2029809493]
 offset_right = 640.0
 offset_bottom = 480.0
 color = Color(1, 1, 1, 0.313726)
 metadata/_edit_lock_ = true
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="START/Leaderboard"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="START/Leaderboard" unique_id=237634033]
 physics_interpolation_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
 
-[node name="SubViewport" type="SubViewport" parent="START/Leaderboard/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="START/Leaderboard/SubViewportContainer" unique_id=964034721]
 disable_3d = true
 own_world_3d = true
 transparent_bg = true
@@ -904,17 +863,17 @@ snap_2d_transforms_to_pixel = true
 size = Vector2i(640, 480)
 render_target_update_mode = 0
 
-[node name="Control" parent="START/Leaderboard/SubViewportContainer/SubViewport" instance=ExtResource("39_abr23")]
+[node name="Control" parent="START/Leaderboard/SubViewportContainer/SubViewport" unique_id=707888919 instance=ExtResource("39_abr23")]
 
-[node name="HTTPRequest" type="HTTPRequest" parent="START/Leaderboard"]
+[node name="HTTPRequest" type="HTTPRequest" parent="START/Leaderboard" unique_id=2048142936]
 timeout = 5.0
 
-[node name="HUD" parent="." instance=ExtResource("8_sdali")]
+[node name="HUD" parent="." unique_id=794142719 instance=ExtResource("8_sdali")]
 visible = false
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2100611317]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1014847075]
 layout_mode = 3
 anchor_left = 0.4
 anchor_right = 0.4
@@ -925,13 +884,13 @@ offset_bottom = 51.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control" unique_id=1593492766]
 position = Vector2(391, -26)
 sprite_frames = SubResource("SpriteFrames_npe5u")
 autoplay = "default"
 centered = false
 
-[node name="Coins" type="Label" parent="CanvasLayer/Control"]
+[node name="Coins" type="Label" parent="CanvasLayer/Control" unique_id=1300643979]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.187
@@ -948,7 +907,7 @@ horizontal_alignment = 2
 script = ExtResource("19_50mii")
 value_name = "score"
 
-[node name="Node2D" type="Node2D" parent="CanvasLayer"]
+[node name="Node2D" type="Node2D" parent="CanvasLayer" unique_id=1968111412]
 script = ExtResource("20_h1nf4")
 amplitude = Vector2(0, 10)
 frequency = 4.0
@@ -956,13 +915,13 @@ sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D" unique_id=1988453747]
 position = Vector2(615, 40)
 sprite_frames = SubResource("SpriteFrames_q23ld")
 autoplay = "default"
 script = ExtResource("51_fkbwa")
 
-[node name="Node2D2" type="Node2D" parent="CanvasLayer"]
+[node name="Node2D2" type="Node2D" parent="CanvasLayer" unique_id=1156812671]
 script = ExtResource("20_h1nf4")
 amplitude = Vector2(0, 10)
 phase = 180.0
@@ -971,13 +930,13 @@ sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D2"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D2" unique_id=435330665]
 position = Vector2(583, 40)
 sprite_frames = SubResource("SpriteFrames_q23ld")
 autoplay = "default"
 script = ExtResource("51_fkbwa")
 
-[node name="Node2D3" type="Node2D" parent="CanvasLayer"]
+[node name="Node2D3" type="Node2D" parent="CanvasLayer" unique_id=163268407]
 script = ExtResource("20_h1nf4")
 amplitude = Vector2(0, 10)
 frequency = 4.0
@@ -985,67 +944,67 @@ sprite_path = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D3"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Node2D3" unique_id=2128463551]
 position = Vector2(551, 40)
 sprite_frames = SubResource("SpriteFrames_q23ld")
 autoplay = "default"
 script = ExtResource("51_fkbwa")
 
-[node name="Status" type="AnimatedSprite2D" parent="CanvasLayer"]
+[node name="Status" type="AnimatedSprite2D" parent="CanvasLayer" unique_id=384152489]
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(320, 448)
 sprite_frames = SubResource("SpriteFrames_rqcdw")
 script = ExtResource("30_jgobj")
 
-[node name="Node" type="Node" parent="."]
+[node name="Node" type="Node" parent="." unique_id=1268523671]
 process_mode = 4
 script = ExtResource("13_o0kdt")
 
-[node name="Maps" type="Node2D" parent="."]
+[node name="Maps" type="Node2D" parent="." unique_id=276790567]
 metadata/_edit_lock_ = true
 
-[node name="classic" parent="Maps" instance=ExtResource("34_l4qgv")]
+[node name="classic" parent="Maps" unique_id=475008197 instance=ExtResource("34_l4qgv")]
 
-[node name="three_islands" parent="Maps" instance=ExtResource("55_p8ldm")]
+[node name="three_islands" parent="Maps" unique_id=2041063928 instance=ExtResource("55_p8ldm")]
 visible = false
 
-[node name="bowser\'s_castle" parent="Maps" instance=ExtResource("56_gypre")]
+[node name="bowser\'s_castle" parent="Maps" unique_id=1910541391 instance=ExtResource("56_gypre")]
 visible = false
 
-[node name="evil_castle" parent="Maps" instance=ExtResource("60_awk3x")]
+[node name="evil_castle" parent="Maps" unique_id=440839451 instance=ExtResource("60_awk3x")]
 visible = false
 
-[node name="playgrounds" parent="Maps" instance=ExtResource("35_7wouc")]
+[node name="playgrounds" parent="Maps" unique_id=610085019 instance=ExtResource("35_7wouc")]
 visible = false
 
-[node name="mario play" parent="Maps" instance=ExtResource("42_p1jxm")]
+[node name="mario play" parent="Maps" unique_id=1529081066 instance=ExtResource("42_p1jxm")]
 visible = false
 
-[node name="playgrounds_2" parent="Maps" instance=ExtResource("44_n3pie")]
+[node name="playgrounds_2" parent="Maps" unique_id=747217390 instance=ExtResource("44_n3pie")]
 visible = false
 
-[node name="underwater" parent="Maps" instance=ExtResource("36_0cnpl")]
+[node name="underwater" parent="Maps" unique_id=2686375 instance=ExtResource("36_0cnpl")]
 visible = false
 
-[node name="underground" parent="Maps" instance=ExtResource("65_lukfv")]
+[node name="underground" parent="Maps" unique_id=1518597128 instance=ExtResource("65_lukfv")]
 visible = false
 
-[node name="overwater" parent="Maps" instance=ExtResource("68_u0fod")]
+[node name="overwater" parent="Maps" unique_id=1844779115 instance=ExtResource("68_u0fod")]
 visible = false
 
-[node name="bowser\'s_castle2" parent="Maps" instance=ExtResource("69_6pg6p")]
+[node name="bowser\'s_castle2" parent="Maps" unique_id=1994806106 instance=ExtResource("69_6pg6p")]
 visible = false
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1361561020]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("68_vmjpb")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=867088076]
 position = Vector2(0, -32)
 polygon = PackedVector2Array(-96, 608, 736, 608, 736, -800, 768, -800, 768, 640, -128, 640, -128, -800, -96, -800)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=594876227]
 position = Vector2(320, -816)
 shape = SubResource("RectangleShape2D_22gor")
 

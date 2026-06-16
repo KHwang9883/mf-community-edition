@@ -1,6 +1,6 @@
-[gd_scene load_steps=36 format=3 uid="uid://b00abmx83n2xo"]
+[gd_scene format=3 uid="uid://b00abmx83n2xo"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/goombas/goomba_jumping.gd" id="1_u71xa"]
+[ext_resource type="Script" uid="uid://b810gjh2uw6q2" path="res://engine/objects/enemies/goombas/goomba_jumping.gd" id="1_u71xa"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_tn18i"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_6mxav"]
 [ext_resource type="PackedScene" uid="uid://dj2b5g2smonyu" path="res://engine/objects/enemies/_dead/enemy_stomped.tscn" id="4_6slb6"]
@@ -23,15 +23,7 @@ size = Vector2(30, 54)
 resource_local_to_scene = true
 script = ExtResource("6_vhwqx")
 creation_nodepack = ExtResource("4_6slb6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead")
 }
@@ -41,15 +33,8 @@ custom_script = ExtResource("5_aso40")
 resource_local_to_scene = true
 script = ExtResource("6_vhwqx")
 creation_nodepack = ExtResource("8_hpuyo")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/DeadRotating"),
 "death_speed": Vector2(0, -250)
@@ -164,7 +149,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ink81")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
@@ -175,12 +160,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_q2bsr")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 50.0
 }]
 
-[node name="ZOMBINEY" type="CharacterBody2D"]
+[node name="ZOMBINEY" type="CharacterBody2D" unique_id=1286271044]
 collision_layer = 2
 collision_mask = 32
 floor_max_angle = 0.837758
@@ -191,21 +176,21 @@ sprite = NodePath("Sprite")
 speed = Vector2(100, 0)
 gravity_scale = 0.5
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=382775346]
 visible = false
 shape = SubResource("RectangleShape2D_aahbl")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1449206118]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_tn18i")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=129673151]
 visible = false
 shape = SubResource("RectangleShape2D_aahbl")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=931469049]
 script = ExtResource("3_6mxav")
 stomping_creation = SubResource("Resource_kg3jd")
 stomping_scores = 100
@@ -216,25 +201,25 @@ killing_sound_succeeded = ExtResource("10_tn18i")
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=620484387]
 sprite_frames = SubResource("SpriteFrames_kckqe")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=380750387]
 visible = false
 position = Vector2(0, 26)
 sprite_frames = SubResource("SpriteFrames_d2qe6")
 offset = Vector2(0, -25)
 script = ExtResource("13_cmo8g")
 
-[node name="DeadRotating" type="Sprite2D" parent="Sprite"]
+[node name="DeadRotating" type="Sprite2D" parent="Sprite" unique_id=2139603615]
 visible = false
 texture = ExtResource("12_q2bsr")
 region_enabled = true
 region_rect = Rect2(0, 0, 44, 52)
 script = ExtResource("14_6hbyb")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1747343327]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-20, -32, 40, 64)
 script = ExtResource("15_w1623")

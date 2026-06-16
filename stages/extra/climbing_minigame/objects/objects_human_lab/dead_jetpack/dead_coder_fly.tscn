@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cr5kn0pwf3lo2"]
+[gd_scene format=3 uid="uid://cr5kn0pwf3lo2"]
 
 [ext_resource type="Script" uid="uid://dalbx57u5hlgi" path="res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.gd" id="1_74w4c"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_4ck2j"]
@@ -60,15 +60,7 @@ func _report_resource() -> void:
 resource_local_to_scene = true
 script = SubResource("GDScript_vf6wq")
 creation_nodepack = ExtResource("3_7c7sb")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -79,15 +71,7 @@ custom_script = ExtResource("4_yxnsw")
 resource_local_to_scene = true
 script = SubResource("GDScript_vf6wq")
 creation_nodepack = ExtResource("3_7c7sb")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -111,7 +95,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_brm6s")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -122,28 +106,28 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_ewbi1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="JetpackCoderSkull" type="Node2D" groups=["#circle"]]
+[node name="JetpackCoderSkull" type="Node2D" unique_id=715571138 groups=["#circle"]]
 script = ExtResource("1_74w4c")
 amplitude = Vector2(0, 50)
 random_phase = true
 frequency = 2.0
 sprite_path = NodePath("Sprite")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1263377313]
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1938707034]
 visible = false
 shape = SubResource("RectangleShape2D_c6snl")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=2084218103]
 script = ExtResource("2_4ck2j")
 stomping_creation = SubResource("2")
 stomping_scores = 100
@@ -165,16 +149,16 @@ killing_creation = SubResource("Resource_kqoge")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("5_rxdlf")
 
-[node name="Node" type="Node2D" parent="Body"]
+[node name="Node" type="Node2D" parent="Body" unique_id=1107188489]
 script = ExtResource("8_ewbi1")
 KEYBOARD_EFFECT = ExtResource("8_4swss")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=116147026]
 position = Vector2(0, -8)
 sprite_frames = SubResource("5")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=318865502]
 visible = false
 position = Vector2(2, -22)
 rotation = 3.14159
@@ -185,7 +169,7 @@ flip_v = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bnv4stcequclr"]
+[gd_scene format=3 uid="uid://bnv4stcequclr"]
 
 [ext_resource type="Script" uid="uid://b6ejlkyn8l7bj" path="res://objects/accelerating_bill/accelerating_bill.gd" id="1_va45e"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_4gi6m"]
@@ -17,15 +17,7 @@ size = Vector2(32, 28)
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("5_prguk")
 creation_nodepack = ExtResource("3_yor8y")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite")
 }
@@ -75,28 +67,28 @@ _data = {
 &"glowing": SubResource("Animation_5y4ok")
 }
 
-[node name="AcceleratingBill" type="CharacterBody2D"]
+[node name="AcceleratingBill" type="CharacterBody2D" unique_id=1021442252]
 script = ExtResource("1_va45e")
 sprite = NodePath("Sprite")
 speed = Vector2(100, 0)
 collision = false
 metadata/_edit_pinned_properties_ = [&"collision", &"speed"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=773369868]
 visible = false
 shape = SubResource("RectangleShape2D_s4qhu")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=985208648]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=73991663]
 visible = false
 shape = SubResource("RectangleShape2D_s4qhu")
 debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1443589122]
 script = ExtResource("2_4gi6m")
 stomping_creation = SubResource("Resource_d54bi")
 stomping_scores = 100
@@ -115,20 +107,18 @@ killing_sound_succeeded = ExtResource("7_vik2a")
 killing_sound_failed = ExtResource("8_4ar45")
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=918321626]
 z_index = 1
 material = SubResource("ShaderMaterial_fntwi")
 texture = ExtResource("10_tcuow")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=75099388]
 visible = false
 rect = Rect2(-256, -256, 512, 512)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_7dci2")
-}
-autoplay = "glowing"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1059868421]
+libraries/ = SubResource("AnimationLibrary_7dci2")
+autoplay = &"glowing"
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]

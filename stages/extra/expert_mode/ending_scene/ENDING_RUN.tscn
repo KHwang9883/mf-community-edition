@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=4 uid="uid://4ivcvf1bym0v"]
+[gd_scene format=4 uid="uid://4ivcvf1bym0v"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_vb6jv"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_iss6s"]
@@ -478,9 +478,9 @@ frequency = 0.004
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tebvh"]
 width = 800
 height = 600
+noise = SubResource("FastNoiseLite_tebvh")
 seamless = true
 seamless_blend_skirt = 0.25
-noise = SubResource("FastNoiseLite_tebvh")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_47e0u"]
 shader = ExtResource("27_bnduh")
@@ -506,31 +506,13 @@ width = 160
 [sub_resource type="Resource" id="Resource_cjsdv"]
 script = ExtResource("35_whh2n")
 creation_nodepack = ExtResource("36_12e0k")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_b2xgn"]
 script = ExtResource("35_whh2n")
 creation_fallback_node = ExtResource("33_begpq")
 creation_nodepack = ExtResource("47_huxlw")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_s1rv2"]
 
@@ -539,7 +521,7 @@ custom_vars = {}
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dagdr"]
 size = Vector2(32, 128)
 
-[node name="Level8-4" type="Node2D"]
+[node name="Level8-4" type="Node2D" unique_id=1128693560]
 script = ExtResource("1_vb6jv")
 time = 200
 completion_music = ExtResource("2_iss6s")
@@ -547,64 +529,64 @@ completion_write_save = false
 jump_to_scene = "uid://cueg4hektims0"
 metadata/_edit_lock_ = true
 
-[node name="MusicLoader" type="Node" parent="."]
+[node name="MusicLoader" type="Node" parent="." unique_id=106102719]
 script = ExtResource("3_1xlnr")
 music = Array[Resource]([ExtResource("4_2kxpu")])
 can_pause = true
 volume_db = Array[float]([-2.5])
 
-[node name="AntiafkExpertMode" parent="MusicLoader" instance=ExtResource("5_6j0rj")]
+[node name="AntiafkExpertMode" parent="MusicLoader" unique_id=1638051861 instance=ExtResource("5_6j0rj")]
 layer = 11
 item_store_enabled = false
 
-[node name="Destruction" type="AudioStreamPlayer" parent="."]
+[node name="Destruction" type="AudioStreamPlayer" parent="." unique_id=2146479631]
 stream = ExtResource("6_dekc4")
 volume_db = -8.0
 bus = &"Sound"
 
-[node name="SecretUnlocker" parent="." instance=ExtResource("6_7q0yb")]
+[node name="SecretUnlocker" parent="." unique_id=1795061920 instance=ExtResource("6_7q0yb")]
 secrets = Array[String](["expert mode completed", "expert mode warpless"])
 is_classic_achievement = Array[bool]([false, false])
 
-[node name="Mario" parent="." instance=ExtResource("6_86jr5")]
+[node name="Mario" parent="." unique_id=2064797722 instance=ExtResource("6_86jr5")]
 position = Vector2(7648, 80)
 direction = -1
 death_music_override = ExtResource("7_idbb7")
 death_wait_time = 0.0
 death_check_for_lives = false
 
-[node name="BurningSurface" parent="Mario" instance=ExtResource("9_0cp38")]
+[node name="BurningSurface" parent="Mario" unique_id=386787688 instance=ExtResource("9_0cp38")]
 
-[node name="BurningSurfaceModifier" parent="Mario" instance=ExtResource("10_y8iwr")]
+[node name="BurningSurfaceModifier" parent="Mario" unique_id=1302613527 instance=ExtResource("10_y8iwr")]
 process_mode = 4
 
-[node name="Timer" type="Timer" parent="Mario"]
+[node name="Timer" type="Timer" parent="Mario" unique_id=1419275035]
 process_callback = 0
 wait_time = 2.5
 one_shot = true
 autostart = true
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="Path2D" type="Path2D" parent="." unique_id=1029337088]
 curve = SubResource("Curve2D_o8bh2")
 metadata/_edit_lock_ = true
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=426045700]
 position = Vector2(7584, 240)
-rotation = 3.14159
+rotation = 3.1415927
 h_offset = 32.0
 loop = false
 script = ExtResource("11_m3mr3")
 speed = 0.0
 stop_on_death = true
 
-[node name="PlayerCamera2D" type="Camera2D" parent="Path2D/PathFollow2D"]
+[node name="PlayerCamera2D" type="Camera2D" parent="Path2D/PathFollow2D" unique_id=283167928]
 editor_draw_screen = false
 script = ExtResource("12_q77xd")
 ignore_retro_scroll = true
 enable_left_border_death = false
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="Path2D/PathFollow2D"]
+[node name="PointLight2D" type="PointLight2D" parent="Path2D/PathFollow2D" unique_id=1715317406]
 position = Vector2(320, 152)
 scale = Vector2(20, 1)
 color = Color(0.627451, 0, 0, 1)
@@ -614,286 +596,284 @@ script = ExtResource("16_ixd3u")
 medium = true
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" parent="." instance=ExtResource("20_ufged")]
+[node name="CameraArea" parent="." unique_id=798869556 instance=ExtResource("20_ufged")]
 offset_left = -384.0
 offset_right = 7940.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
-[node name="Layer0" type="TileMapLayer" parent="." groups=["burning"]]
+[node name="Layer0" type="TileMapLayer" parent="." unique_id=1997173718 groups=["burning"]]
 tile_map_data = PackedByteArray("AAAWAAsAAgAAAAEAAAAXAAsAAgACAAEAAAAYAAsAAQABAAEAAAAZAAsAAgACAAEAAAAaAAsAAgACAAEAAAAbAAsAAgADAAEAAAAZAAoAAgABAAEAAAAaAAoAAgADAAEAAAAhAAsAAgAAAAEAAAAsAAsAAgADAAEAAAAiAAsAAgACAAEAAAAjAAsAAgACAAEAAAAkAAsAAgACAAAAAAAlAAsAAgACAAEAAAAmAAsAAgACAAEAAAAnAAsAAQABAAEAAAAoAAsAAgACAAEAAAApAAsAAgACAAAAAAAqAAsAAgACAAEAAAArAAsAAgACAAEAAAAsAAoAAgAAAAEAAAAtAAoAAgADAAEAAAAzAAsAAgABAAEAAAA4AAsAAgADAAEAAAA0AAsAAgACAAEAAAA1AAsAAQABAAEAAAA2AAsAAgACAAEAAAA3AAsAAgACAAEAAAA2AAoAAgABAAEAAAA3AAoAAgADAAEAAAA2AAYAAgABAAEAAAA3AAYAAgACAAEAAAA4AAYAAgADAAEAAAA+AAsAAQABAAEAAAA/AAsAAgACAAEAAABAAAsAAgACAAEAAABBAAsAAQABAAEAAABCAAsAAgADAAEAAAA9AAsAAgAAAAEAAABLAAsAAgABAAEAAABMAAsAAgACAAEAAABNAAsAAgACAAEAAABPAAsAAgACAAEAAABQAAsAAgADAAEAAABUAAsAAgABAAEAAABVAAsAAgACAAEAAABXAAsAAgACAAEAAABYAAsAAgACAAEAAABZAAsAAgADAAEAAABBAAoAAgABAAEAAABKAAoAAgABAAEAAABCAAoAAgADAAEAAABLAAoAAgADAAEAAABKAAkAAgADAAEAAABJAAkAAgABAAEAAABCAAkAAgABAAEAAABDAAkAAgADAAEAAABEAAkAAAAAAAAAAABFAAkAAAAAAAAAAABGAAkAAAAAAAAAAABHAAkAAAAAAAAAAABIAAkAAAAAAAAAAABRAAsAAAAAAAAAAABTAAsAAAAAAAAAAABSAAsAAAAAAAAAAABkAAsAAgAAAAEAAABpAAsAAgADAAEAAABlAAsAAgACAAEAAABmAAsAAgACAAEAAABnAAsAAQABAAEAAABoAAsAAgACAAEAAABrAAoAAgADAAEAAABoAAoAAgACAAEAAABpAAoAAgACAAEAAABqAAoAAgACAAEAAABnAAoAAgABAAEAAABnAAcAAgABAAEAAABqAAcAAgABAAEAAABoAAcAAgADAAEAAABrAAcAAgADAAEAAABnAAkAAgAFAAEAAQBnAAgAAgAFAAEAAQBrAAkAAgAFAAEAAQBrAAgAAgAFAAEAAQB7AAsAAgAAAAEAAAB8AAsAAgACAAEAAAB+AAoAAgABAAEAAAB+AAsAAgACAAEAAAB/AAsAAgACAAEAAACAAAoAAgACAAEAAACAAAsAAgADAAEAAACBAAoAAgACAAEAAACCAAoAAgADAAEAAACAAAcAAgABAAEAAACBAAcAAgACAAEAAACCAAcAAQAAAAAAAACDAAcAAgACAAEAAACEAAcAAgADAAEAAACAAAIAAgAFAAEAAQCAAAkAAgAFAAEAAQCAAAgAAgAFAAEAAQCAAAYAAgAFAAEAAQCAAAUAAgAFAAEAAQCAAAQAAgAFAAEAAQCAAAMAAgAFAAEAAQCAAAEAAgAFAAEAAQCAAAAAAgAFAAEAAQCSAAsAAgAAAAEAAACTAAsAAgACAAEAAACUAAsAAgACAAEAAACVAAsAAgACAAEAAACWAAoAAgACAAEAAACWAAsAAgACAAEAAACXAAoAAgACAAEAAACXAAsAAgADAAEAAACYAAoAAgACAAEAAACZAAoAAgADAAEAAACTAAoAAgABAAEAAACVAAoAAgACAAEAAACiAAsAAgABAAEAAACjAAsAAgACAAEAAACkAAsAAgACAAEAAAClAAsAAgACAAEAAACmAAsAAgACAAEAAACnAAsAAgADAAEAAACxAAsAAgABAAEAAACyAAsAAgACAAEAAACzAAsAAgACAAEAAAC0AAsAAgACAAEAAAC1AAsAAgACAAEAAAC2AAsAAgADAAEAAACiAAEAAgABAAEAAAC2AAEAAgADAAEAAACjAAEAAgACAAEAAACkAAEAAgACAAEAAAClAAEAAgACAAEAAACmAAEAAgACAAEAAACnAAEAAgACAAEAAACoAAEAAgACAAEAAACpAAEAAgACAAEAAACqAAEAAgACAAEAAACrAAEAAgACAAEAAACsAAEAAgACAAEAAACtAAEAAgACAAEAAACuAAEAAgACAAEAAACvAAEAAgACAAEAAACwAAEAAgACAAEAAACxAAEAAgACAAEAAACyAAEAAgACAAEAAACzAAEAAgACAAEAAAC0AAEAAgACAAEAAAC1AAEAAgACAAEAAACiAAIAAgAFAAEAAQCiAAMAAgAFAAEAAQCiAAQAAgAFAAEAAQCiAAUAAgAFAAEAAQCiAAYAAgAFAAEAAQCiAAcAAgAFAAEAAQCiAAgAAgAFAAEAAQCiAAkAAgAFAAEAAQCiAAoAAgAFAAEAAQDZAAwAAgABAAEAAADaAAwAAgADAAEAAADaAAsAAgABAAEAAADbAAsAAgACAAEAAADcAAsAAgACAAEAAADdAAsAAgACAAEAAADeAAsAAgACAAEAAADfAAsAAgACAAEAAADgAAsAAgACAAEAAADhAAsAAgACAAEAAADiAAsAAgACAAEAAADjAAsAAgACAAEAAADkAAsAAgACAAEAAADlAAsAAgACAAEAAADmAAsAAgACAAEAAADnAAsAAgACAAEAAADoAAsAAgACAAEAAADpAAsAAgACAAEAAADqAAsAAgACAAEAAADrAAsAAgACAAEAAADsAAsAAgACAAEAAADtAAsAAgACAAEAAADuAAsAAgACAAEAAADvAAsAAgACAAEAAADwAAsAAgACAAEAAADfAAoAAgABAAEAAADgAAoAAgADAAEAAADgAAkAAgAFAAAAAADjAAoAAgAFAAEAAADjAAkAAgAFAAEAAADjAAgAAgAFAAEAAADjAAcAAgADAAEAAADiAAcAAgABAAEAAADjAAYAAgAFAAAAAADhAAgAAgAFAAEAAQDiAAgAAgAFAAEAAQDiAAoAAgAFAAEAAQDhAAoAAgAFAAEAAQDkAAUAAgAFAAEAAQDkAAYAAgAFAAEAAQDkAAcAAgAFAAEAAQDkAAgAAgAFAAEAAQDkAAkAAgAFAAEAAEDkAAoAAgAFAAEAAQDlAAoAAgAFAAEAAADlAAkAAgAFAAEAAADlAAgAAgAFAAEAAADlAAcAAgAFAAEAAADlAAYAAgAFAAEAAADlAAUAAgAFAAEAAADlAAQAAgABAAEAAADmAAQAAgADAAEAAADmAAkAAgAFAAEAAEDnAAkAAgAFAAAAAADnAAoAAgAFAAEAAADoAAkAAgAFAAEAAEDpAAkAAgAFAAEAAEDrAAkAAgAFAAEAAEDsAAkAAgAFAAEAAEDtAAoAAgAFAAEAAADtAAkAAgAFAAEAAADtAAgAAgAFAAEAAADtAAcAAgAFAAEAAADtAAYAAgAFAAEAAADtAAUAAgAFAAEAAADwAAoAAgAFAAEAAADwAAkAAgAFAAEAAADwAAgAAgAFAAEAAADwAAcAAgAFAAEAAADwAAYAAgAFAAEAAADwAAUAAgAFAAEAAADtAAQAAgAFAAEAAADwAAQAAgAFAAEAAADtAAMAAgAFAAAAAADwAAMAAgAFAAAAAADxAAQAAgABAAEAAADyAAQAAgADAAEAAADzAAMAAgABAAEAAAD0AAMAAgADAAEAAADnAAQAAgAEAAEAAADoAAQAAgAEAAEAAADpAAQAAgAEAAEAAADqAAQAAgAEAAEAAADrAAQAAgAEAAEAAADsAAQAAgAEAAEAAADqAAkAAgACAAAAAADmAAUAAgAFAAEAAQDnAAUAAgAFAAEAAQDnAAYAAgAFAAEAAQDnAAcAAgAFAAEAAQDnAAgAAgAFAAEAAQDmAAgAAgAFAAEAAQDmAAcAAgAFAAEAAQDmAAYAAgAFAAEAAQDsAAUAAgAFAAEAAQDsAAYAAgAFAAEAAQDsAAcAAgAFAAEAAQDsAAgAAgAFAAEAAQDmAAoAAgAFAAEAAQDuAAkABQAAAAEAAADuAAoABQACAAIAAADvAAkABQADAAIAAADvAAoABQADAAIAAADuAAcABQAAAAEAAADuAAgABQACAAIAAADvAAcABQADAAIAAADvAAgABQADAAIAAADuAAUABQACAAIAAADuAAYABQACAAIAAADvAAUABQADAAIAAADvAAYABQADAAIAAADuAAMABQAAAAAAAADuAAQABQAAAAEAAADvAAMABQABAAAAAADvAAQABQABAAEAAADhAAkAAgAFAAEAAEDiAAkAAgAFAAEAAEDxAAsAAgADAAEAAAD1APn/AgADAAEAAAD1APr/AgADAAEAAAD1APv/AgADAAEAAAD1APz/AgADAAEAAAD1AP3/AgADAAEAAAD1AP7/AgADAAEAAAD1AP//AgADAAEAAAD1AAAAAgADAAEAAAD1AAEAAgADAAEAAAD1AAIAAgADAAEAAAByAAsAAgACAAEAAABzAAsAAgACAAEAAAB1AAoAAgAAAAAAAAB0AAoAAgABAAEAAAB0AAgAAQAAAAEAAQB0AAkAAgAFAAEAAQBPAAYAAQAAAAEAAQBVAAYAAQAAAAEAAQBPAAcAAgAFAAEAAQBPAAgAAgAFAAEAAQBPAAkAAgAFAAEAAQBPAAoAAgAFAAEAAQBVAAoAAgAFAAEAAQBVAAkAAgAFAAEAAQBVAAgAAgAFAAEAAQBVAAcAAgAFAAEAAQCNAAIAAgABAAEAAACOAAIAAgACAAEAAACPAAIAAgACAAEAAACQAAIAAgACAAEAAACRAAIAAgACAAEAAAAoAAMAAQAAAAEAAQAyAAEAAgABAAEAAAAzAAEAAgACAAEAAAA0AAEAAgACAAEAAAA1AAEAAgACAAEAAAA2AAEAAgACAAEAAAA3AAEAAgACAAEAAAA4AAEAAgADAAEAAAAlAAUAAQAAAAEAAQAlAAYAAgAFAAEAAQAlAAcAAgAFAAEAAQAlAAgAAgAFAAEAAQAlAAkAAgAFAAEAAQAlAAoAAgAFAAEAAQAoAAoAAgAFAAEAAQAoAAkAAgAFAAEAAQAoAAgAAgAFAAEAAQAoAAcAAgAFAAEAAQAoAAYAAgAFAAEAAQAoAAUAAgAFAAEAAQAoAAQAAgAFAAEAAQA0AAIAAgAFAAEAAQA0AAMAAgAFAAEAAQA0AAQAAgAFAAEAAQA0AAUAAgAFAAEAAQA0AAYAAgAFAAEAAQA0AAcAAgAFAAEAAQA0AAgAAgAFAAEAAQA0AAkAAgAFAAEAAQA0AAoAAgAFAAEAAQA3AAkAAgAFAAEAAQA3AAgAAgAFAAEAAQA3AAcAAgAFAAEAAQA3AAUAAgAFAAEAAQA3AAQAAgAFAAEAAQA3AAMAAgAFAAEAAQA3AAIAAgAFAAEAAQBNAAoAAgABAAAAAAC8AAsAAgABAAEAAAC+AAsAAgACAAEAAAC/AAsAAgACAAEAAADAAAsAAgACAAEAAADBAAsAAgADAAEAAADFAAsAAgABAAEAAADGAAsAAgACAAEAAADHAAsAAgACAAEAAADIAAsAAgACAAEAAADJAAsAAgACAAEAAADKAAsAAgADAAEAAADOAAsAAgABAAEAAADPAAsAAgACAAEAAADQAAsAAgACAAEAAADRAAsAAgACAAEAAADSAAsAAgACAAEAAADTAAsAAgADAAEAAAC7AAIAAgABAAEAAAC8AAIAAgACAAEAAAC9AAIAAgACAAEAAAC+AAIAAgACAAEAAAC/AAIAAgACAAEAAADDAAIAAgACAAEAAADEAAIAAgACAAEAAADFAAIAAgACAAEAAADGAAIAAgACAAEAAADHAAIAAgACAAEAAADIAAIAAgADAAEAAADLAAIAAgABAAEAAADMAAIAAgACAAEAAADNAAIAAgACAAEAAAC2AAIAAgAFAAEAAQC2AAMAAgAFAAEAAQC2AAQAAgAFAAEAAQC2AAUAAgAFAAEAAQC2AAYAAgAFAAEAAQC2AAcAAgAFAAEAAQC2AAgAAgAFAAEAAQC2AAkAAgAFAAEAAQC2AAoAAgAFAAEAAQC+AAoAAgAFAAEAAQC+AAkAAgAFAAEAAQC+AAgAAgAFAAEAAQC+AAcAAgAFAAEAAQC+AAYAAgAFAAEAAQC+AAUAAgAFAAEAAQC+AAQAAgAFAAEAAQC+AAMAAgAFAAEAAQDHAAMAAgAFAAEAAQDHAAQAAgAFAAEAAQDHAAUAAQACAAEAAQDHAAYAAQAAAAEAAQDHAAcAAgAFAAEAAQDHAAgAAgAFAAEAAQDHAAkAAgAFAAEAAQDHAAoAAgAFAAEAAQCSAAIAAgACAAEAAACTAAEAAQAAAAEAAQCTAAMAAgAFAAEAAQCTAAQAAgAFAAEAAQCTAAUAAgAFAAEAAQCTAAYAAgAFAAEAAQCTAAcAAgAFAAEAAQCTAAgAAgAFAAEAAQCTAAkAAgAFAAEAAQCNAAMAAgAFAAEAAQCNAAQAAgAFAAEAAQCNAAUAAgAFAAEAAQCNAAYAAQACAAEAAQCNAAAAAgAFAAEAAQCNAAEAAgAFAAEAAQCqAAsAAgAAAAEAAACrAAsAAgACAAEAAACsAAsAAgACAAEAAACuAAsAAgADAAEAAACsAAoAAgABAAAAAADJAAUAAgACAAEAAADIAAMAAgAEAAEAAADIAAQAAgAEAAEAAADLAAQAAgAEAAEAAADLAAMAAgAEAAEAAADIAAUAAgABAAEAAADKAAUAAgACAAEAAADLAAUAAgADAAEAAADKAAYAAgAFAAEAAQDKAAcAAgAFAAEAAQDKAAgAAgAFAAEAAQDKAAkAAgAFAAEAAQDKAAoAAgAFAAEAAQC/AAMAAgABAAEAAAC/AAQAAgABAAEAAADBAAYAAgAFAAEAAQDBAAcAAgAFAAEAAQDBAAgAAgAFAAEAAQDBAAkAAgAFAAEAAQDBAAoAAgAFAAEAAQDAAAQAAgACAAEAAADBAAQAAgADAAEAAADBAAUAAgAFAAEAAQDQAAMAAgAFAAEAAQDQAAQAAgAFAAEAAQDQAAUAAgAFAAEAAQDQAAYAAgAFAAEAAQDQAAcAAgAFAAEAAQDQAAgAAgAFAAEAAQDQAAkAAgAFAAEAAQDQAAoAAgAFAAEAAQDBAAMAAgADAAEAAADCAAIAAgACAAEAAADAAAMAAgACAAAAAADAAAIAAgACAAAAAAB0AAsAAgACAAAAAABvAAsAAgAAAAEAAABwAAsAAQAAAAAAAABxAAsAAgACAAAAAABFAAQAAgACAAEAAABGAAQAAgADAAEAAABEAAQAAgABAAEAAACTAAIAAgACAAEAAACUAAIAAgACAAEAAACVAAIAAgACAAEAAACWAAIAAgACAAEAAACXAAIAAgACAAEAAACZAAIAAgADAAEAAACYAAIAAgACAAEAAACZAAAAAgAFAAEAAQCZAAEAAgAFAAEAAQCZAAMAAgAFAAEAAQCZAAQAAgAFAAEAAQCZAAUAAgAFAAEAAQCZAAYAAgAFAAEAAQCZAAcAAgAFAAEAAQCZAAgAAgAFAAEAAQCZAAkAAgAFAAEAAQB1AAsAAgACAAEAAAB2AAsAAgAAAAAAAAD0AAIAAgABAAEAAAD0AAEAAgABAAEAAAD0AAAAAgABAAEAAAD0AP//AgABAAEAAAD0AP7/AgABAAEAAAD0AP3/AgABAAEAAAD0APz/AgABAAEAAAD0APv/AgABAAEAAAD0APr/AgABAAEAAAD0APn/AgABAAEAAAD0APj/AgAEAAEAAAD0APf/AgAEAAEAAAD0APb/AgAEAAEAAAD0APX/AgAEAAEAAADoAAoAAgAFAAEAAQDpAAoAAgAFAAEAAQDqAAoAAgAFAAEAAQDrAAoAAgAFAAEAAQDsAAoAAgAFAAEAAQDoAAgAAgAFAAEAAQDoAAcAAgAFAAEAAQDoAAYAAgAFAAEAAQDoAAUAAgAFAAEAAQDOAAIAAQABAAAAAADQAAIAAQAAAAEAAQCUAAoAAQABAAEAAACtAAsAAQABAAEAAADBAAIAAQABAAEAAAC9AAsAAQABAAEAAAB/AAoAAQABAAEAAAB9AAsAAQABAAEAAABWAAsAAQABAAEAAABOAAsAAQABAAEAAAA=")
 tile_set = ExtResource("21_bq5b3")
 script = ExtResource("22_i3f35")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="Layer0" groups=["burning"]]
+[node name="TileMapLayer" type="TileMapLayer" parent="Layer0" unique_id=503702757 groups=["burning"]]
 tile_map_data = PackedByteArray("AADcAAwAAAAAAAAAAADOAAwAAAAAAAAAAADFAAwAAAAAAAAAAAC8AAwAAAAAAAAAAAC9AAwAAQAAAAAAAAC+AAwAAQAAAAAAAAC/AAwAAQAAAAAAAADAAAwAAQAAAAAAAADGAAwAAQAAAAAAAADHAAwAAQAAAAAAAADIAAwAAQAAAAAAAADJAAwAAQAAAAAAAADPAAwAAQAAAAAAAADQAAwAAQAAAAAAAADRAAwAAQAAAAAAAADSAAwAAQAAAAAAAADdAAwAAQAAAAAAAADeAAwAAQAAAAAAAADfAAwAAQAAAAAAAADgAAwAAQAAAAAAAADhAAwAAQAAAAAAAADiAAwAAQAAAAAAAADjAAwAAQAAAAAAAADkAAwAAQAAAAAAAADlAAwAAQAAAAAAAADmAAwAAQAAAAAAAADnAAwAAQAAAAAAAADoAAwAAQAAAAAAAADpAAwAAQAAAAAAAADqAAwAAQAAAAAAAADrAAwAAQAAAAAAAADsAAwAAQAAAAAAAADtAAwAAQAAAAAAAADuAAwAAQAAAAAAAADvAAwAAQAAAAAAAADwAAwAAQAAAAAAAACyAAwAAQAAAAAAAACzAAwAAQAAAAAAAAC0AAwAAQAAAAAAAAC1AAwAAQAAAAAAAACtAAwAAQAAAAAAAACsAAwAAQAAAAAAAACrAAwAAQAAAAAAAACmAAwAAQAAAAAAAAClAAwAAQAAAAAAAACkAAwAAQAAAAAAAACjAAwAAQAAAAAAAACWAAwAAQAAAAAAAACVAAwAAQAAAAAAAACUAAwAAQAAAAAAAACTAAwAAQAAAAAAAAB/AAwAAQAAAAAAAAB+AAwAAQAAAAAAAAB9AAwAAQAAAAAAAAB8AAwAAQAAAAAAAAB1AAwAAQAAAAAAAAB0AAwAAQAAAAAAAABzAAwAAQAAAAAAAAByAAwAAQAAAAAAAABxAAwAAQAAAAAAAABwAAwAAQAAAAAAAABoAAwAAQAAAAAAAABnAAwAAQAAAAAAAABmAAwAAQAAAAAAAABlAAwAAQAAAAAAAABUAAwAAAAAAAAAAABVAAwAAQAAAAAAAABWAAwAAQAAAAAAAABXAAwAAQAAAAAAAABYAAwAAQAAAAAAAABMAAwAAQAAAAAAAABNAAwAAQAAAAAAAABOAAwAAQAAAAAAAABPAAwAAQAAAAAAAAA+AAwAAQAAAAAAAAA/AAwAAQAAAAAAAABAAAwAAQAAAAAAAABBAAwAAQAAAAAAAAA0AAwAAQAAAAAAAAA1AAwAAQAAAAAAAAA2AAwAAQAAAAAAAAA3AAwAAQAAAAAAAAAoAAwAAQAAAAAAAAApAAwAAQAAAAAAAAAqAAwAAQAAAAAAAAArAAwAAQAAAAAAAAAkAAwAAQAAAAAAAAAlAAwAAQAAAAAAAAAmAAwAAQAAAAAAAAAnAAwAAQAAAAAAAAAiAAwAAQAAAAAAAAAjAAwAAQAAAAAAAAAXAAwAAQAAAAAAAAAYAAwAAQAAAAAAAAAZAAwAAQAAAAAAAAAaAAwAAQAAAAAAAAAWAAwAAAAAAAAAAAAhAAwAAAAAAAAAAAAzAAwAAAAAAAAAAAA9AAwAAAAAAAAAAAAsAAwAAgAAAAAAAAAbAAwAAgAAAAAAAAA4AAwAAgAAAAAAAABCAAwAAgAAAAAAAABQAAwAAgAAAAAAAABZAAwAAgAAAAAAAABpAAwAAgAAAAAAAAB2AAwAAgAAAAAAAABvAAwAAAAAAAAAAABkAAwAAAAAAAAAAABLAAwAAAAAAAAAAAB7AAwAAAAAAAAAAACSAAwAAAAAAAAAAACAAAwAAgAAAAAAAACXAAwAAgAAAAAAAACiAAwAAAAAAAAAAACqAAwAAAAAAAAAAACxAAwAAAAAAAAAAACnAAwAAgAAAAAAAACuAAwAAgAAAAAAAAC2AAwAAgAAAAAAAADBAAwAAgAAAAAAAADKAAwAAgAAAAAAAADTAAwAAgAAAAAAAADxAAwAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_7q0yb")
 
-[node name="LevelScr" type="Node2D" parent="."]
+[node name="LevelScr" type="Node2D" parent="." unique_id=453634483]
 script = ExtResource("13_jqepq")
 
-[node name="FireMarkers" type="Node2D" parent="LevelScr"]
+[node name="FireMarkers" type="Node2D" parent="LevelScr" unique_id=1253033973]
 position = Vector2(7232, 0)
 
-[node name="Marker2D" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=241023437]
 position = Vector2(80, 144)
 
-[node name="Marker2D2" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D2" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=838495062]
 position = Vector2(240, 208)
 
-[node name="Marker2D3" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D3" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1048547770]
 position = Vector2(-16, 336)
 
-[node name="Marker2D4" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D4" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1104336909]
 position = Vector2(336, 336)
 
-[node name="Marker2D45" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D45" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1229285485]
 position = Vector2(560, 64)
 
-[node name="Marker2D5" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D5" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=543987474]
 position = Vector2(-560, 368)
 
-[node name="Marker2D39" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D39" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=760532580]
 position = Vector2(-1072, 112)
 
-[node name="Marker2D40" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D40" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=243615864]
 position = Vector2(-1104, 368)
 
-[node name="Marker2D41" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D41" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1407174296]
 position = Vector2(-832, 368)
 
-[node name="Marker2D42" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D42" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=2052216879]
 position = Vector2(-1712, 368)
 
-[node name="MarkerKonch" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="MarkerKonch" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1507485509]
 position = Vector2(-272, 400)
 
-[node name="Marker2D6" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D6" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=884027529]
 position = Vector2(-1456, 368)
 
-[node name="Marker2D8" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D8" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=329171166]
 position = Vector2(-1488, 48)
 
-[node name="Marker2D9" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D9" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1171056285]
 position = Vector2(-1808, 48)
 
-[node name="Marker2D10" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D10" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1047322951]
 position = Vector2(-2000, 48)
 
-[node name="Marker2D11" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D11" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=56930393]
 position = Vector2(-2352, 80)
 
-[node name="Marker2D12" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D12" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=227468530]
 position = Vector2(-2352, 368)
 
-[node name="Marker2D13" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D13" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1981447072]
 position = Vector2(-2512, 368)
 
-[node name="Marker2D14" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D14" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1321981049]
 position = Vector2(-3104, 192)
 
-[node name="Marker2D15" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D15" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=458984738]
 position = Vector2(-3040, 256)
 
-[node name="Marker2D16" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D16" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1957849749]
 position = Vector2(-3120, 336)
 
-[node name="Marker2D17" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D17" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=927306569]
 position = Vector2(-3184, 368)
 
-[node name="Marker2D18" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D18" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1089692819]
 position = Vector2(-3264, 352)
 
-[node name="Marker2D19" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D19" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=496464819]
 position = Vector2(-3472, 240)
 
-[node name="Marker2D20" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D20" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1544721281]
 position = Vector2(-3616, 368)
 
-[node name="Marker2D46" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D46" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1288755964]
 position = Vector2(-3472, 368)
 
-[node name="Marker2D47" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D47" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=363644231]
 position = Vector2(-3344, 352)
 
-[node name="Marker2D21" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D21" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=566868853]
 position = Vector2(-3792, 240)
 
-[node name="Marker2D22" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D22" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=481008484]
 position = Vector2(-3888, 336)
 
-[node name="Marker2DHui" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2DHui" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1714931843]
 position = Vector2(-3984, 368)
 
-[node name="Marker2D24" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D24" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=309743630]
 position = Vector2(-4400, 368)
 
-[node name="Marker2D25" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D25" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1360745933]
 position = Vector2(-4496, 400)
 
-[node name="Marker2D26" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D26" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1916811237]
 position = Vector2(-4688, 368)
 
-[node name="Marker2D27" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D27" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1140828916]
 position = Vector2(-4784, 400)
 
-[node name="Marker2D28" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D28" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=556109835]
 position = Vector2(-4848, 304)
 
-[node name="Marker2D29" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D29" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=118026835]
 position = Vector2(-5072, 304)
 
-[node name="Marker2D48" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D48" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=633861846]
 position = Vector2(-5456, 208)
 
-[node name="Marker2D30" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D30" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=522738709]
 position = Vector2(-5168, 336)
 
-[node name="Marker2D31" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D31" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=665659674]
 position = Vector2(-5456, 368)
 
-[node name="Marker2D43" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D43" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=228441771]
 position = Vector2(-5472, 48)
 
-[node name="Marker2D50" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D50" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=739175743]
 position = Vector2(-5552, 80)
 
-[node name="Marker2D44" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D44" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=760163699]
 position = Vector2(-5984, 320)
 
-[node name="Marker2D49" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D49" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=643088678]
 position = Vector2(-5984, 192)
 
-[node name="Marker2D32" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D32" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=2035014041]
 position = Vector2(-5520, 336)
 
-[node name="Marker2D33" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D33" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=636908979]
 position = Vector2(-5776, 336)
 
-[node name="Marker2D34" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D34" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1261138135]
 position = Vector2(-5904, 400)
 
-[node name="Marker2D35" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D35" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1710546126]
 position = Vector2(-6032, 368)
 
-[node name="Marker2D37" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D37" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1488839853]
 position = Vector2(-6352, 368)
 
-[node name="Marker2D38" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D38" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1334750899]
 position = Vector2(-6480, 368)
 
-[node name="Marker2D36" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D36" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=1620228725]
 position = Vector2(-6096, 400)
 
-[node name="Marker2D7" type="Marker2D" parent="LevelScr/FireMarkers"]
+[node name="Marker2D7" type="Marker2D" parent="LevelScr/FireMarkers" unique_id=761851529]
 position = Vector2(-2000, 368)
 
-[node name="BrickGenerators" type="Node2D" parent="LevelScr"]
+[node name="BrickGenerators" type="Node2D" parent="LevelScr" unique_id=240656967]
 position = Vector2(7232, 0)
 
-[node name="Marker2D8" type="Marker2D" parent="LevelScr/BrickGenerators"]
+[node name="Marker2D8" type="Marker2D" parent="LevelScr/BrickGenerators" unique_id=1551351643]
 position = Vector2(-3632, 368)
 
-[node name="Marker2D7" type="Marker2D" parent="LevelScr/BrickGenerators"]
+[node name="Marker2D7" type="Marker2D" parent="LevelScr/BrickGenerators" unique_id=695608770]
 position = Vector2(-3056, 240)
 
-[node name="Marker2D2" type="Marker2D" parent="LevelScr/BrickGenerators"]
+[node name="Marker2D2" type="Marker2D" parent="LevelScr/BrickGenerators" unique_id=1897005669]
 position = Vector2(-4784, 368)
 
-[node name="Marker2D3" type="Marker2D" parent="LevelScr/BrickGenerators"]
+[node name="Marker2D3" type="Marker2D" parent="LevelScr/BrickGenerators" unique_id=1586204315]
 position = Vector2(-3824, 240)
 
-[node name="Marker2D4" type="Marker2D" parent="LevelScr/BrickGenerators"]
+[node name="Marker2D4" type="Marker2D" parent="LevelScr/BrickGenerators" unique_id=664585980]
 position = Vector2(-2400, 368)
 
-[node name="Scripted1" type="Node2D" parent="LevelScr"]
+[node name="Scripted1" type="Node2D" parent="LevelScr" unique_id=1744566117]
 z_index = -1
 position = Vector2(6592, 64)
 
-[node name="Area2D" type="Area2D" parent="LevelScr/Scripted1"]
+[node name="Area2D" type="Area2D" parent="LevelScr/Scripted1" unique_id=745518534]
 collision_layer = 0
 monitorable = false
 script = ExtResource("22_s1rv2")
 type = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted1/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted1/Area2D" unique_id=2034961706]
 position = Vector2(112, 33)
 shape = SubResource("RectangleShape2D_jqepq")
 disabled = true
 
-[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted1" groups=["burning"]]
+[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted1" unique_id=1707517426 groups=["burning"]]
 tile_map_data = PackedByteArray("AAAAAAAAAQACAAAAAAABAAAAAgACAAEAAAACAAAAAgACAAEAAAADAAAAAgACAAEAAAAEAAAAAgACAAEAAAAFAAAAAgADAAEAAAA=")
 tile_set = ExtResource("21_bq5b3")
 occlusion_enabled = false
 use_kinematic_bodies = true
 navigation_enabled = false
 
-[node name="TankSpike48" parent="LevelScr/Scripted1/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike48" parent="LevelScr/Scripted1/TileMapLayer" unique_id=1035316279 instance=ExtResource("38_ox2db")]
 position = Vector2(6672, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike49" parent="LevelScr/Scripted1/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike49" parent="LevelScr/Scripted1/TileMapLayer" unique_id=1260326682 instance=ExtResource("38_ox2db")]
 position = Vector2(6704, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike42" parent="LevelScr/Scripted1/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike42" parent="LevelScr/Scripted1/TileMapLayer" unique_id=1678402168 instance=ExtResource("38_ox2db")]
 position = Vector2(6736, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike43" parent="LevelScr/Scripted1/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike43" parent="LevelScr/Scripted1/TileMapLayer" unique_id=602597963 instance=ExtResource("38_ox2db")]
 position = Vector2(6768, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted1"]
+[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted1" unique_id=1195986835]
 position = Vector2(16, 16)
 texture = ExtResource("23_jrmcx")
 region_enabled = true
 region_rect = Rect2(64, 32, 32, 32)
 
-[node name="Pipes" type="Node2D" parent="LevelScr"]
+[node name="Pipes" type="Node2D" parent="LevelScr" unique_id=624660926]
 script = ExtResource("22_i3f35")
 
-[node name="FallingPipe" parent="LevelScr/Pipes" instance=ExtResource("25_jqepq")]
+[node name="FallingPipe" parent="LevelScr/Pipes" unique_id=198415786 instance=ExtResource("25_jqepq")]
 position = Vector2(5760, 112)
 
-[node name="FallingPipe2" parent="LevelScr/Pipes" instance=ExtResource("25_jqepq")]
+[node name="FallingPipe2" parent="LevelScr/Pipes" unique_id=1417865324 instance=ExtResource("25_jqepq")]
 position = Vector2(5600, 112)
 
-[node name="FallingPipe3" parent="LevelScr/Pipes" instance=ExtResource("25_jqepq")]
+[node name="FallingPipe3" parent="LevelScr/Pipes" unique_id=87809510 instance=ExtResource("25_jqepq")]
 position = Vector2(5472, 112)
 
-[node name="FallingPipe4" parent="LevelScr/Pipes" instance=ExtResource("25_jqepq")]
+[node name="FallingPipe4" parent="LevelScr/Pipes" unique_id=216648411 instance=ExtResource("25_jqepq")]
 position = Vector2(5280, 112)
 
-[node name="FallingPipe5" parent="LevelScr/Pipes" instance=ExtResource("25_jqepq")]
+[node name="FallingPipe5" parent="LevelScr/Pipes" unique_id=1443854175 instance=ExtResource("25_jqepq")]
 position = Vector2(4864, 144)
 
-[node name="FallingPipe6" parent="LevelScr/Pipes" instance=ExtResource("25_jqepq")]
+[node name="FallingPipe6" parent="LevelScr/Pipes" unique_id=1765879598 instance=ExtResource("25_jqepq")]
 position = Vector2(1632, 112)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelScr"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelScr" unique_id=1066825747]
 root_node = NodePath("../Scripted2")
-libraries = {
-&"": SubResource("AnimationLibrary_2kxpu")
-}
+libraries/ = SubResource("AnimationLibrary_2kxpu")
 
-[node name="Scripted2" type="Node2D" parent="LevelScr"]
+[node name="Scripted2" type="Node2D" parent="LevelScr" unique_id=1566071652]
 position = Vector2(4160, 80)
 script = ExtResource("22_i3f35")
 
-[node name="Point" type="Node2D" parent="LevelScr/Scripted2"]
+[node name="Point" type="Node2D" parent="LevelScr/Scripted2" unique_id=748780232]
 position = Vector2(368, 156)
 
-[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted2/Point" groups=["burning"]]
+[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted2/Point" unique_id=2119449289 groups=["burning"]]
 position = Vector2(16, -16)
 tile_map_data = PackedByteArray("AAD//wAAAgABAAEAAAAAAAAAAgACAAEAAAABAAAAAgACAAEAAAADAAAAAgADAAEAAAACAAAAAgACAAEAAAACAP//AQABAAEAAAADAP//AQABAAEAAAA=")
 tile_set = ExtResource("21_bq5b3")
 
-[node name="FlameballLauncher22" type="HBoxContainer" parent="LevelScr/Scripted2/Point"]
+[node name="FlameballLauncher22" type="HBoxContainer" parent="LevelScr/Scripted2/Point" unique_id=647152354]
 clip_contents = true
 offset_left = 80.0
 offset_top = -48.0
@@ -903,229 +883,229 @@ pivot_offset = Vector2(16, 16)
 size_flags_horizontal = 2
 theme_override_constants/separation = 0
 
-[node name="Head" type="TextureRect" parent="LevelScr/Scripted2/Point/FlameballLauncher22"]
+[node name="Head" type="TextureRect" parent="LevelScr/Scripted2/Point/FlameballLauncher22" unique_id=752671930]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("26_7q0yb")
 
-[node name="Tail" type="TextureRect" parent="LevelScr/Scripted2/Point/FlameballLauncher22"]
+[node name="Tail" type="TextureRect" parent="LevelScr/Scripted2/Point/FlameballLauncher22" unique_id=1235733521]
 layout_mode = 2
 size_flags_horizontal = 8
 texture = ExtResource("27_tququ")
 
-[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted2/Point/FlameballLauncher22"]
+[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted2/Point/FlameballLauncher22" unique_id=2121813252]
 modulate = Color(1, 0.233333, 0, 1)
 texture = ExtResource("28_3hck4")
 centered = false
 
-[node name="Point3" type="Node2D" parent="LevelScr/Scripted2"]
+[node name="Point3" type="Node2D" parent="LevelScr/Scripted2" unique_id=293745438]
 z_index = -1
 
-[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted2/Point3" groups=["burning"]]
+[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted2/Point3" unique_id=749829095 groups=["burning"]]
 position = Vector2(0, -16)
 tile_map_data = PackedByteArray("AAD+/wAAAgABAAEAAAD//wAAAgACAAEAAAAAAAAAAgACAAEAAAABAAAAAgADAAEAAAA=")
 tile_set = ExtResource("21_bq5b3")
 
-[node name="TankSpike8" parent="LevelScr/Scripted2/Point3" instance=ExtResource("38_ox2db")]
+[node name="TankSpike8" parent="LevelScr/Scripted2/Point3" unique_id=2006876951 instance=ExtResource("38_ox2db")]
 position = Vector2(-79.5, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted2"]
+[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted2" unique_id=1139360541]
 position = Vector2(16, 160)
 texture = ExtResource("23_jrmcx")
 region_enabled = true
 region_rect = Rect2(64, 32, 32, 32)
 
-[node name="Chains" type="Node2D" parent="LevelScr/Scripted2"]
+[node name="Chains" type="Node2D" parent="LevelScr/Scripted2" unique_id=1587451477]
 
-[node name="Chain12" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain12" parent="LevelScr/Scripted2/Chains" unique_id=393717560 instance=ExtResource("26_dekc4")]
 z_index = -1
 position = Vector2(496, 256)
 
-[node name="Chain13" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain13" parent="LevelScr/Scripted2/Chains" unique_id=725048508 instance=ExtResource("26_dekc4")]
 z_index = -1
 position = Vector2(464, 256)
 
-[node name="Chain14" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain14" parent="LevelScr/Scripted2/Chains" unique_id=1098791506 instance=ExtResource("26_dekc4")]
 z_index = -1
 position = Vector2(432, 256)
 
-[node name="Chain15" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain15" parent="LevelScr/Scripted2/Chains" unique_id=1188542374 instance=ExtResource("26_dekc4")]
 z_index = -1
 position = Vector2(400, 256)
 
-[node name="Chain16" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain16" parent="LevelScr/Scripted2/Chains" unique_id=1518851036 instance=ExtResource("26_dekc4")]
 z_index = -1
 position = Vector2(368, 256)
 
-[node name="Chain" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain" parent="LevelScr/Scripted2/Chains" unique_id=1232406711 instance=ExtResource("26_dekc4")]
 position = Vector2(528, 256)
 
-[node name="Chain2" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain2" parent="LevelScr/Scripted2/Chains" unique_id=773941830 instance=ExtResource("26_dekc4")]
 position = Vector2(336, 256)
 
-[node name="Chain3" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain3" parent="LevelScr/Scripted2/Chains" unique_id=1183227201 instance=ExtResource("26_dekc4")]
 position = Vector2(304, 256)
 
-[node name="Chain4" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain4" parent="LevelScr/Scripted2/Chains" unique_id=473500702 instance=ExtResource("26_dekc4")]
 position = Vector2(272, 256)
 
-[node name="Chain5" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain5" parent="LevelScr/Scripted2/Chains" unique_id=854021560 instance=ExtResource("26_dekc4")]
 position = Vector2(240, 256)
 
-[node name="Chain6" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain6" parent="LevelScr/Scripted2/Chains" unique_id=1998212717 instance=ExtResource("26_dekc4")]
 position = Vector2(208, 256)
 
-[node name="Chain7" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain7" parent="LevelScr/Scripted2/Chains" unique_id=1788261453 instance=ExtResource("26_dekc4")]
 position = Vector2(176, 256)
 
-[node name="Chain8" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain8" parent="LevelScr/Scripted2/Chains" unique_id=368794126 instance=ExtResource("26_dekc4")]
 position = Vector2(144, 256)
 
-[node name="Chain9" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain9" parent="LevelScr/Scripted2/Chains" unique_id=1313254558 instance=ExtResource("26_dekc4")]
 position = Vector2(112, 256)
 
-[node name="Chain10" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain10" parent="LevelScr/Scripted2/Chains" unique_id=1811674320 instance=ExtResource("26_dekc4")]
 position = Vector2(80, 256)
 
-[node name="Chain11" parent="LevelScr/Scripted2/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain11" parent="LevelScr/Scripted2/Chains" unique_id=1741838454 instance=ExtResource("26_dekc4")]
 position = Vector2(48, 256)
 
-[node name="Scripted3" type="Node2D" parent="LevelScr"]
+[node name="Scripted3" type="Node2D" parent="LevelScr" unique_id=939218253]
 position = Vector2(3712, 224)
 script = ExtResource("22_i3f35")
 
-[node name="Node2D" type="Node2D" parent="LevelScr/Scripted3"]
+[node name="Node2D" type="Node2D" parent="LevelScr/Scripted3" unique_id=2066955298]
 position = Vector2(0, 16)
 
-[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted3/Node2D" groups=["burning"]]
+[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted3/Node2D" unique_id=857246942 groups=["burning"]]
 z_index = -1
 position = Vector2(0, -16)
 tile_map_data = PackedByteArray("AAAAAAAAAgABAAEAAAABAAAAAgACAAEAAAACAAAAAgACAAEAAAADAPf/AgABAAEAAAADAPj/AgABAAEAAAADAPn/AgABAAEAAAADAPr/AgABAAEAAAADAPv/AgABAAEAAAADAPz/AgABAAEAAAADAP3/AgABAAEAAAADAP7/AgABAAEAAAADAP//AgABAAEAAAAEAPf/AgADAAEAAAAEAPj/AgADAAEAAAAEAPn/AgADAAEAAAAEAPr/AgADAAEAAAAEAPv/AgADAAEAAAAEAPz/AgACAAEAAAAEAP3/AgADAAEAAAAEAP7/AgADAAEAAAAEAP//AgADAAEAAAAEAAAAAgADAAEAAAAFAPz/AgACAAEAAAAGAPz/AgADAAEAAAADAAAAAQABAAEAAAA=")
 tile_set = ExtResource("21_bq5b3")
 
-[node name="TankSpike8" parent="LevelScr/Scripted3/Node2D/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike8" parent="LevelScr/Scripted3/Node2D/TileMapLayer" unique_id=1270655904 instance=ExtResource("38_ox2db")]
 position = Vector2(80, -208)
 
-[node name="TankSpike9" parent="LevelScr/Scripted3/Node2D/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike9" parent="LevelScr/Scripted3/Node2D/TileMapLayer" unique_id=541097409 instance=ExtResource("38_ox2db")]
 position = Vector2(80, -144)
 
-[node name="TankSpike10" parent="LevelScr/Scripted3/Node2D/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike10" parent="LevelScr/Scripted3/Node2D/TileMapLayer" unique_id=667764710 instance=ExtResource("38_ox2db")]
 position = Vector2(80, -80)
 
-[node name="TankSpike11" parent="LevelScr/Scripted3/Node2D/TileMapLayer" instance=ExtResource("38_ox2db")]
+[node name="TankSpike11" parent="LevelScr/Scripted3/Node2D/TileMapLayer" unique_id=1516873888 instance=ExtResource("38_ox2db")]
 position = Vector2(80, -16)
 
-[node name="Marker2D" type="Marker2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer"]
+[node name="Marker2D" type="Marker2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer" unique_id=1089639826]
 position = Vector2(128, -112)
 
-[node name="TankSmallBreak14" parent="LevelScr/Scripted3/Node2D/TileMapLayer" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak14" parent="LevelScr/Scripted3/Node2D/TileMapLayer" unique_id=982253772 instance=ExtResource("62_wuxpr")]
 position = Vector2(112, 16)
 
-[node name="Area2D" type="Area2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer"]
+[node name="Area2D" type="Area2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer" unique_id=1482994054]
 collision_layer = 0
 monitorable = false
 script = ExtResource("22_s1rv2")
 type = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer/Area2D" unique_id=1023518384]
 position = Vector2(80, 17)
 shape = SubResource("RectangleShape2D_jqepq")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer/Area2D"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer/Area2D" unique_id=1631239507]
 position = Vector2(191, -112)
 shape = SubResource("RectangleShape2D_wuxpr")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer/Area2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="LevelScr/Scripted3/Node2D/TileMapLayer/Area2D" unique_id=2104543070]
 position = Vector2(128, -139)
 shape = SubResource("RectangleShape2D_mvw6i")
 
-[node name="Chains" type="Node2D" parent="LevelScr/Scripted3"]
+[node name="Chains" type="Node2D" parent="LevelScr/Scripted3" unique_id=1326666968]
 
-[node name="Chain11" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain11" parent="LevelScr/Scripted3/Chains" unique_id=23868327 instance=ExtResource("26_dekc4")]
 position = Vector2(-16, 16)
 
-[node name="Chain12" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain12" parent="LevelScr/Scripted3/Chains" unique_id=460542602 instance=ExtResource("26_dekc4")]
 position = Vector2(-48, 16)
 
-[node name="Chain13" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain13" parent="LevelScr/Scripted3/Chains" unique_id=1566857615 instance=ExtResource("26_dekc4")]
 position = Vector2(-80, 16)
 
-[node name="Chain14" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain14" parent="LevelScr/Scripted3/Chains" unique_id=443514799 instance=ExtResource("26_dekc4")]
 position = Vector2(-112, 16)
 
-[node name="Chain15" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain15" parent="LevelScr/Scripted3/Chains" unique_id=814464539 instance=ExtResource("26_dekc4")]
 position = Vector2(-144, 16)
 
-[node name="Chain16" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain16" parent="LevelScr/Scripted3/Chains" unique_id=1226033882 instance=ExtResource("26_dekc4")]
 position = Vector2(-176, 16)
 
-[node name="Chain17" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain17" parent="LevelScr/Scripted3/Chains" unique_id=994338471 instance=ExtResource("26_dekc4")]
 position = Vector2(-208, 16)
 
-[node name="Chain18" parent="LevelScr/Scripted3/Chains" instance=ExtResource("26_dekc4")]
+[node name="Chain18" parent="LevelScr/Scripted3/Chains" unique_id=1191335142 instance=ExtResource("26_dekc4")]
 position = Vector2(-240, 16)
 
-[node name="Scripted4" type="Node2D" parent="LevelScr"]
+[node name="Scripted4" type="Node2D" parent="LevelScr" unique_id=2093564555]
 script = ExtResource("22_i3f35")
 
-[node name="SpikeballLauncher2" parent="LevelScr/Scripted4" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher2" parent="LevelScr/Scripted4" unique_id=1687352436 instance=ExtResource("55_4j3yt")]
 position = Vector2(1248, 336)
 
-[node name="Node2D" type="Node2D" parent="LevelScr/Scripted4"]
+[node name="Node2D" type="Node2D" parent="LevelScr/Scripted4" unique_id=1706356933]
 position = Vector2(1248, 112)
 
-[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted4/Node2D"]
+[node name="TileMapLayer" type="TileMapLayer" parent="LevelScr/Scripted4/Node2D" unique_id=1980865327]
 position = Vector2(0, -16)
 tile_map_data = PackedByteArray("AAD9/wAAAgABAAEAAAD+/wAAAgACAAEAAAD//wAAAQABAAAAAAAAAAAAAQACAAAAAAABAAAAAgACAAEAAAACAAAAAgADAAEAAAA=")
 tile_set = ExtResource("21_bq5b3")
 
-[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted4/Node2D"]
+[node name="Sprite2D" type="Sprite2D" parent="LevelScr/Scripted4/Node2D" unique_id=889041403]
 position = Vector2(16, 0)
 texture = ExtResource("23_jrmcx")
 region_enabled = true
 region_rect = Rect2(64, 32, 32, 32)
 
-[node name="Sprite2D2" type="Sprite2D" parent="LevelScr/Scripted4/Node2D"]
+[node name="Sprite2D2" type="Sprite2D" parent="LevelScr/Scripted4/Node2D" unique_id=1715309763]
 position = Vector2(-16, 0)
 texture = ExtResource("23_jrmcx")
 region_enabled = true
 region_rect = Rect2(64, 32, 32, 32)
 
-[node name="TankSpike35" parent="LevelScr/Scripted4/Node2D" instance=ExtResource("38_ox2db")]
+[node name="TankSpike35" parent="LevelScr/Scripted4/Node2D" unique_id=1124418410 instance=ExtResource("38_ox2db")]
 position = Vector2(-80, -32)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike36" parent="LevelScr/Scripted4/Node2D" instance=ExtResource("38_ox2db")]
+[node name="TankSpike36" parent="LevelScr/Scripted4/Node2D" unique_id=1042074324 instance=ExtResource("38_ox2db")]
 position = Vector2(80, -32)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="Area2D" type="Area2D" parent="LevelScr/Scripted4/Node2D"]
+[node name="Area2D" type="Area2D" parent="LevelScr/Scripted4/Node2D" unique_id=1360316575]
 collision_layer = 0
 monitorable = false
 script = ExtResource("22_s1rv2")
 type = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted4/Node2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted4/Node2D/Area2D" unique_id=2094555602]
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_lgipb")
 
-[node name="Area2D2" type="Area2D" parent="LevelScr/Scripted4/Node2D"]
+[node name="Area2D2" type="Area2D" parent="LevelScr/Scripted4/Node2D" unique_id=354238112]
 collision_layer = 0
 monitorable = false
 script = ExtResource("22_s1rv2")
 type = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted4/Node2D/Area2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelScr/Scripted4/Node2D/Area2D2" unique_id=685309651]
 position = Vector2(58, 27)
 shape = SubResource("RectangleShape2D_awwgv")
 disabled = true
 
-[node name="HUD" parent="." instance=ExtResource("23_n3uxp")]
+[node name="HUD" parent="." unique_id=94796399 instance=ExtResource("23_n3uxp")]
 layer = 20
 
-[node name="World" type="Label" parent="HUD"]
+[node name="World" type="Label" parent="HUD" unique_id=180258704]
 anchors_preset = -1
 anchor_left = 0.2
 anchor_right = 0.2
@@ -1141,7 +1121,7 @@ text = "RUN!!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="HUD"]
+[node name="Label" type="Label" parent="HUD" unique_id=526790701]
 offset_left = 217.0
 offset_top = -38.0
 offset_right = 423.0
@@ -1160,7 +1140,7 @@ action_after_sec = 2.0
 fade_on_end = true
 skip_suspended_profile_save = false
 
-[node name="Label2" type="Label" parent="HUD"]
+[node name="Label2" type="Label" parent="HUD" unique_id=2065437343]
 offset_left = 217.0
 offset_top = -38.0
 offset_right = 423.0
@@ -1179,7 +1159,7 @@ action_after_sec = 1.5
 fade_on_end = true
 skip_suspended_profile_save = false
 
-[node name="ColorRect" type="ColorRect" parent="HUD"]
+[node name="ColorRect" type="ColorRect" parent="HUD" unique_id=1286143419]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1187,73 +1167,73 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1619402093]
 
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground" unique_id=1087005714]
 offset_right = 640.0
 offset_bottom = 480.0
 texture = SubResource("GradientTexture2D_cjsdv")
 metadata/_edit_lock_ = true
 
-[node name="Gradient" type="Sprite2D" parent="ParallaxBackground"]
+[node name="Gradient" type="Sprite2D" parent="ParallaxBackground" unique_id=1557508376]
 modulate = Color(1, 1, 1, 0.556863)
 position = Vector2(320, 240)
 scale = Vector2(10, 7.5)
 texture = SubResource("GradientTexture2D_pljnj")
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=2138135981]
 motion_mirroring = Vector2(1280, 0)
 
-[node name="Node2D" type="Node2D" parent="ParallaxBackground/ParallaxLayer2"]
+[node name="Node2D" type="Node2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1432565850]
 script = ExtResource("16_ixd3u")
 medium = true
 metadata/_edit_lock_ = true
 
-[node name="Cloud2" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud2" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=1416270358 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(80, 96)
 
-[node name="Cloud3" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud3" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=1072414152 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(288, 128)
 
-[node name="Cloud4" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud4" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=1359397836 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(544, 176)
 
-[node name="Cloud7" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud7" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=592110572 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(736, 48)
 
-[node name="Cloud8" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud8" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=1600063640 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(848, 152)
 
-[node name="Cloud10" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud10" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=152087494 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(1040, 64)
 
-[node name="Cloud11" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud11" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=1522019568 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(1160, 128)
 
-[node name="Cloud5" parent="ParallaxBackground/ParallaxLayer2/Node2D" instance=ExtResource("25_m4wlh")]
+[node name="Cloud5" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=1185105495 instance=ExtResource("25_m4wlh")]
 z_index = 2
 position = Vector2(480, 80)
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground" unique_id=995641999]
 motion_mirroring = Vector2(640, 0)
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=215014655]
 texture_repeat = 2
 position = Vector2(320, 453)
 texture = ExtResource("26_b8jep")
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 64)
 
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1535068844]
 texture_repeat = 2
 position = Vector2(320, 448)
 texture = ExtResource("26_b8jep")
@@ -1261,12 +1241,12 @@ region_enabled = true
 region_rect = Rect2(0, 0, 640, 64)
 metadata/_edit_lock_ = true
 
-[node name="Node2D" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Node2D" type="ParallaxLayer" parent="ParallaxBackground" unique_id=258141003]
 motion_mirroring = Vector2(800, 0)
 script = ExtResource("16_ixd3u")
 medium = true
 
-[node name="ColorRect2" type="ColorRect" parent="ParallaxBackground/Node2D"]
+[node name="ColorRect2" type="ColorRect" parent="ParallaxBackground/Node2D" unique_id=183924285]
 material = SubResource("ShaderMaterial_47e0u")
 offset_right = 800.0
 offset_bottom = 600.0
@@ -1274,13 +1254,13 @@ color = Color(0.2744, 0.28, 0.28, 1)
 script = ExtResource("28_hcmhb")
 metadata/_edit_lock_ = true
 
-[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=2025505892]
 layer = 1
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" unique_id=700644096]
 motion_mirroring = Vector2(640, 0)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="ParallaxBackground2/ParallaxLayer"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ParallaxBackground2/ParallaxLayer" unique_id=1702046357]
 z_index = 12
 amount = 15
 texture = ExtResource("29_7xeqn")
@@ -1290,10 +1270,10 @@ visibility_rect = Rect2(-16, -80, 672, 560)
 local_coords = true
 process_material = ExtResource("30_88w2r")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=606182814]
 layer = 10
 
-[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer"]
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer" unique_id=1464090586]
 modulate = Color(1, 1, 1, 0.368627)
 material = ExtResource("31_2278w")
 position = Vector2(640, 0)
@@ -1303,7 +1283,7 @@ texture = SubResource("GradientTexture1D_tebvh")
 centered = false
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer"]
+[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer" unique_id=1718645782]
 position = Vector2(668, -6.973)
 rotation = 1.5708
 scale = Vector2(1, 700)
@@ -1311,256 +1291,256 @@ texture = SubResource("GradientTexture1D_s2gb7")
 centered = false
 metadata/_edit_lock_ = true
 
-[node name="Objects" type="Node2D" parent="."]
+[node name="Objects" type="Node2D" parent="." unique_id=1736387896]
 
-[node name="QuestionBlock11" parent="Objects" instance=ExtResource("32_4ryv4")]
+[node name="QuestionBlock11" parent="Objects" unique_id=1968605599 instance=ExtResource("32_4ryv4")]
 position = Vector2(7440, 608)
 result = SubResource("Resource_cjsdv")
 
-[node name="Node2D2" type="Node2D" parent="."]
+[node name="Node2D2" type="Node2D" parent="." unique_id=1597533730]
 script = ExtResource("22_i3f35")
 
-[node name="TankSpike15" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike15" parent="Node2D2" unique_id=224349659 instance=ExtResource("38_ox2db")]
 position = Vector2(2192, 112)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike16" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike16" parent="Node2D2" unique_id=193843849 instance=ExtResource("38_ox2db")]
 position = Vector2(2224, 112)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike17" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike17" parent="Node2D2" unique_id=465120330 instance=ExtResource("38_ox2db")]
 position = Vector2(2256, 112)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike19" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike19" parent="Node2D2" unique_id=730991983 instance=ExtResource("38_ox2db")]
 position = Vector2(4528, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike44" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike44" parent="Node2D2" unique_id=148916207 instance=ExtResource("38_ox2db")]
 position = Vector2(4560, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike45" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike45" parent="Node2D2" unique_id=1506663956 instance=ExtResource("38_ox2db")]
 position = Vector2(4624, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike37" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike37" parent="Node2D2" unique_id=1751406615 instance=ExtResource("38_ox2db")]
 position = Vector2(1616, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike38" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike38" parent="Node2D2" unique_id=102800086 instance=ExtResource("38_ox2db")]
 position = Vector2(1808, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike39" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike39" parent="Node2D2" unique_id=87421765 instance=ExtResource("38_ox2db")]
 position = Vector2(1712, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike20" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike20" parent="Node2D2" unique_id=1624088695 instance=ExtResource("38_ox2db")]
 position = Vector2(4592, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike22" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike22" parent="Node2D2" unique_id=569242900 instance=ExtResource("38_ox2db")]
 position = Vector2(5200, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike50" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike50" parent="Node2D2" unique_id=1180158631 instance=ExtResource("38_ox2db")]
 position = Vector2(7056, 305)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike51" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike51" parent="Node2D2" unique_id=188000202 instance=ExtResource("38_ox2db")]
 position = Vector2(7152, 209)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike23" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike23" parent="Node2D2" unique_id=975225996 instance=ExtResource("38_ox2db")]
 position = Vector2(5232, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike24" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike24" parent="Node2D2" unique_id=502725284 instance=ExtResource("38_ox2db")]
 position = Vector2(5328, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike25" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike25" parent="Node2D2" unique_id=1839907907 instance=ExtResource("38_ox2db")]
 position = Vector2(5360, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike26" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike26" parent="Node2D2" unique_id=226556046 instance=ExtResource("38_ox2db")]
 position = Vector2(5392, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike27" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike27" parent="Node2D2" unique_id=1255103971 instance=ExtResource("38_ox2db")]
 position = Vector2(5424, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike28" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike28" parent="Node2D2" unique_id=858922210 instance=ExtResource("38_ox2db")]
 position = Vector2(5520, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike29" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike29" parent="Node2D2" unique_id=1836741795 instance=ExtResource("38_ox2db")]
 position = Vector2(5552, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike30" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike30" parent="Node2D2" unique_id=748207099 instance=ExtResource("38_ox2db")]
 position = Vector2(5648, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike40" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike40" parent="Node2D2" unique_id=1208879736 instance=ExtResource("38_ox2db")]
 position = Vector2(6000, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike41" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike41" parent="Node2D2" unique_id=771718410 instance=ExtResource("38_ox2db")]
 position = Vector2(6032, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike46" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike46" parent="Node2D2" unique_id=360487860 instance=ExtResource("38_ox2db")]
 position = Vector2(6064, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike47" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike47" parent="Node2D2" unique_id=1831313288 instance=ExtResource("38_ox2db")]
 position = Vector2(6096, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike52" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike52" parent="Node2D2" unique_id=1840223762 instance=ExtResource("38_ox2db")]
 position = Vector2(6224, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike53" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike53" parent="Node2D2" unique_id=765057718 instance=ExtResource("38_ox2db")]
 position = Vector2(6256, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike54" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike54" parent="Node2D2" unique_id=1654824920 instance=ExtResource("38_ox2db")]
 position = Vector2(6288, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike55" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike55" parent="Node2D2" unique_id=1953781838 instance=ExtResource("38_ox2db")]
 position = Vector2(6320, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike56" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike56" parent="Node2D2" unique_id=1199491280 instance=ExtResource("38_ox2db")]
 position = Vector2(6352, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike57" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike57" parent="Node2D2" unique_id=1118391302 instance=ExtResource("38_ox2db")]
 position = Vector2(6384, 48)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike31" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike31" parent="Node2D2" unique_id=361756356 instance=ExtResource("38_ox2db")]
 position = Vector2(5680, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike32" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike32" parent="Node2D2" unique_id=348622585 instance=ExtResource("38_ox2db")]
 position = Vector2(5712, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike33" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike33" parent="Node2D2" unique_id=1246497779 instance=ExtResource("38_ox2db")]
 position = Vector2(5808, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike34" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike34" parent="Node2D2" unique_id=1568380647 instance=ExtResource("38_ox2db")]
 position = Vector2(5840, 16)
 rotation = 1.57079
 scale = Vector2(1, -1)
 
-[node name="TankSpike18" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike18" parent="Node2D2" unique_id=2128326154 instance=ExtResource("38_ox2db")]
 position = Vector2(4496, 80)
 
-[node name="TankSpike13" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike13" parent="Node2D2" unique_id=933221960 instance=ExtResource("38_ox2db")]
 position = Vector2(6960, 368)
 
-[node name="TankSpike14" parent="Node2D2" instance=ExtResource("38_ox2db")]
+[node name="TankSpike14" parent="Node2D2" unique_id=1621382908 instance=ExtResource("38_ox2db")]
 position = Vector2(6928, 400)
 
-[node name="HammerBroJumpMarker3" parent="." instance=ExtResource("40_jyoqf")]
+[node name="HammerBroJumpMarker3" parent="." unique_id=928563610 instance=ExtResource("40_jyoqf")]
 position = Vector2(2528, 160)
 hammer_bros_jumping_type = 1
 
-[node name="TankBowser" parent="." groups=["burning"] instance=ExtResource("43_m8luk")]
+[node name="TankBowser" parent="." unique_id=591405956 groups=["burning"] instance=ExtResource("43_m8luk")]
 position = Vector2(6992, 352)
 
-[node name="TankBowser" parent="TankBowser" index="0"]
+[node name="TankBowser" parent="TankBowser" index="0" unique_id=698482222]
 texture = ExtResource("44_2pelk")
 offset = Vector2(0, -5)
 
-[node name="TankBowser2" parent="." groups=["burning"] instance=ExtResource("43_m8luk")]
+[node name="TankBowser2" parent="." unique_id=295448613 groups=["burning"] instance=ExtResource("43_m8luk")]
 position = Vector2(7744, 128)
 
-[node name="TankBowser" parent="TankBowser2" index="0"]
+[node name="TankBowser" parent="TankBowser2" index="0" unique_id=698482222]
 texture = ExtResource("44_2pelk")
 offset = Vector2(0, -5)
 
-[node name="TankBowser3" parent="." groups=["burning"] instance=ExtResource("43_m8luk")]
+[node name="TankBowser3" parent="." unique_id=1158721988 groups=["burning"] instance=ExtResource("43_m8luk")]
 position = Vector2(7552, 128)
 scale = Vector2(-1, 1)
 
-[node name="TankBowser" parent="TankBowser3" index="0"]
+[node name="TankBowser" parent="TankBowser3" index="0" unique_id=698482222]
 texture = ExtResource("44_2pelk")
 offset = Vector2(0, -5)
 
-[node name="TankBowserImg" type="Sprite2D" parent="."]
+[node name="TankBowserImg" type="Sprite2D" parent="." unique_id=1383962666]
 z_index = -1
 position = Vector2(7489, 223)
 texture = ExtResource("45_sks1d")
 
-[node name="PipeIn" parent="." instance=ExtResource("46_d6ob2")]
+[node name="PipeIn" parent="." unique_id=590537420 instance=ExtResource("46_d6ob2")]
 position = Vector2(7680, 464)
 warp_to_scene = "uid://cueg4hektims0"
 use_blur_transition = true
 
-[node name="QuestionBlock30" parent="." instance=ExtResource("32_4ryv4")]
+[node name="QuestionBlock30" parent="." unique_id=924158650 instance=ExtResource("32_4ryv4")]
 position = Vector2(7408, 608)
 result = SubResource("Resource_b2xgn")
 
-[node name="QuestionBlock27" parent="." instance=ExtResource("32_4ryv4")]
+[node name="QuestionBlock27" parent="." unique_id=419296087 instance=ExtResource("32_4ryv4")]
 position = Vector2(4272, 272)
 result = SubResource("Resource_b2xgn")
 
-[node name="QuestionBlock28" parent="." instance=ExtResource("32_4ryv4")]
+[node name="QuestionBlock28" parent="." unique_id=1582139454 instance=ExtResource("32_4ryv4")]
 position = Vector2(5648, 144)
 result = SubResource("Resource_b2xgn")
 initially_visible_and_solid = false
 
-[node name="Sign" type="Sprite2D" parent="."]
+[node name="Sign" type="Sprite2D" parent="." unique_id=1351321764]
 z_index = -10
 texture_filter = 2
 position = Vector2(720, 624)
 rotation = -0.436332
 texture = ExtResource("50_o3tdf")
 
-[node name="LabelMisterEarl" parent="Sign" instance=ExtResource("51_g2xru")]
+[node name="LabelMisterEarl" parent="Sign" unique_id=1815855645 instance=ExtResource("51_g2xru")]
 offset_left = -49.7144
 offset_top = -45.9182
 offset_right = 48.2856
@@ -1568,80 +1548,80 @@ offset_bottom = -16.9182
 text = "hot surface!
 keep jumping!"
 
-[node name="BulletLauncher" parent="." groups=["burning"] instance=ExtResource("52_1gwsj")]
+[node name="BulletLauncher" parent="." unique_id=847590611 groups=["burning"] instance=ExtResource("52_1gwsj")]
 position = Vector2(7152, 304)
 shooting_force_dir = -1
 metadata/_edit_group_ = true
 
-[node name="BulletBillBase7" parent="BulletLauncher" instance=ExtResource("53_yhbya")]
+[node name="BulletBillBase7" parent="BulletLauncher" unique_id=1493027204 instance=ExtResource("53_yhbya")]
 offset_top = -16.16
 offset_bottom = 15.84
 
-[node name="BulletLauncher2" parent="." groups=["burning"] instance=ExtResource("52_1gwsj")]
+[node name="BulletLauncher2" parent="." unique_id=1098329041 groups=["burning"] instance=ExtResource("52_1gwsj")]
 position = Vector2(7184, 272)
 shooting_force_dir = -1
 metadata/_edit_group_ = true
 
-[node name="BulletBillBase7" parent="BulletLauncher2" instance=ExtResource("53_yhbya")]
+[node name="BulletBillBase7" parent="BulletLauncher2" unique_id=1731446634 instance=ExtResource("53_yhbya")]
 offset_top = -16.16
 offset_bottom = 15.84
 
-[node name="BulletLauncher3" parent="." groups=["burning"] instance=ExtResource("52_1gwsj")]
+[node name="BulletLauncher3" parent="." unique_id=1674468815 groups=["burning"] instance=ExtResource("52_1gwsj")]
 position = Vector2(7248, 208)
 shooting_force_dir = -1
 metadata/_edit_group_ = true
 
-[node name="BulletBillBase7" parent="BulletLauncher3" instance=ExtResource("53_yhbya")]
+[node name="BulletBillBase7" parent="BulletLauncher3" unique_id=506696683 instance=ExtResource("53_yhbya")]
 offset_top = -16.16
 offset_bottom = 15.84
 
-[node name="BulletLauncher4" parent="." groups=["burning"] instance=ExtResource("52_1gwsj")]
+[node name="BulletLauncher4" parent="." unique_id=1725215801 groups=["burning"] instance=ExtResource("52_1gwsj")]
 position = Vector2(7280, 176)
 shooting_force_dir = -1
 metadata/_edit_group_ = true
 
-[node name="BulletBillBase7" parent="BulletLauncher4" instance=ExtResource("53_yhbya")]
+[node name="BulletBillBase7" parent="BulletLauncher4" unique_id=203755858 instance=ExtResource("53_yhbya")]
 offset_top = -16.16
 offset_bottom = 15.84
 
-[node name="Thwomp" parent="." instance=ExtResource("54_1bk7d")]
+[node name="Thwomp" parent="." unique_id=1260235402 instance=ExtResource("54_1bk7d")]
 position = Vector2(2592, 48)
 trigger_area = Rect2(-100, -128, 200, 480)
 
-[node name="Thwomp2" parent="." instance=ExtResource("54_1bk7d")]
+[node name="Thwomp2" parent="." unique_id=1085528201 instance=ExtResource("54_1bk7d")]
 position = Vector2(2720, 48)
 trigger_area = Rect2(-100, -128, 200, 480)
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=1811649636]
 script = ExtResource("22_i3f35")
 
-[node name="SpikeballLauncher" parent="Node2D" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher" parent="Node2D" unique_id=1388496898 instance=ExtResource("55_4j3yt")]
 position = Vector2(1120, 336)
 
-[node name="SpikeballLauncher3" parent="Node2D" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher3" parent="Node2D" unique_id=1821417592 instance=ExtResource("55_4j3yt")]
 position = Vector2(1376, 336)
 
-[node name="SpikeballLauncher4" parent="Node2D" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher4" parent="Node2D" unique_id=1843699638 instance=ExtResource("55_4j3yt")]
 position = Vector2(3328, 208)
 spikeball_velocity_min = Vector2(-100, -350)
 
-[node name="SpikeballLauncher5" parent="Node2D" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher5" parent="Node2D" unique_id=809345328 instance=ExtResource("55_4j3yt")]
 position = Vector2(3424, 208)
 spikeball_velocity_min = Vector2(-100, -350)
 
-[node name="SpikeballLauncher6" parent="Node2D" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher6" parent="Node2D" unique_id=1955149574 instance=ExtResource("55_4j3yt")]
 position = Vector2(5344, 336)
 
-[node name="SpikeballLauncher9" parent="Node2D" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher9" parent="Node2D" unique_id=876924128 instance=ExtResource("55_4j3yt")]
 position = Vector2(6464, 144)
 interval = 3.2
 spikeball_velocity_min = Vector2(-100, -300)
 spikeball_velocity_max = Vector2(100, -200)
 
-[node name="SpikeballLauncher7" parent="Node2D" instance=ExtResource("55_4j3yt")]
+[node name="SpikeballLauncher7" parent="Node2D" unique_id=681138261 instance=ExtResource("55_4j3yt")]
 position = Vector2(5696, 336)
 
-[node name="FlameballLauncher11" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher11" parent="Node2D" unique_id=1423544440 instance=ExtResource("56_rso6l")]
 offset_left = 3232.0
 offset_top = 224.0
 offset_right = 3296.0
@@ -1650,7 +1630,7 @@ interval = 999.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="FlameballLauncher12" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher12" parent="Node2D" unique_id=641028276 instance=ExtResource("56_rso6l")]
 offset_left = 3232.0
 offset_top = 320.0
 offset_right = 3296.0
@@ -1659,7 +1639,7 @@ interval = 999.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="FlameballLauncher20" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher20" parent="Node2D" unique_id=612009433 instance=ExtResource("56_rso6l")]
 offset_left = 3648.0
 offset_top = 320.0
 offset_right = 3712.0
@@ -1668,7 +1648,7 @@ interval = 999.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="FlameballLauncher21" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher21" parent="Node2D" unique_id=1538214921 instance=ExtResource("56_rso6l")]
 z_index = -2
 offset_left = 3968.0
 offset_top = 320.0
@@ -1678,7 +1658,7 @@ interval = 999.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="FlameballLauncher13" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher13" parent="Node2D" unique_id=1075125124 instance=ExtResource("56_rso6l")]
 offset_left = 2048.0
 offset_top = 288.0
 offset_right = 2112.0
@@ -1688,7 +1668,7 @@ initial_interval = 0.6
 speed = 250.0
 amount = 6.0
 
-[node name="FlameballLauncher14" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher14" parent="Node2D" unique_id=2005620017 instance=ExtResource("56_rso6l")]
 offset_left = 2016.0
 offset_top = 320.0
 offset_right = 2080.0
@@ -1698,7 +1678,7 @@ initial_interval = 0.6
 speed = 250.0
 amount = 6.0
 
-[node name="FlameballLauncher22" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher22" parent="Node2D" unique_id=432892358 instance=ExtResource("56_rso6l")]
 offset_left = 736.0
 offset_top = 320.0
 offset_right = 800.0
@@ -1708,7 +1688,7 @@ initial_interval = 0.6
 speed = 250.0
 amount = 6.0
 
-[node name="FlameballLauncher15" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher15" parent="Node2D" unique_id=116480614 instance=ExtResource("56_rso6l")]
 offset_left = 1664.0
 offset_top = 320.0
 offset_right = 1728.0
@@ -1717,7 +1697,7 @@ interval = 999.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="FlameballLauncher17" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher17" parent="Node2D" unique_id=1866911985 instance=ExtResource("56_rso6l")]
 offset_left = 7040.0
 offset_top = 320.0
 offset_right = 7136.0
@@ -1726,7 +1706,7 @@ interval = 999.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="FlameballLauncher18" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher18" parent="Node2D" unique_id=1234839620 instance=ExtResource("56_rso6l")]
 offset_left = 7136.0
 offset_top = 224.0
 offset_right = 7232.0
@@ -1735,7 +1715,7 @@ interval = 999.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="FlameballLauncher19" parent="Node2D" instance=ExtResource("56_rso6l")]
+[node name="FlameballLauncher19" parent="Node2D" unique_id=1209786472 instance=ExtResource("56_rso6l")]
 offset_left = 7232.0
 offset_top = 128.0
 offset_right = 7328.0
@@ -1744,100 +1724,100 @@ interval = 99.0
 initial_interval = 999.0
 sound = SubResource("AudioStreamWAV_s1rv2")
 
-[node name="TankSmallBreak" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak" parent="Node2D" unique_id=1823827993 instance=ExtResource("62_wuxpr")]
 position = Vector2(6064, 368)
 
-[node name="TankSmallBreak2" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak2" parent="Node2D" unique_id=314827360 instance=ExtResource("62_wuxpr")]
 position = Vector2(6192, 80)
 
-[node name="TankSmallBreak3" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak3" parent="Node2D" unique_id=284305757 instance=ExtResource("62_wuxpr")]
 position = Vector2(5552, 368)
 
-[node name="TankSmallBreak4" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak4" parent="Node2D" unique_id=1068025155 instance=ExtResource("62_wuxpr")]
 position = Vector2(4752, 336)
 
-[node name="TankSmallBreak5" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak5" parent="Node2D" unique_id=1653640736 instance=ExtResource("62_wuxpr")]
 position = Vector2(4080, 336)
 
-[node name="TankSmallBreak6" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak6" parent="Node2D" unique_id=1594826255 instance=ExtResource("62_wuxpr")]
 position = Vector2(4016, 368)
 
-[node name="TankSmallBreak7" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak7" parent="Node2D" unique_id=806715480 instance=ExtResource("62_wuxpr")]
 position = Vector2(2768, 368)
 
-[node name="TankSmallBreak8" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak8" parent="Node2D" unique_id=955324154 instance=ExtResource("62_wuxpr")]
 position = Vector2(2512, 368)
 
-[node name="TankSmallBreak9" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak9" parent="Node2D" unique_id=832072268 instance=ExtResource("62_wuxpr")]
 position = Vector2(2096, 368)
 
-[node name="TankSmallBreak12" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak12" parent="Node2D" unique_id=1728151654 instance=ExtResource("62_wuxpr")]
 position = Vector2(2000, 368)
 
-[node name="TankSmallBreak13" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak13" parent="Node2D" unique_id=1879478652 instance=ExtResource("62_wuxpr")]
 position = Vector2(784, 368)
 
-[node name="TankSmallBreak14" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak14" parent="Node2D" unique_id=13888749 instance=ExtResource("62_wuxpr")]
 position = Vector2(1264, 368)
 
-[node name="TankSmallBreak10" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak10" parent="Node2D" unique_id=2060607527 instance=ExtResource("62_wuxpr")]
 position = Vector2(1712, 368)
 
-[node name="TankSmallBreak11" parent="Node2D" instance=ExtResource("62_wuxpr")]
+[node name="TankSmallBreak11" parent="Node2D" unique_id=825524184 instance=ExtResource("62_wuxpr")]
 position = Vector2(3312, 368)
 
-[node name="RedMushroom" parent="." instance=ExtResource("33_begpq")]
+[node name="RedMushroom" parent="." unique_id=1316017109 instance=ExtResource("33_begpq")]
 position = Vector2(7648, -48)
 appear_distance = 0.0
 appear_visible = 0.0
 appear_collectable = 0.0
 speed = Vector2(0, 0)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=108496000]
 collision_layer = 240
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=319725686]
 position = Vector2(-48, 416)
 shape = SubResource("WorldBoundaryShape2D_dekc4")
 
-[node name="DamagedBeam" type="Sprite2D" parent="."]
+[node name="DamagedBeam" type="Sprite2D" parent="." unique_id=542088451]
 z_index = -20
 position = Vector2(3561, 377)
 rotation = -2.09439
 texture = ExtResource("55_s2gb7")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="DamagedBeam"]
+[node name="StaticBody2D" type="StaticBody2D" parent="DamagedBeam" unique_id=2015682902]
 collision_layer = 240
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamagedBeam/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamagedBeam/StaticBody2D" unique_id=969951504]
 visible = false
 shape = SubResource("RectangleShape2D_dagdr")
 
-[node name="DamagedBeam2" type="Sprite2D" parent="DamagedBeam"]
+[node name="DamagedBeam2" type="Sprite2D" parent="DamagedBeam" unique_id=288522545]
 show_behind_parent = true
 position = Vector2(-50.542, 13.5425)
 rotation = 3.92699
 texture = ExtResource("55_s2gb7")
 flip_v = true
 
-[node name="Brick3" parent="." instance=ExtResource("59_3hck4")]
+[node name="Brick3" parent="." unique_id=1715598028 instance=ExtResource("59_3hck4")]
 position = Vector2(2736, 208)
 
-[node name="Brick2" parent="." instance=ExtResource("60_qt7e6")]
+[node name="Brick2" parent="." unique_id=1839588043 instance=ExtResource("60_qt7e6")]
 position = Vector2(2704, 208)
 
-[node name="Brick4" parent="." instance=ExtResource("59_3hck4")]
+[node name="Brick4" parent="." unique_id=1593747945 instance=ExtResource("59_3hck4")]
 position = Vector2(2608, 208)
 
-[node name="Brick5" parent="." instance=ExtResource("60_qt7e6")]
+[node name="Brick5" parent="." unique_id=1348788885 instance=ExtResource("60_qt7e6")]
 position = Vector2(2576, 208)
 
-[node name="TankBreakPart" parent="." instance=ExtResource("61_qt7e6")]
+[node name="TankBreakPart" parent="." unique_id=2016844803 instance=ExtResource("61_qt7e6")]
 position = Vector2(2544, 208)
 
-[node name="TankBreakPart2" parent="." instance=ExtResource("61_qt7e6")]
+[node name="TankBreakPart2" parent="." unique_id=1616299497 instance=ExtResource("61_qt7e6")]
 position = Vector2(2672, 208)
 
 [connection signal="timeout" from="Mario/Timer" to="Mario/BurningSurfaceModifier" method="set_process_mode" binds= [0]]

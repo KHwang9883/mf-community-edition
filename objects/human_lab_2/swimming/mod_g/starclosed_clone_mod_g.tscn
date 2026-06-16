@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bfy3kd7ukexwx"]
+[gd_scene format=3 uid="uid://bfy3kd7ukexwx"]
 
 [ext_resource type="Script" uid="uid://dpmoq7qeco0q6" path="res://objects/human_lab_2/swimming/cheep_and_bubbles.gd" id="1_hyein"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_hyein"]
@@ -22,15 +22,7 @@ size = Vector2(28, 28)
 resource_local_to_scene = true
 script = ExtResource("5_gccps")
 creation_nodepack = ExtResource("3_kwg7d")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, 0),
@@ -87,7 +79,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dou2e")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 12.0
 }]
@@ -98,12 +90,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_hyein")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="StarClosedCloneModG" type="CharacterBody2D"]
+[node name="StarClosedCloneModG" type="CharacterBody2D" unique_id=196091482]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_hyein")
@@ -113,24 +105,24 @@ look_at_player = true
 sprite = NodePath("Sprite")
 speed = Vector2(50, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=942241985]
 visible = false
 position = Vector2(2, -1)
 scale = Vector2(1.68, 1)
 shape = SubResource("RectangleShape2D_urkew")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1308607413]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1764622147]
 visible = false
 position = Vector2(2, -1)
 scale = Vector2(1.76, 1)
 shape = SubResource("RectangleShape2D_8v3i3")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1558035317]
 script = ExtResource("2_hyein")
 stomping_creation = SubResource("Resource_0wfa5")
 stomping_scores = 100
@@ -153,7 +145,7 @@ killing_sound_failed = ExtResource("7_hyein")
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
-[node name="SwimX" type="ShapeCast2D" parent="."]
+[node name="SwimX" type="ShapeCast2D" parent="." unique_id=2064977485]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -162,7 +154,7 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="SwimY" type="ShapeCast2D" parent="."]
+[node name="SwimY" type="ShapeCast2D" parent="." unique_id=1746803025]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -171,17 +163,17 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=17738220]
 sprite_frames = SubResource("SpriteFrames_34jvi")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=505810952]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_xb076")
 script = ExtResource("9_r7iyg")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=433251290]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(3.8147e-06, 3.8147e-06)
 scale = Vector2(2, 2)
@@ -189,11 +181,11 @@ rect = Rect2(-24, -24, 48, 48)
 script = ExtResource("10_v1w3f")
 metadata/_edit_lock_ = true
 
-[node name="Interval" type="Timer" parent="."]
+[node name="Interval" type="Timer" parent="." unique_id=1909817604]
 process_callback = 0
 autostart = true
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=226848691]
 position = Vector2(5, -17)
 
 [connection signal="collided_ceiling" from="." to="." method="turn_y"]

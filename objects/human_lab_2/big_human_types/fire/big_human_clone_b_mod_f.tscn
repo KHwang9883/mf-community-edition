@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bp4j0fdkhmajt"]
+[gd_scene format=3 uid="uid://bp4j0fdkhmajt"]
 
 [ext_resource type="Script" uid="uid://dmcn56u26b38a" path="res://engine/objects/enemies/hammer_bros/hammer_bro_base.gd" id="1_1fkbp"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_1fkbp"]
@@ -19,15 +19,7 @@
 [sub_resource type="Resource" id="Resource_2t02q"]
 script = ExtResource("4_mfkut")
 creation_nodepack = ExtResource("2_1fkbp")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(387.5, 0),
 "speed_min": Vector2(387.5, 0)
@@ -41,15 +33,8 @@ size = Vector2(32, 56)
 resource_local_to_scene = true
 script = ExtResource("4_mfkut")
 creation_nodepack = ExtResource("7_2t02q")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -62,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_1ctlu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -70,7 +55,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_1ctlu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
@@ -183,7 +168,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ctce3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }, {
@@ -191,7 +176,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_myq3u")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }]
@@ -199,7 +184,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtn54"]
 size = Vector2(32, 32)
 
-[node name="PYRO" type="CharacterBody2D"]
+[node name="PYRO" type="CharacterBody2D" unique_id=1382814191]
 collision_layer = 2
 collision_mask = 32
 platform_on_leave = 2
@@ -210,22 +195,22 @@ speed = Vector2(100, 0)
 gravity_scale = 0.2
 metadata/_custom_type_script = "uid://ng3vu4qwreu5"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=153506680]
 visible = false
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_yi8t6")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=948654880]
 process_mode = 3
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1624300575]
 visible = false
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_yi8t6")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1888071327]
 script = ExtResource("6_2mopn")
 stomping_creation = SubResource("Resource_js3nb")
 stomping_scores = 200
@@ -236,13 +221,13 @@ killing_sound_succeeded = ExtResource("9_7caky")
 ice_sprite = NodePath("../../Sprite")
 sound_ignore_pitch_modification = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1746082681]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_r5jqf")
 animation = &"attack"
 autoplay = "default"
 
-[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" unique_id=961368497]
 position = Vector2(0, 28)
 sprite_frames = SubResource("SpriteFrames_ed4w4")
 animation = &"idle"
@@ -253,35 +238,35 @@ can_idle = true
 can_move_both_ways = true
 idle_offset = Vector2(1, 0)
 
-[node name="SpriteProjectile" type="Sprite2D" parent="."]
+[node name="SpriteProjectile" type="Sprite2D" parent="." unique_id=656503241]
 visible = false
 position = Vector2(23, 14)
 scale = Vector2(-1, 1)
 texture = ExtResource("14_1fkbp")
 flip_h = true
 
-[node name="PosAttack" type="Marker2D" parent="."]
+[node name="PosAttack" type="Marker2D" parent="." unique_id=63015844]
 visible = false
 position = Vector2(23, 14)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=961460709]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("15_grhck")
 metadata/_edit_lock_ = true
 
-[node name="Walk" type="Timer" parent="."]
+[node name="Walk" type="Timer" parent="." unique_id=1579918232]
 one_shot = true
 
-[node name="Attack" type="Timer" parent="."]
+[node name="Attack" type="Timer" parent="." unique_id=1183907732]
 wait_time = 0.06
 autostart = true
 
-[node name="Jump" type="Timer" parent="."]
+[node name="Jump" type="Timer" parent="." unique_id=1871593446]
 wait_time = 0.24
 autostart = true
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=70396654]
 visible = false
 position = Vector2(0, -8)
 enabled = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://xyt43i847r8c"]
+[gd_scene format=3 uid="uid://xyt43i847r8c"]
 
 [ext_resource type="Script" uid="uid://c7wcbmd5pnq1n" path="res://engine/objects/enemies/cheeps/cheep.gd" id="1_xl2hy"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_p6owm"]
@@ -23,15 +23,7 @@ size = Vector2(28, 28)
 resource_local_to_scene = true
 script = ExtResource("4_44l7m")
 creation_nodepack = ExtResource("2_qse7k")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -88,12 +80,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nfx7w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="MechChaserCloneModG" type="CharacterBody2D"]
+[node name="MechChaserCloneModG" type="CharacterBody2D" unique_id=1175544533]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_xl2hy")
@@ -106,20 +98,20 @@ sprite = NodePath("Sprite")
 speed = Vector2(50, 0)
 metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1981438999]
 visible = false
 shape = SubResource("RectangleShape2D_urkew")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1175775306]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1604828829]
 visible = false
 shape = SubResource("RectangleShape2D_8v3i3")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=481963116]
 script = ExtResource("2_p6owm")
 stomping_creation = SubResource("Resource_tm8dl")
 stomping_scores = 200
@@ -142,7 +134,7 @@ killing_sound_failed = ExtResource("5_f64ky")
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"killing_immune"]
 
-[node name="SwimX" type="ShapeCast2D" parent="."]
+[node name="SwimX" type="ShapeCast2D" parent="." unique_id=1240007363]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -151,7 +143,7 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="SwimY" type="ShapeCast2D" parent="."]
+[node name="SwimY" type="ShapeCast2D" parent="." unique_id=1814762999]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -160,7 +152,7 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1385846361]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_aoa4j")
 autoplay = "default"
@@ -169,11 +161,11 @@ track_mod = 2
 use_smoothness = true
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="Killed" type="Sprite2D" parent="Sprite"]
+[node name="Killed" type="Sprite2D" parent="Sprite" unique_id=740405480]
 visible = false
 texture = ExtResource("8_fygye")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1680825475]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(3.8147e-06, 3.8147e-06)
 scale = Vector2(2, 2)
@@ -181,7 +173,7 @@ rect = Rect2(-24, -24, 48, 48)
 script = ExtResource("12_ssw8y")
 metadata/_edit_lock_ = true
 
-[node name="Interval" type="Timer" parent="."]
+[node name="Interval" type="Timer" parent="." unique_id=1271004126]
 process_callback = 0
 autostart = true
 

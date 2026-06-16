@@ -68,5 +68,5 @@ func _on_picker_created() -> void:
 func _set_scale() -> void:
 	var colorpick = color_picker.get_popup()
 	var win_scale = SettingsManager.get_ui_scale(colorpick)
-	SettingsManager.scale_window(colorpick, win_scale, false, true)
+	SettingsManager.scale_window(colorpick, win_scale, false)
 	

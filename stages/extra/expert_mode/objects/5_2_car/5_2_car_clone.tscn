@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://db2ok3qly3icb"]
+[gd_scene format=3 uid="uid://db2ok3qly3icb"]
 
 [ext_resource type="Script" uid="uid://bpos5juwp20fl" path="res://stages/extra/expert_mode/objects/5_2_car/5_2_car_clone.gd" id="1_0i4ff"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_m4ahw"]
@@ -19,15 +19,7 @@ size = Vector2(104, 16)
 resource_local_to_scene = true
 script = ExtResource("6_kvxit")
 creation_nodepack = ExtResource("4_wbc3v")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../expl"),
 "death_speed": Vector2(0, -250)
@@ -119,7 +111,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yvblt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }, {
@@ -178,12 +170,12 @@ animations = [{
 "duration": 1.0,
 "texture": null
 }],
-"loop": false,
+"loop": 0,
 "name": &"explode",
 "speed": 15.0
 }]
 
-[node name="GeneralMovementBody2D" type="CharacterBody2D"]
+[node name="GeneralMovementBody2D" type="CharacterBody2D" unique_id=2068482471]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_0i4ff")
@@ -193,20 +185,20 @@ collision = false
 correct_collision = false
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1063964109]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_gxd5b")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=14053608]
 position = Vector2(-960, -464)
 collision_layer = 2
 collision_mask = 7
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=821326338]
 position = Vector2(960, 462)
 shape = SubResource("RectangleShape2D_gxd5b")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1897674162]
 script = ExtResource("2_m4ahw")
 stomping_scores = 100
 stomping_sound = ExtResource("3_m4ahw")
@@ -229,14 +221,14 @@ killing_can_combo = false
 killing_sound_succeeded = ExtResource("5_ayg3e")
 killing_sound_failed = ExtResource("6_wbc3v")
 
-[node name="expl" type="AnimatedSprite2D" parent="."]
+[node name="expl" type="AnimatedSprite2D" parent="." unique_id=170339089]
 z_index = -11
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_nylqt")
 autoplay = "default"
 speed_scale = 1.2
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1166064718]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.90735e-06, -16)
 rect = Rect2(-56, -16, 112, 48)

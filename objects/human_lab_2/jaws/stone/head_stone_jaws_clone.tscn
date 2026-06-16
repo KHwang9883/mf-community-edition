@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://705d3x3ivolt"]
+[gd_scene format=3 uid="uid://705d3x3ivolt"]
 
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="1_wovln"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_3s7vd"]
@@ -15,15 +15,8 @@ size = Vector2(30, 30)
 [sub_resource type="Resource" id="Resource_pdrc3"]
 script = ExtResource("5_g0p87")
 creation_nodepack = ExtResource("3_851q6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -61,23 +54,23 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rmcpl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="HeadJawsClone" type="Node2D"]
+[node name="HeadJawsClone" type="Node2D" unique_id=2059118680]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1732994332]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_wovln")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body" unique_id=1751687301]
 visible = false
 shape = SubResource("RectangleShape2D_owky4")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1374215030]
 script = ExtResource("2_3s7vd")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -99,11 +92,11 @@ killing_sound_failed = ExtResource("7_q33ug")
 ice_sprite = NodePath("../../Sprite")
 sound_ignore_pitch_modification = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=213285857]
 sprite_frames = SubResource("SpriteFrames_hwf8p")
 autoplay = "default"
 
-[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="." unique_id=968226428]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)

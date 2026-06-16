@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cwn8bf8lkndn7"]
+[gd_scene format=3 uid="uid://cwn8bf8lkndn7"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_lklt4"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_2vwgh"]
@@ -27,15 +27,8 @@ size = Vector2(26, 14)
 resource_local_to_scene = true
 script = ExtResource("6_dkb4i")
 creation_nodepack = ExtResource("4_4grag")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -64,7 +57,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gb7qo")
 }],
-"loop": false,
+"loop": 0,
 "name": &"appear",
 "speed": 25.0
 }, {
@@ -81,7 +74,7 @@ animations = [{
 "duration": 4.0,
 "texture": SubResource("AtlasTexture_578b2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
@@ -194,7 +187,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2ij8c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }, {
@@ -202,12 +195,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_he88r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }]
 
-[node name="PresentClone3_A" type="CharacterBody2D"]
+[node name="PresentClone3_A" type="CharacterBody2D" unique_id=9889093]
 position = Vector2(0, -2)
 collision_layer = 2
 collision_mask = 32
@@ -222,31 +215,31 @@ speed = Vector2(50, 0)
 gravity_scale = 0.5
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=530149479]
 visible = false
 position = Vector2(0, 17)
 shape = SubResource("RectangleShape2D_qmmne")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
+[node name="Body" type="Area2D" parent="." unique_id=1377254242 groups=["#lava_body"]]
 position = Vector2(0, 3)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_2vwgh")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=350780998]
 visible = false
 position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_2vwgh")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="Collision2" type="CollisionShape2D" parent="Body"]
+[node name="Collision2" type="CollisionShape2D" parent="Body" unique_id=2077051327]
 visible = false
 position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_lklt4")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=413878933]
 script = ExtResource("3_nweh5")
 stomping_standard = Vector2(0, 0)
 killing_creation = SubResource("Resource_kpwej")
@@ -258,12 +251,12 @@ custom_vars = {
 "attachment_stomped": NodePath("")
 }
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1313251637]
 position = Vector2(0, 3)
 sprite_frames = SubResource("SpriteFrames_a64bo")
 autoplay = "default"
 
-[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" unique_id=1343757906]
 position = Vector2(-1, 28)
 sprite_frames = SubResource("SpriteFrames_8ii85")
 autoplay = "default"
@@ -271,11 +264,11 @@ script = ExtResource("11_loo67")
 enemy_center_node = NodePath("../..")
 walk_offset = Vector2(-1, 0)
 
-[node name="Dead" type="Sprite2D" parent="Sprite"]
+[node name="Dead" type="Sprite2D" parent="Sprite" unique_id=1879856676]
 visible = false
 texture = ExtResource("12_d7enw")
 
-[node name="Vision" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="Vision" type="VisibleOnScreenEnabler2D" parent="." unique_id=1482440338]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-24, -24, 48, 48)
 script = ExtResource("13_4ficf")

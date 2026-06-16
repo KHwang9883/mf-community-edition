@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://darbjobviy7vf"]
+[gd_scene format=3 uid="uid://darbjobviy7vf"]
 
 [ext_resource type="Script" uid="uid://c08gsw7pt6yrv" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_o2san"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_nejwk"]
@@ -23,15 +23,8 @@ size = Vector2(48, 63)
 resource_local_to_scene = true
 script = ExtResource("6_u0vpk")
 creation_nodepack = ExtResource("4_kjlcx")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, 0)
@@ -42,15 +35,8 @@ custom_script = ExtResource("5_d06hx")
 resource_local_to_scene = true
 script = ExtResource("6_u0vpk")
 creation_nodepack = ExtResource("4_kjlcx")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -85,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uo501")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
@@ -96,12 +82,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_3axly")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="CoderCloneRunningC" type="CharacterBody2D"]
+[node name="CoderCloneRunningC" type="CharacterBody2D" unique_id=588484253]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -114,17 +100,17 @@ sprite = NodePath("Sprite")
 speed = Vector2(350, 0)
 gravity_scale = 0.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=170839687]
 visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_anmel")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1288667615]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_nejwk")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1568150290]
 script = ExtResource("3_ojlqy")
 stomping_creation = SubResource("Resource_5c6gf")
 stomping_scores = 100
@@ -134,13 +120,13 @@ killing_creation = SubResource("Resource_in8n8")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_y0kdk")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=2121357588]
 visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_anmel")
 debug_color = Color(0, 0.6, 0, 0.419608)
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=1087915062]
 visible = false
 shape = SubResource("CapsuleShape2D_1c2lf")
 target_position = Vector2(0, 0)
@@ -153,29 +139,29 @@ killer_type = &"shell"
 killing_detection_scale = 2.0
 special_tags = Array[StringName]([&"shell_attack", &"no_score"])
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2023103984]
 position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_3ndbg")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=1993547366]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_616si")
 script = ExtResource("12_kp1fg")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1373274110]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(0, 2)
 rect = Rect2(-64, -64, 128, 128)
 script = ExtResource("13_fxgp5")
 metadata/_edit_lock_ = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1214749846]
 wait_time = 0.4
 script = ExtResource("14_itul2")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=668554741]
 process_mode = 3
 stream = ExtResource("15_c0rn0")
 volume_db = 4.0

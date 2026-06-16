@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bwn1ss5d5sn4q"]
+[gd_scene format=3 uid="uid://bwn1ss5d5sn4q"]
 
 [ext_resource type="Script" uid="uid://bceup212k26pi" path="res://objects/big_bertha/big_bertha.gd" id="1_bx4a3"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_nc5u4"]
@@ -17,15 +17,7 @@ size = Vector2(36, 48)
 resource_local_to_scene = true
 script = ExtResource("5_0kj0g")
 creation_nodepack = ExtResource("3_bx4a3")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -61,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wd5ft")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }, {
@@ -69,7 +61,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a8jpr")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall",
 "speed": 2.0
 }, {
@@ -80,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hx48k")
 }],
-"loop": true,
+"loop": 1,
 "name": &"jump",
 "speed": 8.0
 }]
@@ -91,7 +83,7 @@ size = Vector2(16, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqom2"]
 size = Vector2(192, 128)
 
-[node name="BigBertha" type="CharacterBody2D" groups=["big_bertha_follow"]]
+[node name="BigBertha" type="CharacterBody2D" unique_id=168439339 groups=["big_bertha_follow"]]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_bx4a3")
@@ -101,19 +93,19 @@ collision = false
 correct_collision = false
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1913337744]
 visible = false
 shape = SubResource("RectangleShape2D_ep536")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=974584961]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1601226173]
 shape = SubResource("RectangleShape2D_ep536")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1316928334]
 script = ExtResource("2_nc5u4")
 stomping_enabled = false
 stomping_hurtable = false
@@ -137,27 +129,27 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("7_d6rtk")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=614797153]
 sprite_frames = SubResource("SpriteFrames_aiyf6")
 animation = &"jump"
 autoplay = "jump"
 
-[node name="KillArea" type="Area2D" parent="."]
+[node name="KillArea" type="Area2D" parent="." unique_id=862231014]
 visible = false
 collision_layer = 0
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea" unique_id=1873343824]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_nc5u4")
 
-[node name="Trigger" type="Area2D" parent="."]
+[node name="Trigger" type="Area2D" parent="." unique_id=1695271386]
 visible = false
 collision_layer = 0
 monitorable = false
 script = ExtResource("9_bx4a3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger" unique_id=2094559730]
 position = Vector2(0, -32)
 shape = SubResource("RectangleShape2D_mqom2")
 

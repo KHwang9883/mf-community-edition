@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://byusm7uyrkenj"]
+[gd_scene format=3 uid="uid://byusm7uyrkenj"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_plwhc"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_s2v7n"]
@@ -22,30 +22,13 @@ size = Vector2(34, 55)
 [sub_resource type="Resource" id="Resource_fnuo0"]
 script = ExtResource("5_4xjn7")
 creation_nodepack = ExtResource("4_5mpx1")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_rdh2n"]
 resource_local_to_scene = true
 script = ExtResource("5_4xjn7")
 creation_nodepack = ExtResource("7_arqme")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -160,7 +143,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5l6iw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
@@ -175,12 +158,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vv7de")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="SoliderClone" type="CharacterBody2D"]
+[node name="SoliderClone" type="CharacterBody2D" unique_id=2064675295]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_plwhc")
@@ -190,24 +173,24 @@ speed = Vector2(50, 0)
 gravity_scale = 0.5
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
-[node name="Collision2" type="CollisionShape2D" parent="."]
+[node name="Collision2" type="CollisionShape2D" parent="." unique_id=1446302481]
 visible = false
 position = Vector2(0, -5.75)
 shape = SubResource("RectangleShape2D_b3oop")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1270401095]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_s2v7n")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=724860980]
 visible = false
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_b3oop")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1506967557]
 script = ExtResource("3_p45rq")
 stomping_creation = SubResource("Resource_fnuo0")
 stomping_scores = 100
@@ -233,22 +216,22 @@ killing_sound_failed = ExtResource("9_teiaf")
 ice_sprite = NodePath("../../Sprite")
 sound_ignore_pitch_modification = true
 
-[node name="Node" type="Node2D" parent="Body"]
+[node name="Node" type="Node2D" parent="Body" unique_id=1426521022]
 script = ExtResource("10_y4og1")
 KEYBOARD_EFFECT = ExtResource("11_cfgt7")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=665115816]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_l6v3r")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=551928769]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_o8c0w")
 script = ExtResource("13_gtbnp")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=162911465]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -32, 32, 48)
 script = ExtResource("16_vv7de")

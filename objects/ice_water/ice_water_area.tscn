@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://h4vtt6taalpu"]
+[gd_scene format=3 uid="uid://h4vtt6taalpu"]
 
 [ext_resource type="Script" uid="uid://bk0dstnf18ycm" path="res://objects/ice_water/ice_water_area.gd" id="1_8ulad"]
 [ext_resource type="Shader" uid="uid://c1yibfdu766i8" path="res://engine/shaders/hsv_global.gdshader" id="1_24rbb"]
@@ -35,7 +35,7 @@ noise = SubResource("FastNoiseLite_6qe0v")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
 size = Vector2(1, 1)
 
-[node name="Water" type="VBoxContainer"]
+[node name="Water" type="VBoxContainer" unique_id=1409023785]
 modulate = Color(1, 1, 1, 0.819608)
 material = SubResource("ShaderMaterial_k41pl")
 offset_right = 64.0
@@ -43,7 +43,7 @@ offset_bottom = 16.0
 theme_override_constants/separation = 0
 script = ExtResource("1_8ulad")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=739244859]
 z_index = 31
 material = SubResource("ShaderMaterial_ogl7c")
 layout_mode = 2
@@ -51,23 +51,23 @@ size_flags_vertical = 0
 texture = SubResource("NoiseTexture2D_cuxos")
 stretch_mode = 1
 
-[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
+[node name="Area2D" type="Area2D" parent="." unique_id=1842836073 groups=["#water"]]
 z_index = 1
 collision_layer = 128
 collision_mask = 7
 script = ExtResource("3_wcqqx")
 type = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=521539782]
 shape = SubResource("RectangleShape2D_08xmy")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=205215981]
 z_index = 31
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.490196, 0.760784, 0.894118, 1)
 
-[node name="Node" type="Node" parent="."]
+[node name="Node" type="Node" parent="." unique_id=381955742]
 script = ExtResource("6_p36gh")
 
 [connection signal="area_entered" from="Area2D" to="Node" method="_on_area_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dkcbpjyg8luko"]
+[gd_scene format=3 uid="uid://dkcbpjyg8luko"]
 
 [ext_resource type="Script" uid="uid://dmcn56u26b38a" path="res://engine/objects/enemies/hammer_bros/hammer_bro_base.gd" id="1_wuxxl"]
 [ext_resource type="PackedScene" uid="uid://e0knwhbbb2ok" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.tscn" id="2_wvke0"]
@@ -19,15 +19,7 @@
 [sub_resource type="Resource" id="Resource_sfyyp"]
 script = ExtResource("4_0u4g4")
 creation_nodepack = ExtResource("2_wvke0")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(250, -500),
 "speed_min": Vector2(50, -300)
@@ -42,15 +34,8 @@ size = Vector2(32, 56)
 resource_local_to_scene = true
 script = ExtResource("4_0u4g4")
 creation_nodepack = ExtResource("7_1sb0t")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -63,7 +48,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_wvke0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -71,7 +56,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_wvke0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
@@ -184,7 +169,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_me7cm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }, {
@@ -192,7 +177,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_50gtm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }]
@@ -200,7 +185,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtn54"]
 size = Vector2(32, 32)
 
-[node name="SREBRNY" type="CharacterBody2D"]
+[node name="SREBRNY" type="CharacterBody2D" unique_id=144672069]
 collision_layer = 2
 collision_mask = 32
 platform_on_leave = 2
@@ -211,22 +196,22 @@ speed = Vector2(100, 0)
 gravity_scale = 0.2
 metadata/_custom_type_script = "uid://ng3vu4qwreu5"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1579202336]
 visible = false
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_yi8t6")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=470951619]
 process_mode = 3
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=2013004443]
 visible = false
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_yi8t6")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=73525059]
 script = ExtResource("6_0ioe2")
 stomping_creation = SubResource("Resource_js3nb")
 stomping_scores = 200
@@ -237,12 +222,12 @@ killing_sound_succeeded = ExtResource("9_u71q3")
 ice_sprite = NodePath("../../Sprite")
 sound_ignore_pitch_modification = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=477577456]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_r5jqf")
 autoplay = "default"
 
-[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" unique_id=1062202810]
 position = Vector2(0, 28)
 sprite_frames = SubResource("SpriteFrames_ed4w4")
 animation = &"idle"
@@ -253,34 +238,34 @@ can_idle = true
 can_move_both_ways = true
 idle_offset = Vector2(1, 0)
 
-[node name="SpriteProjectile" type="Sprite2D" parent="."]
+[node name="SpriteProjectile" type="Sprite2D" parent="." unique_id=1727838581]
 visible = false
 position = Vector2(-12, -2)
 scale = Vector2(-1, 1)
 texture = ExtResource("14_i66jo")
 
-[node name="PosAttack" type="Marker2D" parent="."]
+[node name="PosAttack" type="Marker2D" parent="." unique_id=1393206885]
 visible = false
 position = Vector2(-14, -1)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=2122607698]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("15_bw8n3")
 metadata/_edit_lock_ = true
 
-[node name="Walk" type="Timer" parent="."]
+[node name="Walk" type="Timer" parent="." unique_id=654406582]
 one_shot = true
 
-[node name="Attack" type="Timer" parent="."]
+[node name="Attack" type="Timer" parent="." unique_id=109717856]
 wait_time = 0.06
 autostart = true
 
-[node name="Jump" type="Timer" parent="."]
+[node name="Jump" type="Timer" parent="." unique_id=586023568]
 wait_time = 0.24
 autostart = true
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=909748342]
 visible = false
 position = Vector2(0, -8)
 enabled = false

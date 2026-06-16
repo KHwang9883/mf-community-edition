@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bjfopvbcjtcxl"]
+[gd_scene format=3 uid="uid://bjfopvbcjtcxl"]
 
 [ext_resource type="Script" uid="uid://dpmoq7qeco0q6" path="res://objects/human_lab_2/swimming/cheep_and_bubbles.gd" id="1_o84qh"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qwlxo"]
@@ -25,15 +25,7 @@ size = Vector2(28, 28)
 resource_local_to_scene = true
 script = ExtResource("5_lpsnh")
 creation_nodepack = ExtResource("3_vdfok")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, 0),
@@ -76,7 +68,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lpsnh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }]
@@ -87,12 +79,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_5pm8i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="StarClosedCloneModJ" type="CharacterBody2D"]
+[node name="StarClosedCloneModJ" type="CharacterBody2D" unique_id=1081484712]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_o84qh")
@@ -102,24 +94,24 @@ sprite = NodePath("Sprite")
 speed = Vector2(100, 0)
 metadata/_edit_pinned_properties_ = [&"sprite", &"look_at_player", &"speed"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1736085531]
 visible = false
 position = Vector2(2, -1)
 scale = Vector2(1.68, 1)
 shape = SubResource("RectangleShape2D_urkew")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1130133388]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=368830117]
 visible = false
 position = Vector2(2, -1)
 scale = Vector2(1.76, 1)
 shape = SubResource("RectangleShape2D_8v3i3")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1354537766]
 script = ExtResource("2_qwlxo")
 stomping_creation = SubResource("Resource_0wfa5")
 stomping_scores = 100
@@ -141,11 +133,11 @@ killing_sound_succeeded = SubResource("AudioStreamSynchronized_dghfo")
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
-[node name="Node" type="Node2D" parent="Body"]
+[node name="Node" type="Node2D" parent="Body" unique_id=1055528280]
 script = ExtResource("7_qwlxo")
 KEYBOARD_EFFECT = ExtResource("8_n1lvn")
 
-[node name="SwimX" type="ShapeCast2D" parent="."]
+[node name="SwimX" type="ShapeCast2D" parent="." unique_id=993742718]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -154,7 +146,7 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="SwimY" type="ShapeCast2D" parent="."]
+[node name="SwimY" type="ShapeCast2D" parent="." unique_id=1488925665]
 visible = false
 shape = SubResource("RectangleShape2D_oamh3")
 target_position = Vector2(0, 0)
@@ -163,17 +155,17 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1292102722]
 sprite_frames = SubResource("SpriteFrames_34jvi")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=1779454444]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_xb076")
 script = ExtResource("9_p0ju3")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=527546886]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(3.8147e-06, 3.8147e-06)
 scale = Vector2(2, 2)
@@ -181,15 +173,15 @@ rect = Rect2(-24, -24, 48, 48)
 script = ExtResource("10_18fv3")
 metadata/_edit_lock_ = true
 
-[node name="Interval" type="Timer" parent="."]
+[node name="Interval" type="Timer" parent="." unique_id=534202049]
 process_callback = 0
 autostart = true
 
-[node name="BubbleGenerator" type="Marker2D" parent="."]
+[node name="BubbleGenerator" type="Marker2D" parent="." unique_id=1170126962]
 position = Vector2(3, -15)
 script = ExtResource("12_vdfok")
 
-[node name="BubbleGenerator2" type="Marker2D" parent="."]
+[node name="BubbleGenerator2" type="Marker2D" parent="." unique_id=562965708]
 position = Vector2(-21, 2)
 script = ExtResource("12_vdfok")
 delay = 0.1

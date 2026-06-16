@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://4elqv2fjyfwx"]
+[gd_scene format=3 uid="uid://4elqv2fjyfwx"]
 
 [ext_resource type="Script" uid="uid://ctv5a4wyjyqqy" path="res://stages/extra/world_u/objects/poison_mushroom_wings.gd" id="1_jqubr"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_jqubr"]
@@ -20,16 +20,7 @@ size = Vector2(30, 30)
 resource_local_to_scene = true
 script = ExtResource("4_eqggg")
 creation_nodepack = ExtResource("3_t5gu1")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oamh3"]
 size = Vector2(2, 2)
@@ -51,12 +42,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2ln1c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="PoisonMushroomWings" type="CharacterBody2D"]
+[node name="PoisonMushroomWings" type="CharacterBody2D" unique_id=205323106]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_jqubr")
@@ -73,20 +64,20 @@ sprite = NodePath("Sprite")
 speed = Vector2(50, 0)
 metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=63120549]
 visible = false
 shape = SubResource("RectangleShape2D_urkew")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=353403131]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1007481950]
 visible = false
 shape = SubResource("RectangleShape2D_8v3i3")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=2049130754]
 script = ExtResource("2_jqubr")
 stomping_enabled = false
 stomping_standard = Vector2(0, 0)
@@ -103,7 +94,7 @@ killing_sound_failed = ExtResource("5_pcnh0")
 frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"killing_immune"]
 
-[node name="SwimX" type="ShapeCast2D" parent="."]
+[node name="SwimX" type="ShapeCast2D" parent="." unique_id=732482938]
 visible = false
 enabled = false
 shape = SubResource("RectangleShape2D_oamh3")
@@ -112,7 +103,7 @@ max_results = 1
 collision_mask = 128
 collide_with_bodies = false
 
-[node name="SwimY" type="ShapeCast2D" parent="."]
+[node name="SwimY" type="ShapeCast2D" parent="." unique_id=539276755]
 visible = false
 enabled = false
 shape = SubResource("RectangleShape2D_oamh3")
@@ -121,12 +112,12 @@ max_results = 1
 collision_mask = 128
 collide_with_bodies = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1455134522]
 sprite_frames = SubResource("SpriteFrames_1a1uf")
 autoplay = "default"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=710995241]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(3.8147e-06, 3.8147e-06)
 scale = Vector2(2, 2)
@@ -135,11 +126,11 @@ script = ExtResource("9_1a1uf")
 new_rect = Rect2(-512, -240, 1024, 480)
 metadata/_edit_lock_ = true
 
-[node name="Interval" type="Timer" parent="."]
+[node name="Interval" type="Timer" parent="." unique_id=1132095671]
 process_callback = 0
 autostart = true
 
-[node name="Wings" parent="." instance=ExtResource("10_t5gu1")]
+[node name="Wings" parent="." unique_id=1348592863 instance=ExtResource("10_t5gu1")]
 position = Vector2(-21, -2)
 frame_progress = 0.0
 root_path = NodePath("..")
@@ -147,7 +138,7 @@ parent_path = NodePath("../Sprite")
 flip_as_parent = false
 metadata/_edit_pinned_properties_ = [&"root_path", &"parent_path"]
 
-[node name="Wings2" parent="." instance=ExtResource("10_t5gu1")]
+[node name="Wings2" parent="." unique_id=1916624496 instance=ExtResource("10_t5gu1")]
 position = Vector2(19, -2)
 frame_progress = 0.0
 flip_h = true

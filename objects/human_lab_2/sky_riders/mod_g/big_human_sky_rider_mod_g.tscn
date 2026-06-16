@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://dtbkqvx3l3awm"]
+[gd_scene format=3 uid="uid://dtbkqvx3l3awm"]
 
 [ext_resource type="Script" uid="uid://f02wcyi08ks1" path="res://engine/objects/enemies/lakitus/lakitu.gd" id="1_gi1yu"]
 [ext_resource type="PackedScene" uid="uid://dashw8pi1ehgr" path="res://objects/human_lab_2/sky_riders/mod_g/egg/clone3a_gold_egg.tscn" id="2_gi1yu"]
@@ -15,16 +15,8 @@
 [sub_resource type="Resource" id="Resource_etq5v"]
 script = ExtResource("4_ey7eg")
 creation_nodepack = ExtResource("2_gi1yu")
-creation_force_sibling = false
 trans_offset = Vector2(0, -8)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("3_n617p")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aq6tk"]
@@ -33,15 +25,8 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_h3r88"]
 script = ExtResource("4_ey7eg")
 creation_nodepack = ExtResource("7_jhlgc")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 2
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -223,7 +208,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8ngq1")
 }],
-"loop": false,
+"loop": 0,
 "name": &"blink1",
 "speed": 50.0
 }, {
@@ -255,7 +240,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g7i2l")
 }],
-"loop": false,
+"loop": 0,
 "name": &"blink2",
 "speed": 40.0
 }, {
@@ -263,7 +248,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lbp1a")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 0.0
 }, {
@@ -304,26 +289,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_en0ym")
 }],
-"loop": false,
+"loop": 0,
 "name": &"pitch",
 "speed": 50.0
 }]
 
-[node name="BigHumanSkyRiderModG" type="Node2D"]
+[node name="BigHumanSkyRiderModG" type="Node2D" unique_id=39188256]
 script = ExtResource("1_gi1yu")
 pitched = SubResource("Resource_etq5v")
 sounds = Array[AudioStream]([ExtResource("5_uk4ul"), ExtResource("5_uk4ul"), ExtResource("5_uk4ul")])
 metadata/_edit_pinned_properties_ = [&"pitched"]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=358530159]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=2062254902]
 shape = SubResource("RectangleShape2D_aq6tk")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=805085622]
 script = ExtResource("6_6ssvw")
 stomping_hurtable = false
 stomping_creation = SubResource("Resource_h3r88")
@@ -349,23 +334,23 @@ ice_fragile = true
 sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_hurtable", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_sound", &"killing_sound_succeeded", &"killing_immune", &"ice_sprite", &"ice_fragile"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=32435012]
 sprite_frames = SubResource("SpriteFrames_kg3wr")
 animation = &"pitch"
 autoplay = "default"
 
-[node name="RectDraw" type="Node2D" parent="."]
+[node name="RectDraw" type="Node2D" parent="." unique_id=577064856]
 script = ExtResource("11_ks6b8")
 
-[node name="Animation" type="Timer" parent="."]
+[node name="Animation" type="Timer" parent="." unique_id=1841540281]
 wait_time = 0.5
 autostart = true
 
-[node name="Pitching" type="Timer" parent="."]
+[node name="Pitching" type="Timer" parent="." unique_id=1838040941]
 wait_time = 4.0
 one_shot = true
 
-[node name="VisibleOnScreen2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreen2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=479186567]
 modulate = Color(1, 1, 1, 0.0392157)
 position = Vector2(3.57627e-08, 4.76837e-07)
 scale = Vector2(1.6, 2.4)

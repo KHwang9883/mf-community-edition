@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnga66pn23va0"]
+[gd_scene format=3 uid="uid://dnga66pn23va0"]
 
 [ext_resource type="Script" uid="uid://ct6tka05uai57" path="res://stages/extra/world_of_stupidity/following_poison_mushroom/following_poison_mushroom.gd" id="1_ufyib"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_cbowf"]
@@ -27,12 +27,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x0chs")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="PoisonousMushroom" type="CharacterBody2D"]
+[node name="PoisonousMushroom" type="CharacterBody2D" unique_id=209761897]
 collision_layer = 4
 collision_mask = 0
 floor_constant_speed = true
@@ -42,21 +42,21 @@ script = ExtResource("1_ufyib")
 gravity_scale = 0.5
 collision = false
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=837735717]
 visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_70umx")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=232974208]
 visible = false
 collision_layer = 4
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1116920558]
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=267397549]
 script = ExtResource("2_cbowf")
 stomping_enabled = false
 killing_immune = {
@@ -64,7 +64,7 @@ killing_immune = {
 }
 turn_into_coin_on_level_end = false
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1780191117]
 sprite_frames = SubResource("SpriteFrames_1jdnw")
 autoplay = "default"
 
