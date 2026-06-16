@@ -1,0 +1,102 @@
+[gd_scene load_steps=17 format=4 uid="uid://dsburodhkg2sr"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_itvxv"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_0hlqs"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_43ucn"]
+[ext_resource type="Script" uid="uid://bxx54cyd4mjsq" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_n0xss"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_f42wl"]
+[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_kaucd"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_5qt67"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_j3qd6"]
+[ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="9_tof58"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_kuai8"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_8ov0o"]
+[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_dd5i3"]
+[ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="13_43ucn"]
+[ext_resource type="PackedScene" uid="uid://bgoltym0mckv5" path="res://stages/extra/minix/objects/coin_walking.tscn" id="14_n0xss"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fgi2v"]
+texture = ExtResource("10_kuai8")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_vr771"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_fgi2v")
+
+[node name="MinixCoinTest" type="Node2D"]
+script = ExtResource("1_itvxv")
+completion_music = ExtResource("2_0hlqs")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" type="Node" parent="." instance=ExtResource("3_43ucn")]
+script = ExtResource("4_n0xss")
+
+[node name="Player" type="CharacterBody2D" parent="." instance=ExtResource("5_f42wl")]
+position = Vector2(80, 400)
+collision_mask = 16
+slide_on_ceiling = false
+floor_max_angle = 0.837758
+floor_snap_length = 12.0
+platform_on_leave = 2
+script = ExtResource("6_kaucd")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+editor_draw_screen = false
+script = ExtResource("7_5qt67")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" type="Control" parent="." instance=ExtResource("8_j3qd6")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 11008.0
+offset_bottom = 480.0
+script = ExtResource("9_tof58")
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAAAAA0AAAAAAAAAAAABAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAAAAwAAAAAAAAAAAAOAAwAAAAAAAAAAAASAAwAAAAAAAAAAAAWAAwAAAAAAAAAAAAaAAwAAAAAAAAAAAAeAAwAAAAAAAAAAAAeAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAiAAwAAAAAAAAAAAAfAA0AAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_vr771")
+navigation_enabled = false
+
+[node name="HUD" type="CanvasLayer" parent="." instance=ExtResource("11_8ov0o")]
+script = ExtResource("12_dd5i3")
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="Goomba" parent="." instance=ExtResource("13_43ucn")]
+position = Vector2(528, 400)
+
+[node name="Goomba2" parent="." instance=ExtResource("13_43ucn")]
+position = Vector2(656, 400)
+
+[node name="Goomba3" parent="." instance=ExtResource("13_43ucn")]
+position = Vector2(784, 400)
+
+[node name="Goomba4" parent="." instance=ExtResource("13_43ucn")]
+position = Vector2(912, 400)
+
+[node name="Goomba5" parent="." instance=ExtResource("13_43ucn")]
+position = Vector2(1040, 400)
+
+[node name="CoinWalk" parent="." instance=ExtResource("14_n0xss")]
+position = Vector2(528, 400)
+
+[node name="CoinWalk2" parent="." instance=ExtResource("14_n0xss")]
+position = Vector2(656, 400)
+
+[node name="CoinWalk3" parent="." instance=ExtResource("14_n0xss")]
+position = Vector2(784, 400)
+
+[node name="CoinWalk4" parent="." instance=ExtResource("14_n0xss")]
+position = Vector2(912, 400)
+
+[node name="CoinWalk5" parent="." instance=ExtResource("14_n0xss")]
+position = Vector2(1040, 400)
