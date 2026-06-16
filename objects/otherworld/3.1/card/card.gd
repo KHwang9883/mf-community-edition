@@ -3,7 +3,6 @@ extends Projectile
 const explosion_effect: PackedScene = preload("res://objects/volcano/bob_omb/explosion/explosion_effect.tscn")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
-@export var remove_offscreen_after: float = 2.0
 
 var drown: bool = false
 var trail_timer: float
@@ -11,10 +10,6 @@ var trail_timer: float
 @onready var detector: ShapeCast2D = $Attack
 
 signal run_out
-
-func _ready() -> void:
-	offscreen_handler(remove_offscreen_after)
-	super()
 
 func _physics_process(delta: float) -> void:
 	super(delta)

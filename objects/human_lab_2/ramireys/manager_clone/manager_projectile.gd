@@ -1,10 +1,8 @@
 extends Projectile
 
 @export var angle_precision_deg: float = 11.25
-@export var remove_offscreen_after: float = 1.0
 
 func _ready() -> void:
-	offscreen_handler(remove_offscreen_after)
 	super()
 	var pl: Player = Thunder._current_player
 	if !pl: return
