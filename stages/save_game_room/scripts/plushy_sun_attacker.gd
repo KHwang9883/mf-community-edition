@@ -1,5 +1,8 @@
 extends Node
 
+var stomping_enabled: bool = false
+var _stomping_delayer: Variant = null
+
 func got_killed(killer_type, special_tags = {}, trigger_enemy_failed_signal = false) -> Dictionary:
 	if killer_type != "boomerang": return {}
 	$"../..".body_entered()
