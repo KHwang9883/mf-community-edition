@@ -41,6 +41,8 @@ func _ready() -> void:
 	total_achievements += classic_page.achievements_number
 	total_unlocked += classic_page.achievements_unlocked
 	completion = (float(total_unlocked) / float(total_achievements)) * 100.0
+	if completion == NAN:
+		completion = 0
 	print("completion: %.2f%%" % completion)
 	label_percent.text %= completion
 
