@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="19_q5s8f"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="21_lmd6e"]
 [ext_resource type="Script" uid="uid://cwueb01l430hj" path="res://stages/extra/world_u/objects/boss/bowser_attack_shoot_poison.gd" id="21_sds2c"]
+[ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="26_q5s8f"]
 
 [sub_resource type="Curve2D" id="Curve2D_41u8e"]
 _data = {
@@ -168,14 +169,14 @@ colors = PackedColorArray(0, 0, 0, 0.792157, 0, 0, 0, 0)
 gradient = SubResource("Gradient_rft62")
 width = 112
 
-[sub_resource type="Resource" id="Resource_qup62"]
+[sub_resource type="Resource" id="Resource_fd3jq"]
 resource_local_to_scene = true
 script = ExtResource("19_q5s8f")
 creation_fallback_node = ExtResource("17_ogd63")
 creation_nodepack = ExtResource("18_qup62")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_q5s8f"]
+[sub_resource type="Resource" id="Resource_ek6m7"]
 resource_local_to_scene = true
 script = ExtResource("19_q5s8f")
 creation_fallback_node = ExtResource("17_ogd63")
@@ -190,6 +191,9 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sds2c"]
 size = Vector2(768, 16)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_aci7x"]
+normal = Vector2(-1, 0)
 
 [node name="LevelU-4-3H" type="Node2D" unique_id=642235085]
 script = ExtResource("1_0qi51")
@@ -334,11 +338,11 @@ centered = false
 
 [node name="QuestionBlock" parent="." unique_id=1873083122 instance=ExtResource("16_h6f8f")]
 position = Vector2(144, 240)
-result = SubResource("Resource_qup62")
+result = SubResource("Resource_fd3jq")
 
 [node name="QuestionBlock2" parent="." unique_id=852640197 instance=ExtResource("16_h6f8f")]
 position = Vector2(272, 240)
-result = SubResource("Resource_q5s8f")
+result = SubResource("Resource_ek6m7")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=785673637]
 collision_layer = 112
@@ -375,6 +379,11 @@ monitorable = false
 position = Vector2(1264, 40)
 shape = SubResource("RectangleShape2D_sds2c")
 metadata/_edit_lock_ = true
+
+[node name="AudioAreaCave" parent="." unique_id=595208769 instance=ExtResource("26_q5s8f")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave" unique_id=733557509]
+shape = SubResource("WorldBoundaryShape2D_aci7x")
 
 [connection signal="bowser_triggered" from="BowserTrigger" to="BowserPoison" method="activate"]
 [connection signal="killed_succeeded_by" from="BowserPortraitLeft/Body/EnemyAttacked" to="BowserPoison" method="painting_hurt"]
