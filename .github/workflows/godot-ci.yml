@@ -52,9 +52,9 @@ jobs:
           godot --headless --export-release "Windows Desktop" "${{ env.EXPORT_DIR }}/windows/$EXPORT_NAME.exe"
       - name: Prepare For Upload
         run: |
-          echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/Readme.md"
+          echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/README.md"
           cd ${{ env.EXPORT_DIR }}
-          cp Readme.md windows/Readme.md
+          cp README.md windows/Readme.md
           rm windows/LICENSE
           rm -rf windows/.git
           zip -r build_windows.zip windows
@@ -67,7 +67,9 @@ jobs:
             username=${{ secrets.CLOUDREVE_USERNAME }}
             password=${{ secrets.CLOUDREVE_PASSWORD }}
             root=/${{ env.UPLOAD_FOLDER }}
-          include: '${{ env.EXPORT_DIR }}/**'
+          include: |
+            '${{ env.EXPORT_DIR }}/build_windows.zip'
+            '${{ env.EXPORT_DIR }}/README.md'
       # - name: Upload Files
       #   run: |
       #     EXPORT_DIR="$(readlink -f build)"
