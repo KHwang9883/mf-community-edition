@@ -1,6 +1,7 @@
 extends Node
 
 var stomping_enabled: bool = false
+@warning_ignore("unused_private_class_variable")
 var _stomping_delayer: Variant = null
 
 func got_killed(killer_type, special_tags = {}, trigger_enemy_failed_signal = false) -> Dictionary:
