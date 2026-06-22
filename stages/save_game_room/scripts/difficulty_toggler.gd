@@ -4,7 +4,7 @@ extends Node2D
 @onready var pipe_save: StaticBody2D = $World9
 @onready var pipe_save2: StaticBody2D = $World10
 @onready var pipe_save3: StaticBody2D = $World12
-@onready var pipes: Array[StaticBody2D] = [pipe_save, pipe_save2, pipe_save3]
+@onready var pipes: Array[StaticBody2D] = [pipe_save, pipe_save2, pipe_save3, $World13]
 @onready var pipe_init_y: float = pipe_save.position.y
 
 var page: int = 0

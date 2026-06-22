@@ -8,7 +8,9 @@
 [ext_resource type="AudioStream" uid="uid://cxh66hhdkpcuq" path="res://music/extra/world_u/underground_ocremix.mp3" id="6_7xgap"]
 [ext_resource type="PackedScene" uid="uid://dw54kg4ssaj3o" path="res://objects/otherworld/secret_otherworld_unlocker_choicer.tscn" id="7_flpge"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_koaeu"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_076e6"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_isjdj"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="9_qm8w8"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_vncmi"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_d4hjf"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="11_msep5"]
@@ -119,7 +121,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_m5eqa"]
+[sub_resource type="Resource" id="Resource_ertpw"]
 resource_local_to_scene = true
 script = ExtResource("40_okc72")
 creation_fallback_node = ExtResource("38_4rx0t")
@@ -166,6 +168,17 @@ progress_to_int = 4
 secrets = Array[String](["world u secret levels found"])
 show_progress_toast = false
 progress_by_id = "world 9 - 1 revamped"
+
+[node name="SecretUnlocker" parent="." unique_id=596987888 instance=ExtResource("8_076e6")]
+secrets = Array[String](["world u hard in kevin mode"])
+show_progress_toast = false
+progress_by_id = "1"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker" unique_id=717208255]
+script = ExtResource("9_qm8w8")
+progress_secret_mode_ids = Array[int]([0])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." unique_id=1169939109 instance=ExtResource("7_koaeu")]
 position = Vector2(80, 961)
@@ -1040,7 +1053,7 @@ position = Vector2(4800, 1024)
 
 [node name="QuestionBlock" parent="." unique_id=604041065 instance=ExtResource("37_7usrf")]
 position = Vector2(2800, 1232)
-result = SubResource("Resource_m5eqa")
+result = SubResource("Resource_ertpw")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=580548813]
 collision_layer = 1024
@@ -1166,5 +1179,6 @@ region_rect = Rect2(0, 32, 64, 32)
 position = Vector2(4096, 1072)
 script = ExtResource("50_076e6")
 
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="tried_to_enter" from="PipeIn4" to="SecretUnlockerOther" method="tried_to_warp"]
 [connection signal="warp_started" from="PipeIn4" to="HUD/Label" method="activate"]

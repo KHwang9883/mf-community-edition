@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_mrgs2"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_vlqtj"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_0al6v"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="9_8wc66"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_r42xg"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="11_1ejbp"]
 [ext_resource type="TileSet" uid="uid://bkc31edmhu6n3" path="res://tilesets/underground/blue_platforms.tres" id="12_hpo5j"]
@@ -114,19 +115,19 @@ width = 640
 height = 400
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Resource" id="Resource_eedmn"]
-resource_local_to_scene = true
-script = ExtResource("31_c13xt")
-creation_nodepack = ExtResource("30_8hsn7")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_8wc66"]
-resource_local_to_scene = true
-script = ExtResource("31_c13xt")
-creation_nodepack = ExtResource("30_8hsn7")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_5dfy6"]
+resource_local_to_scene = true
+script = ExtResource("31_c13xt")
+creation_nodepack = ExtResource("30_8hsn7")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_kwkr4"]
+resource_local_to_scene = true
+script = ExtResource("31_c13xt")
+creation_nodepack = ExtResource("30_8hsn7")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_kgh7c"]
 resource_local_to_scene = true
 script = ExtResource("31_c13xt")
 creation_nodepack = ExtResource("30_8hsn7")
@@ -151,7 +152,7 @@ colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_jh5j3"]
 gradient = SubResource("Gradient_dhq3r")
 
-[sub_resource type="Resource" id="Resource_kwkr4"]
+[sub_resource type="Resource" id="Resource_5njkx"]
 resource_local_to_scene = true
 script = ExtResource("31_c13xt")
 creation_nodepack = ExtResource("52_4isnx")
@@ -211,6 +212,17 @@ secrets = Array[String](["world u secret levels found"])
 show_progress_toast = false
 progress_by_id = "human lab remix?"
 progress_to = 4
+
+[node name="SecretUnlocker2" parent="." unique_id=596987888 instance=ExtResource("8_mrgs2")]
+secrets = Array[String](["world u normal in kevin mode"])
+show_progress_toast = false
+progress_by_id = "2"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2" unique_id=1834269814]
+script = ExtResource("9_8wc66")
+progress_secret_mode_ids = Array[int]([0])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." unique_id=597860405 instance=ExtResource("8_vlqtj")]
 position = Vector2(320, 400)
@@ -593,15 +605,15 @@ position = Vector2(2352, 336)
 
 [node name="QuestionBlock" parent="." unique_id=1192705899 instance=ExtResource("29_eujks")]
 position = Vector2(1648, 272)
-result = SubResource("Resource_eedmn")
+result = SubResource("Resource_5dfy6")
 
 [node name="QuestionBlock2" parent="." unique_id=1883023867 instance=ExtResource("29_eujks")]
 position = Vector2(1840, 144)
-result = SubResource("Resource_8wc66")
+result = SubResource("Resource_kwkr4")
 
 [node name="QuestionBlock3" parent="." unique_id=460423097 instance=ExtResource("29_eujks")]
 position = Vector2(2896, 48)
-result = SubResource("Resource_5dfy6")
+result = SubResource("Resource_kgh7c")
 
 [node name="RotoCenter" parent="." unique_id=746002377 instance=ExtResource("32_qpa3o")]
 position = Vector2(1648, 272)
@@ -1253,7 +1265,7 @@ jumping_height = 300.0
 
 [node name="QuestionBlockLife" parent="." unique_id=184243530 instance=ExtResource("51_fbbbq")]
 position = Vector2(6704, 1232)
-result = SubResource("Resource_kwkr4")
+result = SubResource("Resource_5njkx")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=1598839108]
 position = Vector2(6288, 1408)
@@ -1753,6 +1765,7 @@ position = Vector2(6288, 1392)
 [node name="LavaBubbles5" parent="." unique_id=617192818 instance=ExtResource("67_eedmn")]
 position = Vector2(4688, 1392)
 
+[connection signal="level_completed" from="." to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="player_enter" from="Area2D2" to="Water" method="show"]
 [connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
 [connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="progress_secret" binds= [0, false]]
