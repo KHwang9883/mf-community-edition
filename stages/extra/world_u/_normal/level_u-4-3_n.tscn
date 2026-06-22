@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_lj4vi"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_258fi"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_nv6uj"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_ntwva"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_vtwoh"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="5_tlkm3"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="5_xlnfs"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="6_ioejj"]
 [ext_resource type="AudioStream" uid="uid://c4qgs76bb4a2k" path="res://music/extra/world_u/ultimate_koopa.ogg" id="7_tmoyo"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_v8c33"]
@@ -128,14 +130,14 @@ colors = PackedColorArray(0, 0, 0, 0.792157, 0, 0, 0, 0)
 gradient = SubResource("Gradient_rft62")
 width = 112
 
-[sub_resource type="Resource" id="Resource_rtsja"]
+[sub_resource type="Resource" id="Resource_d415q"]
 resource_local_to_scene = true
 script = ExtResource("22_hejco")
 creation_fallback_node = ExtResource("20_uoiu7")
 creation_nodepack = ExtResource("21_qv3w3")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_ntwva"]
+[sub_resource type="Resource" id="Resource_dtpe3"]
 resource_local_to_scene = true
 script = ExtResource("22_hejco")
 creation_fallback_node = ExtResource("20_uoiu7")
@@ -163,6 +165,18 @@ metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 metadata/_edit_vertical_guides_ = [2000.0]
 
 [node name="MusicLoader" parent="." unique_id=442993611 instance=ExtResource("3_nv6uj")]
+
+[node name="SecretUnlocker" parent="." unique_id=596987888 instance=ExtResource("4_ntwva")]
+secrets = Array[String](["world u good ending", "world u good ending in kevin mode", "world u normal completed", "world u normal in kevin mode"])
+progress_by_id = "4"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker" unique_id=354376741]
+script = ExtResource("5_xlnfs")
+normal_ids = Array[int]([0, 2])
+secret_mode_ids = Array[int]([1])
+progress_secret_mode_ids = Array[int]([3])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." unique_id=1788725794 instance=ExtResource("4_vtwoh")]
 position = Vector2(48, 368)
@@ -297,11 +311,11 @@ centered = false
 
 [node name="QuestionBlock" parent="." unique_id=2087986001 instance=ExtResource("19_uondc")]
 position = Vector2(144, 240)
-result = SubResource("Resource_rtsja")
+result = SubResource("Resource_d415q")
 
 [node name="QuestionBlock2" parent="." unique_id=1463688284 instance=ExtResource("19_uondc")]
 position = Vector2(272, 240)
-result = SubResource("Resource_ntwva")
+result = SubResource("Resource_dtpe3")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=163849078]
 collision_layer = 112
@@ -343,6 +357,7 @@ metadata/_edit_lock_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave" unique_id=671620656]
 shape = SubResource("WorldBoundaryShape2D_xlnfs")
 
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="bowser_triggered" from="BowserTrigger" to="BowserPoison" method="activate"]
 [connection signal="killed_succeeded_by" from="BowserPortraitLeft/Body/EnemyAttacked" to="BowserPoison" method="painting_hurt"]
 [connection signal="killed_succeeded_by" from="BowserPortraitRight/Body/EnemyAttacked" to="BowserPoison" method="painting_hurt"]

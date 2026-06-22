@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_3s5eo"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_edhss"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_ejcvn"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="9_pi460"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_042sr"]
 [ext_resource type="TileSet" uid="uid://bgdkv8m3grmin" path="res://engine/tilesets/castle/castle_tileset.tres" id="11_d0jkf"]
 [ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="12_v2bdd"]
@@ -162,13 +163,13 @@ metadata/_snap_count = 8
 gradient = SubResource("Gradient_rft62")
 width = 128
 
-[sub_resource type="Resource" id="Resource_3s5eo"]
+[sub_resource type="Resource" id="Resource_i12wu"]
 resource_local_to_scene = true
 script = ExtResource("31_npdbs")
 creation_nodepack = ExtResource("30_amk8e")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_pi460"]
+[sub_resource type="Resource" id="Resource_hd24i"]
 resource_local_to_scene = true
 script = ExtResource("31_npdbs")
 creation_nodepack = ExtResource("30_amk8e")
@@ -176,18 +177,6 @@ trans_inheritances = 7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5e3t2"]
 size = Vector2(1296, 32)
-
-[sub_resource type="Resource" id="Resource_i12wu"]
-resource_local_to_scene = true
-script = ExtResource("31_npdbs")
-creation_nodepack = ExtResource("46_qrbdp")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_hd24i"]
-resource_local_to_scene = true
-script = ExtResource("31_npdbs")
-creation_nodepack = ExtResource("46_qrbdp")
-trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_abslq"]
 resource_local_to_scene = true
@@ -222,11 +211,23 @@ trans_inheritances = 7
 [sub_resource type="Resource" id="Resource_r7jon"]
 resource_local_to_scene = true
 script = ExtResource("31_npdbs")
+creation_nodepack = ExtResource("46_qrbdp")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_ggs5p"]
+resource_local_to_scene = true
+script = ExtResource("31_npdbs")
+creation_nodepack = ExtResource("46_qrbdp")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_6uj7a"]
+resource_local_to_scene = true
+script = ExtResource("31_npdbs")
 creation_fallback_node = ExtResource("46_qrbdp")
 creation_nodepack = ExtResource("47_ql26x")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_ggs5p"]
+[sub_resource type="Resource" id="Resource_2u3un"]
 resource_local_to_scene = true
 script = ExtResource("31_npdbs")
 creation_fallback_node = ExtResource("46_qrbdp")
@@ -319,6 +320,17 @@ secrets = Array[String](["world u secret levels found"])
 show_progress_toast = false
 progress_by_id = "u - x"
 progress_to = 4
+
+[node name="SecretUnlocker2" parent="." unique_id=596987888 instance=ExtResource("8_3s5eo")]
+secrets = Array[String](["world u normal in kevin mode", "world u normal completed"])
+progress_by_id = "4"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2" unique_id=747505037]
+script = ExtResource("9_pi460")
+normal_ids = Array[int]([1])
+progress_secret_mode_ids = Array[int]([0])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." unique_id=1670329680 instance=ExtResource("8_edhss")]
 position = Vector2(48, 304)
@@ -837,11 +849,11 @@ offset_bottom = 528.0
 
 [node name="QuestionBlock" parent="." unique_id=1950787661 instance=ExtResource("29_oqk6m")]
 position = Vector2(2512, 144)
-result = SubResource("Resource_3s5eo")
+result = SubResource("Resource_i12wu")
 
 [node name="QuestionBlock2" parent="." unique_id=1502285898 instance=ExtResource("29_oqk6m")]
 position = Vector2(7472, 240)
-result = SubResource("Resource_pi460")
+result = SubResource("Resource_hd24i")
 
 [node name="KoopaParatroopaRed" parent="." unique_id=918602965 instance=ExtResource("32_r8fdo")]
 position = Vector2(1456, 240)
@@ -1181,45 +1193,45 @@ position = Vector2(2640, 1040)
 
 [node name="QuestionBlock3" parent="." unique_id=1655228646 instance=ExtResource("45_atoin")]
 position = Vector2(1360, 1232)
-result = SubResource("Resource_i12wu")
+result = SubResource("Resource_abslq")
 
 [node name="QuestionBlock4" parent="." unique_id=1133423039 instance=ExtResource("45_atoin")]
 position = Vector2(3088, 1232)
-result = SubResource("Resource_hd24i")
+result = SubResource("Resource_rstws")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock5" parent="." unique_id=1291943227 instance=ExtResource("45_atoin")]
 position = Vector2(3120, 1232)
-result = SubResource("Resource_abslq")
+result = SubResource("Resource_lh05e")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock6" parent="." unique_id=1532150907 instance=ExtResource("45_atoin")]
 position = Vector2(3152, 1232)
-result = SubResource("Resource_rstws")
+result = SubResource("Resource_318c7")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock7" parent="." unique_id=2028337734 instance=ExtResource("45_atoin")]
 position = Vector2(3184, 1232)
-result = SubResource("Resource_lh05e")
+result = SubResource("Resource_icwq8")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock8" parent="." unique_id=169715195 instance=ExtResource("45_atoin")]
 position = Vector2(3216, 1232)
-result = SubResource("Resource_318c7")
+result = SubResource("Resource_r7jon")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock9" parent="." unique_id=596111894 instance=ExtResource("45_atoin")]
 position = Vector2(3248, 1232)
-result = SubResource("Resource_icwq8")
+result = SubResource("Resource_ggs5p")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock10" parent="." unique_id=1100021318 instance=ExtResource("45_atoin")]
 position = Vector2(7824, 1200)
-result = SubResource("Resource_r7jon")
+result = SubResource("Resource_6uj7a")
 
 [node name="QuestionBlock11" parent="." unique_id=1696249227 instance=ExtResource("45_atoin")]
 position = Vector2(7504, 1232)
-result = SubResource("Resource_ggs5p")
+result = SubResource("Resource_2u3un")
 
 [node name="Area2D2" type="Area2D" parent="." unique_id=326454167]
 script = ExtResource("48_ledmv")
@@ -1499,5 +1511,7 @@ offset_bottom = 386.0
 [connection signal="warp_started" from="PipeIn4" to="PoisonMushroomWings2" method="kill_enemy"]
 [connection signal="warp_started" from="PipeIn5" to="Area2D2/Node" method="_on_pipe_in_5_warp_started"]
 [connection signal="player_enter" from="Area2D2" to="Area2D2/Node" method="_on_area_2d_2_player_enter"]
+[connection signal="warp_started" from="PipeIn9" to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="warp_started" from="PipeIn10" to="HUD/Label" method="activate"]
+[connection signal="warp_started" from="PipeIn10" to="SecretUnlocker2/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="warp_started" from="PipeIn10" to="SecretUnlocker" method="progress_secret" binds= [0, false]]

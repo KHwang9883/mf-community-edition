@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_0qi51"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_gtv5l"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_lc3sm"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="4_ek6m7"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="5_6j354"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_t0qih"]
 [ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="5_wgb7l"]
 [ext_resource type="AudioStream" uid="uid://c4qgs76bb4a2k" path="res://music/extra/world_u/ultimate_koopa.ogg" id="7_41u8e"]
@@ -169,14 +171,14 @@ colors = PackedColorArray(0, 0, 0, 0.792157, 0, 0, 0, 0)
 gradient = SubResource("Gradient_rft62")
 width = 112
 
-[sub_resource type="Resource" id="Resource_fd3jq"]
+[sub_resource type="Resource" id="Resource_aci7x"]
 resource_local_to_scene = true
 script = ExtResource("19_q5s8f")
 creation_fallback_node = ExtResource("17_ogd63")
 creation_nodepack = ExtResource("18_qup62")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_ek6m7"]
+[sub_resource type="Resource" id="Resource_02v46"]
 resource_local_to_scene = true
 script = ExtResource("19_q5s8f")
 creation_fallback_node = ExtResource("17_ogd63")
@@ -204,6 +206,18 @@ metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 metadata/_edit_vertical_guides_ = [2000.0]
 
 [node name="MusicLoader" parent="." unique_id=940501788 instance=ExtResource("3_lc3sm")]
+
+[node name="SecretUnlocker" parent="." unique_id=596987888 instance=ExtResource("4_ek6m7")]
+secrets = Array[String](["world u good ending", "world u good ending in kevin mode", "world u hard completed", "world u hard in kevin mode"])
+progress_by_id = "4"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker" unique_id=1745892542]
+script = ExtResource("5_6j354")
+normal_ids = Array[int]([0, 2])
+secret_mode_ids = Array[int]([1])
+progress_secret_mode_ids = Array[int]([3])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." unique_id=1115484745 instance=ExtResource("5_t0qih")]
 position = Vector2(48, 368)
@@ -338,11 +352,11 @@ centered = false
 
 [node name="QuestionBlock" parent="." unique_id=1873083122 instance=ExtResource("16_h6f8f")]
 position = Vector2(144, 240)
-result = SubResource("Resource_fd3jq")
+result = SubResource("Resource_aci7x")
 
 [node name="QuestionBlock2" parent="." unique_id=852640197 instance=ExtResource("16_h6f8f")]
 position = Vector2(272, 240)
-result = SubResource("Resource_ek6m7")
+result = SubResource("Resource_02v46")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=785673637]
 collision_layer = 112
@@ -385,6 +399,7 @@ metadata/_edit_lock_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AudioAreaCave" unique_id=733557509]
 shape = SubResource("WorldBoundaryShape2D_aci7x")
 
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="bowser_triggered" from="BowserTrigger" to="BowserPoison" method="activate"]
 [connection signal="killed_succeeded_by" from="BowserPortraitLeft/Body/EnemyAttacked" to="BowserPoison" method="painting_hurt"]
 [connection signal="killed_succeeded_by" from="BowserPortraitRight/Body/EnemyAttacked" to="BowserPoison" method="painting_hurt"]

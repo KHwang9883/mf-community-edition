@@ -7,7 +7,9 @@
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_77phl"]
 [ext_resource type="AudioStream" uid="uid://cxh66hhdkpcuq" path="res://music/extra/world_u/underground_ocremix.mp3" id="6_i13lk"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_mts2t"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="7_rwvr0"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="8_6bhok"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="8_iq133"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_4idkq"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_l5n2o"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="11_72lyw"]
@@ -113,14 +115,14 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_ey3aa"]
+[sub_resource type="Resource" id="Resource_uw3yh"]
 resource_local_to_scene = true
 script = ExtResource("40_xrkuv")
 creation_fallback_node = ExtResource("38_cn7bd")
 creation_nodepack = ExtResource("39_8y474")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_b1c32"]
+[sub_resource type="Resource" id="Resource_xorvk"]
 resource_local_to_scene = true
 script = ExtResource("40_xrkuv")
 creation_nodepack = ExtResource("41_f0377")
@@ -159,6 +161,17 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_i13lk")])
 volume_db = Array[float]([-1.0])
+
+[node name="SecretUnlocker" parent="." unique_id=596987888 instance=ExtResource("7_rwvr0")]
+secrets = Array[String](["world u normal in kevin mode"])
+show_progress_toast = false
+progress_by_id = "1"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker" unique_id=1058799218]
+script = ExtResource("8_iq133")
+progress_secret_mode_ids = Array[int]([0])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." unique_id=1579312936 instance=ExtResource("7_mts2t")]
 position = Vector2(80, 961)
@@ -941,11 +954,11 @@ position = Vector2(4624, 1120)
 
 [node name="QuestionBlock" parent="." unique_id=84768197 instance=ExtResource("37_2sbjq")]
 position = Vector2(2800, 1232)
-result = SubResource("Resource_ey3aa")
+result = SubResource("Resource_uw3yh")
 
 [node name="QuestionBlock2" parent="." unique_id=950985671 instance=ExtResource("37_2sbjq")]
 position = Vector2(3088, 1264)
-result = SubResource("Resource_b1c32")
+result = SubResource("Resource_xorvk")
 initially_visible_and_solid = false
 exists_once = true
 
@@ -1041,3 +1054,5 @@ scale = Vector2(1, 0.5)
 texture = ExtResource("43_ey3aa")
 region_enabled = true
 region_rect = Rect2(0, 32, 64, 32)
+
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]

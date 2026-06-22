@@ -8,6 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://hjy24yffgitp" path="res://music/extra/world_u/dire_dire_docks.ogg" id="6_3miit"]
 [ext_resource type="AudioStream" uid="uid://dvjer3bl0ftxm" path="res://music/extra/world_u/smw-brinstar.ogg" id="7_oij5c"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="8_hx23i"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="8_p1xeu"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="9_kp6ti"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="9_rvsec"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="10_4lyrb"]
 [ext_resource type="TileSet" uid="uid://bkax37l1q8oni" path="res://engine/tilesets/underground/underground.tres" id="11_pugry"]
@@ -99,13 +101,13 @@ gradient = SubResource("Gradient_cfxbo")
 height = 18
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Resource" id="Resource_w3foq"]
+[sub_resource type="Resource" id="Resource_8r8py"]
 resource_local_to_scene = true
 script = ExtResource("27_743m8")
 creation_nodepack = ExtResource("26_0su00")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_wq4vl"]
+[sub_resource type="Resource" id="Resource_c2mch"]
 resource_local_to_scene = true
 script = ExtResource("27_743m8")
 creation_fallback_node = ExtResource("28_2mx6d")
@@ -231,6 +233,17 @@ boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_3miit"), ExtResource("6_3miit"), ExtResource("7_oij5c")])
 volume_db = Array[float]([0.0, 0.0, 4.0])
 start_from_sec = Array[float]([0.0, 108.52, 0.0])
+
+[node name="SecretUnlocker" parent="." unique_id=596987888 instance=ExtResource("8_p1xeu")]
+secrets = Array[String](["world u hard in kevin mode"])
+show_progress_toast = false
+progress_by_id = "3"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker" unique_id=1593726540]
+script = ExtResource("9_kp6ti")
+progress_secret_mode_ids = Array[int]([0])
+progress_reset_on_complete = false
 
 [node name="Player" parent="." unique_id=1729712249 instance=ExtResource("8_hx23i")]
 position = Vector2(48, 80)
@@ -1522,11 +1535,11 @@ position = Vector2(592, 112)
 
 [node name="QuestionBlock" parent="." unique_id=1343117640 instance=ExtResource("25_2ri8s")]
 position = Vector2(592, 304)
-result = SubResource("Resource_w3foq")
+result = SubResource("Resource_8r8py")
 
 [node name="QuestionBlock2" parent="." unique_id=899925071 instance=ExtResource("25_2ri8s")]
 position = Vector2(4240, 176)
-result = SubResource("Resource_wq4vl")
+result = SubResource("Resource_c2mch")
 
 [node name="CheepBlue" parent="." unique_id=162070024 instance=ExtResource("30_hgjd0")]
 position = Vector2(976, 336)
@@ -2428,6 +2441,7 @@ position = Vector2(5008, 260)
 [node name="CheepGreen4" parent="." unique_id=1276109912 instance=ExtResource("60_w3foq")]
 position = Vector2(5168, 260)
 
+[connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="collected" from="Forcer" to="Forcer" method="queue_free"]
 [connection signal="collected" from="Forcer" to="BigCheep" method="_on_forcer_collected"]
 [connection signal="collected" from="Forcer2" to="Forcer2" method="queue_free"]
