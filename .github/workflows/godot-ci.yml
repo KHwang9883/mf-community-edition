@@ -53,7 +53,7 @@ jobs:
         run: |
           cd $PROJECT_PATH
           echo "interim-amd64\n${{ github.sha }}" > stages/main_menu/version-text.txt
-          mkdir -v -p linux
+          mkdir -v -p "${{ env.EXPORT_DIR }}/linux"
           echo '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" -- --developer-commands' > "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
           chmod +x "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
           godot --headless --export-release "Linux/X11" "${{ env.EXPORT_DIR }}/linux/$EXPORT_NAME.x86_64"
