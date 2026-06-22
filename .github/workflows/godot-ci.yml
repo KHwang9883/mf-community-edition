@@ -41,7 +41,7 @@ jobs:
       - name: Windows Build
         run: |
           cd $PROJECT_PATH
-          echo "nightly-win64\n${{ github.sha }}" > stages/main_menu/version-text.txt
+          echo "interim-win64\n${{ github.sha }}" > stages/main_menu/version-text.txt
           printf "extends RefCounted\n\nconst DEBUG_ENABLED = true\n" > engine/singletones/nodes/debug/enable_debug.gd
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "${{ env.EXPORT_DIR }}/windows/01. Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "${{ env.EXPORT_DIR }}/windows/02. Compatibility Mode (angle).bat"
@@ -49,14 +49,24 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3 -- --developer-commands' > "${{ env.EXPORT_DIR }}/windows/04. Debug, Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle -- --developer-commands' > "${{ env.EXPORT_DIR }}/windows/05. Debug, Compatibility Mode (angle).bat"
           godot --headless --export-release "Windows Desktop" "${{ env.EXPORT_DIR }}/windows/$EXPORT_NAME.exe"
+      - name: Linux Build
+        run: |
+          cd $PROJECT_PATH
+          echo "interim-amd64\n${{ github.sha }}" > stages/main_menu/version-text.txt
+          mkdir -v -p linux
+          echo '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" -- --developer-commands' > "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
+          chmod +x "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
+          godot --headless --export-release "Linux/X11" "${{ env.EXPORT_DIR }}/linux/$EXPORT_NAME.x86_64"
       - name: Prepare For Upload
         run: |
           echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/README.md"
           cd ${{ env.EXPORT_DIR }}
           cp README.md windows/Readme.md
+          cp README.md linux/Readme.md
           rm windows/LICENSE
           rm -rf windows/.git
           zip -r build_windows.zip windows
+          zip -r build_linux.zip linux
       - name: Upload to Cloudreve
         uses: bxb100/action-upload@v0
         with:
@@ -68,6 +78,7 @@ jobs:
             root=/${{ env.UPLOAD_FOLDER }}
           include: |
             '${{ env.EXPORT_DIR }}/build_windows.zip'
+            '${{ env.EXPORT_DIR }}/build_linux.zip'
             '${{ env.EXPORT_DIR }}/README.md'
       # - name: Upload Files
       #   run: |
