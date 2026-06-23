@@ -17,7 +17,7 @@ jobs:
       image: jue13/godot-ci:4.7
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: recursive
       # - name: Set WINEPREFIX
@@ -46,10 +46,11 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle -- --developer-commands' > "${{ env.EXPORT_DIR }}/windows/05. Debug, Compatibility Mode (angle).bat"
           godot --headless --export-release "Windows Desktop" "${{ env.EXPORT_DIR }}/windows/$EXPORT_NAME.exe"
       - name: Checkout Skins
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: meteo-dream/bundled-mfce-skins
           path: build/windows
+          clean: false
       - name: Prepare For Upload
         run: |
           echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/README.md"
@@ -78,7 +79,7 @@ jobs:
       image: jue13/godot-ci:4.7
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: recursive
       - name: Setup
@@ -102,10 +103,11 @@ jobs:
           chmod +x "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
           godot --headless --export-release "Linux/X11" "${{ env.EXPORT_DIR }}/linux/$EXPORT_NAME.x86_64"
       - name: Checkout Skins
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: meteo-dream/bundled-mfce-skins
           path: build/linux
+          clean: false
       - name: Prepare For Upload
         run: |
           echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/linux/README.md"
