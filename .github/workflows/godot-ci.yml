@@ -54,10 +54,10 @@ jobs:
         run: |
           echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/README.md"
           cd ${{ env.EXPORT_DIR }}
-          mv windows/temp_skins/* windows
-          rmdir windows/temp_skins
+          mv -v windows/temp_skins/* windows
+          rm -rf windows/temp_skins
           cp README.md windows/Readme.md
-          rm windows/LICENSE
+          rm -f windows/LICENSE
           rm -rf windows/.git
           zip -r build_windows.zip windows
       - name: Upload to Cloudreve
@@ -112,8 +112,8 @@ jobs:
         run: |
           echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/linux/README.md"
           cd ${{ env.EXPORT_DIR }}
-          mv linux/temp_skins/* linux
-          rmdir linux/temp_skins
+          mv -v linux/temp_skins/* linux
+          rm -rf linux/temp_skins
           rm -rf linux/.git
           zip -r build_linux.zip linux
       - name: Upload to Cloudreve
