@@ -20,11 +20,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: Checkout Skins
-        uses: actions/checkout@v4
-        with:
-          repository: meteo-dream/bundled-mfce-skins
-          path: build/windows
       # - name: Set WINEPREFIX
       #   run: echo WINEPREFIX=/root/.wine >> "$GITHUB_ENV"
       - name: Setup
@@ -43,30 +38,26 @@ jobs:
           cd $PROJECT_PATH
           echo "interim-win64\n${{ github.sha }}" > stages/main_menu/version-text.txt
           printf "extends RefCounted\n\nconst DEBUG_ENABLED = true\n" > engine/singletones/nodes/debug/enable_debug.gd
+          mkdir -v -p "${{ env.EXPORT_DIR }}/windows"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "${{ env.EXPORT_DIR }}/windows/01. Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "${{ env.EXPORT_DIR }}/windows/02. Compatibility Mode (angle).bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" -- --developer-commands' > "${{ env.EXPORT_DIR }}/windows/03. Debug Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3 -- --developer-commands' > "${{ env.EXPORT_DIR }}/windows/04. Debug, Compatibility Mode.bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle -- --developer-commands' > "${{ env.EXPORT_DIR }}/windows/05. Debug, Compatibility Mode (angle).bat"
           godot --headless --export-release "Windows Desktop" "${{ env.EXPORT_DIR }}/windows/$EXPORT_NAME.exe"
-      - name: Linux Build
-        run: |
-          cd $PROJECT_PATH
-          echo "interim-amd64\n${{ github.sha }}" > stages/main_menu/version-text.txt
-          mkdir -v -p "${{ env.EXPORT_DIR }}/linux"
-          echo '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" -- --developer-commands' > "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
-          chmod +x "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
-          godot --headless --export-release "Linux/X11" "${{ env.EXPORT_DIR }}/linux/$EXPORT_NAME.x86_64"
+      - name: Checkout Skins
+        uses: actions/checkout@v4
+        with:
+          repository: meteo-dream/bundled-mfce-skins
+          path: build/windows
       - name: Prepare For Upload
         run: |
           echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/README.md"
           cd ${{ env.EXPORT_DIR }}
           cp README.md windows/Readme.md
-          cp README.md linux/Readme.md
           rm windows/LICENSE
           rm -rf windows/.git
           zip -r build_windows.zip windows
-          zip -r build_linux.zip linux
       - name: Upload to Cloudreve
         uses: bxb100/action-upload@v0
         with:
@@ -78,50 +69,57 @@ jobs:
             root=/${{ env.UPLOAD_FOLDER }}
           include: |
             '${{ env.EXPORT_DIR }}/build_windows.zip'
-            '${{ env.EXPORT_DIR }}/build_linux.zip'
             '${{ env.EXPORT_DIR }}/README.md'
-      # - name: Upload Files
-      #   run: |
-      #     EXPORT_DIR="$(readlink -f build)"
-      #     FILE_SIZE="$(wc -c < $EXPORT_DIR/build_windows.zip)"
-      #     FOLDER_UUID="$(cat /proc/sys/kernel/random/uuid)"
-
-      #     echo "Creating an upload folder: $FOLDER_UUID"
-      #     curl -X MKCOL \
-      #       -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-      #       ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID \
-      #       --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip'
-
-      #     LOOP_ID=0
-      #     PART_ID=""
-      #     for FILE in $EXPORT_DIR/part_*
-      #     do
-      #       LOOP_ID=$((LOOP_ID + 1))
-      #       PART_ID=$(printf "%05d" "$LOOP_ID")
-      #       echo "Uploading part $PART_ID: $FILE"
-      #       curl -X PUT \
-      #         -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-      #         ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/$PART_ID \
-      #         --data-binary "@$FILE" \
-      #         --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip' \
-      #         --header "OC-Total-Length: ${FILE_SIZE}"
-      #     done
-
-      #     echo "Assembling the chunks"
-      #     curl -X MOVE \
-      #       -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-      #       ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/uploads/${{ secrets.NEXTCLOUD_USERNAME }}/$FOLDER_UUID/.file \
-      #       --header 'Destination: ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/build_windows.zip' \
-      #       --header "OC-Total-Length: ${FILE_SIZE}"
-
-      #     echo "Uploading file: $EXPORT_DIR/Readme.md"
-      #     curl \
-      #       -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} \
-      #       -T "$EXPORT_DIR/Readme.md" \
-      #       -g ${{ secrets.NEXTCLOUD_URL }}/remote.php/dav/files/${{ secrets.NEXTCLOUD_USERNAME }}/GitHub-Uploads/${{ env.UPLOAD_FOLDER }}/
-
-#      - name: Upload Artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: windows
-#          path: build/windows
+  
+  export-linux:
+    name: Linux x86-64 Export
+    runs-on: ubuntu-24.04 # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
+    container:
+      image: jue13/godot-ci:4.7
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          echo EXPORT_DIR="$(readlink -f build)" >> $GITHUB_ENV
+      - name: Project Import
+        run: |
+          cd $PROJECT_PATH
+          godot --headless --import
+      - name: Linux Build
+        run: |
+          cd $PROJECT_PATH
+          echo "interim-amd64\n${{ github.sha }}" > stages/main_menu/version-text.txt
+          printf "extends RefCounted\n\nconst DEBUG_ENABLED = true\n" > engine/singletones/nodes/debug/enable_debug.gd
+          mkdir -v -p "${{ env.EXPORT_DIR }}/linux"
+          echo '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" -- --developer-commands' > "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
+          chmod +x "${{ env.EXPORT_DIR }}/linux/Debug Mode.sh"
+          godot --headless --export-release "Linux/X11" "${{ env.EXPORT_DIR }}/linux/$EXPORT_NAME.x86_64"
+      - name: Checkout Skins
+        uses: actions/checkout@v4
+        with:
+          repository: meteo-dream/bundled-mfce-skins
+          path: build/linux
+      - name: Prepare For Upload
+        run: |
+          echo "MFCE Build: [$(echo "${{ github.sha }}" | cut -c 1-7)](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) from $(date '+%d-%b-%Y %T')" > "${{ env.EXPORT_DIR }}/linux/README.md"
+          cd ${{ env.EXPORT_DIR }}
+          rm -rf linux/.git
+          zip -r build_linux.zip linux
+      - name: Upload to Cloudreve
+        uses: bxb100/action-upload@v0
+        with:
+          provider: webdav
+          provider_options: |
+            endpoint=${{ secrets.CLOUDREVE_URL }}
+            username=${{ secrets.CLOUDREVE_USERNAME }}
+            password=${{ secrets.CLOUDREVE_PASSWORD }}
+            root=/${{ env.UPLOAD_FOLDER }}
+          include: |
+            '${{ env.EXPORT_DIR }}/build_linux.zip'
