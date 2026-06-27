@@ -11,7 +11,7 @@ var function: Thunder.SmoothFunction = Thunder.SmoothFunction.EASE_IN_OUT
 
 @onready var _tweak: bool = SettingsManager.get_tweak("enable_smooth_cam_transitions", true)
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !_tweak || (player && player.warp != player.Warp.NONE):
 		modulate.a = 0.0 if is_black else 1.0
