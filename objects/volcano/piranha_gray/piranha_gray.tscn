@@ -25,6 +25,9 @@ custom_vars = {
 }
 custom_script = ExtResource("4_y0mmm")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q4g6m"]
+size = Vector2(30, 46)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_on22v"]
 atlas = ExtResource("7_cpvio")
 region = Rect2(0, 0, 32, 32)
@@ -90,10 +93,21 @@ killing_immune = {
 "starman": false
 }
 killing_creation = SubResource("Resource_fvcap")
+killing_body_override = NodePath("../../BodyKilling")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_c40lm")
 killing_sound_failed = ExtResource("7_vs3hk")
 metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
+
+[node name="BodyKilling" type="Area2D" parent="." unique_id=336186508]
+collision_layer = 2
+collision_mask = 6
+
+[node name="Collision" type="CollisionShape2D" parent="BodyKilling" unique_id=830565367]
+visible = false
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_q4g6m")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="Head" type="AnimatedSprite2D" parent="." unique_id=587751468]
 z_index = -2
@@ -107,10 +121,8 @@ position = Vector2(0, 24)
 texture = ExtResource("8_c7kmd")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1955928071]
-modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(0.5, -24)
-scale = Vector2(1.55, 2.4)
-metadata/_edit_lock_ = true
+rect = Rect2(-16, -48, 32, 48)
+show_rect = false
 
 [node name="Step" type="Timer" parent="." unique_id=760071324]
 one_shot = true
