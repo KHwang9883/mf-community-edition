@@ -38,11 +38,9 @@
 [ext_resource type="PackedScene" uid="uid://xupxs1ig4f5p" path="res://engine/objects/enemies/chain_chomp/chain_chomp.tscn" id="32_4nh10"]
 [ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="33_4e03i"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="33_w5omk"]
-[ext_resource type="Script" uid="uid://fdxatwkqrg77" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="36_c7e6h"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="38_6wng6"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="38_k0v1j"]
 [ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="40_i2155"]
-[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="42_gumhl"]
 [ext_resource type="PackedScene" uid="uid://r3wtvvkcepce" path="res://engine/objects/enemies/paratroopas/paratroopa_red.tscn" id="44_hq5ja"]
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="46_nx04u"]
 [ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="47_f15d2"]
@@ -92,68 +90,6 @@ fill_to = Vector2(0.857143, 0.142857)
 metadata/_snap_enabled = true
 metadata/_snap_count = 7
 
-[sub_resource type="GDScript" id="GDScript_07gfi"]
-script/source = "extends Resource
-class_name InstanceNode2D
-
-## A kind of [Resource] that stores a [PackedScene], whose root is a [Node2D], that you need to add[br]
-##
-## You need to call [method NodeCreator.prepare_ins_2d] and input the resource as the first parameter to instantiate
-## and create the node packed in [member creation_nodepack]
-
-@export_category(\"InstanceNode2D\")
-@export_group(\"Creation\",\"creation_\")
-## The [Node2D] you have packed as the root, also the instance you are going to add via [method NodeCreator.prepare_ins_2d]
-@export var creation_nodepack: PackedScene
-## When [method NodeCreator.NodeCreation.create_2d] is called for this instance, ticking this will force creation as a sibling, rather than directly under current scene node.
-@export var creation_force_sibling: bool = false
-@export_group(\"Transform\",\"trans_\")
-## The offset of the created, related to its [member Node2D.global_transform]
-@export var trans_offset: Vector2
-## The flags for transform properties that you want the created to inherit
-@export_flags(\"inherit_rotation\",\"inherit_scale\",\"inherit_skew\") var trans_inheritances: int
-## [member Node2D.global_rotation] of the created, if [code]inherit_rotation[/code] ticked, it will rotate from the creator's
-@export var trans_rotation: float
-## [member Node2D.global_scale] of the created, if [code]inherit_scale[/code] ticked, it will be scaled by the creator's
-@export var trans_scale: Vector2 = Vector2.ONE
-## [member Node2D.global_skew] of the created, if [code]inherit_skew[/code] ticked, it will be sheared from the creator's
-@export var trans_skew: float
-@export_group(\"Visibility\",\"visi_\")
-## [member CanvasItem.visible] of the created
-@export var visi_z_index: int
-## [member CanvasItem.z_as_relative] of the created
-@export var visi_z_as_relative: bool = true
-## [member CanvasItem.y_sort_enabled] of the created
-@export var visi_y_sort_enabled: bool
-@export_group(\"Extension\")
-## Custom variables for [member custom_script]
-@export var custom_vars: Dictionary
-## Custom script executed when [method NodeCreator.execute_instance_script] is called
-@export var custom_script: GDScript
-
-
-func _report_resource() -> void:
-	printerr(\"[Report] The error happened on: \" + str(get_rid()) + \", with path:\" + resource_path)
-"
-
-[sub_resource type="Resource" id="Resource_6oa5f"]
-script = SubResource("GDScript_07gfi")
-creation_nodepack = ExtResource("42_gumhl")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
-trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {
-"speed_max": Vector2(387.5, 0),
-"speed_min": Vector2(387.5, 0)
-}
-custom_script = ExtResource("36_c7e6h")
-
 [sub_resource type="Curve2D" id="Curve2D_4fms8"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 4096, 288, -127.252, 0, 127.252, 0, 4288, 288, 0, 0, 0, 0, 4544, 128)
@@ -166,10 +102,22 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="Resource" id="Resource_k2p4f"]
+[sub_resource type="Resource" id="Resource_wdq2b"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
 creation_nodepack = ExtResource("21_1o6tc")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_nimhc"]
+resource_local_to_scene = true
+script = ExtResource("22_1csv6")
+creation_nodepack = ExtResource("21_1o6tc")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_k2p4f"]
+resource_local_to_scene = true
+script = ExtResource("22_1csv6")
+creation_nodepack = ExtResource("33_w5omk")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_mu4ay"]
@@ -181,7 +129,7 @@ trans_inheritances = 7
 [sub_resource type="Resource" id="Resource_07gfi"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
-creation_nodepack = ExtResource("33_w5omk")
+creation_nodepack = ExtResource("21_1o6tc")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_shkt2"]
@@ -217,41 +165,41 @@ trans_inheritances = 7
 [sub_resource type="Resource" id="Resource_vvvj0"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
-creation_nodepack = ExtResource("21_1o6tc")
+creation_fallback_node = ExtResource("25_44v8s")
+creation_nodepack = ExtResource("33_4e03i")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_pqwnm"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
-creation_nodepack = ExtResource("21_1o6tc")
+creation_fallback_node = ExtResource("25_44v8s")
+creation_nodepack = ExtResource("26_8xpwt")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_n03ta"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
 creation_fallback_node = ExtResource("25_44v8s")
-creation_nodepack = ExtResource("33_4e03i")
+creation_nodepack = ExtResource("26_8xpwt")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_flkpm"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
 creation_fallback_node = ExtResource("25_44v8s")
-creation_nodepack = ExtResource("26_8xpwt")
+creation_nodepack = ExtResource("33_4e03i")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_tdy6f"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
-creation_fallback_node = ExtResource("25_44v8s")
-creation_nodepack = ExtResource("26_8xpwt")
+creation_nodepack = ExtResource("21_1o6tc")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_8jepj"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
-creation_fallback_node = ExtResource("25_44v8s")
-creation_nodepack = ExtResource("33_4e03i")
+creation_nodepack = ExtResource("21_1o6tc")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_vrjwj"]
@@ -284,23 +232,11 @@ script = ExtResource("22_1csv6")
 creation_nodepack = ExtResource("21_1o6tc")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_uadrc"]
-resource_local_to_scene = true
-script = ExtResource("22_1csv6")
-creation_nodepack = ExtResource("21_1o6tc")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_8yfh5"]
-resource_local_to_scene = true
-script = ExtResource("22_1csv6")
-creation_nodepack = ExtResource("21_1o6tc")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_0hkhb"]
 script = ExtResource("22_1csv6")
 creation_nodepack = ExtResource("21_1o6tc")
 
-[sub_resource type="Resource" id="Resource_u65x0"]
+[sub_resource type="Resource" id="Resource_uadrc"]
 resource_local_to_scene = true
 script = ExtResource("22_1csv6")
 creation_fallback_node = ExtResource("25_44v8s")
@@ -959,7 +895,6 @@ position = Vector2(3232, 99)
 
 [node name="FireBro2" parent="Enemies" unique_id=1569722274 instance=ExtResource("49_16qt1")]
 position = Vector2(3856, 80)
-projectile = SubResource("Resource_6oa5f")
 
 [node name="RotoCenter4" parent="Enemies" unique_id=672369133 instance=ExtResource("27_ihons")]
 position = Vector2(3856, 112)
@@ -1434,33 +1369,33 @@ position = Vector2(13088, 1249)
 
 [node name="QuestionBlock63" parent="." unique_id=1457806211 instance=ExtResource("63_wqc6x")]
 position = Vector2(128, 320)
-result = SubResource("Resource_k2p4f")
+result = SubResource("Resource_wdq2b")
 
 [node name="QuestionBlock64" parent="." unique_id=1431351217 instance=ExtResource("63_wqc6x")]
 position = Vector2(1984, 304)
-result = SubResource("Resource_mu4ay")
+result = SubResource("Resource_nimhc")
 
 [node name="QuestionBlock82" parent="." unique_id=1332463100 instance=ExtResource("63_wqc6x")]
 position = Vector2(2272, 304)
-result = SubResource("Resource_07gfi")
+result = SubResource("Resource_k2p4f")
 initially_visible_and_solid = false
 exists_once = true
 
 [node name="QuestionBlock65" parent="." unique_id=1711823661 instance=ExtResource("63_wqc6x")]
 position = Vector2(3728, 208)
-result = SubResource("Resource_shkt2")
+result = SubResource("Resource_mu4ay")
 
 [node name="QuestionBlock66" parent="." unique_id=1607967204 instance=ExtResource("63_wqc6x")]
 position = Vector2(3952, 112)
-result = SubResource("Resource_m55fh")
+result = SubResource("Resource_07gfi")
 
 [node name="QuestionBlock67" parent="." unique_id=2111955620 instance=ExtResource("63_wqc6x")]
 position = Vector2(7632, 256)
-result = SubResource("Resource_fwq75")
+result = SubResource("Resource_shkt2")
 
 [node name="QuestionBlock68" parent="." unique_id=1492520041 instance=ExtResource("63_wqc6x")]
 position = Vector2(7664, 256)
-result = SubResource("Resource_enx3k")
+result = SubResource("Resource_m55fh")
 
 [node name="Brick119" parent="." unique_id=410686313 instance=ExtResource("55_fwq75")]
 position = Vector2(1904, 432)
@@ -1500,61 +1435,61 @@ position = Vector2(12784, 1360)
 
 [node name="QuestionBlock79" parent="." unique_id=1136557313 instance=ExtResource("63_wqc6x")]
 position = Vector2(7104, 16)
-result = SubResource("Resource_wqc6x")
+result = SubResource("Resource_fwq75")
 
 [node name="QuestionBlock80" parent="." unique_id=1451064636 instance=ExtResource("63_wqc6x")]
 position = Vector2(7136, 16)
-result = SubResource("Resource_vvvj0")
+result = SubResource("Resource_enx3k")
 
 [node name="QuestionBlock69" parent="." unique_id=1767392753 instance=ExtResource("63_wqc6x")]
 position = Vector2(9120, 288)
-result = SubResource("Resource_pqwnm")
+result = SubResource("Resource_wqc6x")
 
 [node name="QuestionBlock77" parent="." unique_id=174740225 instance=ExtResource("63_wqc6x")]
 position = Vector2(9744, 240)
-result = SubResource("Resource_n03ta")
+result = SubResource("Resource_vvvj0")
 initially_visible_and_solid = false
 exists_once = true
 
 [node name="QuestionBlock49" parent="." unique_id=348135250 instance=ExtResource("63_wqc6x")]
 position = Vector2(160, 320)
-result = SubResource("Resource_flkpm")
+result = SubResource("Resource_pqwnm")
 
 [node name="QuestionBlock50" parent="." unique_id=758807038 instance=ExtResource("63_wqc6x")]
 position = Vector2(9088, 288)
-result = SubResource("Resource_tdy6f")
+result = SubResource("Resource_n03ta")
 
 [node name="QuestionBlock78" parent="." unique_id=556949382 instance=ExtResource("63_wqc6x")]
 position = Vector2(4800, 328)
-result = SubResource("Resource_8jepj")
+result = SubResource("Resource_flkpm")
 
 [node name="QuestionBlock70" parent="." unique_id=1109065205 instance=ExtResource("63_wqc6x")]
 position = Vector2(10544, 1168)
-result = SubResource("Resource_vrjwj")
+result = SubResource("Resource_tdy6f")
 
 [node name="QuestionBlock71" parent="." unique_id=924286550 instance=ExtResource("63_wqc6x")]
 position = Vector2(10576, 1168)
-result = SubResource("Resource_luo1r")
+result = SubResource("Resource_8jepj")
 
 [node name="QuestionBlock72" parent="." unique_id=1319050907 instance=ExtResource("63_wqc6x")]
 position = Vector2(10672, 1168)
-result = SubResource("Resource_d5ps0")
+result = SubResource("Resource_vrjwj")
 
 [node name="QuestionBlock73" parent="." unique_id=858356891 instance=ExtResource("63_wqc6x")]
 position = Vector2(10960, 1264)
-result = SubResource("Resource_gp7gf")
+result = SubResource("Resource_luo1r")
 
 [node name="QuestionBlock74" parent="." unique_id=1495366383 instance=ExtResource("63_wqc6x")]
 position = Vector2(12272, 1040)
-result = SubResource("Resource_xp80i")
+result = SubResource("Resource_d5ps0")
 
 [node name="QuestionBlock75" parent="." unique_id=1432346800 instance=ExtResource("63_wqc6x")]
 position = Vector2(12304, 1040)
-result = SubResource("Resource_uadrc")
+result = SubResource("Resource_gp7gf")
 
 [node name="QuestionBlock76" parent="." unique_id=713769578 instance=ExtResource("63_wqc6x")]
 position = Vector2(12912, 1232)
-result = SubResource("Resource_8yfh5")
+result = SubResource("Resource_xp80i")
 
 [node name="Brick11" parent="." unique_id=1075529471 instance=ExtResource("55_fwq75")]
 position = Vector2(5696, 48)
@@ -1562,7 +1497,7 @@ result = SubResource("Resource_0hkhb")
 
 [node name="QuestionBlock81" parent="." unique_id=257393543 instance=ExtResource("63_wqc6x")]
 position = Vector2(12720, 1008)
-result = SubResource("Resource_u65x0")
+result = SubResource("Resource_uadrc")
 
 [connection signal="lightning_emitted" from="FG/ParallaxLayer/Lightning" to="FG/DirectionalLight2D" method="lightning_flash"]
 
