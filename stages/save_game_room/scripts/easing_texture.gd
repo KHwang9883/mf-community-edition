@@ -30,8 +30,8 @@ func _process(delta: float) -> void:
 		easer = false
 
 func _ready():
-	if !is_black:
-		modulate.a = 1
+	#if !is_black:
+	#	modulate.a = 1
 	await get_tree().physics_frame
 	easer = false
 	counter = 1
