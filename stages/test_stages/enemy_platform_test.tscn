@@ -7,9 +7,22 @@
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_7d1na"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_335sw"]
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="10_hkwn5"]
+[ext_resource type="PackedScene" uid="uid://dwwj1xf14lwx1" path="res://objects/platform_path_no_correction.tscn" id="11_50e1y"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_oti3a"]
 [ext_resource type="PackedScene" uid="uid://ctpsv143q5pjv" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="13_hkwn5"]
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="14_7ttd0"]
+
+[sub_resource type="Curve2D" id="Curve2D_8vlvo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 160, 336, 0, 0, 0, 0, 160, 432)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_50e1y"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 304, 208, 0, 0, 0, 0, 304, 256)
+}
+point_count = 2
 
 [node name="EnemyPlatformTest" type="Node2D" unique_id=2102820159]
 script = ExtResource("1_fhpdi")
@@ -32,7 +45,7 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=906317459]
-tile_map_data = PackedByteArray("AAD//w0AAAAAAAAAAAAPAA0AAQAAAAAAAAAQAA0AAQAAAAAAAAAWAA0AAQAAAAAAAAD//wwAAAAAAAAAAAD//wsAAAAAAAAAAAD//woAAAAAAAAAAAD//wkAAAAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAAXAA0AAQAAAAAAAAAXAAwAAQAAAAAAAAAXAAsAAQAAAAAAAAAXAAoAAQAAAAAAAAAXAAkAAQAAAAAAAAAKAAwAAQAAAAAAAAAJAAwAAQAAAAAAAAAIAAwAAQAAAAAAAAAHAAwAAQAAAAAAAAAGAAwAAQAAAAAAAAAFAAwAAQAAAAAAAAAEAAwAAQAAAAAAAAADAAwAAQAAAAAAAAACAAwAAQAAAAAAAAABAAwAAQAAAAAAAAAAAAwAAQAAAAAAAAAQAAwAAQACAAAAAAAKAA0AAQAAAAAAAAAKAA4AAQAAAAAAAAALAA4AAQAAAAAAAAAMAA4AAQAAAAAAAAANAA4AAQAAAAAAAAAOAA4AAQAAAAAAAAAPAA4AAQAAAAAAAAAWAAwAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAD//w0AAAAAAAAAAAAPAA0AAQAAAAAAAAAQAA0AAQAAAAAAAAAWAA0AAQAAAAAAAAD//wwAAAAAAAAAAAD//wsAAAAAAAAAAAD//woAAAAAAAAAAAD//wkAAAAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAAXAA0AAQAAAAAAAAAXAAwAAQAAAAAAAAAXAAsAAQAAAAAAAAAXAAoAAQAAAAAAAAAXAAkAAQAAAAAAAAAKAAwAAQAAAAAAAAAJAAwAAQAAAAAAAAAIAAwAAQAAAAAAAAAHAAwAAQAAAAAAAAAGAAwAAQAAAAAAAAAFAAwAAQAAAAAAAAAQAAwAAQACAAAAAAAKAA0AAQAAAAAAAAAKAA4AAQAAAAAAAAALAA4AAQAAAAAAAAAMAA4AAQAAAAAAAAANAA4AAQAAAAAAAAAOAA4AAQAAAAAAAAAPAA4AAQAAAAAAAAAWAAwAAQAAAAAAAAABAAwAAQAAAAAAAAACAAwAAQAAAAAAAAADAAwAAQAAAAAAAAADAAsAAQAAAAAAAAAIAAYAAQAAAAAAAAAJAAYAAQAAAAAAAAAKAAYAAQAAAAAAAAAJAAkAAQAAAAAAAAAKAAkAAQAAAAAAAAA=")
 tile_set = ExtResource("10_hkwn5")
 
 [node name="HUD" parent="." unique_id=1253350432 instance=ExtResource("11_oti3a")]
@@ -42,13 +55,32 @@ tile_set = ExtResource("10_hkwn5")
 [node name="Objects" type="Node2D" parent="." unique_id=763683342]
 
 [node name="KoopaShellGreen" parent="." unique_id=172102422 instance=ExtResource("13_hkwn5")]
-position = Vector2(272, 368)
+position = Vector2(145, 320)
 
 [node name="PlatformPath" parent="." unique_id=1860949628 instance=ExtResource("14_7ttd0")]
 position = Vector2(432, 416)
 
-[node name="PlatformPath3" parent="." unique_id=812274633 instance=ExtResource("14_7ttd0")]
-position = Vector2(224, 240)
-
 [node name="PlatformPath2" parent="." unique_id=377709567 instance=ExtResource("14_7ttd0")]
 position = Vector2(624, 400)
+
+[node name="Path2D" type="Path2D" parent="." unique_id=1417538859]
+curve = SubResource("Curve2D_8vlvo")
+
+[node name="PlatformPath" parent="Path2D" unique_id=545295576 instance=ExtResource("11_50e1y")]
+position = Vector2(160, 336)
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="Path2D2" type="Path2D" parent="." unique_id=576134243]
+curve = SubResource("Curve2D_50e1y")
+
+[node name="PlatformPath" parent="Path2D2" unique_id=124527126 instance=ExtResource("11_50e1y")]
+position = Vector2(304, 253.50879)
+progress = 45.508797
+loop = true
+speed = 0.0
+loop_backwards = false
+smooth_enabled = false

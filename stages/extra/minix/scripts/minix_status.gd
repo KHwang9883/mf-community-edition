@@ -110,6 +110,7 @@ func _time_countdown_sound_loop(repeat = 0) -> void:
 	
 	var vol = 0.0
 	if repeat > 20:
+		@warning_ignore("integer_division")
 		vol -= 1.0 * min((repeat - 20) / 3, 12)
 	
 	if godlike_count > 0:
