@@ -1,0 +1,152 @@
+[gd_scene format=4 uid="uid://doa5s2yrrppis"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_jw1d6"]
+[ext_resource type="Script" uid="uid://b2nycqiiqob8t" path="res://stages/extra/world_u/scripts/end_cutscene_u.gd" id="2_xicac"]
+[ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="3_g5p35"]
+[ext_resource type="Texture2D" uid="uid://bklyfgnvm6k15" path="res://engine/scenes/castle_cutscene/textures/castle_broken_3.png" id="4_hmnrb"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_y8riy"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="5_hmnrb"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_jpaw1"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_eikk4"]
+[ext_resource type="Texture2D" uid="uid://b5477r418vvmg" path="res://engine/tilesets/rockland/gfx/big_clouds.png" id="7_xicac"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_7wnal"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="9_lp6il"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="10_i8mx2"]
+[ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="11_6t08y"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="13_g5p35"]
+
+[sub_resource type="Gradient" id="Gradient_g5p35"]
+colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y8riy"]
+gradient = SubResource("Gradient_g5p35")
+width = 640
+height = 480
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[node name="EndCutsceneBase" type="Node2D" unique_id=2056284715]
+script = ExtResource("1_jw1d6")
+metadata/_custom_type_script = "uid://bwpe24nufpj37"
+
+[node name="CutsceneLogic" type="Node" parent="." unique_id=1759011593]
+script = ExtResource("2_xicac")
+
+[node name="Castle" type="Sprite2D" parent="." unique_id=1494319214]
+position = Vector2(173, 240)
+texture = ExtResource("3_g5p35")
+
+[node name="CastleBig2" type="Sprite2D" parent="." unique_id=1263284556]
+position = Vector2(173, 128)
+texture = ExtResource("3_g5p35")
+region_enabled = true
+region_rect = Rect2(0, 160, 315, 192)
+
+[node name="CastleBig3" type="Sprite2D" parent="." unique_id=1468417402]
+position = Vector2(173, -64)
+texture = ExtResource("3_g5p35")
+region_enabled = true
+region_rect = Rect2(0, 160, 315, 192)
+
+[node name="CastleFullBrokenDeluxe" type="Sprite2D" parent="." unique_id=413942671]
+visible = false
+position = Vector2(0, 176)
+texture = ExtResource("4_hmnrb")
+centered = false
+
+[node name="Mario" parent="." unique_id=169935397 instance=ExtResource("4_y8riy")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(173, 400)
+gravity_scale = 0.35
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=1531104249]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("5_hmnrb")
+
+[node name="CamArea" parent="." unique_id=1790766850 instance=ExtResource("6_jpaw1")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Node2D2" type="Node2D" parent="." unique_id=1401821409]
+z_index = -1
+
+[node name="BigClouds" type="Sprite2D" parent="Node2D2" unique_id=949617093]
+z_index = -99
+position = Vector2(512, 320)
+texture = ExtResource("7_xicac")
+
+[node name="BigClouds3" type="Sprite2D" parent="Node2D2" unique_id=507961246]
+z_index = -99
+position = Vector2(-16, 139)
+texture = ExtResource("7_xicac")
+flip_v = true
+
+[node name="QualityVisible" type="Node2D" parent="Node2D2" unique_id=1454242475]
+position = Vector2(-13955, -480)
+script = ExtResource("9_lp6il")
+
+[node name="GiantClouds2" type="Sprite2D" parent="Node2D2/QualityVisible" unique_id=1438051535]
+z_index = -100
+position = Vector2(14216, 760)
+texture = ExtResource("10_i8mx2")
+metadata/_edit_lock_ = true
+
+[node name="GiantClouds3" type="Sprite2D" parent="Node2D2/QualityVisible" unique_id=462299405]
+z_index = -100
+position = Vector2(14435, 528)
+texture = ExtResource("10_i8mx2")
+flip_v = true
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="." unique_id=212199227]
+z_index = 4
+use_parent_material = true
+tile_map_data = PackedByteArray("AAATAA8AAAABAAEAAAATAA4AAAABAAEAAAATAA0AAAABAAAAAAASAA8AAAABAAEAAAASAA4AAAABAAEAAAASAA0AAAABAAAAAAARAA8AAAABAAEAAAARAA4AAAABAAEAAAARAA0AAAABAAAAAAAQAA8AAAABAAEAAAAQAA4AAAABAAEAAAAQAA0AAAABAAAAAAAPAA8AAAABAAEAAAAPAA4AAAABAAEAAAAPAA0AAAABAAAAAAAOAA8AAAABAAEAAAAOAA4AAAABAAEAAAAOAA0AAAABAAAAAAANAA8AAAABAAEAAAANAA4AAAABAAEAAAANAA0AAAABAAAAAAAMAA8AAAABAAEAAAAMAA4AAAABAAEAAAAMAA0AAAABAAAAAAALAA8AAAABAAEAAAALAA4AAAABAAEAAAALAA0AAAABAAAAAAAKAA8AAAABAAEAAAAKAA4AAAABAAEAAAAKAA0AAAABAAAAAAAJAA8AAAABAAEAAAAJAA4AAAABAAEAAAAJAA0AAAABAAAAAAAIAA8AAAABAAEAAAAIAA4AAAABAAEAAAAIAA0AAAABAAAAAAAHAA8AAAABAAEAAAAHAA4AAAABAAEAAAAHAA0AAAABAAAAAAAGAA8AAAABAAEAAAAGAA4AAAABAAEAAAAGAA0AAAABAAAAAAAFAA8AAAABAAEAAAAFAA4AAAABAAEAAAAEAA8AAAABAAEAAAAEAA4AAAABAAEAAAAEAA0AAAABAAAAAAADAA8AAAABAAEAAAADAA4AAAABAAEAAAADAA0AAAABAAAAAAACAA8AAAABAAEAAAACAA4AAAABAAEAAAACAA0AAAABAAAAAAABAA8AAAABAAEAAAABAA4AAAABAAEAAAABAA0AAAABAAAAAAAAAA8AAAABAAEAAAAAAA4AAAABAAEAAAAAAA0AAAABAAAAAAD//w8AAAAAAAEAAAD//w4AAAAAAAEAAAD//w0AAAAAAAAAAAAUAA0AAAABAAAAAAAUAA4AAAABAAEAAAAUAA8AAAABAAEAAAD//xAAAAAAAAIAAAAAABAAAAABAAIAAAABABAAAAABAAIAAAACABAAAAABAAIAAAADABAAAAABAAIAAAAEABAAAAABAAIAAAAFABAAAAABAAIAAAAGABAAAAABAAIAAAAHABAAAAABAAIAAAAIABAAAAABAAIAAAAJABAAAAABAAIAAAAKABAAAAABAAIAAAALABAAAAABAAIAAAAMABAAAAABAAIAAAANABAAAAABAAIAAAAOABAAAAABAAIAAAAPABAAAAABAAIAAAAQABAAAAABAAIAAAARABAAAAABAAIAAAASABAAAAABAAIAAAATABAAAAABAAIAAAAUABAAAAABAAIAAAAFAA0AAAABAAAAAAASAAwAAgAAAAAABwARAAwAAgAAAAAABwAEAAUAAgAAAAAAAgAVABAAAAACAAIAAAAVAA8AAAACAAEAAAAVAA4AAAACAAEAAAAVAA0AAAACAAAAAAAPAAwAAgAAAAAABwAQAAwAAgAAAAAABwANAAwAAgAAAAAABwAOAAwAAgAAAAAABwALAAwAAgAAAAAABQAWAA0AAQAAAAAAAAAXAA0AAQAAAAAAAAAYAA0AAQAAAAAAAAAZAA0AAQAAAAAAAAAaAA0AAQAAAAAAAAAbAA0AAQAAAAAAAAAcAA0AAQAAAAAAAAAdAA0AAQAAAAAAAAAeAA0AAQAAAAAAAAAfAA0AAQAAAAAAAAAgAA0AAQAAAAAAAAAhAA0AAQAAAAAAAAAiAA0AAQAAAAAAAAA=")
+tile_set = ExtResource("7_eikk4")
+
+[node name="Layer1" type="TileMapLayer" parent="." unique_id=749155216]
+z_index = 4
+use_parent_material = true
+tile_set = ExtResource("7_eikk4")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1384151000]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground" unique_id=741353852]
+texture = SubResource("GradientTexture2D_y8riy")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." unique_id=469826780 instance=ExtResource("8_7wnal")]
+visible = false
+
+[node name="CastleEndMarker" type="Marker2D" parent="." unique_id=165235989]
+position = Vector2(173, 416)
+
+[node name="Node2D" type="Node2D" parent="." unique_id=22272815]
+z_index = -20
+script = ExtResource("9_lp6il")
+
+[node name="Sign" type="Sprite2D" parent="." unique_id=1296352106]
+position = Vector2(476, 361)
+texture = ExtResource("11_6t08y")
+
+[node name="Label" parent="Sign" unique_id=914191916 instance=ExtResource("13_g5p35")]
+custom_minimum_size = Vector2(76, 45)
+custom_maximum_size = Vector2(-1, 45)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -53.0
+offset_right = -84.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 2
+text = "PIXEL
+%s"
+vertical_alignment = 1
+autowrap_mode = 1
