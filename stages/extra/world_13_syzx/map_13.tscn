@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="2_4mjll"]
 [ext_resource type="AudioStream" uid="uid://bt7fal58b1fj7" path="res://music/extra/world_13_syzx/map_13.ogg" id="3_mbbt5"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="4_2a4y5"]
-[ext_resource type="Texture2D" uid="uid://bb05kwgnyd1e8" path="res://gfx/map/maps/map12.png" id="5_ew7g7"]
+[ext_resource type="Texture2D" uid="uid://dql8l5tmxqheu" path="res://gfx/map/maps/map13.png" id="5_bkkcs"]
 [ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="6_ghdg7"]
 [ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="7_vs1ul"]
 [ext_resource type="Script" uid="uid://w38wmhi8lagh" path="res://engine/scenes/map/scripts/map_camera.gd" id="8_5djex"]
@@ -36,9 +36,6 @@
 [ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="36_3ee8k"]
 [ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="37_eg5we"]
 [ext_resource type="PackedScene" uid="uid://b3qcjy1uyf7t0" path="res://gfx/fancy_graphics/map_cloud.tscn" id="38_kgyxt"]
-[ext_resource type="Texture2D" uid="uid://sbbfh8tigfty" path="res://tilesets/desert/gfx/desert_cloud.png" id="39_h5n2i"]
-[ext_resource type="Script" uid="uid://b8puhalomggbj" path="res://engine/scenes/map/scripts/map_swim_area.gd" id="41_0hwqs"]
-[ext_resource type="Texture2D" uid="uid://dvjw1w4kiegfq" path="res://gfx/map/maps/overlay/map12water.png" id="42_eugws"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0mn0p"]
 shader = ExtResource("14_tkuxs")
@@ -50,38 +47,6 @@ shader_parameter/value = 0.0
 atlas = ExtResource("17_xaadb")
 region = Rect2(194, 171, 94, 81)
 filter_clip = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c8jec"]
-atlas = ExtResource("39_h5n2i")
-region = Rect2(0, 0, 65, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7fce3"]
-atlas = ExtResource("39_h5n2i")
-region = Rect2(65, 0, 65, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_srh8n"]
-atlas = ExtResource("39_h5n2i")
-region = Rect2(130, 0, 65, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_uylys"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c8jec")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7fce3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_srh8n")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 4.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mn0p"]
-size = Vector2(288, 82.5)
 
 [node name="Map" type="Node2D" unique_id=2054226429]
 script = ExtResource("1_hluev")
@@ -110,9 +75,7 @@ region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
 [node name="Map1" type="Sprite2D" parent="." unique_id=878778445]
-visible = false
-position = Vector2(32, 0)
-texture = ExtResource("5_ew7g7")
+texture = ExtResource("5_bkkcs")
 centered = false
 
 [node name="Player" parent="." unique_id=1722271656 instance=ExtResource("6_ghdg7")]
@@ -124,7 +87,7 @@ dots = ExtResource("7_vs1ul")
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=992143115]
 limit_left = 0
 limit_top = 0
-limit_right = 2240
+limit_right = 3184
 limit_bottom = 480
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
@@ -167,7 +130,7 @@ region_enabled = true
 region_rect = Rect2(214, 0, 94, 66)
 
 [node name="FancyWorld" type="Sprite2D" parent="GUI2/WorldText" unique_id=707676699]
-position = Vector2(-2, 0)
+position = Vector2(-4, 0)
 texture = ExtResource("16_ytrry")
 offset = Vector2(-38, 0)
 script = ExtResource("10_66mbk")
@@ -199,7 +162,7 @@ texture = ExtResource("22_qo2ps")
 script = ExtResource("10_66mbk")
 
 [node name="Syzxchulun" type="Sprite2D" parent="GUI2" unique_id=948843306]
-position = Vector2(551, 30)
+position = Vector2(552, 30)
 texture = ExtResource("23_n1jdt")
 script = ExtResource("10_66mbk")
 
@@ -227,7 +190,7 @@ metadata/_edit_lock_ = true
 [node name="MarkerSpace" type="Node2D" parent="." unique_id=414177697]
 editor_description = "Use this as World"
 script = ExtResource("27_2lkt7")
-space_name = 12
+space_name = 13
 dot_texture = ExtResource("28_87iq5")
 x_texture = ExtResource("29_ndxqt")
 draw_dots = true
@@ -387,93 +350,49 @@ script = ExtResource("10_66mbk")
 dot_offset = Vector2(5, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=15901039]
-position = Vector2(2088, 244)
+position = Vector2(3024, 128)
 texture = ExtResource("34_xn2wo")
 script = ExtResource("35_fxb16")
 
 [node name="Sun" type="Sprite2D" parent="Node2D" unique_id=2131920081]
-position = Vector2(576, 104)
+position = Vector2(239.99998, 112)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("36_3ee8k")
 script = ExtResource("37_eg5we")
 speed = 150.0
 
-[node name="MapCloud" parent="Node2D" unique_id=382645214 instance=ExtResource("38_kgyxt")]
-position = Vector2(112, 72)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud2" parent="Node2D" unique_id=1500151406 instance=ExtResource("38_kgyxt")]
+position = Vector2(96, 48)
 
-[node name="MapCloud2" parent="Node2D" unique_id=499119748 instance=ExtResource("38_kgyxt")]
-position = Vector2(152, 376)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud3" parent="Node2D" unique_id=70210777 instance=ExtResource("38_kgyxt")]
+position = Vector2(432, 80)
 
-[node name="MapCloud3" parent="Node2D" unique_id=584000468 instance=ExtResource("38_kgyxt")]
-position = Vector2(312, 304)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud4" parent="Node2D" unique_id=691211599 instance=ExtResource("38_kgyxt")]
+position = Vector2(704, 48)
 
-[node name="MapCloud4" parent="Node2D" unique_id=1256156163 instance=ExtResource("38_kgyxt")]
-position = Vector2(456, 48)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud5" parent="Node2D" unique_id=965603689 instance=ExtResource("38_kgyxt")]
+position = Vector2(880, 64)
 
-[node name="MapCloud5" parent="Node2D" unique_id=472022429 instance=ExtResource("38_kgyxt")]
-position = Vector2(576, 320)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud12" parent="Node2D" unique_id=2104769738 instance=ExtResource("38_kgyxt")]
+position = Vector2(1584, 80)
 
-[node name="MapCloud6" parent="Node2D" unique_id=255308315 instance=ExtResource("38_kgyxt")]
-position = Vector2(696, 40)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud13" parent="Node2D" unique_id=1008805933 instance=ExtResource("38_kgyxt")]
+position = Vector2(1872, 96)
 
-[node name="MapCloud7" parent="Node2D" unique_id=1131857145 instance=ExtResource("38_kgyxt")]
-position = Vector2(928, 56)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud6" parent="Node2D" unique_id=1841021910 instance=ExtResource("38_kgyxt")]
+position = Vector2(1088, 320)
 
-[node name="MapCloud8" parent="Node2D" unique_id=1366573622 instance=ExtResource("38_kgyxt")]
-position = Vector2(1136, 88)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud7" parent="Node2D" unique_id=1030380140 instance=ExtResource("38_kgyxt")]
+position = Vector2(1136, 32)
 
-[node name="MapCloud9" parent="Node2D" unique_id=1362592159 instance=ExtResource("38_kgyxt")]
-position = Vector2(1272, 40)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud8" parent="Node2D" unique_id=272783066 instance=ExtResource("38_kgyxt")]
+position = Vector2(1360, 80)
 
-[node name="MapCloud10" parent="Node2D" unique_id=1769523764 instance=ExtResource("38_kgyxt")]
-position = Vector2(1488, 104)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud9" parent="Node2D" unique_id=2063260391 instance=ExtResource("38_kgyxt")]
+position = Vector2(1408, 336)
 
-[node name="MapCloud17" parent="Node2D" unique_id=1931472110 instance=ExtResource("38_kgyxt")]
-position = Vector2(1656, 160)
-sprite_frames = SubResource("SpriteFrames_uylys")
+[node name="MapCloud10" parent="Node2D" unique_id=1184821972 instance=ExtResource("38_kgyxt")]
+position = Vector2(688, 224)
 
-[node name="MapCloud11" parent="Node2D" unique_id=1589857839 instance=ExtResource("38_kgyxt")]
-position = Vector2(1792, 48)
-sprite_frames = SubResource("SpriteFrames_uylys")
-
-[node name="MapCloud12" parent="Node2D" unique_id=526519802 instance=ExtResource("38_kgyxt")]
-position = Vector2(2064, 56)
-sprite_frames = SubResource("SpriteFrames_uylys")
-
-[node name="MapCloud13" parent="Node2D" unique_id=917756738 instance=ExtResource("38_kgyxt")]
-position = Vector2(776, 416)
-sprite_frames = SubResource("SpriteFrames_uylys")
-
-[node name="MapCloud14" parent="Node2D" unique_id=746059131 instance=ExtResource("38_kgyxt")]
-position = Vector2(1024, 336)
-sprite_frames = SubResource("SpriteFrames_uylys")
-
-[node name="MapCloud15" parent="Node2D" unique_id=898199104 instance=ExtResource("38_kgyxt")]
-position = Vector2(1312, 368)
-sprite_frames = SubResource("SpriteFrames_uylys")
-
-[node name="MapCloud16" parent="Node2D" unique_id=266219943 instance=ExtResource("38_kgyxt")]
-position = Vector2(2032, 368)
-sprite_frames = SubResource("SpriteFrames_uylys")
-
-[node name="SwimArea" type="Area2D" parent="." unique_id=1725514443]
-script = ExtResource("41_0hwqs")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SwimArea" unique_id=278824064]
-position = Vector2(1680, 377.25)
-shape = SubResource("RectangleShape2D_0mn0p")
-
-[node name="Map12Water" type="Sprite2D" parent="." unique_id=411426968]
-z_index = 6
-position = Vector2(1652, 351)
-texture = ExtResource("42_eugws")
+[node name="MapCloud11" parent="Node2D" unique_id=1109552229 instance=ExtResource("38_kgyxt")]
+position = Vector2(288, 224)
