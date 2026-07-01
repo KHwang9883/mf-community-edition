@@ -72,7 +72,7 @@ func show_description(desc: String, title: String) -> void:
 	#$Box/Texture.size.y = text.get_line_height() * text.get_line_count() + 8
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	var _sfx = CharacterManager.get_sound_replace(MESSAGE_BLOCK, MESSAGE_BLOCK, "message_box", false)
-	Audio.play_1d_sound(_sfx)
+	Audio.play_1d_sound(_sfx, true, {ignore_pause = true})
 	get_tree().paused = true
 	
 	box.position = Vector2(320, 240)
