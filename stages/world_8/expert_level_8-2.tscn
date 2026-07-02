@@ -53,6 +53,7 @@
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://engine/objects/bumping_blocks/question_block/templates/blue/Blue Coin Question Block.tscn" id="44_ha04j"]
 [ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="44_novg7"]
 [ext_resource type="PackedScene" uid="uid://wqjbkgomnnv0" path="res://engine/objects/enemies/icicle/icicle.tscn" id="45_ha04j"]
+[ext_resource type="Material" uid="uid://curmr513d4oj3" path="res://objects/ice_water/ice_water_particles.tres" id="47_nbsca"]
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="47_nn8uk"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="55_ppgrm"]
 [ext_resource type="Texture2D" uid="uid://bgwe2peb6we47" path="res://gfx/sign/10-3_roto.png" id="56_nbsca"]
@@ -122,56 +123,39 @@ shader_parameter/hue = 0.447
 shader_parameter/saturation = -0.967
 shader_parameter/value = 0.0
 
-[sub_resource type="Curve" id="Curve_lf0hv"]
-_data = [Vector2(0, 0.550562), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_tpa6j"]
-curve = SubResource("Curve_lf0hv")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_avtle"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(150, 0, 0)
-direction = Vector3(0, -1, 0)
-initial_velocity_min = 100.0
-initial_velocity_max = 150.0
-gravity = Vector3(0, 150, 0)
-scale_curve = SubResource("CurveTexture_tpa6j")
-
-[sub_resource type="Resource" id="Resource_ppgrm"]
+[sub_resource type="Resource" id="Resource_qhehv"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_nodepack = ExtResource("43_nn8uk")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_nbsca"]
-resource_local_to_scene = true
-script = ExtResource("22_w7chr")
-creation_fallback_node = ExtResource("20_qhehv")
-creation_nodepack = ExtResource("38_jau3g")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_qhehv"]
-resource_local_to_scene = true
-script = ExtResource("22_w7chr")
-creation_fallback_node = ExtResource("20_qhehv")
-creation_nodepack = ExtResource("38_jau3g")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_t5sfr"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
-creation_nodepack = ExtResource("47_nn8uk")
+creation_fallback_node = ExtResource("20_qhehv")
+creation_nodepack = ExtResource("38_jau3g")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_w7chr"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
-creation_nodepack = ExtResource("23_ipgw0")
+creation_fallback_node = ExtResource("20_qhehv")
+creation_nodepack = ExtResource("38_jau3g")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_ipgw0"]
+resource_local_to_scene = true
+script = ExtResource("22_w7chr")
+creation_nodepack = ExtResource("47_nn8uk")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_aowkh"]
+resource_local_to_scene = true
+script = ExtResource("22_w7chr")
+creation_nodepack = ExtResource("23_ipgw0")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_2ydhh"]
 resource_local_to_scene = true
 script = ExtResource("22_w7chr")
 creation_nodepack = ExtResource("23_ipgw0")
@@ -863,7 +847,7 @@ amount = 15
 texture = ExtResource("43_ha04j")
 lifetime = 0.8
 visibility_rect = Rect2(-160, -128, 320, 160)
-process_material = SubResource("ParticleProcessMaterial_avtle")
+process_material = ExtResource("47_nbsca")
 script = ExtResource("44_novg7")
 
 [node name="LavaBubbles2" type="GPUParticles2D" parent="Node2D2" unique_id=1612964653]
@@ -874,7 +858,7 @@ amount = 15
 texture = ExtResource("43_ha04j")
 lifetime = 0.8
 visibility_rect = Rect2(-160, -128, 320, 160)
-process_material = SubResource("ParticleProcessMaterial_avtle")
+process_material = ExtResource("47_nbsca")
 script = ExtResource("44_novg7")
 
 [node name="Icicle" parent="." unique_id=1549550582 instance=ExtResource("45_ha04j")]
@@ -915,28 +899,28 @@ position = Vector2(4640, 256)
 
 [node name="QuestionBlock" parent="." unique_id=609366759 instance=ExtResource("44_ha04j")]
 position = Vector2(1808, 304)
-result = SubResource("Resource_ppgrm")
+result = SubResource("Resource_qhehv")
 
 [node name="QuestionBlock3" parent="." unique_id=80150482 instance=ExtResource("44_ha04j")]
 position = Vector2(2640, 272)
-result = SubResource("Resource_nbsca")
+result = SubResource("Resource_t5sfr")
 
 [node name="QuestionBlock4" parent="." unique_id=85625649 instance=ExtResource("44_ha04j")]
 position = Vector2(5360, 176)
-result = SubResource("Resource_qhehv")
+result = SubResource("Resource_w7chr")
 
 [node name="QuestionBlock2" parent="." unique_id=1658835967 instance=ExtResource("44_ha04j")]
 position = Vector2(1840, 304)
-result = SubResource("Resource_t5sfr")
+result = SubResource("Resource_ipgw0")
 
 [node name="QuestionBlock5" parent="." unique_id=1157893760 instance=ExtResource("44_ha04j")]
 position = Vector2(1776, 48)
-result = SubResource("Resource_w7chr")
+result = SubResource("Resource_aowkh")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock6" parent="." unique_id=1874175936 instance=ExtResource("44_ha04j")]
 position = Vector2(6512, 272)
-result = SubResource("Resource_ipgw0")
+result = SubResource("Resource_2ydhh")
 initially_visible_and_solid = false
 
 [node name="Sign" type="Sprite2D" parent="." unique_id=2141189645]
@@ -952,5 +936,3 @@ scale = Vector2(0.75, 0.85)
 texture = ExtResource("56_nbsca")
 
 [connection signal="finished" from="CanvasLayer/Node2D/BGParticles" to="CanvasLayer/Node2D/BGParticles" method="queue_free"]
-[connection signal="finished" from="Node2D2/LavaBubbles" to="Node2D2/LavaBubbles" method="queue_free"]
-[connection signal="finished" from="Node2D2/LavaBubbles2" to="Node2D2/LavaBubbles2" method="queue_free"]
