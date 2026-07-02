@@ -64,7 +64,6 @@ func status_update() -> void:
 		await _delayer.timeout
 		_delayer = null
 		
-#		enemy_attacked.add_to_group(&"shell")
 		enemy_attacked.stomping_enabled = true
 		enemy_attacked.stomping_hurtable = true
 		
@@ -73,7 +72,6 @@ func status_update() -> void:
 		animation.frame = 0
 		disappear_timer.start()
 		
-#		enemy_attacked.remove_from_group(&"shell")
 		enemy_attacked.stomping_enabled = false
 		enemy_attacked.stomping_hurtable = false
 		combo.reset_combo()
