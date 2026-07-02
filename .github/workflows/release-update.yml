@@ -4,7 +4,7 @@ on: workflow_dispatch
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 
 env:
-  GODOT_VERSION: 4.7
+  GODOT_VERSION: 4.7.1.rc
   EXPORT_NAME: Mario Forever Community Edition
   PROJECT_PATH: .
   UPLOAD_FOLDER: MFCE-Builds/Release
@@ -14,7 +14,7 @@ jobs:
     name: Windows x86-64 Release Export
     runs-on: ubuntu-24.04 # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
     container:
-      image: jue13/godot-ci:4.7
+      image: jue13/godot-ci:4.7.1.rc
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -27,7 +27,7 @@ jobs:
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION} ~/.local/share/godot/export_templates/${GODOT_VERSION}
           echo EXPORT_DIR="$(readlink -f build)" >> $GITHUB_ENV
       - name: Project Import
         run: |
@@ -41,7 +41,6 @@ jobs:
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "${{ env.EXPORT_DIR }}/windows/01. Launch in Compatibility Mode (OpenGL 3).bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "${{ env.EXPORT_DIR }}/windows/02. Launch in Compatibility Mode (ANGLE).bat"
           echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver vulkan' > "${{ env.EXPORT_DIR }}/windows/03. Launch in Compatibility Mode (Vulkan).bat"
-          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --main-pack mfce-skin-editor.pck' > "${{ env.EXPORT_DIR }}/windows/Launch MFCE Skin Editor.bat"
           godot --headless --export-release "Windows Desktop" "${{ env.EXPORT_DIR }}/windows/$EXPORT_NAME.exe"
       - name: Checkout Skins
         uses: actions/checkout@v7
@@ -74,7 +73,7 @@ jobs:
     name: Linux x86-64 Release Export
     runs-on: ubuntu-24.04 # Using 24.04 due to libgdmpt extension (for audio playback) failing on 22.04
     container:
-      image: jue13/godot-ci:4.7
+      image: jue13/godot-ci:4.7.1.rc
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -85,7 +84,7 @@ jobs:
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION} ~/.local/share/godot/export_templates/${GODOT_VERSION}
           echo EXPORT_DIR="$(readlink -f build)" >> $GITHUB_ENV
       - name: Project Import
         run: |
@@ -97,10 +96,8 @@ jobs:
           mkdir -v -p "${{ env.EXPORT_DIR }}/linux"
           printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64"' > "${{ env.EXPORT_DIR }}/linux/00. Launch in Recommended Mode.sh"
           printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" --rendering-driver opengl3' > "${{ env.EXPORT_DIR }}/linux/01. Launch in Compatibility Mode.sh"
-          printf '#!/bin/bash\n\n"./${{ env.EXPORT_NAME }}.x86_64" --main-pack mfce-skin-editor.pck' > "${{ env.EXPORT_DIR }}/linux/Launch MFCE Skin Editor.sh"
           chmod +x "${{ env.EXPORT_DIR }}/linux/00. Launch in Recommended Mode.sh"
           chmod +x "${{ env.EXPORT_DIR }}/linux/01. Launch in Compatibility Mode.sh"
-          chmod +x "${{ env.EXPORT_DIR }}/linux/Launch MFCE Skin Editor.sh"
           godot --headless --export-release "Linux/X11" "${{ env.EXPORT_DIR }}/linux/$EXPORT_NAME.x86_64"
       - name: Checkout Skins
         uses: actions/checkout@v7
