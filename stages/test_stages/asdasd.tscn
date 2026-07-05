@@ -1,0 +1,194 @@
+[gd_scene format=4 uid="uid://buoc3olti6srs"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_4jv7e"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_b1p2m"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_x5kxg"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_511ie"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_vd1fg"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_3v5n6"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="10_7i70s"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_4jf78"]
+[ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="11_v3v6o"]
+[ext_resource type="PackedScene" uid="uid://7p86qw2ptq4o" path="res://stages/extra/world_10_syzx/platform_path_blue.tscn" id="12_4jv7e"]
+[ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="17_7hpcf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7hpcf"]
+texture = ExtResource("10_7i70s")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_plpdh"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_7hpcf")
+
+[sub_resource type="Gradient" id="Gradient_y8mqc"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_plpdh"]
+gradient = SubResource("Gradient_y8mqc")
+width = 480
+
+[sub_resource type="Curve2D" id="Curve2D_sp5h7"]
+bake_interval = 25.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 5840, 944, 0, 0, 0, 0, 5840, 1456)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_b1p2m"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 3040, -384, 0, 0, 0, 0, 3232, -384)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_v3v6o"]
+_data = {
+"points": PackedVector2Array(-0.9330146, 191.7345, 0.9330146, -191.7345, 4528, -512, 0.9330146, -192.201, -0.9330146, 192.201, 4832, -512, 0, 192.66751, 0, -192.66751, 4528, -512)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_4jv7e"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 6144, -448, 0, 0, 0, 0, 6336, -640, 0, 0, 0, 0, 6624, -640, 0, 0, 0, 0, 6624, -896, 0, 0, 0, 0, 6848, -1104)
+}
+point_count = 5
+
+[node name="Asdasd" type="Node2D" unique_id=134135178]
+script = ExtResource("1_4jv7e")
+completion_music = ExtResource("2_b1p2m")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" parent="." unique_id=1674830763 instance=ExtResource("3_x5kxg")]
+
+[node name="Player" parent="." unique_id=169935397 instance=ExtResource("5_511ie")]
+position = Vector2(3328, 320)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=1547836651]
+editor_draw_screen = false
+script = ExtResource("7_vd1fg")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." unique_id=1790766850 instance=ExtResource("8_3v5n6")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="CamArea" parent="." unique_id=460176343 instance=ExtResource("8_3v5n6")]
+offset_left = 2992.0
+offset_top = -880.0
+offset_right = 3632.0
+offset_bottom = -80.0
+metadata/_edit_lock_ = true
+
+[node name="CamArea2" parent="." unique_id=1610278987 instance=ExtResource("8_3v5n6")]
+offset_left = 4048.0
+offset_top = -944.0
+offset_right = 5328.0
+offset_bottom = -48.0
+
+[node name="CamArea3" parent="." unique_id=640529373 instance=ExtResource("8_3v5n6")]
+offset_left = 5616.0
+offset_top = -1680.0
+offset_right = 8112.0
+offset_bottom = -48.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=770700874]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAABiAAwAAAAAAAAAAABjAAwAAAAAAAAAAABkAAwAAAAAAAAAAABlAAwAAAAAAAAAAABmAAwAAAAAAAAAAABnAAwAAAAAAAAAAABoAAwAAAAAAAAAAABpAAwAAAAAAAAAAABqAAwAAAAAAAAAAABrAAwAAAAAAAAAAABsAAwAAAAAAAAAAABtAAwAAAAAAAAAAABuAAwAAAAAAAAAAABvAAwAAAAAAAAAAABwAAwAAAAAAAAAAABxAAwAAAAAAAAAAAByAAwAAAAAAAAAAABzAAwAAAAAAAAAAAB0AAwAAAAAAAAAAAB9AA4AAAAAAAAAAAB9AA0AAAAAAAAAAAB9AAwAAAAAAAAAAAB9AAsAAAAAAAAAAAB9AAoAAAAAAAAAAAB9AAkAAAAAAAAAAAB9AAYAAAAAAAAAAAB9AAgAAAAAAAAAAAB9AAcAAAAAAAAAAAB5AAcAAAAAAAAAAAB5AAYAAAAAAAAAAAB5AAUAAAAAAAAAAAB5AAQAAAAAAAAAAAB5AAMAAAAAAAAAAAB5AAIAAAAAAAAAAAB5AAEAAAAAAAAAAAB5AAAAAAAAAAAAAAB5AP//AAAAAAAAAABnAPX/AAAAAAAAAABmAPX/AAAAAAAAAABpAPH/AAAAAAAAAABqAPH/AAAAAAAAAABnAO7/AAAAAAAAAABmAO7/AAAAAAAAAABsAPD/AAAAAAAAAABvAPD/AAAAAAAAAABuAPD/AAAAAAAAAABtAPD/AAAAAAAAAABkAPP/AAAAAAAAAABjAPP/AAAAAAAAAABiAPP/AAAAAAAAAABhAPP/AAAAAAAAAACRAPD/AAAAAAAAAACSAPD/AAAAAAAAAACTAPD/AAAAAAAAAADJAOb/AAAAAAAAAADHAO//AAAAAAAAAADTAOb/AAAAAAAAAADQAN3/AAAAAAAAAADAAOr/AAAAAAAAAADJAOX/AAAAAAAAAADUAOb/AAAAAAAAAADIAO//AAAAAAAAAADBAOr/AAAAAAAAAADPAN3/AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_plpdh")
+navigation_enabled = false
+
+[node name="HUD" parent="." unique_id=469826780 instance=ExtResource("11_4jf78")]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=1668001429]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1365408811]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=583567166]
+motion_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1494359310]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_plpdh")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Path2D2" type="Path2D" parent="." unique_id=182427389]
+position = Vector2(-1888.4, -960)
+curve = SubResource("Curve2D_sp5h7")
+
+[node name="PlatformPath" parent="Path2D2" unique_id=1976199190 instance=ExtResource("17_7hpcf")]
+position = Vector2(5840, 944)
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="PlatformPath2" parent="Path2D2" unique_id=98555624 instance=ExtResource("17_7hpcf")]
+position = Vector2(5840, 1072)
+progress = 128.0
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="PlatformPath3" parent="Path2D2" unique_id=1479147538 instance=ExtResource("17_7hpcf")]
+position = Vector2(5840, 1200)
+progress = 256.0
+loop = true
+speed = 0.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="PlatformPath4" parent="Path2D2" unique_id=1189859326 instance=ExtResource("17_7hpcf")]
+position = Vector2(5840, 1328)
+progress = 384.0
+loop = true
+speed = 50.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+
+[node name="KoopaRed" parent="." unique_id=1990356411 instance=ExtResource("11_v3v6o")]
+position = Vector2(3168, -432)
+
+[node name="Path2D" type="Path2D" parent="." unique_id=685570682]
+position = Vector2(0, 0.4)
+curve = SubResource("Curve2D_b1p2m")
+
+[node name="PlatformPath" parent="Path2D" unique_id=1073629525 instance=ExtResource("12_4jv7e")]
+position = Vector2(3040, -384)
+
+[node name="Path2D5" type="Path2D" parent="." unique_id=2093958605]
+position = Vector2(272, 624)
+curve = SubResource("Curve2D_b1p2m")
+
+[node name="PlatformPath" parent="Path2D5" unique_id=1711466952 instance=ExtResource("12_4jv7e")]
+position = Vector2(3040, -384)
+
+[node name="Path2D3" type="Path2D" parent="." unique_id=1359641361]
+curve = SubResource("Curve2D_v3v6o")
+
+[node name="PlatformPath" parent="Path2D3" unique_id=1452374371 instance=ExtResource("17_7hpcf")]
+position = Vector2(4528, -512)
+loop = true
+speed = 200.0
+loop_backwards = false
+smooth_enabled = false
+
+[node name="Path2D4" type="Path2D" parent="." unique_id=1888066453]
+curve = SubResource("Curve2D_4jv7e")
+
+[node name="PlatformPath" parent="Path2D4" unique_id=709013547 instance=ExtResource("12_4jv7e")]
+position = Vector2(6144, -448)
+speed = 200.0
