@@ -109,3 +109,7 @@ func _make_split(id: int, no_check: bool = false) -> void:
 		Thunder.autosplitter.split("MFCE Achievement")
 	if Thunder.autosplitter.can_split_on("achievement_classic") && is_classic_achievement[id]:
 		Thunder.autosplitter.split("Classic Achievement")
+
+
+func perform_checks_and_unlock() -> void:
+	pass # Replace with function body.
