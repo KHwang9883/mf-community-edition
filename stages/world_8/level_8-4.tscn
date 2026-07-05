@@ -10,12 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://0s1sj8ke5lyv" path="res://engine/objects/platform/platform_path_tank_floor.tscn" id="7_v140h"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_at3p7"]
 [ext_resource type="TileSet" uid="uid://c40wyx3trs5d2" path="res://tilesets/tanks/tank_tileset.tres" id="9_4v4wu"]
+[ext_resource type="TileSet" uid="uid://dsqboambcjuek" path="res://engine/tilesets/tanks/tanks_ground.tres" id="9_4yr00"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_3kggv"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="10_y8vol"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="11_gf5fn"]
 [ext_resource type="PackedScene" uid="uid://cfdgwxnth6m3d" path="res://tilesets/tanks/scenes/dark_cloud.tscn" id="12_mg27i"]
 [ext_resource type="PackedScene" uid="uid://ddl8refhx7slj" path="res://engine/objects/projectiles/flameball/flameball.tscn" id="12_mhvqs"]
-[ext_resource type="Texture2D" uid="uid://cpc057l26xydx" path="res://engine/objects/platform/tank_ground.png" id="13_0yjlx"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="13_86kv7"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="15_0icvb"]
 [ext_resource type="Material" uid="uid://csursv0gnjouq" path="res://materials/fog1-2.tres" id="16_kmcbq"]
@@ -112,9 +112,14 @@ enable_right_border_death = false
 metadata/_edit_lock_ = true
 
 [node name="PlatformPathTankFloor" parent="Path2D/PathFollow2D" unique_id=1156929854 instance=ExtResource("7_v140h")]
-visible = false
 position = Vector2(0, 176)
 metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Path2D/PathFollow2D/PlatformPathTankFloor" unique_id=783195886]
+tile_map_data = PackedByteArray("AAD1/wAAAAAAAAAAAAD1/wEAAAAAAAEAAAD1/wIAAAAAAAIAAAD2/wAAAAABAAAAAAD2/wEAAAABAAEAAAD2/wIAAAABAAIAAAD3/wAAAAABAAAAAAD3/wEAAAABAAEAAAD3/wIAAAABAAIAAAD4/wAAAAABAAAAAAD4/wEAAAABAAEAAAD4/wIAAAABAAIAAAD5/wAAAAABAAAAAAD5/wEAAAABAAEAAAD5/wIAAAABAAIAAAD6/wAAAAABAAAAAAD6/wEAAAABAAEAAAD6/wIAAAABAAIAAAD7/wAAAAABAAAAAAD7/wEAAAABAAEAAAD7/wIAAAABAAIAAAD8/wAAAAABAAAAAAD8/wEAAAABAAEAAAD8/wIAAAABAAIAAAD9/wAAAAABAAAAAAD9/wEAAAABAAEAAAD9/wIAAAABAAIAAAD+/wAAAAABAAAAAAD+/wEAAAABAAEAAAD+/wIAAAABAAIAAAD//wAAAAABAAAAAAD//wEAAAABAAEAAAD//wIAAAABAAIAAAAAAAAAAAABAAAAAAAAAAEAAAABAAEAAAAAAAIAAAABAAIAAAABAAAAAAABAAAAAAABAAEAAAABAAEAAAABAAIAAAABAAIAAAACAAAAAAABAAAAAAACAAEAAAABAAEAAAACAAIAAAABAAIAAAADAAAAAAABAAAAAAADAAEAAAABAAEAAAADAAIAAAABAAIAAAAEAAAAAAABAAAAAAAEAAEAAAABAAEAAAAEAAIAAAABAAIAAAAFAAAAAAABAAAAAAAFAAEAAAABAAEAAAAFAAIAAAABAAIAAAAGAAAAAAABAAAAAAAGAAEAAAABAAEAAAAGAAIAAAABAAIAAAAHAAAAAAABAAAAAAAHAAEAAAABAAEAAAAHAAIAAAABAAIAAAAIAAAAAAABAAAAAAAIAAEAAAABAAEAAAAIAAIAAAABAAIAAAAJAAAAAAABAAAAAAAJAAEAAAABAAEAAAAJAAIAAAABAAIAAAAKAAAAAAACAAAAAAAKAAEAAAACAAEAAAAKAAIAAAACAAIAAAA=")
+tile_set = ExtResource("9_4yr00")
+collision_enabled = false
+navigation_enabled = false
 
 [node name="CameraArea" parent="." unique_id=1635770204 instance=ExtResource("8_at3p7")]
 offset_right = 7824.0
@@ -173,13 +178,6 @@ position = Vector2(320, 240)
 scale = Vector2(10, 7.5)
 texture = SubResource("GradientTexture2D_pljnj")
 metadata/_edit_lock_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground" unique_id=31935721]
-texture_repeat = 2
-position = Vector2(320, 448)
-texture = ExtResource("13_0yjlx")
-region_enabled = true
-region_rect = Rect2(0, 0, 640, 64)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=659085151]
 layer = 10

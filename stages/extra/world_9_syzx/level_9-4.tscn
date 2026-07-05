@@ -24,12 +24,12 @@
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="14_w4ar6"]
 [ext_resource type="Texture2D" uid="uid://b8idq72xw2p21" path="res://stages/extra/hardcore_2/objects/spike_hard_block_gray.png" id="15_kq7rv"]
 [ext_resource type="PackedScene" uid="uid://cjroicsm5yiy6" path="res://engine/objects/enemies/spikeball_launcher/spikeball_launcher.tscn" id="16_plq58"]
+[ext_resource type="TileSet" uid="uid://dsqboambcjuek" path="res://engine/tilesets/tanks/tanks_ground.tres" id="16_w1wj0"]
 [ext_resource type="Script" uid="uid://o6tmgw1htbwk" path="res://stages/extra/world_9_syzx/advanced_edition_node.gd" id="17_kxh1q"]
 [ext_resource type="Script" uid="uid://e4cum50xssao" path="res://stages/extra/world_9_syzx/level_9-4-spikes.gd" id="17_m48np"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://engine/objects/bumping_blocks/question_block/templates/gray/Gray Coin Question Block.tscn" id="17_wogyh"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="18_eg66j"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="19_dye02"]
-[ext_resource type="Texture2D" uid="uid://smnhrcu4qan6" path="res://stages/extra/world_9_syzx/gfx/9-4_grass.png" id="19_fsfp7"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="20_qbtdg"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="22_1lpa3"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="23_ty1rn"]
@@ -66,7 +66,7 @@ colors = PackedColorArray(0.0313726, 0, 0, 1, 0.156863, 0.156863, 0.156863, 1)
 gradient = SubResource("Gradient_f8ifp")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Resource" id="Resource_w1wj0"]
+[sub_resource type="Resource" id="Resource_qh15b"]
 resource_local_to_scene = true
 script = ExtResource("20_qbtdg")
 creation_fallback_node = ExtResource("18_eg66j")
@@ -79,13 +79,6 @@ creation_fallback_node = ExtResource("18_eg66j")
 creation_nodepack = ExtResource("19_dye02")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_qh15b"]
-resource_local_to_scene = true
-script = ExtResource("20_qbtdg")
-creation_fallback_node = ExtResource("18_eg66j")
-creation_nodepack = ExtResource("22_1lpa3")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_cun2g"]
 resource_local_to_scene = true
 script = ExtResource("20_qbtdg")
@@ -94,6 +87,13 @@ creation_nodepack = ExtResource("22_1lpa3")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_i1nn3"]
+resource_local_to_scene = true
+script = ExtResource("20_qbtdg")
+creation_fallback_node = ExtResource("18_eg66j")
+creation_nodepack = ExtResource("22_1lpa3")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_ler52"]
 resource_local_to_scene = true
 script = ExtResource("20_qbtdg")
 creation_nodepack = ExtResource("35_onri6")
@@ -190,9 +190,14 @@ enable_right_border_death = false
 metadata/_edit_lock_ = true
 
 [node name="PlatformPathTankFloor" parent="Path2D/PathFollow2D" unique_id=956574349 instance=ExtResource("8_g4oa6")]
-visible = false
 position = Vector2(0, 176)
 metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Path2D/PathFollow2D/PlatformPathTankFloor" unique_id=695476169]
+tile_map_data = PackedByteArray("AAD1/wAAAQAAAAAAAAD1/wEAAQAAAAEAAAD1/wIAAAAAAAIAAAD2/wAAAQABAAAAAAD2/wEAAQABAAEAAAD2/wIAAAABAAIAAAD3/wAAAQABAAAAAAD3/wEAAQABAAEAAAD3/wIAAAABAAIAAAD4/wAAAQABAAAAAAD4/wEAAQABAAEAAAD4/wIAAAABAAIAAAD5/wAAAQABAAAAAAD5/wEAAQABAAEAAAD5/wIAAAABAAIAAAD6/wAAAQABAAAAAAD6/wEAAQABAAEAAAD6/wIAAAABAAIAAAD7/wAAAQABAAAAAAD7/wEAAQABAAEAAAD7/wIAAAABAAIAAAD8/wAAAQABAAAAAAD8/wEAAQABAAEAAAD8/wIAAAABAAIAAAD9/wAAAQABAAAAAAD9/wEAAQABAAEAAAD9/wIAAAABAAIAAAD+/wAAAQABAAAAAAD+/wEAAQABAAEAAAD+/wIAAAABAAIAAAD//wAAAQABAAAAAAD//wEAAQABAAEAAAD//wIAAAABAAIAAAAAAAAAAQABAAAAAAAAAAEAAQABAAEAAAAAAAIAAAABAAIAAAABAAAAAQABAAAAAAABAAEAAQABAAEAAAABAAIAAAABAAIAAAACAAAAAQABAAAAAAACAAEAAQABAAEAAAACAAIAAAABAAIAAAADAAAAAQABAAAAAAADAAEAAQABAAEAAAADAAIAAAABAAIAAAAEAAAAAQABAAAAAAAEAAEAAQABAAEAAAAEAAIAAAABAAIAAAAFAAAAAQABAAAAAAAFAAEAAQABAAEAAAAFAAIAAAABAAIAAAAGAAAAAQABAAAAAAAGAAEAAQABAAEAAAAGAAIAAAABAAIAAAAHAAAAAQABAAAAAAAHAAEAAQABAAEAAAAHAAIAAAABAAIAAAAIAAAAAQABAAAAAAAIAAEAAQABAAEAAAAIAAIAAAABAAIAAAAJAAAAAQABAAAAAAAJAAEAAQABAAEAAAAJAAIAAAABAAIAAAAKAAAAAQACAAAAAAAKAAEAAQACAAEAAAAKAAIAAAACAAIAAAA=")
+tile_set = ExtResource("16_w1wj0")
+collision_enabled = false
+navigation_enabled = false
 
 [node name="CameraArea" parent="." unique_id=1699011632 instance=ExtResource("7_e8dkr")]
 offset_right = 7776.0
@@ -221,8 +226,6 @@ theme_override_fonts/font = ExtResource("14_w4ar6")
 text = "WORLD
 9-4"
 horizontal_alignment = 1
-
-[node name="Objects" type="Node2D" parent="." unique_id=1786738883]
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=425085419]
 z_index = 1
@@ -381,13 +384,6 @@ scale = Vector2(10, 7.5)
 texture = SubResource("GradientTexture2D_6p4b0")
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2" unique_id=1523827441]
-texture_repeat = 2
-position = Vector2(320, 448)
-texture = ExtResource("19_fsfp7")
-region_enabled = true
-region_rect = Rect2(0, 0, 640, 64)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=82903555]
 layer = 10
 
@@ -444,7 +440,7 @@ spikeball_velocity_max = Vector2(100, -50)
 
 [node name="QuestionBlock" parent="." unique_id=571915873 instance=ExtResource("17_wogyh")]
 position = Vector2(816, 144)
-result = SubResource("Resource_w1wj0")
+result = SubResource("Resource_qh15b")
 
 [node name="QuestionBlock5" parent="." unique_id=2009285550 instance=ExtResource("17_wogyh")]
 position = Vector2(1680, 144)
@@ -452,15 +448,15 @@ result = SubResource("Resource_86gpk")
 
 [node name="QuestionBlock2" parent="." unique_id=724863056 instance=ExtResource("17_wogyh")]
 position = Vector2(3632, 304)
-result = SubResource("Resource_qh15b")
+result = SubResource("Resource_cun2g")
 
 [node name="QuestionBlock4" parent="." unique_id=802758187 instance=ExtResource("17_wogyh")]
 position = Vector2(5680, 208)
-result = SubResource("Resource_cun2g")
+result = SubResource("Resource_i1nn3")
 
 [node name="QuestionBlock3" parent="." unique_id=998459786 instance=ExtResource("17_wogyh")]
 position = Vector2(4208, 240)
-result = SubResource("Resource_i1nn3")
+result = SubResource("Resource_ler52")
 
 [node name="BulletLauncher3" parent="." unique_id=118536091 instance=ExtResource("23_ty1rn")]
 position = Vector2(1264, 240.16)

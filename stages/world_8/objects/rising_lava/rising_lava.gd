@@ -15,6 +15,9 @@ var player: Player
 
 func _ready():
 	player = Thunder._current_player
+	if is_instance_valid(player):
+		lava_hud.position.y = lava_top_hud.position.y + (global_position.y - player.global_position.y) / 20
+		lava_hud.reset_physics_interpolation()
 	timer.timeout.connect(func():
 		_start_rising()
 	)
