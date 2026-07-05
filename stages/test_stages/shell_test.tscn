@@ -1,0 +1,48 @@
+[gd_scene format=4 uid="uid://udckyj22tjok"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_ec32w"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_htf7p"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_obgp0"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_af58j"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="7_tbuex"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_ygyw8"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_2frs8"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_j80ro"]
+[ext_resource type="PackedScene" uid="uid://btsmfgkalyjsi" path="res://engine/objects/enemies/buzzle_bettle/buzzle_beetle_shell.tscn" id="13_htf7p"]
+
+[node name="ShellTest" type="Node2D" unique_id=1587241693]
+script = ExtResource("1_ec32w")
+completion_music = ExtResource("2_htf7p")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" parent="." unique_id=1674830763 instance=ExtResource("3_obgp0")]
+
+[node name="Player" parent="." unique_id=169935397 instance=ExtResource("5_af58j")]
+position = Vector2(160, 208)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=1387534420]
+editor_draw_screen = false
+script = ExtResource("7_ygyw8")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." unique_id=1790766850 instance=ExtResource("8_2frs8")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=431440878]
+tile_map_data = PackedByteArray("AAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAANAAYAAAAAAAAAAAAIAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAwAAAAAAAAAAAAFAAwAAAAAAAAAAAAGAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAAIAAwAAAAAAAAAAAAJAAwAAAAAAAAAAAAKAA0AAAAAAAAAAAALAAwAAAAAAAAAAAAMAAwAAAAAAAAAAAANAAwAAAAAAAAAAAAOAAwAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAASAAcAAgAAAAAAAAATAAcAAgAAAAAAAAAUAAcAAgAAAAAAAAAVAAcAAgAAAAAAAAAWAAcAAgAAAAAAAAASAAYAAgABAAAAAAARAAUAAgABAAAAAAARAAYAAgAAAAAAAAARAAcAAgAAAAAAAAAXAAUAAgAAAAAAAAAXAAYAAgAAAAAAAAAXAAcAAgAAAAAAAAAWAAYAAgACAAAAAAAPAAIACAABAAIAAAAOAAMACAABAAIAAAAOAAoACAAAAAAAAAAPAAkACAAAAAAAAAAQAAgACAAAAAAAAAA=")
+tile_set = ExtResource("7_tbuex")
+navigation_enabled = false
+
+[node name="HUD" parent="." unique_id=469826780 instance=ExtResource("11_j80ro")]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=354730425]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="BuzzleBettleShell" parent="." unique_id=51646883 instance=ExtResource("13_htf7p")]
+position = Vector2(204.5, 208)
+
+[node name="BuzzleBettleShell2" parent="." unique_id=29517199 instance=ExtResource("13_htf7p")]
+position = Vector2(656, 208)
