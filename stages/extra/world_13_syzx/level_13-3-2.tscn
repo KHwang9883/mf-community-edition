@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_aoarn"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_ykvcy"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_1duyc"]
+[ext_resource type="PackedScene" uid="uid://cat0b6208nfnh" path="res://components/secrets_manager/secret_unlocker.tscn" id="3_42p11"]
 [ext_resource type="Script" uid="uid://diwj4k540d7j" path="res://objects/music_loader_custom/music_loader_custom.gd" id="4_e2uct"]
+[ext_resource type="Script" uid="uid://7byhkvlnfxa" path="res://components/secrets_manager/unlock_multiple.gd" id="4_yn3b6"]
 [ext_resource type="AudioStream" uid="uid://c7matagtmeja5" path="res://music/complete_tweaked.ogg" id="5_d1k71"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_smnd8"]
 [ext_resource type="AudioStream" uid="uid://diwewy7328od8" path="res://music/extra/world_13_syzx/13-3-2.ogg" id="6_g1fpa"]
@@ -516,7 +518,21 @@ editor_description = "Enter map scene path in the \"Jump to Scene\" property her
 script = ExtResource("1_aoarn")
 time = 300
 completion_music = ExtResource("2_ykvcy")
-jump_to_scene = "uid://df78lrspxqlju"
+jump_to_scene = "uid://sc0thhgcvq0g"
+game_over_continue_scene_override = "uid://cvq70nea708i1"
+
+[node name="SecretUnlocker2" parent="." unique_id=596987888 instance=ExtResource("3_42p11")]
+secrets = Array[String](["syzxchulun world 13", "syzxchulun world 13 kevin mode", "syzxchulun world 13 advance", "syzxchulun world 13 advance kevin mode"])
+progress_by_id = "4"
+progress_to = 4
+
+[node name="UnlockMultiple" type="Node" parent="SecretUnlocker2" unique_id=2138902672]
+script = ExtResource("4_yn3b6")
+progress_ids = Array[int]([0])
+progress_secret_mode_ids = Array[int]([1])
+check_for_softendo_mode = true
+softendo_progress_ids = Array[int]([2])
+softendo_progress_secret_mode_ids = Array[int]([3])
 
 [node name="MusicLoader" parent="." unique_id=1200414950 instance=ExtResource("3_1duyc")]
 script = ExtResource("4_e2uct")
@@ -972,3 +988,5 @@ position = Vector2(8496, 80)
 
 [node name="BowserEdge2" parent="." unique_id=1249972403 instance=ExtResource("40_7jhm2")]
 position = Vector2(9008, 80)
+
+[connection signal="level_completed" from="." to="SecretUnlocker2" method="perform_checks_and_unlock"]
