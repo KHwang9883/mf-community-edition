@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dk1x3jg2ub2tp" path="res://objects/falling_t_platform/falling_t_platform.gd" id="1_4h4v1"]
 [ext_resource type="Texture2D" uid="uid://2md8itqx70of" path="res://gfx/tilesets/castle/castle_1.png" id="1_qqa1y"]
-[ext_resource type="Script" uid="uid://bloud4duhhq0t" path="res://objects/falling_t_platform/fall_t_vision.gd" id="3_0kw2t"]
-[ext_resource type="AudioStream" uid="uid://bkl7l5reed0ge" path="res://sfx/castle_crash.wav" id="3_gxaqv"]
-[ext_resource type="AudioStream" uid="uid://bunci8fpe8bed" path="res://objects/falling_t_platform/boss_explode.wav" id="4_37cxg"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_dil4j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qt1us"]
 atlas = ExtResource("1_qqa1y")
@@ -138,29 +136,12 @@ texture = SubResource("AtlasTexture_043eg")
 centered = false
 region_rect = Rect2(0, 0, 96, 128)
 
-[node name="SoundCrash" type="AudioStreamPlayer2D" parent="." unique_id=1512670133]
-position = Vector2(0, -336)
-stream = ExtResource("3_gxaqv")
-volume_db = 6.0
-bus = &"Sound"
-area_mask = 8
-metadata/_edit_lock_ = true
-
-[node name="SoundBoom" type="AudioStreamPlayer2D" parent="." unique_id=1309986228]
-position = Vector2(0, -336)
-stream = ExtResource("4_37cxg")
-volume_db = 12.0
-bus = &"Sound"
-area_mask = 8
-metadata/_edit_lock_ = true
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=268392501]
 visible = false
 position = Vector2(0, -16)
 polygon = PackedVector2Array(-160, -368, -160, -336, -128, -336, -128, -304, -96, -304, -96, -272, 96, -272, 96, -304, 128, -304, 128, -336, 160, -336, 160, -368)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=528486151]
-visible = false
 position = Vector2(-7.62939e-06, -176)
-scale = Vector2(16, 20.8)
-script = ExtResource("3_0kw2t")
+rect = Rect2(-160, -208, 320, 416)
+script = ExtResource("4_dil4j")
