@@ -1,5 +1,8 @@
 extends AnimatableBody2D
 
+const CASTLE_CRASH = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
+const BOSS_EXPLODE = preload("res://objects/falling_t_platform/boss_explode.wav")
+
 @export_range(0, 360, 0.01, "radians_as_degrees", "or_greater") var rotation_acceleration: float = TAU/360
 @export_range(0, 10, 0.01, "or_greater", "suffix:x") var falling_acceleration_ratio: float = 0.2
 
@@ -11,8 +14,6 @@ var angular_vel: float
 
 @onready var sprite_top: Node2D = $SpriteTop
 @onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
-@onready var sound_crash: AudioStreamPlayer2D = $SoundCrash
-@onready var sound_boom: AudioStreamPlayer2D = $SoundBoom
 
 
 func _physics_process(delta: float) -> void:
@@ -31,7 +32,7 @@ func _physics_process(delta: float) -> void:
 			var cam := get_viewport().get_camera_2d() as PlayerCamera2D
 			if cam:
 				cam.shock(1.75, Vector2(3, 0))
-			sound_crash.play()
+			Audio.play_sound(CASTLE_CRASH, self, false)
 			
 			visible_on_screen_enabler_2d.queue_free()
 	elif is_equal_approx(absf(arm), 1.0):
@@ -52,6 +53,6 @@ func _physics_process(delta: float) -> void:
 			var cam := get_viewport().get_camera_2d() as PlayerCamera2D
 			if cam:
 				cam.shock(1.5, Vector2(12 * (1 - clampf(inverse_lerp(0, 1280, cam.get_screen_center_position().distance_to(global_position)), 0, 1)), 0))
-				sound_boom.play()
+				Audio.play_sound(BOSS_EXPLODE, self, false)
 				await get_tree().create_timer(3, false, true).timeout
 				queue_free()
