@@ -1,3 +1,4 @@
+@warning_ignore("missing_tool")
 extends Level
 
 @export var climbing_scene: String = "res://stages/extra/climbing_minigame/climbing_lava_run.tscn"
@@ -35,6 +36,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	var tw = lava_bowser.create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tw.tween_property(lava_bowser, "position:y", lava_bowser.position.y + 240, 4)
 	tw.tween_property(lava_bowser, "modulate:a", 0.0, 2.5)
+	lava_bowser.get_node("Area2D/CollisionShape2D").disabled = true
 	
 	await get_tree().create_timer(1.0, false, false).timeout
 	
