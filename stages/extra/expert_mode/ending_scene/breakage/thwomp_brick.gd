@@ -37,7 +37,7 @@ func bricks_break() -> void:
 	queue_free()
 
 
-func got_bumped(by_player: bool = false) -> void:
+func got_bumped(by_player: bool = false, trigger_hit_attacker: bool = true) -> void:
 	if _triggered && lock_while_triggered: return
 	var pl := Thunder._current_player
 	if by_player:
@@ -51,9 +51,10 @@ func got_bumped(by_player: bool = false) -> void:
 	
 	# Standard brick
 	if by_player && pl.suit.type == Data.PLAYER_POWER.SMALL:
-		bump(false)
+		bump(false, 0, trigger_hit_attacker)
 	else:
-		hit_attack()
+		if trigger_hit_attacker:
+			hit_attack()
 		bricks_break()
 	
 
