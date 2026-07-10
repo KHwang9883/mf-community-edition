@@ -25,7 +25,6 @@
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="24_fln4o"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="25_bypu3"]
 [ext_resource type="Material" uid="uid://bqbnhvliq3s32" path="res://engine/shaders/add_unshaded_effect.tres" id="26_mexpm"]
-[ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="27_ojbt1"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="28_383b4"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="29_70c51"]
 [ext_resource type="TileSet" uid="uid://b5c17g3cwebar" path="res://tilesets/underground/underground.tres" id="30_g808m"]
@@ -88,6 +87,7 @@
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="85_w44o8"]
 [ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="88_xyt6v"]
 [ext_resource type="PackedScene" uid="uid://o82bpqe7fxui" path="res://objects/human_lab_2/ramireys/werewolf_clone/werewolf_clone.tscn" id="89_ft6p5"]
+[ext_resource type="PackedScene" uid="uid://bhe1rln5sw47" path="res://objects/human_lab_2/zorro/zorro.tscn" id="89_o4ow1"]
 [ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="89_xyt6v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k455a"]
@@ -644,13 +644,11 @@ uppercase = true
 [node name="CoderClone" parent="." unique_id=1765936029 instance=ExtResource("12_vogpj")]
 position = Vector2(480, 264)
 
-[node name="Objects" type="Node2D" parent="." unique_id=1167359567]
-
 [node name="BowserTrigger" parent="." unique_id=1134100937 node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("22_hvgss")]
 position = Vector2(11072, 224)
 curve = SubResource("Curve2D_s4opk")
 trigger_area = Rect2(0, 0, 32, 960)
-trigger_bowser = NodePath("../Bowser")
+trigger_bowser = NodePath("../Bowser2")
 boss_music = ExtResource("13_x8obe")
 
 [node name="RotoCenter" parent="." unique_id=958018544 instance=ExtResource("24_fln4o")]
@@ -671,31 +669,6 @@ position = Vector2(180, 0)
 amplitude_enable = true
 amplitude = Vector2(180, 180)
 amplitude_changing_speed = 350.0
-
-[node name="Bowser" parent="." unique_id=1474656100 instance=ExtResource("27_ojbt1")]
-position = Vector2(11776, 256)
-health = 8
-status_interval = Array[float]([3.0, 3.0, 3.0, 3.0, 3.0])
-status = Array[StringName]([&"flame", &"flame", &"flame", &"flame", &"multiflames"])
-
-[node name="Label2" type="Label" parent="Bowser" unique_id=183334078]
-offset_left = -40.0
-offset_top = -120.0
-offset_right = 52.0
-offset_bottom = -22.0
-theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("42_mr3wq")
-theme_override_font_sizes/font_size = 11
-text = "PLEASE,
-REPLACE ME WITH 
-FULLY-FUNCTIONAL
-ZORRO BOSS"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-metadata/_edit_use_anchors_ = true
 
 [node name="BowserEdge" parent="." unique_id=399124299 instance=ExtResource("28_383b4")]
 position = Vector2(11376, 48)
@@ -1457,13 +1430,13 @@ position = Vector2(1, 94)
 texture = ExtResource("39_dr8p7")
 
 [node name="Label3" type="Label" parent="ContainerBubbles3/SignSmallUpsideDown6" unique_id=825562882]
-offset_left = -46.0
-offset_top = -11.0
-offset_right = 46.0
-offset_bottom = 43.0
+offset_left = -45.0
+offset_top = -12.0
+offset_right = 47.0
+offset_bottom = 42.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
 theme_override_constants/line_spacing = 0
-theme_override_constants/outline_size = 5
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("41_2jcq4")
 theme_override_font_sizes/font_size = 24
 text = "NYN"
@@ -2824,3 +2797,9 @@ rotation = -1.5708
 
 [node name="WerewolfClone" parent="." unique_id=120818019 instance=ExtResource("89_ft6p5")]
 position = Vector2(9088, 320)
+
+[node name="Bowser2" parent="." unique_id=712077096 instance=ExtResource("89_o4ow1")]
+position = Vector2(11776, 256)
+health = 8
+status_interval = Array[float]([3.0, 3.0, 3.0, 3.0, 3.0])
+status = Array[StringName]([&"flame", &"flame", &"flame", &"flame", &"multiflames"])
