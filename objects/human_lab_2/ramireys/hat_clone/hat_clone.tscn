@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs.png" id="15_iwldq"]
 [ext_resource type="Texture2D" uid="uid://dhcij2ccbpcvp" path="res://objects/human_lab_2/ramireys/hat_clone/gfx/dead.png" id="16_pv7v0"]
 [ext_resource type="Script" uid="uid://d0ir2qr4v6lu7" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="16_q71w0"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="16_yfx0n"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="17_ybfps"]
 
 [sub_resource type="Resource" id="Resource_c83wo"]
@@ -31,7 +32,7 @@ custom_script = ExtResource("9_ispfc")
 size = Vector2(32, 58)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8qmi"]
-size = Vector2(32, 32)
+size = Vector2(52, 30)
 
 [sub_resource type="Resource" id="Resource_8814w"]
 resource_local_to_scene = true
@@ -270,13 +271,16 @@ animations = [{
 "speed": 50.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_kkpmq"]
+radius = 8.0
+
 [node name="HatClone" type="CharacterBody2D" unique_id=2054790556]
-platform_on_leave = 2
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
 floor_max_angle = 0.837758
 floor_snap_length = 5.0
+platform_on_leave = 2
 script = ExtResource("1_bpqgx")
 stomping_creation = SubResource("Resource_c83wo")
 look_at_player = true
@@ -288,6 +292,12 @@ gravity_scale = 0.5
 visible = false
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_frpgf")
+
+[node name="Collision2" type="CollisionShape2D" parent="." unique_id=1232843673]
+visible = false
+position = Vector2(0, 17)
+shape = SubResource("RectangleShape2D_o8qmi")
+debug_color = Color(0.65098, 0.666667, 0.309804, 0.419608)
 
 [node name="Body" type="Area2D" parent="." unique_id=1273765381]
 collision_layer = 2
@@ -302,7 +312,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="Collision2" type="CollisionShape2D" parent="Body" unique_id=1103912826]
 visible = false
-position = Vector2(0, 16)
+position = Vector2(0, 17)
 shape = SubResource("RectangleShape2D_o8qmi")
 debug_color = Color(0.65098, 0.666667, 0.309804, 0.419608)
 
@@ -336,9 +346,26 @@ enemy_center_node = NodePath("../..")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1250081677]
 self_modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-20, -32, 40, 64)
+rect = Rect2(-25, -32, 50, 64)
 script = ExtResource("17_ybfps")
 metadata/_edit_lock_ = true
+
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=1183570236]
+visible = false
+position = Vector2(0, 16)
+enabled = false
+shape = SubResource("CircleShape2D_kkpmq")
+target_position = Vector2(0, 0)
+max_results = 24
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("16_yfx0n")
+killer_type = &"shell"
+killing_detection_scale = 2.0
+trigger_enemy_failed_signal = false
+special_tags = Array[StringName]([])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
