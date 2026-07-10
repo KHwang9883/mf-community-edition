@@ -6,11 +6,11 @@ extends StaticBumpingBlock
 @onready var anim: AnimatedSprite2D = $Sprites/AnimatedSprite2D/Anim
 
 
-func got_bumped(by_player: bool = false) -> void:
+func got_bumped(by_player: bool = false, trigger_hit_attacker: bool = true) -> void:
 	if _triggered: return
-	bump(true)
+	bump(true, 0, trigger_hit_attacker)
 
-func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
+func bump(disable: bool, bump_rotation: float = 0, trigger_hit_attacker: bool = true):
 	if _triggered && lock_while_triggered: return
 	if !active: return
 	
@@ -31,4 +31,4 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	result = _result
 	anim.visible = false
 	
-	super(disable, bump_rotation, interrupt)
+	super(disable, bump_rotation, trigger_hit_attacker)
