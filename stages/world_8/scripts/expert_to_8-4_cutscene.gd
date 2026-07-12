@@ -91,13 +91,13 @@ var atom_rotating: bool
 func spawn_item() -> void:
 	var pl = Thunder._current_player
 	if !pl: return
-	var tw: Tween
+	
 	if pl.suit.type != Data.PLAYER_POWER.FULL:
 		Audio.play_1d_sound(THROW)
 		fire_flower.global_position = toad.global_position
 		fire_flower.modulate.a = 0.05
-		tw = fire_flower.create_tween()
-		tw.tween_property(fire_flower, "modulate:a", 1.0, 0.3)
+		var tw: Tween = fire_flower.create_tween()
+		tw.tween_property(fire_flower, "modulate:a", 1.0, 0.3).from(0.05)
 		fire_flower.reset_physics_interpolation()
 		fire_flower.speed = Vector2(-350, -280)
 		fire_flower_rotating = true
@@ -110,8 +110,8 @@ func spawn_item() -> void:
 	Audio.play_1d_sound(THROW)
 	life_mushroom.global_position = toad.global_position
 	life_mushroom.modulate.a = 0.05
-	tw = life_mushroom.create_tween()
-	tw.tween_property(life_mushroom, "modulate:a", 1.0, 0.3)
+	var tw2: Tween = life_mushroom.create_tween()
+	tw2.tween_property(life_mushroom, "modulate:a", 1.0, 0.3).from(0.05)
 	life_mushroom.reset_physics_interpolation()
 	life_mushroom.speed = Vector2(-300, -280)
 	life_rotating = true
@@ -128,8 +128,8 @@ func spawn_item() -> void:
 		Audio.play_1d_sound(THROW)
 		atom_replenisher.global_position = toad.global_position
 		atom_replenisher.modulate.a = 0.05
-		tw = atom_replenisher.create_tween()
-		tw.tween_property(atom_replenisher, "modulate:a", 1.0, 0.3)
+		var tw3: Tween = atom_replenisher.create_tween()
+		tw3.tween_property(atom_replenisher, "modulate:a", 1.0, 0.3).from(0.05)
 		atom_replenisher.reset_physics_interpolation()
 		atom_replenisher.speed = Vector2(-250, -280)
 		atom_rotating = true
