@@ -18,6 +18,7 @@ extends Node2D
 @onready var marker_q_block: Marker2D = $Cutscene3/MarkerQBlock
 @onready var marker_toad: Marker2D = $Cutscene3/MarkerToad
 @onready var marker_toad2: Marker2D = $Cutscene3/MarkerToad2
+@onready var player: Player = $Player
 
 var _original_time_scale: float
 var _skippable: bool
@@ -41,6 +42,8 @@ func _restore() -> void:
 func _flow_intros() -> void:
 	# INTRO
 	
+	player.completed = true
+	player.warp = Player.Warp.IN
 	music_loader.play_buffered()
 	for i in shrooms.get_children():
 		i.scale = Vector2.ZERO
