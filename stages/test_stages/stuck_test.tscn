@@ -1,0 +1,89 @@
+[gd_scene format=4 uid="uid://cg526q38uc26m"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_pkotg"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_r7441"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_5hh42"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_l5y56"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_ofb0m"]
+[ext_resource type="TileSet" uid="uid://kqcreyi6o4v" path="res://tilesets/human_lab/human_lab-5.tres" id="8_5hh42"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_ipn81"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/gfx/hard_block.png" id="10_kjtd4"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_l5y56"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="13_l5y56"]
+[ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/gfx/hard_block_only.png" id="14_ts4tb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ofb0m"]
+texture = ExtResource("10_kjtd4")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_ipn81"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_ofb0m")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrivr"]
+size = Vector2(64, 32)
+
+[node name="StuckTest" type="Node2D" unique_id=1573169956]
+script = ExtResource("1_pkotg")
+completion_music = ExtResource("2_r7441")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" parent="." unique_id=1674830763 instance=ExtResource("3_5hh42")]
+
+[node name="Player" parent="." unique_id=169935397 instance=ExtResource("5_l5y56")]
+position = Vector2(352, 272)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=1617135713]
+editor_draw_screen = false
+script = ExtResource("7_ofb0m")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." unique_id=1790766850 instance=ExtResource("8_ipn81")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1264903957]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAKAAUAAAAAAAAAAAALAAUAAAAAAAAAAAAMAAUAAAAAAAAAAAAHAAcAAAAAAAAAAAAKAAwAAAAAAAAAAAAKAAsAAAAAAAAAAAAKAAoAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAoAAAAAAAAAAAALAAsAAAAAAAAAAAALAAwAAAAAAAAAAAAMAAwAAAAAAAAAAAAMAAsAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_ipn81")
+navigation_enabled = false
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="." unique_id=1298524138]
+tile_map_data = PackedByteArray("AAAGAAsAAAAFAAAAAQAFAAoAAAAAAAEAABA=")
+tile_set = ExtResource("8_5hh42")
+navigation_enabled = false
+
+[node name="HUD" parent="." unique_id=469826780 instance=ExtResource("11_l5y56")]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=1174202650]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="RedMushroom" parent="." unique_id=417575905 instance=ExtResource("13_l5y56")]
+position = Vector2(128, 400)
+appear_distance = 0.0
+speed = Vector2(0, 0)
+gravity_scale = 0.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1838469782]
+position = Vector2(0, 10)
+collision_layer = 112
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=544957941]
+position = Vector2(128, 342)
+shape = SubResource("RectangleShape2D_xrivr")
+
+[node name="HardBlockOnly" type="Sprite2D" parent="StaticBody2D/CollisionShape2D" unique_id=571423533]
+show_behind_parent = true
+position = Vector2(-16, 0)
+texture = ExtResource("14_ts4tb")
+
+[node name="HardBlockOnly2" type="Sprite2D" parent="StaticBody2D/CollisionShape2D" unique_id=1688960549]
+show_behind_parent = true
+position = Vector2(16, 0)
+texture = ExtResource("14_ts4tb")
