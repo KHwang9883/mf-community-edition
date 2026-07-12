@@ -55,6 +55,8 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="50_n5aq1"]
 [ext_resource type="PackedScene" uid="uid://cwn8ha7w1t78a" path="res://objects/gray_qblocks/brick_grey2.tscn" id="51_n5aq1"]
 [ext_resource type="Script" uid="uid://dv8k8n7tpbvty" path="res://engine/components/enemy_rng_set_seed/enemy_rng_set_seed.gd" id="52_4w4j0"]
+[ext_resource type="Script" uid="uid://b03mfsh5rvxsr" path="res://stages/extra/expert_mode/otherworld/scripts/level8_kevin.gd" id="56_i6dqp"]
+[ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="57_uwrsc"]
 
 [sub_resource type="Curve2D" id="Curve2D_fbsdy"]
 _data = {
@@ -129,6 +131,7 @@ antiafk_enabled = false
 position = Vector2(80, 400)
 death_music_override = ExtResource("7_bkord")
 death_wait_time = 0.0
+metadata/ignore_loludied = true
 
 [node name="Path2D" type="Path2D" parent="." unique_id=189747438]
 curve = SubResource("Curve2D_fbsdy")
@@ -960,6 +963,47 @@ position = Vector2(6784, 272)
 [node name="Node" type="Node" parent="." unique_id=55203551]
 script = ExtResource("52_4w4j0")
 seed_value = 101
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=98321466]
+layer = 100
+visible = false
+script = ExtResource("56_i6dqp")
+
+[node name="Node2D" type="Node2D" parent="CanvasLayer2" unique_id=145265623]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2/Node2D" unique_id=1486703784]
+offset_right = 640.0
+offset_bottom = 480.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.8862745)
+
+[node name="Node2D" type="Node2D" parent="CanvasLayer2/Node2D" unique_id=1659018021]
+snap_2d_transforms_mode = 1
+position = Vector2(320, 240)
+
+[node name="Label" parent="CanvasLayer2/Node2D/Node2D" unique_id=914191916 instance=ExtResource("57_uwrsc")]
+offset_left = -288.0
+offset_top = -144.0
+offset_right = 288.0
+offset_bottom = 176.0
+text = "Congratulations!
+
+but this is as far as you can go in kevin mode.
+
+you cannot beat this level.
+
+even if you tried hard enough, it is not happening.
+
+grab yourself a cake and pretend that you've beaten it.
+
+this is the best case for you. since, it is, in fact, unbeatable.
+
+if you are not satisfied with such ending,
+please begin to run around with your hair on fire :)
+
+ 
+
+your score is: %d (new record!!!!)"
 
 [editable path="TankBowser"]
 [editable path="TankBowser2"]

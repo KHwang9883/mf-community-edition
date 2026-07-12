@@ -80,6 +80,13 @@ func _ready() -> void:
 	if !is_instance_valid(mario): return
 	mario_pos = mario.global_position
 	reset_physics_interpolation()
+	if Scenes.current_scene && "expert_mode/otherworld/level_8.tscn" in Scenes.current_scene.scene_file_path:
+		mario.death_music_ignore_pause = true
+		var _22 = load("res://music/minix/custom/smp2_gameover.mp3")
+		mario.death_music_override = _22
+		mario.death_wait_time = -1
+		KevinGlobal.wait_time = _22.get_length()
+		return
 	var _death_sound = DEATH_SOUNDS[0]
 	if _random_sounds_tweak:
 		_death_sound = DEATH_SOUNDS.pick_random()
