@@ -100,6 +100,8 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent):
 	if !_skippable: return
 	if event.is_action_pressed(&"ui_cancel") || (event.is_action_pressed(&"m_attack") && _skippable_plus):
+		_skippable = false
+		_skippable_plus = false
 		_fade_out()
 
 func _fade_out() -> void:

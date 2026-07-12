@@ -154,6 +154,7 @@ func _flow_intros():
 func _unhandled_input(event: InputEvent):
 	if !skippable: return
 	if event.is_action_pressed(&"ui_cancel"):
+		skippable = false
 		_start_transition()
 
 func _start_transition() -> void:

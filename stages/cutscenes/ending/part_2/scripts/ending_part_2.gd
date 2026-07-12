@@ -7,7 +7,6 @@ extends LevelCutscene
 @onready var cell_peach = $CellPeach
 
 var _original_time_scale: float
-#var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 var set_looking: bool = false
 var mario_walking: bool = false
@@ -88,9 +87,7 @@ func _time(t: float) -> void:
 func _physics_process(_delta: float) -> void:
 	if mario_walking:
 		mario.speed.x = 50
-		(func():
-			mario.global_position.x = cell_peach.global_position.x - 40
-		).call_deferred()
+		mario.global_position.x = cell_peach.global_position.x - 40
 	
 	if cell_peach.global_position.x >= 1056 && !peach_enter:
 		peach_enter = true
@@ -103,6 +100,7 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent):
 	if !skippable: return
 	if event.is_action_pressed(&"ui_cancel"):
+		skippable = false
 		_fade_out()
 
 func _fade_out() -> void:
