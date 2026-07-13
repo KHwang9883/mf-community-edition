@@ -16,9 +16,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !is_inside || delay: return
-	var random_pick: int = randi_range(0, random_pick - 1)
-	if random_pick < sounds.size():
-		Audio.play_1d_sound(sounds[random_pick])
+	var random_picked: int = randi_range(0, random_pick - 1)
+	if random_picked < sounds.size():
+		Audio.play_1d_sound(sounds[random_picked])
 	
 	delay = true
 	await get_tree().create_timer(delay_sec, false, false, true).timeout
