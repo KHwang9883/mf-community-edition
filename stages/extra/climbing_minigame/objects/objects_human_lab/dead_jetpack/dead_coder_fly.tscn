@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://dalbx57u5hlgi" path="res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.gd" id="1_74w4c"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_4ck2j"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_7c7sb"]
-[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_yxnsw"]
+[ext_resource type="Script" uid="uid://di002h8pytk7t" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/dead_coder_killed.gd" id="4_xgoiy"]
 [ext_resource type="AudioStream" uid="uid://m3fb62sh1nho" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/JetpackImpact.wav" id="5_rxdlf"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_ta407"]
+[ext_resource type="AudioStream" uid="uid://c0bi1gh37xdeo" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/sfx/SkeletonDead.ogg" id="7_xgoiy"]
 [ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_4swss"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="8_ewbi1"]
 [ext_resource type="Texture2D" uid="uid://mapnany1gi8g" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/gfx/tmp.png" id="8_trxq7"]
@@ -20,10 +21,17 @@ script = ExtResource("5_ta407")
 creation_nodepack = ExtResource("3_7c7sb")
 trans_inheritances = 7
 custom_vars = {
-"death": NodePath("../../Sprite"),
+"death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, 0)
 }
-custom_script = ExtResource("4_yxnsw")
+custom_script = ExtResource("4_xgoiy")
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_7wa85"]
+stream_count = 2
+stream_0/stream = ExtResource("5_rxdlf")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("7_xgoiy")
+stream_1/volume = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t0utb"]
 atlas = ExtResource("8_trxq7")
@@ -78,7 +86,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 script = ExtResource("2_4ck2j")
 stomping_creation = SubResource("Resource_xgoiy")
 stomping_scores = 100
-stomping_sound = ExtResource("5_rxdlf")
+stomping_sound = SubResource("AudioStreamSynchronized_7wa85")
 killing_immune = {
 &"beetroot": false,
 &"boomerang": false,
@@ -94,7 +102,7 @@ killing_immune = {
 }
 killing_creation = SubResource("Resource_xgoiy")
 killing_scores = 100
-killing_sound_succeeded = ExtResource("5_rxdlf")
+killing_sound_succeeded = SubResource("AudioStreamSynchronized_7wa85")
 
 [node name="Node" type="Node2D" parent="Body" unique_id=1107188489]
 script = ExtResource("8_ewbi1")
@@ -106,11 +114,9 @@ autoplay = "default"
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=318865502]
 visible = false
-position = Vector2(2, -22)
 rotation = 3.14159
 sprite_frames = SubResource("6")
 autoplay = "default"
-offset = Vector2(0, -20)
 flip_v = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

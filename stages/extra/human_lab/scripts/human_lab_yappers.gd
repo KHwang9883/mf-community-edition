@@ -4,10 +4,10 @@ var is_inside: bool
 var is_playing: bool
 var yapper_2_talks: bool
 
-@onready var yapper_1_lines = [
+@export var yapper_1_lines: Array[AudioStream] = [
 	preload("res://sfx/house_of_clones/AAA_gadacz1.wav"), preload("res://sfx/house_of_clones/AAA_gadacz2.wav"), preload("res://sfx/house_of_clones/AAA_gadacz3.wav"), preload("res://sfx/house_of_clones/AAA_gadacz4.wav"), preload("res://sfx/house_of_clones/AAA_gadacz5.wav"),
 ]
-@onready var yapper_2_lines = [
+@export var yapper_2_lines: Array[AudioStream] = [
 	preload("res://sfx/house_of_clones/AAA_gadacz1b.wav"), preload("res://sfx/house_of_clones/AAA_gadacz2b.wav"), preload("res://sfx/house_of_clones/AAA_gadacz3b.wav"), preload("res://sfx/house_of_clones/AAA_gadacz4b.wav"), preload("res://sfx/house_of_clones/AAA_gadacz5b.wav"),
 ]
 @onready var yapper_1: AnimatedSprite2D = $Yapper
