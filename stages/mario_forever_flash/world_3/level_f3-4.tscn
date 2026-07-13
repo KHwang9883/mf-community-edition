@@ -38,7 +38,6 @@
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="35_keiwq"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="37_bcspo"]
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="38_1i2dr"]
-[ext_resource type="Texture2D" uid="uid://cinosbf4fs2wr" path="res://gfx/misc/launcher-middle-rounded.png" id="39_r3fsc"]
 [ext_resource type="PackedScene" uid="uid://bq45lxt7bqoma" path="res://engine/objects/bosses/bowser/bowser_edge.tscn" id="39_xymlb"]
 [ext_resource type="PackedScene" uid="uid://bqjnaf8ggec04" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick Gray.tscn" id="40_y4sdh"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="42_vo116"]
@@ -95,6 +94,12 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="Resource" id="Resource_keiwq"]
+resource_local_to_scene = true
+script = ExtResource("23_i668o")
+creation_nodepack = ExtResource("12_bmgxp")
+trans_inheritances = 7
+
 [sub_resource type="Resource" id="Resource_r3fsc"]
 resource_local_to_scene = true
 script = ExtResource("23_i668o")
@@ -114,12 +119,6 @@ creation_nodepack = ExtResource("12_bmgxp")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_0k742"]
-resource_local_to_scene = true
-script = ExtResource("23_i668o")
-creation_nodepack = ExtResource("12_bmgxp")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_d83l2"]
 resource_local_to_scene = true
 script = ExtResource("23_i668o")
 creation_nodepack = ExtResource("12_bmgxp")
@@ -746,9 +745,11 @@ position = Vector2(2512, 144)
 
 [node name="KoopaParatroopaRedVertical" parent="." unique_id=1732481672 instance=ExtResource("25_1fayf")]
 position = Vector2(1776, 311)
+phase = 18.341033201323345
 
 [node name="KoopaParatroopaRedVertical2" parent="." unique_id=57896495 instance=ExtResource("25_1fayf")]
 position = Vector2(2192, 279)
+phase = 290.5009213870585
 
 [node name="BowserTrigger" parent="." unique_id=177270953 node_paths=PackedStringArray("trigger_bowser") instance=ExtResource("32_xl4co")]
 position = Vector2(6048, 176)
@@ -791,26 +792,26 @@ max_items = 5
 
 [node name="QuestionBlock" parent="." unique_id=1562933129 instance=ExtResource("20_kj3qr")]
 position = Vector2(1488, 112)
-result = SubResource("Resource_r3fsc")
+result = SubResource("Resource_keiwq")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock2" parent="." unique_id=540180872 instance=ExtResource("20_kj3qr")]
 position = Vector2(2544, 144)
-result = SubResource("Resource_c4yb2")
+result = SubResource("Resource_r3fsc")
 
 [node name="QuestionBlock3" parent="." unique_id=1196872273 instance=ExtResource("20_kj3qr")]
 position = Vector2(4560, 176)
-result = SubResource("Resource_r83jb")
+result = SubResource("Resource_c4yb2")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock4" parent="." unique_id=1377716353 instance=ExtResource("20_kj3qr")]
 position = Vector2(4592, 48)
-result = SubResource("Resource_0k742")
+result = SubResource("Resource_r83jb")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock5" parent="." unique_id=671667112 instance=ExtResource("20_kj3qr")]
 position = Vector2(4624, 48)
-result = SubResource("Resource_d83l2")
+result = SubResource("Resource_0k742")
 initially_visible_and_solid = false
 
 [node name="BulletLauncher3" parent="." unique_id=1344684594 instance=ExtResource("42_vo116")]
@@ -822,11 +823,14 @@ shooting_delay_max = 6.5
 offset_left = 896.0
 offset_top = 256.0
 offset_right = 928.0
-offset_bottom = 316.0
+offset_bottom = 320.0
 
-[node name="Launcher-middle-rounded7" type="Sprite2D" parent="." unique_id=370229328]
-position = Vector2(912, 304)
-texture = ExtResource("39_r3fsc")
+[node name="BulletBillBase8" parent="." unique_id=991781428 instance=ExtResource("43_61d1h")]
+z_index = -1
+offset_left = 896.0
+offset_top = 256.0
+offset_right = 928.0
+offset_bottom = 328.0
 
 [node name="BulletLauncher4" parent="." unique_id=1495348991 instance=ExtResource("42_vo116")]
 position = Vector2(4176, 208.16)
