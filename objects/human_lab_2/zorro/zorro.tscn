@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://hkqqedfq116j" path="res://objects/human_lab_2/zorro/gfx/zorro_walk.png" id="4_djiv3"]
 [ext_resource type="AudioStream" uid="uid://caprgusuw8uyw" path="res://engine/objects/bosses/bowser/sounds/bowser_hurt.wav" id="4_ivff0"]
 [ext_resource type="AudioStream" uid="uid://bjqfo0crpavl2" path="res://objects/human_lab_2/zorro/sfx/zorro_defeat.ogg" id="5_0c7xe"]
+[ext_resource type="AudioStream" uid="uid://kmdg48uxs4mj" path="res://engine/objects/bosses/bowser/sounds/bowser_died.wav" id="5_1bc52"]
 [ext_resource type="Texture2D" uid="uid://4453rbc66rey" path="res://objects/human_lab_2/zorro/gfx/zorro_flame_triple.png" id="5_q0mse"]
 [ext_resource type="Texture2D" uid="uid://b3vjd8nc1q178" path="res://objects/human_lab_2/zorro/gfx/zorro_jump.png" id="6_602qp"]
 [ext_resource type="Texture2D" uid="uid://b84gmmsb50yhk" path="res://objects/human_lab_2/zorro/gfx/zorro_flame.png" id="6_hsvf6"]
@@ -15,13 +16,22 @@
 [ext_resource type="Texture2D" uid="uid://b8j8mctpdguki" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs_idle.png" id="12_h4buv"]
 [ext_resource type="Texture2D" uid="uid://cl1wuvr84nftr" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs_jump.png" id="13_ivff0"]
 [ext_resource type="Script" uid="uid://d0ir2qr4v6lu7" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="14_0c7xe"]
+[ext_resource type="PackedScene" uid="uid://c5h3dhh5fouiw" path="res://objects/human_lab_2/zorro/knife.tscn" id="16_0c7xe"]
 [ext_resource type="AudioStream" uid="uid://bvkwoauc0kwn7" path="res://objects/human_lab_2/zorro/sfx/zorro_throw.wav" id="16_h4buv"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="17_1bc52"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_0c7xe"]
+stream_count = 2
+stream_0/stream = ExtResource("3_h4buv")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("4_ivff0")
+stream_1/volume = 0.0
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_xrivr"]
 stream_count = 2
 stream_0/stream = ExtResource("3_h4buv")
 stream_0/volume = 0.0
-stream_1/stream = ExtResource("4_ivff0")
+stream_1/stream = ExtResource("5_1bc52")
 stream_1/volume = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bc52"]
@@ -347,9 +357,14 @@ animations = [{
 "speed": 25.0
 }]
 
+[sub_resource type="Resource" id="Resource_lqipw"]
+script = ExtResource("17_1bc52")
+creation_nodepack = ExtResource("16_0c7xe")
+trans_inheritances = 7
+
 [node name="Bowser" unique_id=712077096 instance=ExtResource("1_3he5r")]
 script = ExtResource("2_hsvf6")
-hurt_sound = ExtResource("3_h4buv")
+hurt_sound = SubResource("AudioStreamSynchronized_0c7xe")
 death_sound = SubResource("AudioStreamSynchronized_xrivr")
 falling_sound = ExtResource("5_0c7xe")
 
@@ -366,29 +381,32 @@ position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_1bc52")
 
 [node name="Sprite" parent="." index="2" unique_id=487093778]
-position = Vector2(10, 0)
+position = Vector2(0, 0)
 sprite_frames = SubResource("SpriteFrames_h51u7")
+offset = Vector2(10, 0)
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0" unique_id=1949370630]
-position = Vector2(-10, 27)
+position = Vector2(0, 27)
 sprite_frames = SubResource("SpriteFrames_lqipw")
-animation = &"idle"
+animation = &"jump"
 autoplay = "idle"
 script = ExtResource("14_0c7xe")
 enemy_center_node = NodePath("../..")
 can_idle = true
 can_move_both_ways = true
 can_jump = true
-idle_offset = Vector2(1, 0)
+flip_method = 1
 
 [node name="PosFlame" parent="." index="4" unique_id=2065201772]
 visible = true
 position = Vector2(24, 8)
 
 [node name="attack_flame" parent="." index="6" unique_id=1111065083]
+projectile_inst = SubResource("Resource_lqipw")
 flame_sound = ExtResource("16_h4buv")
 flame_delay = 0.66
 
 [node name="attack_multiflames" parent="." index="7" unique_id=1547033884]
+projectile_inst = SubResource("Resource_lqipw")
 flame_sound = ExtResource("16_h4buv")
 flame_delay = 0.66
