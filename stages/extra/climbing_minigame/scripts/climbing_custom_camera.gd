@@ -526,43 +526,6 @@ func bowser_attack() -> void:
 	)
 	tween_hammer.tween_property(bowser, "position:x", 688, 1.5)
 
-#func podo_create_advanced_sequence() -> void:
-	#get_tree().create_timer(30, false).timeout.connect(podo_create_advanced_sequence)
-	#
-	#Audio.play_1d_sound(alarm)
-	#await get_tree().create_timer(4, false).timeout
-	#
-	#for i in range(30):
-		#podo_create_advanced(i)
-
-
-#func podo_create_advanced(i: int) -> void:
-	#await get_tree().create_timer(float(i) / 4.0, false).timeout
-	#Audio.play_1d_sound(woo)
-	#var podo1 = podoboo.instantiate()
-	#podo1.interval = 0
-	#podo1.position = Vector2(320, 448-16)
-	#podo1.speed.x = randi_range(-200, 200)
-	#podo1.jumping_height = 400
-	#podo1._on_jump()
-	#podo1.get_node("Interval").queue_free()
-	#moving_group.add_child(podo1)
-
-
-#func roto_create() -> void:
-	#get_tree().create_timer(randi_range(4, 7), false).timeout.connect(roto_create)
-	#
-	#var rotoi = roto.instantiate()
-	#rotoi.position = Vector2(randi_range(0, 640), -256 + moving_group.global_position.y)
-	#
-	#var rotodisci = rotodisc.instantiate()
-	#rotodisci.frequency = randi_range(-100, 100)
-	#rotodisci.amplitude_changing_speed = randi_range(100, 500)
-	#rotodisci.amplitude_enable = !randi_range(0, 1)
-	#rotoi.add_child(rotodisci)
-	#
-	#Scenes.current_scene.add_child(rotoi)
-
 
 func start_transition() -> void:
 	if _transition_started:

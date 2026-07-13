@@ -58,6 +58,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2j3f"]
+size = Vector2(30, 46)
+
 [node name="StoneJawsClone" type="Node2D" unique_id=569598382]
 script = ExtResource("1_tn5f8")
 
@@ -86,6 +89,7 @@ killing_immune = {
 "starman": false
 }
 killing_creation = SubResource("Resource_6vsr6")
+killing_body_override = NodePath("../../BodyKilling")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_k8hme")
 killing_sound_failed = ExtResource("7_dgyng")
@@ -112,6 +116,16 @@ metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="." unique_id=786233041]
 one_shot = true
+
+[node name="BodyKilling" type="Area2D" parent="." unique_id=1501750141]
+collision_layer = 2
+collision_mask = 6
+
+[node name="Collision" type="CollisionShape2D" parent="BodyKilling" unique_id=2048093056]
+visible = false
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_n2j3f")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]

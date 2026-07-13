@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://c3lq87gv2rowf" path="res://stages/extra/climbing_minigame/textures/marioline.png" id="10_moyc8"]
 [ext_resource type="Script" uid="uid://merg1qsxqs4l" path="res://stages/extra/climbing_minigame/scripts/climbing_head.gd" id="11_k3mmq"]
 [ext_resource type="Texture2D" uid="uid://br752og2ucdxx" path="res://stages/extra/climbing_minigame/textures/goodluck.png" id="12_0kwoy"]
+[ext_resource type="Script" uid="uid://dfau5rm6qbs23" path="res://stages/extra/climbing_minigame/scripts/climbing_custom_camera.gd" id="13_l5uua"]
 [ext_resource type="PackedScene" uid="uid://cr5kn0pwf3lo2" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/dead_coder_fly.tscn" id="13_r4cpm"]
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="14_h7vre"]
 [ext_resource type="PackedScene" uid="uid://dy7n6bn410q5c" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/boomerang_flower/boomerang_flower_lava_run.tscn" id="14_l5uua"]
@@ -32,7 +33,6 @@
 [ext_resource type="PackedScene" uid="uid://bd71lcoapyqa7" path="res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn" id="23_g5mna"]
 [ext_resource type="PackedScene" uid="uid://bxaj6iub5wrps" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn" id="24_2n21k"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="26_yhukw"]
-[ext_resource type="FontVariation" uid="uid://qyudyhura28u" path="res://gfx/fonts/comixheavy_condensed.tres" id="27_8xywe"]
 [ext_resource type="PackedScene" uid="uid://c8yftgwnhhc4a" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/swimming_bones/swimming_bones.tscn" id="32_l5uua"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xm6v6"]
@@ -62,10 +62,6 @@ fill_to = Vector2(0.9, 0.2)
 metadata/_snap_enabled = true
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7d5gc"]
-
-[sub_resource type="GDScript" id="GDScript_n02dd"]
-script/source = "extends \"res://stages/extra/climbing_minigame/scripts/climbing_custom_camera.gd\"
-"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o311q"]
 size = Vector2(32, 864)
@@ -156,6 +152,7 @@ boss_music_volume_db = Array[float]([0.0])
 boss_music_start_from_sec = Array[float]([0.0])
 music = Array[Resource]([ExtResource("6_r4cpm")])
 can_pause = true
+volume_db = Array[float]([2.0])
 start_from_sec = Array[float]([0.0])
 custom_script = ExtResource("7_rsbmr")
 
@@ -199,7 +196,7 @@ limit_left = 0
 limit_right = 640
 limit_bottom = 480
 editor_draw_screen = false
-script = SubResource("GDScript_n02dd")
+script = ExtResource("13_l5uua")
 final_cutscene = "uid://co7vhp6p7qmc6"
 difficulty = 1
 skulltroopa = ExtResource("13_r4cpm")
@@ -341,19 +338,9 @@ speed_max = Vector2i(-50, -375)
 position = Vector2(0, 480)
 shape = SubResource("WorldBoundaryShape2D_3fhm2")
 
-[node name="LabelKevin" type="Label" parent="." unique_id=2076115055]
+[node name="LabelKevin" type="Label" parent="." unique_id=1956149349]
 visible = false
-z_index = 80
-offset_top = 480.0
-offset_right = 192.0
-offset_bottom = 512.0
-theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("27_8xywe")
-theme_override_font_sizes/font_size = 11
-text = "you really don't want
-to do this with kevin..."
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
+offset_left = -96.0
+offset_top = 640.0
+offset_right = -56.0
+offset_bottom = 663.0

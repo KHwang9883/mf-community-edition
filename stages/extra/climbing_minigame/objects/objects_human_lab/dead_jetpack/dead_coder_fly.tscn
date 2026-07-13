@@ -5,76 +5,23 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_7c7sb"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_yxnsw"]
 [ext_resource type="AudioStream" uid="uid://m3fb62sh1nho" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/JetpackImpact.wav" id="5_rxdlf"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_ta407"]
 [ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_4swss"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="8_ewbi1"]
 [ext_resource type="Texture2D" uid="uid://mapnany1gi8g" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/gfx/tmp.png" id="8_trxq7"]
 [ext_resource type="Texture2D" uid="uid://cf5828npf0yv1" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/gfx/ded.png" id="9_ewbi1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c6snl"]
-size = Vector2(28, 32)
+size = Vector2(28, 56)
 
-[sub_resource type="GDScript" id="GDScript_vf6wq"]
-script/source = "extends Resource
-
-## A kind of [Resource] that stores a [PackedScene], whose root is a [Node2D], that you need to add[br]
-##
-## You need to call [method NodeCreator.prepare_ins_2d] and input the resource as the first parameter to instantiate
-## and create the node packed in [member creation_nodepack]
-
-@export_category(\"InstanceNode2D\")
-@export_group(\"Creation\",\"creation_\")
-## The [Node2D] you have packed as the root, also the instance you are going to add via [method NodeCreator.prepare_ins_2d]
-@export var creation_nodepack: PackedScene
-## When [method NodeCreator.NodeCreation.create_2d] is called for this instance, ticking this will force creation as a sibling, rather than directly under current scene node.
-@export var creation_force_sibling: bool = false
-@export_group(\"Transform\",\"trans_\")
-## The offset of the created, related to its [member Node2D.global_transform]
-@export var trans_offset: Vector2
-## The flags for transform properties that you want the created to inherit
-@export_flags(\"inherit_rotation\",\"inherit_scale\",\"inherit_skew\") var trans_inheritances: int
-## [member Node2D.global_rotation] of the created, if [code]inherit_rotation[/code] ticked, it will rotate from the creator's
-@export var trans_rotation: float
-## [member Node2D.global_scale] of the created, if [code]inherit_scale[/code] ticked, it will be scaled by the creator's
-@export var trans_scale: Vector2 = Vector2.ONE
-## [member Node2D.global_skew] of the created, if [code]inherit_skew[/code] ticked, it will be sheared from the creator's
-@export var trans_skew: float
-@export_group(\"Visibility\",\"visi_\")
-## [member CanvasItem.visible] of the created
-@export var visi_z_index: int
-## [member CanvasItem.z_as_relative] of the created
-@export var visi_z_as_relative: bool = true
-## [member CanvasItem.y_sort_enabled] of the created
-@export var visi_y_sort_enabled: bool
-@export_group(\"Extension\")
-## Custom variables for [member custom_script]
-@export var custom_vars: Dictionary
-## Custom script executed when [method NodeCreator.execute_instance_script] is called
-@export var custom_script: GDScript
-
-
-func _report_resource() -> void:
-	printerr(\"[Report] The error happened on: \" + str(get_rid()) + \", with path:\" + resource_path)
-"
-
-[sub_resource type="Resource" id="2"]
+[sub_resource type="Resource" id="Resource_xgoiy"]
 resource_local_to_scene = true
-script = SubResource("GDScript_vf6wq")
+script = ExtResource("5_ta407")
 creation_nodepack = ExtResource("3_7c7sb")
 trans_inheritances = 7
 custom_vars = {
-"death": NodePath("../../Sprite/Dead"),
-"death_speed": Vector2(0, -250)
-}
-custom_script = ExtResource("4_yxnsw")
-
-[sub_resource type="Resource" id="Resource_kqoge"]
-resource_local_to_scene = true
-script = SubResource("GDScript_vf6wq")
-creation_nodepack = ExtResource("3_7c7sb")
-trans_inheritances = 7
-custom_vars = {
-"death": NodePath("../../Sprite/Dead"),
-"death_speed": Vector2(0, -250)
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
 }
 custom_script = ExtResource("4_yxnsw")
 
@@ -129,7 +76,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body" unique_id=2084218103]
 script = ExtResource("2_4ck2j")
-stomping_creation = SubResource("2")
+stomping_creation = SubResource("Resource_xgoiy")
 stomping_scores = 100
 stomping_sound = ExtResource("5_rxdlf")
 killing_immune = {
@@ -145,7 +92,7 @@ killing_immune = {
 &"shell_forced": false,
 &"starman": false
 }
-killing_creation = SubResource("Resource_kqoge")
+killing_creation = SubResource("Resource_xgoiy")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("5_rxdlf")
 
@@ -154,7 +101,6 @@ script = ExtResource("8_ewbi1")
 KEYBOARD_EFFECT = ExtResource("8_4swss")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=116147026]
-position = Vector2(0, -8)
 sprite_frames = SubResource("5")
 autoplay = "default"
 

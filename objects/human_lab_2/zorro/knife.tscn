@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://c5h3dhh5fouiw"]
+
+[ext_resource type="Script" uid="uid://cr6yuoiat01q3" path="res://engine/objects/bosses/bowser/projectile/flame.gd" id="1_prl1g"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_1e86i"]
+[ext_resource type="PackedScene" uid="uid://c48ah60x3adlf" path="res://engine/objects/effects/bubble/lava_bubbles_kill.tscn" id="3_thisk"]
+[ext_resource type="Script" uid="uid://2hwja2gjpc7g" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="4_koure"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_yx6gf"]
+[ext_resource type="AudioStream" uid="uid://diioijiioder2" path="res://engine/objects/enemies/podoboo/podoboo.wav" id="6_dok0l"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_kawoc"]
+[ext_resource type="Texture2D" uid="uid://c0jtvvsgrhvim" path="res://objects/human_lab_2/zorro/gfx/knife.png" id="8_prl1g"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="9_be508"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d15y5"]
+radius = 6.0
+
+[sub_resource type="Resource" id="Resource_nu7ap"]
+script = ExtResource("5_yx6gf")
+creation_nodepack = ExtResource("3_thisk")
+trans_inheritances = 2
+visi_z_index = 3
+custom_vars = {
+"lifetime": 0.3
+}
+custom_script = ExtResource("4_koure")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qfn7i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_prl1g")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_cwhce"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nu7ap"]
+gradient = SubResource("Gradient_cwhce")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
+[node name="Flame" type="CharacterBody2D" unique_id=1546232828]
+collision_layer = 0
+collision_mask = 0
+platform_on_leave = 2
+script = ExtResource("1_prl1g")
+belongs_to = 1
+remove_offscreen_after_sec_tracking = Dictionary[String, float]({
+"enemy": 0.0,
+"player": 0.0
+})
+sprite = NodePath("Sprite")
+speed = Vector2(200, 0)
+collision = false
+metadata/_edit_pinned_properties_ = [&"collision", &"belongs_to"]
+
+[node name="Body" type="Area2D" parent="." unique_id=317167317]
+collision_layer = 2
+collision_mask = 5
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=136696198]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_d15y5")
+
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=647025118]
+script = ExtResource("2_1e86i")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_nu7ap")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_dok0l")
+killing_sound_failed = ExtResource("7_kawoc")
+frozen_enabled = false
+sound_ignore_pitch_modification = true
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_failed"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=621809373]
+sprite_frames = SubResource("SpriteFrames_qfn7i")
+autoplay = "default"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1405509159]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-32, -16, 64, 32)
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1826133535]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_nu7ap")
+script = ExtResource("9_be508")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
