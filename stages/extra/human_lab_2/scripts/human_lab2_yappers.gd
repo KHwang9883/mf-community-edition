@@ -23,7 +23,7 @@ func _physics_process(delta: float) -> void:
 	delay += delta * 50
 	if delay > 20:
 		var rand_number: int = randi_range(0, yapper_lines.size() - 1)
-		if last_one == rand_number && last_one != 3:
+		if last_one == rand_number && rand_number != 3:
 			rand_number = randi_range(0, yapper_lines.size() - 1)
 		audio_player.stream = yapper_lines[rand_number]
 		last_one = rand_number
