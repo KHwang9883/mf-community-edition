@@ -143,7 +143,7 @@ func _ready_mus_hacks() -> void:
 			music_var_2 = music_var_1
 			boss_music_var_2 = boss_music_var_1
 			var_2_volume_db = var_1_volume_db
-		if _level is Level && SecretsManager.has_meta(&"squario_lvl_complete"):
+		if bgm_tweak != 0 && _level is Level && SecretsManager.has_meta(&"squario_lvl_complete"):
 			_level.completion_music = SecretsManager.get_meta(&"squario_lvl_complete")
 			_level.DEFAULT_COMPLETION = _level.completion_music
 			_level.completion_music_delay_sec = 3.0
