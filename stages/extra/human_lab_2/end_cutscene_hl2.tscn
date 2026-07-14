@@ -1,25 +1,51 @@
 [gd_scene format=4 uid="uid://fa3nmtrdyr15"]
 
 [ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_0gq2s"]
-[ext_resource type="Script" uid="uid://yeqltigwyet6" path="res://stages/world_1/scripts/end_cutscene.gd" id="2_msohu"]
+[ext_resource type="Script" uid="uid://6r6qel25kfgk" path="res://stages/extra/human_lab_2/scripts/end_cutscene_hl2.gd" id="2_um08b"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="3_tcdaq"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_gjgsy"]
 [ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="5_hnqyo"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_ac0be"]
-[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="7_wen3t"]
+[ext_resource type="TileSet" uid="uid://bg1tccd6vhwi3" path="res://tilesets/overworld_red/overworld_red.tres" id="7_qhy02"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_md88m"]
 [ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="9_4r1du"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="10_66uwq"]
-[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="11_lqy14"]
-[ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="12_d7tls"]
+[ext_resource type="AudioStream" uid="uid://bpsvxf54doq36" path="res://sfx/dsplstrt.ogg" id="11_caavh"]
 [ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="13_i28gf"]
+[ext_resource type="Shader" uid="uid://erh4rhsoly5d" path="res://engine/objects/bumping_blocks/switch_block/shaders/hsv.gdshader" id="13_um08b"]
+[ext_resource type="Texture2D" uid="uid://0atqoof1v43b" path="res://gfx/fancy_graphics/746.png" id="14_caavh"]
+[ext_resource type="Texture2D" uid="uid://0dre8vf55m8d" path="res://stages/extra/human_lab_2/gfx/sunsethill.png" id="15_8o3r3"]
+[ext_resource type="Texture2D" uid="uid://cppfckrpoh2tt" path="res://stages/extra/human_lab_2/gfx/treebig.png" id="16_ygbfa"]
+[ext_resource type="Texture2D" uid="uid://dgh3g171mr5ug" path="res://stages/extra/human_lab_2/gfx/treesmall.png" id="17_23fn5"]
+[ext_resource type="PackedScene" uid="uid://bcoft2vppiv2m" path="res://stages/extra/human_lab_2/objects/cloud_ornage.tscn" id="18_5wbbw"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="21_23fn5"]
+[ext_resource type="Script" uid="uid://dpnc0xvkxt846" path="res://engine/objects/enemies/human_lab/container/container_area_node.gd" id="21_ygbfa"]
+[ext_resource type="Texture2D" uid="uid://ctgvx5oj6c8wn" path="res://stages/extra/human_lab_2/gfx/hugebitch_bottom.png" id="23_4kcd4"]
+[ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/gfx/hard_block_only.png" id="24_qgaeq"]
+[ext_resource type="Texture2D" uid="uid://cjtsdvs1oooe2" path="res://stages/extra/human_lab_2/gfx/hugebitch_top.png" id="25_2ymlk"]
+[ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="26_4kcd4"]
+[ext_resource type="Texture2D" uid="uid://ciunh76igu415" path="res://stages/extra/human_lab_2/gfx/hugebitch.png" id="26_wqj6q"]
 
-[sub_resource type="Gradient" id="Gradient_slprf"]
-colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+[sub_resource type="Gradient" id="Gradient_gaf5c"]
+colors = PackedColorArray(0.815299, 0.208944, 0.21867, 1, 1, 0.785726, 0.516154, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e3oq"]
-gradient = SubResource("Gradient_slprf")
-width = 480
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ytamb"]
+gradient = SubResource("Gradient_gaf5c")
+width = 640
+height = 480
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fq4a5"]
+shader = ExtResource("13_um08b")
+shader_parameter/hue = -0.539
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4kcd4"]
+shader = ExtResource("13_um08b")
+shader_parameter/hue = -0.337
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
 
 [node name="CaveCutscene" type="Node2D" unique_id=957370947]
 script = ExtResource("1_0gq2s")
@@ -28,7 +54,7 @@ fade_out_time = 0.02
 can_be_skipped = true
 
 [node name="CutsceneLogic" type="Node" parent="." unique_id=315561244]
-script = ExtResource("2_msohu")
+script = ExtResource("2_um08b")
 
 [node name="Castle" type="Sprite2D" parent="." unique_id=852821603]
 position = Vector2(16, 64)
@@ -51,20 +77,14 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="Layer0" type="TileMapLayer" parent="." unique_id=446739458]
-z_index = 4
-tile_map_data = PackedByteArray("AAATAA8AAAABAAEAAAATAA4AAAABAAEAAAATAA0AAAABAAAAAAASAA8AAAABAAEAAAASAA4AAAABAAEAAAASAA0AAAABAAAAAAARAA8AAAABAAEAAAARAA4AAAABAAEAAAARAA0AAAABAAAAAAAQAA8AAAABAAEAAAAQAA4AAAABAAEAAAAQAA0AAAABAAAAAAAPAA8AAAABAAEAAAAPAA4AAAABAAEAAAAPAA0AAAABAAAAAAAOAA8AAAABAAEAAAAOAA4AAAABAAEAAAAOAA0AAAABAAAAAAANAA8AAAABAAEAAAANAA4AAAABAAEAAAANAA0AAAABAAAAAAAMAA8AAAABAAEAAAAMAA4AAAABAAEAAAAMAA0AAAABAAAAAAALAA8AAAABAAEAAAALAA4AAAABAAEAAAALAA0AAAABAAAAAAAKAA8AAAABAAEAAAAKAA4AAAABAAEAAAAKAA0AAAABAAAAAAAJAA8AAAABAAEAAAAJAA4AAAABAAEAAAAJAA0AAAABAAAAAAAIAA8AAAABAAEAAAAIAA4AAAABAAEAAAAIAA0AAAABAAAAAAAHAA8AAAABAAEAAAAHAA4AAAABAAEAAAAHAA0AAAABAAAAAAAGAA8AAAABAAEAAAAGAA4AAAABAAEAAAAGAA0AAAABAAAAAAAFAA8AAAABAAEAAAAFAA4AAAABAAEAAAAEAA8AAAABAAEAAAAEAA4AAAABAAEAAAAEAA0AAAABAAAAAAADAA8AAAABAAEAAAADAA4AAAABAAEAAAADAA0AAAABAAAAAAACAA8AAAABAAEAAAACAA4AAAABAAEAAAACAA0AAAABAAAAAAABAA8AAAABAAEAAAABAA4AAAABAAEAAAABAA0AAAABAAAAAAAAAA8AAAABAAEAAAAAAA4AAAABAAEAAAAAAA0AAAABAAAAAAD//w8AAAAAAAEAAAD//w4AAAAAAAEAAAD//w0AAAAAAAAAAAAUAA0AAAABAAAAAAAUAA4AAAABAAEAAAAUAA8AAAABAAEAAAD//xAAAAAAAAIAAAAAABAAAAABAAIAAAABABAAAAABAAIAAAACABAAAAABAAIAAAADABAAAAABAAIAAAAEABAAAAABAAIAAAAFABAAAAABAAIAAAAGABAAAAABAAIAAAAHABAAAAABAAIAAAAIABAAAAABAAIAAAAJABAAAAABAAIAAAAKABAAAAABAAIAAAALABAAAAABAAIAAAAMABAAAAABAAIAAAANABAAAAABAAIAAAAOABAAAAABAAIAAAAPABAAAAABAAIAAAAQABAAAAABAAIAAAARABAAAAABAAIAAAASABAAAAABAAIAAAATABAAAAABAAIAAAAUABAAAAABAAIAAAAFAA0AAAABAAAAAAATAAwAAgAAAAAABwASAAwAAgAAAAAABwARAAwAAgAAAAAABwALAAIAAgAAAAAAAgANAAwAAgAAAAAAAQAAAAEAAgAAAAAAAgARAAcAAgAAAAAAAgASAAEAAgAAAAAAAgAEAAUAAgAAAAAAAgAVABAAAAACAAIAAAAVAA8AAAACAAEAAAAVAA4AAAACAAEAAAAVAA0AAAACAAAAAAAWAA0AAQAAAAAAAAAXAA0AAQAAAAAAAAAXAAwAAQAAAAAAAAAXAAsAAQAAAAAAAAAXAAoAAQAAAAAAAAAXAAkAAQAAAAAAAAAXAAgAAQAAAAAAAAAXAAcAAQAAAAAAAAAXAAYAAQAAAAAAAAAXAAUAAQAAAAAAAAAXAAQAAQAAAAAAAAAPAAwAAgAAAAAAAwAUAAwAAgAAAAAABwALAAwAAgAAAAAABQA=")
-tile_set = ExtResource("7_wen3t")
-
-[node name="Layer1" type="TileMapLayer" parent="." unique_id=852394597]
-tile_set = ExtResource("7_wen3t")
+tile_map_data = PackedByteArray("AAATAA8AAgABAAIAAAATAA4AAgABAAEAAAATAA0AAgABAAAAAAASAA8AAgABAAIAAAASAA4AAgABAAEAAAASAA0AAgABAAAAAAARAA8AAgABAAIAAAARAA4AAgABAAEAAAARAA0AAgABAAAAAAAQAA8AAgABAAIAAAAQAA4AAgABAAEAAAAQAA0AAgABAAAAAAAPAA8AAgABAAIAAAAPAA4AAgABAAEAAAAPAA0AAgABAAAAAAAOAA8AAgABAAIAAAAOAA4AAgABAAEAAAAOAA0AAgABAAAAAAANAA8AAgABAAIAAAANAA4AAgABAAEAAAANAA0AAgABAAAAAAAMAA8AAgABAAIAAAAMAA4AAgABAAEAAAAMAA0AAgABAAAAAAALAA8AAgABAAIAAAALAA4AAgABAAEAAAALAA0AAgABAAAAAAAKAA8AAgABAAIAAAAKAA4AAgABAAEAAAAKAA0AAgABAAAAAAAJAA8AAgABAAIAAAAJAA4AAgABAAEAAAAJAA0AAgABAAAAAAAIAA8AAgABAAIAAAAIAA4AAgABAAEAAAAIAA0AAgABAAAAAAAHAA8AAgABAAIAAAAHAA4AAgABAAEAAAAHAA0AAgABAAAAAAAGAA8AAgABAAIAAAAGAA4AAgABAAEAAAAGAA0AAgABAAAAAAAFAA8AAgABAAIAAAAFAA4AAgABAAEAAAAEAA8AAgABAAIAAAAEAA4AAgABAAEAAAAEAA0AAgABAAAAAAADAA8AAgABAAIAAAADAA4AAgABAAEAAAADAA0AAgABAAAAAAACAA8AAgABAAIAAAACAA4AAgABAAEAAAACAA0AAgABAAAAAAABAA8AAgABAAIAAAABAA4AAgABAAEAAAABAA0AAgABAAAAAAAAAA8AAgABAAIAAAAAAA4AAgABAAEAAAAAAA0AAgABAAAAAAD//w8AAgAAAAIAAAD//w4AAgAAAAEAAAD//w0AAgAAAAAAAAAUAA0AAgABAAAAAAAUAA4AAgABAAEAAAAUAA8AAgABAAIAAAAFAA0AAgABAAAAAAATAAwABgAAAAAAAAASAAwABgAAAAAAAAARAAwABgAAAAAAAAAVAA8AAgABAAIAAAAVAA4AAgABAAEAAAAVAA0AAgABAAAAAAAWAA0AAQAAAAAAAAAXAA0AAQAAAAAAAAAXAAwAAQAAAAAAAAAXAAsAAQAAAAAAAAAXAAoAAQAAAAAAAAAXAAkAAQAAAAAAAAAXAAgAAQAAAAAAAAAXAAcAAQAAAAAAAAAXAAYAAQAAAAAAAAAXAAUAAQAAAAAAAAAXAAQAAQAAAAAAAAAUAAwABgAAAAAAAAA=")
+tile_set = ExtResource("7_qhy02")
+navigation_enabled = false
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1753205140]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground" unique_id=186639736]
-position = Vector2(640, 0)
-rotation = 1.5708
-scale = Vector2(1, 640)
-texture = SubResource("GradientTexture1D_0e3oq")
+texture = SubResource("GradientTexture2D_ytamb")
 centered = false
 metadata/_edit_lock_ = true
 
@@ -74,19 +94,110 @@ visible = false
 [node name="CastleEndMarker" type="Marker2D" parent="." unique_id=766259588]
 position = Vector2(173, 416)
 
-[node name="Node2D" type="Node2D" parent="." unique_id=1549378673]
-z_index = -20
-script = ExtResource("9_4r1du")
-
-[node name="GiantClouds3" type="Sprite2D" parent="Node2D" unique_id=567649643]
-modulate = Color(1, 1, 1, 0.713726)
-position = Vector2(96, 240)
-texture = ExtResource("10_66uwq")
-
-[node name="PlushySun" type="Sprite2D" parent="Node2D" unique_id=1393514157]
-position = Vector2(464, 112)
-texture = ExtResource("11_lqy14")
-script = ExtResource("12_d7tls")
-
 [node name="ChorniyCutsceneSpawner" type="Node" parent="." unique_id=680244389]
 script = ExtResource("13_i28gf")
+
+[node name="softendo" type="Node2D" parent="." unique_id=298656735]
+script = ExtResource("9_4r1du")
+metadata/_edit_lock_ = true
+
+[node name="GiantClouds" type="Sprite2D" parent="softendo" unique_id=1366608679]
+z_index = -15
+material = SubResource("ShaderMaterial_fq4a5")
+position = Vector2(400, 240)
+texture = ExtResource("10_66uwq")
+
+[node name="750" type="Sprite2D" parent="softendo" unique_id=956935174]
+material = SubResource("ShaderMaterial_4kcd4")
+position = Vector2(464, 464)
+texture = ExtResource("14_caavh")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1990727418]
+
+[node name="Sunsethill11" type="Sprite2D" parent="Node2D" unique_id=53609101]
+z_index = -15
+position = Vector2(416, 384)
+texture = ExtResource("15_8o3r3")
+
+[node name="Sunsethill12" type="Sprite2D" parent="Node2D" unique_id=2061888796]
+z_index = -15
+position = Vector2(128, 408)
+texture = ExtResource("15_8o3r3")
+
+[node name="Treebig2" type="Sprite2D" parent="Node2D" unique_id=25882463]
+z_index = -5
+position = Vector2(360, 368)
+texture = ExtResource("16_ygbfa")
+
+[node name="Treesmall" type="Sprite2D" parent="Node2D" unique_id=1678052602]
+z_index = -5
+position = Vector2(488, 384)
+texture = ExtResource("17_23fn5")
+
+[node name="Cloud61" parent="Node2D" unique_id=1751867016 instance=ExtResource("18_5wbbw")]
+position = Vector2(32, 80)
+
+[node name="Cloud62" parent="Node2D" unique_id=730656933 instance=ExtResource("18_5wbbw")]
+position = Vector2(496, 80)
+
+[node name="Cloud64" parent="Node2D" unique_id=1046598741 instance=ExtResource("18_5wbbw")]
+position = Vector2(320, 32)
+
+[node name="Cloud63" parent="Node2D" unique_id=1372641776 instance=ExtResource("18_5wbbw")]
+position = Vector2(544, 224)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1543125590]
+script = ExtResource("21_23fn5")
+
+[node name="Node" type="Node" parent="Area2D" unique_id=1898486800]
+script = ExtResource("21_ygbfa")
+
+[node name="HugebitchBottom" type="Sprite2D" parent="." unique_id=514835805]
+position = Vector2(176, 624)
+texture = ExtResource("23_4kcd4")
+
+[node name="HardBlockOnly" type="Sprite2D" parent="HugebitchBottom" unique_id=1473070109]
+position = Vector2(0, 128)
+texture = ExtResource("24_qgaeq")
+
+[node name="HugebitchTop" type="Sprite2D" parent="." unique_id=1709150534]
+position = Vector2(176, -144)
+texture = ExtResource("25_2ymlk")
+
+[node name="HardBlockOnly" type="Sprite2D" parent="HugebitchTop" unique_id=550477314]
+position = Vector2(0, -128)
+texture = ExtResource("24_qgaeq")
+
+[node name="Hugebitch" type="Sprite2D" parent="." unique_id=1818005101]
+position = Vector2(176, 240)
+texture = ExtResource("26_wqj6q")
+
+[node name="HardBlockOnly" type="Sprite2D" parent="Hugebitch" unique_id=935904744]
+position = Vector2(0, 224)
+texture = ExtResource("24_qgaeq")
+
+[node name="HardBlockOnly2" type="Sprite2D" parent="Hugebitch" unique_id=2058112148]
+position = Vector2(0, -224)
+texture = ExtResource("24_qgaeq")
+
+[node name="Castle" type="Sprite2D" parent="Hugebitch" unique_id=1454435227]
+texture = ExtResource("3_tcdaq")
+script = ExtResource("26_4kcd4")
+amplitude = Vector2(0, 9)
+random_phase = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Hugebitch" unique_id=1806616324]
+position = Vector2(160, -16)
+stream = ExtResource("11_caavh")
+volume_db = 5.0
+bus = &"Sound"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=314542082]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=820243975]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
