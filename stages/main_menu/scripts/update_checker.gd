@@ -1,6 +1,7 @@
 extends Node
 
-const url: String = "https://mfce.rnx.su/api/version/v2"
+const url: String = "https://mfce.rnx.su"
+const url_backup: String = "https://mfce.nx.wtf"
 #const url: String = "http://127.0.0.1:3000/api/version/v2"
 
 # this is a verification key to ensure we got correct data
@@ -18,6 +19,7 @@ var url_open: String
 
 const COIN = preload("res://sfx/clear.wav")
 const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block/message_block.wav")
+const api_str: String = "/api/version/v2"
 
 signal found_update
 
@@ -32,6 +34,7 @@ var main_menu_controls: MenuItemsController
 
 var has_update: bool
 var checking_tween: Tween
+var backup: int = 0
 
 func _ready() -> void:
 	if is_in_main_menu:
@@ -56,7 +59,7 @@ func _ready() -> void:
 		return
 	
 	http_request.request_completed.connect(_on_http_get, CONNECT_ONE_SHOT)
-	http_request.request(url + "?gameName=" + game_key + "&version=" + str(version))
+	http_request.request(url + api_str + "?gameName=" + game_key + "&version=" + str(version))
 
 
 func _on_http_get(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -73,6 +76,9 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 			dict = body_res
 	else:
 		print("[Update Check Error] Result:", result, " Response Code: ", response_code)
+		if backup == 0:
+			_checking_throw_error(true)
+			return
 		if is_in_main_menu:
 			update_checking.text = "error!\nplease check your internet connection"
 		return
@@ -135,7 +141,13 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 	found_update.emit()
 
 
-func _checking_throw_error() -> void:
+func _checking_throw_error(soft: bool = false) -> void:
+	if backup == 0:
+		backup = 1
+		http_request.request_completed.connect(_on_http_get, CONNECT_ONE_SHOT)
+		http_request.request(url_backup + api_str + "?gameName=" + game_key + "&version=" + str(version))
+		return
+	if soft: return
 	if !is_in_main_menu: return
 	if checking_tween: checking_tween.kill()
 	update_checking.modulate.a = 0.9
