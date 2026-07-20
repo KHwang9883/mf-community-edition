@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://vft45f4ykw2h" path="res://objects/human_lab_2/jaws/ladder/gfx/4a.png" id="11_77lg2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4g34j"]
-size = Vector2(30, 159)
+size = Vector2(30, 144)
 
 [sub_resource type="Resource" id="Resource_fvcap"]
 script = ExtResource("5_q23nv")
@@ -26,6 +26,9 @@ custom_vars = {
 "fast_death_effect": true
 }
 custom_script = ExtResource("4_2uht6")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xgfd2"]
+size = Vector2(30, 158)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vyrc6"]
 animations = [{
@@ -75,7 +78,7 @@ collision_mask = 7
 
 [node name="Collision" type="CollisionShape2D" parent="Body" unique_id=183299597]
 visible = false
-position = Vector2(0, 16.5)
+position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_4g34j")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
@@ -94,6 +97,7 @@ killing_immune = {
 "starman": false
 }
 killing_creation = SubResource("Resource_fvcap")
+killing_body_override = NodePath("../../BodyKilling")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_e75sv")
 killing_sound_failed = ExtResource("7_57c8m")
@@ -106,6 +110,16 @@ metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
 position = Vector2(0, -25)
 script = ExtResource("8_7f6cu")
 KEYBOARD_EFFECT = ExtResource("9_un7js")
+
+[node name="BodyKilling" type="Area2D" parent="." unique_id=1097906239]
+collision_layer = 2
+collision_mask = 6
+
+[node name="Collision" type="CollisionShape2D" parent="BodyKilling" unique_id=568414851]
+visible = false
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_xgfd2")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="Head#Dead" type="AnimatedSprite2D" parent="." unique_id=564261184]
 visible = false

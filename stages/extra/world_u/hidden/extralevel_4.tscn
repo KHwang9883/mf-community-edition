@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="34_eox4y"]
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="35_6twnu"]
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="36_8ubll"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="36_88qr8"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="37_4bs0m"]
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="38_svjel"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="39_7j0do"]
@@ -69,33 +70,33 @@ shader_parameter/hue = -0.455
 shader_parameter/saturation = 0.0
 shader_parameter/value = 0.0
 
-[sub_resource type="Resource" id="Resource_4qdon"]
-resource_local_to_scene = true
-script = ExtResource("23_jej8e")
-creation_nodepack = ExtResource("22_agdhc")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_88qr8"]
-resource_local_to_scene = true
-script = ExtResource("23_jej8e")
-creation_nodepack = ExtResource("22_agdhc")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_yql2c"]
 resource_local_to_scene = true
 script = ExtResource("23_jej8e")
-creation_fallback_node = ExtResource("25_e6yw4")
-creation_nodepack = ExtResource("26_q26ql")
+creation_nodepack = ExtResource("22_agdhc")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_dbbr0"]
 resource_local_to_scene = true
 script = ExtResource("23_jej8e")
+creation_nodepack = ExtResource("22_agdhc")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_e24vr"]
+resource_local_to_scene = true
+script = ExtResource("23_jej8e")
 creation_fallback_node = ExtResource("25_e6yw4")
 creation_nodepack = ExtResource("26_q26ql")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_e24vr"]
+[sub_resource type="Resource" id="Resource_fpnjk"]
+resource_local_to_scene = true
+script = ExtResource("23_jej8e")
+creation_fallback_node = ExtResource("25_e6yw4")
+creation_nodepack = ExtResource("26_q26ql")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_jkvcm"]
 resource_local_to_scene = true
 script = ExtResource("23_jej8e")
 creation_nodepack = ExtResource("28_o1gt3")
@@ -104,7 +105,7 @@ trans_inheritances = 7
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ct1h"]
 size = Vector2(16, 512)
 
-[sub_resource type="Resource" id="Resource_fpnjk"]
+[sub_resource type="Resource" id="Resource_wrs7u"]
 resource_local_to_scene = true
 script = ExtResource("23_jej8e")
 creation_fallback_node = ExtResource("25_e6yw4")
@@ -123,7 +124,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_jkvcm"]
+[sub_resource type="Resource" id="Resource_iwreq"]
 resource_local_to_scene = true
 script = ExtResource("23_jej8e")
 creation_nodepack = ExtResource("47_hkk6c")
@@ -385,24 +386,24 @@ position = Vector2(528, 432)
 
 [node name="QuestionBlockPoisonous" parent="." unique_id=1072439000 instance=ExtResource("21_q5w6d")]
 position = Vector2(336, 304)
-result = SubResource("Resource_4qdon")
+result = SubResource("Resource_yql2c")
 
 [node name="QuestionBlockPoisonous2" parent="." unique_id=1764459903 instance=ExtResource("21_q5w6d")]
 position = Vector2(560, 432)
-result = SubResource("Resource_88qr8")
+result = SubResource("Resource_dbbr0")
 
 [node name="QuestionBlockBeetroot" parent="." unique_id=2015857868 instance=ExtResource("24_ni7l5")]
 position = Vector2(3728, 272)
-result = SubResource("Resource_yql2c")
+result = SubResource("Resource_e24vr")
 
 [node name="QuestionBlockBeetroot2" parent="." unique_id=1247010280 instance=ExtResource("24_ni7l5")]
 position = Vector2(3728, 112)
-result = SubResource("Resource_dbbr0")
+result = SubResource("Resource_fpnjk")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock" parent="." unique_id=974967160 instance=ExtResource("27_cedxm")]
 position = Vector2(656, 304)
-result = SubResource("Resource_e24vr")
+result = SubResource("Resource_jkvcm")
 
 [node name="PiranhaGreen" parent="." unique_id=1230699636 instance=ExtResource("29_cmxu1")]
 position = Vector2(384, 160)
@@ -568,6 +569,36 @@ shape = SubResource("RectangleShape2D_6ct1h")
 [node name="FinishLine" parent="." unique_id=1913242686 instance=ExtResource("33_hblh6")]
 position = Vector2(7552, 416)
 
+[node name="LightEffect" type="Sprite2D" parent="FinishLine" unique_id=933916786]
+z_index = -10
+position = Vector2(176, -268)
+texture = ExtResource("36_88qr8")
+script = ExtResource("14_gm84a")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect2" type="Sprite2D" parent="FinishLine" unique_id=2133047504]
+z_index = -10
+position = Vector2(240, -268)
+texture = ExtResource("36_88qr8")
+script = ExtResource("14_gm84a")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect3" type="Sprite2D" parent="FinishLine" unique_id=97438353]
+z_index = -10
+position = Vector2(16, -13)
+texture = ExtResource("36_88qr8")
+script = ExtResource("14_gm84a")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
 [node name="HammerBro5" parent="." unique_id=1529524048 instance=ExtResource("34_eox4y")]
 position = Vector2(3536, 656)
 
@@ -622,7 +653,7 @@ frequency = -50.0
 
 [node name="QuestionBlockGreenLui2" parent="." unique_id=1045225579 instance=ExtResource("40_81bn5")]
 position = Vector2(624, 304)
-result = SubResource("Resource_fpnjk")
+result = SubResource("Resource_wrs7u")
 
 [node name="PipeIn" parent="." unique_id=567714050 instance=ExtResource("42_1avxm")]
 position = Vector2(6032, 80)
@@ -673,7 +704,7 @@ collision = false
 
 [node name="QuestionBlockLife" parent="." unique_id=38060426 instance=ExtResource("46_5v5f6")]
 position = Vector2(2096, 144)
-result = SubResource("Resource_jkvcm")
+result = SubResource("Resource_iwreq")
 
 [node name="HammerBroJumpMarker" parent="." unique_id=1352118717 instance=ExtResource("48_xj3pr")]
 position = Vector2(3776, 224)
@@ -721,5 +752,5 @@ position = Vector2(4624, 160)
 
 [connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="collided_wall" from="Layer3/SpinyRed" to="Layer3/SpinyRed" method="turn_x"]
-[connection signal="collided_wall" from="Layer3/@CharacterBody2D@221820" to="Layer3/@CharacterBody2D@221820" method="turn_x"]
-[connection signal="collided_wall" from="Layer3/@CharacterBody2D@221869" to="Layer3/@CharacterBody2D@221869" method="turn_x"]
+[connection signal="collided_wall" from="Layer3/@CharacterBody2D@541998" to="Layer3/@CharacterBody2D@541998" method="turn_x"]
+[connection signal="collided_wall" from="Layer3/@CharacterBody2D@542047" to="Layer3/@CharacterBody2D@542047" method="turn_x"]
