@@ -25,11 +25,11 @@ func _time() -> void:
 		randi_range(random_spawn_min.y, random_spawn_max.y)
 	)
 	
-	if to_pos.y > 560:
+	if to_pos.y > destroy_below_y:
 		return
 	
 	var fish
-	if !_tweak:
+	if !_tweak || !replace_by_yellow_in_advanced:
 		fish = cheep_scene.instantiate()
 	else:
 		fish = CHEEP_YEL_JUMPING.instantiate()

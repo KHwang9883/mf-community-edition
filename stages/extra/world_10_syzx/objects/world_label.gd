@@ -4,4 +4,7 @@ extends Label
 
 func _ready() -> void:
 	var _str = "*" if _tweak else ""
-	text = text % _str
+	var newtext = text % _str
+	if _tweak:
+		newtext += "  "
+	text = newtext
