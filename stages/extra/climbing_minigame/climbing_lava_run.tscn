@@ -16,9 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://d0121yqkw7b6i" path="res://engine/objects/fluid/lava_area.tscn" id="14_2gpud"]
 [ext_resource type="PackedScene" uid="uid://bd71lcoapyqa7" path="res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn" id="14_sbwe8"]
 [ext_resource type="Texture2D" uid="uid://dmwfhcgla7av" path="res://engine/tilesets/castle/gfx/BGCastleVertical.png" id="15_04y6r"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="15_5kjie"]
 [ext_resource type="PackedScene" uid="uid://bxaj6iub5wrps" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn" id="15_vgukt"]
 [ext_resource type="Texture2D" uid="uid://duyieyqodtxa8" path="res://engine/objects/bosses/bowser/texture/bowser_hammer_pre.png" id="16_pmfeq"]
 [ext_resource type="PackedScene" uid="uid://fq70crcmppwi" path="res://stages/extra/climbing_minigame/objects/fish_bones/fish_bones.tscn" id="16_wrk3g"]
+[ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="16_yut0y"]
 [ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="17_ctd05"]
 [ext_resource type="Texture2D" uid="uid://nwyeqno7oote" path="res://engine/tilesets/castle/gfx/gray_platform_tile.png" id="18_gt44m"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="19_s0br3"]
@@ -55,6 +57,18 @@ fill_to = Vector2(0.9, 0.2)
 metadata/_snap_enabled = true
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7d5gc"]
+
+[sub_resource type="Gradient" id="Gradient_g0ejw"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lbpem"]
+gradient = SubResource("Gradient_g0ejw")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o311q"]
 size = Vector2(32, 864)
@@ -188,6 +202,52 @@ force_xscroll_off = true
 offset_top = 444.0
 offset_right = 640.0
 offset_bottom = 524.0
+
+[node name="Node2D" type="Node2D" parent="MovingGroup/Lava" unique_id=372922506]
+position = Vector2(0, 36)
+script = ExtResource("15_5kjie")
+
+[node name="ochko" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1387139127]
+position = Vector2(400, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_lbpem")
+offset = Vector2(0, 8)
+script = ExtResource("16_yut0y")
+
+[node name="ochko5" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=232131521]
+position = Vector2(504, -16)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_lbpem")
+offset = Vector2(0, 8)
+script = ExtResource("16_yut0y")
+
+[node name="ochko6" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1229776236]
+position = Vector2(608, -16)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_lbpem")
+offset = Vector2(0, 8)
+script = ExtResource("16_yut0y")
+
+[node name="ochko2" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1217559278]
+position = Vector2(288, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_lbpem")
+offset = Vector2(0, 8)
+script = ExtResource("16_yut0y")
+
+[node name="ochko3" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1610712443]
+position = Vector2(160, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_lbpem")
+offset = Vector2(0, 8)
+script = ExtResource("16_yut0y")
+
+[node name="ochko4" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=613029631]
+position = Vector2(48, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_lbpem")
+offset = Vector2(0, 8)
+script = ExtResource("16_yut0y")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MovingGroup" unique_id=239750316]
 disable_mode = 1
