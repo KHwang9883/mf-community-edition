@@ -31,7 +31,9 @@
 [ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="21_0mp8o"]
 [ext_resource type="Texture2D" uid="uid://clf55qqnl30jr" path="res://stages/extra/human_lab_2/gfx/orangecastle_bg_vertical.png" id="22_exkyh"]
 [ext_resource type="PackedScene" uid="uid://bd71lcoapyqa7" path="res://stages/extra/climbing_minigame/objects/platform_custom/platform_path_custom.tscn" id="23_g5mna"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="23_moyc8"]
 [ext_resource type="PackedScene" uid="uid://bxaj6iub5wrps" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn" id="24_2n21k"]
+[ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="24_k3mmq"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="26_yhukw"]
 [ext_resource type="PackedScene" uid="uid://c8yftgwnhhc4a" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/swimming_bones/swimming_bones.tscn" id="32_l5uua"]
 
@@ -62,6 +64,18 @@ fill_to = Vector2(0.9, 0.2)
 metadata/_snap_enabled = true
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7d5gc"]
+
+[sub_resource type="Gradient" id="Gradient_moyc8"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0kwoy"]
+gradient = SubResource("Gradient_moyc8")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o311q"]
 size = Vector2(32, 864)
@@ -213,6 +227,52 @@ force_xscroll_off = true
 offset_top = 444.0
 offset_right = 640.0
 offset_bottom = 524.0
+
+[node name="Node2D" type="Node2D" parent="MovingGroup/Lava" unique_id=240360524]
+position = Vector2(0, 36)
+script = ExtResource("23_moyc8")
+
+[node name="ochko" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1986119777]
+position = Vector2(400, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_0kwoy")
+offset = Vector2(0, 8)
+script = ExtResource("24_k3mmq")
+
+[node name="ochko5" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=819557909]
+position = Vector2(504, -16)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_0kwoy")
+offset = Vector2(0, 8)
+script = ExtResource("24_k3mmq")
+
+[node name="ochko6" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1187334142]
+position = Vector2(608, -16)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_0kwoy")
+offset = Vector2(0, 8)
+script = ExtResource("24_k3mmq")
+
+[node name="ochko2" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1690628297]
+position = Vector2(288, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_0kwoy")
+offset = Vector2(0, 8)
+script = ExtResource("24_k3mmq")
+
+[node name="ochko3" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=1002841234]
+position = Vector2(160, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_0kwoy")
+offset = Vector2(0, 8)
+script = ExtResource("24_k3mmq")
+
+[node name="ochko4" type="PointLight2D" parent="MovingGroup/Lava/Node2D" unique_id=65128248]
+position = Vector2(48, -10)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_0kwoy")
+offset = Vector2(0, 8)
+script = ExtResource("24_k3mmq")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MovingGroup" unique_id=1425114312]
 disable_mode = 1
