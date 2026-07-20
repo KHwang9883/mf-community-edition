@@ -27,6 +27,9 @@ custom_vars = {
 }
 custom_script = ExtResource("4_65ysn")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4cm3y"]
+size = Vector2(30, 158)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_vyrc6"]
 animations = [{
 "frames": [{
@@ -68,11 +71,11 @@ stretching_speed = 60.0
 stretching_length = 172.0
 
 [node name="Body" type="Area2D" parent="." unique_id=1515432481]
-visible = false
 collision_layer = 2
 collision_mask = 7
 
 [node name="Collision" type="CollisionShape2D" parent="Body" unique_id=538097169]
+visible = false
 position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_4g34j")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
@@ -92,6 +95,7 @@ killing_immune = {
 "starman": false
 }
 killing_creation = SubResource("Resource_fvcap")
+killing_body_override = NodePath("../../BodyKilling")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_5olv4")
 killing_sound_failed = ExtResource("7_lnuf4")
@@ -104,6 +108,16 @@ metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
 position = Vector2(0, -25)
 script = ExtResource("8_x85p6")
 KEYBOARD_EFFECT = ExtResource("9_fsyq6")
+
+[node name="BodyKilling" type="Area2D" parent="." unique_id=1897567189]
+collision_layer = 2
+collision_mask = 6
+
+[node name="Collision" type="CollisionShape2D" parent="BodyKilling" unique_id=1267195067]
+visible = false
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_4cm3y")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="Head#Dead" type="AnimatedSprite2D" parent="." unique_id=56787938]
 visible = false

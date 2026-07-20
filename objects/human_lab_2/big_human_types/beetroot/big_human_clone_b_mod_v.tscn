@@ -199,7 +199,7 @@ metadata/_custom_type_script = "uid://ng3vu4qwreu5"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=832446677]
 visible = false
-position = Vector2(0, -3)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_yi8t6")
 
 [node name="Body" type="Area2D" parent="." unique_id=1647028342]
@@ -209,11 +209,12 @@ collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1433811754]
 visible = false
-position = Vector2(0, -3)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_yi8t6")
 
 [node name="EnemyAttacked" type="Node" parent="Body" unique_id=323451399]
 script = ExtResource("6_75vs5")
+stomping_offset = Vector2(0, 7)
 stomping_creation = SubResource("Resource_js3nb")
 stomping_scores = 200
 stomping_sound = ExtResource("9_r43nn")
@@ -224,7 +225,7 @@ ice_sprite = NodePath("../../Sprite")
 sound_ignore_pitch_modification = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1403101364]
-position = Vector2(0, -8)
+position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_r5jqf")
 animation = &"attack"
 autoplay = "default"
@@ -242,34 +243,37 @@ idle_offset = Vector2(1, 0)
 
 [node name="SpriteProjectile" type="Sprite2D" parent="." unique_id=157283249]
 visible = false
-position = Vector2(-12, -2)
+position = Vector2(-12, 5)
 scale = Vector2(-1, 1)
 texture = ExtResource("14_fhgwx")
 
 [node name="PosAttack" type="Marker2D" parent="." unique_id=492762082]
 visible = false
-position = Vector2(-14, -1)
+position = Vector2(-14, 6)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1633112340]
 self_modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-16, -16, 32, 32)
+rect = Rect2(-18, -32, 36, 64)
 script = ExtResource("15_vi1qs")
 metadata/_edit_lock_ = true
 
 [node name="Walk" type="Timer" parent="." unique_id=121403609]
+process_callback = 0
 one_shot = true
 
 [node name="Attack" type="Timer" parent="." unique_id=1309676520]
+process_callback = 0
 wait_time = 0.06
 autostart = true
 
 [node name="Jump" type="Timer" parent="." unique_id=804875395]
+process_callback = 0
 wait_time = 0.24
 autostart = true
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=1979565370]
 visible = false
-position = Vector2(0, -8)
+position = Vector2(0, -1)
 enabled = false
 shape = SubResource("RectangleShape2D_gtn54")
 target_position = Vector2(0, 0)
