@@ -3,15 +3,11 @@
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_y55fs"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_4gtxh"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_mciik"]
-[ext_resource type="Script" uid="uid://bxx54cyd4mjsq" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_asise"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_4ewfn"]
-[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_kpxns"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_y3m6f"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_o4xav"]
-[ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="9_wsxcx"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/gfx/hard_block.png" id="10_qo5vs"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_orho2"]
-[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_8j5yt"]
 [ext_resource type="PackedScene" uid="uid://b00abmx83n2xo" path="res://objects/human_lab_2/ramireys/Clone4/clone4.tscn" id="13_4gtxh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ooqtj"]
@@ -31,45 +27,32 @@ script = ExtResource("1_y55fs")
 completion_music = ExtResource("2_4gtxh")
 metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
 
-[node name="MusicLoader" type="Node" parent="." unique_id=1674830763 instance=ExtResource("3_mciik")]
-script = ExtResource("4_asise")
+[node name="MusicLoader" parent="." unique_id=1674830763 instance=ExtResource("3_mciik")]
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=169935397 instance=ExtResource("5_4ewfn")]
+[node name="Player" parent="." unique_id=169935397 instance=ExtResource("5_4ewfn")]
 position = Vector2(316, 400)
-collision_mask = 16
-slide_on_ceiling = false
-floor_max_angle = 0.837758
-floor_snap_length = 12.0
-platform_on_leave = 2
-platform_floor_layers = 4294901776
-script = ExtResource("6_kpxns")
-gravity_scale = 1.0
-max_falling_speed = 500.0
+horizontal_correction_amount = 16
 
 [node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=682800359]
 editor_draw_screen = false
 script = ExtResource("7_y3m6f")
 metadata/_edit_lock_ = true
 
-[node name="CameraArea" type="Control" parent="." unique_id=1790766850 instance=ExtResource("8_o4xav")]
-layout_mode = 3
-anchors_preset = 0
+[node name="CameraArea" parent="." unique_id=1790766850 instance=ExtResource("8_o4xav")]
 offset_right = 11008.0
 offset_bottom = 480.0
-script = ExtResource("9_wsxcx")
 metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=449974147]
-tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAALAAkAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAALAAkAAAAAAAAAAAAhAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAAoAAwAAAAAAAAAAAAFAAkAAAAAAAAAAAADAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAANAAkAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_peyji")
 navigation_enabled = false
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=469826780 instance=ExtResource("11_orho2")]
-script = ExtResource("12_8j5yt")
+[node name="HUD" parent="." unique_id=469826780 instance=ExtResource("11_orho2")]
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=843418335]
 z_index = -100
 metadata/_edit_lock_ = true
 
 [node name="ZOMBINEY" parent="." unique_id=1286271044 instance=ExtResource("13_4gtxh")]
-position = Vector2(432, 384)
+position = Vector2(430, 384)

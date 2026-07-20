@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://lxaoo8fhrvtm"]
+
+[ext_resource type="Script" uid="uid://rskb47imnw1k" path="res://stages/extra/world_12_syzx/objects/cheep_green_jumping.gd" id="1_evji0"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_otkcd"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_oc807"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_5ves5"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_lwiaf"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_g2lw7"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_ibxyc"]
+[ext_resource type="Texture2D" uid="uid://cluoseai66up" path="res://engine/objects/enemies/cheeps/textures/cheep_green.png" id="8_evji0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
+size = Vector2(28, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vy57"]
+size = Vector2(28, 28)
+
+[sub_resource type="Resource" id="Resource_0wfa5"]
+resource_local_to_scene = true
+script = ExtResource("5_lwiaf")
+creation_nodepack = ExtResource("3_oc807")
+trans_inheritances = 7
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("4_5ves5")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pduek"]
+atlas = ExtResource("8_evji0")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilet2"]
+atlas = ExtResource("8_evji0")
+region = Rect2(0, 32, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ihgwm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pduek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilet2")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="CheepJumping" type="CharacterBody2D" unique_id=842396791 groups=["#water_body"]]
+collision_layer = 130
+collision_mask = 32
+platform_on_leave = 2
+script = ExtResource("1_evji0")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(0, 0)
+gravity_scale = 0.2
+collision = false
+metadata/_edit_pinned_properties_ = [&"sprite", &"look_at_player", &"speed"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=282250023]
+visible = false
+shape = SubResource("RectangleShape2D_8v3i3")
+
+[node name="Body" type="Area2D" parent="." unique_id=745668621]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1050143496]
+visible = false
+shape = SubResource("RectangleShape2D_5vy57")
+
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=910801180]
+script = ExtResource("2_otkcd")
+stomping_creation = SubResource("Resource_0wfa5")
+stomping_scores = 100
+stomping_sound = ExtResource("6_g2lw7")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"iceblock": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_0wfa5")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_ibxyc")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1329625866]
+sprite_frames = SubResource("SpriteFrames_ihgwm")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1707651587]
+rect = Rect2(-100, -100, 200, 200)
+show_rect = false
+
+[connection signal="collided_ceiling" from="." to="." method="turn_y"]
+[connection signal="collided_floor" from="." to="." method="turn_y"]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]
