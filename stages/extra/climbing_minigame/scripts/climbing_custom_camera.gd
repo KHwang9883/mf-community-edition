@@ -490,7 +490,7 @@ func lakitu() -> void:
 	
 
 func bowser_attack() -> void:
-	Audio.play_1d_sound(preload("res://music/climbing_minigame/snd_bowser_laugh.ogg"), false)
+	Audio.play_1d_sound(SND_BOWSER_LAUGH, false)
 	if difficulty < 3:
 		return
 	if !use_sequence_table:
