@@ -48,6 +48,7 @@
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="41_lek3c"]
 [ext_resource type="Texture2D" uid="uid://vmkr0eaks2fr" path="res://gfx/fancy_graphics/bighill.png" id="42_7jfqu"]
 [ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="45_nmmfv"]
+[ext_resource type="Texture2D" uid="uid://3f6efhfdu374" path="res://engine/tilesets/overworld/gfx/fence.png" id="46_msora"]
 [ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://engine/tilesets/overworld/gfx/green_pipe_entering_another.png" id="48_3x6ls"]
 [ext_resource type="PackedScene" uid="uid://dwih13maquoyl" path="res://objects/harder_design_node/harder_design_node.tscn" id="49_o5m56"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="50_cvtfh"]
@@ -115,14 +116,14 @@ gradient = SubResource("Gradient_cfp1v")
 height = 16
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Resource" id="Resource_nmmfv"]
+[sub_resource type="Resource" id="Resource_bc3dy"]
 resource_local_to_scene = true
 script = ExtResource("23_46wvn")
 creation_fallback_node = ExtResource("21_togic")
 creation_nodepack = ExtResource("22_3xo1v")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_msora"]
+[sub_resource type="Resource" id="Resource_2lqlv"]
 resource_local_to_scene = true
 script = ExtResource("23_46wvn")
 creation_nodepack = ExtResource("51_nmmfv")
@@ -597,7 +598,7 @@ position = Vector2(1296, 208)
 [node name="QuestionBlockFireFlower" parent="." unique_id=1172674307 instance=ExtResource("20_uga5i")]
 position = Vector2(464, 336)
 disable_mode = 0
-result = SubResource("Resource_nmmfv")
+result = SubResource("Resource_bc3dy")
 
 [node name="CheepBlue" parent="." unique_id=1181613168 instance=ExtResource("31_mffwr")]
 position = Vector2(5200, 192)
@@ -611,9 +612,6 @@ look_at_player = false
 force_direction = -1
 speed = Vector2(-50, 0)
 
-[node name="Objects" type="Node2D" parent="." unique_id=705416966]
-metadata/_edit_lock_ = true
-
 [node name="PipeIn" parent="." unique_id=1812418595 instance=ExtResource("32_64ams")]
 position = Vector2(7504, 320)
 rotation = -1.57079
@@ -622,7 +620,6 @@ warp_to = NodePath("../PipeOut")
 use_blur_transition = true
 
 [node name="FinishLine" parent="." unique_id=1126244130 instance=ExtResource("33_1ruqk")]
-z_index = -15
 position = Vector2(7520, -576)
 use_strict_detection_area = true
 
@@ -655,6 +652,11 @@ maximum = true
 medium = false
 minimum = false
 metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="Fence" type="Sprite2D" parent="." unique_id=1608307932]
+z_index = -1
+position = Vector2(7696, -592)
+texture = ExtResource("46_msora")
 
 [node name="PipeOut" parent="." unique_id=1943971423 instance=ExtResource("34_rlfh2")]
 position = Vector2(7152, -592)
@@ -788,7 +790,7 @@ position = Vector2(4432, -816)
 
 [node name="QuestionBlockLife" parent="HarderDesignNode" unique_id=1181572690 instance=ExtResource("50_cvtfh")]
 position = Vector2(3888, -848)
-result = SubResource("Resource_msora")
+result = SubResource("Resource_2lqlv")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="HarderDesignNode" unique_id=100528696]
 tile_map_data = PackedByteArray("AADKAPD/AAACAAIAAADKAO//AAACAAEAAADKAO7/AAACAAAAAADJAPD/AAABAAIAAADJAO//AAABAAEAAADJAO7/AAABAAAAAADIAPD/AAABAAIAAADIAO//AAABAAEAAADIAO7/AAABAAAAAADHAPD/AAABAAIAAADHAO//AAABAAEAAADHAO7/AAABAAAAAADGAPD/AAABAAIAAADGAO//AAABAAEAAADGAO7/AAABAAAAAADFAPD/AAABAAIAAADFAO//AAABAAEAAADFAO7/AAABAAAAAADEAPD/AAAAAAIAAADEAO//AAAAAAEAAADEAO7/AAAAAAAAAAC9APD/AAACAAIAAAC9AO//AAACAAEAAAC9AO7/AAACAAAAAAC8APD/AAABAAIAAAC8AO//AAABAAEAAAC8AO7/AAABAAAAAAC7APD/AAABAAIAAAC7AO//AAABAAEAAAC7AO7/AAABAAAAAAC6APD/AAABAAIAAAC6AO//AAABAAEAAAC6AO7/AAABAAAAAAC5APD/AAABAAIAAAC5AO//AAABAAEAAAC5AO7/AAABAAAAAAC4APD/AAABAAIAAAC4AO//AAABAAEAAAC4AO7/AAABAAAAAAC3APD/AAAAAAIAAAC3AO//AAAAAAEAAAC3AO7/AAAAAAAAAACyAOv/AQAAAAAAAACxAOv/AQAAAAAAAACsAOn/AQAAAAAAAACrAOn/AQAAAAAAAAC8AO3/AgAAAAAAAQC6AO3/AgAAAAAAAQDHAO3/AgAAAAAAAQCmAOf/AQAAAAAAAAClAOf/AQAAAAAAAACgAOn/AQAAAAAAAACfAOn/AQAAAAAAAACaAOr/AQAAAAAAAACZAOr/AQAAAAAAAACSAOr/AQAAAAAAAACRAOr/AQAAAAAAAACLAOr/AQAAAAAAAACLAOv/AQAAAAAAAACLAOz/AQAAAAAAAACLAO3/AQAAAAAAAACLAO7/AQAAAAAAAACLAO//AQAAAAAAAACLAPD/AQAAAAAAAACKAOr/AQAAAAAAAACJAOr/AQAAAAAAAACIAOr/AQAAAAAAAACHAOr/AQAAAAAAAACGAOr/AQAAAAAAAACFAOr/AQAAAAAAAACEAOr/AQAAAAAAAACDAOr/AQAAAAAAAACCAOr/AQAAAAAAAACBAOr/AQAAAAAAAACAAOr/AQAAAAAAAAB/AOr/AQAAAAAAAAB+AOr/AQAAAAAAAAB9AOr/AQAAAAAAAAB9AOn/AQAAAAAAAAB9AOj/AQAAAAAAAAB8AOn/AQAAAAAAAAB8AOr/AQAAAAAAAAB7AOr/AQAAAAAAAAB6AOr/AQAAAAAAAAB4AOr/AQAAAAAAAAB3AOr/AQAAAAAAAAB2AOn/AQAAAAAAAAB1AOn/AQAAAAAAAAB1AOj/AQAAAAAAAAB1AOr/AQAAAAAAAAB1AOv/AQAAAAAAAAB1AOz/AQAAAAAAAAB1AO3/AQAAAAAAAAB1AO7/AQAAAAAAAAB1AO//AQAAAAAAAAB1APD/AQAAAAAAAAB2AOr/AQAAAAAAAAB5AOr/AQAAAAAAAABwAOj/AgAAAAAAAgB9AOP/AgAAAAAAAgB0AOL/AgAAAAAAAgCNAOz/AgAAAAAAAgCSAOL/AgAAAAAAAgCXAOf/AgAAAAAAAgCgAOP/AgAAAAAAAgCpAOb/AgAAAAAAAgClAOz/AgAAAAAAAgCGAOb/AgAAAAAAAgC0AOX/AgAAAAAAAgC7AOH/AgAAAAAAAgC/AOf/AgAAAAAAAgC1AO//AgAAAAAACwDCAO//AgAAAAAABAA=")

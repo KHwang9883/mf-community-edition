@@ -56,6 +56,7 @@
 [ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://engine/tilesets/overworld/gfx/green_pipe_entering_another.png" id="53_xb6qv"]
 [ext_resource type="Texture2D" uid="uid://de5hk77lmaf5c" path="res://engine/tilesets/signs/sign.png" id="54_eipiu"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="55_d8ap7"]
+[ext_resource type="Texture2D" uid="uid://3f6efhfdu374" path="res://engine/tilesets/overworld/gfx/fence.png" id="57_4x4c5"]
 
 [sub_resource type="Gradient" id="Gradient_16eid"]
 colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
@@ -116,14 +117,14 @@ size = Vector2(7904, 412)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4x4c5"]
 size = Vector2(20, 58)
 
-[sub_resource type="Resource" id="Resource_d8ap7"]
+[sub_resource type="Resource" id="Resource_ylvna"]
 resource_local_to_scene = true
 script = ExtResource("5_3vig6")
 creation_fallback_node = ExtResource("3_iqfr0")
 creation_nodepack = ExtResource("51_xb6qv")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_4x4c5"]
+[sub_resource type="Resource" id="Resource_atoc5"]
 resource_local_to_scene = true
 script = ExtResource("5_3vig6")
 creation_fallback_node = ExtResource("3_iqfr0")
@@ -545,7 +546,6 @@ warp_to = NodePath("../PipeOut")
 use_blur_transition = true
 
 [node name="FinishLine" parent="." unique_id=889279220 instance=ExtResource("45_68ve4")]
-z_index = -15
 position = Vector2(7520, -576)
 use_strict_detection_area = true
 
@@ -907,11 +907,11 @@ script = ExtResource("52_d8ap7")
 
 [node name="QuestionBlockBeetroot" parent="." unique_id=1927192353 instance=ExtResource("49_sklqv")]
 position = Vector2(464, 336)
-result = SubResource("Resource_d8ap7")
+result = SubResource("Resource_ylvna")
 
 [node name="QuestionBlockBeetroot2" parent="." unique_id=1781509050 instance=ExtResource("49_sklqv")]
 position = Vector2(4080, 272)
-result = SubResource("Resource_4x4c5")
+result = SubResource("Resource_atoc5")
 
 [node name="GreenPipeEnteringAnother" type="Sprite2D" parent="." unique_id=52777218]
 position = Vector2(7104, -608)
@@ -936,6 +936,11 @@ grow_vertical = 2
 text = "jump on
 cheep cheeps"
 vertical_alignment = 1
+
+[node name="Fence" type="Sprite2D" parent="." unique_id=1066204361]
+z_index = -1
+position = Vector2(7696, -592)
+texture = ExtResource("57_4x4c5")
 
 [connection signal="level_completed" from="." to="MusicLoader/SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
