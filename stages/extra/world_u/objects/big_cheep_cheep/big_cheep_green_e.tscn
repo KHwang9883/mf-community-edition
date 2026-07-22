@@ -119,9 +119,9 @@ animations = [{
 }]
 
 [node name="CheepGreen" type="CharacterBody2D" unique_id=1687314272]
-platform_on_leave = 2
 collision_layer = 2
 collision_mask = 32
+platform_on_leave = 2
 script = ExtResource("1_baiew")
 turn_x_enabled = false
 swimming_y_speed = 45.0
@@ -213,7 +213,9 @@ autostart = true
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/AnimatedSprite2D" method="hide"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/AnimatedSprite2D" method="hide"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
 [connection signal="timeout" from="Interval" to="." method="_cheep_swimming"]
