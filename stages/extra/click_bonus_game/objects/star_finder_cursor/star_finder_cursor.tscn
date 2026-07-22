@@ -9,18 +9,28 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_nfyne"]
 radius = 2.0
 
-[node name="StarFinderCursor" type="Sprite2D" unique_id=1371685662]
+[node name="StarFinderCursor" type="Node2D" unique_id=1674609884]
 physics_interpolation_mode = 2
 z_index = 200
-position = Vector2(-16, -16)
-texture = ExtResource("1_jspt5")
 script = ExtResource("2_7l1lt")
 
 [node name="Timer" type="Timer" parent="." unique_id=956141102]
 wait_time = 0.05
 autostart = true
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=378905219]
+[node name="Area2D" type="Area2D" parent="." unique_id=12826673 groups=["mouse_cursor"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1673175923]
+shape = SubResource("CircleShape2D_nfyne")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=509097147]
+physics_interpolation_mode = 2
+
+[node name="Cursor" type="Sprite2D" parent="CanvasLayer" unique_id=2126447197]
+position = Vector2(-16, -16)
+texture = ExtResource("1_jspt5")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer/Cursor" unique_id=378905219]
 emitting = false
 texture = ExtResource("3_xw5pp")
 lifetime = 0.4
@@ -29,7 +39,7 @@ explosiveness = 1.0
 fixed_fps = 60
 process_material = ExtResource("3_w4rdj")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=1385850943]
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="CanvasLayer/Cursor" unique_id=1385850943]
 emitting = false
 amount = 15
 texture = ExtResource("3_xw5pp")
@@ -38,8 +48,3 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 process_material = ExtResource("5_7qygd")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=12826673 groups=["mouse_cursor"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1673175923]
-shape = SubResource("CircleShape2D_nfyne")
