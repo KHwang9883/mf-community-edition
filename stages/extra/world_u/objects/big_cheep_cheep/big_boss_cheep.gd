@@ -24,10 +24,23 @@ var moving: bool
 var attack_timer: float
 var died: bool
 
-@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var sprite: Sprite2D = $Sprite
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 @onready var launch_pos: Marker2D = $LaunchPos
+@onready var mouth: AnimatedSprite2D = $Sprite/Mouth
+@onready var eyes: AnimatedSprite2D = $Sprite/Eyes
+@onready var top: AnimatedSprite2D = $Sprite/Top
+@onready var fins: AnimatedSprite2D = $Sprite/Fins
+
 var hud: CanvasLayer
+var warning: Label
+
+func _ready() -> void:
+	super()
+	warning = Scenes.current_scene.get_node("BossWarning")
+	warning.hide()
+	warning.modulate.a = 0
+	warning.z_index = 999
 
 func activate() -> void:
 	active = true
@@ -42,10 +55,19 @@ func activate() -> void:
 func _physics_process(delta: float) -> void:
 	if !active: return
 	
-	if attack_timer < 1.0:
+	if moving:
+		motion_process(delta)
+	
+	if health <= 0:
+		return
+	
+	if attack_timer < attack_interval:
 		attack_timer += delta
-	elif health > 0:
+		if attack_timer >= attack_interval - 0.2:
+			mouth.play(&"open")
+	else:
 		attack_timer = 0
+		mouth.play(&"close")
 		Audio.play_sound(launch_sound, self, false)
 		var pl :Player = Thunder._current_player
 		var cheep = CHEEP_GREEN.instantiate()
@@ -63,9 +85,6 @@ func _physics_process(delta: float) -> void:
 		cheep.interval.paused = true
 		cheep.visiblity.rect = cheep.visiblity.new_rect
 		Thunder.reorder_on_top_of(cheep, self)
-	
-	if moving:
-		motion_process(delta)
 
 
 func hurt(_external_damage_source: bool = false) -> void:
@@ -80,13 +99,32 @@ func hurt(_external_damage_source: bool = false) -> void:
 func die() -> void:
 	enemy_attacked.killing_sound_succeeded = null
 	died = true
+	eyes.hide()
+	top.show()
+	top.play()
+	fins.show()
+	fins.play()
+	sprite.self_modulate.a = 0.0
+	if mouth.animation == &"close":
+		mouth.play(&"open")
 	var _sfx2 = CharacterManager.get_sound_replace(falling_sound, falling_sound, "bowser_fall", false)
 	Audio.play_sound(_sfx2, self, false)
-	await get_tree().create_timer(1.0, false, true, false).timeout
-	var tw = create_tween()
-	tw.tween_property(self, "speed:x", -death_speed, 0.5)
-	moving = true
+	#warning.show()
+	#var tw2 = create_tween().set_trans(Tween.TRANS_SINE)
+	#for i in 3:
+		#tw2.tween_property(warning, "modulate:a", 1.0, 0.15)
+		#tw2.tween_property(warning, "modulate:a", 0.25, 0.15)
+	#tw2.tween_property(warning, "modulate:a", 1.0, 0.15)
+	#tw2.tween_property(warning, "modulate:a", 0.0, 0.2)
+	#tw2.tween_callback(warning.hide)
 	
+	var tw = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	tw.tween_interval(0.3)
+	tw.tween_callback(set.bind(&"moving", true))
+	tw.tween_property(self, "speed:x", 0.0, 0.7).from(50.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_LINEAR)
+	tw.tween_property(self, "speed:x", -death_speed, 0.5)
+	
+	moving = true
 
 
 func _on_forcer_collected() -> void:
