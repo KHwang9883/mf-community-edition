@@ -33,14 +33,9 @@ var died: bool
 @onready var fins: AnimatedSprite2D = $Sprite/Fins
 
 var hud: CanvasLayer
-var warning: Label
 
 func _ready() -> void:
 	super()
-	warning = Scenes.current_scene.get_node("BossWarning")
-	warning.hide()
-	warning.modulate.a = 0
-	warning.z_index = 999
 
 func activate() -> void:
 	active = true
@@ -109,14 +104,6 @@ func die() -> void:
 		mouth.play(&"open")
 	var _sfx2 = CharacterManager.get_sound_replace(falling_sound, falling_sound, "bowser_fall", false)
 	Audio.play_sound(_sfx2, self, false)
-	#warning.show()
-	#var tw2 = create_tween().set_trans(Tween.TRANS_SINE)
-	#for i in 3:
-		#tw2.tween_property(warning, "modulate:a", 1.0, 0.15)
-		#tw2.tween_property(warning, "modulate:a", 0.25, 0.15)
-	#tw2.tween_property(warning, "modulate:a", 1.0, 0.15)
-	#tw2.tween_property(warning, "modulate:a", 0.0, 0.2)
-	#tw2.tween_callback(warning.hide)
 	
 	var tw = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.tween_interval(0.3)
