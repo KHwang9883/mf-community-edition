@@ -63,6 +63,7 @@ func _physics_process(delta: float) -> void:
 		
 		await get_tree().create_timer(1.5, false).timeout
 		Audio.stop_music_channel(1, true)
+		video_stream_player.speed_scale = 1 / Engine.time_scale
 		
 		var tw = create_tween()
 		tw.tween_property(color_rect, "modulate:a", 1, 1)
