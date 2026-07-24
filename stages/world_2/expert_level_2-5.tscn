@@ -64,6 +64,7 @@
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="49_s26hq"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="50_j301e"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="55_58exh"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="65_oowqm"]
 
 [sub_resource type="Curve2D" id="Curve2D_aapar"]
 _data = {
@@ -71,13 +72,13 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_c3u82"]
+[sub_resource type="Resource" id="Resource_1epgr"]
 resource_local_to_scene = true
 script = ExtResource("4_jeef1")
 creation_nodepack = ExtResource("5_jxdww")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_oowqm"]
+[sub_resource type="Resource" id="Resource_rfm4i"]
 resource_local_to_scene = true
 script = ExtResource("4_jeef1")
 creation_nodepack = ExtResource("5_jxdww")
@@ -95,13 +96,13 @@ creation_fallback_node = ExtResource("2_3fdkw")
 creation_nodepack = ExtResource("3_bbgpc")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_1epgr"]
+[sub_resource type="Resource" id="Resource_3yrav"]
 resource_local_to_scene = true
 script = ExtResource("4_jeef1")
 creation_nodepack = ExtResource("5_jxdww")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_rfm4i"]
+[sub_resource type="Resource" id="Resource_jgdip"]
 resource_local_to_scene = true
 script = ExtResource("4_jeef1")
 creation_nodepack = ExtResource("10_34pn1")
@@ -484,6 +485,12 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
 metadata/_snap_enabled = true
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrivr"]
+size = Vector2(32, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_71n1w"]
+size = Vector2(80, 176)
+
 [node name="Level2-5" type="Node2D" unique_id=435179949]
 script = ExtResource("1_c3u82")
 completion_music = ExtResource("2_oowqm")
@@ -687,11 +694,11 @@ position = Vector2(5200, 304)
 
 [node name="QuestionBlock14" parent="." unique_id=2127377926 instance=ExtResource("9_a3v0t")]
 position = Vector2(3280, 176)
-result = SubResource("Resource_c3u82")
+result = SubResource("Resource_1epgr")
 
 [node name="QuestionBlock15" parent="." unique_id=1683432457 instance=ExtResource("9_a3v0t")]
 position = Vector2(3248, 176)
-result = SubResource("Resource_oowqm")
+result = SubResource("Resource_rfm4i")
 
 [node name="QuestionBlock16" parent="." unique_id=400085170 instance=ExtResource("9_a3v0t")]
 position = Vector2(7888, 144)
@@ -705,12 +712,12 @@ initially_visible_and_solid = false
 
 [node name="QuestionBlock17" parent="." unique_id=766742025 instance=ExtResource("9_a3v0t")]
 position = Vector2(496, 176)
-result = SubResource("Resource_1epgr")
+result = SubResource("Resource_3yrav")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock18" parent="." unique_id=757671819 instance=ExtResource("9_a3v0t")]
 position = Vector2(272, 176)
-result = SubResource("Resource_rfm4i")
+result = SubResource("Resource_jgdip")
 initially_visible_and_solid = false
 
 [node name="Bowser2" parent="." unique_id=622524411 instance=ExtResource("7_n6wm8")]
@@ -1309,6 +1316,22 @@ texture = SubResource("GradientTexture2D_oowqm")
 flip_h = true
 region_rect = Rect2(0, 0, 32, 32)
 
+[node name="Area2D" type="Area2D" parent="." unique_id=2093695800]
+script = ExtResource("65_oowqm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=985739105]
+position = Vector2(16, 440)
+shape = SubResource("RectangleShape2D_xrivr")
+
+[node name="Area2D2" type="Area2D" parent="." unique_id=722006655]
+script = ExtResource("65_oowqm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=1511931310]
+position = Vector2(40, 216)
+shape = SubResource("RectangleShape2D_71n1w")
+
 [connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]
 [connection signal="secret_found" from="secret" to="SecretUnlocker2" method="progress_secret" binds= [0, false]]
 [connection signal="timeout" from="Marker2D/Timer" to="Marker2D" method="_on_timer_timeout"]
+[connection signal="player_enter" from="Area2D" to="PlayerCamera2D" method="toggle_retro_scroll" binds= [true]]
+[connection signal="player_enter" from="Area2D2" to="PlayerCamera2D" method="toggle_retro_scroll" binds= [false]]
