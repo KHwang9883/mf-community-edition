@@ -65,6 +65,7 @@
 [ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="62_mcsm7"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://engine/tilesets/underground/gfx/purple_pipe.png" id="63_oejoe"]
 [ext_resource type="Texture2D" uid="uid://br7p3i5hxmjer" path="res://gfx/misc/skull.png" id="65_w4vyl"]
+[ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="66_ytq5l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_68wr5"]
 texture = ExtResource("14_5h8lg")
@@ -109,19 +110,19 @@ width = 640
 height = 400
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Resource" id="Resource_w4vyl"]
-resource_local_to_scene = true
-script = ExtResource("31_3eqib")
-creation_nodepack = ExtResource("30_wpd1i")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_ytq5l"]
-resource_local_to_scene = true
-script = ExtResource("31_3eqib")
-creation_nodepack = ExtResource("30_wpd1i")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_lpyaa"]
+resource_local_to_scene = true
+script = ExtResource("31_3eqib")
+creation_nodepack = ExtResource("30_wpd1i")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_g8t3h"]
+resource_local_to_scene = true
+script = ExtResource("31_3eqib")
+creation_nodepack = ExtResource("30_wpd1i")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_yj7b2"]
 resource_local_to_scene = true
 script = ExtResource("31_3eqib")
 creation_nodepack = ExtResource("30_wpd1i")
@@ -158,7 +159,7 @@ metadata/_snap_enabled = true
 gradient = SubResource("Gradient_is7fa")
 width = 32
 
-[sub_resource type="Resource" id="Resource_g8t3h"]
+[sub_resource type="Resource" id="Resource_gb0jk"]
 resource_local_to_scene = true
 script = ExtResource("31_3eqib")
 creation_nodepack = ExtResource("52_p707y")
@@ -207,6 +208,18 @@ gradient = SubResource("Gradient_8uuaa")
 height = 32
 fill_from = Vector2(0.9, 0)
 fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_vpvon"]
+colors = PackedColorArray(0.972549, 0.658824, 0.658824, 1, 0.972549, 0.658824, 0.658824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i3s6s"]
+gradient = SubResource("Gradient_vpvon")
+width = 180
+height = 180
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
 
 [node name="LevelU-2-1E" type="Node2D" unique_id=1203720193]
@@ -630,15 +643,15 @@ position = Vector2(2352, 336)
 
 [node name="QuestionBlock" parent="." unique_id=1213461535 instance=ExtResource("29_d5h5e")]
 position = Vector2(1648, 272)
-result = SubResource("Resource_w4vyl")
+result = SubResource("Resource_lpyaa")
 
 [node name="QuestionBlock2" parent="." unique_id=1153143142 instance=ExtResource("29_d5h5e")]
 position = Vector2(1840, 144)
-result = SubResource("Resource_ytq5l")
+result = SubResource("Resource_g8t3h")
 
 [node name="QuestionBlock3" parent="." unique_id=433427471 instance=ExtResource("29_d5h5e")]
 position = Vector2(2896, 48)
-result = SubResource("Resource_lpyaa")
+result = SubResource("Resource_yj7b2")
 
 [node name="RotoCenter" parent="." unique_id=580551205 instance=ExtResource("32_jakek")]
 position = Vector2(1648, 272)
@@ -1314,7 +1327,7 @@ jumping_height = 300.0
 
 [node name="QuestionBlockLife" parent="." unique_id=156537586 instance=ExtResource("51_2tgx7")]
 position = Vector2(6704, 1232)
-result = SubResource("Resource_g8t3h")
+result = SubResource("Resource_gb0jk")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=1683137808]
 position = Vector2(6288, 1408)
@@ -1825,6 +1838,247 @@ texture = ExtResource("65_w4vyl")
 [node name="Skull2" type="Sprite2D" parent="." unique_id=673708676]
 position = Vector2(3248, 1068)
 texture = ExtResource("65_w4vyl")
+
+[node name="Node2D2" type="Node2D" parent="." unique_id=1571025249]
+script = ExtResource("23_5thhg")
+
+[node name="ochko2" type="PointLight2D" parent="Node2D2" unique_id=369045253]
+position = Vector2(32, 1400)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko3" type="PointLight2D" parent="Node2D2" unique_id=479853617]
+position = Vector2(144, 1400)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko4" type="PointLight2D" parent="Node2D2" unique_id=1132083509]
+position = Vector2(768, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko5" type="PointLight2D" parent="Node2D2" unique_id=850673440]
+position = Vector2(832, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko6" type="PointLight2D" parent="Node2D2" unique_id=2036279220]
+position = Vector2(1184, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko7" type="PointLight2D" parent="Node2D2" unique_id=590551608]
+position = Vector2(1240, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko8" type="PointLight2D" parent="Node2D2" unique_id=1648467897]
+position = Vector2(1856, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko9" type="PointLight2D" parent="Node2D2" unique_id=347503722]
+position = Vector2(1920, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko10" type="PointLight2D" parent="Node2D2" unique_id=574785138]
+position = Vector2(2064, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko11" type="PointLight2D" parent="Node2D2" unique_id=1002288547]
+position = Vector2(2160, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko12" type="PointLight2D" parent="Node2D2" unique_id=327912996]
+position = Vector2(2392, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko13" type="PointLight2D" parent="Node2D2" unique_id=1908041392]
+position = Vector2(2488, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko14" type="PointLight2D" parent="Node2D2" unique_id=1777824798]
+position = Vector2(3824, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko15" type="PointLight2D" parent="Node2D2" unique_id=267888510]
+position = Vector2(4560, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko16" type="PointLight2D" parent="Node2D2" unique_id=1085470380]
+position = Vector2(4680, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko17" type="PointLight2D" parent="Node2D2" unique_id=409196270]
+position = Vector2(6096, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko18" type="PointLight2D" parent="Node2D2" unique_id=1879054063]
+position = Vector2(6208, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko19" type="PointLight2D" parent="Node2D2" unique_id=1737520127]
+position = Vector2(6368, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko20" type="PointLight2D" parent="Node2D2" unique_id=296946669]
+position = Vector2(6480, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko21" type="PointLight2D" parent="Node2D2" unique_id=65748863]
+position = Vector2(6968, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko22" type="PointLight2D" parent="Node2D2" unique_id=473552392]
+position = Vector2(7104, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko23" type="PointLight2D" parent="Node2D2" unique_id=1908318427]
+position = Vector2(7240, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko24" type="PointLight2D" parent="Node2D2" unique_id=1718946606]
+position = Vector2(7368, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko25" type="PointLight2D" parent="Node2D2" unique_id=759888945]
+position = Vector2(7760, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko26" type="PointLight2D" parent="Node2D2" unique_id=1971495072]
+position = Vector2(7864, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko27" type="PointLight2D" parent="Node2D2" unique_id=301644285]
+position = Vector2(7984, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko28" type="PointLight2D" parent="Node2D2" unique_id=2042663945]
+position = Vector2(8088, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko29" type="PointLight2D" parent="Node2D2" unique_id=1994827722]
+position = Vector2(8208, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko30" type="PointLight2D" parent="Node2D2" unique_id=5491239]
+position = Vector2(8328, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko31" type="PointLight2D" parent="Node2D2" unique_id=1777669335]
+position = Vector2(8432, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko32" type="PointLight2D" parent="Node2D2" unique_id=1588460424]
+position = Vector2(9040, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko33" type="PointLight2D" parent="Node2D2" unique_id=1480398558]
+position = Vector2(9168, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko34" type="PointLight2D" parent="Node2D2" unique_id=259232016]
+position = Vector2(9296, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
+
+[node name="ochko35" type="PointLight2D" parent="Node2D2" unique_id=1445975324]
+position = Vector2(9416, 1384)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_i3s6s")
+offset = Vector2(0, 8)
+script = ExtResource("66_ytq5l")
 
 [connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="player_enter" from="Area2D2" to="Water" method="show"]
