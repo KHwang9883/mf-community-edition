@@ -1,10 +1,11 @@
 @tool
 extends "res://engine/objects/enemies/paratroopas/paratroopa_circle_generator.gd"
 
-@onready var _tweak = ProfileManager.current_profile.data.get("advanced_edition", false)
+var _tweak: bool
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	_tweak = ProfileManager.current_profile.data.get("advanced_edition", false)
 	for i in amount:
 		var angle: float = float(i) * (360 / float(amount))
 		if !troopa: return
