@@ -55,6 +55,7 @@
 [ext_resource type="PackedScene" uid="uid://0ugpa0ybv34g" path="res://engine/objects/enemies/rotos/roto_center.tscn" id="45_y30e1"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="46_2uded"]
 [ext_resource type="PackedScene" uid="uid://cforx4e0v73a7" path="res://engine/objects/enemies/rotos/roto_red.tscn" id="46_4awih"]
+[ext_resource type="Texture2D" uid="uid://dii887xxrfhqi" path="res://gfx/fancy_graphics/cloud_light_effect.png" id="47_l2v48"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="48_8qfbd"]
 [ext_resource type="PackedScene" uid="uid://3tgyqgylcvji" path="res://engine/objects/bumping_blocks/brick/brick_blue.tscn" id="51_fpri6"]
 [ext_resource type="PackedScene" uid="uid://bvf7eu5tf645m" path="res://engine/objects/bumping_blocks/question_block/templates/blue/Blue Coin Question Block.tscn" id="52_sq20p"]
@@ -257,6 +258,19 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="Gradient" id="Gradient_r3xdq"]
+colors = PackedColorArray(0.476577, 0.476579, 0.476578, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7ksc3"]
+gradient = SubResource("Gradient_r3xdq")
+width = 240
+height = 240
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.857143, 0.142857)
+metadata/_snap_enabled = true
+metadata/_snap_count = 7
+
 [sub_resource type="Curve2D" id="Curve2D_deg8h"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 6624, 416, 0, 0, 0, 0, 6944, 416)
@@ -428,45 +442,45 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_xny5m"]
+[sub_resource type="Resource" id="Resource_cnyn5"]
 resource_local_to_scene = true
 script = ExtResource("31_cv2gf")
 creation_fallback_node = ExtResource("29_151fa")
 creation_nodepack = ExtResource("30_qt7ha")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_l2v48"]
+[sub_resource type="Resource" id="Resource_bh4g8"]
 resource_local_to_scene = true
 script = ExtResource("31_cv2gf")
 creation_nodepack = ExtResource("25_kexm0")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_7ksc3"]
+[sub_resource type="Resource" id="Resource_4u5uy"]
 resource_local_to_scene = true
 script = ExtResource("31_cv2gf")
 creation_fallback_node = ExtResource("29_151fa")
 creation_nodepack = ExtResource("34_phifn")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_cnyn5"]
+[sub_resource type="Resource" id="Resource_03pn6"]
 resource_local_to_scene = true
 script = ExtResource("31_cv2gf")
 creation_nodepack = ExtResource("25_kexm0")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_bh4g8"]
+[sub_resource type="Resource" id="Resource_6jnth"]
 resource_local_to_scene = true
 script = ExtResource("31_cv2gf")
 creation_nodepack = ExtResource("48_8qfbd")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_4u5uy"]
+[sub_resource type="Resource" id="Resource_s7isn"]
 resource_local_to_scene = true
 script = ExtResource("31_cv2gf")
 creation_nodepack = ExtResource("25_kexm0")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_03pn6"]
+[sub_resource type="Resource" id="Resource_myv8n"]
 resource_local_to_scene = true
 script = ExtResource("31_cv2gf")
 creation_nodepack = ExtResource("25_kexm0")
@@ -847,6 +861,67 @@ position = Vector2(5744, 208)
 
 [node name="FinishLine" parent="." unique_id=1797506127 instance=ExtResource("53_lr8ya")]
 position = Vector2(7520, 416)
+
+[node name="Node2D" type="Node2D" parent="FinishLine" unique_id=1253053630]
+script = ExtResource("57_q8ay6")
+inverted = true
+
+[node name="PointLight2D2" type="PointLight2D" parent="FinishLine/Node2D" unique_id=159985568]
+position = Vector2(240, -272)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_7ksc3")
+texture_scale = 0.5
+script = ExtResource("17_4nu11")
+medium = true
+
+[node name="PointLight2D3" type="PointLight2D" parent="FinishLine/Node2D" unique_id=167535978]
+position = Vector2(176, -272)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_7ksc3")
+texture_scale = 0.5
+script = ExtResource("17_4nu11")
+medium = true
+
+[node name="PointLight2D4" type="PointLight2D" parent="FinishLine/Node2D" unique_id=1826918634]
+position = Vector2(16, -16)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_7ksc3")
+texture_scale = 0.5
+script = ExtResource("17_4nu11")
+medium = true
+
+[node name="Node2D2" type="Node2D" parent="FinishLine" unique_id=1147811889]
+script = ExtResource("57_q8ay6")
+
+[node name="LightEffect" type="Sprite2D" parent="FinishLine/Node2D2" unique_id=822036042]
+z_index = -2
+position = Vector2(176, -268)
+texture = ExtResource("47_l2v48")
+script = ExtResource("17_4nu11")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect2" type="Sprite2D" parent="FinishLine/Node2D2" unique_id=938433816]
+z_index = -2
+position = Vector2(240, -268)
+texture = ExtResource("47_l2v48")
+script = ExtResource("17_4nu11")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
+
+[node name="LightEffect3" type="Sprite2D" parent="FinishLine/Node2D2" unique_id=749479319]
+z_index = -2
+position = Vector2(16, -13)
+texture = ExtResource("47_l2v48")
+script = ExtResource("17_4nu11")
+maximum = true
+medium = false
+minimum = false
+metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
 
 [node name="SpinyIron4" parent="." unique_id=1548321012 instance=ExtResource("44_h52nr")]
 position = Vector2(7344, 240)
@@ -1530,15 +1605,15 @@ position = Vector2(320, 288)
 
 [node name="QuestionBlock5" parent="." unique_id=636657413 instance=ExtResource("52_sq20p")]
 position = Vector2(544, 256)
-result = SubResource("Resource_xny5m")
+result = SubResource("Resource_cnyn5")
 
 [node name="QuestionBlock6" parent="." unique_id=829913918 instance=ExtResource("52_sq20p")]
 position = Vector2(1424, 304)
-result = SubResource("Resource_l2v48")
+result = SubResource("Resource_bh4g8")
 
 [node name="QuestionBlock7" parent="." unique_id=907698000 instance=ExtResource("52_sq20p")]
 position = Vector2(1392, 304)
-result = SubResource("Resource_7ksc3")
+result = SubResource("Resource_4u5uy")
 
 [node name="Brick4" parent="." unique_id=14556965 instance=ExtResource("51_fpri6")]
 position = Vector2(3072, 272)
@@ -1569,19 +1644,19 @@ position = Vector2(3328, 272)
 
 [node name="QuestionBlock" parent="." unique_id=833723932 instance=ExtResource("52_sq20p")]
 position = Vector2(3696, 80)
-result = SubResource("Resource_cnyn5")
+result = SubResource("Resource_03pn6")
 
 [node name="QuestionBlock2" parent="." unique_id=700801419 instance=ExtResource("52_sq20p")]
 position = Vector2(3872, 80)
-result = SubResource("Resource_bh4g8")
+result = SubResource("Resource_6jnth")
 
 [node name="QuestionBlock8" parent="." unique_id=305532670 instance=ExtResource("52_sq20p")]
 position = Vector2(4560, 272)
-result = SubResource("Resource_4u5uy")
+result = SubResource("Resource_s7isn")
 
 [node name="QuestionBlock9" parent="." unique_id=1831289073 instance=ExtResource("52_sq20p")]
 position = Vector2(4592, 272)
-result = SubResource("Resource_03pn6")
+result = SubResource("Resource_myv8n")
 
 [node name="PipeSnow28" type="Sprite2D" parent="." unique_id=2123108432]
 z_index = -1
