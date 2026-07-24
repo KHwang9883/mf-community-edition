@@ -83,7 +83,7 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 
 func is_retro_scroll() -> bool:
 	if !_retro_tweak || ignore_retro_scroll || !is_instance_valid(player): return false
-	if player.completed || player.warp == player.Warp.OUT: return false
+	if player.warp == player.Warp.OUT: return false
 	
 	return true
 

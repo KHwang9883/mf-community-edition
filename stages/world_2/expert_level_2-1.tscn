@@ -1272,16 +1272,19 @@ use_strict_detection_area = true
 [node name="Finishline" parent="FinishLine2" index="0" unique_id=1059799333]
 position = Vector2(208, -144)
 flip_h = true
-region_enabled = true
 region_rect = Rect2(160, 0, 95, 288)
 
-[node name="CompletionArea" parent="FinishLine2" index="1" unique_id=1555531841]
+[node name="FinishlineRight" parent="FinishLine2" index="1" unique_id=2042243505]
+position = Vector2(176, -144)
+flip_h = true
+
+[node name="CompletionArea" parent="FinishLine2" index="2" unique_id=1555531841]
 visible = true
 
 [node name="CollisionShape2D" parent="FinishLine2/CompletionArea" index="0" unique_id=1857897832]
 position = Vector2(176, -144)
 
-[node name="CrossingBarArea" parent="FinishLine2" index="2" unique_id=127894044]
+[node name="CrossingBarArea" parent="FinishLine2" index="3" unique_id=127894044]
 position = Vector2(214, -256)
 
 [node name="Crossingbar" parent="FinishLine2/CrossingBarArea" index="0" unique_id=1463940467]
@@ -1309,5 +1312,7 @@ region_rect = Rect2(0, 32, 64, 32)
 [connection signal="view_section_changed" from="CamArea4" to="CamArea4/Node" method="_on_cam_area_4_view_section_changed"]
 [connection signal="view_section_changed" from="CamArea4" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]
 [connection signal="view_section_changed" from="CamArea3" to="CamArea4/Node" method="_on_cam_area_3_view_section_changed"]
+[connection signal="warped" from="DoorIn" to="PlayerCamera2D" method="switch_to_direction" binds= [-1]]
+[connection signal="warped" from="DoorIn2" to="PlayerCamera2D" method="switch_to_direction" binds= [1]]
 
 [editable path="FinishLine2"]
