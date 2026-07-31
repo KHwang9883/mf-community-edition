@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://d1qecvadhlkwe"]
+
+[ext_resource type="PackedScene" uid="uid://443hynmdu5so" path="res://stages/world_1/map_1_complete.tscn" id="1_ar15y"]
+[ext_resource type="Texture2D" uid="uid://cm4havsld8lo8" path="res://gfx/map/world_names/world_9.png" id="2_a42mx"]
+[ext_resource type="Texture2D" uid="uid://ch0oca57bj4cu" path="res://gfx/map/world_names/world_10.png" id="3_qlvev"]
+[ext_resource type="Texture2D" uid="uid://87ceihdttant" path="res://gfx/map/world_names/world_13.png" id="4_mtsnf"]
+[ext_resource type="Texture2D" uid="uid://ba2l3s3q7xnv3" path="res://gfx/fancy_graphics/world_texts/world_atlas_numbers.png" id="5_jvxok"]
+[ext_resource type="Texture2D" uid="uid://vi6ntncaxo8i" path="res://stages/extra/secrets/gfx/syzxchulun_team.png" id="6_i8w1h"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="7_jrq6f"]
+[ext_resource type="Texture2D" uid="uid://71122widk1g8" path="res://stages/extra/world_12_syzx/objects/custom_map_by_syzx_team.png" id="8_kjqxg"]
+[ext_resource type="Texture2D" uid="uid://dcqoxrk5ljqcy" path="res://gfx/map/maps/completed/map13-completed.png" id="9_ynlqr"]
+[ext_resource type="Script" uid="uid://cpbjc7dmw7me5" path="res://stages/extra/world_9_syzx/advanced_ed_map.gd" id="10_a0cw7"]
+[ext_resource type="Script" uid="uid://c6b531vw33sbg" path="res://stages/extra/lost_map/scripts/delete_suspended_progress.gd" id="11_yeoba"]
+[ext_resource type="Texture2D" uid="uid://bbnbk71mgo1m5" path="res://gfx/map/maps/overlay/map13overlay.png" id="12_f737h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uylys"]
+atlas = ExtResource("5_jvxok")
+region = Rect2(194, 171, 94, 81)
+filter_clip = true
+
+[node name="Map-complete" unique_id=505479271 instance=ExtResource("1_ar15y")]
+goto_scene = "res://stages/save_game_room/save_game_room.tscn"
+world_name = "13"
+
+[node name="Bg" parent="." index="1" unique_id=1962632418]
+position = Vector2(-224, 0)
+
+[node name="WorldText2" parent="GUI" parent_id_path=PackedInt32Array(238295068) index="1" unique_id=1536176693]
+texture = ExtResource("2_a42mx")
+
+[node name="BounceMarker" parent="GUI/WorldText2" index="0" unique_id=1364841325]
+position = Vector2(0, 154)
+
+[node name="Sprite2D" parent="GUI/WorldText2" index="1" unique_id=2047013740]
+position = Vector2(-48, 0)
+texture = ExtResource("3_qlvev")
+region_enabled = true
+region_rect = Rect2(0, 0, 218, 70)
+
+[node name="AnimatedSprite2D" parent="GUI/WorldText2/Sprite2D" index="0" unique_id=2076968320]
+position = Vector2(48, 48)
+
+[node name="Sprite2D2" type="Sprite2D" parent="GUI/WorldText2/Sprite2D" index="1" unique_id=1660953267]
+position = Vector2(153, -3)
+texture = ExtResource("4_mtsnf")
+region_enabled = true
+region_rect = Rect2(216, 0, 91, 66)
+
+[node name="World2" parent="GUI/WorldText2" index="2" unique_id=1885501311]
+position = Vector2(-18, 0)
+
+[node name="FancyNumber" parent="GUI/WorldText2/World2" index="0" unique_id=1484466674]
+position = Vector2(127, 0)
+texture = SubResource("AtlasTexture_uylys")
+
+[node name="AnimatedSprite2D" parent="GUI/WorldText2/World2" index="1" unique_id=757911854]
+position = Vector2(19, 43)
+
+[node name="Syzxchulun" type="Sprite2D" parent="GUI" parent_id_path=PackedInt32Array(238295068) index="2" unique_id=388104352]
+z_index = -1
+position = Vector2(557, 39)
+texture = ExtResource("6_i8w1h")
+script = ExtResource("7_jrq6f")
+
+[node name="Syzxchulun2" type="Sprite2D" parent="GUI" parent_id_path=PackedInt32Array(238295068) index="3" unique_id=1802304188]
+visible = false
+z_index = -1
+position = Vector2(550, 40)
+texture = ExtResource("8_kjqxg")
+script = ExtResource("7_jrq6f")
+maximum = false
+medium = true
+minimum = true
+
+[node name="Map1-cumplete" parent="." index="3" unique_id=2023813327]
+position = Vector2(0, 16)
+texture = ExtResource("9_ynlqr")
+centered = false
+script = ExtResource("10_a0cw7")
+advance_map = ExtResource("9_ynlqr")
+
+[node name="GwiazdkowyMapowy" parent="Node2D" parent_id_path=PackedInt32Array(1473926817) index="0" unique_id=1270603795]
+position = Vector2(320, 112)
+
+[node name="Node3" type="Node" parent="." index="5" unique_id=517225719]
+script = ExtResource("11_yeoba")
+perform_immediately = true
+
+[node name="Map13Overlay" type="Sprite2D" parent="." index="6" unique_id=1685554395]
+z_index = 1
+position = Vector2(392, 224)
+texture = ExtResource("12_f737h")

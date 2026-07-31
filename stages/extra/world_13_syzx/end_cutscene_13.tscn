@@ -1,0 +1,136 @@
+[gd_scene format=4 uid="uid://1dpkp4y1p6a8"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_8ivps"]
+[ext_resource type="Script" uid="uid://bpj454w31te0y" path="res://stages/extra/world_13_syzx/script/end_cutscene_13.gd" id="2_kkvqb"]
+[ext_resource type="Texture2D" uid="uid://d5k7l5kqa0tx" path="res://stages/extra/world_13_syzx/gfx/airship_cutscene.png" id="2_y43td"]
+[ext_resource type="Script" uid="uid://xa87t7rc25gj" path="res://objects/player_camera_custom/player_camera_custom.gd" id="4_8juai"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="5_w5b74"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="6_11x0m"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_5vnvw"]
+[ext_resource type="PackedScene" uid="uid://bemct5fknr7f8" path="res://tilesets/tanks/scenes/cloud.tscn" id="8_kkvqb"]
+[ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="9_8juai"]
+[ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="10_5vnvw"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="10_w5b74"]
+[ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="11_arwwt"]
+[ext_resource type="Texture2D" uid="uid://dlmofbnu0g3b6" path="res://stages/extra/world_13_syzx/gfx/airship_cutscene_fall.png" id="13_arwwt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wj575"]
+size = Vector2(352, 32)
+
+[sub_resource type="Gradient" id="Gradient_slprf"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8juai"]
+gradient = SubResource("Gradient_slprf")
+width = 480
+
+[node name="AirshipCutscene" type="Node2D" unique_id=55665956]
+script = ExtResource("1_8ivps")
+goto_path = "uid://d1qecvadhlkwe"
+fade_out_time = 0.02
+metadata/_custom_type_script = "uid://bwpe24nufpj37"
+
+[node name="CutsceneLogic" type="Node" parent="." unique_id=30667811]
+script = ExtResource("2_kkvqb")
+
+[node name="Airship" type="Node2D" parent="." unique_id=748298117]
+z_index = 4
+position = Vector2(-48, 0)
+
+[node name="AirshipNotBroken" type="Sprite2D" parent="Airship" unique_id=1782379675]
+position = Vector2(160, 205)
+texture = ExtResource("2_y43td")
+
+[node name="Marker2D" type="Marker2D" parent="Airship" unique_id=1507757200]
+position = Vector2(80, 416)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=713751739]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("4_8juai")
+
+[node name="CamArea" parent="." unique_id=1790766850 instance=ExtResource("5_w5b74")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="." unique_id=1338491759]
+z_index = 5
+tile_map_data = PackedByteArray("AAAAAA0AAAABAAAAAAD//w0AAAAAAAAAAAD//w4AAAAAAAEAAAD//w8AAAAAAAEAAAAAAA8AAAABAAEAAAAAAA4AAAABAAEAAAD//xAAAAAAAAIAAAAAABAAAAABAAIAAAABABAAAAABAAIAAAACABAAAAABAAIAAAADABAAAAABAAIAAAAEABAAAAABAAIAAAAFABAAAAABAAIAAAAGABAAAAABAAIAAAAHABAAAAABAAIAAAAIABAAAAABAAIAAAAJABAAAAABAAIAAAAKABAAAAABAAIAAAALABAAAAABAAIAAAAMABAAAAABAAIAAAANABAAAAABAAIAAAAOABAAAAABAAIAAAAPABAAAAABAAIAAAAQABAAAAABAAIAAAARABAAAAABAAIAAAASABAAAAABAAIAAAATABAAAAABAAIAAAAUABAAAAABAAIAAAAUAA8AAAABAAEAAAAUAA4AAAABAAEAAAAUAA0AAAABAAAAAAATAA0AAAABAAAAAAASAA0AAAABAAAAAAARAA0AAAABAAAAAAAQAA0AAAABAAAAAAAPAA0AAAABAAAAAAAOAA0AAAABAAAAAAANAA0AAAABAAAAAAAMAA0AAAABAAAAAAALAA0AAAABAAAAAAAKAA0AAAABAAAAAAAJAA0AAAABAAAAAAAIAA0AAAABAAAAAAAHAA0AAAABAAAAAAAGAA0AAAABAAAAAAAFAA0AAAABAAAAAAAEAA0AAAABAAAAAAADAA0AAAABAAAAAAACAA0AAAABAAAAAAABAA0AAAABAAAAAAABAA4AAAABAAEAAAABAA8AAAABAAEAAAACAA8AAAABAAEAAAADAA8AAAABAAEAAAADAA4AAAABAAEAAAAEAA4AAAABAAEAAAACAA4AAAABAAEAAAAFAA4AAAABAAEAAAAGAA4AAAABAAEAAAAHAA4AAAABAAEAAAAIAA4AAAABAAEAAAAIAA8AAAABAAEAAAAHAA8AAAABAAEAAAAGAA8AAAABAAEAAAAFAA8AAAABAAEAAAAEAA8AAAABAAEAAAAKAA4AAAABAAEAAAAJAA4AAAABAAEAAAALAA4AAAABAAEAAAANAA4AAAABAAEAAAAMAA4AAAABAAEAAAAKAA8AAAABAAEAAAAJAA8AAAABAAEAAAALAA8AAAABAAEAAAAMAA8AAAABAAEAAAANAA8AAAABAAEAAAAOAA4AAAABAAEAAAAPAA4AAAABAAEAAAAQAA4AAAABAAEAAAAOAA8AAAABAAEAAAAPAA8AAAABAAEAAAARAA4AAAABAAEAAAASAA4AAAABAAEAAAASAA8AAAABAAEAAAARAA8AAAABAAEAAAAQAA8AAAABAAEAAAATAA8AAAABAAEAAAATAA4AAAABAAEAAAAVAA0AAAACAAAAAAAVAA4AAAACAAEAAAAVAA8AAAACAAEAAAAVABAAAAACAAIAAAAWAA0AAQAAAAAAAAAXAA0AAQAAAAAAAAAXAAwAAQAAAAAAAAAXAAsAAQAAAAAAAAAXAAoAAQAAAAAAAAAXAAkAAQAAAAAAAAAXAAgAAQAAAAAAAAAXAAcAAQAAAAAAAAAXAAYAAQAAAAAAAAA=")
+tile_set = ExtResource("6_11x0m")
+
+[node name="Layer1" type="TileMapLayer" parent="." unique_id=1419647961]
+z_index = -2
+tile_map_data = PackedByteArray("AAACAAwAAgAAAAAACAAUAAwAAgAAAAAABwATAAwAAgAAAAAABwASAAwAAgAAAAAABwARAAwAAgAAAAAABwAPAAwAAgAAAAAADgAMAAwAAgAAAAAABQANAAwAAgAAAAAAEAA=")
+tile_set = ExtResource("6_11x0m")
+
+[node name="Layer2" type="TileMapLayer" parent="." unique_id=967996770]
+z_index = -4
+tile_map_data = PackedByteArray("AAANAAwAAgAAAAAADAA=")
+tile_set = ExtResource("6_11x0m")
+
+[node name="Mario" parent="." unique_id=169935397 instance=ExtResource("7_5vnvw")]
+z_index = -2
+position = Vector2(64, 240)
+
+[node name="AirshipEndMarker" type="Marker2D" parent="." unique_id=1975666778]
+position = Vector2(32, 416)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1344787994]
+position = Vector2(96, 272)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=45666744]
+shape = SubResource("RectangleShape2D_wj575")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=470140687]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground" unique_id=49646088]
+z_index = -100
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_8juai")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1369294360]
+
+[node name="Cloud" parent="ParallaxBackground/ParallaxLayer" unique_id=737640874 instance=ExtResource("8_kkvqb")]
+position = Vector2(128, 88)
+
+[node name="Cloud2" parent="ParallaxBackground/ParallaxLayer" unique_id=1797735261 instance=ExtResource("8_kkvqb")]
+position = Vector2(448, 56)
+
+[node name="Cloud3" parent="ParallaxBackground/ParallaxLayer" unique_id=1367661443 instance=ExtResource("8_kkvqb")]
+position = Vector2(608, 128)
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=459902998]
+
+[node name="Node2D" type="Node2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=143117785]
+z_index = -80
+script = ExtResource("10_w5b74")
+
+[node name="GiantClouds3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=1104070857]
+modulate = Color(1, 1, 1, 0.713726)
+position = Vector2(96, 240)
+texture = ExtResource("9_8juai")
+
+[node name="PlushySun" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Node2D" unique_id=352346803]
+position = Vector2(536, 120)
+texture = ExtResource("10_5vnvw")
+script = ExtResource("11_arwwt")
+
+[node name="AirshipFall" type="Node2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1451956221]
+z_index = -10
+position = Vector2(-88, -40)
+rotation = 0.13264503
+
+[node name="AirshipFallSprite" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/AirshipFall" unique_id=815215314]
+modulate = Color(1, 1, 1, 0.5294118)
+position = Vector2(24, -72)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("13_arwwt")
+metadata/_edit_lock_ = true
