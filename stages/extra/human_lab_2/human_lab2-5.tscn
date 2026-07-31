@@ -470,6 +470,9 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrivr"]
+size = Vector2(96, 416)
+
 [node name="HumanLab2-5" type="Node2D" unique_id=103292890]
 script = ExtResource("1_qnmtc")
 climbing_scene = "res://stages/extra/climbing_minigame/human_lava_run.tscn"
@@ -692,7 +695,7 @@ metadata/_edit_group_ = true
 script = ExtResource("29_70c51")
 
 [node name="ochko" type="PointLight2D" parent="LavaBowser/Node2D" unique_id=2081780008]
-position = Vector2(400, -10)
+position = Vector2(416, -10)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_38kum")
 offset = Vector2(0, 8)
@@ -713,7 +716,7 @@ offset = Vector2(0, 8)
 script = ExtResource("34_1erp1")
 
 [node name="ochko4" type="PointLight2D" parent="LavaBowser/Node2D" unique_id=245651666]
-position = Vector2(48, -10)
+position = Vector2(32, -10)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_38kum")
 offset = Vector2(0, 8)
@@ -1378,30 +1381,6 @@ text = "THERE SHOULD
 BE A EASTER EGG.
 LOOK FOR IT 
 IN MFA"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-metadata/_edit_use_anchors_ = true
-
-[node name="ContainerBubbles3" parent="." unique_id=1626017988 instance=ExtResource("37_wnl8h")]
-position = Vector2(13520, 124)
-sprite = ExtResource("45_khcwd")
-
-[node name="SignSmallUpsideDown6" type="Sprite2D" parent="ContainerBubbles3" unique_id=2012613835]
-position = Vector2(1, 94)
-texture = ExtResource("39_dr8p7")
-
-[node name="Label3" type="Label" parent="ContainerBubbles3/SignSmallUpsideDown6" unique_id=825562882]
-offset_left = -45.0
-offset_top = -12.0
-offset_right = 47.0
-offset_bottom = 42.0
-theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("41_2jcq4")
-theme_override_font_sizes/font_size = 24
-text = "NYN"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
@@ -2354,10 +2333,12 @@ result = SubResource("Resource_smtsn")
 [node name="PipeIn" parent="." unique_id=1444096565 instance=ExtResource("84_q2d3a")]
 position = Vector2(4704, 304)
 warp_to = NodePath("../PipeOut")
+use_blur_transition = true
 
 [node name="PipeIn2" parent="." unique_id=1451309518 instance=ExtResource("84_q2d3a")]
 position = Vector2(13632, 336)
 warp_to = NodePath("../PipeOut2")
+use_blur_transition = true
 
 [node name="PipeOut" parent="." unique_id=1258210003 instance=ExtResource("85_w44o8")]
 position = Vector2(12672, 368)
@@ -2765,3 +2746,34 @@ position = Vector2(11776, 256)
 health = 8
 status_interval = Array[float]([3.0, 3.0, 3.0, 3.0, 3.0])
 status = Array[StringName]([&"flame", &"flame", &"flame", &"flame", &"multiflames"])
+
+[node name="ContainerBubbles3" parent="." unique_id=1626017988 instance=ExtResource("37_wnl8h")]
+position = Vector2(13520, 124)
+sprite = ExtResource("45_khcwd")
+
+[node name="SignSmallUpsideDown6" type="Sprite2D" parent="ContainerBubbles3" unique_id=2012613835]
+position = Vector2(1, 94)
+texture = ExtResource("39_dr8p7")
+
+[node name="Label3" type="Label" parent="ContainerBubbles3/SignSmallUpsideDown6" unique_id=825562882]
+offset_left = -45.0
+offset_top = -12.0
+offset_right = 47.0
+offset_bottom = 42.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.356863, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("41_2jcq4")
+theme_override_font_sizes/font_size = 24
+text = "NYN"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Area2D3" type="Area2D" parent="." unique_id=116267473]
+script = ExtResource("79_xyt6v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3" unique_id=1274231049]
+position = Vector2(13520, 208)
+shape = SubResource("RectangleShape2D_xrivr")

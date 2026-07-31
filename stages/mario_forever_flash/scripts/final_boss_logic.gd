@@ -1,7 +1,7 @@
 extends Node2D
 
-const SPINY_RED = preload("uid://c58i0gaq0il4o")
-const RED_MUSHROOM = preload("uid://b71msw28e37a")
+const SPINY_RED = preload("res://engine/objects/enemies/spinies/spiny_red.tscn")
+const RED_MUSHROOM = preload("res://engine/objects/powerups/red_mushroom/red_mushroom.tscn")
 
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var marker_2d_2: Marker2D = $Marker2D2

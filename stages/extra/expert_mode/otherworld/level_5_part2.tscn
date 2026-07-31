@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://bltp6t4sv4qno" path="res://stages/world_7/objects/question_block_life_far_away.tscn" id="11_xra2l"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="12_fijka"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="13_axxty"]
-[ext_resource type="PackedScene" uid="uid://d20tu17c32ipm" path="res://engine/objects/bumping_blocks/question_block/templates/Boomerang Flower Question Block.tscn" id="14_kga3o"]
 [ext_resource type="PackedScene" uid="uid://d3wd3j0m0dek8" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower_forced.tscn" id="15_y2pud"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://engine/objects/bumping_blocks/question_block/templates/gray/Gray Coin Question Block.tscn" id="16_7c5sy"]
 [ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="17_1vidn"]
@@ -29,6 +28,12 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="Resource" id="Resource_v5t2e"]
+resource_local_to_scene = true
+script = ExtResource("13_axxty")
+creation_nodepack = ExtResource("12_fijka")
+trans_inheritances = 7
+
 [sub_resource type="Resource" id="Resource_fuspr"]
 resource_local_to_scene = true
 script = ExtResource("13_axxty")
@@ -38,20 +43,20 @@ trans_inheritances = 7
 [sub_resource type="Resource" id="Resource_jo8jn"]
 resource_local_to_scene = true
 script = ExtResource("13_axxty")
-creation_nodepack = ExtResource("12_fijka")
+creation_nodepack = ExtResource("6_1vgia")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_1kvdw"]
 resource_local_to_scene = true
 script = ExtResource("13_axxty")
-creation_nodepack = ExtResource("12_fijka")
+creation_fallback_node = ExtResource("15_y2pud")
+creation_nodepack = ExtResource("15_y2pud")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_80fs5"]
 resource_local_to_scene = true
 script = ExtResource("13_axxty")
-creation_fallback_node = ExtResource("15_y2pud")
-creation_nodepack = ExtResource("15_y2pud")
+creation_nodepack = ExtResource("12_fijka")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_gocwl"]
@@ -61,12 +66,6 @@ creation_nodepack = ExtResource("6_1vgia")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_1vgia"]
-resource_local_to_scene = true
-script = ExtResource("13_axxty")
-creation_nodepack = ExtResource("6_1vgia")
-trans_inheritances = 7
-
-[sub_resource type="Resource" id="Resource_30m5n"]
 resource_local_to_scene = true
 script = ExtResource("13_axxty")
 creation_nodepack = ExtResource("17_1vidn")
@@ -89,9 +88,7 @@ z_index = -1
 position = Vector2(4000, 1024)
 preprocess = 1.0
 script = ExtResource("2_jo8jn")
-maximum = true
 medium = true
-minimum = false
 
 [node name="IceStatic" type="Node2D" parent="." unique_id=1047610095]
 
@@ -677,22 +674,14 @@ position = Vector2(9264, 1040)
 
 [node name="QuestionBlockLifeFarAway" parent="." unique_id=228323364 instance=ExtResource("11_xra2l")]
 position = Vector2(9520, 976)
-result = SubResource("Resource_fuspr")
+result = SubResource("Resource_v5t2e")
 
 [node name="QuestionBlockLifeFarAway2" parent="." unique_id=1961349671 instance=ExtResource("11_xra2l")]
 position = Vector2(9488, 976)
-result = SubResource("Resource_jo8jn")
-
-[node name="QuestionBlockLifeFarAway4" parent="." unique_id=544627643 instance=ExtResource("11_xra2l")]
-position = Vector2(10896, 1328)
-result = SubResource("Resource_1kvdw")
+result = SubResource("Resource_fuspr")
 
 [node name="FireBro3" parent="." unique_id=242416022 instance=ExtResource("10_rso0f")]
 position = Vector2(10976, 1168)
-
-[node name="QuestionBlockBoomerang" parent="." unique_id=119855909 instance=ExtResource("14_kga3o")]
-position = Vector2(10928, 1328)
-result = SubResource("Resource_80fs5")
 
 [node name="Goomba12" parent="." unique_id=1538946655 instance=ExtResource("8_beudj")]
 position = Vector2(10256, 1296)
@@ -705,16 +694,24 @@ position = Vector2(10544, 1296)
 
 [node name="QuestionBlock6" parent="." unique_id=638584333 instance=ExtResource("16_7c5sy")]
 position = Vector2(7088, 1328)
-result = SubResource("Resource_gocwl")
+result = SubResource("Resource_jo8jn")
+
+[node name="QuestionBlock9" parent="." unique_id=1851736272 instance=ExtResource("16_7c5sy")]
+position = Vector2(10928, 1328)
+result = SubResource("Resource_1kvdw")
+
+[node name="QuestionBlock10" parent="." unique_id=734730083 instance=ExtResource("16_7c5sy")]
+position = Vector2(10896, 1328)
+result = SubResource("Resource_80fs5")
 
 [node name="QuestionBlock7" parent="." unique_id=949402339 instance=ExtResource("16_7c5sy")]
 position = Vector2(7088, 1168)
-result = SubResource("Resource_1vgia")
+result = SubResource("Resource_gocwl")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock8" parent="." unique_id=2031990267 instance=ExtResource("16_7c5sy")]
 position = Vector2(7088, 1040)
-result = SubResource("Resource_30m5n")
+result = SubResource("Resource_1vgia")
 initially_visible_and_solid = false
 
 [node name="KoopaParatroopaGreen3" parent="." unique_id=639916392 instance=ExtResource("18_7lugn")]

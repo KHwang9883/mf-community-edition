@@ -11,7 +11,9 @@
 [ext_resource type="Material" uid="uid://dpwcqva66u2sf" path="res://materials/grayscale.tres" id="12_puofd"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="14_5i2i7"]
 [ext_resource type="Texture2D" uid="uid://6bwpp568bmq0" path="res://gfx/fancy_graphics/giant_clouds.png" id="15_7i21y"]
+[ext_resource type="Texture2D" uid="uid://bs57b16ok6fv5" path="res://tilesets/icy_ground/snow_night_forest.png" id="16_2om7x"]
 [ext_resource type="Texture2D" uid="uid://ctevqve3rw01o" path="res://gfx/fancy_graphics/sun.png" id="16_eq3nq"]
+[ext_resource type="Material" uid="uid://ojgibc28h28q" path="res://materials/syzx10-1snow.tres" id="17_puofd"]
 [ext_resource type="Script" uid="uid://c2km3lo02dqt3" path="res://gfx/fancy_graphics/scripts/plushy_sun.gd" id="17_wpbql"]
 [ext_resource type="PackedScene" uid="uid://cgw53vgjiurmx" path="res://objects/generic_water/generic_water_custom.tscn" id="18_cl5sh"]
 [ext_resource type="Script" uid="uid://y7kp0intfnf5" path="res://objects/chorniy_mario/chorniy_cutscene_spawner.gd" id="19_unoff"]
@@ -45,6 +47,10 @@ height = 240
 fill = 2
 fill_from = Vector2(1, 1)
 fill_to = Vector2(0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3egnm"]
+atlas = ExtResource("16_2om7x")
+region = Rect2(232, 136, 16, 16)
 
 [node name="WaterCutscene" type="Node2D" unique_id=381611302]
 script = ExtResource("1_2om7x")
@@ -133,3 +139,16 @@ script = ExtResource("17_wpbql")
 
 [node name="ChorniyCutsceneSpawner" type="Node" parent="." unique_id=1692592406]
 script = ExtResource("19_unoff")
+
+[node name="Node2D3" type="Node2D" parent="." unique_id=2127480856]
+script = ExtResource("11_c73rl")
+medium = true
+
+[node name="Snow" type="GPUParticles2D" parent="Node2D3" unique_id=1131186130]
+amount = 500
+texture = SubResource("AtlasTexture_3egnm")
+lifetime = 5.0
+preprocess = 3.0
+visibility_rect = Rect2(-50, 0, 700, 480)
+trail_lifetime = 2.72
+process_material = ExtResource("17_puofd")
