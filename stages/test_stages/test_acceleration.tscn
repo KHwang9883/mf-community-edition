@@ -1,0 +1,105 @@
+[gd_scene format=4 uid="uid://ki5styeecb21"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_1gpxe"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_1peg6"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_aqv0n"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_u248g"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_vtp20"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_11no6"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/gfx/hard_block.png" id="10_8x8pv"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_rjarr"]
+[ext_resource type="Script" uid="uid://dw4qmk3j4chfx" path="res://stages/test_stages/test_scripts/speedometer.gd" id="13_1peg6"]
+[ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="14_u248g"]
+[ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="15_3xgx4"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="16_vtp20"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fo8bh"]
+texture = ExtResource("10_8x8pv")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_uxg6i"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_fo8bh")
+
+[sub_resource type="Resource" id="Resource_1gpxe"]
+resource_local_to_scene = true
+script = ExtResource("16_vtp20")
+creation_nodepack = ExtResource("15_3xgx4")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_1peg6"]
+resource_local_to_scene = true
+script = ExtResource("16_vtp20")
+creation_nodepack = ExtResource("15_3xgx4")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_aqv0n"]
+resource_local_to_scene = true
+script = ExtResource("16_vtp20")
+creation_nodepack = ExtResource("15_3xgx4")
+trans_inheritances = 7
+
+[node name="Testacceleration" type="Node2D" unique_id=1268635419]
+script = ExtResource("1_1gpxe")
+completion_music = ExtResource("2_1peg6")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" parent="." unique_id=1674830763 instance=ExtResource("3_aqv0n")]
+
+[node name="Player" parent="." unique_id=169935397 instance=ExtResource("5_u248g")]
+position = Vector2(15, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=1874871243]
+editor_draw_screen = false
+script = ExtResource("7_vtp20")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" parent="." unique_id=1790766850 instance=ExtResource("8_11no6")]
+offset_right = 11008.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=520736566]
+tile_map_data = PackedByteArray("AAACAA0AAAAAAAAAAAAAAA0AAAAAAAAAAAABAA0AAAAAAAAAAAADAA0AAAAAAAAAAAAEAA0AAAAAAAAAAAAFAA0AAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAJAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAALAA0AAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAAOAA0AAAAAAAAAAAAPAA0AAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAD//w0AAAAAAAAAAAD//wwAAAAAAAAAAAD//wsAAAAAAAAAAAD//woAAAAAAAAAAAD//wkAAAAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAAUAA0AAAAAAAAAAAAVAA0AAAAAAAAAAAAWAA0AAAAAAAAAAAAXAA0AAAAAAAAAAAAYAA0AAAAAAAAAAAAZAA0AAAAAAAAAAAAaAA0AAAAAAAAAAAAbAA0AAAAAAAAAAAAcAA0AAAAAAAAAAAAdAA0AAAAAAAAAAAAeAA0AAAAAAAAAAAAfAA0AAAAAAAAAAAAgAA0AAAAAAAAAAAAhAA0AAAAAAAAAAAAiAA0AAAAAAAAAAAAjAA0AAAAAAAAAAAAkAA0AAAAAAAAAAAAlAA0AAAAAAAAAAAAmAA0AAAAAAAAAAAAnAA0AAAAAAAAAAAAoAA0AAAAAAAAAAAApAA0AAAAAAAAAAAAqAA0AAAAAAAAAAAArAA0AAAAAAAAAAAAsAA0AAAAAAAAAAAAtAA0AAAAAAAAAAAAuAA0AAAAAAAAAAAAvAA0AAAAAAAAAAAAwAA0AAAAAAAAAAAAxAA0AAAAAAAAAAAAyAA0AAAAAAAAAAAAzAA0AAAAAAAAAAAA0AA0AAAAAAAAAAAA1AA0AAAAAAAAAAAA2AA0AAAAAAAAAAAA3AA0AAAAAAAAAAAA4AA0AAAAAAAAAAAA5AA0AAAAAAAAAAAA6AA0AAAAAAAAAAAA7AA0AAAAAAAAAAAA8AA0AAAAAAAAAAAA9AA0AAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_uxg6i")
+navigation_enabled = false
+
+[node name="HUD" parent="." unique_id=469826780 instance=ExtResource("11_rjarr")]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=437706605]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1331064061]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=838546825]
+process_physics_priority = 1
+offset_left = 48.0
+offset_top = 80.0
+offset_right = 320.0
+offset_bottom = 108.0
+theme_override_font_sizes/font_size = 20
+script = ExtResource("13_1peg6")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=308230284]
+offset_left = 640.0
+offset_top = 320.0
+offset_right = 672.0
+offset_bottom = 416.0
+color = Color(1, 0, 0, 1)
+
+[node name="QuestionBlockLife" parent="." unique_id=299248554 instance=ExtResource("14_u248g")]
+position = Vector2(240, 176)
+result = SubResource("Resource_1gpxe")
+
+[node name="QuestionBlockLife3" parent="." unique_id=2135922861 instance=ExtResource("14_u248g")]
+position = Vector2(208, 144)
+result = SubResource("Resource_1peg6")
+
+[node name="QuestionBlockLife2" parent="." unique_id=747848888 instance=ExtResource("14_u248g")]
+position = Vector2(336, 208)
+result = SubResource("Resource_aqv0n")

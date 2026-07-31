@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 		activated = false
 		container.focused = false
 		var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-		tw.tween_property(self, "modulate:a", 0.0, 0.5)
+		tw.tween_property(self, "modulate:a", 0.0, 0.3)
 		tw.tween_callback(queue_free)
 		antiafk_ref_node.return_to_game()
 		return

@@ -65,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		pl.ignore_input = true
 		pl.visible = false
 		pl.death_sprite.modulate.a = 0
-		var tw: Tween = pl.create_tween()
+		var tw: Tween = pl.create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tw.tween_interval(0.6)
 		tw.tween_callback(pl.die)
 	
