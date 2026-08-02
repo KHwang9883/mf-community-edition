@@ -47,7 +47,7 @@ func _ready() -> void:
 				death_node.offset -= min_quality_offset
 			var root := enemy_attacked.get_parent().get_parent() as GravityBody2D
 			if root:
-				node.gravity_dir = root.gravity_dir
+				node.gravity_dir = root.get_global_gravity_dir()
 	node.add_child(death_node)
 
 
