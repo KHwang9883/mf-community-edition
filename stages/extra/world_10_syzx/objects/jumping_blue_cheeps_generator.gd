@@ -4,8 +4,6 @@ const CHEEP_YEL_JUMPING = preload("res://stages/extra/world_10_syzx/objects/chee
 
 @export var chance_every_stopped_sec: float = 0.2
 @export var replace_by_yellow_in_advanced: bool = true
-@export var random_spawn_min := Vector2i(32, 16)
-@export var random_spawn_max := Vector2i(32, 316)
 @export var destroy_below_y: float = 560
 @onready var _tweak = ProfileManager.current_profile.data.get("advanced_edition", false)
 
