@@ -1,7 +1,11 @@
 extends Node
 
+@export_node_path("Node2D") var center_node: NodePath = ^".."
 @export var creation: InstanceNode2D
 @onready var par: Node2D = $".."
+
+@warning_ignore("unused_private_class_variable")
+@onready var _center: Node2D = get_node_or_null(center_node)
 
 func _ready() -> void:
 	par.splash_sequence_started.connect(spawn_body)
