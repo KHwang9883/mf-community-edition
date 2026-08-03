@@ -3,7 +3,7 @@ extends Node
 const CASTLE_SMOKE = preload("res://engine/scenes/castle_cutscene/objects/castle_smoke.tscn")
 const ZAMEK_LECI = preload("res://sfx/ZamekLeci.wav")
 const PIPE = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
-const FALL = preload("res://sfx/airship_falling.wav")
+const FALL = preload("res://sfx/comedy_cartoon_falling_tone.mp3")
 
 @onready var player: Player = Thunder._current_player
 @onready var castle = $"../Airship"
@@ -20,6 +20,8 @@ var _finished: float = 0.0
 var _letit: bool = false
 var _offset: Vector2
 var _falling: bool = false
+var _airship_speed: Vector2 = Vector2(0.9, 0.4)
+var _airship_scale: Vector2 = Vector2(1.0, 0.1)
 
 signal player_at_wall
 
@@ -30,17 +32,17 @@ func _ready() -> void:
 	await _time(1.0)
 	_moving = true
 	var _sfx = CharacterManager.get_sound_replace(PIPE, PIPE, "pipe", false)
-	Audio.play_1d_sound(_sfx)
+	Audio.play_1d_sound(_sfx, false)
 	
 	await _time(3.0)
-	Audio.play_1d_sound(ZAMEK_LECI)
+	Audio.play_1d_sound(ZAMEK_LECI, false)
 	_letit = true
 	run_while(_smoke_particles, 0.02)
-	Thunder._current_camera.shock(5, Vector2(3, 3))
+	Thunder._current_camera.shock_smooth(4, 100)
 	
 	await _time(6.0)
 	_falling = true
-	Audio.play_1d_sound(FALL)
+	Audio.play_1d_sound(FALL, false)
 	await _time(10.0)
 	_finished = 3
 
@@ -59,11 +61,12 @@ func _physics_process(delta: float) -> void:
 		castle.position.y -= 40 * delta * _offset.y
 		
 	if _falling:
-		airship_fall.position.y += 0.4
-		airship_fall.position.x += 1
+		airship_fall.position += _airship_speed * delta * 50
+		_airship_speed.x += 0.05 * delta
 		airship_fall.modulate.a = move_toward(airship_fall.modulate.a, 0.0, delta * 0.12)
-		airship_fall.scale = airship_fall.scale.move_toward(Vector2.ZERO, delta * 0.1)
-		airship_fall.rotation_degrees += delta * 1
+		airship_fall.scale = airship_fall.scale.move_toward(Vector2.ZERO, delta * _airship_scale.y)
+		airship_fall.rotation_degrees += delta * _airship_scale.x
+		_airship_scale += Vector2.ONE * 0.0025 * delta
 	
 	if _finished > 2.0 && _finished < 999:
 		_finished = 1000
@@ -88,4 +91,4 @@ func _smoke_particles() -> void:
 	Scenes.current_scene.add_child(smoke)
 
 func _time(sec: float) -> void:
-	await get_tree().create_timer(sec, false).timeout
+	await get_tree().create_timer(sec, false, false).timeout
