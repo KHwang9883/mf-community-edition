@@ -46,18 +46,18 @@ func _ready() -> void:
 			_sine_move = 0
 			_state = 2
 	
-	return
+	#return
 	
-	await get_tree().create_timer(2, false).timeout
-	_destroying = true
-	run_while(
-		func():
-			Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush.wav"), true, {volume = -6}),
-		0.099
-	)
-	run_while(func(): castle.position.x = castle_pos + randi_range(-3, 3), 0.01)
-	run_while(_brick_particles, 0.15)
-	run_while(_smoke_particles, 0.02)
+	#await get_tree().create_timer(2, false).timeout
+	#_destroying = true
+	#run_while(
+		#func():
+			#Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush.wav"), true, {volume = -6}),
+		#0.099
+	#)
+	#run_while(func(): castle.position.x = castle_pos + randi_range(-3, 3), 0.01)
+	#run_while(_brick_particles, 0.15)
+	#run_while(_smoke_particles, 0.02)
 
 
 func _physics_process(delta: float) -> void:

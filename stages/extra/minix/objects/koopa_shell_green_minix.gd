@@ -10,8 +10,8 @@ const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.w
 @export_subgroup("Attack")
 @export_range(0, 256) var sharpness: int
 @export_group("Sound", "sound_")
-@export var kicked_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
-@export var combo_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+@export var kicked_sound: AudioStream = DEFAULT_KICK
+@export var combo_sound: AudioStream = DEFAULT_KICK
 
 var _delayer: SceneTreeTimer
 
