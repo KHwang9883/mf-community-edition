@@ -49,7 +49,9 @@ const DEFAULT_LINES = {
 	"water_splash_in": null,
 	"water_splash_out": null,
 	"p_switch": preload("res://engine/objects/p_switch/p_switch_music.ogg"),
+	"p_switch_activate": preload("res://engine/objects/core/checkpoint/sounds/switch.wav"),
 	"bonus_run_out": preload("res://engine/objects/p_switch/p_switch_runout.wav"),
+	"bonus_stopwatch": preload("res://engine/objects/items/stopwatch/stopwatch.wav"),
 }
 
 var skin_tweaks: Dictionary = {}
