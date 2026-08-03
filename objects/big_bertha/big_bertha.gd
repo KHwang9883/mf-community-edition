@@ -5,6 +5,7 @@ extends GeneralMovementBody2D
 @export var respawn_delay: float = 6
 @export var respawn_offset: float = 0
 @export var checkpoints_offset: Dictionary = {}
+@export var verbose_text: bool = false
 
 var state: int
 var free_roam: bool = true
@@ -22,8 +23,8 @@ func _ready() -> void:
 		position += checkpoints_offset[Data.values.checkpoint]
 		reset_physics_interpolation()
 	
-	if !Console.debug_mode:
-		Scenes.current_scene.get_node("HUD/DebugSpd").hide()
+	if Console.debug_mode && verbose_text:
+		Scenes.current_scene.get_node("HUD/DebugSpd").show()
 
 
 func _physics_process(delta: float) -> void:
@@ -39,35 +40,42 @@ func _physics_process(delta: float) -> void:
 	
 	var water_pos_y: float = _process_states(delta, cam_center)
 	if sprite_node.animation != &"fall":
-		sprite_node.animation = &"default" if !can_eat else &"jump"
+		sprite_node.animation = &"default" if !can_eat || has_eaten else &"jump"
 	
-	if Console.debug_mode:
+	if Console.debug_mode && verbose_text:
 		var hud = Thunder._current_hud
 		if hud:
 			hud.get_node("DebugSpd").text = "%.1f" % [speed.x]
 	var pl: Player = Thunder._current_player
 	if !pl: return
 	
-	if pl.is_dying: has_eaten = true
+	if pl.is_dying:
+		has_eaten = true
 	
 	if cooldown > 0:
 		cooldown = move_toward(cooldown, 0, delta)
 	elif free_roam && position.y < water_pos_y + 32 && can_eat:
-		if trigger.get_overlapping_bodies().has(pl):
 			jump(350)
 			free_roam = false
 			speed.x = 250 if speed.x > 0 else -250
 			gravity_scale = 0.35
 	
-	if can_eat && kill_area.get_overlapping_bodies().has(pl) && !has_eaten:
+	if has_eaten:
+		return
+	
+	if can_eat && sprite_node.animation != &"fall" && kill_area.get_overlapping_bodies().has(pl):
 		has_eaten = true
 		pl.no_movement = true
 		pl.ignore_input = true
 		pl.visible = false
+		pl.is_skidding = false
 		pl.death_sprite.modulate.a = 0
 		var tw: Tween = pl.create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tw.tween_interval(0.6)
-		tw.tween_callback(pl.die)
+		tw.tween_callback(func():
+			pl.ignore_input = false
+			pl.position.y = 9999
+		)
 	
 
 func _process_states(delta, cam_center) -> float:
@@ -83,8 +91,11 @@ func _process_states(delta, cam_center) -> float:
 	if !free_roam: return water_pos_y
 	
 	speed.y = move_toward(speed.y, 0, delta * 1250)
+	var player: Player = Thunder._current_player
+	if has_eaten:
+		player = null
 	
-	var target_y: float = Thunder._current_player.position.y - 16 if Thunder._current_player else water_pos_y + 16
+	var target_y: float = player.position.y - 16 if player else water_pos_y + 16
 	if target_y < water_pos_y + 16:
 		target_y = water_pos_y + 16
 	if position.y < water_pos_y + 16:
@@ -92,7 +103,7 @@ func _process_states(delta, cam_center) -> float:
 	else:
 		position.y = lerpf(position.y, target_y, ease(delta, 0.25))
 	
-	var pl_speed = 1 if !Thunder._current_player else 1 + abs(Thunder._current_player.speed.x) / 450
+	var pl_speed = 1 if !player else 1 + abs(player.speed.x) / 450
 	match state:
 		0:
 			if position.x > cam_center.x - 128 || has_eaten:
