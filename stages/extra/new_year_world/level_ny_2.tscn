@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bs0p7pkrqdk3e" path="res://objects/christmas_clones/elf_clone1/elf_worker_clone1.tscn" id="14_dhuvo"]
 [ext_resource type="PackedScene" uid="uid://cwn8bf8lkndn7" path="res://objects/christmas_clones/present_clone_3a/present_clone_3_a.tscn" id="15_a33do"]
 [ext_resource type="Texture2D" uid="uid://jmhitvgqcda6" path="res://stages/extra/new_year_world/gfx/ny_lights.png" id="16_msy3x"]
+[ext_resource type="Material" uid="uid://yaffjqnk147b" path="res://materials/snow/ny_3_snw.tres" id="16_qtaeb"]
 [ext_resource type="PackedScene" uid="uid://cyxh76mdfvwim" path="res://objects/christmas_clones/big_elf_presenter/big_elf_presenter.tscn" id="16_ugp4l"]
 [ext_resource type="PackedScene" uid="uid://cem1tcrhqrauj" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.tscn" id="17_6ubp0"]
 [ext_resource type="Texture2D" uid="uid://di7n46afxdwxv" path="res://stages/extra/new_year_world/gfx/Lantern.png" id="17_yvuhl"]
@@ -48,42 +49,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_jelsy"]
 atlas = ExtResource("9_uib43")
 region = Rect2(232, 136, 16, 16)
-
-[sub_resource type="Curve" id="Curve_dhuvo"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.616216, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -7.01374, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_nn8nd"]
-curve = SubResource("Curve_dhuvo")
-
-[sub_resource type="Curve" id="Curve_a33do"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.756757, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -13.0691, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_oh7c7"]
-curve = SubResource("Curve_a33do")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w1u0q"]
-lifetime_randomness = 0.15
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(7200, 0, 0)
-emission_shape = 3
-emission_box_extents = Vector3(7200, 0, 1)
-angle_min = -45.0
-angle_max = 45.0
-direction = Vector3(0, 1, 0)
-spread = 30.0
-initial_velocity_min = 50.0
-initial_velocity_max = 100.0
-gravity = Vector3(0, 0, 0)
-scale_min = 0.1
-scale_max = 0.4
-scale_curve = SubResource("CurveTexture_oh7c7")
-alpha_curve = SubResource("CurveTexture_nn8nd")
-collision_mode = 1
-collision_friction = 1.0
-collision_bounce = 0.0
-collision_use_scale = true
 
 [sub_resource type="Gradient" id="Gradient_qcxsd"]
 interpolation_mode = 2
@@ -144,7 +109,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_t5p6t"]
+[sub_resource type="Resource" id="Resource_t7m2k"]
 resource_local_to_scene = true
 script = ExtResource("33_fjfm1")
 creation_nodepack = ExtResource("32_64t1w")
@@ -257,14 +222,13 @@ script = ExtResource("11_i0ehe")
 medium = true
 
 [node name="Snow" type="GPUParticles2D" parent="Node2D" unique_id=400881714]
-z_index = 7
 amount = 1100
 texture = SubResource("AtlasTexture_jelsy")
 lifetime = 5.0
 preprocess = 3.0
 visibility_rect = Rect2(-100, 0, 14500, 480)
 trail_lifetime = 2.72
-process_material = SubResource("ParticleProcessMaterial_w1u0q")
+process_material = ExtResource("16_qtaeb")
 metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." unique_id=102378740 instance=ExtResource("11_d3pvj")]
@@ -817,7 +781,7 @@ metadata/_edit_pinned_properties_ = [&"medium", &"minimum", &"maximum"]
 
 [node name="QuestionBlock" parent="." unique_id=532113371 instance=ExtResource("31_6qspm")]
 position = Vector2(13168, 304)
-result = SubResource("Resource_t5p6t")
+result = SubResource("Resource_t7m2k")
 initially_visible_and_solid = false
 exists_once = true
 
