@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="23_mirga"]
 [ext_resource type="PackedScene" uid="uid://cmpxknv0aw4o8" path="res://engine/objects/platform/castle_platforms/single_platform.tscn" id="25_6nctb"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="25_qwow7"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="27_mirga"]
 [ext_resource type="PackedScene" uid="uid://72feht11cer2" path="res://engine/components/audio_area/audio_area_cave.tscn" id="33_sjdnm"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="42_q7xxg"]
 
@@ -45,7 +46,7 @@ colors = PackedColorArray(0.364706, 0.00392157, 0.00392157, 0, 0.364706, 0.00392
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_cxhyf"]
 gradient = SubResource("Gradient_sobna")
 
-[sub_resource type="Resource" id="Resource_4hbmk"]
+[sub_resource type="Resource" id="Resource_3kmph"]
 resource_local_to_scene = true
 script = ExtResource("23_iniw2")
 creation_nodepack = ExtResource("13_yfb3f")
@@ -96,6 +97,9 @@ width = 112
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oqbgn"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrivr"]
+size = Vector2(64, 32)
+
 [node name="LevelS4-4" type="Node2D" unique_id=250400699]
 script = ExtResource("1_1q075")
 time = 150
@@ -131,7 +135,6 @@ death_music_override = ExtResource("7_vm12a")
 [node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=1638389309]
 editor_draw_screen = false
 script = ExtResource("8_g0cnm")
-ignore_retro_scroll = true
 
 [node name="CameraArea" parent="." unique_id=2062009502 instance=ExtResource("9_052p4")]
 offset_right = 8224.0
@@ -413,7 +416,7 @@ texture = SubResource("GradientTexture2D_cxhyf")
 [node name="QuestionBlock" parent="." unique_id=1683987588 instance=ExtResource("20_s3rcu")]
 modulate = Color(0.803922, 0.929412, 0.937255, 1)
 position = Vector2(528, 240)
-result = SubResource("Resource_4hbmk")
+result = SubResource("Resource_3kmph")
 initially_visible_and_solid = false
 
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=1980743953]
@@ -569,3 +572,20 @@ falling_delay = 0.5
 position = Vector2(7776, 336)
 warp_to_scene = "uid://c2alkppdqkix6"
 use_blur_transition = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=946601018]
+script = ExtResource("27_mirga")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1760516416]
+position = Vector2(6352, 144)
+shape = SubResource("RectangleShape2D_xrivr")
+
+[node name="Area2D2" type="Area2D" parent="." unique_id=1136070197]
+script = ExtResource("27_mirga")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=705078721]
+position = Vector2(6096, 272)
+shape = SubResource("RectangleShape2D_xrivr")
+
+[connection signal="player_enter" from="Area2D" to="PlayerCamera2D" method="switch_to_direction" binds= [-1]]
+[connection signal="player_enter" from="Area2D2" to="PlayerCamera2D" method="switch_to_direction" binds= [1]]
