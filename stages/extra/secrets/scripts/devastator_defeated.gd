@@ -36,10 +36,13 @@ func has_hit(hp: int) -> void:
 	if hp != 0: return
 	timer.start()
 	timer.timeout.connect(add_life)
+	Scenes.current_scene.enable_restart_in_pause = false
 
 
 func add_life() -> void:
 	if gifted > 23: return
+	if !Thunder._current_player:
+		return
 	Thunder.add_lives(1)
 	gifted += 1
 	var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
