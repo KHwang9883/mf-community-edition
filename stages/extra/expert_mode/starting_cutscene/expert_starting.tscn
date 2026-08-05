@@ -60,6 +60,7 @@
 [ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="57_xjoa7"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="58_x4acr"]
 [ext_resource type="Texture2D" uid="uid://ckiq7mmn7yufe" path="res://engine/objects/bumping_blocks/brick/textures/brick.png" id="59_furqn"]
+[ext_resource type="Texture2D" uid="uid://ehrk7tmgv47w" path="res://engine/objects/enemies/piranha_plants/textures/piranha_green.png" id="59_xjoa7"]
 [ext_resource type="PackedScene" uid="uid://dgcgfl28trox0" path="res://engine/objects/springboard/springboard.tscn" id="61_x5otd"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="62_xjoa7"]
 
@@ -968,6 +969,38 @@ animations = [{
 "speed": 20.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uu2e"]
+atlas = ExtResource("59_xjoa7")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0ro8"]
+atlas = ExtResource("59_xjoa7")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2i7l"]
+atlas = ExtResource("59_xjoa7")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x4acr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uu2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0ro8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2i7l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0ro8")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="ExpertStarting" type="Node2D" unique_id=1750732135]
 script = ExtResource("1_3u5r1")
 
@@ -1790,14 +1823,20 @@ texture = ExtResource("57_xjoa7")
 flip_h = true
 vframes = 2
 
-[node name="PiranhaGreen" parent="." unique_id=783740098 instance=ExtResource("58_x4acr")]
-position = Vector2(352, 1152)
+[node name="Sprite2" type="AnimatedSprite2D" parent="." unique_id=221697992]
+z_index = -2
+position = Vector2(352, 1128)
+sprite_frames = SubResource("SpriteFrames_x4acr")
+autoplay = "default"
+
+[node name="Sprite3" type="AnimatedSprite2D" parent="." unique_id=1806739969]
+z_index = -2
+position = Vector2(-544, 1096)
+sprite_frames = SubResource("SpriteFrames_x4acr")
+autoplay = "default"
 
 [node name="PiranhaGreen3" parent="." unique_id=408583037 instance=ExtResource("58_x4acr")]
 position = Vector2(448, 1760)
-
-[node name="PiranhaGreen2" parent="." unique_id=1800988343 instance=ExtResource("58_x4acr")]
-position = Vector2(-544, 1120)
 
 [node name="Brick6" type="Sprite2D" parent="." unique_id=175295207]
 position = Vector2(-80, 1104)
