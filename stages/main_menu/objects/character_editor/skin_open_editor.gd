@@ -66,10 +66,16 @@ func _handle_select(mouse_input: bool = false) -> void:
 
 
 func accept():
-	var pck_arg: PackedStringArray = ["--main-pack","mfce-skin-editor.pck"]
-	var pid := OS.create_instance(pck_arg)
-	if pid != -1:
-		get_tree().quit()
+	var path: String = OS.get_executable_path().get_base_dir().path_join("Skin Editor")
+	if "Windows" in OS.get_name():
+		path += ".exe"
+	else:
+		path += ".x86_64"
+	var dict := OS.execute_with_pipe(path, [], false)
+	if dict && dict.get("pid", -1) != -1:
+		pass
+	else:
+		OS.alert("Cannot open: %s" % path, "Error")
 
 
 var _template: String
