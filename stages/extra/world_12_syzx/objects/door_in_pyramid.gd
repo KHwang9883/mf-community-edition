@@ -1,12 +1,17 @@
+@tool
 extends "res://engine/objects/warps/door/door_in.gd"
 
 var _fix_walking_player_anim: bool
 
 func _ready() -> void:
 	super()
+	if Engine.is_editor_hint(): return
 	_target = 0.02
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		queue_redraw()
+		return
 	if !player: return
 	if _fix_walking_player_anim:
 		player.sprite.play(&"default")
@@ -68,12 +73,7 @@ func _physics_process(delta: float) -> void:
 			_fix_walking_player_anim = false
 			await get_tree().physics_frame
 			
-			if warp_to_scene: 
-				Scenes.scene_changed.connect(func(_current_scene):
-					TransitionManager.current_transition.paused = false
-				, CONNECT_ONE_SHOT)
-			else:
-				TransitionManager.current_transition.paused = false
+			TransitionManager.current_transition.paused = false
 		else: pass_warp()
 
 
