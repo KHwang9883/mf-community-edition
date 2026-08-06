@@ -2,10 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dalbx57u5hlgi" path="res://stages/extra/climbing_minigame/objects/paratroopa_skull/paratroopa_green_skully.gd" id="1_74w4c"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_4ck2j"]
-[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_7c7sb"]
+[ext_resource type="PackedScene" uid="uid://cqisa10qpvqdh" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/dead_coder.tscn" id="3_xodof"]
 [ext_resource type="Script" uid="uid://di002h8pytk7t" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/dead_coder_killed.gd" id="4_xgoiy"]
 [ext_resource type="AudioStream" uid="uid://m3fb62sh1nho" path="res://objects/human_lab_2/coders/jetpack/coder_clone_mod_j/sfx/JetpackImpact.wav" id="5_rxdlf"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_ta407"]
+[ext_resource type="PackedScene" uid="uid://bdcyubxkn5ekj" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/skeleparts.tscn" id="5_xodof"]
 [ext_resource type="AudioStream" uid="uid://c0bi1gh37xdeo" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/sfx/SkeletonDead.ogg" id="7_xgoiy"]
 [ext_resource type="PackedScene" uid="uid://yj33pjhh4fkt" path="res://objects/christmas_clones/elf_jetpack/jetpack_effect.tscn" id="8_4swss"]
 [ext_resource type="Script" uid="uid://ctpdglckoxmg6" path="res://objects/christmas_clones/gifter_clone/scripts/losing_item_effect.gd" id="8_ewbi1"]
@@ -18,11 +19,12 @@ size = Vector2(28, 56)
 [sub_resource type="Resource" id="Resource_xgoiy"]
 resource_local_to_scene = true
 script = ExtResource("5_ta407")
-creation_nodepack = ExtResource("3_7c7sb")
+creation_nodepack = ExtResource("3_xodof")
 trans_inheritances = 7
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
-"death_speed": Vector2(0, 0)
+"death_speed": Vector2(0, 0),
+"skeleparts": ExtResource("5_xodof")
 }
 custom_script = ExtResource("4_xgoiy")
 
@@ -121,7 +123,5 @@ flip_v = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]

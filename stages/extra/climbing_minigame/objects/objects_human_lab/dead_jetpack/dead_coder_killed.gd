@@ -22,7 +22,14 @@ func _ready() -> void:
 	var min_quality_offset: Vector2 = vars.get("min_quality_offset", Vector2.ZERO)
 	
 	if death.is_empty(): return
-	var death_node: Node2D = enemy_attacked.get_node_or_null(death).duplicate()
+	var death_node: Node2D
+	if is_fast_quality:
+		death_node = enemy_attacked.get_node_or_null(death).duplicate()
+	else:
+		death_node = vars.skeleparts.instantiate()
+		if vars.get("fett", false):
+			death_node.switch_to_fett.call_deferred()
+		speed.x = 0
 	if !death_node: return
 	
 	if !attacker_speed:
@@ -31,29 +38,32 @@ func _ready() -> void:
 	death_node.visible = true
 	death_node.set(&"speed_scale", 0)
 	if attacker_speed != Vector2.ZERO && node is GravityBody2D:
-		node.speed.y *= 2 * gravity_scale
-		node.gravity_scale = gravity_scale
-		node.max_falling_speed = max_falling_speed
 		if is_fast_quality:
 			death_node.offset -= min_quality_offset
-		fancy_death_effect()
-	else:
-		if node is GravityBody2D:
-			node.speed = speed
-			node.speed.y *= 2 * gravity_scale
+			node.speed *= 2 * gravity_scale
 			node.gravity_scale = gravity_scale
-			node.max_falling_speed = max_falling_speed
-			if is_fast_quality:
-				death_node.offset -= min_quality_offset
-			var root := enemy_attacked.get_parent().get_parent() as GravityBody2D
-			if root:
-				node.gravity_dir = root.get_global_gravity_dir()
+			fancy_death_effect()
+		else:
+			node.speed = Vector2.ZERO
+			node.gravity_scale = gravity_scale * 0.5
+		node.max_falling_speed = max_falling_speed
+	#else:
+		#if node is GravityBody2D:
+			#node.speed = speed
+			#node.speed.y *= 2 * gravity_scale
+			#node.gravity_scale = gravity_scale
+			#node.max_falling_speed = max_falling_speed
+			#if is_fast_quality:
+				#death_node.offset -= min_quality_offset
+			#var root := enemy_attacked.get_parent().get_parent() as GravityBody2D
+			#if root:
+				#node.gravity_dir = root.get_global_gravity_dir()
 	node.add_child(death_node)
 
 
 func fancy_death_effect() -> void:
 	dir = sign(attacker_speed.x)
 	node.speed.x *= dir
-	if &"rotating_dir" in node:
-		node.rotating_dir = dir
-	
+	#if &"rotating_dir" in node:
+		#node.rotating_dir = dir
+	#
