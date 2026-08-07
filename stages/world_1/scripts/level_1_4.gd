@@ -4,12 +4,13 @@ extends Level
 @export var climbing_scene: String = "res://stages/extra/climbing_minigame/climbing_lava_run.tscn"
 @export var climbing_set_difficulty := 0
 @export var climbing_after_scene: String = ""
+@export var ignore_tweak: bool = false
 @onready var lava_bowser: Node2D = $LavaBowser
 
 
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
-	if !SettingsManager.get_tweak("minigames_in_main_worlds", true):
+	if !ignore_tweak && !SettingsManager.get_tweak("minigames_in_main_worlds", true):
 		super(walking, walking_dir)
 		return
 	if _level_has_completed: return
