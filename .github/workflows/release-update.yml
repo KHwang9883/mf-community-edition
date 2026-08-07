@@ -37,10 +37,10 @@ jobs:
         run: |
           cd $PROJECT_PATH
           mkdir -v -p "${{ env.EXPORT_DIR }}/windows"
-          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe"' > "${{ env.EXPORT_DIR }}/windows/00. Launch in Recommended Mode.bat"
-          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "${{ env.EXPORT_DIR }}/windows/01. Launch in Compatibility Mode (OpenGL 3).bat"
-          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "${{ env.EXPORT_DIR }}/windows/02. Launch in Compatibility Mode (ANGLE).bat"
-          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver vulkan' > "${{ env.EXPORT_DIR }}/windows/03. Launch in Compatibility Mode (Vulkan).bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe"' > "${{ env.EXPORT_DIR }}/windows/00. Launch in Recommended Mode (D3D12).bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3' > "${{ env.EXPORT_DIR }}/windows/02. Launch in Compatibility Mode (OpenGL3.3).bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver opengl3_angle' > "${{ env.EXPORT_DIR }}/windows/03. Launch in Compatibility Mode (ANGLE).bat"
+          echo 'start "" ".\${{ env.EXPORT_NAME }}.exe" --rendering-driver vulkan' > "${{ env.EXPORT_DIR }}/windows/01. Launch in Alternative Mode (Vulkan).bat"
           godot --headless --export-release "Windows Desktop" "${{ env.EXPORT_DIR }}/windows/$EXPORT_NAME.exe"
       - name: Checkout Skins
         uses: actions/checkout@v7
