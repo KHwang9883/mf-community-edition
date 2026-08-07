@@ -75,7 +75,7 @@ func _on_http_get(result: int, response_code: int, headers: PackedStringArray, b
 		if body_res:
 			dict = body_res
 	else:
-		print("[Update Check Error] Result:", result, " Response Code: ", response_code)
+		print("[Update Check Error] Result: ", _get_result_text(result), " Response Code: ", response_code)
 		if backup == 0:
 			_checking_throw_error(true)
 			return
@@ -176,3 +176,36 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_select"):
 		OS.shell_open(url_open)
 		get_tree().quit()
+
+
+static func _get_result_text(result: HTTPRequest.Result) -> String:
+	match result:
+		HTTPRequest.RESULT_SUCCESS:
+			return "Success"
+		HTTPRequest.RESULT_CHUNKED_BODY_SIZE_MISMATCH:
+			return "CHUNKED_BODY_SIZE_MISMATCH"
+		HTTPRequest.RESULT_CANT_CONNECT:
+			return "CANT_CONNECT"
+		HTTPRequest.RESULT_CANT_RESOLVE:
+			return "CANT_RESOLVE"
+		HTTPRequest.RESULT_CONNECTION_ERROR:
+			return "CONNECTION_ERROR"
+		HTTPRequest.RESULT_TLS_HANDSHAKE_ERROR:
+			return "TLS_HANDSHAKE_ERROR"
+		HTTPRequest.RESULT_NO_RESPONSE:
+			return "NO_RESPONSE"
+		HTTPRequest.RESULT_BODY_SIZE_LIMIT_EXCEEDED:
+			return "BODY_SIZE_LIMIT_EXCEEDED"
+		HTTPRequest.RESULT_BODY_DECOMPRESS_FAILED:
+			return "BODY_DECOMPRESS_FAILED"
+		HTTPRequest.RESULT_REQUEST_FAILED:
+			return "REQUEST_FAILED"
+		HTTPRequest.RESULT_DOWNLOAD_FILE_CANT_OPEN:
+			return "RESULT_DOWNLOAD_FILE_CANT_OPEN"
+		HTTPRequest.RESULT_DOWNLOAD_FILE_WRITE_ERROR:
+			return "DOWNLOAD_FILE_WRITE_ERROR"
+		HTTPRequest.RESULT_REDIRECT_LIMIT_REACHED:
+			return "REDIRECT_LIMIT_REACHED"
+		HTTPRequest.RESULT_TIMEOUT:
+			return "Timeout"
+	return "Unknown"
