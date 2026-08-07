@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://4453rbc66rey" path="res://objects/human_lab_2/zorro/gfx/zorro_flame_triple.png" id="5_q0mse"]
 [ext_resource type="Texture2D" uid="uid://b3vjd8nc1q178" path="res://objects/human_lab_2/zorro/gfx/zorro_jump.png" id="6_602qp"]
 [ext_resource type="Texture2D" uid="uid://b84gmmsb50yhk" path="res://objects/human_lab_2/zorro/gfx/zorro_flame.png" id="6_hsvf6"]
+[ext_resource type="Texture2D" uid="uid://cpfdlpysl7ixh" path="res://objects/human_lab_2/zorro/gfx/zorro_dash.png" id="7_lqipw"]
 [ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="8_h4buv"]
 [ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs.png" id="11_hsvf6"]
 [ext_resource type="Texture2D" uid="uid://b8j8mctpdguki" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs_idle.png" id="12_h4buv"]
@@ -36,6 +37,57 @@ stream_1/volume = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bc52"]
 size = Vector2(44, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrivr"]
+size = Vector2(20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg05c"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tngou"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(80, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_viiae"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(160, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7lq8"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(240, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hthu7"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(320, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wm1pa"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(400, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrons"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(0, 64, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlxun"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(80, 64, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0bsr"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(160, 64, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_736o8"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(240, 64, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1s73"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(320, 64, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qeg7u"]
+atlas = ExtResource("7_lqipw")
+region = Rect2(400, 64, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x2po7"]
 atlas = ExtResource("3_q0mse")
@@ -111,6 +163,55 @@ animations = [{
 "loop": 1,
 "name": &"burst",
 "speed": 50.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg05c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tngou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_viiae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7lq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hthu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wm1pa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrons")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlxun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0bsr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_736o8")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_f1s73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qeg7u")
+}],
+"loop": 0,
+"name": &"dash",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qeg7u")
+}],
+"loop": 1,
+"name": &"dash_on",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -372,13 +473,14 @@ falling_sound = ExtResource("5_0c7xe")
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_1bc52")
 
-[node name="Body" parent="." index="1" unique_id=1208363667]
-visible = true
-
-[node name="CollisionShape2D" parent="Body" index="0" unique_id=1504321950]
-visible = false
+[node name="CollisionShape2D" parent="Body" parent_id_path=PackedInt32Array(1208363667) index="0" unique_id=1504321950]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_1bc52")
+
+[node name="CollisionDash" type="CollisionShape2D" parent="Body" parent_id_path=PackedInt32Array(1208363667) index="2" unique_id=178817292]
+position = Vector2(34, 12)
+shape = SubResource("RectangleShape2D_xrivr")
+disabled = true
 
 [node name="Sprite" parent="." index="2" unique_id=487093778]
 position = Vector2(0, 0)
@@ -410,3 +512,5 @@ flame_delay = 0.66
 projectile_inst = SubResource("Resource_lqipw")
 flame_sound = ExtResource("16_h4buv")
 flame_delay = 0.66
+
+[connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
