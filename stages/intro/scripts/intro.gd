@@ -19,7 +19,7 @@ func _ready() -> void:
 		display_disclaimer()
 		return
 		
-	await get_tree().create_timer(0.6, false, true, false).timeout
+	await get_tree().create_timer(0.6, false, true, true).timeout
 	print("[Startup] Compiling shaders...")
 	cacher = SHADER_OPTIMIZER.instantiate()
 	cacher.complete.connect(display_disclaimer)
