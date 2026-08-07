@@ -51,19 +51,21 @@ var cheat_warned: bool
 var _star_world: bool = true
 var _star_sel_world: int = 1
 var _star_sel_level: int = 1
+var _do_not_block: bool = false
 
 @onready var label: Label = $Label
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
 @onready var message_block_2: AnimatableBody2D = %MessageBlock2
 
 signal save_deleted
+signal star_world_available
 
 func _ready() -> void:
 	super()
 	if Engine.is_editor_hint(): return
 	if no_star_world_until_secret: _star_world = false
 	
-	_update_save()
+	_update_save(true)
 	
 	if reset_node:
 		player_enter.connect(_update_reset_labels)
@@ -120,7 +122,7 @@ func _input(event: InputEvent) -> void:
 			_update_reset_labels()
 	
 
-func _update_save() -> void:
+func _update_save(do_signal: bool = false) -> void:
 	is_blocked = false
 	if clear_color_override:
 		label.remove_theme_color_override(&"font_color")
@@ -146,14 +148,20 @@ func _update_save() -> void:
 		else:
 			is_not_allowed = !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret)
 	
-	if no_star_world_until_secret && is_not_allowed:
+	if no_star_world_until_secret && is_not_allowed && !_do_not_block:
 		return
 	_star_world = true
 	label.set_world_numbers("%d-0" % _star_sel_level)
+	
+	if _do_not_block: # crutch for world U Hard/Normal unlocking easier difficulties
+		return
 	if is_not_allowed:
 		is_blocked = true
 		label.add_theme_color_override(&"font_color", Color.LIGHT_CORAL)
 		return
+	
+	if do_signal:
+		star_world_available.emit()
 	
 	#label.add_theme_color_override(&"font_color", Color.LIGHT_GREEN)
 
