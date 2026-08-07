@@ -52,6 +52,7 @@ const DEFAULT_LINES = {
 	"p_switch_activate": preload("res://engine/objects/core/checkpoint/sounds/switch.wav"),
 	"bonus_run_out": preload("res://engine/objects/p_switch/p_switch_runout.wav"),
 	"bonus_stopwatch": preload("res://engine/objects/items/stopwatch/stopwatch.wav"),
+	"enemy_freeze": preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3"),
 }
 
 var skin_tweaks: Dictionary = {}
