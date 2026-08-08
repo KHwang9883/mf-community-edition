@@ -42,14 +42,14 @@ func _process(_delta: float) -> void:
 		_tweening = false
 
 func _update_visibility() -> void:
-	match SettingsManager.QUALITY:
-		SettingsManager.QUALITY.MIN:
-			amount = mini(50, ceili(particles * 0.5))
-		
-		SettingsManager.QUALITY.MID:
-			amount = mini(200, ceili(particles * 0.8))
-		
-		SettingsManager.QUALITY.MAX:
-			amount = particles
-	
+	#match SettingsManager.QUALITY:
+		#SettingsManager.QUALITY.MIN:
+			#amount = mini(50, ceili(particles * 0.5))
+		#
+		#SettingsManager.QUALITY.MID:
+			#amount = mini(200, ceili(particles * 0.8))
+		#
+		#SettingsManager.QUALITY.MAX:
+			#amount = particles
 	_sound.playing = is_visible_in_tree()
+	_sound.stream_paused = get_tree().paused && is_visible_in_tree()

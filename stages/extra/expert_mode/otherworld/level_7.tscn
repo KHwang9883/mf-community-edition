@@ -1039,6 +1039,7 @@ medium = true
 position = Vector2(-1344, 0)
 amount = 1600
 lifetime = 1.83
+preprocess = 1.5
 visibility_rect = Rect2(0, 0, 11000, 960)
 sound_only_in_visible_rect = false
 
@@ -2571,12 +2572,12 @@ texture = ExtResource("73_i5ghj")
 [connection signal="warp_ended" from="snickers" to="Node" method="activate"]
 [connection signal="warp_ended" from="bounty" to="Node" method="activate"]
 [connection signal="warp_ended" from="bounty" to="SecretUnlocker3" method="progress_secret" binds= [0, false]]
-[connection signal="warp_started" from="PipeIn3" to="texts" method="queue_free"]
 [connection signal="warp_started" from="PipeIn3" to="snickers" method="queue_free"]
 [connection signal="warp_started" from="PipeIn3" to="bounty" method="queue_free"]
-[connection signal="warp_started" from="PipeIn4" to="texts" method="queue_free"]
+[connection signal="warp_started" from="PipeIn3" to="texts" method="queue_free"]
 [connection signal="warp_started" from="PipeIn4" to="snickers" method="queue_free"]
 [connection signal="warp_started" from="PipeIn4" to="bounty" method="queue_free"]
+[connection signal="warp_started" from="PipeIn4" to="texts" method="queue_free"]
 [connection signal="life_text_triggered" from="GravityBody2D" to="HUD/BonusLevelUnlocked" method="show"]
 [connection signal="life_text_triggered" from="GravityBody2D" to="HUD/BonusLevelUnlocked" method="activate"]
 [connection signal="grab_initiated" from="GravityBody2D/GrabbableModifier" to="GravityBody2D" method="_on_grab_initiated"]
@@ -2584,9 +2585,9 @@ texture = ExtResource("73_i5ghj")
 [connection signal="ungrabbed" from="GravityBody2D/GrabbableModifier" to="GravityBody2D" method="_on_ungrabbed"]
 [connection signal="body_entered" from="PipeInPlaceholder" to="GravityBody2D" method="_on_pipe_in_body_entered"]
 [connection signal="warp_started" from="PipeInPlaceholder" to="MessageBlock" method="show_message"]
-[connection signal="free_everything_no_candy" from="Node" to="texts" method="queue_free"]
 [connection signal="free_everything_no_candy" from="Node" to="snickers" method="queue_free"]
 [connection signal="free_everything_no_candy" from="Node" to="bounty" method="queue_free"]
+[connection signal="free_everything_no_candy" from="Node" to="texts" method="queue_free"]
 
 [editable path="MissileBulletLauncher"]
 [editable path="MissileBulletLauncher3"]
