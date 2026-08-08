@@ -5,6 +5,8 @@ const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block
 var opened: bool
 var message_activated: bool
 var controls_blocked: bool
+@warning_ignore("unused_private_class_variable")
+var _improved_levels: bool = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
