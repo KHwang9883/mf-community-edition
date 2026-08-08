@@ -5025,6 +5025,39 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="RewardText" type="Node2D" parent="Objects" unique_id=869375919]
+script = ExtResource("10_cgryk")
+amplitude = Vector2(0, 10)
+frequency = 2.0
+
+[node name="LabelClassic" type="Label" parent="Objects/RewardText" unique_id=483066095]
+offset_left = 3968.0
+offset_top = 368.0
+offset_right = 4352.0
+offset_bottom = 384.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "reward: new powerup in save room"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="LabelPage1" type="Label" parent="Objects/RewardText" unique_id=1038507842]
+offset_left = -144.0
+offset_top = -896.0
+offset_right = -16.0
+offset_bottom = -842.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 21
+text = "reward:
+new powerup
+in save room"
+horizontal_alignment = 1
+uppercase = true
+
 [node name="AchievementPager" type="Node2D" parent="Objects" unique_id=1079468156]
 script = ExtResource("117_btyue")
 
@@ -7389,7 +7422,9 @@ metadata/_edit_lock_ = true
 [connection signal="warp_started" from="Objects/Node2D3/PipeIn" to="KevinLayer/KevinActivationLabel" method="kevin_reset"]
 [connection signal="all_achievements_done" from="Objects/text blah blah" to="ScriptedEvents/AllAchievements" method="activate"]
 [connection signal="all_achievements_done" from="Objects/text blah blah" to="Objects/KevinHint/PathFollow2D" method="activate"]
+[connection signal="all_achievements_done" from="Objects/text blah blah" to="Objects/RewardText/LabelClassic" method="hide"]
 [connection signal="all_achievements_done" from="Objects/text blah blah2" to="ScriptedEvents/AllAchievements2" method="activate"]
+[connection signal="all_achievements_done" from="Objects/text blah blah2" to="Objects/AchievementPager" method="_on_page_1_all_achievements_done"]
 [connection signal="all_achievements_done" from="Objects/text blah blah2" to="Objects/text blah blah3" method="show_achievement" binds= ["FrogMode"]]
 [connection signal="warp_started" from="Objects/PipeIn2" to="Objects/PipeShortcutSprite" method="set_pos"]
 [connection signal="warp_ended" from="Objects/PipeOut3" to="Objects/PipeShortcutSprite" method="go_away"]
