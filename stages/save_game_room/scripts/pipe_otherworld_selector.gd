@@ -207,8 +207,20 @@ func _update_reset_labels() -> void:
 		return
 	var secret = SecretsManager.get_secret(secret_name)
 	if !secret || (secret is Array && !secret_level_values[_star_sel_level - 1] in secret):
-		reset_node.secrets.text = level_lock_explain
+		var locked_lvl_text = level_lock_explain
+		if secret_level_values.size() > _star_sel_level - 1:
+			match secret_level_values[_star_sel_level - 1]:
+				"human lab 1.2":
+					locked_lvl_text = "level locked! find a passage in world u easy!"
+				"human lab remix?":
+					locked_lvl_text = "level locked! find a passage in world u normal!"
+				"world 9 - 1 revamped":
+					locked_lvl_text = "level locked! find a passage in world u hard!"
+		reset_node.secrets.text = locked_lvl_text
 	else:
-		reset_node.secrets.text = level_unlock_explain % secret_level_values[_star_sel_level - 1]
+		var unlocked_lvl_text = secret_level_values[_star_sel_level - 1]
+		if unlocked_lvl_text == "u - x":
+			unlocked_lvl_text = "world u - x"
+		reset_node.secrets.text = level_unlock_explain % unlocked_lvl_text
 	
 		
