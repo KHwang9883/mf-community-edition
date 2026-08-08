@@ -13,11 +13,13 @@ extends Node2D
 
 @onready var init_pos: Vector2 = pipes[0].position
 @onready var label_percent: Label = $"../LabelPercent"
+@onready var label_page_1: Label = $"../RewardText/LabelPage1"
 
 var page: int = 0
 var total_pages: int = 4
 var tw: Tween
 var completion: float
+var completed_page_1: bool
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_INHERIT
@@ -73,3 +75,8 @@ func switch_page() -> void:
 
 func _update_label_5() -> void:
 	label_page_number.text = "page %d / %d" % [page + 1, total_pages]
+	label_page_1.visible = page == 0 && !completed_page_1
+
+
+func _on_page_1_all_achievements_done() -> void:
+	completed_page_1 = true
