@@ -832,7 +832,6 @@ gravity_scale = 0.0
 collision = false
 
 [node name="Checkpoint" parent="." unique_id=765229048 instance=ExtResource("50_mcjec")]
-z_index = -7
 position = Vector2(4144, 416)
 
 [node name="BigHumanCloneBModF4" parent="." unique_id=662026206 instance=ExtResource("24_6x0cm")]
@@ -1609,17 +1608,6 @@ shape = SubResource("RectangleShape2D_b2558")
 [node name="Node" type="Node" parent="Area2D10" unique_id=210417847]
 script = ExtResource("50_l7bgb")
 
-[node name="Node2D2" type="Node2D" parent="." unique_id=758704100]
-position = Vector2(-1344, 0)
-script = ExtResource("14_6ppt1")
-medium = true
-
-[node name="Rain" parent="Node2D2" unique_id=1542949120 instance=ExtResource("51_1y2rp")]
-amount = 1600
-preprocess = 0.7
-visibility_rect = Rect2(0, 0, 11000, 960)
-sound_only_in_visible_rect = false
-
 [node name="QuestionBlock6" parent="." unique_id=1486028436 instance=ExtResource("52_fjber")]
 position = Vector2(3696, 48)
 result = SubResource("Resource_rj8cf")
@@ -1800,5 +1788,16 @@ serafimgws"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="Node2D2" type="Node2D" parent="." unique_id=758704100]
+script = ExtResource("14_6ppt1")
+medium = true
+
+[node name="Rain" parent="Node2D2" unique_id=1542949120 instance=ExtResource("51_1y2rp")]
+z_index = 10
+amount = 180
+preprocess = 0.5
+visibility_rect = Rect2(0, 0, 11000, 960)
+sound_only_in_visible_rect = false
 
 [connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
