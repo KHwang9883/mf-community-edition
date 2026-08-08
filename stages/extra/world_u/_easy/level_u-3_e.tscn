@@ -64,6 +64,8 @@
 [ext_resource type="PackedScene" uid="uid://c7ecw05iivkki" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_cheep_green_e.tscn" id="56_eonmc"]
 [ext_resource type="Script" uid="uid://mw43snwy3apr" path="res://stages/extra/expert_mode/objects/pipe_in_choicer/pipe_in_choicer.gd" id="60_uqsb4"]
 [ext_resource type="PackedScene" uid="uid://t1hrujsae7se" path="res://stages/extra/world_u/objects/big_cheep_cheep/big_boss_cheep.tscn" id="61_4ub73"]
+[ext_resource type="Texture2D" uid="uid://ub283slvxgxe" path="res://engine/tilesets/underground/gfx/pipe_bg.png" id="65_xm7xu"]
+[ext_resource type="PackedScene" uid="uid://eyqjecs0sfv0" path="res://engine/objects/effects/bubble/bubble_bg_generator.tscn" id="66_cea01"]
 
 [sub_resource type="Gradient" id="Gradient_bribe"]
 colors = PackedColorArray(0.0646965, 0.0646965, 0.0646965, 1, 0, 0, 0.25098, 1)
@@ -103,13 +105,13 @@ gradient = SubResource("Gradient_cfxbo")
 height = 18
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Resource" id="Resource_e8hqt"]
+[sub_resource type="Resource" id="Resource_tso5v"]
 resource_local_to_scene = true
 script = ExtResource("21_71j6m")
 creation_nodepack = ExtResource("20_38ifa")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_gfmij"]
+[sub_resource type="Resource" id="Resource_gba2s"]
 resource_local_to_scene = true
 script = ExtResource("21_71j6m")
 creation_fallback_node = ExtResource("24_rnsdq")
@@ -1498,11 +1500,11 @@ position = Vector2(592, 112)
 
 [node name="QuestionBlock" parent="." unique_id=456294269 instance=ExtResource("19_6fkxs")]
 position = Vector2(592, 304)
-result = SubResource("Resource_e8hqt")
+result = SubResource("Resource_tso5v")
 
 [node name="QuestionBlock2" parent="." unique_id=47017525 instance=ExtResource("19_6fkxs")]
 position = Vector2(4240, 176)
-result = SubResource("Resource_gfmij")
+result = SubResource("Resource_gba2s")
 
 [node name="CheepBlue" parent="." unique_id=194498996 instance=ExtResource("23_wytki")]
 position = Vector2(976, 336)
@@ -2295,6 +2297,17 @@ script = ExtResource("60_uqsb4")
 
 [node name="BigCheep" parent="." unique_id=683507124 instance=ExtResource("61_4ub73")]
 position = Vector2(5808, 240)
+
+[node name="PipeBg" type="Sprite2D" parent="." unique_id=562921236]
+self_modulate = Color(1, 1, 1, 0.376471)
+z_index = -11
+position = Vector2(7072, 240)
+texture = ExtResource("65_xm7xu")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 480)
+
+[node name="Marker2D" parent="PipeBg" unique_id=1701472854 instance=ExtResource("66_cea01")]
+position = Vector2(0, 20)
 
 [connection signal="level_completed" from="." to="SecretUnlocker/UnlockMultiple" method="perform_checks_and_unlock"]
 [connection signal="collected" from="Forcer" to="Forcer" method="queue_free"]
