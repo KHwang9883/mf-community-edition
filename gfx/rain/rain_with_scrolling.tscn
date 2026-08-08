@@ -2,38 +2,17 @@
 
 [ext_resource type="Texture2D" uid="uid://u3e4c7dp5kik" path="res://gfx/rain/raindrop.png" id="1_t7mln"]
 [ext_resource type="Script" uid="uid://bmt8qymufeabw" path="res://gfx/rain/rain.gd" id="2_43e7g"]
+[ext_resource type="Material" uid="uid://cgc4blo5m6v6c" path="res://materials/rain_with_scrolling.tres" id="2_43o4s"]
 [ext_resource type="AudioStream" uid="uid://cn5cn1ew4u6l" path="res://gfx/rain/rain_loop.ogg" id="3_qxqr5"]
-
-[sub_resource type="Gradient" id="Gradient_hvayu"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_e2g6i"]
-gradient = SubResource("Gradient_hvayu")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oby2i"]
-lifetime_randomness = 0.1
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(7000, -50, 0)
-emission_shape = 3
-emission_box_extents = Vector3(7200, 0, 0)
-angle_min = 50.0
-angle_max = 60.0
-direction = Vector3(-0.6, 1, 0)
-spread = 10.0
-flatness = 1.0
-initial_velocity_min = 1000.0
-initial_velocity_max = 1200.0
-gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_e2g6i")
 
 [node name="Rain" type="GPUParticles2D" unique_id=1072601768]
 amount = 3000
 texture = ExtResource("1_t7mln")
 lifetime = 0.7
-preprocess = 5.0
+preprocess = 1.0
 randomness = 0.5
 visibility_rect = Rect2(0, 0, 14000, 480)
-process_material = SubResource("ParticleProcessMaterial_oby2i")
+process_material = ExtResource("2_43o4s")
 script = ExtResource("2_43e7g")
 
 [node name="Sound" type="AudioStreamPlayer" parent="." unique_id=2011196581]
