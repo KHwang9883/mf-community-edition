@@ -7,7 +7,9 @@ extends Node
 @onready var _tweak: bool = SettingsManager.get_tweak(
 	"remade_levels" if !improvements_tweak else "improved_extra_levels", true
 )
-@onready var _warn_tweak: bool = SettingsManager.get_tweak("show_warning_on_revamped_levels", true)
+@onready var _warn_tweak: bool = SettingsManager.get_tweak(
+	"show_warning_on_revamped_levels"  if !improvements_tweak else "show_warning_on_improved_levels", true
+)
 @onready var revamp_warning: Control = $RevampWarning/Control
 @onready var player = Scenes.current_scene.get_node(Scenes.current_scene.player)
 
@@ -17,6 +19,9 @@ func _ready() -> void:
 	if !new_level_path: return
 	if improvements_tweak:
 		revamp_warning._remade_tweak = _tweak
+		# for improved levels, its a different tweak
+		revamp_warning._warn_tweak = _warn_tweak
+		revamp_warning._improved_levels = true
 	if _tweak && !_warn_tweak:
 		if set_data_only:
 			Data.values.revamp_scene = Scenes.get_scene_path(new_level_path)

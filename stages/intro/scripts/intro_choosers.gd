@@ -75,6 +75,7 @@ func _apply_style_tweaks(style: GameStyle) -> void:
 	
 	# Both Recommended and Classic style options
 	_tweaks.show_warning_on_revamped_levels = false
+	_tweaks.show_warning_on_improved_levels = false
 	
 	for i in _tweaks.keys():
 		SettingsManager.set_tweak(i, _tweaks[i])
@@ -104,6 +105,7 @@ func _apply_look_tweaks(look: GameLook) -> void:
 			print("[Intro] Selected Game Look: Classic")
 	
 	_tweaks.show_warning_on_revamped_levels = true
+	_tweaks.show_warning_on_improved_levels = true
 	
 	for i in _tweaks.keys():
 		SettingsManager.set_tweak(i, _tweaks[i])

@@ -18,10 +18,15 @@ func _handle_select(mouse_input: bool = false) -> void:
 		prog.selected_old.emit()
 	
 	if set_tweak_off:
-		SettingsManager.set_tweak("show_warning_on_revamped_levels", false)
+		if !prog._improved_levels:
+			SettingsManager.set_tweak("show_warning_on_revamped_levels", false)
+		else:
+			SettingsManager.set_tweak("show_warning_on_improved_levels", false)
 		SettingsManager.save_tweaks()
 	
-	print("[RevampMessage] Is New: %s, warning tweak turned off: %s" % [is_new, set_tweak_off])
+	print("[RevampMessage] Improv?: %s, Is New: %s, warning tweak turned off: %s" % [
+		prog._improved_levels, is_new, set_tweak_off
+	])
 	prog.toggle(true)
 	
 	_has_started = true
