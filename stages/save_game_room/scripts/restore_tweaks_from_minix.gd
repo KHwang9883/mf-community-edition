@@ -72,4 +72,9 @@ func _open_star_world_for(warp: Area2D) -> void:
 		warp._star_world = true
 		warp._do_not_block = true
 		warp.label.set_world_numbers("%d-0" % warp._star_sel_level)
-	
+
+
+func _on_syzx_advance_star_world_available(world_number: int) -> void:
+	_open_star_world_for(get_node_or_null(
+		"../SyzxDifficultyToggle/World" + str(world_number) + "/Page0/PipeIn"
+	))
