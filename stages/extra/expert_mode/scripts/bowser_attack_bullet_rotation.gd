@@ -31,6 +31,7 @@ func middle_attack() -> void:
 	).create_2d(false).call_method(
 		func(bul: Node2D) -> void:
 			bul.global_transform = pos_bullet.global_transform
+			bul.gravity_dir_rotation = false
 			if bul is GeneralMovementBody2D:
 				var real_rot = wrapf(bul.rotation, 0, TAU)
 				bul.sprite_node.flip_v = real_rot > PI/2 && real_rot < 3*PI/2
@@ -39,9 +40,9 @@ func middle_attack() -> void:
 				if bul.has_method(&"set_self_modulate_back") && is_instance_valid(bul.sprite_node):
 					bul.sprite_node.self_modulate.a = 0.0
 					bul.set_self_modulate_back()
-				var enemy_attacked: Node = bul.get_node_or_null("Body/EnemyAttacked")
-				if enemy_attacked:
-					enemy_attacked.stomping_standard = enemy_attacked.stomping_standard.rotated(-bul.global_rotation)
+				#var enemy_attacked: Node = bul.get_node_or_null("Body/EnemyAttacked")
+				#if enemy_attacked:
+					#enemy_attacked.stomping_standard = enemy_attacked.stomping_standard.rotated(-bul.global_rotation)
 	)
 	NodeCreator.prepare_2d(explosion, pos_bullet).create_2d().bind_global_transform(Vector2.from_angle(launcher.rotation) * 16 * bowser.facing)
 	end_attack()
