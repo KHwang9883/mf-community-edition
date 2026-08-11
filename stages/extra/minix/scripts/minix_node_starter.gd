@@ -14,10 +14,12 @@ var _continued: bool
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
 @onready var minix_controls: MenuItemsController = $MinixControls
 @onready var control: Control = $"../Leaderboard/SubViewportContainer/SubViewport/Control/CanvasLayer/Title"
+var leaderboard_client: LeaderboardClient
 
 signal game_started
 
 func _ready() -> void:
+	leaderboard_client = get_node_or_null(^"../../LeaderboardClient")
 	Scenes.custom_scenes.minix_node = self
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
@@ -84,7 +86,12 @@ func start_game() -> void:
 	_music.call_deferred()
 	var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "modulate:a", 0.0, 0.5)
-	
+
+	if leaderboard_client:
+		leaderboard_client.reset_integrity()
+		leaderboard_client.version = ProjectSettings.get_setting("application/thunder_settings/version", 0)
+		leaderboard_client.game = "MINIX"
+
 	mario.completed = false
 	SettingsManager.hide_mouse()
 	
@@ -122,3 +129,8 @@ func _music() -> void:
 	
 	music_loader.index = new_random
 	music_loader.play_buffered()
+
+
+func _on_time_added(time: int) -> void:
+	if leaderboard_client:
+		leaderboard_client.track_time(time)
