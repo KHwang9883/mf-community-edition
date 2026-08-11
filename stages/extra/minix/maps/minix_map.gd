@@ -78,15 +78,7 @@ func _on_coin_timer_timeout() -> void:
 	if !"lasted" in Data.values:
 		Data.values.lasted = 0
 	Data.values.lasted = int(Data.values.lasted) + 1
-	
-	var score_loader = Scenes.custom_scenes.minix_node.minix_score_loader
-	if !score_loader.time_encrypted.is_empty():
-		var _hash = str(Data.values.lasted - 1).md5_buffer()
-		if _hash != score_loader.time_encrypted:
-			#print("t")
-			score_loader.time_crack = true
-	
-	score_loader.time_encrypted = str(Data.values.lasted).md5_buffer()
+	Scenes.custom_scenes.minix_node._on_time_added(int(Data.values.lasted))
 
 
 func pick_random_marker() -> Vector2:

@@ -3,14 +3,9 @@ extends Node2D
 const RECORD := preload("res://stages/extra/minix/objects/leaderboard_record.tscn")
 const POOL_SIZE = 100
 
-#var _record_pool := []
 var _index: int
-
-var url: String = "https://mfce.rnx.su/api/records"
-#var url: String = "http://127.0.0.1:3000/api/records"
 var map_load_name = "all maps"
 
-@onready var http_request: HTTPRequest = $HTTPRequest
 @onready var control: Control = $SubViewportContainer/SubViewport/Control
 @onready var menu_controller: MenuItemsController = $SubViewportContainer/SubViewport/Control/MenuItemsController
 @onready var prev_page: Label = menu_controller.get_child(0)
@@ -20,8 +15,8 @@ var next_page: Label
 @onready var prev_page_temp: String = prev_page.text
 @onready var next_page_temp: String
 @onready var lb_status: Label = %LBStatus
-@onready var lb_status_request: HTTPRequest = lb_status.get_node(^"HTTPRequest")
 @onready var lb_status_timer: Timer = lb_status.get_node(^"Timer")
+var lb_client: LeaderboardClient
 
 var is_loading = true
 var has_results = false
@@ -30,8 +25,10 @@ var total_pages: int = 1
 var old = false
 var has_error: bool = false
 var lb_status_checking: bool = true
+var _fetch_pending: bool = false
 
 func _ready() -> void:
+	lb_client = get_node_or_null(^"../../LeaderboardClient") as LeaderboardClient
 	for i in POOL_SIZE:
 		var record = RECORD.instantiate()
 		record.hide()
@@ -41,10 +38,17 @@ func _ready() -> void:
 	next_page.change_page_by = 1
 	next_page_temp = "go to the next page (%d of %d)"
 	menu_controller.add_child(next_page)
-	
+
+	if lb_client:
+		lb_client.version = version
+		lb_client.game = "MINIX"
+		lb_client.online_checked.connect(_on_online_checked)
+		lb_client.records_loaded.connect(_on_records_loaded)
+	else:
+		_on_online_checked(false)
+
 	await get_tree().create_timer(0.8, true, false, true).timeout
 	if !is_inside_tree(): return
-	Thunder._connect(lb_status_request.request_completed, _on_http_get_status)
 	Thunder._connect(lb_status_timer.timeout, func():
 		if !lb_status_checking:
 			lb_status_timer.stop()
@@ -53,17 +57,14 @@ func _ready() -> void:
 			lb_status.visible_characters + 1, len(lb_status.text) - 3, len(lb_status.text) + 1
 		)
 	)
-	var params = "?page=%d&limit=%d&sortBy=%s&sortType=%s&version=%d" % [page, 1, "score", "desc", version]
-	var err := lb_status_request.request(url + params)
-	if err != OK:
-		Thunder._disconnect(lb_status_request.request_completed, _on_http_get_status)
-		_on_http_get_status(2, 403, [], [])
+	if lb_client:
+		lb_client.check_online()
 
 
-func _on_http_get_status(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func _on_online_checked(online: bool) -> void:
 	lb_status_checking = false
 	lb_status.visible_ratio = 1.0
-	if result == HTTPRequest.RESULT_SUCCESS && response_code in [200, 302, 304]:
+	if online:
 		lb_status.text = "online"
 		lb_status.add_theme_color_override(&"font_color", Color.html("c0f8c0"))
 	else:
@@ -72,64 +73,57 @@ func _on_http_get_status(result: int, response_code: int, headers: PackedStringA
 
 
 func _load_records() -> void:
+	_fetch_pending = true
 	is_loading = true
 	has_results = false
 	menu_controller.mouse_input = false
 	menu_controller.move_selector(0, true)
 
-	if http_request.request_completed.is_connected(_on_http_get_leaderboard):
-		return
-
-	#if page == 1:
 	for i in menu_controller.get_children():
 		i.hide()
 	_index = 0
 
-	#await get_tree().physics_frame
 	has_error = false
-	http_request.request_completed.connect(_on_http_get_leaderboard, CONNECT_ONE_SHOT)
-
-	var params = "?page=%d&limit=%d&sortBy=%s&game=%s&sortType=%s&version=%d" % [page, 100, "score", "MINIX", "desc", version]
-	#print(map_load_name)
-	if map_load_name != "all maps":
-		params += "&map=" + map_load_name.uri_encode()
-
-	var error = http_request.request(url + params)
-	if error: print("ERROR:", error)
-
-
-func _on_http_get_leaderboard(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	if result == HTTPRequest.RESULT_SUCCESS:
-		var body_res = body.get_string_from_utf8()
-		setup_records(body_res)
+	if lb_client:
+		lb_client.fetch_records(page, 100, map_load_name)
 	else:
-		print(response_code)
-		print(result)
+		has_error = true
+
+
+func _on_records_loaded(ok: bool, response_code: int, payload: Dictionary) -> void:
+	_fetch_pending = false
 	is_loading = false
 
 	if response_code == 401:
 		old = true
-	if !response_code in [401, 200]:
+	if response_code not in [401, 200]:
 		has_error = true
-
-
-func setup_records(body: String) -> void:
-	var setup_selector = false
-	var json_out = JSON.parse_string(body)
-	var dict := {} 
-
-	if json_out != null && json_out is Dictionary:
-		dict = json_out
+		print("leaderboard fetch error: ", response_code, " ok=", ok)
 	else:
-		dict.totalPages = 0
-		dict.records = {}
-	total_pages = dict.totalPages
+		has_error = false
 
-	#if len(menu_controller.get_children()) == 0:
+	setup_records(payload)
+
+
+func setup_records(dict: Dictionary) -> void:
+	var setup_selector = false
+
+	if dict == null || dict.is_empty():
+		dict = {"totalPages": 0, "records": []}
+	if !"totalPages" in dict:
+		dict.totalPages = 0
+	if !"records" in dict || dict.records == null:
+		dict.records = []
+
+	total_pages = int(dict.totalPages)
+
 	if !menu_controller.get_child(1).visible:
 		setup_selector = true
 
-	if !dict || len(dict.records) == 0:
+	var records = dict.records
+	if typeof(records) != TYPE_ARRAY:
+		records = []
+	if len(records) == 0:
 		has_results = false
 	else:
 		has_results = true
@@ -138,13 +132,13 @@ func setup_records(body: String) -> void:
 	next_page.visible = page < total_pages
 	prev_page.text = prev_page_temp % [page - 1, total_pages]
 	next_page.text = next_page_temp % [page + 1, total_pages]
-	
-	_add_records_to_menu(dict)
+
+	_add_records_to_menu(records)
 	for i in menu_controller.get_children():
 		if !i is NinePatchRect:
 			continue
-		if len(dict.records) > i.get_index() - 1:
-			i.set_record(dict.records[i.get_index() - 1])
+		if len(records) > i.get_index() - 1:
+			i.set_record(records[i.get_index() - 1])
 		else:
 			i.set_empty()
 	menu_controller.expanded = null
@@ -154,9 +148,9 @@ func setup_records(body: String) -> void:
 		menu_controller.move_selector(0, true)
 		menu_controller.queue_redraw()
 
-func _add_records_to_menu(dict) -> void:
-	for i in range(len(dict.records)):
-		#var record_item = RECORD.instantiate()
+
+func _add_records_to_menu(records) -> void:
+	for i in range(len(records)):
 		var record_item = menu_controller.get_child(_index + 1)
 		_index = wrapi(_index + 1, 0, POOL_SIZE)
 		record_item.show()

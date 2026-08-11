@@ -13,10 +13,20 @@ func _physics_process(_delta: float) -> void:
 	if lb.old:
 		text = "this version of the game is too old!\n\nplease download a newer version\nto use the leaderboard system!"
 	elif lb.has_error:
-		text = "failed to load the leaderboard!\nplease check your internet connection."
+		if lb.lb_client:
+			text = "failed to load the leaderboard!\nplease check your internet connection."
+		else:
+			text = """failed to load the leaderboard!
+the library has not loaded properly.
+either libleaderboards is missing
+or it failed to initialize.
+
+please download an official version
+of mario forever: community edition
+to use the leaderboard system!"""
 	selector.visible = lb.has_results
 	visible = !lb.has_results
 	menu_items_controller.control_forward = "ui_down" if lb.has_results else "ui_text_delete_all_to_right"
 	menu_items_controller.control_backward = "ui_up" if lb.has_results else "ui_text_delete_all_to_right"
-	start.visible = !lb.is_loading && !lb.has_error
-	start_2.visible = !lb.is_loading && !lb.has_error
+	start.visible = !lb.has_error
+	start_2.visible = !lb.has_error
