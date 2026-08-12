@@ -11,7 +11,7 @@ extends MenuSelection
 
 @onready var minix_controls: MenuItemsController = $".."
 @onready var starter: Node2D = $"../../../Node2D"
-var lb_client: LeaderboardClient
+var lb_client
 
 const SUBMITTED = preload("res://stages/extra/minix/sfx/submitted.wav")
 

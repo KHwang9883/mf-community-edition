@@ -16,13 +16,31 @@ var default_score_values: Dictionary = {
 var score_values: Dictionary = default_score_values.duplicate(true)
 
 @onready var node_2d: Node2D = $"../START/Node2D"
-var leaderboard_client: LeaderboardClient
+## Optional GDExtension node; null when libleaderboards failed to load.
+var leaderboard_client
 
 signal score_loaded
 signal score_saved
 
+
+func _enter_tree() -> void:
+	_ensure_leaderboard_client()
+
+
+func _ensure_leaderboard_client() -> void:
+	if has_node(^"LeaderboardClient"):
+		leaderboard_client = get_node(^"LeaderboardClient")
+		return
+	if !ClassDB.class_exists(&"LeaderboardClient"):
+		return
+	var client: Node = ClassDB.instantiate(&"LeaderboardClient")
+	client.name = &"LeaderboardClient"
+	client.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(client)
+	leaderboard_client = client
+
+
 func _ready() -> void:
-	leaderboard_client = get_node_or_null(^"../LeaderboardClient") as LeaderboardClient
 	Thunder._connect(score_loaded, _on_score_loaded)
 	Thunder._connect(score_saved, _on_score_loaded)
 	if load_values_on_start:

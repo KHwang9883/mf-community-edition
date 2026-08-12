@@ -16,9 +16,9 @@ var next_page: Label
 @onready var next_page_temp: String
 @onready var lb_status: Label = %LBStatus
 @onready var lb_status_timer: Timer = lb_status.get_node(^"Timer")
-var lb_client: LeaderboardClient
+var lb_client
 
-var is_loading = true
+var is_loading: bool
 var has_results = false
 var page := 1
 var total_pages: int = 1
@@ -28,7 +28,8 @@ var lb_status_checking: bool = true
 var _fetch_pending: bool = false
 
 func _ready() -> void:
-	lb_client = get_node_or_null(^"../../LeaderboardClient") as LeaderboardClient
+	var score_loader = get_node_or_null(^"../../MinixScoreLoader")
+	lb_client = score_loader.leaderboard_client if score_loader else null
 	for i in POOL_SIZE:
 		var record = RECORD.instantiate()
 		record.hide()
