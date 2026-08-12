@@ -14,12 +14,12 @@ var _continued: bool
 @onready var minix_score_loader: Node = $"../../MinixScoreLoader"
 @onready var minix_controls: MenuItemsController = $MinixControls
 @onready var control: Control = $"../Leaderboard/SubViewportContainer/SubViewport/Control/CanvasLayer/Title"
-var leaderboard_client: LeaderboardClient
+var leaderboard_client
 
 signal game_started
 
 func _ready() -> void:
-	leaderboard_client = get_node_or_null(^"../../LeaderboardClient")
+	leaderboard_client = minix_score_loader.leaderboard_client
 	Scenes.custom_scenes.minix_node = self
 	SettingsManager.set_tweak("life_every_2_mil_score", false)
 	SettingsManager.set_tweak("stomping_combo", false)
