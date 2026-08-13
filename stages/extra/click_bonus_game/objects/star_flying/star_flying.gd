@@ -6,7 +6,7 @@ extends Node2D
 @export var alive_time: float = 4
 
 func _ready() -> void:
-	await get_tree().create_timer(alive_time, false, true, false).timeout
+	await get_tree().create_timer(alive_time, false, true).timeout
 	var tw = create_tween()
 	tw.tween_property(self, "modulate:a", 0, 0.5)
 	await tw.finished

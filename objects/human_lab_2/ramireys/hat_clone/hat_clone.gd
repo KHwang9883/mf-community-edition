@@ -62,8 +62,6 @@ func get_stomped() -> void:
 		speed.x = -150
 		sprite_node.flip_h = false
 	speed.y = -80
-	
-	#get_tree().create_timer(lying_time_sec, false).timeout.connect(get_up)
 
 
 func _physics_process(delta: float) -> void:

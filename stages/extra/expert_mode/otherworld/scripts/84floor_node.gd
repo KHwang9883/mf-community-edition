@@ -7,7 +7,7 @@ var speed: float = 0
 var speed_enabled: bool
 
 func _ready() -> void:
-	await get_tree().create_timer(2, false, true, false).timeout
+	await get_tree().create_timer(2.0, false, true).timeout
 	speed_enabled = true
 
 func _physics_process(delta: float) -> void:

@@ -19,7 +19,7 @@ func _ready() -> void:
 		await get_tree().physics_frame
 		while !vis.is_on_screen():
 			await get_tree().physics_frame
-		await get_tree().create_timer(abs(self_ignite_after_sec), false).timeout
+		await get_tree().create_timer(abs(self_ignite_after_sec), false, true).timeout
 		sprite_node.play(&"self_ignite" if !ignited else &"stomp_ignited")
 		set_ignited(true, true)
 		_initiate_explosion()
@@ -51,7 +51,7 @@ func set_ignited(to: bool, self_ignition: bool = false) -> void:
 	
 	if abs(self_ignite_after_sec) > 0.0: return
 	if !is_inside_tree(): return
-	await get_tree().create_timer(wait_for_explosion_for_sec, false).timeout
+	await get_tree().create_timer(wait_for_explosion_for_sec, false, true).timeout
 	sprite_node.play(&"stomp_ignited")
 	_initiate_explosion()
 
@@ -68,7 +68,7 @@ func fired() -> void:
 
 func _initiate_explosion() -> void:
 	if !is_inside_tree(): return
-	get_tree().create_timer(1.0, false).timeout.connect(_explode, CONNECT_ONE_SHOT)
+	get_tree().create_timer(1.0, false, true).timeout.connect(_explode, CONNECT_ONE_SHOT)
 
 func _explode() -> void:
 	if Thunder.view.is_getting_closer(self, 64):

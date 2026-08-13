@@ -106,7 +106,7 @@ func _physics_process(delta: float) -> void:
 	
 	if !appear_triggered && (is_instance_valid(mario) && mario_pos.distance_squared_to(mario.global_position) > 4 ):
 		appear_triggered = true
-		get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
+		get_tree().create_timer(1.0, false, true).timeout.connect(func():
 			visible = false
 			if !cutscene:
 				Audio.play_1d_sound(APPEAR, true, { ignore_pause = true })
@@ -131,7 +131,7 @@ func _physics_process(delta: float) -> void:
 	if mario.warp != 0 && mario.warp_dir == mario.WarpDir.UP:
 		warp_invinc_timer = 15
 	
-	get_tree().create_timer(1.0, false, true, false).timeout.connect(func():
+	get_tree().create_timer(1.0, false, true).timeout.connect(func():
 		if pause: return
 		
 		if !is_instance_valid(mario):
@@ -167,13 +167,8 @@ func _map_process(_delta: float) -> void:
 		appear_triggered = true
 		Thunder.reorder_on_top_of(self, player)
 		cloud_light_effect.self_modulate.a = 0.75
-		#await get_tree().create_timer(1, false, true, false).timeout
-		#visible = false
-		#for i in 2:
-		#	await get_tree().physics_frame
-		#visible = true
 	
-	get_tree().create_timer(1.0 if !player.is_faster else 0.15, false, true, false).timeout.connect(func():
+	get_tree().create_timer(1.0 if !player.is_faster else 0.15, false, true).timeout.connect(func():
 		if !player.reached:
 			global_position = pos
 		if map_count < 2:
