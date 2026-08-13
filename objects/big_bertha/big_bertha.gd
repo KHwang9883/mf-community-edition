@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	if has_eaten:
 		return
 	
-	if can_eat && sprite_node.animation != &"fall" && kill_area.get_overlapping_bodies().has(pl):
+	if can_eat && kill_area.get_overlapping_bodies().has(pl):
 		has_eaten = true
 		pl.no_movement = true
 		pl.ignore_input = true
