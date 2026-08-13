@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bwax58h5ee6hh" path="res://tilesets/tanks/gfx/dots_pipe.png" id="9_3wam3"]
 [ext_resource type="Texture2D" uid="uid://dfi4d7levruc4" path="res://gfx/backgrounds/smasvolcanoresize.png" id="9_kpyok"]
 [ext_resource type="TileSet" uid="uid://cisrnptu4w3tf" path="res://tilesets/volcano/volcano.tres" id="9_m60rt"]
-[ext_resource type="Shader" uid="uid://cll0u4t0lu3vx" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="10_2bn3x"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="10_y817y"]
 [ext_resource type="Script" uid="uid://cnn6muchpcx7x" path="res://gfx/fancy_graphics/fg_fog/fogfreq.gd" id="11_e5qiu"]
 [ext_resource type="Script" uid="uid://dc824j5folagw" path="res://engine/objects/players/player_camera_autoscroll.gd" id="12_q7ovd"]
@@ -34,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://cego6fro2o3pg" path="res://objects/volcano/bomb_launcher/bomb_launcher_right.tscn" id="20_ia1o8"]
 [ext_resource type="PackedScene" uid="uid://cvt7wr4xv4m6j" path="res://objects/dragon_coin/dragon_coin.tscn" id="20_mmltu"]
 [ext_resource type="PackedScene" uid="uid://bkaivnr6tufb" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.tscn" id="21_078wl"]
+[ext_resource type="Material" uid="uid://ybfnww58ih8p" path="res://materials/fog9-5.tres" id="21_732sa"]
 [ext_resource type="PackedScene" uid="uid://csr5enkl02jsj" path="res://objects/volcano/goomba_volcano/goomba_volcano.tscn" id="22_0yd5v"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="23_bex12"]
 [ext_resource type="PackedScene" uid="uid://dvmhwh1khygq6" path="res://engine/objects/bumping_blocks/brick/brick_gray.tscn" id="24_k1cnr"]
@@ -84,30 +84,6 @@ gradient = SubResource("Gradient_kcucd")
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_da8nf"]
-frequency = 0.004
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b84yi"]
-width = 800
-height = 600
-noise = SubResource("FastNoiseLite_da8nf")
-seamless = true
-seamless_blend_skirt = 0.25
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iy852"]
-shader = ExtResource("10_2bn3x")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_b84yi")
-shader_parameter/density = 0.65
-shader_parameter/speed = Vector2(0.02, 0.01)
-shader_parameter/freq = 1.0
-
-[sub_resource type="Resource" id="Resource_732sa"]
-resource_local_to_scene = true
-script = ExtResource("28_0wb6d")
-creation_fallback_node = ExtResource("26_7uxdl")
-creation_nodepack = ExtResource("27_ms6uf")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_0djak"]
 resource_local_to_scene = true
 script = ExtResource("28_0wb6d")
@@ -125,7 +101,8 @@ trans_inheritances = 7
 [sub_resource type="Resource" id="Resource_4ra0x"]
 resource_local_to_scene = true
 script = ExtResource("28_0wb6d")
-creation_nodepack = ExtResource("23_bex12")
+creation_fallback_node = ExtResource("26_7uxdl")
+creation_nodepack = ExtResource("27_ms6uf")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_cxmjt"]
@@ -159,6 +136,12 @@ creation_nodepack = ExtResource("23_bex12")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_h77od"]
+resource_local_to_scene = true
+script = ExtResource("28_0wb6d")
+creation_nodepack = ExtResource("23_bex12")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_oa7wd"]
 resource_local_to_scene = true
 script = ExtResource("28_0wb6d")
 creation_nodepack = ExtResource("36_tw8v2")
@@ -332,7 +315,7 @@ texture = SubResource("GradientTexture2D_06dy5")
 metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Parallax2D2" unique_id=1106136124]
-material = SubResource("ShaderMaterial_iy852")
+material = ExtResource("21_732sa")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0.329412, 0.337255, 0.337255, 1)
@@ -587,39 +570,39 @@ position = Vector2(2160, 272)
 
 [node name="QuestionBlock7" parent="." unique_id=881879532 instance=ExtResource("25_p2fnt")]
 position = Vector2(1296, 176)
-result = SubResource("Resource_732sa")
+result = SubResource("Resource_0djak")
 
 [node name="QuestionBlock8" parent="." unique_id=1876837609 instance=ExtResource("25_p2fnt")]
 position = Vector2(4528, 208)
-result = SubResource("Resource_0djak")
+result = SubResource("Resource_oq86w")
 
 [node name="QuestionBlock9" parent="." unique_id=1446583125 instance=ExtResource("25_p2fnt")]
 position = Vector2(7600, 336)
-result = SubResource("Resource_oq86w")
+result = SubResource("Resource_4ra0x")
 
 [node name="QuestionBlock" parent="." unique_id=955476729 instance=ExtResource("25_p2fnt")]
 position = Vector2(2096, 272)
-result = SubResource("Resource_4ra0x")
+result = SubResource("Resource_cxmjt")
 
 [node name="QuestionBlock3" parent="." unique_id=1369327806 instance=ExtResource("25_p2fnt")]
 position = Vector2(5360, 48)
-result = SubResource("Resource_cxmjt")
+result = SubResource("Resource_b2d30")
 
 [node name="QuestionBlock4" parent="." unique_id=1482592106 instance=ExtResource("25_p2fnt")]
 position = Vector2(5424, 48)
-result = SubResource("Resource_b2d30")
+result = SubResource("Resource_u6r3a")
 
 [node name="QuestionBlock5" parent="." unique_id=756651942 instance=ExtResource("25_p2fnt")]
 position = Vector2(5104, 336)
-result = SubResource("Resource_u6r3a")
+result = SubResource("Resource_n4dme")
 
 [node name="QuestionBlock6" parent="." unique_id=990237118 instance=ExtResource("25_p2fnt")]
 position = Vector2(5680, 336)
-result = SubResource("Resource_n4dme")
+result = SubResource("Resource_fyh7o")
 
 [node name="QuestionBlock10" parent="." unique_id=1263160531 instance=ExtResource("25_p2fnt")]
 position = Vector2(10160, 208)
-result = SubResource("Resource_fyh7o")
+result = SubResource("Resource_h77od")
 initially_visible_and_solid = false
 
 [node name="BulletLauncherLeft" parent="." unique_id=1590490861 instance=ExtResource("18_dts87")]
@@ -735,7 +718,7 @@ position = Vector2(8624, 144)
 
 [node name="QuestionBlock2" parent="." unique_id=535482860 instance=ExtResource("25_p2fnt")]
 position = Vector2(3600, 336)
-result = SubResource("Resource_h77od")
+result = SubResource("Resource_oa7wd")
 
 [node name="BulletBillBase9" parent="." unique_id=516189676 instance=ExtResource("19_drh7i")]
 offset_left = 4352.0

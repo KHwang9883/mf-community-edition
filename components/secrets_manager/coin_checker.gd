@@ -30,7 +30,10 @@ func _on_child_exiting_tree() -> void:
 
 func check_for_coins() -> void:
 	if !_has_collected(true):
-		return
+		if !(
+			Console.debug_mode && !OS.has_feature("template") && Input.is_key_pressed(KEY_BACKSPACE)
+		):
+			return
 	
 	Data.technical_values.map_scene = Scenes.current_scene.jump_to_scene
 	Scenes.current_scene.jump_to_scene = Scenes.get_scene_path(toad_scene)

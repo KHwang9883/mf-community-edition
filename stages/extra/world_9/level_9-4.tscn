@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://dfi4d7levruc4" path="res://gfx/backgrounds/smasvolcanoresize.png" id="12_47vb5"]
 [ext_resource type="Script" uid="uid://dvhscoyla00d0" path="res://engine/objects/effects/player_death_hud.gd" id="12_dqhvv"]
 [ext_resource type="Material" uid="uid://buxudaaft4i5o" path="res://materials/level_8-3.tres" id="13_8b1lq"]
-[ext_resource type="Shader" uid="uid://cll0u4t0lu3vx" path="res://gfx/fancy_graphics/fg_fog/fg_fog.gdshader" id="14_hyv55"]
 [ext_resource type="Texture2D" uid="uid://c0wwmb1p27s8h" path="res://engine/objects/fluid/textures/hud_lava_rounded.png" id="14_m3x1p"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="15_7ydqe"]
 [ext_resource type="TileSet" uid="uid://cisrnptu4w3tf" path="res://tilesets/volcano/volcano.tres" id="15_47vb5"]
@@ -38,6 +37,7 @@
 [ext_resource type="Material" uid="uid://dpwcqva66u2sf" path="res://materials/grayscale.tres" id="26_pb8n0"]
 [ext_resource type="PackedScene" uid="uid://c6jebmtmr1aap" path="res://objects/volcano/bob_omb/bob_omb.tscn" id="28_2pwhr"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="28_q4q3a"]
+[ext_resource type="Material" uid="uid://ybfnww58ih8p" path="res://materials/fog9-5.tres" id="28_ri1qc"]
 [ext_resource type="PackedScene" uid="uid://csr5enkl02jsj" path="res://objects/volcano/goomba_volcano/goomba_volcano.tscn" id="29_i7ims"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="29_r73d2"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="30_jd5so"]
@@ -157,23 +157,6 @@ gradient = SubResource("Gradient_wddd7")
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0sxyr"]
-frequency = 0.004
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d84cs"]
-width = 800
-height = 600
-noise = SubResource("FastNoiseLite_0sxyr")
-seamless = true
-seamless_blend_skirt = 0.25
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqhvv"]
-shader = ExtResource("14_hyv55")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_d84cs")
-shader_parameter/density = 0.65
-shader_parameter/speed = Vector2(0.02, 0.01)
-shader_parameter/freq = 1.0
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pwxgs"]
 blend_mode = 1
 
@@ -214,13 +197,6 @@ script = ExtResource("30_jd5so")
 creation_nodepack = ExtResource("16_0uh6d")
 metadata/_custom_type_script = "uid://chvjy6okoognf"
 
-[sub_resource type="Resource" id="Resource_ri1qc"]
-resource_local_to_scene = true
-script = ExtResource("30_jd5so")
-creation_fallback_node = ExtResource("28_q4q3a")
-creation_nodepack = ExtResource("29_r73d2")
-trans_inheritances = 7
-
 [sub_resource type="Resource" id="Resource_gvxf8"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
@@ -231,29 +207,36 @@ trans_inheritances = 7
 [sub_resource type="Resource" id="Resource_pb8n0"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
-creation_nodepack = ExtResource("36_101y3")
+creation_fallback_node = ExtResource("28_q4q3a")
+creation_nodepack = ExtResource("29_r73d2")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_esm03"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
-creation_nodepack = ExtResource("16_0uh6d")
+creation_nodepack = ExtResource("36_101y3")
 trans_inheritances = 7
 
 [sub_resource type="Resource" id="Resource_8xrmb"]
+resource_local_to_scene = true
+script = ExtResource("30_jd5so")
+creation_nodepack = ExtResource("16_0uh6d")
+trans_inheritances = 7
+
+[sub_resource type="Resource" id="Resource_xugma"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
 creation_fallback_node = ExtResource("28_q4q3a")
 creation_nodepack = ExtResource("29_r73d2")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_xugma"]
+[sub_resource type="Resource" id="Resource_hynut"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
 creation_nodepack = ExtResource("43_b2d30")
 trans_inheritances = 7
 
-[sub_resource type="Resource" id="Resource_hynut"]
+[sub_resource type="Resource" id="Resource_ordq5"]
 resource_local_to_scene = true
 script = ExtResource("30_jd5so")
 creation_nodepack = ExtResource("43_b2d30")
@@ -1096,7 +1079,7 @@ script = ExtResource("18_p6hx5")
 medium = true
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxBackground2/ParallaxLayer3" unique_id=800720810]
-material = SubResource("ShaderMaterial_dqhvv")
+material = ExtResource("28_ri1qc")
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0.329412, 0.337255, 0.337255, 1)
@@ -1995,34 +1978,34 @@ result = SubResource("Resource_oydpa")
 [node name="Brick11" parent="." unique_id=865645039 instance=ExtResource("38_hyv55")]
 position = Vector2(13328, 240)
 max_items = 1
-result = SubResource("Resource_ri1qc")
+result = SubResource("Resource_gvxf8")
 
 [node name="QuestionBlock2" parent="." unique_id=1357205895 instance=ExtResource("39_fd2nv")]
 position = Vector2(272, 144)
-result = SubResource("Resource_gvxf8")
+result = SubResource("Resource_pb8n0")
 
 [node name="QuestionBlock4" parent="." unique_id=598619919 instance=ExtResource("39_fd2nv")]
 position = Vector2(2320, 144)
-result = SubResource("Resource_pb8n0")
+result = SubResource("Resource_esm03")
 initially_visible_and_solid = false
 exists_once = true
 
 [node name="QuestionBlock5" parent="." unique_id=1508562026 instance=ExtResource("39_fd2nv")]
 position = Vector2(2480, 176)
-result = SubResource("Resource_esm03")
+result = SubResource("Resource_8xrmb")
 initially_visible_and_solid = false
 
 [node name="QuestionBlock6" parent="." unique_id=443928869 instance=ExtResource("39_fd2nv")]
 position = Vector2(7568, 208)
-result = SubResource("Resource_8xrmb")
+result = SubResource("Resource_xugma")
 
 [node name="QuestionBlock7" parent="." unique_id=1878913091 instance=ExtResource("39_fd2nv")]
 position = Vector2(12816, 208)
-result = SubResource("Resource_xugma")
+result = SubResource("Resource_hynut")
 
 [node name="QuestionBlock8" parent="." unique_id=1552625391 instance=ExtResource("39_fd2nv")]
 position = Vector2(15536, 176)
-result = SubResource("Resource_hynut")
+result = SubResource("Resource_ordq5")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=539844214]
 collision_layer = 0
