@@ -16,6 +16,8 @@ func _ready() -> void:
 func _on_music_started(index: int) -> void:
 	_idx = -1
 	await Audio.music_started
+	if !is_inside_tree():
+		return
 	_idx = index
 	_on_order_changed()
 
