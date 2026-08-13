@@ -93,11 +93,14 @@ func _on_confirmation_dialog_confirmed() -> void:
 			SecretsManager.notify("All save profiles deleted")
 		"Achievements":
 			path = "user://achievements.thss"
-			SecretsManager.secrets = {}
 			var err := OS.move_to_trash(ProjectSettings.globalize_path(path))
 			if err != OK:
 				SecretsManager.notify_error("File does not exist")
 			else:
+				SecretsManager.secrets = {}
+				SettingsManager.set_tweak("console_enabled", false)
+				if Console.is_visible():
+					Console.hide()
 				SecretsManager.notify("Achievements have been reset")
 		"Tweaks":
 			path = "user://tweaks.thss"
