@@ -24,14 +24,14 @@ var _run_away: bool = false
 
 
 func _ready() -> void:
-	await get_tree().create_timer(2, false).timeout
+	await get_tree().create_timer(2, false, true).timeout
 	
 	_creation_mushroom()
 	_creation_flower()
 
 
 func _creation_mushroom() -> void:
-	await get_tree().create_timer(1, false).timeout
+	await get_tree().create_timer(1, false, true).timeout
 	
 	if !is_instance_valid(mario) || mario.completed: return
 	if !Scenes.current_scene.has_node("Bowser"):
@@ -64,12 +64,12 @@ func _creation_mushroom() -> void:
 		Scenes.current_scene.add_child(mushroom)
 		
 		amount_counter += 1
-		await get_tree().create_timer(1, false).timeout
+		await get_tree().create_timer(1, false, true).timeout
 		cell_peach.animation = 'default'
 
 
 func _creation_flower() -> void:
-	await get_tree().create_timer(5, false).timeout
+	await get_tree().create_timer(5, false, true).timeout
 	
 	if !is_instance_valid(mario) || mario.completed: return
 	if !Scenes.current_scene.has_node("Bowser"):
@@ -94,7 +94,7 @@ func _creation_flower() -> void:
 		Scenes.current_scene.add_child(flower)
 		
 		amount_counter += 1
-		await get_tree().create_timer(1, false).timeout
+		await get_tree().create_timer(1, false, true).timeout
 		cell_peach.animation = 'default'
 
 
@@ -104,8 +104,10 @@ func cutscene() -> void:
 		return
 	
 	mario.completed = true
+	mario.ignore_input = true
+	#mario.speed.x = 0
 	
-	await get_tree().create_timer(1, false).timeout
+	await get_tree().create_timer(1, false, true).timeout
 	if !is_instance_valid(mario):
 		return
 	
@@ -121,7 +123,7 @@ func cutscene() -> void:
 	tw.tween_property(self, "global_position:y", 364, 4)
 	await tw.finished
 	
-	#await get_tree().create_timer(0.5, false).timeout
+	#await get_tree().create_timer(0.5, false, true).timeout
 	
 	_moving = true
 
@@ -163,10 +165,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		_player_speed = 0
 		_moving = false
-		await get_tree().create_timer(0.2, false).timeout
+		await get_tree().create_timer(0.2, false, true).timeout
 		if !is_instance_valid(mario): return
 		mario.direction = 1
-		await get_tree().create_timer(0.5, false).timeout
+		await get_tree().create_timer(0.5, false, true).timeout
 		if !is_instance_valid(mario): return
 		var _sfx = CharacterManager.get_sound_replace(JUMP, JUMP, "jump", true)
 		Audio.play_sound(_sfx, mario)
@@ -176,14 +178,14 @@ func _physics_process(delta: float) -> void:
 		cell.visible = false
 		mario.jump(-800)
 		
-		await get_tree().create_timer(0.4, false).timeout
+		await get_tree().create_timer(0.4, false, true).timeout
 		cell_peach.z_index = 5
-		await get_tree().create_timer(0.4, false).timeout
+		await get_tree().create_timer(0.4, false, true).timeout
 		
 		_run_away = true
 		cell_peach.play('walk')
 		
-		await get_tree().create_timer(2, false).timeout
+		await get_tree().create_timer(2, false, true).timeout
 		
 		Scenes.current_scene.throw_to_scene()
 	
