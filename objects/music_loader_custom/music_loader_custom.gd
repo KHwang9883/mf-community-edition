@@ -58,7 +58,11 @@ func _ready_achievements() -> void:
 		var pl = Thunder._current_player
 		var _i: int = 0
 		while !is_instance_valid(pl) && _i < 200:
+			if !is_inside_tree():
+				return
 			await get_tree().physics_frame
+			if !is_inside_tree():
+				return
 			_i += 1
 			if _i >= 199:
 				return
@@ -94,38 +98,50 @@ func _ready_mus_tweaks() -> void:
 		add_child(_pitch_changer, true)
 	
 	if SettingsManager.get_tweak("amiga_ntsc_pitch", false):
-		Thunder._connect(music_started, func(_index: int):
-			await Audio.music_started
-			(func():
-				if !channel_id in Audio._music_channels: return
-				if !is_instance_valid(Audio._music_channels[channel_id]): return
-				
-				if Audio._music_channels[channel_id].stream is AudioStreamMPT:
-					var _res_path: String = Audio._music_channels[channel_id].stream.resource_path
-					if _res_path.ends_with(".mod") || "u_feel_it" in _res_path:
-						print("Changing AMIGA pitch of ", _index)
-						var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
-						playback.set_pitch_factor(1.00917)
-			).call_deferred()
-		)
+		Thunder._connect(music_started, _on_amiga_ntsc_pitch)
 	
 	if SettingsManager.get_tweak("original_snes_pitch", false):
-		Thunder._connect(music_started, func(_index: int):
-			await Audio.music_started
-			(func():
-				if !channel_id in Audio._music_channels: return
-				if !is_instance_valid(Audio._music_channels[channel_id]): return false
-				if !_snes_pitch_check(Audio._music_channels[channel_id].stream):
-					return
-				
-				if Audio._music_channels[channel_id].stream is AudioStreamMPT:
-					print("Changing SNES pitch of ", _index)
-					var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
-					playback.set_pitch_factor(0.976)
-				else:
-					Audio._music_channels[channel_id].pitch_scale = 0.976
-			).call_deferred()
-		)
+		Thunder._connect(music_started, _on_original_snes_pitch)
+
+
+func _on_amiga_ntsc_pitch(_index: int) -> void:
+	await Audio.music_started
+	if !is_inside_tree():
+		return
+	_apply_amiga_ntsc_pitch.call_deferred(_index)
+
+
+func _apply_amiga_ntsc_pitch(_index: int) -> void:
+	if !channel_id in Audio._music_channels: return
+	if !is_instance_valid(Audio._music_channels[channel_id]): return
+	
+	if Audio._music_channels[channel_id].stream is AudioStreamMPT:
+		var _res_path: String = Audio._music_channels[channel_id].stream.resource_path
+		if _res_path.ends_with(".mod") || "u_feel_it" in _res_path:
+			print("Changing AMIGA pitch of ", _index)
+			var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
+			playback.set_pitch_factor(1.00917)
+
+
+func _on_original_snes_pitch(_index: int) -> void:
+	await Audio.music_started
+	if !is_inside_tree():
+		return
+	_apply_original_snes_pitch.call_deferred(_index)
+
+
+func _apply_original_snes_pitch(_index: int) -> void:
+	if !channel_id in Audio._music_channels: return
+	if !is_instance_valid(Audio._music_channels[channel_id]): return
+	if !_snes_pitch_check(Audio._music_channels[channel_id].stream):
+		return
+	
+	if Audio._music_channels[channel_id].stream is AudioStreamMPT:
+		print("Changing SNES pitch of ", _index)
+		var playback: AudioStreamPlaybackMPT = Audio._music_channels[channel_id].get_stream_playback()
+		playback.set_pitch_factor(0.976)
+	else:
+		Audio._music_channels[channel_id].pitch_scale = 0.976
 
 
 func _ready_mus_hacks() -> void:
@@ -192,11 +208,15 @@ func _change_music(ind: int, ch_id: int) -> void:
 		var _trans = TransitionManager.current_transition
 		if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 			await _trans.end
+			if !is_inside_tree():
+				return
 		var player = await Audio.play_music(options[0], options[1], options[2], play_globally)
-		(func():
-			if play_globally && player:
-				player.set_meta(&"play_when_scene_changed", true)
-		).call_deferred()
+		if !is_inside_tree():
+			return
+		# Pass player as an argument. A lambda capturing it after await lives on
+		# the coroutine stack and crashes with "Bad address index" if this node
+		# is freed during a fast scene switch.
+		_apply_global_music_meta.call_deferred(player)
 		is_paused = false
 		_fade_in_tweak.call_deferred(player, ind)
 	else:
@@ -220,7 +240,11 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 	var _trans = TransitionManager.current_transition
 	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 		await _trans.end
+		if !is_inside_tree():
+			return false
 	var player = await Audio.play_music(buffered_to_play[0], buffered_to_play[1], buffered_to_play[2], play_globally)
+	if !is_inside_tree():
+		return false
 	music_resumed_buffered.emit()
 	_fade_in_tweak.call_deferred(player, current_music.find(buffered_to_play[0]))
 	buffered_to_play = []
@@ -232,6 +256,8 @@ func _fade_in_tweak(player, ind: int) -> void:
 	if !SettingsManager.get_tweak("bgm_fade_in_bug_emulation", false):
 		return
 	await get_tree().create_timer(0.015, true, false, true).timeout
+	if !is_inside_tree():
+		return
 	if ind == 0 && !ignore_fade_in_tweak && is_instance_valid(player):
 		player.volume_db = -59
 		var to_vol = volume_db[ind] if volume_db.size() >= ind else 0.0
