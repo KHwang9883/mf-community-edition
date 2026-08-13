@@ -6,7 +6,7 @@ const INTRO_CASTLE_CRUSH_2 = preload("res://sfx/IntroCastleCrush2.wav")
 @onready var thwomp2: CharacterBody2D = $"../Thwomp2"
 
 func _ready() -> void:
-	await get_tree().create_timer(2, false).timeout
+	await get_tree().create_timer(2, false, true).timeout
 	
 	_creation_mushroom()
 
@@ -15,14 +15,15 @@ func cutscene() -> void:
 		printerr('SHIT HAPPENED IN CUTSCENE!')
 		return
 	
-	mario.completed = true
+	mario.ignore_input = true
 	
-	await get_tree().create_timer(1, false).timeout
+	await get_tree().create_timer(1, false, true).timeout
 	if !is_instance_valid(mario):
 		return
 	
 	animation_player.pause()
 	_fade_help()
+	mario.completed = true
 	
 	if mario.global_position.x > marker_mario_destroyer_pos.global_position.x:
 		mario.direction = -1
@@ -30,11 +31,13 @@ func cutscene() -> void:
 		mario.direction = 1
 	
 	if is_instance_valid(thwomp) && thwomp.position.y > 16:
-		var _tw = thwomp.create_tween().tween_property(thwomp, "position:y", -48, 2.0)
+		thwomp.create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS) \
+			.tween_property(thwomp, "position:y", -48, 2.0)
 	if is_instance_valid(thwomp2) && thwomp2.position.y > 16:
-		var _tw = thwomp2.create_tween().tween_property(thwomp2, "position:y", -48, 2.0)
+		thwomp2.create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS) \
+			.tween_property(thwomp2, "position:y", -48, 2.0)
 	
-	var tw = create_tween().set_parallel()
+	var tw = create_tween().set_parallel().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.tween_property(self, "global_position:y", 364, 3.0)
 	tw.tween_property(self, "modulate", Color.WHITE, 2.4)
 	await tw.finished
