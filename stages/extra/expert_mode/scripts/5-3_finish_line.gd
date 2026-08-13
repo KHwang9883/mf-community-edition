@@ -16,5 +16,5 @@ func _physics_process(delta: float) -> void:
 		Audio.stop_all_musics(false)
 		if Thunder._current_hud:
 			Thunder._current_hud.pause_timer()
-		await get_tree().create_timer(1.2, false, true, false).timeout
+		await get_tree().create_timer(1.2, false, true).timeout
 		Scenes.current_scene.finish(true)

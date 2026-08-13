@@ -29,13 +29,13 @@ func _ready() -> void:
 	
 	chase_and_follow(150)
 
-func chase_and_follow(speed: float) -> void:
+func chase_and_follow(__speed: float) -> void:
 	var pl: Player = Thunder._current_player
 	if !pl: return
 	if pl.global_position < global_position:
-		_chase_speed = -abs(speed)
+		_chase_speed = -abs(__speed)
 	else:
-		_chase_speed = abs(speed)
+		_chase_speed = abs(__speed)
 	
 	gravity_scale = 0.15
 	_follow_progress = 0.0
@@ -132,7 +132,7 @@ func _physics_process(delta: float) -> void:
 			sprite.play(&"jump")
 	
 	if !pl: return
-	get_tree().create_timer(0.8, false, true, false).timeout.connect(func():
+	get_tree().create_timer(0.8, false, true).timeout.connect(func():
 		#if !is_instance_valid(mario):
 		#	kevin_podokh()
 		#	return

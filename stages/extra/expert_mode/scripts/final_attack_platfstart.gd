@@ -42,7 +42,7 @@ func start_attack() -> void:
 func middle_attack() -> void:
 	super()
 	bowser.jump(bowser.jumping_speed + 100)
-	await get_tree().create_timer(0.25, false, true, false).timeout
+	await get_tree().create_timer(0.25, false, true).timeout
 	body_1.collision_layer = body_1.collision_layer_ori
 	body_2.collision_layer = body_2.collision_layer_ori
 	# Tween for processing attack
