@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cuwctg3qw300d" path="res://objects/human_lab_2/coders/jetpack/mod_p/gfx/pogo.tscn" id="10_4r0gb"]
 [ext_resource type="Texture2D" uid="uid://b3eqwi2ibwlwy" path="res://objects/human_lab_2/coders/jetpack/mod_p/gfx/image.png" id="11_2op6v"]
 [ext_resource type="Texture2D" uid="uid://x1b1vqu024vr" path="res://engine/objects/enemies/human_lab/koopa_troopa/textures/clone_dead.png" id="12_4r0gb"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="13_8pb5g"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="14_x0wfi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
@@ -87,11 +88,11 @@ animations = [{
 }]
 
 [node name="POGO" type="CharacterBody2D" unique_id=1672379946]
-platform_on_leave = 2
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
 floor_snap_length = 5.0
+platform_on_leave = 2
 script = ExtResource("1_2op6v")
 jump_sound = ExtResource("2_4r0gb")
 look_at_player = true
@@ -137,17 +138,17 @@ KEYBOARD_EFFECT = ExtResource("10_4r0gb")
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_b04x4")
 autoplay = "default"
-frame = 5
-frame_progress = 1.0
 metadata/_edit_lock_ = true
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=1939155011]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_8u4jf")
+script = ExtResource("13_8pb5g")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=844307344]
 self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-20, -48, 40, 96)
 script = ExtResource("14_x0wfi")
 metadata/_edit_lock_ = true
 
