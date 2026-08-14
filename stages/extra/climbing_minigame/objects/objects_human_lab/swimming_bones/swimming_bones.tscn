@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b5tx872touch7" path="res://stages/extra/climbing_minigame/textures/dead_starclosed.png" id="6_ejydv"]
 [ext_resource type="AudioStream" uid="uid://c0bi1gh37xdeo" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/dead_jetpack/sfx/SkeletonDead.ogg" id="6_vwgvr"]
 [ext_resource type="Texture2D" uid="uid://bsvxml3fqiro0" path="res://stages/extra/climbing_minigame/objects/objects_human_lab/swimming_bones/ded.png" id="8_7vj8l"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="10_uejkq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwgvr"]
 size = Vector2(46, 25)
@@ -16,7 +17,7 @@ size = Vector2(46, 25)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vj8l"]
 size = Vector2(45, 23)
 
-[sub_resource type="Resource" id="Resource_vwgvr"]
+[sub_resource type="Resource" id="Resource_gjnon"]
 resource_local_to_scene = true
 script = ExtResource("5_olx6y")
 creation_nodepack = ExtResource("3_j6h55")
@@ -97,9 +98,9 @@ shape = SubResource("RectangleShape2D_7vj8l")
 
 [node name="EnemyAttacked" parent="Body" index="1" unique_id=1558121631]
 stomping_offset = Vector2(0, 3)
-stomping_creation = SubResource("Resource_vwgvr")
+stomping_creation = SubResource("Resource_gjnon")
 stomping_sound = ExtResource("6_vwgvr")
-killing_creation = SubResource("Resource_vwgvr")
+killing_creation = SubResource("Resource_gjnon")
 killing_sound_succeeded = ExtResource("6_vwgvr")
 
 [node name="Sprite" parent="." index="2" unique_id=1956115556]
@@ -111,5 +112,6 @@ flip_h = true
 [node name="Dead" type="Sprite2D" parent="Sprite" index="0" unique_id=667722281]
 visible = false
 texture = ExtResource("8_7vj8l")
+script = ExtResource("10_uejkq")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_flip_v" binds= [true]]
