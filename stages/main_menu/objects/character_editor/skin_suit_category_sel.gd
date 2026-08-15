@@ -27,6 +27,7 @@ var tweak_descriptions: Dictionary = {
 	"head_bump_sound": "play global sound 'head_bump' on every touch of ceiling.",
 	"fall_animation": "if false, 'fall' animation and the derivatives are replaced by 'jump'.",
 	"separate_swim_idle_animation": "if looping for 'swim' animation is disabled, the 'swim_idle' animation will play right after.",
+	"frog_restart_swim_on_direction_change": "frog suit only. if true, swim/swim_up/swim_down restart from frame 0 when changing direction, and swim_up/swim_down play fully before swim_idle when up/down is released.",
 	"emit_particles": {
 		"enabled": "if no texture is set, the default texture will be starman particles.",
 		"color": "particles will be modulated by this color.",
