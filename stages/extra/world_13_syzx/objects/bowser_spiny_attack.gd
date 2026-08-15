@@ -20,6 +20,9 @@ var _old_facing: int = 0
 func start_attack() -> void:
 	super()
 	_attacking = true
+	_snap_egg_sprite()
+	egg_sprite.show()
+	egg_sprite.reset_physics_interpolation()
 	var tw = create_tween()
 	tw.tween_interval(flame_delay)
 	tw.tween_callback(middle_attack)
@@ -27,19 +30,21 @@ func start_attack() -> void:
 
 func _physics_process(delta: float) -> void:
 	if _attacking:
-		pos_flame.position.x = pos_flame_x * bowser.facing
-		egg_sprite.position = pos_flame.position
-		if _old_facing != bowser.facing:
-			bowser.facing = _old_facing
-			egg_sprite.reset_physics_interpolation()
-		egg_sprite.show()
+		_snap_egg_sprite()
 		egg_sprite.rotation_degrees += delta * 50 * 22.5
+
+
+func _snap_egg_sprite() -> void:
+	pos_flame.position.x = pos_flame_x * bowser.facing
+	egg_sprite.position = pos_flame.position
+	if _old_facing != bowser.facing:
+		_old_facing = bowser.facing
+		egg_sprite.reset_physics_interpolation()
 
 
 func middle_attack() -> void:
 	super()
 	_attacking = false
-	_old_facing = 0
 	egg_sprite.hide()
 	if !projectile_inst: return
 	for i in 3:
