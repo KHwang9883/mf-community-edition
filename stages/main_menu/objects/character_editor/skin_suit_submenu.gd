@@ -3,6 +3,7 @@ extends "res://stages/main_menu/scripts/tweak_category_sel.gd"
 const BOOL_SUIT_TWEAK_SELECTION = preload("res://stages/main_menu/objects/character_editor/bool_suit_tweak_selection.tscn")
 const FLOAT_SUIT_TWEAK_SELECTION = preload("res://stages/main_menu/objects/character_editor/float_suit_tweak_selection.tscn")
 const COLOR_SUIT_TWEAK_SELECTION = preload("res://stages/main_menu/objects/character_editor/color_suit_tweak_selection.tscn")
+const VECTOR2_SUIT_TWEAK_SELECTION = preload("res://stages/main_menu/objects/character_editor/vector2_suit_tweak_selection.tscn")
 
 var tweak_descriptions: Dictionary = {}
 var powerup_name: String
@@ -135,5 +136,51 @@ func create_tweak_selection(tweak) -> void:
 		move_to.add_child(_color_tweak)
 		_color_tweak.color_rect.color = str(get_tweak_value(tweak))
 		Thunder.reorder_on_top_of(_color_tweak, h_separator_spawn)
+	# Вектор2, окно с двумя спинбоксами
+	elif _is_vector2_tweak(get_tweak_value(tweak)):
+		var _vec_tweak = VECTOR2_SUIT_TWEAK_SELECTION.instantiate()
+		var _vec := _to_vector2(get_tweak_value(tweak))
+		_vec_tweak.get_node("Label").text = tweak.replacen("_", " ")
+		_vec_tweak.tweak_name = tweak
+		_vec_tweak.current_vec = _vec
+		_vec_tweak.add_to_group(&"_submenu_skin_suit_tweak")
+		move_to.add_child(_vec_tweak)
+		if tweak in tweak_descriptions:
+			if tweak_descriptions[tweak] is String:
+				_vec_tweak.tweak_description_text = tweak_descriptions[tweak]
+			else:
+				_vec_tweak.tweak_description_text = tweak_descriptions[tweak].name
+				_apply_vector2_spinbox_limits(_vec_tweak, tweak_descriptions[tweak])
+		_vec_tweak.get_node("Label2").text = _vec_tweak.format_vec2(_vec)
+		Thunder.reorder_on_top_of(_vec_tweak, h_separator_spawn)
 	else:
 		print(":( dont know how to parse %s" % tweak)
+
+
+func _is_vector2_tweak(value: Variant) -> bool:
+	if value is Vector2 || value is Vector2i:
+		return true
+	if value is Array && value.size() == 2:
+		return typeof(value[0]) in [TYPE_INT, TYPE_FLOAT] && typeof(value[1]) in [TYPE_INT, TYPE_FLOAT]
+	return false
+
+
+func _to_vector2(value: Variant) -> Vector2:
+	if value is Vector2:
+		return value
+	if value is Vector2i:
+		return Vector2(value)
+	if value is Array && value.size() >= 2:
+		return Vector2(value[0], value[1])
+	return Vector2.ZERO
+
+
+func _apply_vector2_spinbox_limits(vec_tweak: Node, desc: Dictionary) -> void:
+	for spin_box in [vec_tweak.spin_box_x, vec_tweak.spin_box_y]:
+		if "min" in desc:
+			spin_box.min_value = desc.min
+		if "max" in desc:
+			spin_box.max_value = desc.max
+		if "step" in desc:
+			spin_box.step = desc.step
+			spin_box.custom_arrow_step = desc.step
