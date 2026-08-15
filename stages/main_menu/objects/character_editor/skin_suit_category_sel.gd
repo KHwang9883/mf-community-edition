@@ -45,7 +45,10 @@ var tweak_descriptions: Dictionary = {
 			"step" = 0.01,
 		},
 		"local_coords": "should the particles follow player's position? also if true, may fix jitter on movement.",
-		"offset": "offset particles by this Vector2. (x, y)"
+		"offset": {
+			"name" = "offset particles by this Vector2. (x, y)",
+			"step" = 1,
+		}
 	},
 	"emit_particles_sel": "particles for in-game character; for more options, see global skin tweaks menu.",
 	"loop_frame_offsets_sel": "add any animation to the list to set a frame where the animation will continue after looping; 0-based. negative values are ignored.",
