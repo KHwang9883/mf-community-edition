@@ -1,5 +1,7 @@
 extends Node
 
+const CASTLE_CRASH = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
+
 @onready var lava_end_cutscene: LevelCutscene = $".."
 @onready var mario: Player = Thunder._current_player
 
@@ -26,7 +28,7 @@ func _physics_process(delta: float) -> void:
 		mario.speed.x += 500 * delta
 	
 	if mario.global_position.x > 500 && !_transition:
-		Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush2.wav"), true, { "ignore_pause": true })
+		Audio.play_1d_sound(CASTLE_CRASH, true, { "ignore_pause": true })
 		_transition = true
 		Thunder._current_camera.shock(1.5, Vector2(4, 4))
 		get_tree().call_group(&"1-4_castle", &"set_falling")

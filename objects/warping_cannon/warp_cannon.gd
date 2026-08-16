@@ -7,7 +7,7 @@ const EXPLOSION: PackedScene = preload("res://engine/objects/effects/explosion/e
 @export var rotation_limit: Vector2
 @export var cannon_shootng_speed: float = 1000
 @export var cannon_moving_sound: AudioStream = preload("res://engine/objects/enemies/piranha_plants/sounds/robot.mp3")
-@export var cannon_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg")
+@export var cannon_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 
 var behaviors: Array[ByNodeScript]
 

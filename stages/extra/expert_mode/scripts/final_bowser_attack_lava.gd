@@ -15,7 +15,7 @@ extends BowserAttack
 #@onready var lava_children: Array[Sprite2D]
 @onready var light_effect_lava: Node2D = $"../../LavaBowser/LightEffectLava"
 
-const CRUSH_2 = preload("res://sfx/IntroCastleCrush2.wav")
+const CRUSH_2 = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
 
 func _ready() -> void:
 	var lava_base = lava_bowser.get_child(0)

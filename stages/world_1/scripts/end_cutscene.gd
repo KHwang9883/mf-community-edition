@@ -2,6 +2,8 @@ extends Node
 
 const CASTLE_BRICK = preload("res://engine/scenes/castle_cutscene/objects/castle_brick.tscn")
 const CASTLE_SMOKE = preload("res://engine/scenes/castle_cutscene/objects/castle_smoke.tscn")
+const CASTLE_CRASH = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
+const CASTLE_CRASH_LOOP = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash_loop.wav")
 
 @onready var player: Player = Thunder._current_player
 @onready var castle = $"../Castle"
@@ -24,13 +26,13 @@ func _ready() -> void:
 	await get_tree().create_timer(0.5, false).timeout
 	_moving = true
 	await get_tree().create_timer(2.5, false).timeout
-	Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush2.wav"))
+	Audio.play_1d_sound(CASTLE_CRASH)
 	Thunder._current_camera.shock(2, Vector2(4, 4))
 	await get_tree().create_timer(2, false).timeout
 	_destroying = true
 	run_while(
 		func():
-			Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush.wav"), true, {volume = -6}),
+			Audio.play_1d_sound(CASTLE_CRASH_LOOP, true, {volume = -6}),
 		0.099
 	)
 	run_while(func(): castle.position.x = castle_pos + randi_range(-3, 3), 0.01)

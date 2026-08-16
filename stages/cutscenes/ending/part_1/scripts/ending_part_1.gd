@@ -129,7 +129,7 @@ func _flow_intros():
 	await get_tree().create_timer(6.0, false).timeout
 	_sfx = CharacterManager.get_sound_replace(BUMP, BUMP, "block_bump", false)
 	Audio.play_sound(_sfx, marker_konchik)
-	Audio.play_sound(preload("res://sfx/IntroCastleCrush2.wav"), marker_konchik)
+	Audio.play_sound(preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav"), marker_konchik)
 	const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 	_sfx = CharacterManager.get_sound_replace(BREAK, BREAK, "block_break", false)
 	Audio.play_sound(_sfx, marker_konchik)

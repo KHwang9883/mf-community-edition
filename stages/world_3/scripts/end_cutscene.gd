@@ -7,7 +7,7 @@ const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 const HURT = preload("res://engine/objects/bosses/bowser/sounds/bowser_hurt.wav")
 const KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
 const STUN = preload("res://engine/objects/projectiles/sounds/stun.wav")
-const ZAMEK_LECI = preload("res://sfx/ZamekLeci.wav")
+const ZAMEK_LECI = preload("res://engine/scenes/castle_cutscene/sounds/castle_fly.wav")
 
 @onready var player: Player = Thunder._current_player
 @onready var castle = $"../Castle"

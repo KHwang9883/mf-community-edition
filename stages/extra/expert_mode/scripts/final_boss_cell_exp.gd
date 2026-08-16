@@ -1,7 +1,7 @@
 extends "res://objects/final_boss_cell/final_boss_cell.gd"
 
 const DAMAGED_TILE = preload("res://stages/extra/expert_mode/ending_scene/breakage/damaged_tile.tscn")
-const INTRO_CASTLE_CRUSH_2 = preload("res://sfx/IntroCastleCrush2.wav")
+const INTRO_CASTLE_CRUSH_2 = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
 @onready var thwomp: CharacterBody2D = $"../Thwomp"
 @onready var thwomp2: CharacterBody2D = $"../Thwomp2"
 

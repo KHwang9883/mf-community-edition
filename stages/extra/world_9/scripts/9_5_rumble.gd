@@ -1,6 +1,6 @@
 extends Node
 
-const INTRO_CASTLE_CRUSH_2 = preload("res://sfx/IntroCastleCrush2.wav")
+const INTRO_CASTLE_CRUSH_2 = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
 #@onready var color_rect: ColorRect = $"../../LavaAnim/ColorRect"
 @onready var collision_shape_2d: CollisionShape2D = $"../../LavaAnim/Area2D/CollisionShape2D"
 @onready var lava_anim: Node2D = $"../../LavaAnim"
