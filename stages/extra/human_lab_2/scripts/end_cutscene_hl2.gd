@@ -1,9 +1,10 @@
 extends Node
 
-const ZAMEK_LECI = preload("res://sfx/ZamekLeci.wav")
+const ZAMEK_LECI = preload("res://engine/scenes/castle_cutscene/sounds/castle_fly.wav")
 const FALL = preload("res://engine/objects/enemies/spike_ceiling/sfx/fall.wav")
 const SND_LIGHTS_ON = preload("res://stages/extra/human_lab_2/objects/nyn/snd_lights_on.ogg")
 const BOWSER_DIED = preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav")
+const CASTLE_CRASH = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
 
 @onready var player: Player = Thunder._current_player
 @onready var castle = $"../Castle"
@@ -34,7 +35,7 @@ func _ready() -> void:
 	_moving = true
 	
 	await get_tree().create_timer(2.5, false).timeout
-	Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush2.wav"))
+	Audio.play_1d_sound(CASTLE_CRASH)
 	Thunder._current_camera.shock(2, Vector2(4, 4))
 	tw = create_tween().set_parallel().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.tween_property(hugebitch_bottom, "position:y", 528, 1.9)

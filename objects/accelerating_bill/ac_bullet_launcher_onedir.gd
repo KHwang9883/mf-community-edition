@@ -17,7 +17,7 @@ extends AnimatableBody2D
 @export var shooting_delay_min: float = 1.5
 @export var shooting_delay_max: float = 4.5
 @export_group("Sound")
-@export var shooting_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg")
+@export var shooting_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 @export var sound_pitch_min: float = 1.0
 @export var sound_pitch_max: float = 1.2
 

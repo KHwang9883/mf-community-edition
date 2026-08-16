@@ -1,7 +1,7 @@
 extends BowserAttack
 
 @export var projectile_inst: InstanceNode2D = preload("./bowser_attack_shoot_instance.tres")
-@export var flame_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg")
+@export var flame_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 @export var flame_delay: float = 1.15
 @export var flame_speed_x: float = 100
 @export_group("Animations")

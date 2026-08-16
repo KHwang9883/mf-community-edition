@@ -1,6 +1,8 @@
 @warning_ignore("missing_tool")
 extends Level
 
+const CASTLE_CRASH = preload("res://engine/scenes/castle_cutscene/sounds/castle_crash.wav")
+
 @export var climbing_scene: String = "res://stages/extra/climbing_minigame/climbing_lava_run.tscn"
 @export var climbing_set_difficulty := 0
 @export var climbing_after_scene: String = ""
@@ -32,7 +34,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Data.values.onetime_blocks = true
 	Thunder._current_player.left_right = 0
 	
-	Audio.play_1d_sound(preload("res://sfx/IntroCastleCrush2.wav"))
+	Audio.play_1d_sound(CASTLE_CRASH)
 	Thunder._current_camera.shock(9, Vector2(4, 4))
 	var tw = lava_bowser.create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC).set_parallel()
 	tw.tween_property(lava_bowser, "position:y", lava_bowser.position.y + 240, 4)

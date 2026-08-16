@@ -1,7 +1,7 @@
 extends Node
 
 const CASTLE_SMOKE = preload("res://engine/scenes/castle_cutscene/objects/castle_smoke.tscn")
-const ZAMEK_LECI = preload("res://sfx/ZamekLeci.wav")
+const ZAMEK_LECI = preload("res://engine/scenes/castle_cutscene/sounds/castle_fly.wav")
 const PIPE = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 const FALL = preload("res://sfx/comedy_cartoon_falling_tone.mp3")
 
