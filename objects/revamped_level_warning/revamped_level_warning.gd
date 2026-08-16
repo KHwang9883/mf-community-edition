@@ -45,10 +45,10 @@ func toggle(force_close: bool = false) -> void:
 		opened = !opened
 
 	if opened:
-		if ProfileManager.current_profile.data.get("advanced_edition", null):
-			selected_new.emit()
-			print("[RevampMessage] Advanced Edition Forced to new Level Design.")
-			return
+		#if ProfileManager.current_profile.data.get("advanced_edition", null):
+			#selected_new.emit()
+			#print("[RevampMessage] Advanced Edition Forced to new Level Design.")
+			#return
 		if !_warn_tweak:
 			if _remade_tweak:
 				selected_new.emit()
