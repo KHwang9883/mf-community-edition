@@ -9,9 +9,6 @@ func _ready() -> void:
 		Data.technical_values.erase("main_menu_scene")
 	KevinGlobal.activated = false
 	hide()
-	var _sel = Scenes.custom_scenes.pause.v_box_container.get_node("GoToMainMenu")
-	_sel.is_enabled = true
-	_sel.modulate.v = 1.0
 
 func _physics_process(delta: float) -> void:
 	if !is_inside_tree(): return
@@ -37,12 +34,10 @@ func on_skin_room_exit() -> void:
 	hide()
 	Thunder._disconnect(Scenes.scene_changed, _on_scene_changed)
 	skin_tweaks.focused = true
-	var _sel = Scenes.custom_scenes.pause.v_box_container.get_node("GoToMainMenu")
-	_sel.is_enabled = true
-	_sel.modulate.v = 1.0
 	if "temp_f4_key" in Data.technical_values:
 		SettingsManager.set_tweak("f4_keybind", Data.technical_values.temp_f4_key)
 		Data.technical_values.erase("temp_f4_key")
+	TransitionManager.clear_transition()
 	await get_tree().physics_frame
 	if !is_inside_tree(): return
 	Scenes.custom_scenes.pause.open_blocked = false
@@ -54,9 +49,6 @@ func _on_scene_changed(node: Node) -> void:
 	var menu = Data.technical_values.get("main_menu_scene")
 	if is_instance_valid(menu):
 		menu.free()
-	var _sel = Scenes.custom_scenes.pause.v_box_container.get_node("GoToMainMenu")
-	_sel.is_enabled = true
-	_sel.modulate.v = 1.0
 	Data.technical_values.erase("main_menu_scene")
 	if "temp_f4_key" in Data.technical_values:
 		SettingsManager.set_tweak("f4_keybind", Data.technical_values.temp_f4_key)
