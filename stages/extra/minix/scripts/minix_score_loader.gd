@@ -28,10 +28,15 @@ func _enter_tree() -> void:
 
 
 func _ensure_leaderboard_client() -> void:
+	var _override_path = OS.get_executable_path().get_base_dir().path_join("override.cfg")
+	if FileAccess.file_exists(_override_path):
+		print(_override_path)
+		return
 	if has_node(^"LeaderboardClient"):
 		leaderboard_client = get_node(^"LeaderboardClient")
 		return
 	if !ClassDB.class_exists(&"LeaderboardClient"):
+		print("[Minix Score Manager] Failed to load library!")
 		return
 	var client: Node = ClassDB.instantiate(&"LeaderboardClient")
 	client.name = &"LeaderboardClient"
