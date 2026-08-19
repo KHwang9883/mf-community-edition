@@ -90,15 +90,11 @@ func _handle_select(mouse_input: bool = false) -> void:
 			print("Warning: No suit tweaks for char: ", _char)
 		elif CharacterManager.suit_tweaks[_char].has(powerup_name):
 			var _quick_node = get_quick_node()
-			# Засовываем скин твики в память, чтоб там ее редачить
 			if !_quick_node.skin_tweaks.has(powerup_name):
-				# Ищем в файле жсон и берем оттуда
 				if SkinsManager.suit_tweaks.has(SkinsManager.current_skin) && SkinsManager.suit_tweaks[SkinsManager.current_skin].has(powerup_name):
 					_quick_node.skin_tweaks[powerup_name] = SkinsManager.suit_tweaks[SkinsManager.current_skin][powerup_name].duplicate(true)
-				# Если в жсоне нет, берем дефолтные
 				else:
 					_quick_node.skin_tweaks[powerup_name] = CharacterManager.suit_tweaks[_char][powerup_name].duplicate(true)
-			# Создаем опции для настройки скин твиков прямо из игры
 			for tweak in CharacterManager.suit_tweaks[_char][powerup_name]:
 				create_tweak_selection(tweak)
 	
@@ -148,8 +144,7 @@ func get_tweak_value(tweak) -> Variant:
 	return CharacterManager.suit_tweaks[CharacterManager.get_character_name()][powerup_name][tweak]
 
 func create_tweak_selection(tweak) -> void:
-	#prints(tweak, get_tweak_value(tweak))
-	# Булеан, чекмарк
+	# Boolean, checkbox
 	if get_tweak_value(tweak) is bool:
 		var _bool_tweak = BOOL_SUIT_TWEAK_SELECTION.instantiate()
 		_bool_tweak.get_node("Label").text = tweak.replacen("_", " ")
@@ -160,14 +155,14 @@ func create_tweak_selection(tweak) -> void:
 		move_to.add_child(_bool_tweak)
 		print(move_to)
 		Thunder.reorder_on_top_of(_bool_tweak, h_separator_spawn)
-	# Число, окно со спинбоксом
+	
+	# A number, window with a spinbox
 	elif get_tweak_value(tweak) is float:
 		_create_spinbox_selection(tweak, false)
 		
-	# То же
 	elif get_tweak_value(tweak) is int:
 		_create_spinbox_selection(tweak, true)
-	# Сабменю
+	# Submenu
 	elif get_tweak_value(tweak) is Dictionary:
 		var _submenu = SUBMENU_TWEAK_SELECTION.instantiate()
 		_submenu.get_node("Label").text = tweak.replacen("_", " ")
