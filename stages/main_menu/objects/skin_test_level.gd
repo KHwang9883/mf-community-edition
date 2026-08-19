@@ -1,3 +1,4 @@
+@warning_ignore("missing_tool")
 extends Stage2D
 
 @export var enable_restart_in_pause: bool = true
@@ -12,9 +13,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	Console.cv.item_display_shown = true
-	var _sel = Scenes.custom_scenes.pause.v_box_container.get_node("GoToMainMenu")
-	_sel.is_enabled = false
-	_sel.modulate.v = 0.5
+	Scenes.custom_scenes.pause.open_blocked = true
 	super()
 
 func _physics_process(delta: float) -> void:
@@ -26,7 +25,7 @@ func _physics_process(delta: float) -> void:
 	if 0 in Audio._music_channels:
 		Audio._music_channels[0].process_mode = Node.PROCESS_MODE_DISABLED
 	
-	if Input.is_action_just_pressed(&"a_delete"):
+	if Input.is_action_just_pressed(&"ui_cancel"):
 		Scenes.custom_scenes.pause.open_blocked = true
 		hide()
 		Scenes.current_scene = Data.technical_values.main_menu_scene

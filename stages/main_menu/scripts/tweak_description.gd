@@ -18,6 +18,7 @@ signal message_hidden
 
 func _ready() -> void:
 	reset_physics_interpolation()
+	hide()
 	box.scale = Vector2.ZERO
 	label_2.visible = false
 	tweaks.add_user_signal("_tweak_desc")
@@ -57,6 +58,8 @@ func _physics_process(delta: float) -> void:
 
 func show_description(desc: String, title: String) -> void:
 	message_shown.emit()
+	show()
+	reset_physics_interpolation()
 	box.scale = Vector2.ZERO
 	var btexture: TextureRect = $Box/Texture
 	text.text = desc

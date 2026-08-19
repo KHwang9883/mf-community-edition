@@ -37,6 +37,7 @@ var checking_tween: Tween
 var backup: int = 0
 
 func _ready() -> void:
+	
 	if is_in_main_menu:
 		main_menu_controls = $"../../Menu/MainMenuControls"
 		update_found = $"../UpdateFound"
@@ -47,7 +48,11 @@ func _ready() -> void:
 		update_found.visible = false
 	
 		await get_tree().create_timer(0.8, true, false, true).timeout
-	elif !Data.technical_values.get("skip_update_check"):
+	
+	if Data.technical_values.get("update_delayer"):
+		return
+	
+	if !is_in_main_menu && !Data.technical_values.get("skip_update_check"):
 		await get_tree().create_timer(0.3, false, false, true).timeout
 		print("[Update Checker] Checking for updates in Save Room...")
 		
@@ -155,8 +160,14 @@ func _checking_throw_error(soft: bool = false) -> void:
 
 
 func _checking_not_found() -> void:
+	var tw = Data.create_tween().set_ignore_time_scale().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tw.tween_interval(180.0)
+	tw.tween_callback(func(): Data.technical_values.update_delayer = false)
+	Data.technical_values.update_delayer = true
+	
 	if !is_in_main_menu:
 		Data.technical_values.skip_update_check = true
+		
 		print("[Update Checker] No updates found")
 		return
 	if checking_tween: checking_tween.kill()
