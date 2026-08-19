@@ -37,11 +37,12 @@ func suspended_game_logic() -> void:
 			profile.saved_player_state,
 			"Mario" if !!profile.get("saved_profile_data").get("mario_forever_expert") else ""
 		)
-		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(_suit)
+		var suit_frames: SpriteFrames = SkinsManager.apply_player_skin(_suit).duplicate()
 		state_preview.sprite_frames = suit_frames
 		loop_offset_behavior_script = ByNodeScript.activate_script(
 			LoopOffsetBehaviorScript, state_preview, {suit = _suit.name}
 		)
+		suit_frames.set_animation_loop_mode(&"walk", SpriteFrames.LoopMode.LOOP_LINEAR)
 		state_preview.play(&"walk")
 		if profile.saved_profile_data.get(&"kevin_mode_enabled"):
 			cursed_preview.sprite_frames = suit_frames

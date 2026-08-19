@@ -17,5 +17,5 @@ func _ready() -> void:
 	play(&"walk")
 
 func _physics_process(delta: float) -> void:
-	if animation != "walk":
-		play("walk")
+	if animation != &"walk":
+		play(&"walk")
