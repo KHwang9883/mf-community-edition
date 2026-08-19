@@ -23,15 +23,15 @@ func _handle_select(mouse_input: bool = false) -> void:
 			print("Warning: No suit tweaks for char: ", _char)
 		elif _default_tweaks[_char].has(_powerup) && _default_tweaks[_char][_powerup].has(tweak_name):
 			var _quick_node = get_quick_node()
-			# Засовываем скин твики в память, чтоб там ее редачить
+			# Putting skin tweaks into memory so we can edit them
 			if !_quick_node.skin_tweaks.has(powerup_name):
-				# Ищем в файле жсон и берем оттуда
+				# Finding a JSON file and importing stuff from it
 				if skin_tweaks.has(SkinsManager.current_skin) && skin_tweaks[SkinsManager.current_skin].has(_powerup) && skin_tweaks[SkinsManager.current_skin][_powerup].has(tweak_name):
 					_quick_node.skin_tweaks[powerup_name] = skin_tweaks[SkinsManager.current_skin][_powerup][tweak_name].duplicate(true)
-				# Если в жсоне нет, берем дефолтные
+				# If there's no JSON, loading defaults
 				else:
 					_quick_node.skin_tweaks[powerup_name] = _default_tweaks[_char][_powerup][tweak_name].duplicate(true)
-			# Создаем опции для настройки скин твиков прямо из игры
+			# Creating settings to configure skin tweaks right in the game
 			for tweak in _default_tweaks[_char][_powerup][tweak_name]:
 				create_tweak_selection(tweak)
 		
@@ -70,7 +70,7 @@ func get_tweak_value(tweak) -> Variant:
 	return CharacterManager.suit_tweaks[CharacterManager.get_character_name()][powerup_name][tweak_name][tweak]
 
 func create_tweak_selection(tweak) -> void:
-	# Булеан, чекмарк
+	# Boolean, checkbox
 	if get_tweak_value(tweak) is bool:
 		var _bool_tweak = BOOL_SUIT_TWEAK_SELECTION.instantiate()
 		_bool_tweak.get_node("Label").text = tweak.replacen("_", " ")
@@ -81,7 +81,7 @@ func create_tweak_selection(tweak) -> void:
 			_bool_tweak.tweak_description_text = tweak_descriptions[tweak]
 		move_to.add_child(_bool_tweak)
 		Thunder.reorder_on_top_of(_bool_tweak, h_separator_spawn)
-	# Число, окно со спинбоксом
+	# A number, window with a spinbox
 	elif get_tweak_value(tweak) is float && tweak_name != "loop_frame_offsets":
 		var _float_tweak = FLOAT_SUIT_TWEAK_SELECTION.instantiate()
 		_float_tweak.get_node("Label").text = tweak.replacen("_", " ")
@@ -101,7 +101,7 @@ func create_tweak_selection(tweak) -> void:
 				if "step" in tweak_descriptions[tweak]:
 					_float_tweak.spin_box.custom_arrow_step = tweak_descriptions[tweak].step
 		Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
-	# То же
+	# Same thing here
 	elif get_tweak_value(tweak) is int || (get_tweak_value(tweak) is float && tweak_name == "loop_frame_offsets"):
 		var _float_tweak = FLOAT_SUIT_TWEAK_SELECTION.instantiate()
 		_float_tweak.get_node("Label").text = tweak.replacen("_", " ")
@@ -125,7 +125,7 @@ func create_tweak_selection(tweak) -> void:
 				if "step" in tweak_descriptions[tweak]:
 					_float_tweak.spin_box.custom_arrow_step = tweak_descriptions[tweak].step
 		Thunder.reorder_on_top_of(_float_tweak, h_separator_spawn)
-	# Колор пикер
+	# Color picker
 	elif get_tweak_value(tweak) is String && get_tweak_value(tweak).is_valid_html_color():
 		var _color_tweak = COLOR_SUIT_TWEAK_SELECTION.instantiate()
 		_color_tweak.get_node("Label").text = tweak.replacen("_", " ")
@@ -136,7 +136,7 @@ func create_tweak_selection(tweak) -> void:
 		move_to.add_child(_color_tweak)
 		_color_tweak.color_rect.color = str(get_tweak_value(tweak))
 		Thunder.reorder_on_top_of(_color_tweak, h_separator_spawn)
-	# Вектор2, окно с двумя спинбоксами
+	# Vector2, window with 2 spinboxes
 	elif _is_vector2_tweak(get_tweak_value(tweak)):
 		var _vec_tweak = VECTOR2_SUIT_TWEAK_SELECTION.instantiate()
 		var _vec := _to_vector2(get_tweak_value(tweak))

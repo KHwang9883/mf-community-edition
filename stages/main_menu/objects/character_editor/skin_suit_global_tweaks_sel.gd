@@ -9,7 +9,6 @@ func _ready() -> void:
 		SettingsManager.settings_saved.connect(_update_text)
 
 func _handle_select(mouse_input: bool = false) -> void:
-	#if Data.technical_values.get("main_menu_scene"): return
 	if !SkinsManager.current_skin: return
 	# Custom skin
 	get_tree().call_group(&"_skin_suit_tweak", &"queue_free")
@@ -18,15 +17,15 @@ func _handle_select(mouse_input: bool = false) -> void:
 		printerr("Warning: No global skin tweaks for char: ", _char)
 		return
 	var _quick_node = get_quick_node()
-	# Засовываем скин твики в память, чтоб там ее редачить
+	# Putting skin tweaks into memory so we can edit them
 	if !_quick_node.skin_tweaks.has(powerup_name):
-		# Ищем в файле жсон и берем оттуда
+		# Finding a JSON file and importing stuff from it
 		if SkinsManager.misc_textures.has(SkinsManager.current_skin) && SkinsManager.misc_textures[SkinsManager.current_skin].has("global_skin_tweaks"):
 			_quick_node.skin_tweaks[powerup_name] = SkinsManager.misc_textures[SkinsManager.current_skin].global_skin_tweaks.duplicate(true)
-		# Если в жсоне нет, берем дефолтные
+		# If there's no JSON, loading defaults
 		else:
 			_quick_node.skin_tweaks[powerup_name] = CharacterManager.misc_textures[_char].global_skin_tweaks.duplicate(true)
-	# Создаем опции для настройки скин твиков прямо из игры
+	# Creating settings to configure skin tweaks right in the game
 	var sorted_dict: Dictionary = CharacterManager.misc_textures[_char].global_skin_tweaks.duplicate(true)
 	sorted_dict.sort()
 	for tweak in sorted_dict:
