@@ -15,6 +15,7 @@ var _current_timer: SceneTreeTimer
 var _post_death_timer: SceneTreeTimer
 
 func _ready() -> void:
+	Scenes.scene_shortcut_pressed.connect(reset_state)
 	node_2d.visible = false
 	node_2d2.modulate.a = 0
 	color_rect.modulate.a = 0
@@ -26,6 +27,15 @@ func _ready() -> void:
 		else:
 			active = false
 	)
+
+func reset_state() -> void:
+	deactivate()
+	node_2d.visible = false
+	node_2d2.modulate.a = 0
+	color_rect.modulate.a = 0
+	node_2d2.scale = Vector2.ONE * 2
+	Audio.stop_music_channel(1, false)
+
 
 func activate(wait_time: float) -> void:
 	if _current_timer:
@@ -48,9 +58,15 @@ func _post_death_activation() -> void:
 func music(wait_time: float = 0.0) -> void:
 	await get_tree().create_timer(max(0.52 - wait_time, 0.1), true, false, true).timeout
 	if !active: return
+	_play_jingle()
+
+
+func _play_jingle() -> void:
 	@warning_ignore("incompatible_ternary")
-	Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
+	await Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
 		1, {ignore_pause = true})
+	if !active:
+		Audio.stop_music_channel(1, false)
 
 
 func deactivate() -> void:
@@ -59,8 +75,10 @@ func deactivate() -> void:
 	get_tree().paused = false
 	if _post_death_timer:
 		Thunder._disconnect(_post_death_timer.timeout, _post_death_activation)
+		_post_death_timer = null
 	if _current_timer:
 		Thunder._disconnect(_current_timer.timeout, music)
+		_current_timer = null
 	Scenes.custom_scenes.pause.open_blocked = false
 
 
@@ -76,9 +94,7 @@ func _physics_process(delta: float) -> void:
 				Thunder._disconnect(_current_timer.timeout, music)
 				_current_timer = null
 				Audio._music_channels[1].queue_free()
-				@warning_ignore("incompatible_ternary")
-				Audio.play_music(LOLUDIED_SONG if randi_range(1, 100) != 1 else LOLUDIED_EASTER,
-					1, {ignore_pause = true})
+				_play_jingle()
 			
 		elif Input.is_action_just_pressed("ui_accept") || Input.is_physical_key_pressed(KEY_KP_ENTER):
 			Audio.stop_all_sounds()
