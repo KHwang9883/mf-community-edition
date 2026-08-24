@@ -31,6 +31,9 @@ func _physics_process(delta: float) -> void:
 				sprite.flip_v,
 				true,
 				0.05,
+				1.0,
+				null,
+				-1
 			)
 
 func collect() -> void:
