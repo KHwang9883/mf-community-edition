@@ -93,7 +93,7 @@ func _on_confirmation_dialog_confirmed() -> void:
 			SecretsManager.notify("All save profiles deleted")
 		"Achievements":
 			path = "user://achievements.thss"
-			var err := OS.move_to_trash(ProjectSettings.globalize_path(path))
+			var err := MobileCompat.remove_user_file(path)
 			if err != OK:
 				SecretsManager.notify_error("File does not exist")
 			else:
@@ -104,7 +104,7 @@ func _on_confirmation_dialog_confirmed() -> void:
 				SecretsManager.notify("Achievements have been reset")
 		"Tweaks":
 			path = "user://tweaks.thss"
-			var err := OS.move_to_trash(ProjectSettings.globalize_path(path))
+			var err := MobileCompat.remove_user_file(path)
 			if err != OK:
 				SecretsManager.notify_error("File does not exist")
 			else:
@@ -112,7 +112,7 @@ func _on_confirmation_dialog_confirmed() -> void:
 				SettingsManager.restart_application.call_deferred(false)
 		"Settings":
 			path = "user://settings.thss"
-			var err := OS.move_to_trash(ProjectSettings.globalize_path(path))
+			var err := MobileCompat.remove_user_file(path)
 			if err != OK:
 				SecretsManager.notify_error("File does not exist")
 			else:
@@ -120,7 +120,7 @@ func _on_confirmation_dialog_confirmed() -> void:
 				SettingsManager.restart_application.call_deferred(false)
 		"Minix":
 			path = "user://minigames.thss"
-			var err := OS.move_to_trash(ProjectSettings.globalize_path(path))
+			var err := MobileCompat.remove_user_file(path)
 			if err != OK:
 				SecretsManager.notify_error("File does not exist")
 			else:
