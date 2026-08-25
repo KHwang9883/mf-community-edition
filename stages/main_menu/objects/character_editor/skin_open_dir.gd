@@ -32,6 +32,8 @@ func _handle_right_click() -> void:
 
 func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
+	if MobileCompat.is_touch_device() && !is_docs:
+		return
 	if is_docs:
 		OS.shell_open("https://marioforever.space/topic/66/skin-pack-guide")
 		return

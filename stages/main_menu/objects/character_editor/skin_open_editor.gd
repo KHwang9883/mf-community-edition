@@ -66,6 +66,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 
 
 func accept():
+	if MobileCompat.is_touch_device():
+		return
 	var path: String = OS.get_executable_path().get_base_dir().path_join("Skin Editor")
 	if "Windows" in OS.get_name():
 		path += ".exe"
