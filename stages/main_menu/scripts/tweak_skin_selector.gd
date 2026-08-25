@@ -12,6 +12,7 @@ extends "res://stages/main_menu/scripts/tweak_category_sel.gd"
 #@onready var arrow_r: Label = $HBoxContainer/HBoxContainer/arrow
 
 const SKIN_PACK_SELECTION = preload("res://stages/main_menu/objects/character_editor/skin_pack_selection.tscn")
+const SKIN_IMPORT_ROW := preload("res://components/mobile/skin_import_row.gd")
 @export_color_no_alpha var COLOR_SELECTED_SKIN := Color(1.0, 0.895, 0.79)
 
 @onready var quick_settings_script: Node = $"../../SkinTweaks/HSeparatorSpawn/QuickSettingsScript"
@@ -38,8 +39,15 @@ func _on_button_selection_entered() -> void:
 		_skin_sel.add_to_group(&"_skin_selection")
 		move_to.add_child(_skin_sel)
 		move_to.move_child(_skin_sel, move_to.get_child_count() - 2)
-		
-	
+
+	if MobileCompat.is_touch_device():
+		var import_row := HBoxContainer.new()
+		import_row.set_script(SKIN_IMPORT_ROW)
+		import_row.add_to_group(&"_skin_selection")
+		move_to.add_child(import_row)
+		move_to.move_child(import_row, move_to.get_child_count() - 2)
+
+
 	move_to._update_selectors()
 	quick_settings_script._base_resize_menu(move_to)
 

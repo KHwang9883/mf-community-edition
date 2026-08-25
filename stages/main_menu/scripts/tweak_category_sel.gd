@@ -14,10 +14,12 @@ const SELECT_FAILURE = preload("res://engine/components/ui/_sounds/select_failur
 @onready var move_to: MenuItemsController = get_node_or_null(move_to_path)
 @onready var selector_to: MenuSelector = get_node_or_null(menu_selector_path)
 var _timer: float
+var _authored_reset_to: int
 
 signal selection_entered
 
 func _ready() -> void:
+	_authored_reset_to = reset_to
 	if valu:
 		valu.modulate.a = 0.0
 		_template = valu.text
@@ -41,6 +43,8 @@ func _physics_process(delta: float) -> void:
 func _handle_focused(focus) -> void:
 	super(focus)
 	if !focus: return
+	if valu:
+		_update_text()
 	if tweak_description_text:
 		$"../..".emit_signal(&"_tweak_desc", get_parent())
 
@@ -70,9 +74,13 @@ func _select_category() -> void:
 	camera_2d.update_limit()
 	camera_2d.reset_physics_interpolation()
 	await get_tree().physics_frame
-	
-	if reset_to >= 0:
-		get_parent().move_selector(reset_to, true)
+
+	var target := reset_to
+	var own_index: int = get_parent().selectors.find(self)
+	if _authored_reset_to > 0 && reset_to == _authored_reset_to && own_index >= 0:
+		target = own_index
+	if target >= 0:
+		get_parent().move_selector(target, true)
 	elif is_instance_valid(old_selector):
 		get_parent().move_selector(old_selector._current_item_index, true)
 	move_to.focused = true
@@ -82,6 +90,8 @@ func _select_category() -> void:
 
 var _template: String
 func _update_text() -> void:
+	if !focused:
+		return
 	var _events: Array[InputEvent] = InputMap.action_get_events(&"ui_accept")
 	var _event: String = "enter"
 	var _temp: String
