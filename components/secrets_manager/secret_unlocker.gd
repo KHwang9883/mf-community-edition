@@ -6,6 +6,7 @@ extends Node
 @export var show_progress_toast: bool = true
 @export var is_classic_achievement: Array[bool] = [false]
 @export var toast_text_overrides: Array[String] = [""]
+@export var unlock_kevin_even_if_from_middle: bool = false
 @export_category("Progress Achievement")
 @export var progress_by_id: String
 @export var progress_to: int
@@ -29,7 +30,7 @@ func unlock_with_kevin(id: int = 0) -> void:
 		if !KevinGlobal.activated:
 			print("[Secrets] ID %d check failed (secret mode)" % [id])
 			return
-		if ProfileManager.current_profile.data.get("started_from_middle", false):
+		if !unlock_kevin_even_if_from_middle && ProfileManager.current_profile.data.get("started_from_middle", false):
 			print("[Secrets] Profile was started from middle! Cancelling ID %d. (secret mode)" % [id])
 			return
 		_make_split(id)

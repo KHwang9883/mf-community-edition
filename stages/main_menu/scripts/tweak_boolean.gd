@@ -22,8 +22,8 @@ var is_blocked: bool
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
-	toggle.texture.region.position.y = 0 if tweak else 16
+	_update_toggle_visual()
+	SettingsManager.tweaks_updated.connect(_update_toggle_visual)
 	
 	if lock_behind_story_mode:
 		SecretsManager.secret_set.connect(unlock_blocked_tweak)
@@ -39,6 +39,13 @@ func unlock_blocked_tweak(_secret: String) -> void:
 	$Label.text = _old_tweak_title
 	is_blocked = false
 	tweak_description_text = _old_tweak_desc
+
+
+func _update_toggle_visual() -> void:
+	if Engine.is_editor_hint():
+		return
+	var tweak = SettingsManager.get_tweak(tweak_name, default_value)
+	toggle.texture.region.position.y = 0 if tweak else 16
 
 
 func _handle_focused(focus) -> void:
