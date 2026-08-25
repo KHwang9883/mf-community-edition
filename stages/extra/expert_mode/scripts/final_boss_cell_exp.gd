@@ -16,6 +16,10 @@ func cutscene() -> void:
 		return
 	
 	mario.ignore_input = true
+	if KevinGlobal.activated:
+		var kev = KevinGlobal._current_kevin
+		if is_instance_valid(kev):
+			kev.kevin_podokh()
 	
 	await get_tree().create_timer(1, false, true).timeout
 	if !is_instance_valid(mario):
