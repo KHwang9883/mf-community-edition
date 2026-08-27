@@ -21,8 +21,8 @@ const SECRET_CODE_TYPE = preload("res://sfx/secret_code_type.ogg")
 const KEVIN_ACTIVATED = preload("res://sfx/kevin_activated.ogg")
 const EVENT_WIN_LEVEL_ORIGINAL = preload("res://sfx/event_win_level_original.ogg")
 
-var is_pressed: bool
 var only_compat_activation: bool
+var _held_keys: Dictionary = {}
 
 func _ready() -> void:
 	node_2d.visible = false
@@ -38,14 +38,6 @@ func _physics_process(_delta: float) -> void:
 	
 	for i in range(progress):
 		text += string[i]
-	
-	if !Input.is_anything_pressed():
-		is_pressed = false
-	
-	if !only_compat_activation:
-		progress_process(progress, string, true)
-	if !SecretsManager.has_secret("hint_guy_encountered"):
-		progress_process(dumbprogress, dumbstring, false)
 	
 	if KevinGlobal.activated && music_loader.index == 0:
 		music_loader.index = 1
@@ -64,11 +56,49 @@ func _physics_process(_delta: float) -> void:
 			kevin_reset()
 			deactivated.emit()
 
-func progress_process(_progress: int, _string: String, real: bool) -> void:
-	if KevinGlobal.activated || is_pressed: return
-	if _progress >= len(_string): return
-	if Input.is_key_pressed(OS.find_keycode_from_string(_string[_progress])):
-		is_pressed = true
+func _is_modifier_key(keycode: Key) -> bool:
+	return keycode == KEY_SHIFT || keycode == KEY_CTRL || keycode == KEY_ALT || keycode == KEY_META
+
+func _has_other_keys_pressed(except_keycode: Key) -> bool:
+	for key in _held_keys:
+		if key == except_keycode:
+			continue
+		if Input.is_key_pressed(key):
+			return true
+	return false
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey && !event.is_echo() && !_is_modifier_key(event.keycode):
+		if event.pressed:
+			_held_keys[event.keycode] = true
+		else:
+			_held_keys.erase(event.keycode)
+	
+	if KevinGlobal.activated: return
+	if !(event is InputEventKey && event.is_pressed() && !event.is_echo()):
+		return
+	# Held modifiers shouldn't count as a new (wrong) key.
+	if _is_modifier_key(event.keycode):
+		return
+	var player: Player = Thunder._current_player
+	if !player: return
+	if player.warp != player.Warp.NONE: return
+	if player.no_movement: return
+	if !SecretsManager.is_endgame(): return
+	
+	if !only_compat_activation:
+		if progress_process(event.keycode, true):
+			return
+	if !SecretsManager.has_secret("hint_guy_encountered"):
+		progress_process(event.keycode, false)
+
+func progress_process(keycode: Key, real: bool) -> bool:
+	var _progress: int = progress if real else dumbprogress
+	var _string: String = string if real else dumbstring
+	if _progress >= len(_string): return false
+	if keycode == OS.find_keycode_from_string(_string[_progress]):
+		if _progress == 0 && _has_other_keys_pressed(keycode):
+			return false
 		if real:
 			progress += 1
 			dumbprogress = 0
@@ -91,14 +121,14 @@ func progress_process(_progress: int, _string: String, real: bool) -> void:
 			var _twe = kevin_label_fake.create_tween()
 			_twe.tween_interval(5.0)
 			_twe.tween_property(kevin_label_fake, "modulate:a", 0.0, 0.7)
-	elif Input.is_anything_pressed():
-		if real:
-			progress = 0
-		else:
-			dumbprogress = 0
-			is_pressed = true
-			kevin_label_fake.visible = false
-		text = ""
+		return true
+	if real:
+		progress = 0
+	else:
+		dumbprogress = 0
+		kevin_label_fake.visible = false
+	text = ""
+	return false
 
 func kevin_reset(no_music: bool = false) -> void:
 	if !no_music:
