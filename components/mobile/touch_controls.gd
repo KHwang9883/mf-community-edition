@@ -2,10 +2,15 @@ extends CanvasLayer
 
 const GAME_MOVE_ACTIONS: Array[StringName] = [&"m_left", &"m_right", &"m_up", &"m_down"]
 const UI_MOVE_ACTIONS: Array[StringName] = [&"ui_left", &"ui_right", &"ui_up", &"ui_down"]
+const DUMMY_ACTIONS: Array[StringName] = [&"vjoy_left", &"vjoy_right", &"vjoy_up", &"vjoy_down"]
+
+const STICK_DIGITAL_THRESHOLD := 0.25
 
 const OFFSET_KEYS: Array[String] = [
 	"touch_off_dpad", "touch_off_jump", "touch_off_fire", "touch_off_extra", "touch_off_pause",
 ]
+const STICK_SETTING := &"touch_stick"
+const DUAL_SETTING := &"touch_dual_mode"
 
 const ActionButton := preload("res://components/mobile/action_button.gd")
 
@@ -58,6 +63,11 @@ var jump_btn
 var fire_btn
 var extra_btn
 var pause_btn
+var stick: VirtualJoystick
+var _dpad_anchor := Vector2.ZERO
+var _stick_prev_ui := [false, false, false, false]
+var _stick_edit_finger := -1
+var _stick_edit_mouse := false
 
 
 func _ready() -> void:
@@ -79,6 +89,9 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if edit_mode:
+		_handle_stick_edit_input(event)
+
 	var was_touch := false
 	if event is InputEventScreenTouch || event is InputEventScreenDrag:
 		was_touch = true
@@ -93,6 +106,42 @@ func _input(event: InputEvent) -> void:
 	if was_touch != _last_device_was_touch:
 		_last_device_was_touch = was_touch
 		_sync_buttons.call_deferred()
+
+
+## Repositions the virtual stick while the touch layout editor is open.
+## The stick swallows presses as joystick input, so its drag is handled here,
+## in _input, before the GUI layer sees the event. The stick shares the
+## d-pad anchor & offset ("touch_off_dpad"), matching _relayout().
+func _handle_stick_edit_input(event: InputEvent) -> void:
+	if !stick_enabled() || !stick.visible:
+		return
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			if _stick_edit_finger == -1 \
+					&& stick.get_global_rect().has_point(event.position):
+				_stick_edit_finger = event.index
+				_on_dpad_drag(Vector2.ZERO, null, "touch_off_dpad")
+		elif event.index == _stick_edit_finger:
+			_stick_edit_finger = -1
+			_save_offsets()
+	elif event is InputEventScreenDrag:
+		if event.index == _stick_edit_finger:
+			_on_dpad_drag(event.relative, null, "touch_off_dpad")
+	elif event is InputEventMouseButton \
+			&& event.button_index == MOUSE_BUTTON_LEFT \
+			&& event.device != InputEvent.DEVICE_ID_EMULATION:
+		if event.is_pressed():
+			if !_stick_edit_mouse \
+					&& stick.get_global_rect().has_point(event.position):
+				_stick_edit_mouse = true
+				_on_dpad_drag(Vector2.ZERO, null, "touch_off_dpad")
+		elif _stick_edit_mouse:
+			_stick_edit_mouse = false
+			_save_offsets()
+	elif event is InputEventMouseMotion \
+			&& event.device != InputEvent.DEVICE_ID_EMULATION \
+			&& _stick_edit_mouse:
+		_on_dpad_drag(event.relative, null, "touch_off_dpad")
 
 
 func _physics_process(_delta: float) -> void:
@@ -112,6 +161,7 @@ func _physics_process(_delta: float) -> void:
 		_last_chooser_active = chooser
 		_last_popup_active = popup
 		_refresh_state()
+	_process_stick_digital()
 
 
 func refresh_popup_cache() -> void:
@@ -192,6 +242,19 @@ func _build_controls() -> void:
 	pause_btn = ActionButton.new([], "| |")
 	pause_btn.touch_pressed.connect(_press_pause)
 
+	stick = VirtualJoystick.new()
+	stick.joystick_mode = VirtualJoystick.JOYSTICK_FIXED
+	stick.visibility_mode = VirtualJoystick.VISIBILITY_ALWAYS
+	stick.deadzone_ratio = 0.15
+	stick.action_left = DUMMY_ACTIONS[0]
+	stick.action_right = DUMMY_ACTIONS[1]
+	stick.action_up = DUMMY_ACTIONS[2]
+	stick.action_down = DUMMY_ACTIONS[3]
+	add_child(stick)
+	for action in DUMMY_ACTIONS:
+		if !InputMap.has_action(action):
+			InputMap.add_action(action)
+
 	jump_btn.drag_moved.connect(_on_drag.bind(jump_btn, "touch_off_jump"))
 	fire_btn.drag_moved.connect(_on_drag.bind(fire_btn, "touch_off_fire"))
 	extra_btn.drag_moved.connect(_on_drag.bind(extra_btn, "touch_off_extra"))
@@ -228,13 +291,101 @@ func apply_settings() -> void:
 	_relayout()
 
 
+func stick_enabled() -> bool:
+	return SettingsManager.get_custom_setting("touch_stick", false)
+
+
+func set_stick_mode(on: bool) -> void:
+	SettingsManager.set_custom_setting("touch_stick", on)
+	if on:
+		SettingsManager.set_custom_setting("touch_dual_mode", false)
+	SettingsManager.save_settings()
+	_refresh_state()
+
+
+func use_dual_mode() -> bool:
+	return stick_enabled() && SettingsManager.get_custom_setting("touch_dual_mode", false)
+
+
+func set_dual_mode(on: bool) -> void:
+	SettingsManager.set_custom_setting("touch_dual_mode", on)
+	if on:
+		SettingsManager.set_custom_setting("touch_stick", true)
+	SettingsManager.save_settings()
+	_refresh_state()
+
+
+func _current_ui_mode() -> bool:
+	return _state == ViewState.MENU || (
+		get_tree().paused
+		|| (_pause_open_blocked() && !_in_skin_test_room())
+		|| (_hybrid_scene && _embedded_menu_active())
+	)
+
+
+func _release_stick() -> void:
+	for a in DUMMY_ACTIONS:
+		if Input.is_action_pressed(a):
+			Input.action_release(a)
+	var real := UI_MOVE_ACTIONS if _current_ui_mode() else GAME_MOVE_ACTIONS
+	for i in 4:
+		if _stick_prev_ui[i]:
+			MobileCompat.inject_action(real[i], false)
+			_stick_prev_ui[i] = false
+
+
+func _stick_analog() -> Vector2:
+	return Vector2(
+		Input.get_action_strength(DUMMY_ACTIONS[1]) - Input.get_action_strength(DUMMY_ACTIONS[0]),
+		Input.get_action_strength(DUMMY_ACTIONS[3]) - Input.get_action_strength(DUMMY_ACTIONS[2])
+	)
+
+
+func _snap_octant(vec: Vector2) -> int:
+	if vec.length_squared() < STICK_DIGITAL_THRESHOLD * STICK_DIGITAL_THRESHOLD:
+		return -1
+	var ang := atan2(vec.y, vec.x)
+	var idx := int(round(ang / (PI / 4.0)))
+	return ((idx % 8) + 8) % 8
+
+
+func _digitals_for_octant(idx: int) -> Array:
+	if idx < 0:
+		return [false, false, false, false]
+	match idx:
+		0: return [false, true, false, false]
+		1: return [false, true, false, true]
+		2: return [false, false, false, true]
+		3: return [true, false, false, true]
+		4: return [true, false, false, false]
+		5: return [true, false, true, false]
+		6: return [false, false, true, false]
+		7: return [false, true, true, false]
+	return [false, false, false, false]
+
+
+func _process_stick_digital() -> void:
+	if !stick_enabled() || edit_mode || !stick.visible:
+		_release_stick()
+		return
+	var want := _digitals_for_octant(_snap_octant(_stick_analog()))
+	var real := UI_MOVE_ACTIONS if _current_ui_mode() else GAME_MOVE_ACTIONS
+	for i in 4:
+		if want[i] != _stick_prev_ui[i]:
+			MobileCompat.inject_action(real[i], want[i])
+			_stick_prev_ui[i] = want[i]
+
+
 func set_layout_edit(on: bool) -> void:
 	if edit_mode == on:
 		return
 	edit_mode = on
+	_stick_edit_finger = -1
+	_stick_edit_mouse = false
 	if on:
 		for btn in _all_buttons():
 			btn.force_release()
+		_release_stick()
 	_last_device_was_touch = true
 	layout_edit_changed.emit(on)
 	_refresh_state()
@@ -269,21 +420,45 @@ func _load_offsets() -> void:
 
 func _on_dpad_drag(delta: Vector2, _btn, key: String) -> void:
 	if !_drag_base.has(key):
-		_drag_base[key] = {pos = dpad_buttons[0].position, off = _offsets[key]}
-	for b in dpad_buttons:
-		b.position += delta
-		_clamp_node(b, ds_size())
+		_drag_base[key] = {pos = _dpad_anchor, off = _offsets[key]}
+	_dpad_anchor += delta
+	_clamp_anchor()
 	var md := _min_dim()
-	_offsets[key] = _drag_base[key].off + (dpad_buttons[0].position - _drag_base[key].pos) / md
+	_offsets[key] = _drag_base[key].off + (_dpad_anchor - _drag_base[key].pos) / md
+	_relayout()
+
+
+func _clamp_anchor() -> void:
+	var win := DisplayServer.window_get_size()
+	var ds := ds_size()
+	_dpad_anchor.x = clampf(_dpad_anchor.x, ds * 1.0, win.x - ds * 1.0)
+	_dpad_anchor.y = clampf(_dpad_anchor.y, ds * 1.0, win.y - ds * 1.0)
 
 
 func _on_drag(delta: Vector2, btn, key: String) -> void:
 	if !_drag_base.has(key):
 		_drag_base[key] = {pos = btn.position, off = _offsets[key]}
 	btn.position += delta
+	_snap_to_axes(btn)
 	_clamp_node(btn, btn.size.x)
 	var md := _min_dim()
 	_offsets[key] = _drag_base[key].off + (btn.position - _drag_base[key].pos) / md
+
+
+## Snaps a dragged action button to the center axes of the other right-side
+## buttons (jump/fire/extra), so their centers can be aligned
+## horizontally or vertically in the layout editor.
+func _snap_to_axes(btn) -> void:
+	var threshold := maxf(12.0, _min_dim() * 0.02)
+	for other in [jump_btn, fire_btn, extra_btn]:
+		if other == btn || !is_instance_valid(other):
+			continue
+		var o_center: Vector2 = other.position + other.size * 0.5
+		var center: Vector2 = btn.position + btn.size * 0.5
+		if absf(center.x - o_center.x) < threshold:
+			btn.position.x = o_center.x - btn.size.x * 0.5
+		if absf(center.y - o_center.y) < threshold:
+			btn.position.y = o_center.y - btn.size.y * 0.5
 
 
 func _save_offsets() -> void:
@@ -335,7 +510,7 @@ func _relayout() -> void:
 	var ds := unit * 0.125
 	var gap := unit * 0.014
 	_default_positions.dpad = Vector2(l + ds * 1.55, win.y - b - ds * 1.55)
-	var dpad_center: Vector2 = _default_positions.dpad + _offsets.touch_off_dpad * minf(win.x, win.y)
+	_dpad_anchor = _default_positions.dpad + _offsets.touch_off_dpad * minf(win.x, win.y)
 	var offsets := [
 		Vector2(-(ds + gap), 0),
 		Vector2(ds + gap, 0),
@@ -344,9 +519,15 @@ func _relayout() -> void:
 	]
 	for i in dpad_buttons.size():
 		dpad_buttons[i].size = Vector2.ONE * ds
-		dpad_buttons[i].position = dpad_center + offsets[i] - Vector2.ONE * ds * 0.5
+		dpad_buttons[i].position = _dpad_anchor + offsets[i] - Vector2.ONE * ds * 0.5
 		dpad_buttons[i].font_size = int(ds * 0.26)
 		dpad_buttons[i].queue_redraw()
+
+	var stick_size := ds * 2.6
+	stick.joystick_size = stick_size
+	stick.tip_size = ds * 1.1
+	stick.size = Vector2.ONE * stick_size
+	stick.position = _dpad_anchor - Vector2.ONE * stick_size * 0.5
 
 	var az := unit * 0.155
 	_default_positions[jump_btn] = Vector2(win.x - r - az, win.y - b - az)
@@ -474,6 +655,9 @@ func _sync_buttons() -> void:
 		for btn in _all_buttons():
 			btn.force_release()
 			btn.visible = false
+		_release_stick()
+		stick.visible = false
+		stick.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		return
 	var paused := (
 		get_tree().paused
@@ -481,13 +665,38 @@ func _sync_buttons() -> void:
 		|| (_hybrid_scene && _embedded_menu_active())
 	)
 	var ui_mode := _state == ViewState.MENU || paused
+	var use_stick := stick_enabled()
+	var dual := use_dual_mode()
 
 	for i in dpad_buttons.size():
 		var target: Array = [] if edit_mode else [move_action_for(ui_mode, i)]
-		dpad_buttons[i].visible = active && _state != ViewState.PAUSE_ONLY
+		var dpad_active := false
+		if !use_stick || (dual && ui_mode):
+			dpad_active = active && _state != ViewState.PAUSE_ONLY
+		dpad_buttons[i].visible = dpad_active
 		dpad_buttons[i].input_locked = edit_mode
 		if dpad_buttons[i].actions != target:
 			dpad_buttons[i].set_actions(target)
+
+	if dual:
+		stick.visible = active && _state != ViewState.PAUSE_ONLY && !ui_mode
+	else:
+		stick.visible = active && _state != ViewState.PAUSE_ONLY && use_stick
+	var stick_consumes_input := (
+		stick.visible
+		&& _state != ViewState.PAUSE_ONLY
+		&& !(dual && ui_mode)
+	)
+	if edit_mode:
+		# Disable the built-in stick handling so presses can be used
+		# for repositioning in the layout editor instead.
+		stick.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		stick.mouse_filter = (
+			Control.MOUSE_FILTER_STOP if stick_consumes_input
+			else Control.MOUSE_FILTER_IGNORE
+		)
+	stick.modulate.a = 1.0 if edit_mode else ui_opacity()
 
 	jump_btn.input_locked = edit_mode
 	if edit_mode:

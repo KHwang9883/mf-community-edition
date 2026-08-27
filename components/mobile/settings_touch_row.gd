@@ -2,7 +2,6 @@ extends MenuSelection
 
 const ROW_FONT := preload("res://engine/fonts/font_variations/tweaks_font_var.tres")
 const VALUE_FONT := preload("res://engine/fonts/font_variations/tweaks_font_title.tres")
-const ARROW_FONT := preload("res://engine/fonts/junebug.ttf")
 const TOGGLE_SOUND := preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 const SIZE_PRESETS: Array[float] = [1.0, 1.25, 1.5, 1.75, 2.0, 2.5]
@@ -19,7 +18,7 @@ var _value_label: Label
 var _arrow_l: Label
 var _arrow_r: Label
 var _arrow_base := {}
-var _wobble_t := 0.0
+var _arrow_tweens := {}
 var _timer := 0.0
 
 
@@ -52,18 +51,31 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if !is_instance_valid(_arrow_l) || !is_instance_valid(_arrow_r):
 		return
-	_wobble_t += delta
-	for entry in [[_arrow_l, -3.0], [_arrow_r, 3.0]]:
+	for entry in [[_arrow_l, true], [_arrow_r, false]]:
 		var arrow: Label = entry[0]
 		if !arrow.visible:
 			continue
 		if !_arrow_base.has(arrow):
 			_arrow_base[arrow] = arrow.position
 			continue
-		arrow.position.x = _arrow_base[arrow].x + sin(_wobble_t * 8.0) * entry[1]
+		if !_arrow_tweens.has(arrow):
+			_start_arrow_tween(arrow, entry[1])
+
+
+func _start_arrow_tween(arrow: Label, left_side: bool) -> void:
+	var base: float = _arrow_base[arrow].x
+	var tw := create_tween().set_loops()
+	tw.tween_property(arrow, "position:x", base - (3.0 if left_side else -3.0), 0.2)
+	tw.tween_callback(func() -> void: arrow.position.x = base)
+	_arrow_tweens[arrow] = tw
 
 
 func _invalidate_arrow_base() -> void:
+	for arrow in _arrow_tweens:
+		var tw: Tween = _arrow_tweens[arrow]
+		if is_instance_valid(tw):
+			tw.kill()
+	_arrow_tweens.clear()
 	_arrow_base.clear()
 
 
@@ -92,8 +104,8 @@ func _make_arrow(left_side: bool) -> Label:
 	arrow.name = &"ArrowL" if left_side else &"ArrowR"
 	arrow.text = "<--" if left_side else "-->"
 	arrow.uppercase = true
-	arrow.add_theme_font_override(&"font", ARROW_FONT)
-	arrow.add_theme_font_size_override(&"font_size", 13)
+	arrow.add_theme_font_override(&"font", VALUE_FONT)
+	arrow.add_theme_font_size_override(&"font_size", 22)
 	arrow.add_theme_color_override(&"font_shadow_color", COLOR_SHADOW)
 	arrow.add_theme_color_override(&"font_outline_color", COLOR_OUTLINE)
 	arrow.add_theme_constant_override(&"line_spacing", 1)
@@ -112,6 +124,8 @@ func _row_name() -> String:
 			return "TOUCH LAYOUT"
 		"reset":
 			return "RESET TOUCH LAYOUT"
+		"stick":
+			return "MOVE INPUT"
 	return "TOUCH SIZE"
 
 
@@ -145,6 +159,13 @@ func _refresh_label() -> void:
 			_value_label.text = ""
 		"reset":
 			_value_label.text = ""
+		"stick":
+			if TouchControls.use_dual_mode():
+				_value_label.text = "DUAL"
+			elif TouchControls.stick_enabled():
+				_value_label.text = "STICK"
+			else:
+				_value_label.text = "D-PAD"
 	_invalidate_arrow_base.call_deferred()
 	_sync_arrows()
 
@@ -171,6 +192,21 @@ func _cycle(direction: int) -> void:
 	match kind:
 		"layout":
 			TouchControls.set_layout_edit(!TouchControls.edit_mode)
+			_play_toggle_sound()
+		"stick":
+			# Cycle order: D-PAD -> STICK -> DUAL -> D-PAD. Any direction
+			# follows this loop so the sequence never gets confusing.
+			var mode := 0
+			if TouchControls.use_dual_mode():
+				mode = 2
+			elif TouchControls.stick_enabled():
+				mode = 1
+			mode = wrapi(mode + direction, 0, 3)
+			TouchControls.set_dual_mode(mode == 2)
+			if mode == 1:
+				TouchControls.set_stick_mode(true)
+			elif mode == 0:
+				TouchControls.set_stick_mode(false)
 			_play_toggle_sound()
 		_:
 			var presets := _presets()

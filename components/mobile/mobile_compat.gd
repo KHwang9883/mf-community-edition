@@ -310,6 +310,7 @@ func _inject_touch_rows(page: Node) -> void:
 		["TouchSize", "size"],
 		["TouchOpacity", "opacity"],
 		["TouchLayout", "layout"],
+		["TouchStick", "stick"],
 		["TouchReset", "reset"],
 	]:
 		var row := HBoxContainer.new()
