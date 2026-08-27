@@ -165,7 +165,10 @@
 [ext_resource type="Script" uid="uid://gxt6safn8vkx" path="res://stages/save_game_room/scripts/pipe_skip_tween.gd" id="119_ur33w"]
 [ext_resource type="PackedScene" uid="uid://ckcy2nk2urb4f" path="res://stages/save_game_room/objects/achievements_ce_p3.tscn" id="125_4dwkg"]
 [ext_resource type="Texture2D" uid="uid://c8hv4q5tiekro" path="res://gfx/sign/arrow_left.png" id="125_p8qum"]
+[ext_resource type="Script" uid="uid://bbplmsebpp6d0" path="res://stages/save_game_room/scripts/secrets_table.gd" id="126_5w725"]
+[ext_resource type="Script" uid="uid://blwm21ur7hf3c" path="res://stages/save_game_room/scripts/kevin_mode_mastery.gd" id="126_kraha"]
 [ext_resource type="PackedScene" uid="uid://ca0aliep75hsg" path="res://stages/save_game_room/objects/achievements_ce_p4.tscn" id="126_q1lqq"]
+[ext_resource type="Script" uid="uid://b4r3e1yygl5s" path="res://stages/save_game_room/scripts/secrets_table_achievement.gd" id="127_kraha"]
 [ext_resource type="Texture2D" uid="uid://bgvmhpdvcdrpp" path="res://gfx/sign/sign_minix_welcome.png" id="127_tmf5d"]
 [ext_resource type="Script" uid="uid://bv7yjtyu01w7u" path="res://stages/save_game_room/scripts/label_secret_react.gd" id="129_hhyol"]
 [ext_resource type="Script" uid="uid://c21fnrg010psg" path="res://stages/save_game_room/scripts/kevin_hint_save_room.gd" id="130_ql23r"]
@@ -1124,6 +1127,22 @@ size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pdu7e"]
 size = Vector2(64, 32)
+
+[sub_resource type="FontVariation" id="FontVariation_py0iw"]
+base_font = ExtResource("78_vkeyl")
+variation_embolden = 0.3
+variation_transform = Transform2D(1.2, 0, 0, 0.6, 0, 0)
+spacing_glyph = 2
+spacing_top = -8
+spacing_bottom = -2
+
+[sub_resource type="FontVariation" id="FontVariation_lvqia"]
+base_font = ExtResource("78_vkeyl")
+variation_embolden = 0.3
+variation_transform = Transform2D(1.2, 0, 0, 0.6, 0, 0)
+spacing_glyph = 2
+spacing_top = -12
+spacing_bottom = -5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur33w"]
 size = Vector2(64, 32)
@@ -4959,15 +4978,202 @@ uppercase = true
 
 [node name="LabelPercent" type="Label" parent="Objects" unique_id=2133506788]
 offset_left = -1216.0
-offset_top = -928.0
+offset_top = -920.0
 offset_right = -704.0
-offset_bottom = -880.0
+offset_bottom = -888.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 32
 text = "%.2f%%"
 horizontal_alignment = 1
+uppercase = true
+
+[node name="SuperAchievements" type="Control" parent="Objects" unique_id=1106245718]
+unique_name_in_owner = true
+process_mode = 4
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1216.0
+offset_top = -856.0
+offset_right = -704.0
+offset_bottom = -640.0
+script = ExtResource("126_kraha")
+
+[node name="Label27" type="Label" parent="Objects/SuperAchievements" unique_id=307503395]
+layout_mode = 0
+offset_top = -16.0
+offset_right = 512.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.69411767, 0.42745098, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_7uvh2")
+theme_override_font_sizes/font_size = 28
+text = "KEVIN MODE MASTERY"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Objects/SuperAchievements" unique_id=95438985]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 23.0
+offset_right = 432.0
+offset_bottom = 97.0
+theme_override_constants/separation = 2
+script = ExtResource("126_5w725")
+
+[node name="ExpertMaster" type="HBoxContainer" parent="Objects/SuperAchievements/VBoxContainer" unique_id=1241028315]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("127_kraha")
+secret_id = "expert mode kevin master"
+
+[node name="Label7" type="Label" parent="Objects/SuperAchievements/VBoxContainer/ExpertMaster" unique_id=368116990]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_py0iw")
+theme_override_font_sizes/font_size = 20
+text = "expert mode warpless"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/SuperAchievements/VBoxContainer/ExpertMaster" unique_id=175491133]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_lvqia")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Achievement4" type="HBoxContainer" parent="Objects/SuperAchievements/VBoxContainer" unique_id=651866141]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("127_kraha")
+secret_id = "otherworld in kevin mode"
+progress_to = 8
+
+[node name="Label7" type="Label" parent="Objects/SuperAchievements/VBoxContainer/Achievement4" unique_id=646701390]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_py0iw")
+theme_override_font_sizes/font_size = 20
+text = "all otherworld levels"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/SuperAchievements/VBoxContainer/Achievement4" unique_id=1645663795]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_lvqia")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="UMaster" type="HBoxContainer" parent="Objects/SuperAchievements/VBoxContainer" unique_id=1562234629]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("127_kraha")
+secret_id = "world u kevin master"
+
+[node name="Label7" type="Label" parent="Objects/SuperAchievements/VBoxContainer/UMaster" unique_id=463537212]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_py0iw")
+theme_override_font_sizes/font_size = 20
+text = "all world u difficulties"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/SuperAchievements/VBoxContainer/UMaster" unique_id=70375885]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_lvqia")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="SyzxMaster" type="HBoxContainer" parent="Objects/SuperAchievements/VBoxContainer" unique_id=1909170304]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("127_kraha")
+secret_id = "syzx worlds kevin master"
+
+[node name="Label7" type="Label" parent="Objects/SuperAchievements/VBoxContainer/SyzxMaster" unique_id=2098464754]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_py0iw")
+theme_override_font_sizes/font_size = 20
+text = "all advance syzxchulun worlds"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/SuperAchievements/VBoxContainer/SyzxMaster" unique_id=893384883]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_lvqia")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Achievement5" type="HBoxContainer" parent="Objects/SuperAchievements/VBoxContainer" unique_id=659122481]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("127_kraha")
+secret_id = "world u secret levels in kevin mode"
+progress_to = 4
+count_for_percent_as_one = true
+
+[node name="Label7" type="Label" parent="Objects/SuperAchievements/VBoxContainer/Achievement5" unique_id=1657390206]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_py0iw")
+theme_override_font_sizes/font_size = 20
+text = "all world u hidden levels"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Toggle" type="Label" parent="Objects/SuperAchievements/VBoxContainer/Achievement5" unique_id=1836734170]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.533333, 0.439216, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_lvqia")
+theme_override_font_sizes/font_size = 28
+text = "no"
+horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
@@ -5725,7 +5931,7 @@ uppercase = true
 
 [node name="Label25" type="Label" parent="Scenery" unique_id=260797330]
 offset_left = -1216.0
-offset_top = -976.0
+offset_top = -968.0
 offset_right = -704.0
 offset_bottom = -944.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
@@ -5734,7 +5940,6 @@ theme_override_fonts/font = ExtResource("22_7uvh2")
 theme_override_font_sizes/font_size = 28
 text = "TOTAL ACHIEVEMENT PROGRESS:"
 horizontal_alignment = 1
-vertical_alignment = 1
 uppercase = true
 
 [node name="Sign5" type="Sprite2D" parent="Scenery" unique_id=522970183]

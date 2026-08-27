@@ -14,6 +14,7 @@ extends Node2D
 @onready var init_pos: Vector2 = pipes[0].position
 @onready var label_percent: Label = $"../LabelPercent"
 @onready var label_page_1: Label = $"../RewardText/LabelPage1"
+@onready var super_achievements: Control = %SuperAchievements
 
 var page: int = 0
 var total_pages: int = 4
@@ -39,14 +40,16 @@ func _ready() -> void:
 	for i in pipes:
 		total_achievements += i.achievements_number
 		total_unlocked += i.achievements_unlocked
-		prints("%d / %d" % [i.achievements_unlocked, i.achievements_number])
 	total_achievements += classic_page.achievements_number
 	total_unlocked += classic_page.achievements_unlocked
+	prints("%d / %d" % [total_unlocked, total_achievements])
 	completion = (float(total_unlocked) / float(total_achievements)) * 100.0
 	if is_nan(completion):
 		completion = 0
 	print("completion: %.2f%%" % completion)
 	label_percent.text %= completion
+	if is_equal_approx(completion, 100.0):
+		super_achievements.activate_branch()
 
 
 func left_bumped() -> void:
