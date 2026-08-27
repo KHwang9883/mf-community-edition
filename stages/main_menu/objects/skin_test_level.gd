@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		Audio.stop_music_channel(1, false) # game over
 		Audio.stop_music_channel(98, false) # starman
 		if 0 in Audio._music_channels:
-			Audio._music_channels[0].process_mode = Node.PROCESS_MODE_INHERIT
+			Audio._music_channels[0].process_mode = Node.PROCESS_MODE_ALWAYS
 		_is_stage_ready = false
 		await get_tree().physics_frame
 		queue_free()
