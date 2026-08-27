@@ -8,6 +8,8 @@
 [![License][license-img]](LICENSE.txt)
 [![Discord][discord-img]][discord-link]
 
+**English** | [中文](README.zh.md)
+
 A community remake of [Mario Forever][mf-wiki] by Buziol Games, rebuilt in [Godot 4][godot-link] on [Thunder Engine](https://github.com/Thunder-Engine-Dev/thunder-engine).
 
 Free, non-commercial fan project by [Meteo Dream](https://github.com/meteo-dream). Not affiliated with Nintendo or Buziol Games.
@@ -105,7 +107,7 @@ This project uses a [non-commercial fan-project license](LICENSE.txt). The licen
 Most bundled graphics, music, sound, characters, and original Mario Forever levels are **derivative works**. Nintendo IP stays with Nintendo. Mario Forever content stays with Buziol Games. Ports such as Squario, Mario Forever Flash, Syzxchulun worlds, and World U stay with their original authors. See [LICENSE](LICENSE.txt) for the full asset classification.
 
 
-The [engine/](engine/) submodule's original source code is licensed under the [BSD 2-Clause License](engine/LICENSE). That license does **not** cover Nintendo characters, names, graphics, music, or anything based on them bundled with the engine; those remain Nintendo's property. See [engine/LICENSE](engine/LICENSE) and [engine/README.md](engine/README.md).
+The [engine/](engine/) submodule's original source code is licensed under the [BSD 2-Clause License](https://github.com/Thunder-Engine-Dev/thunder-engine/blob/main/LICENSE). That license does **not** cover Nintendo characters, names, graphics, music, or anything based on them bundled with the engine; those remain Nintendo's property. See [engine/LICENSE](https://github.com/Thunder-Engine-Dev/thunder-engine/blob/main/LICENSE) and [engine/README.md](https://github.com/Thunder-Engine-Dev/thunder-engine/blob/main/README.md).
 
 [godot-img]: https://img.shields.io/badge/Godot-4.7-478cbf?logo=godot-engine&logoColor=white
 [godot-link]: https://godotengine.org

@@ -8,6 +8,8 @@
 [![License][license-img]](LICENSE.txt)
 [![Discord][discord-img]][discord-link]
 
+[English](README.md) | **中文**
+
 由 Buziol Games 制作的 [Mario Forever][mf-wiki] 社区重制版，基于 [Godot 4][godot-link] 和 [Thunder Engine](https://github.com/Thunder-Engine-Dev/thunder-engine) 重新构建。
 
 由 [Meteo Dream](https://github.com/meteo-dream/meteo-dream) 打造的免费、非商业同人项目。与任天堂（Nintendo）或 Buziol Games 没有任何关联。
@@ -105,7 +107,7 @@ git submodule update --init --recursive
 随附的大部分图像、音乐、音效、角色以及原版 Mario Forever 关卡均属于**衍生作品**。任天堂 IP 仍归任天堂所有。Mario Forever 的相关内容仍归 Buziol Games 所有。Squario、Mario Forever Flash、Syzxchulun 世界和 World U 等移植作品仍归其原作者所有。完整的资产分类请参见 [LICENSE](LICENSE.txt)。
 
 
-`engine/` 子模块源代码采用 [BSD 2-Clause License](engine/LICENSE) 授权。该许可证**不适用于**随引擎附带的任天堂角色、名称、图像、音乐以及任何基于这些内容制作的内容；这些内容仍归任天堂所有。详见 [engine/LICENSE](engine/LICENSE) 和 [engine/README.md](engine/README.md)。
+`engine/` 子模块源代码采用 [BSD 2-Clause License](https://github.com/Thunder-Engine-Dev/thunder-engine/blob/main/LICENSE) 授权。该许可证**不适用于**随引擎附带的任天堂角色、名称、图像、音乐以及任何基于这些内容制作的内容；这些内容仍归任天堂所有。详见 [engine/LICENSE](https://github.com/Thunder-Engine-Dev/thunder-engine/blob/main/LICENSE) 和 [engine/README.md](https://github.com/Thunder-Engine-Dev/thunder-engine/blob/main/README.md)。
 
 [godot-img]: https://img.shields.io/badge/Godot-4.7-478cbf?logo=godot-engine&logoColor=white
 [godot-link]: https://godotengine.org
