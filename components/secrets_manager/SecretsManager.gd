@@ -20,6 +20,7 @@ var _tween_game_save: Tween
 @onready var vignette: Sprite2D = $Vignette
 @onready var saved: Control = $Saved
 @onready var notif_root: Control = $Control
+@onready var notification_box: VBoxContainer = %NotificationBox
 
 var _overlay_layer: CanvasLayer
 var _overlay_holder: Control
@@ -221,7 +222,7 @@ func notify(text: String, outline_color: Color = Color(0.505, 1, 0.34)) -> void:
 	styleb.border_color = outline_color
 	panel_c.add_theme_stylebox_override(&"panel", styleb)
 	notif.get_child(0).get_child(0).get_child(0).text = text
-	%NotificationBox.add_child(notif)
+	notification_box.add_child(notif)
 	notif.modulate.a = 0.0
 	var __tw = notif.create_tween()
 	__tw.tween_property(notif, "modulate:a", 1.0, 0.3)
