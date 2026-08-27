@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://cyhfdmwkwu7x5" path="res://objects/revamped_level_warning/revamp_fckoff.gd" id="8_jmtey"]
 [ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="9_ayvkh"]
 [ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="11_anq62"]
-[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="11_f2sdj"]
+[ext_resource type="Script" uid="uid://b3j5nkqkpkikr" path="res://engine/scripts/nodes/ui/input_rich_text_label.gd" id="11_f2sdj"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="13_06asx"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
@@ -245,7 +245,7 @@ grow_horizontal = 2
 texture = SubResource("AtlasTexture_s7bic")
 stretch_mode = 3
 
-[node name="Label11" type="Label" parent="Control" unique_id=1243653349]
+[node name="Label11" type="RichTextLabel" parent="Control" unique_id=1243653349]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -255,21 +255,28 @@ offset_top = -176.0
 offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.937255, 0.941176, 1, 1)
+clip_contents = false
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.937255, 0.941176, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.235294, 1)
-theme_override_constants/line_spacing = 1
+theme_override_constants/line_separation = 1
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = SubResource("FontVariation_hc0wu")
-theme_override_font_sizes/font_size = 22
+theme_override_fonts/normal_font = SubResource("FontVariation_hc0wu")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
 text = "This level has two versions.
 choose which one to play.
 
-press %s for more information."
+press {ui_select} for more information."
+scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
-uppercase = true
 script = ExtResource("11_f2sdj")
-action = "ui_select"
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
 
 [node name="Node" type="Node" parent="Control" unique_id=416640555]
 script = ExtResource("11_anq62")

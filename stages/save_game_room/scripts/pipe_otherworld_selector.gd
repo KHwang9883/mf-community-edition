@@ -200,6 +200,8 @@ func _update_reset_labels() -> void:
 	#if reset_node.unlock:
 		#reset_node.unlock.visible = _star_world
 	reset_node.unlock2.visible = _star_world
+	if reset_node.unlock2.has_method(&"set_hold_up_to_select_level"):
+		reset_node.unlock2.set_hold_up_to_select_level(false)
 	
 	reset_node.secrets.visible = true
 	if no_secrets_label || !secret_name:

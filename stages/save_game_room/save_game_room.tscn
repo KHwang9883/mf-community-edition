@@ -124,7 +124,7 @@
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="76_g6rab"]
 [ext_resource type="Script" uid="uid://dksfhwoyiedi6" path="res://stages/save_game_room/scripts/kevin_activate.gd" id="77_s7vb4"]
 [ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="78_vkeyl"]
-[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="78_yjld5"]
+[ext_resource type="Script" uid="uid://b3j5nkqkpkikr" path="res://engine/scripts/nodes/ui/input_rich_text_label.gd" id="78_yjld5"]
 [ext_resource type="Script" uid="uid://da433lpjdpl3i" path="res://stages/save_game_room/scripts/select_level_label.gd" id="79_ntcy7"]
 [ext_resource type="AudioStream" uid="uid://cbw3tcy4guuc3" path="res://objects/chorniy_mario/death_sounds/sb.ogg" id="79_tlm30"]
 [ext_resource type="Script" uid="uid://bwktxjghp0fwl" path="res://stages/save_game_room/scripts/scripted_events.gd" id="82_cj338"]
@@ -1179,13 +1179,6 @@ colors = PackedColorArray(0.51, 0, 0.00849987, 0.705882)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_hyfrs"]
 gradient = SubResource("Gradient_tv66u")
 width = 284
-
-[sub_resource type="LabelSettings" id="LabelSettings_p8qum"]
-font = ExtResource("22_7uvh2")
-font_size = 26
-outline_size = 8
-outline_color = Color(0, 0, 0.341176, 1)
-shadow_size = 0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_um1io"]
 atlas = ExtResource("59_52xgh")
@@ -4297,43 +4290,68 @@ offset_bottom = -10.0
 size_flags_vertical = 3
 theme_override_constants/separation = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Reset/VBoxContainer" unique_id=1831422977]
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/Reset/VBoxContainer" unique_id=1831422977]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
-text = "TO DELETE A SAVE, HOLD %s FOR 3 SEC."
+theme_override_fonts/normal_font = ExtResource("22_7uvh2")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+text = "TO DELETE A SAVE, HOLD {a_delete} FOR 3 SEC."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 1
-uppercase = true
 script = ExtResource("78_yjld5")
-action = "a_delete"
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
 
-[node name="Unlock" type="Label" parent="CanvasLayer/Reset/VBoxContainer" unique_id=811560856]
+[node name="Unlock" type="RichTextLabel" parent="CanvasLayer/Reset/VBoxContainer" unique_id=811560856]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
-text = "to select a world, press %s."
+theme_override_fonts/normal_font = ExtResource("22_7uvh2")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+text = "to select a world, press {a_tab}."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 1
-uppercase = true
 script = ExtResource("78_yjld5")
-action = "a_tab"
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
 
-[node name="Unlock2" type="Label" parent="CanvasLayer/Reset/VBoxContainer" unique_id=1133359553]
+[node name="Unlock2" type="RichTextLabel" parent="CanvasLayer/Reset/VBoxContainer" unique_id=1133359553]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
+theme_override_fonts/normal_font = ExtResource("22_7uvh2")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
 text = "to select a level, use corresponding number buttons."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 1
-uppercase = true
 script = ExtResource("79_ntcy7")
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
 
 [node name="Secrets" type="Label" parent="CanvasLayer/Reset/VBoxContainer" unique_id=1996004996]
 visible = false
@@ -4384,31 +4402,48 @@ offset_bottom = -10.0
 size_flags_vertical = 3
 theme_override_constants/separation = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Reset2/VBoxContainer" unique_id=100580737]
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/Reset2/VBoxContainer" unique_id=100580737]
 visible = false
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
-text = "TO DELETE A SAVE, PRESS AND HOLD %s FOR 3 SEC."
+theme_override_fonts/normal_font = ExtResource("22_7uvh2")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+text = "TO DELETE A SAVE, PRESS AND HOLD {a_delete} FOR 3 SEC."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 1
-uppercase = true
 script = ExtResource("78_yjld5")
-action = "a_delete"
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
 
-[node name="Unlock2" type="Label" parent="CanvasLayer/Reset2/VBoxContainer" unique_id=1314156320]
+[node name="Unlock2" type="RichTextLabel" parent="CanvasLayer/Reset2/VBoxContainer" unique_id=1314156320]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
+theme_override_fonts/normal_font = ExtResource("22_7uvh2")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
 text = "to select a level, use corresponding number buttons."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 1
-uppercase = true
 script = ExtResource("79_ntcy7")
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
 
 [node name="Secrets" type="Label" parent="CanvasLayer/Reset2/VBoxContainer" unique_id=1863107069]
 visible = false
@@ -5549,16 +5584,6 @@ unique_name_in_owner = true
 position = Vector2(112, 608)
 message = "Would you like to start the Frog Challenge?"
 
-[node name="MessageExpertKevin" parent="." unique_id=883562069 instance=ExtResource("115_nqbov")]
-unique_name_in_owner = true
-position = Vector2(144, 608)
-message = "Expert mode with Kevin has not been tested, so completing it is not guaranteed. You might get stuck on some level.
-Try warping again to continue anyway."
-font_size = 26
-box_size = Vector2(320, 128)
-message_label_settings = SubResource("LabelSettings_p8qum")
-hide_by_accept_cancel = true
-
 [node name="Scenery" type="Node2D" parent="." unique_id=1583176285]
 
 [node name="SpringHalftiles" type="Sprite2D" parent="Scenery" unique_id=264094541]
@@ -5608,21 +5633,29 @@ amplitude = Vector2(0, 15)
 phase = 180.0
 frequency = 2.0
 
-[node name="Label" type="Label" parent="Scenery/Node2D2" unique_id=818328558]
+[node name="Label" type="RichTextLabel" parent="Scenery/Node2D2" unique_id=818328558]
+clip_contents = false
 offset_left = 802.0
 offset_top = 176.0
 offset_right = 1245.0
 offset_bottom = 224.0
+focus_mode = 0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/line_separation = 3
 theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("22_7uvh2")
-theme_override_font_sizes/font_size = 21
+theme_override_fonts/normal_font = ExtResource("22_7uvh2")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
 text = "YOU CAN EXCHANGE SOME LIVES FOR ONE OF THESE ITEMS!!!
 BUT BE CAREFUL, SOMETIMES LIVES ARE MORE IMPORTANT THAN THIS STUFF."
+scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 1
-uppercase = true
 script = ExtResource("88_ctl7w")
-action = "m_up"
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
 
 [node name="Label" type="Label" parent="Scenery" unique_id=1156180588]
 offset_left = 752.0

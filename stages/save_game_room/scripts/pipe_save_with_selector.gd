@@ -56,7 +56,7 @@ var _star_sel_level: int
 @onready var message_block_2: AnimatableBody2D = %MessageBlock2
 @onready var message_block_choicer: AnimatableBody2D = %MessageBlockChoicer
 @onready var message_warning: String = message_block_2.message
-@onready var message_expert_kevin: AnimatableBody2D = %MessageExpertKevin
+#@onready var message_expert_kevin: AnimatableBody2D = %MessageExpertKevin
 var faster_deletion_tw: bool
 
 signal save_deleted
@@ -127,8 +127,8 @@ func _physics_process(delta: float) -> void:
 		player.up_down = 0
 		if show_kevin_not_tested_warning && KevinGlobal.activated && !kevin_not_tested_asked:
 			kevin_not_tested_asked = true
-			message_expert_kevin.show_message()
-			return
+			#message_expert_kevin.show_message()
+			#return
 		if !cheat_warned && (console_enabled || save_is_cheated):
 			message_block_2.message = (
 				message_warning_from_save if save_is_cheated \
@@ -291,6 +291,8 @@ func _update_reset_labels() -> void:
 	if reset_node.unlock:
 		reset_node.unlock.visible = (_star_world || allow_selecting_worlds) && len(level_count) > 1
 	reset_node.unlock2.visible = _star_world
+	if reset_node.unlock2.has_method(&"set_hold_up_to_select_level"):
+		reset_node.unlock2.set_hold_up_to_select_level(true)
 	reset_node.secrets.visible = false
 	reset_node.deaths.visible = false
 	

@@ -40,7 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://jljkmhjfalxq" path="res://gfx/texts/signs/1-4_run.png" id="36_5ihu6"]
 [ext_resource type="PackedScene" uid="uid://boprmwc4aw1lr" path="res://engine/objects/bumping_blocks/question_block/templates/gray/Gray Coin Question Block.tscn" id="36_b28n6"]
 [ext_resource type="PackedScene" uid="uid://bj3fvmd6bah6d" path="res://engine/fonts/templates/mister_earl_font.tscn" id="37_bb4m8"]
-[ext_resource type="Script" uid="uid://c0xlh6o06spwa" path="res://engine/objects/signs/sign_help_key_formatter.gd" id="38_6jd6a"]
+[ext_resource type="PackedScene" uid="uid://daeak20xtro33" path="res://engine/fonts/templates/mister_earl_input_rich_text.tscn" id="38_6jd6a"]
 [ext_resource type="Script" uid="uid://b66w23lsb1766" path="res://gfx/fancy_graphics/scripts/lava_light_pulse.gd" id="38_q7ory"]
 [ext_resource type="PackedScene" uid="uid://cx0wdn3m2f25y" path="res://engine/objects/bosses/bowser/bowser_lava_template.tscn" id="39_0gixq"]
 [ext_resource type="Texture2D" uid="uid://842fv7cdaynf" path="res://gfx/texts/signs/1-4_bowser.png" id="39_ln2lb"]
@@ -918,18 +918,17 @@ z_index = -1
 position = Vector2(2976, 282)
 texture = ExtResource("36_5ihu6")
 
-[node name="LabelMisterEarl" parent="Hints/1-4Run" unique_id=943501319 instance=ExtResource("37_bb4m8")]
+[node name="LabelMisterEarl" parent="Hints/1-4Run" unique_id=943501319 instance=ExtResource("38_6jd6a")]
+clip_contents = true
 offset_left = -87.0
-offset_top = -28.0
+offset_top = -26.0
 offset_right = 89.0
-offset_bottom = 11.0
-text = "hold %s
+offset_bottom = 13.0
+theme_override_constants/line_separation = 1
+text = "hold {m_run}
 to run, and jump farther!"
-vertical_alignment = 1
 autowrap_mode = 2
-clip_text = true
-script = ExtResource("38_6jd6a")
-action = "m_run"
+vertical_alignment = 1
 
 [node name="1-4Run2" type="Sprite2D" parent="Hints" unique_id=1443400249]
 z_index = -1
@@ -1284,6 +1283,6 @@ flip_h = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="unlock_secret"]
-[connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
 [connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="warp_split"]
+[connection signal="warp_started" from="PipeIn3" to="HUD/Label" method="activate"]
 [connection signal="warp_started" from="PipeIn3" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped"]]
