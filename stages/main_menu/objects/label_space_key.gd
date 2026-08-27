@@ -1,31 +1,35 @@
-extends Label
+extends InputRichTextLabel
 
-@export var action: String = "ui_select"
+@export_multiline var text_keyboard: String = ""
+@export_multiline var text_joypad: String = ""
 
 var _tw: Tween
 var _min_a: float = 0
-@onready var _template = text
+
 
 func _ready() -> void:
 	modulate.a = 0
-	update_text()
-	SettingsManager.settings_saved.connect(update_text)
+	_apply_device_template()
+	super._ready()
 
 
-func _physics_process(delta: float) -> void:
-	if _tw: return
+func update_text() -> void:
+	_apply_device_template()
+	super.update_text()
+
+
+func _physics_process(_delta: float) -> void:
+	if _tw:
+		return
 	
 	_tw = create_tween().set_loops().set_trans(Tween.TRANS_SINE)
 	_tw.tween_property(self, ^"modulate:a", 1, 0.5)
 	_tw.tween_property(self, ^"modulate:a", _min_a, 0.5)
 
 
-func update_text() -> void:
-	var _events: Array[InputEvent] = InputMap.action_get_events(action)
-	var _event: String = "buttons on keyboard"
-	for i in _events:
-		if i is InputEventKey:
-			_event = i.as_text().get_slice(' (', 0) + ' key'
-			break
-	
-	text = _template % _event
+func _apply_device_template() -> void:
+	if SettingsManager.device_keyboard:
+		if !text_keyboard.is_empty():
+			input_template = text_keyboard
+	elif !text_joypad.is_empty():
+		input_template = text_joypad

@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bhfasvyftne1e" path="res://objects/antiafk_expert_mode/item_scripts/item_boomerang.gd" id="9_8tub8"]
 [ext_resource type="Texture2D" uid="uid://8cgmkjqf2bkv" path="res://engine/objects/powerups/frog_suit/texture.png" id="10_divwl"]
 [ext_resource type="Script" uid="uid://bgqk3ucie02p" path="res://objects/antiafk_expert_mode/item_scripts/item_hammer.gd" id="11_xq4u2"]
+[ext_resource type="Script" uid="uid://b3j5nkqkpkikr" path="res://engine/scripts/nodes/ui/input_rich_text_label.gd" id="12_irtl"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_divwl"]
 noise_type = 5
@@ -167,17 +168,25 @@ texture = SubResource("AtlasTexture_cgr3w")
 stretch_mode = 3
 script = ExtResource("11_xq4u2")
 
-[node name="Label" type="Label" parent="Control/ItemStock" unique_id=324822367]
+[node name="Label" type="RichTextLabel" parent="Control/ItemStock" unique_id=324822367]
 visible = false
 modulate = Color(1, 1, 1, 0.501961)
+clip_contents = false
 layout_mode = 0
 offset_left = 44.0
 offset_top = -1.0
 offset_right = 552.0
 offset_bottom = 35.0
-theme_override_fonts/font = ExtResource("4_mo0ls")
-text = "press %s
+focus_mode = 0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("4_mo0ls")
+bbcode_enabled = true
+text = "press {m_extra}
 to use item"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
 vertical_alignment = 1
-clip_text = true
+script = ExtResource("12_irtl")
 uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"

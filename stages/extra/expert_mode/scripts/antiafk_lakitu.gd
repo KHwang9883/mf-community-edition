@@ -39,8 +39,7 @@ var active_store: Control
 
 @onready var label: Label = $Label
 @onready var item_stock: TextureRect = $Control/ItemStock
-@onready var item_stock_help_label: Label = $Control/ItemStock/Label
-@onready var label_item_help_text: String = item_stock_help_label.text
+@onready var item_stock_help_label: Control = $Control/ItemStock/Label
 
 func _ready() -> void:
 	item = Data.values.get("item", "")
@@ -136,7 +135,6 @@ func update_item_stock_content() -> void:
 			item_stock.get_node(item).visible = true
 			if item_need_help:
 				item_stock_help_label.visible = true
-				item_stock_help_text()
 				item_stock_help_label.modulate.a = 0.5
 				tw2 = item_stock_help_label.create_tween()
 				tw2.tween_interval(10.0)
@@ -145,22 +143,6 @@ func update_item_stock_content() -> void:
 				tw2.tween_property(item_stock_help_label, "modulate:a", 0.5, 0.1)
 		else:
 			empty_item_stock()
-
-func item_stock_help_text() -> void:
-	var _events: Array[InputEvent] = InputMap.action_get_events(&"m_extra")
-	var _event: String = "unbinded"
-	var _temp: String
-	for i in _events:
-		if i is InputEventKey:
-			_temp = i.as_text().get_slice(' (', 0)
-			#if SettingsManager.device_keyboard:
-			_event = _temp
-			break
-		#elif i is InputEventJoypadButton:
-		#	_temp = "Joy " + str(i.button_index)
-		if _temp: _event = _temp
-	
-	item_stock_help_label.text = label_item_help_text % [_event]
 
 func empty_item_stock() -> void:
 	item = ""
