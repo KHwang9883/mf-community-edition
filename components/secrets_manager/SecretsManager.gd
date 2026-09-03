@@ -22,9 +22,6 @@ var _tween_game_save: Tween
 @onready var notif_root: Control = $Control
 @onready var notification_box: VBoxContainer = %NotificationBox
 
-var _overlay_layer: CanvasLayer
-var _overlay_holder: Control
-
 signal secret_set(_name: String)
 
 func _init() -> void:
@@ -69,7 +66,7 @@ func _init() -> void:
 func _ready() -> void:
 	saved.modulate.a = 0
 	load_secrets()
-	_setup_window_overlay()
+	_move_toasts_to_overlay()
 	reparent.call_deferred(GlobalViewport.vp, false)
 	Data.life_added.connect(func():
 		if Data.values.lives >= 99:
@@ -93,35 +90,13 @@ func _ready() -> void:
 	#	pl_speed.process_mode = Node.PROCESS_MODE_PAUSABLE
 
 
-func _setup_window_overlay() -> void:
-	# Circle wipes live on the window overlay (high-res). Keep toasts in that
-	# same viewport so they draw above the wipe without pixelating it.
-	_overlay_layer = CanvasLayer.new()
-	_overlay_layer.name = &"SecretsOverlay"
-	_overlay_layer.layer = 128
-	_overlay_layer.process_mode = Node.PROCESS_MODE_ALWAYS
-	GlobalViewport.add_child(_overlay_layer)
-	
-	_overlay_holder = Control.new()
-	_overlay_holder.name = &"OverlayRoot"
-	_overlay_holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_overlay_layer.add_child(_overlay_holder)
+func _move_toasts_to_overlay() -> void:
+	var overlay := GlobalViewport.overlay_vp
+	if !overlay:
+		return
 	notif_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for node in [label, marker_2d, notif_root, saved]:
-		node.reparent(_overlay_holder, false)
-	
-	Thunder._connect(GlobalViewport.view_updated, _sync_window_overlay)
-	_sync_window_overlay()
-
-
-func _sync_window_overlay() -> void:
-	if !is_instance_valid(_overlay_layer) || !is_instance_valid(_overlay_holder):
-		return
-	var container := GlobalViewport.container
-	_overlay_layer.offset = container.position
-	_overlay_layer.scale = container.scale
-	_overlay_holder.size = Vector2(GlobalViewport.vp.size)
-	_overlay_holder.texture_filter = container.texture_filter
+		node.reparent(overlay, false)
 
 
 func _physics_process(delta: float) -> void:
