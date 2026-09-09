@@ -6,7 +6,6 @@ extends Path2D
 var active: bool = false
 
 func _ready() -> void:
-	
 	platf.progress = bowser.global_position.x - first_point
 
 func _physics_process(delta: float) -> void:
