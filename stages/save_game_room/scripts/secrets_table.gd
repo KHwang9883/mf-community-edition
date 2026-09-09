@@ -18,6 +18,7 @@ func _ready() -> void:
 	
 	for child in children:
 		if !child.visible: continue
+		if child is HSeparator || child is VSeparator: continue
 		var achievement = child
 		if is_paginated:
 			achievement = child.get_child(0)
