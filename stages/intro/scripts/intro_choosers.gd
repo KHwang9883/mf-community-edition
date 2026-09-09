@@ -67,7 +67,8 @@ func _apply_style_tweaks(style: GameStyle) -> void:
 	_tweaks.enable_blur_transitions = is_recommended
 	_tweaks.enable_smooth_cam_transitions = is_recommended
 	_tweaks.player_skid_animation = is_recommended
-	_tweaks.remade_levels = is_recommended
+	_tweaks.remade_levels = false
+	_tweaks.improved_extra_levels = is_recommended
 	_tweaks.bowser_stomping = not is_recommended
 	_tweaks.stomping_combo = is_recommended
 	_tweaks.minigames_in_main_worlds = is_recommended
