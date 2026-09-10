@@ -43,6 +43,11 @@ func _handle_select(mouse_input: bool = false) -> void:
 	
 	super(mouse_input)
 	
+	if !!prog.profile.get("saved_profile_data").get("master_challenge"):
+		if !"saved_player_state" in prog.profile:
+			Thunder._current_player_state = null
+			Thunder._current_player_state_path = ""
+	
 	KevinGlobal.activated = !!prog.profile.get("saved_profile_data").get("kevin_mode_enabled")
 	
 	if SecretsManager.is_console_enabled():

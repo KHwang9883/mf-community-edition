@@ -55,10 +55,13 @@ func _physics_process(delta: float) -> void:
 			timer_enter = 100.0
 			var _sfx = CharacterManager.get_sound_replace(POWERUP, POWERUP, "hud_acceptance", false)
 			Audio.play_1d_sound(_sfx)
-			life_text_triggered.emit()
 			Data.technical_values.special_otherworld_toad = true
-			if int(Data.technical_values.remaining_continues) != -1:
-				Data.technical_values.remaining_continues += 1
+			if MasterChallenge.is_active():
+				await MasterChallenge.award_click_bonus_lives()
+			else:
+				life_text_triggered.emit()
+				if int(Data.technical_values.remaining_continues) != -1:
+					Data.technical_values.remaining_continues += 1
 			print("added a continue, total: %d" % Data.technical_values.remaining_continues)
 	else:
 		z_index = 0

@@ -63,6 +63,8 @@
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="44_8l1xr"]
 [ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="45_f11p6"]
 [ext_resource type="Script" uid="uid://b6reo6h4cdgok" path="res://engine/tilesets/starland/starland_light.gd" id="46_v4kwy"]
+[ext_resource type="Script" uid="uid://bfvl064urf1ro" path="res://components/master_challenge/master_ch_only_node.gd" id="47_mcnode"]
+[ext_resource type="Script" uid="uid://c6b531vw33sbg" path="res://stages/extra/lost_map/scripts/delete_suspended_progress.gd" id="48_delsus"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a4lmp"]
 texture = ExtResource("13_ugcjb")
@@ -902,6 +904,29 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="MasterWarp" type="Node2D" parent="HUD" unique_id=1876503921]
+position = Vector2(320, -32)
+script = ExtResource("7_d6oxt")
+speed_sec = 1.0
+action_after_sec = 5.0
+fade_on_end = true
+change_scene = "res://stages/main_menu/main_menu.tscn"
+skip_suspended_profile_save = false
+
+[node name="Label2" type="Label" parent="HUD/MasterWarp" unique_id=1876503922]
+offset_left = -320.0
+offset_right = 320.0
+offset_bottom = 27.0
+pivot_offset = Vector2(132, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("7_88ke4")
+theme_override_font_sizes/font_size = 20
+text = "the true master challenge prohibits the use of warps.
+your master challenge run is now invalidated."
+horizontal_alignment = 1
+uppercase = true
+
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1248934386]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("28_7k1g3")
@@ -1731,8 +1756,21 @@ texture = SubResource("GradientTexture2D_rwx88")
 offset = Vector2(0, 8)
 script = ExtResource("29_64uml")
 
-[node name="PipeIn2" parent="." unique_id=1237008668 instance=ExtResource("19_fhsuf")]
+[node name="Expert7Warp" type="Node2D" parent="." unique_id=1876503923]
+script = ExtResource("47_mcnode")
+only_for_non_master = true
+
+[node name="PipeIn2" parent="Expert7Warp" unique_id=1237008668 instance=ExtResource("19_fhsuf")]
 position = Vector2(3072, 432)
+
+[node name="MainMenuWarp" type="Node2D" parent="." unique_id=1876503924]
+script = ExtResource("47_mcnode")
+
+[node name="PipeIn3" parent="MainMenuWarp" unique_id=1876503925 instance=ExtResource("19_fhsuf")]
+position = Vector2(3072, 432)
+
+[node name="Node" type="Node" parent="MainMenuWarp/PipeIn3" unique_id=1876503926]
+script = ExtResource("48_delsus")
 
 [node name="LavaHeat15" type="Sprite2D" parent="." unique_id=1748809260]
 position = Vector2(3248, 400)
@@ -1746,7 +1784,9 @@ region_rect = Rect2(32, 0, 32, 32)
 [connection signal="player_enter" from="Area2D" to="ParallaxBackground/ParallaxLayer2/StarSky" method="disappear"]
 [connection signal="tried_to_enter" from="PipeIn" to="SecretUnlockerOther2" method="tried_to_warp"]
 [connection signal="warp_started" from="PipeIn" to="HUD/Label" method="activate"]
-[connection signal="warp_started" from="PipeIn2" to="HUD/ExpWorld7Warp" method="warp_split"]
-[connection signal="warp_started" from="PipeIn2" to="HUD/ExpWorld7Warp" method="activate"]
-[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped", true]]
-[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="unlock_secret" binds= [2]]
+[connection signal="warp_started" from="Expert7Warp/PipeIn2" to="HUD/ExpWorld7Warp" method="warp_split"]
+[connection signal="warp_started" from="Expert7Warp/PipeIn2" to="HUD/ExpWorld7Warp" method="activate"]
+[connection signal="warp_started" from="Expert7Warp/PipeIn2" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped", true]]
+[connection signal="warp_started" from="Expert7Warp/PipeIn2" to="SecretUnlocker" method="unlock_secret" binds= [2]]
+[connection signal="warp_started" from="MainMenuWarp/PipeIn3" to="HUD/MasterWarp" method="activate"]
+[connection signal="warp_started" from="MainMenuWarp/PipeIn3" to="MainMenuWarp/PipeIn3/Node" method="delete_suspended"]

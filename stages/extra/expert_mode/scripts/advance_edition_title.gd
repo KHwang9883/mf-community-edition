@@ -15,6 +15,11 @@ const POWERUP = preload("res://engine/objects/players/prefabs/sounds/powerup.wav
 var label_text_pointer: int = 0
 
 func _ready() -> void:
+	if MasterChallenge.is_active():
+		var start4: Label = $Controls/Start4
+		start4.visible = true
+		start4.disabled = false
+		selector.position_paddings_array = [0.0, 0.0, 0.0, 0.0]
 	controls.modulate.a = 0
 	selector.modulate.a = 0
 	#lostmap_title_press_enter._min_a = 0.7

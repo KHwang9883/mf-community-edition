@@ -59,13 +59,16 @@ func _on_level_completed() -> void:
 			Data.values.lives = Data.technical_values.saved_lives
 			var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
 			Audio.play_1d_sound(_sfx)
-		elif Data.technical_values.remaining_continues != -1:
+		elif Data.technical_values.remaining_continues != -1 && !MasterChallenge.is_active():
 			const pwrp = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
 			var _sfx = CharacterManager.get_sound_replace(pwrp, pwrp, "hud_acceptance", false)
 			Audio.play_1d_sound(_sfx)
 		
 	Data.technical_values.erase("saved_lives")
 	if Data.technical_values.remaining_continues != -1:
-		life_text_triggered.emit()
-		Data.technical_values.remaining_continues += 1
+		if MasterChallenge.is_active():
+			await MasterChallenge.award_click_bonus_lives()
+		else:
+			life_text_triggered.emit()
+			Data.technical_values.remaining_continues += 1
 	print("added a continue, total: %d" % Data.technical_values.remaining_continues)

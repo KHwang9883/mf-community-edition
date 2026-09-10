@@ -2,7 +2,6 @@ extends Node2D
 
 @onready var _tweak: bool = SettingsManager.get_tweak("additional_save_pipes", false)
 
-@onready var label_5: Label = $"../Objects/Label5"
 @onready var reset: Node2D = $"../CanvasLayer/Reset"
 @onready var left_pager: StaticBumpingBlock = $LeftPager
 @onready var right_pager: StaticBumpingBlock = $RightPager

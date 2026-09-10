@@ -48,6 +48,7 @@ var kevin_not_tested_asked: bool
 var _star_world: bool
 var _star_sel_world: int
 var _star_sel_level: int
+var master_challenge_pipe: bool
 
 @onready var label: Label = $Label
 @onready var reset_node: Node2D = get_node_or_null(reset_node_path)
@@ -55,6 +56,7 @@ var _star_sel_level: int
 @onready var cursed_pipe: Sprite2D = $CursedPipe
 @onready var message_block_2: AnimatableBody2D = %MessageBlock2
 @onready var message_block_choicer: AnimatableBody2D = %MessageBlockChoicer
+@onready var message_master_kevin: AnimatableBody2D = get_node_or_null("%MessageMasterKevin")
 @onready var message_warning: String = message_block_2.message
 #@onready var message_expert_kevin: AnimatableBody2D = %MessageExpertKevin
 var faster_deletion_tw: bool
@@ -125,6 +127,10 @@ func _physics_process(delta: float) -> void:
 		_warp_initiator()
 	elif player.up_down > 0 && warp_direction == Player.WarpDir.DOWN:
 		player.up_down = 0
+		if master_challenge_pipe && KevinGlobal.activated:
+			if message_master_kevin:
+				message_master_kevin.show_message.call_deferred()
+			return
 		if show_kevin_not_tested_warning && KevinGlobal.activated && !kevin_not_tested_asked:
 			kevin_not_tested_asked = true
 			#message_expert_kevin.show_message()
@@ -282,6 +288,9 @@ func pass_warp() -> void:
 	if set_data_to_profile:
 		ProfileManager.current_profile.data[set_data_to_profile] = true
 		print("Profile Data: %s" % set_data_to_profile)
+	if master_challenge_pipe:
+		ProfileManager.current_profile.data.master_challenge = true
+		print("Profile Data: master_challenge")
 	await get_tree().physics_frame
 	print("--END OF WARP INFO--")
 	super()
@@ -351,5 +360,8 @@ func _update_reset_labels() -> void:
 
 
 func block_pure_pipe() -> void:
+	if master_challenge_pipe:
+		is_blocked = true
+		return
 	if !is_empty && !is_cursed:
 		is_blocked = true

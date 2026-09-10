@@ -399,6 +399,8 @@ func finish() -> void:
 	var unlocker = Scenes.current_scene.get_node("SecretUnlocker")
 	unlocker.unlock_secret(0)
 	unlocker.unlock_if(["warped"], 1)
+	if ProfileManager.current_profile.data.get("master_challenge"):
+		unlocker.unlock_if(["warped"], 2)
 	ProfileManager.current_profile.data.star_world = true
 	ProfileManager.current_profile.data.power_completed = Thunder._current_player_state.get(&"name")
 	if KevinGlobal.activated && !"deaths_completed" in ProfileManager.current_profile.data:

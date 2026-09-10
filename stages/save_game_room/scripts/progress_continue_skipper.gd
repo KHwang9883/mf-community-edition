@@ -27,10 +27,20 @@ func mario_forever_advance(is_from_save: bool = false) -> void:
 	SettingsManager.set_tweak("harder_level_design", true)
 	SettingsManager.set_tweak("minigames_in_main_worlds", true)
 	if !is_from_save:
-		Data.technical_values.remaining_continues = 3
-		ProjectSettings.set_setting(
-			"application/thunder_settings/player/gameover_continues", 3
-		)
+		var is_mc: bool = false
+		var exp_pipes: Node = Scenes.current_scene.get_node_or_null("ExpertSavePipes")
+		if exp_pipes && int(exp_pipes.get("page")) > 0:
+			is_mc = true
+		if is_mc:
+			Data.technical_values.remaining_continues = 0
+			ProjectSettings.set_setting(
+				"application/thunder_settings/player/gameover_continues", 0
+			)
+		else:
+			Data.technical_values.remaining_continues = 3
+			ProjectSettings.set_setting(
+				"application/thunder_settings/player/gameover_continues", 3
+			)
 	CharacterManager.forced_character = "Mario"
 	var pl = Thunder._current_player
 	if pl && pl is Player:

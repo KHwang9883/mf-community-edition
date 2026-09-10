@@ -58,6 +58,8 @@
 [ext_resource type="Texture2D" uid="uid://bghn6wrlbas7n" path="res://engine/tilesets/overworld/gfx/green_pipe_entering_another.png" id="53_jt2ca"]
 [ext_resource type="PackedScene" uid="uid://cv7p8xyw12pbx" path="res://engine/objects/bumping_blocks/question_block/templates/Life Mushroom Question Block.tscn" id="54_8ho1t"]
 [ext_resource type="PackedScene" uid="uid://ltoqkqmxpt65" path="res://engine/objects/powerups/life_mushroom/life_mushroom.tscn" id="55_dnklc"]
+[ext_resource type="Script" uid="uid://bfvl064urf1ro" path="res://components/master_challenge/master_ch_only_node.gd" id="56_mcnode"]
+[ext_resource type="Script" uid="uid://c6b531vw33sbg" path="res://stages/extra/lost_map/scripts/delete_suspended_progress.gd" id="57_delsus"]
 
 [sub_resource type="Gradient" id="Gradient_ehahp"]
 colors = PackedColorArray(0, 0.435294, 0.87451, 1, 0.823529, 0.917647, 0.972549, 1)
@@ -276,6 +278,29 @@ theme_override_font_sizes/font_size = 20
 text = "you have found a secret passage to expert world 8!"
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
+
+[node name="MasterWarp" type="Node2D" parent="HUD" unique_id=1986504731]
+position = Vector2(320, -32)
+script = ExtResource("16_hvqlc")
+speed_sec = 1.0
+action_after_sec = 5.0
+fade_on_end = true
+change_scene = "res://stages/main_menu/main_menu.tscn"
+skip_suspended_profile_save = false
+
+[node name="Label2" type="Label" parent="HUD/MasterWarp" unique_id=1986504732]
+offset_left = -320.0
+offset_right = 320.0
+offset_bottom = 27.0
+pivot_offset = Vector2(132, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("17_vtnks")
+theme_override_font_sizes/font_size = 20
+text = "the true master challenge prohibits the use of warps.
+your master challenge run is now invalidated."
+horizontal_alignment = 1
 uppercase = true
 
 [node name="Node" type="Node" parent="." unique_id=124566065]
@@ -986,16 +1011,33 @@ position = Vector2(2224, 17)
 result = SubResource("Resource_16f5e")
 initially_visible_and_solid = false
 
-[node name="PipeIn2" parent="." unique_id=2125054992 instance=ExtResource("37_p52id")]
+[node name="Expert8Warp" type="Node2D" parent="." unique_id=1986504733]
+script = ExtResource("56_mcnode")
+only_for_non_master = true
+
+[node name="PipeIn2" parent="Expert8Warp" unique_id=2125054992 instance=ExtResource("37_p52id")]
 position = Vector2(2224, -32)
 rotation = 1.57079
 warp_direction = 0
 
+[node name="MainMenuWarp" type="Node2D" parent="." unique_id=1986504734]
+script = ExtResource("56_mcnode")
+
+[node name="PipeIn3" parent="MainMenuWarp" unique_id=1986504735 instance=ExtResource("37_p52id")]
+position = Vector2(2224, -32)
+rotation = 1.57079
+warp_direction = 0
+
+[node name="Node" type="Node" parent="MainMenuWarp/PipeIn3" unique_id=1986504736]
+script = ExtResource("57_delsus")
+
 [connection signal="warp_started" from="PipeIn" to="Node" method="disable"]
 [connection signal="warp_started" from="PipeIn" to="Node2" method="disable"]
-[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="unlock_secret"]
-[connection signal="warp_started" from="PipeIn2" to="HUD/ExpWorld8Warp" method="activate"]
-[connection signal="warp_started" from="PipeIn2" to="HUD/ExpWorld8Warp" method="warp_split"]
-[connection signal="warp_started" from="PipeIn2" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped", true]]
+[connection signal="warp_started" from="Expert8Warp/PipeIn2" to="SecretUnlocker" method="unlock_secret"]
+[connection signal="warp_started" from="Expert8Warp/PipeIn2" to="HUD/ExpWorld8Warp" method="activate"]
+[connection signal="warp_started" from="Expert8Warp/PipeIn2" to="HUD/ExpWorld8Warp" method="warp_split"]
+[connection signal="warp_started" from="Expert8Warp/PipeIn2" to="SecretUnlocker" method="add_shit_to_profile" binds= ["warped", true]]
+[connection signal="warp_started" from="MainMenuWarp/PipeIn3" to="HUD/MasterWarp" method="activate"]
+[connection signal="warp_started" from="MainMenuWarp/PipeIn3" to="MainMenuWarp/PipeIn3/Node" method="delete_suspended"]
 
 [editable path="Water"]
