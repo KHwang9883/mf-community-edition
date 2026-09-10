@@ -15,7 +15,9 @@ func _ready() -> void:
 func add_kevin() -> void:
 	if Console.debug_mode && Input.is_action_pressed("a_delete"):
 		activated = true
+	if !is_instance_valid(Scenes.current_scene): return
 	if !activated || Scenes.current_scene.name == 'SaveGameRoom': return
+	
 	var kevin := KEVIN_SCENE.instantiate()
 	kevin.position = Vector2(-100, -100)
 	_current_kevin = kevin
@@ -24,7 +26,9 @@ func add_kevin() -> void:
 func patch_mario() -> void:
 	if Console.debug_mode && Input.is_action_pressed("a_delete"):
 		activated = true
+	if !is_instance_valid(Scenes.current_scene): return
 	if Scenes.current_scene.name == "SaveGameRoom": return
+	
 	var fast_respawn: bool = SettingsManager.get_tweak("fast_respawn", false)
 	var player: Player = Thunder._current_player
 	

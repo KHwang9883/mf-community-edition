@@ -1,7 +1,7 @@
 extends Node
 
 const url: String = "https://mfce.rnx.su"
-const url_backup: String = "https://mfce.nx.wtf"
+const url_backup: String = "https://mfce.marioforever.space"
 #const url: String = "http://127.0.0.1:3000/api/version/v2"
 
 # this is a verification key to ensure we got correct data

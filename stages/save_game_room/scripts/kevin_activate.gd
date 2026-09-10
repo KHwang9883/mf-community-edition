@@ -4,8 +4,8 @@ signal activated
 signal dumbactivated
 signal deactivated
 
-var string = "kevin"
-var dumbstring = "myname"
+const string = "kevin"
+const dumbstring = "myname"
 var progress = 0
 var dumbprogress = 0
 var dumb_activated: bool
@@ -19,7 +19,6 @@ var dumb_activated: bool
 
 const SECRET_CODE_TYPE = preload("res://sfx/secret_code_type.ogg")
 const KEVIN_ACTIVATED = preload("res://sfx/kevin_activated.ogg")
-const EVENT_WIN_LEVEL_ORIGINAL = preload("res://sfx/event_win_level_original.ogg")
 
 var only_compat_activation: bool
 var _held_keys: Dictionary = {}
@@ -113,6 +112,7 @@ func progress_process(keycode: Key, real: bool) -> bool:
 			else:
 				kevin_activate()
 		elif !dumb_activated && dumbprogress >= len(_string):
+			var EVENT_WIN_LEVEL_ORIGINAL = load("res://sfx/event_win_level_original.ogg")
 			Audio.play_1d_sound(EVENT_WIN_LEVEL_ORIGINAL, true, { ignore_pause = true, volume = -4 })
 			dumbactivated.emit()
 			kevin_label_fake.text = "uh, no... not literally, you dummy"

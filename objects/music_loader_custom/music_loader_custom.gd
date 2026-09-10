@@ -1,6 +1,5 @@
 extends "res://engine/objects/core/music_loader/music_loader.gd"
 
-const MUSIC_PITCH_CHANGER = preload("res://objects/music_loader_custom/music_pitch_changer.tscn")
 const PITCH_PREFIXES: Array = ["smw2-", "smw-", "smas-", "smrpg-", "smb-", "smb3-", "save_g", "smb_", "smb1"]
 
 @export_category("Tweaks")
@@ -94,6 +93,7 @@ func _ready_achievements() -> void:
 
 func _ready_mus_tweaks() -> void:
 	if SettingsManager.get_tweak("pitch_music_everywhere", false) && !has_node("MusicPitchChanger"):
+		var MUSIC_PITCH_CHANGER = load("res://objects/music_loader_custom/music_pitch_changer.tscn")
 		var _pitch_changer = MUSIC_PITCH_CHANGER.instantiate()
 		add_child(_pitch_changer, true)
 	
