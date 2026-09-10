@@ -151,6 +151,7 @@ func _on_game_over_finished() -> void:
 	Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 	Data.values.skip_progress_continue = true
 	Data.technical_values.remaining_continues = 0
+	_rollback_current_world_progress()
 
 	var dest: String = ""
 	if ProfileManager.current_profile:
@@ -225,6 +226,66 @@ func _parse_world_level_from_path(path: String) -> Vector2i:
 	if !matched:
 		return Vector2i.ZERO
 	return Vector2i(int(matched.get_string(1)), int(matched.get_string(2)))
+
+
+func _rollback_current_world_progress() -> void:
+	if !ProfileManager.current_profile:
+		return
+	var world: int = _current_world_number()
+	if world <= 0:
+		return
+	var profile: ProfileManager.Profile = ProfileManager.current_profile
+	var completed: Variant = profile.data.get("completed_levels", [])
+	if completed is Array:
+		var kept: Array = []
+		for level_path in completed:
+			if _level_belongs_to_world(str(level_path), world):
+				continue
+			kept.append(level_path)
+		profile.data.completed_levels = kept
+	profile.set_world_numbers(world, 1)
+	profile.data.erase("next_level")
+	if ProfileManager.profiles.has("suspended"):
+		ProfileManager.delete_profile("suspended")
+	ProfileManager.save_current_profile()
+
+
+func _current_world_number() -> int:
+	if is_instance_valid(Scenes.current_scene):
+		var from_scene: int = _world_number_from_path(Scenes.current_scene.scene_file_path)
+		if from_scene > 0:
+			return from_scene
+	var wl: Vector2i = _resume_world_level()
+	if wl.x > 0:
+		return wl.x
+	if !ProfileManager.current_profile:
+		return 0
+	return _world_number_from_path(str(ProfileManager.current_profile.data.get("current_world", "")))
+
+
+func _world_number_from_path(path: String) -> int:
+	var resolved: String = Scenes.get_scene_path(path)
+	var parsed: Vector2i = _parse_world_level_from_path(resolved)
+	if parsed.x > 0:
+		return parsed.x
+	var map_regex := RegEx.create_from_string(r"(?:expert_)?map_(\d+)")
+	var map_match: RegExMatch = map_regex.search(resolved.get_file())
+	if map_match:
+		return int(map_match.get_string(1))
+	var dir_regex := RegEx.create_from_string(r"/world_(\d+)/")
+	var dir_match: RegExMatch = dir_regex.search(resolved)
+	if dir_match:
+		return int(dir_match.get_string(1))
+	return 0
+
+
+func _level_belongs_to_world(path: String, world: int) -> bool:
+	if world <= 0:
+		return false
+	var resolved: String = Scenes.get_scene_path(path)
+	if resolved.contains("/world_%d/" % world):
+		return true
+	return _parse_world_level_from_path(resolved).x == world
 
 
 func _suppress_save_icon_this_map() -> void:
