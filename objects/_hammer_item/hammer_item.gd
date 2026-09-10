@@ -9,6 +9,7 @@ var time_remaining: float
 var is_blinking: bool
 var at_top: bool
 var old_top: bool
+var _follow_ready: bool
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var starman_combo: Combo = Combo.new(self)
@@ -40,15 +41,26 @@ func _physics_process(delta: float) -> void:
 	if !pl: return queue_free()
 	at_top = floori(time_remaining * 100) % 40 > 20
 	
+	var target: Vector2
 	if at_top:
-		global_position = pl.head.global_position - Vector2(0, 12)
+		target = pl.head.global_position - Vector2(0, 12)
 		sprite.rotation_degrees = 0
 	else:
-		global_position = pl.global_position + Vector2(24, 0) * pl.direction
+		target = pl.global_position + Vector2(24, 0) * pl.direction
 		sprite.rotation_degrees = 90 * pl.direction
-	if at_top != old_top:
+	# Keep interpolation in step with the player so top/side swaps don't jitter.
+	if !_follow_ready:
+		global_position = target
 		reset_physics_interpolation()
 		old_top = at_top
+		_follow_ready = true
+	elif at_top != old_top:
+		global_position = target - (pl.global_position - pl.global_transform_previous.origin)
+		reset_physics_interpolation()
+		global_position = target
+		old_top = at_top
+	else:
+		global_position = target
 	sprite.flip_h = pl.direction < 0
 	
 	time_remaining = move_toward(time_remaining, 0.0, delta)
