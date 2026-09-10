@@ -12,6 +12,7 @@ var _hit_ids: PackedStringArray = []
 var _ow_zero_lives: bool = false
 var _ow_old_death_stop_music: bool = true
 var _game_over_handling: bool = false
+var _scene_reloading: bool = false
 var death_quit_audio: AudioStreamPlayer
 
 
@@ -24,6 +25,7 @@ func is_active() -> bool:
 func _ready() -> void:
 	Scenes.scene_ready.connect(_on_scene_ready)
 	Scenes.pre_scene_changed.connect(_on_pre_scene_changed)
+	Scenes.scene_reloaded.connect(_on_scene_reloaded)
 	Scenes.scene_shortcut_pressed.connect(_on_quit_while_alive)
 	get_tree().root.close_requested.connect(_on_close_game)
 	call_deferred(&"_connect_pause_exits")
@@ -85,9 +87,18 @@ func _physics_process(_delta: float) -> void:
 		pl.death_stop_music = _ow_old_death_stop_music
 
 
+func _on_scene_reloaded() -> void:
+	_scene_reloading = true
+
+
 func _on_pre_scene_changed() -> void:
+	if _game_over_handling:
+		_apply_game_over_data_reset()
 	if !is_active():
 		_forced_onetime_blocks = false
+		return
+	if _scene_reloading:
+		_saved_onetime_blocks = Data.values.get("onetime_blocks", true)
 		return
 	if _forced_onetime_blocks:
 		return
@@ -97,6 +108,7 @@ func _on_pre_scene_changed() -> void:
 
 
 func _on_scene_ready() -> void:
+	_scene_reloading = false
 	_wrap_game_over()
 	if Input.is_action_pressed(&"ui_page_up") && Console.debug_mode:
 		ProfileManager.current_profile.data.master_challenge = true
@@ -146,10 +158,7 @@ func _on_game_over_finished() -> void:
 	if _game_over_handling:
 		return
 	_game_over_handling = true
-	_clear_hit_blocks()
-	Data.reset_all_values()
-	Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
-	Data.values.skip_progress_continue = true
+	_clear_session_persistents()
 	Data.technical_values.remaining_continues = 0
 	_rollback_current_world_progress()
 
@@ -163,6 +172,13 @@ func _on_game_over_finished() -> void:
 		t.with_animation("to_black_linear")
 	)
 	_game_over_handling = false
+
+
+func _apply_game_over_data_reset() -> void:
+	Data.reset_all_values()
+	Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
+	Data.values.skip_progress_continue = true
+	_clear_session_persistents()
 
 
 func _apply_otherworld_lives() -> void:
@@ -383,6 +399,14 @@ func _clear_hit_blocks() -> void:
 	if typeof(csv) == TYPE_DICTIONARY:
 		csv.erase("mc_hit_scene")
 		csv.erase("mc_hit_ids")
+
+
+func _clear_session_persistents() -> void:
+	_hit_scene = ""
+	_hit_ids.clear()
+	Data.technical_values.custom_saved_values = {}
+	if Data.values.has("item"):
+		Data.values.item = ""
 
 
 func _write_hit_blocks_to_custom_values() -> void:

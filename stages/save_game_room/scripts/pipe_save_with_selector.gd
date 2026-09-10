@@ -103,7 +103,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			deletion_progress = clampf(deletion_progress - delta, 0, 1)
 		
-		if (_star_world || allow_selecting_worlds) && Input.is_action_just_pressed("a_tab"):
+		if _can_select_world_level() && Input.is_action_just_pressed("a_tab"):
 			var _sfx = CharacterManager.get_sound_replace(SCORING, SCORING, "menu_select_short", false)
 			if player.up_down == 0 && len(level_count) > 1:
 				Audio.play_1d_sound(_sfx)
@@ -171,7 +171,7 @@ func _input(event: InputEvent) -> void:
 	if player == null: return
 	if !(event is InputEventKey && event.is_pressed() && !event.is_echo()):
 		return
-	if _tweak || !_star_world: return
+	if _tweak || !_star_world || master_challenge_pipe: return
 	if event.keycode > 48 && event.keycode <= 57:
 		if event.keycode - 48 == _star_sel_level:
 			return
@@ -190,6 +190,7 @@ func _update_save() -> void:
 	cheat_warned = false
 	cursed_pipe.visible = false
 	label.remove_theme_color_override(&"font_color")
+	label._tweak = _tweak
 	
 	var prof = ProfileManager.profiles.get(profile_name)
 	
@@ -202,14 +203,20 @@ func _update_save() -> void:
 		label.add_theme_color_override(
 			&"font_color", Color.LIGHT_GREEN if !is_cursed else Color("#b16dff")
 		)
-		var wnumbers: Array
-		if prof.data.get("star_numbers"):
-			wnumbers = prof.data.star_numbers.split("-")
+		if master_challenge_pipe:
+			var world_numbers: String = prof.get_world_numbers().get_slice("-", 0)
+			if !world_numbers.is_empty():
+				label._tweak = true
+				label.set_world_numbers(world_numbers)
 		else:
-			wnumbers = prof.get_world_numbers().split("-")
-		_star_sel_world = int(wnumbers[0])
-		_star_sel_level = int(wnumbers[1])
-		label.set_world_numbers("-".join(wnumbers))
+			var wnumbers: Array
+			if prof.data.get("star_numbers"):
+				wnumbers = prof.data.star_numbers.split("-")
+			else:
+				wnumbers = prof.get_world_numbers().split("-")
+			_star_sel_world = int(wnumbers[0])
+			_star_sel_level = int(wnumbers[1])
+			label.set_world_numbers("-".join(wnumbers))
 	elif force_disable_level_save && prof:
 		var world_numbers: String = prof.get_world_numbers().get_slice("-", 0)
 		if !world_numbers.is_empty():
@@ -249,7 +256,7 @@ func pass_warp() -> void:
 		SecretsManager._has_cheated = true
 		print("Console enabled, profile marked as cheated.")
 	
-	if _tweak || (force_disable_level_save && !_star_world):
+	if _tweak || (force_disable_level_save && (!_star_world || master_challenge_pipe)):
 		ProfileManager.current_profile.data.completed_levels = []
 		_star_sel_level = 1
 		print("Forcibly started from Level 1. Either tweak enabled or no star level selector.")
@@ -260,7 +267,7 @@ func pass_warp() -> void:
 		Data.values.deaths = ProfileManager.current_profile.data.get_or_add("deaths", 0)
 		print("Deaths set to %d." % Data.values.deaths)
 	target = null
-	if _star_world || allow_selecting_worlds:
+	if _can_select_world_level():
 		if _star_sel_level && _star_sel_world:
 			ProfileManager.current_profile.data.star_numbers = &"%d-%d" % [_star_sel_world, _star_sel_level]
 			ProfileManager.save_current_profile()
@@ -298,8 +305,8 @@ func pass_warp() -> void:
 
 func _update_reset_labels() -> void:
 	if reset_node.unlock:
-		reset_node.unlock.visible = (_star_world || allow_selecting_worlds) && len(level_count) > 1
-	reset_node.unlock2.visible = _star_world
+		reset_node.unlock.visible = _can_select_world_level() && len(level_count) > 1
+	reset_node.unlock2.visible = _star_world && !master_challenge_pipe
 	if reset_node.unlock2.has_method(&"set_hold_up_to_select_level"):
 		reset_node.unlock2.set_hold_up_to_select_level(true)
 	reset_node.secrets.visible = false
@@ -357,6 +364,10 @@ func _update_reset_labels() -> void:
 		return
 	reset_node.secrets.text = "applicable for %s" % ", ".join(_arr)
 	reset_node.secrets.visible = true
+
+
+func _can_select_world_level() -> bool:
+	return !master_challenge_pipe && (_star_world || allow_selecting_worlds)
 
 
 func block_pure_pipe() -> void:
