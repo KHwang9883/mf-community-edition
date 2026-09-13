@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://8m66h512cc4d"]
+
+[ext_resource type="Script" uid="uid://n6utvnospy3g" path="res://engine/objects/bosses/bowser/bowser_trigger.gd" id="1_wtgyi"]
+[ext_resource type="PackedScene" uid="uid://dqvkmp7gpatb4" path="res://stages/extra/expert_mode/objects/bowserflame_generator.tscn" id="2_0cr35"]
+
+[sub_resource type="Curve2D" id="Curve2D_0cr35"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -240, 16, 0, 0, 0, 0, 30037, 16)
+}
+point_count = 2
+
+[node name="BowserTrigger" type="Path2D" unique_id=2081189954 groups=["bowser_flame_gen"]]
+editor_description = "This should be placed ONLY as DIRECT CHILD of the level, and just under the camera"
+position = Vector2(897, 270)
+curve = SubResource("Curve2D_0cr35")
+script = ExtResource("1_wtgyi")
+trigger_area = Rect2(0, 0, 32, 9060)
+boss_music = null
+boss_music_fading = false
+
+[node name="RouteFollower" type="PathFollow2D" parent="." unique_id=2120829650]
+position = Vector2(-240, 16)
+rotates = false
+loop = false
+
+[node name="Marker2D" parent="." unique_id=1259708575 instance=ExtResource("2_0cr35")]
+position = Vector2(1001, 168)
+
+[connection signal="bowser_triggered" from="." to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_hr26n"]
 [ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_jj36s"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_35pvx"]
+[ext_resource type="AudioStream" uid="uid://bo1yufj7ga7ha" path="res://music/interference.mod" id="4_e70ps"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="6_bwp78"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="7_yio3u"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/gfx/hard_block.png" id="9_kut5j"]
@@ -17,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://dkh7mvjujqr3x" path="res://engine/objects/enemies/thwomp/thwomp_chilly.tscn" id="15_vaym0"]
 [ext_resource type="PackedScene" uid="uid://ceb7bsjju64a2" path="res://objects/human_lab_2/big_human_types/coder/big_coder_clone_b.tscn" id="16_e70ps"]
 [ext_resource type="PackedScene" uid="uid://bb05yxesqjex3" path="res://objects/human_lab_2/ramireys/hat_clone/hat_clone.tscn" id="17_gk1yl"]
+[ext_resource type="PackedScene" uid="uid://dqvkmp7gpatb4" path="res://stages/extra/expert_mode/objects/bowserflame_generator.tscn" id="18_e70ps"]
+[ext_resource type="PackedScene" uid="uid://diivlwjl0y1i7" path="res://engine/objects/bosses/bowser/bowser_trigger.tscn" id="19_c1lmp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o5l2d"]
 texture = ExtResource("9_kut5j")
@@ -30,11 +33,18 @@ physics_layer_0/collision_layer = 112
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_o5l2d")
 
+[sub_resource type="Curve2D" id="Curve2D_lrbrd"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -240, 16, 0, 0, 0, 0, 3037, 16)
+}
+point_count = 2
+
 [node name="NewEnemies" type="Node2D" unique_id=2038220401]
 script = ExtResource("1_lddqg")
 completion_music = ExtResource("2_jj36s")
 
 [node name="MusicLoader" parent="." unique_id=1309142724 instance=ExtResource("2_hr26n")]
+music = Array[Resource]([ExtResource("4_e70ps")])
 
 [node name="Mario" parent="." unique_id=1366141553 instance=ExtResource("4_35pvx")]
 position = Vector2(752, 272)
@@ -110,3 +120,15 @@ position = Vector2(944, 384)
 
 [node name="HatClone2" parent="." unique_id=1046561827 instance=ExtResource("17_gk1yl")]
 position = Vector2(1008, 352)
+
+[node name="Marker2D" parent="." unique_id=1259708575 instance=ExtResource("18_e70ps")]
+position = Vector2(1001, 168)
+
+[node name="BowserTrigger" parent="." unique_id=2081189954 instance=ExtResource("19_c1lmp")]
+position = Vector2(1087, 270)
+curve = SubResource("Curve2D_lrbrd")
+trigger_area = Rect2(0, 0, 32, 960)
+boss_music = null
+boss_music_fading = false
+
+[connection signal="bowser_triggered" from="BowserTrigger" to="Marker2D" method="_on_bowser_trigger_bowser_triggered"]

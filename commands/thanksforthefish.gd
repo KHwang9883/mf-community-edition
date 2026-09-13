@@ -1,6 +1,6 @@
 extends Command
 
-const CHEEP_SPAWNER = preload("res://engine/objects/enemies/cheeps/jumping_cheeps_generator.tscn")
+const CHEEP_SPAWNER = preload("res://commands/objects/jumping_cheeps_generator.tscn")
 const SCENE_PATHS: Array[StringName] = [
 	&"human_lab",
 	&"level_ny_",
@@ -21,7 +21,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 	else:
 		Thunder._disconnect(Scenes.scene_ready, patch_level)
 		if Scenes.is_inside_tree():
-			for i in Scenes.get_tree().get_nodes_in_group(&"the_goomba_spawner"):
+			for i in Scenes.get_tree().get_nodes_in_group(&"cheep_gen_cheat"):
 				i.queue_free()
 		return Command.ExecuteResult.new("Fish find someone more interesting!")
 		
@@ -29,7 +29,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 func patch_level() -> void:
 	if !Scenes.is_inside_tree() || !Scenes.current_scene is Level:
 		return
-	if Scenes.get_tree().get_node_count_in_group(&"the_goomba_spawner") > 0:
+	if Scenes.get_tree().get_node_count_in_group(&"cheep_gen_cheat") > 0:
 		return
 	var spawner = CHEEP_SPAWNER.instantiate()
 	var scene_path: String = Scenes.current_scene.scene_file_path
