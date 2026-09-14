@@ -18,6 +18,68 @@ const SCENE_PATHS_1: Array[StringName] = [
 	&"level_u-4_e",
 	&"level_u-4_n",
 	&"level_u-4_h",
+	&"level_12-1",
+	&"level_10-3",
+	&"level_13-1",
+	&"level_9-4",
+	&"level_9-5",
+	&"level_s1-3",
+	&"level_s2-2",
+	&"level_s2-3",
+	&"level_s2-4",
+	&"level_s3-1",
+	&"level_s3-4",
+	&"level_s4-2",
+	&"level_s4-3",
+	&"funny_tanks",
+	&"level_ny_2",
+	&"level_ny_3",
+	&"level_ny_4-2",
+	&"lost_map_1",
+	&"lost_map_3",
+	&"lost_map_5",
+	&"human_lab2-2",
+	&"human_lab2-4",
+	&"human_lab-3",
+	&"hardcore_2-1",
+	&"hardcore_1-1",
+]
+const SCENE_PATHS_2: Array[StringName] = [
+	&"level_8-1",
+	&"expert_level_8-1",
+	&"expert_level_4-3",
+	&"level_1-4",
+	&"level_2-5",
+	&"level_3-4",
+	&"level_4-4",
+	&"level_6-4",
+	&"level_f3-4",
+	&"expert_level_1-4",
+	&"expert_level_2-5",
+	&"expert_level_3-4",
+	&"expert_level_4-4",
+	&"expert_level_6-4",
+	&"level_f4-2",
+	&"stupidity-3",
+	&"level_13-2",
+	&"level_13-3",
+	&"level_12-2",
+	&"level_10-4",
+	&"level_s1-4",
+	&"devastator",
+	&"starman_running",
+	&"lost_map_6",
+	&"human_lab2-5",
+	&"hardcore_2-4",
+	&"hardcore_1-4",
+]
+const SCENE_PATHS_3: Array[StringName] = [
+	&"expert_level_5-2",
+	&"level_s3-3",
+	&"koopa_troopa_liberation",
+]
+const SCENE_PATHS_4: Array[StringName] = [
+	&"level_f2-1",
 ]
 
 static func register() -> Command:
@@ -48,5 +110,17 @@ func patch_level() -> void:
 		return path in scene_path
 	):
 		spawner.get_child(0).bottom_line_position = 288.0
+	if SCENE_PATHS_2.any(func(path: StringName):
+		return path in scene_path
+	):
+		spawner.get_child(0).bottom_line_position = 224.0
+	if SCENE_PATHS_3.any(func(path: StringName):
+		return path in scene_path
+	):
+		spawner.get_child(0).bottom_line_position = 160.0
+	if SCENE_PATHS_4.any(func(path: StringName):
+		return path in scene_path
+	):
+		spawner.get_child(0).bottom_line_position = 352.0
 	Scenes.current_scene.add_child(spawner)
 	#Scenes.current_scene.add_child(spawner2)
