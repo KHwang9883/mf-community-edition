@@ -1,6 +1,7 @@
 extends Command
 
-const GOOMBA_PARTY_SPAWNER = preload("res://objects/goomba_party_spawner/goomba_party_spawner.tscn")
+var GOOMBA_PARTY_SPAWNER = load("res://objects/goomba_party_spawner/goomba_party_spawner.tscn")
+var GOOMBA_CLONE = load("res://objects/human_lab_2/ramireys/goomba_clone/goomba_clone.tscn")
 const SCENE_PATHS: Array[StringName] = [
 	&"human_lab",
 	&"level_ny_",
@@ -36,5 +37,5 @@ func patch_level() -> void:
 	if SCENE_PATHS.any(func(path: StringName):
 		return path in scene_path
 	):
-		spawner.spawned_enemy = preload("res://objects/human_lab_2/ramireys/goomba_clone/goomba_clone.tscn")
+		spawner.spawned_enemy = GOOMBA_CLONE
 	Scenes.current_scene.add_child(spawner)

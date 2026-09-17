@@ -1,10 +1,10 @@
 extends Command
 
-const WIND_NODE = preload("res://stages/extra/expert_mode/objects/world4_3wind.tscn")
-const WIND_FX_NODE = preload("res://stages/extra/expert_mode/objects/world4_3wind_fx.tscn")
+var WIND_NODE = load("res://stages/extra/expert_mode/objects/world4_3wind.tscn")
+var WIND_FX_NODE = load("res://stages/extra/expert_mode/objects/world4_3wind_fx.tscn")
 
 static func register() -> Command:
-	return new().set_name("windyday").set_description("Make every level a *4-3")
+	return new().set_name("windyday").set_description("Make every level windy")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):
@@ -26,6 +26,6 @@ func patch_level() -> void:
 		return
 	var spawner = WIND_NODE.instantiate()
 	var spawner2 = WIND_FX_NODE.instantiate()
-	var scene_path: String = Scenes.current_scene.scene_file_path
+	#var scene_path: String = Scenes.current_scene.scene_file_path
 	Scenes.current_scene.add_child(spawner)
 	Scenes.current_scene.add_child(spawner2)

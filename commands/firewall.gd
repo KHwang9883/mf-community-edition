@@ -1,10 +1,10 @@
 extends Command
 
-const WIND_NODE = preload("res://stages/extra/expert_mode/objects/bowserflame_generator.tscn")
-const WIND_FX_NODE = preload("res://stages/extra/expert_mode/objects/bowserflame_gen_trigger.tscn")
+var GENERATOR = load("res://stages/extra/expert_mode/objects/bowserflame_generator.tscn")
+var GENERATOR_TRIGGER = load("res://stages/extra/expert_mode/objects/bowserflame_gen_trigger.tscn")
 
 static func register() -> Command:
-	return new().set_name("firewall").set_description("Make every level a expert bowser appearance")
+	return new().set_name("firewall").set_description("Make every level an Expert Bowser appearance")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):
@@ -16,7 +16,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 		if Scenes.is_inside_tree():
 			for i in Scenes.get_tree().get_nodes_in_group(&"bowser_flame_gen"):
 				i.queue_free()
-		return Command.ExecuteResult.new("You are free in your internet!")
+		return Command.ExecuteResult.new("Success, OFF")
 		
 
 func patch_level() -> void:
@@ -24,8 +24,8 @@ func patch_level() -> void:
 		return
 	if Scenes.get_tree().get_node_count_in_group(&"bowser_flame_gen") > 0:
 		return
-	var spawner = WIND_NODE.instantiate()
-	var spawner2 = WIND_FX_NODE.instantiate()
-	var scene_path: String = Scenes.current_scene.scene_file_path
-	Scenes.current_scene.add_child(spawner)
-	Scenes.current_scene.add_child(spawner2)
+	var generator = GENERATOR.instantiate()
+	var generator_trigger = GENERATOR_TRIGGER.instantiate()
+	#var scene_path: String = Scenes.current_scene.scene_file_path
+	Scenes.current_scene.add_child(generator)
+	Scenes.current_scene.add_child(generator_trigger)

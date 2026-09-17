@@ -1,7 +1,6 @@
 extends Command
 
-const WIND_NODE = preload("res://stages/extra/hardcore_2/objects/spike_roof.tscn")
-#const WIND_FX_NODE = preload("res://stages/extra/expert_mode/objects/world4_3wind_fx.tscn")
+var SPIKEROOF = load("res://stages/extra/hardcore_2/objects/spike_roof.tscn")
 const SCENE_PATHS_1: Array[StringName] = [
 	&"level_1-3",
 	&"expert_level_1-3",
@@ -81,21 +80,27 @@ const SCENE_PATHS_3: Array[StringName] = [
 const SCENE_PATHS_4: Array[StringName] = [
 	&"level_f2-1",
 ]
+const SCENE_PATCHES: Dictionary[Array, float] = {
+	SCENE_PATHS_1: 288.0,
+	SCENE_PATHS_2: 224.0,
+	SCENE_PATHS_3: 160.0,
+	SCENE_PATHS_4: 352.0,
+}
 
 static func register() -> Command:
-	return new().set_name("heavyskies").set_description("Make every level a Hardcore 2-2")
+	return new().set_name("spikeroof").set_description("Make every level have a Hardcore 2-3 spike roof")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):
 		Thunder._connect(Scenes.scene_ready, patch_level)
 		patch_level()
-		return Command.ExecuteResult.new("Heavy Skies! (Run this command again to disable)")
+		return Command.ExecuteResult.new("The sky is falling. (Run this command again to disable)")
 	else:
 		Thunder._disconnect(Scenes.scene_ready, patch_level)
 		if Scenes.is_inside_tree():
 			for i in Scenes.get_tree().get_nodes_in_group(&"spikeroof"):
 				i.queue_free()
-		return Command.ExecuteResult.new("Skies is clear again!")
+		return Command.ExecuteResult.new("Success, OFF")
 		
 
 func patch_level() -> void:
@@ -103,24 +108,15 @@ func patch_level() -> void:
 		return
 	if Scenes.get_tree().get_node_count_in_group(&"spikeroof") > 0:
 		return
-	var spawner = WIND_NODE.instantiate()
-	#var spawner2 = WIND_FX_NODE.instantiate()
+	var spawner = SPIKEROOF.instantiate()
 	var scene_path: String = Scenes.current_scene.scene_file_path
-	if SCENE_PATHS_1.any(func(path: StringName):
-		return path in scene_path
-	):
-		spawner.get_child(0).bottom_line_position = 288.0
-	if SCENE_PATHS_2.any(func(path: StringName):
-		return path in scene_path
-	):
-		spawner.get_child(0).bottom_line_position = 224.0
-	if SCENE_PATHS_3.any(func(path: StringName):
-		return path in scene_path
-	):
-		spawner.get_child(0).bottom_line_position = 160.0
-	if SCENE_PATHS_4.any(func(path: StringName):
-		return path in scene_path
-	):
-		spawner.get_child(0).bottom_line_position = 352.0
+	var spike_ceiling: VBoxContainer = spawner.get_child(0)
+	
+	var keys: Array = SCENE_PATCHES.keys()
+	var values: Array = SCENE_PATCHES.values()
+	for i in SCENE_PATCHES.size():
+		if keys[i].any(func(path: StringName):
+			return path in scene_path
+		):
+			spike_ceiling.bottom_line_position = values[i]
 	Scenes.current_scene.add_child(spawner)
-	#Scenes.current_scene.add_child(spawner2)

@@ -2,8 +2,8 @@ extends Command
 
 #const debris_effect = preload("res://engine/objects/effects/brick_debris/brick_debris_grey.tscn")
 #const BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
-const MINECRAFT_LAYER = preload("res://commands/minec/minecraft_layer.tscn")
-const OUTLINE_DRAW = preload("res://commands/minec/outline_draw.tscn")
+var MINECRAFT_LAYER = load("res://commands/minec/minecraft_layer.tscn")
+var OUTLINE_DRAW = load("res://commands/minec/outline_draw.tscn")
 
 
 static func register() -> Command:
