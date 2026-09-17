@@ -1,0 +1,231 @@
+[gd_scene format=4 uid="uid://bg5uc7ny6op2d"]
+
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_n8qpp"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_j0sfk"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="3_dibc3"]
+[ext_resource type="Script" uid="uid://bxx54cyd4mjsq" path="res://engine/objects/core/music_loader/music_loader.gd" id="4_4e2ms"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="5_4yyk3"]
+[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="6_1wn6a"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="7_f404m"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="8_au0x5"]
+[ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="9_ijg8w"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="10_ijg8w"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_bu85g"]
+[ext_resource type="Script" uid="uid://b8yydtvt64i62" path="res://engine/components/hud/hud.gd" id="12_2xeo8"]
+[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="13_x8isl"]
+[ext_resource type="Script" uid="uid://etlhugga6myu" path="res://stages/save_game_room/scripts/pipe_otherworld_selector.gd" id="14_bu85g"]
+[ext_resource type="Script" uid="uid://casskh5blmgo6" path="res://stages/save_game_room/scripts/reset_and_select.gd" id="15_2xeo8"]
+[ext_resource type="Texture2D" uid="uid://cwwgmgsjprj1p" path="res://engine/scenes/save_game_room/textures/reset_counter_bg.png" id="16_vdjxd"]
+[ext_resource type="Script" uid="uid://blthfq00iwm17" path="res://engine/scenes/save_game_room/scripts/saved_level_label.gd" id="16_x8isl"]
+[ext_resource type="Texture2D" uid="uid://cquriu107cwpu" path="res://engine/scenes/save_game_room/textures/reset_counter.png" id="17_wrr7h"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="18_e4xdc"]
+[ext_resource type="Script" uid="uid://b3j5nkqkpkikr" path="res://engine/scripts/nodes/ui/input_rich_text_label.gd" id="19_c1ght"]
+[ext_resource type="Script" uid="uid://da433lpjdpl3i" path="res://stages/save_game_room/scripts/select_level_label.gd" id="20_eivec"]
+
+[node name="WarpPipes" type="Node2D" unique_id=465760701]
+script = ExtResource("1_n8qpp")
+time = -1
+completion_music = ExtResource("2_j0sfk")
+metadata/_custom_type_script = "uid://dh7ob1sbo8lx7"
+
+[node name="MusicLoader" type="Node" parent="." unique_id=1674830763 instance=ExtResource("3_dibc3")]
+script = ExtResource("4_4e2ms")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=169935397 instance=ExtResource("5_4yyk3")]
+position = Vector2(80, 400)
+collision_mask = 16
+slide_on_ceiling = false
+floor_max_angle = 0.837758
+floor_snap_length = 12.0
+platform_on_leave = 2
+platform_floor_layers = 4294901776
+script = ExtResource("6_1wn6a")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=2019466205]
+editor_draw_screen = false
+script = ExtResource("7_f404m")
+metadata/_edit_lock_ = true
+
+[node name="CameraArea" type="Control" parent="." unique_id=1790766850 instance=ExtResource("8_au0x5")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 11008.0
+offset_bottom = 480.0
+script = ExtResource("9_ijg8w")
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1395863416]
+tile_map_data = PackedByteArray("AAACAA0AAAABAAAAAAAHAAsABAAAAAAAAAAHAAwABAAAAAEAAAAIAAsABAABAAAAAAAIAAwABAABAAEAAAAJAAsABAAAAAAAAAAJAAwABAAAAAEAAAAKAAsABAABAAAAAAAKAAwABAABAAEAAAALAAsABAAAAAAAAAALAAwABAAAAAEAAAAMAAsABAABAAAAAAAMAAwABAABAAEAAAANAAsABAAAAAAAAAANAAwABAAAAAEAAAAOAAsABAABAAAAAAAOAAwABAABAAEAAAAPAAsABAAAAAAAAAAPAAwABAAAAAEAAAAQAAsABAABAAAAAAAQAAwABAABAAEAAAARAAsABAAAAAAAAAARAAwABAAAAAEAAAASAAsABAABAAAAAAASAAwABAABAAEAAAAAAA0AAAABAAAAAAABAA0AAAABAAAAAAADAA0AAAABAAAAAAAEAA0AAAABAAAAAAAFAA0AAAABAAAAAAAGAA0AAAABAAAAAAAHAA0AAAABAAAAAAAIAA0AAAABAAAAAAAJAA0AAAABAAAAAAAKAA0AAAABAAAAAAALAA0AAAABAAAAAAAMAA0AAAABAAAAAAANAA0AAAABAAAAAAAOAA0AAAABAAAAAAAPAA0AAAABAAAAAAAQAA0AAAABAAAAAAARAA0AAAABAAAAAAASAA0AAAABAAAAAAATAA0AAAABAAAAAAA=")
+tile_set = ExtResource("10_ijg8w")
+navigation_enabled = false
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=469826780 instance=ExtResource("11_bu85g")]
+script = ExtResource("12_2xeo8")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=653787219]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="PipeIn" parent="." unique_id=1607065405 instance=ExtResource("13_x8isl")]
+position = Vector2(256, 336)
+script = ExtResource("14_bu85g")
+profile_name = "debug"
+level_count = {
+1: 4
+}
+secret_level_values = ["1-1", "1-2", "2-2", "3-3", "4-3", "5-3", "6-2", "8-3"]
+map_scene_template = ""
+level_scene_template = "res://stages/test_stages/warp_pipes.tscn"
+reset_node_path = NodePath("../Reset")
+force_disable_level_save = true
+set_data_to_profile = ""
+secret_name = "all otherworld levels found"
+secret_id_explicit = ""
+no_star_world_until_secret = true
+no_secrets_label = true
+force_warp_to_save_room = false
+force_intro_if_level_1 = false
+clear_color_override = true
+secret_completed = ""
+secret_completed_kevin = ""
+secret_completed_values = PackedStringArray()
+level_lock_explain = "level locked! find a passage in expert mode worlds!"
+level_unlock_explain = "you have found this level in expert %s"
+use_circle_transition = true
+circle_closing_speed = 0.05
+circle_center_after_middle = true
+
+[node name="Label" type="Label" parent="PipeIn" unique_id=1978546495]
+z_index = -6
+offset_left = -64.0
+offset_top = -96.0
+offset_right = 64.0
+offset_bottom = -51.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("18_e4xdc")
+theme_override_font_sizes/font_size = 21
+text = "OTHERWORLD
+LEVEL %s"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("16_x8isl")
+
+[node name="PipeIn2" parent="." unique_id=1437556772 instance=ExtResource("13_x8isl")]
+position = Vector2(320, 336)
+warp_to_scene = "uid://bg5uc7ny6op2d"
+use_circle_transition = true
+circle_closing_speed = 0.05
+
+[node name="Reset" type="Node2D" parent="." unique_id=272566708]
+position = Vector2(0, 6)
+script = ExtResource("15_2xeo8")
+
+[node name="Progress" type="TextureProgressBar" parent="Reset" unique_id=58778480]
+visible = false
+offset_left = 275.0
+offset_top = 10.0
+offset_right = 555.0
+offset_bottom = 26.0
+max_value = 1.0
+step = 0.05
+texture_under = ExtResource("16_vdjxd")
+texture_progress = ExtResource("17_wrr7h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Reset" unique_id=2100018961]
+offset_left = 192.0
+offset_top = -56.0
+offset_right = 640.0
+offset_bottom = -10.0
+size_flags_vertical = 3
+theme_override_constants/separation = 3
+
+[node name="Label" type="RichTextLabel" parent="Reset/VBoxContainer" unique_id=934488154]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("18_e4xdc")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+text = "TO DELETE A SAVE, HOLD {a_delete} FOR 3 SEC."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("19_c1ght")
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
+
+[node name="Unlock" type="RichTextLabel" parent="Reset/VBoxContainer" unique_id=1749728389]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("18_e4xdc")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+text = "to select a world, press {a_tab}."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("19_c1ght")
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
+
+[node name="Unlock2" type="RichTextLabel" parent="Reset/VBoxContainer" unique_id=1835540570]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 6
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("18_e4xdc")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+text = "to select a level, use corresponding number buttons."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("20_eivec")
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
+
+[node name="Secrets" type="Label" parent="Reset/VBoxContainer" unique_id=1647944269]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("18_e4xdc")
+theme_override_font_sizes/font_size = 21
+text = "applicable for warpless, no hit, no deaths"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Deaths" type="Label" parent="Reset/VBoxContainer" unique_id=1447910296]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_outline_color = Color(0, 0, 0.470588, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("18_e4xdc")
+theme_override_font_sizes/font_size = 21
+text = "deaths"
+horizontal_alignment = 1
+uppercase = true

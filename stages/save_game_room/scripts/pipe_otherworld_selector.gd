@@ -120,7 +120,13 @@ func _input(event: InputEvent) -> void:
 			_star_sel_level = event.keycode - 48
 			_update_save()
 			_update_reset_labels()
-	
+
+
+func _warping_process(delta: float) -> void:
+	if !_smooth_entry_active && _duration >= _target && !warp_trans && !_warp_triggered:
+		_update_warp_to_scene()
+	super(delta)
+
 
 func _update_save(do_signal: bool = false) -> void:
 	is_blocked = false
@@ -167,31 +173,6 @@ func _update_save(do_signal: bool = false) -> void:
 
 
 func pass_warp() -> void:
-	ProfileManager.set_current_profile(profile_name)
-	
-	target = null
-	
-	if map_scene_template.is_empty():
-		warp_to_scene = level_scene_template.format([str(_star_sel_level)])
-	elif !(force_intro_if_level_1 && _star_sel_level == 1):
-		warp_to_scene = map_scene_template
-		if _star_sel_level > 1:
-			print("Profile Started from level %d, added bit to data." % _star_sel_level)
-			ProfileManager.current_profile.data.started_from_middle = true
-		if _star_sel_world && level_count.size() > 1:
-			ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
-		if _star_sel_level:
-			Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
-			Data.values.map_force_go_next = true
-	
-	if force_warp_to_save_room:
-		ProfileManager.current_profile.data.warp_to_save_room = true
-	Data.values.skip_progress_continue = true
-	# Activate Kevin in saved pipe on enter
-	if KevinGlobal.activated:
-		ProfileManager.current_profile.data.kevin_mode_enabled = true
-	if set_data_to_profile:
-		ProfileManager.current_profile.data[set_data_to_profile] = true
 	await get_tree().physics_frame
 	super()
 
@@ -225,4 +206,30 @@ func _update_reset_labels() -> void:
 			unlocked_lvl_text = "world u - x"
 		reset_node.secrets.text = level_unlock_explain % unlocked_lvl_text
 	
-		
+
+func _update_warp_to_scene() -> void:
+	ProfileManager.set_current_profile(profile_name)
+	
+	target = null
+	
+	if map_scene_template.is_empty():
+		warp_to_scene = level_scene_template.format([str(_star_sel_level)])
+	elif !(force_intro_if_level_1 && _star_sel_level == 1):
+		warp_to_scene = map_scene_template
+		if _star_sel_level > 1:
+			print("Profile Started from level %d, added bit to data." % _star_sel_level)
+			ProfileManager.current_profile.data.started_from_middle = true
+		if _star_sel_world && level_count.size() > 1:
+			ProfileManager.current_profile.data.current_world = map_scene_template.format([str(_star_sel_world)])
+		if _star_sel_level:
+			Data.values.map_force_selected_marker = level_scene_template.format([str(_star_sel_world), str(_star_sel_level - 1)])
+			Data.values.map_force_go_next = true
+	
+	if force_warp_to_save_room:
+		ProfileManager.current_profile.data.warp_to_save_room = true
+	Data.values.skip_progress_continue = true
+	# Activate Kevin in saved pipe on enter
+	if KevinGlobal.activated:
+		ProfileManager.current_profile.data.kevin_mode_enabled = true
+	if set_data_to_profile:
+		ProfileManager.current_profile.data[set_data_to_profile] = true
