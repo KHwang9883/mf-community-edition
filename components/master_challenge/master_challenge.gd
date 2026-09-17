@@ -206,7 +206,10 @@ func _is_save_or_menu() -> bool:
 	if !is_instance_valid(Scenes.current_scene):
 		return false
 	var path: String = Scenes.current_scene.scene_file_path
-	return path.contains("save_game_room") || path.contains("main_menu")
+	return (
+		"save_game_room" in path || "main_menu" in path || "_title" in path ||
+		"starting" in path
+	)
 
 
 func _is_resume_from_suspended() -> bool:
@@ -498,6 +501,8 @@ func _save_master_challenge_suspended(show_icon: bool) -> void:
 	if _is_world_1_1():
 		if ProfileManager.profiles.has("suspended"):
 			ProfileManager.delete_profile("suspended")
+		return
+	if _resume_world_level().y <= 1:
 		return
 	var scene_path: String = _suspended_scene_path()
 	if scene_path.is_empty():
