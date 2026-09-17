@@ -64,26 +64,13 @@ func start_selected() -> void:
 	Audio.stop_music_channel(2, true)
 	await tw.finished
 	
-	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if ProfileManager.current_profile && "current_world" in ProfileManager.current_profile.data:
 		goto_scene = ProfileManager.current_profile.data.current_world
 	
-	if !_crossfade:
-		TransitionManager.accept_transition(
-			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-				.instantiate()
-				.with_speeds(0.04, -0.1)
-				.with_pause()
-		)
-		
-		await TransitionManager.transition_middle
-		Scenes.goto_scene(goto_scene)
-	else:
-		TransitionManager.accept_transition(
-			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-				.instantiate()
-				.with_scene(goto_scene)
-		)
+	Scenes.goto_scene_with_transition(goto_scene, &"auto", func(t):
+		t.with_speeds(5.0, -0.1)
+	)
+
 
 func _physics_process(delta: float) -> void:
 	screen_camera.offset.x += 4.0

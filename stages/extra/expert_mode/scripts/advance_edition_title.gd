@@ -1,3 +1,4 @@
+@warning_ignore("missing_tool")
 extends Stage2D
 
 @export var goto_scene: String
@@ -30,20 +31,7 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(0.8, false).timeout
 	controls.focused = true
-	
-	#await tw.finished
-	#_label_fader()
-#
-#func _label_fader() -> void:
-	#var tw = create_tween()
-	#tw.tween_property(label, "modulate:a", 1, 2)
-	#await get_tree().create_timer(4, false).timeout
-	#
-	#tw = create_tween()
-	#tw.tween_property(label, "modulate:a", 0, 2)
-	#await tw.finished
-	#
-	#_label_fader()
+
 
 func start_selected() -> void:
 	if !controls.focused: return
@@ -61,21 +49,6 @@ func start_selected() -> void:
 	#ProfileManager.current_profile.data.current_world = goto_scene
 	#ProfileManager.save_current_profile()
 	
-	var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
-	
-	if !_crossfade:
-		TransitionManager.accept_transition(
-			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-				.instantiate()
-				.with_speeds(0.04, -0.1)
-				.with_pause()
-		)
-		
-		await TransitionManager.transition_middle
-		Scenes.goto_scene(goto_scene)
-	else:
-		TransitionManager.accept_transition(
-			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-				.instantiate()
-				.with_scene(goto_scene)
-		)
+	Scenes.goto_scene_with_transition(goto_scene, &"auto", func(t):
+		t.with_speeds(5.0, -0.1)
+	)
