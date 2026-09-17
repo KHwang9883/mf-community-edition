@@ -13,7 +13,6 @@ enum TRACK_MOD{
 @export_range(0.0, 10.0, 0.001, "hide_slider", "or_grather") var smoothness: float = 3.0
 
 var _target_angle: float
-var _elapsed: float
 
 func _ready() -> void:
 	match track_mod:

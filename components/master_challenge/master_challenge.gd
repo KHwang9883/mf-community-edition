@@ -170,6 +170,7 @@ func _on_game_over_finished() -> void:
 
 	await Scenes.goto_scene_with_transition(dest, &"fade", func(t):
 		t.with_animation("to_black_linear")
+		t.with_speeds(3.0, 1.0)
 	)
 	_game_over_handling = false
 
