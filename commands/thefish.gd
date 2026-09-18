@@ -12,7 +12,7 @@ const SCENE_PATHS: Array[StringName] = [
 ]
 
 static func register() -> Command:
-	return new().set_name("thanksforthefish").set_description("Make every level a 2-2!!!")
+	return new().set_name("thefish").set_description("Make every level a 2-2!!!")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):
@@ -32,8 +32,11 @@ func patch_level() -> void:
 		return
 	if Scenes.get_tree().get_node_count_in_group(&"cheep_gen_cheat") > 0:
 		return
-	var spawner = CHEEP_SPAWNER.instantiate()
 	var scene_path: String = Scenes.current_scene.scene_file_path
+	if "save_game_room" in scene_path || "main_menu" in scene_path:
+		return
+		
+	var spawner = CHEEP_SPAWNER.instantiate()
 	if SCENE_PATHS.any(func(path: StringName):
 		return path in scene_path
 	):

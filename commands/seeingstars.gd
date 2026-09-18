@@ -23,6 +23,9 @@ func patch_level() -> void:
 		return
 	if Scenes.get_tree().get_node_count_in_group(&"the_starfall") > 0:
 		return
+	var scene_path: String = Scenes.current_scene.scene_file_path
+	if "save_game_room" in scene_path || "main_menu" in scene_path:
+		return
+	
 	var spawner = STARFALL.instantiate()
-	#var scene_path: String = Scenes.current_scene.scene_file_path
 	Scenes.current_scene.add_child(spawner)

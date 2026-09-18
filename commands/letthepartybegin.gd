@@ -32,8 +32,11 @@ func patch_level() -> void:
 		return
 	if Scenes.get_tree().get_node_count_in_group(&"the_goomba_spawner") > 0:
 		return
-	var spawner = GOOMBA_PARTY_SPAWNER.instantiate()
 	var scene_path: String = Scenes.current_scene.scene_file_path
+	if "save_game_room" in scene_path || "main_menu" in scene_path:
+		return
+	
+	var spawner = GOOMBA_PARTY_SPAWNER.instantiate()
 	if SCENE_PATHS.any(func(path: StringName):
 		return path in scene_path
 	):

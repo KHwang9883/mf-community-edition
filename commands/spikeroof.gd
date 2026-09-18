@@ -80,6 +80,10 @@ const SCENE_PATHS_3: Array[StringName] = [
 const SCENE_PATHS_4: Array[StringName] = [
 	&"level_f2-1",
 ]
+const SCENE_PATHS_5: Array[StringName] = [
+	&"human_lab-4",
+	&"human_lab-jeansowaty",
+]
 const SCENE_PATCHES: Dictionary[Array, float] = {
 	SCENE_PATHS_1: 288.0,
 	SCENE_PATHS_2: 224.0,
@@ -94,7 +98,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):
 		Thunder._connect(Scenes.scene_ready, patch_level)
 		patch_level()
-		return Command.ExecuteResult.new("The sky is falling. (Run this command again to disable)")
+		return Command.ExecuteResult.new("Heavy skies... (Run this command again to disable)")
 	else:
 		Thunder._disconnect(Scenes.scene_ready, patch_level)
 		if Scenes.is_inside_tree():
@@ -108,15 +112,71 @@ func patch_level() -> void:
 		return
 	if Scenes.get_tree().get_node_count_in_group(&"spikeroof") > 0:
 		return
-	var spawner = SPIKEROOF.instantiate()
 	var scene_path: String = Scenes.current_scene.scene_file_path
+	if "save_game_room" in scene_path || "main_menu" in scene_path:
+		return
+	
+	var spawner: Parallax2D = SPIKEROOF.instantiate()
 	var spike_ceiling: VBoxContainer = spawner.get_child(0)
+	_disable_spike_hazard(spike_ceiling)
 	
 	var keys: Array = SCENE_PATCHES.keys()
 	var values: Array = SCENE_PATCHES.values()
 	for i in SCENE_PATCHES.size():
-		if keys[i].any(func(path: StringName):
-			return path in scene_path
-		):
+		if keys[i].any(_is_in_scene_path.bind(scene_path)):
 			spike_ceiling.bottom_line_position = values[i]
+	
+	if SCENE_PATHS_5.any(_is_in_scene_path.bind(scene_path)):
+		var left_spike_wall = _set_side_spikes(spawner, spike_ceiling)
+		spawner.scroll_scale.x = 1
+		spike_ceiling.position.x += 160
+		spike_ceiling.bottom_line_position += 160 - 32
+		left_spike_wall.bottom_line_position += 32
+		var layer_2: TileMapLayer = Scenes.current_scene.get_node_or_null("Layer2") as TileMapLayer
+		if layer_2:
+			layer_2.erase_cell(Vector2i(1, 107))
+			layer_2.erase_cell(Vector2i(2, 107))
+	#if SCENE_PATHS_5.any(_is_in_scene_path.bind(scene_path)):
+	#	spawner.scroll_scale.y = 0
+	
+	spawner.add_to_group(&"spikeroof")
 	Scenes.current_scene.add_child(spawner)
+
+func _is_in_scene_path(path: StringName, scene_path: String) -> bool:
+	return path in scene_path
+
+
+func _set_side_spikes(spawner: Parallax2D, spike_ceiling: VBoxContainer) -> VBoxContainer:
+	spawner.repeat_size.x = 0
+	spike_ceiling.rotation_degrees = 90
+	spike_ceiling.position = Vector2(496, -48)
+	spike_ceiling.bottom_line_position = 384
+	spike_ceiling.activated_area.position.y = -15000
+	spike_ceiling.activated_area.size.y = 40000
+	
+	var left_spike_wall: VBoxContainer = spike_ceiling.duplicate()
+	left_spike_wall.rotation_degrees = -90
+	left_spike_wall.position = Vector2(-496, -48)
+	left_spike_wall.bottom_line_position = 256
+	left_spike_wall.activated_area.position.y = -15000
+	left_spike_wall.activated_area.size.y = 40000
+	_disable_spike_hazard(left_spike_wall)
+	spawner.add_child.call_deferred(left_spike_wall)
+	return left_spike_wall
+
+
+func _disable_spike_hazard(spike_ceiling: Node) -> void:
+	spike_ceiling.set_physics_process(false)
+	var spike_area := spike_ceiling.get_node_or_null(^"Spike/Area2D") as Area2D
+	if spike_area:
+		spike_area.monitoring = false
+		spike_area.set_physics_process(false)
+
+
+func _set_spike_floor(spawner: Parallax2D, spike_ceiling: VBoxContainer) -> void:
+	spike_ceiling.rotation_degrees = 180
+	spike_ceiling.position.y = 448
+	spike_ceiling.bottom_line_position = 104
+	spike_ceiling.activated_area.position.y = -960
+	spike_ceiling.activated_area.size.y = 4000
+	

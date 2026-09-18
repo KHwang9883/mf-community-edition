@@ -4,7 +4,8 @@ var GENERATOR = load("res://stages/extra/expert_mode/objects/bowserflame_generat
 var GENERATOR_TRIGGER = load("res://stages/extra/expert_mode/objects/bowserflame_gen_trigger.tscn")
 
 static func register() -> Command:
-	return new().set_name("firewall").set_description("Make every level an Expert Bowser appearance")
+	return new().set_name("firewall").set_description("Make every level an Expert Bowser appearance") \
+	.set_debug() # command is unfinished, so only debug builds can access it
 
 func execute(args:Array) -> Command.ExecuteResult:
 	if !Scenes.scene_ready.is_connected(patch_level):
@@ -24,8 +25,11 @@ func patch_level() -> void:
 		return
 	if Scenes.get_tree().get_node_count_in_group(&"bowser_flame_gen") > 0:
 		return
+	var scene_path: String = Scenes.current_scene.scene_file_path
+	if "save_game_room" in scene_path || "main_menu" in scene_path:
+		return
+	
 	var generator = GENERATOR.instantiate()
 	var generator_trigger = GENERATOR_TRIGGER.instantiate()
-	#var scene_path: String = Scenes.current_scene.scene_file_path
 	Scenes.current_scene.add_child(generator)
 	Scenes.current_scene.add_child(generator_trigger)
