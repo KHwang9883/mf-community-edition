@@ -3,10 +3,8 @@ extends Command
 var SPIKEROOF = load("res://stages/extra/hardcore_2/objects/spike_roof.tscn")
 const SCENE_PATHS_1: Array[StringName] = [
 	&"level_1-3",
-	&"expert_level_1-3",
-	&"level_5-2",
+	&"/level_5-2",
 	&"level_8-4_boss",
-	&"expert_level_8-4_boss",
 	&"level_f1-4",
 	&"level_f2-2",
 	&"level_f2-4",
@@ -42,22 +40,18 @@ const SCENE_PATHS_1: Array[StringName] = [
 	&"human_lab-3",
 	&"hardcore_2-1",
 	&"hardcore_1-1",
+	&"otherworld/level_2",
 ]
 const SCENE_PATHS_2: Array[StringName] = [
 	&"level_8-1",
-	&"expert_level_8-1",
 	&"expert_level_4-3",
 	&"level_1-4",
 	&"level_2-5",
 	&"level_3-4",
 	&"level_4-4",
 	&"level_6-4",
+	&"level_7-4",
 	&"level_f3-4",
-	&"expert_level_1-4",
-	&"expert_level_2-5",
-	&"expert_level_3-4",
-	&"expert_level_4-4",
-	&"expert_level_6-4",
 	&"level_f4-2",
 	&"stupidity-3",
 	&"level_13-2",
@@ -79,16 +73,59 @@ const SCENE_PATHS_3: Array[StringName] = [
 ]
 const SCENE_PATHS_4: Array[StringName] = [
 	&"level_f2-1",
+	&"level_ny_4",
 ]
 const SCENE_PATHS_5: Array[StringName] = [
 	&"human_lab-4",
 	&"human_lab-jeansowaty",
+]
+const SCENE_PATHS_6: Array[StringName] = [
+	&"level_s4-4",
+	&"level_9-3",
+	&"level_6-2",
+	&"level_12-3",
+	&"extralevel_1",
+	&"level_f4-5",
+	&"hardcore_1-3",
+	&"otherworld/level_6",
+	&"otherworld/level_5",
+	&"otherworld/level_4",
+	&"world_9/level_9-2",
+]
+const SCENE_PATHS_7: Array[StringName] = [
+	&"save_game_room",
+	&"main_menu",
+	&"level_4-2",
+	&"expert_level_8-3",
+	&"level_12-4",
+	&"otherworld/level_7",
+]
+const SCENE_PATHS_8: Array[StringName] = [
+	&"/level_8-3",
+]
+const SCENE_PATHS_9: Array[StringName] = [
+	&"level_u-4-2_e",
+	&"level_u-4-2_n",
+	&"level_u-4-2_h",
+	&"climbing_lava_run",
+	&"human_lava_run",
+	&"level_s4-5",
+]
+const SCENE_PATHS_10: Array[StringName] = [
+	&"lost_map_2",
+	&"lost_map_4",
+]
+const SCENE_PATHS_11: Array[StringName] = [
+	&"level_u-2_e",
+	&"level_u-2_n",
+	&"level_u-2_h",
 ]
 const SCENE_PATCHES: Dictionary[Array, float] = {
 	SCENE_PATHS_1: 288.0,
 	SCENE_PATHS_2: 224.0,
 	SCENE_PATHS_3: 160.0,
 	SCENE_PATHS_4: 352.0,
+	SCENE_PATHS_10: 344.0,
 }
 
 static func register() -> Command:
@@ -136,8 +173,48 @@ func patch_level() -> void:
 		if layer_2:
 			layer_2.erase_cell(Vector2i(1, 107))
 			layer_2.erase_cell(Vector2i(2, 107))
-	#if SCENE_PATHS_5.any(_is_in_scene_path.bind(scene_path)):
-	#	spawner.scroll_scale.y = 0
+	
+	if SCENE_PATHS_8.any(_is_in_scene_path.bind(scene_path)):
+		var left_spike_wall = _set_side_spikes(spawner, spike_ceiling)
+		left_spike_wall.position.x -= 32
+		spawner.scroll_scale.x = 1
+		spike_ceiling.position.x = 576
+		spike_ceiling.bottom_line_position += 160 - 32
+		left_spike_wall.bottom_line_position += 32
+		var layer_2: TileMapLayer = Scenes.current_scene.get_node_or_null("Layer2") as TileMapLayer
+		if layer_2:
+			layer_2.erase_cell(Vector2i(1, 107))
+			layer_2.erase_cell(Vector2i(2, 107))
+			
+	if SCENE_PATHS_9.any(_is_in_scene_path.bind(scene_path)):
+		var left_spike_wall = _set_side_spikes(spawner, spike_ceiling)
+		spawner.scroll_scale.x = 1
+		spike_ceiling.position.x = 496
+		spike_ceiling.bottom_line_position += 160 - 32
+		left_spike_wall.bottom_line_position -= 64
+		var layer_2: TileMapLayer = Scenes.current_scene.get_node_or_null("Layer2") as TileMapLayer
+		if layer_2:
+			layer_2.erase_cell(Vector2i(1, 107))
+			layer_2.erase_cell(Vector2i(2, 107))
+			
+	if SCENE_PATHS_6.any(_is_in_scene_path.bind(scene_path)):
+		spike_ceiling.rotation_degrees = 180
+		spike_ceiling.position.y = 448
+		spike_ceiling.bottom_line_position = 320
+		spike_ceiling.activated_area.position.y = -960
+		spike_ceiling.activated_area.size.y = 4000
+		spawner.z_index = 10
+		#spawner.scroll_scale.y = 1
+	
+	if SCENE_PATHS_10.any(_is_in_scene_path.bind(scene_path)):
+		spike_ceiling.activation_time = 6.0
+		
+	if SCENE_PATHS_11.any(_is_in_scene_path.bind(scene_path)):
+		spike_ceiling.bottom_line_position = 1280.0
+		spike_ceiling.activated_area = Rect2(-15000.0,480.0,30000.0,1440.0)
+		spawner.scroll_scale.y = 1
+		spike_ceiling.position.y = 608.0
+		spike_ceiling.size.y = 384.0
 	
 	spawner.add_to_group(&"spikeroof")
 	Scenes.current_scene.add_child(spawner)
@@ -171,12 +248,4 @@ func _disable_spike_hazard(spike_ceiling: Node) -> void:
 	if spike_area:
 		spike_area.monitoring = false
 		spike_area.set_physics_process(false)
-
-
-func _set_spike_floor(spawner: Parallax2D, spike_ceiling: VBoxContainer) -> void:
-	spike_ceiling.rotation_degrees = 180
-	spike_ceiling.position.y = 448
-	spike_ceiling.bottom_line_position = 104
-	spike_ceiling.activated_area.position.y = -960
-	spike_ceiling.activated_area.size.y = 4000
 	
