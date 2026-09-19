@@ -67,6 +67,7 @@ const APPEAR = preload("res://objects/chorniy_mario/appear.ogg")
 @onready var stars: CPUParticles2D = $Stars
 
 var mario_pos: Vector2
+var _prev_follow_pos: Vector2
 var appear_triggered = false
 var cutscene: bool = false
 
@@ -79,6 +80,7 @@ func hide_text() -> void:
 func _ready() -> void:
 	if !is_instance_valid(mario): return
 	mario_pos = mario.global_position
+	_prev_follow_pos = mario_pos
 	reset_physics_interpolation()
 	if Scenes.current_scene && "expert_mode/otherworld/level_8.tscn" in Scenes.current_scene.scene_file_path:
 		mario.death_music_ignore_pause = true
@@ -123,11 +125,16 @@ func _physics_process(delta: float) -> void:
 		kevin_podokh()
 		return
 	
+	if _prev_follow_pos.distance_to(mario.global_position) > 100:
+		reset_physics_interpolation()
+	_prev_follow_pos = mario.global_position
+	
 	var pos: Vector2 = mario.global_position
 	var animation = mario.sprite.animation
 	var frame = mario.sprite.frame
 	var flip_h = mario.sprite.flip_h
 	var frames = mario.sprite.sprite_frames
+	var z_ind = mario.sprite_container.z_index
 	if mario.warp != 0 && mario.warp_dir == mario.WarpDir.UP:
 		warp_invinc_timer = 15
 	
@@ -138,7 +145,13 @@ func _physics_process(delta: float) -> void:
 			kevin_podokh()
 			return
 		
+		var is_resetting := false
+		if global_position.distance_to(pos) > 100:
+			is_resetting = true
 		global_position = pos
+		if is_resetting:
+			reset_physics_interpolation()
+		sprite.z_index = z_ind
 		sprite.animation = animation
 		sprite.frame = frame
 		sprite.flip_h = flip_h
@@ -168,9 +181,19 @@ func _map_process(_delta: float) -> void:
 		Thunder.reorder_on_top_of(self, player)
 		cloud_light_effect.self_modulate.a = 0.75
 	
+	if _prev_follow_pos.distance_to(pos) > 100:
+		reset_physics_interpolation()
+	_prev_follow_pos = pos
+	
 	get_tree().create_timer(1.0 if !player.is_faster else 0.15, false, true).timeout.connect(func():
 		if !player.reached:
+			var is_resetting := false
+			if global_position.distance_to(pos) > 100:
+				is_resetting = true
 			global_position = pos
+			if is_resetting:
+				reset_physics_interpolation()
+		sprite.z_index = player.player.z_index
 		if map_count < 2:
 			visible = false
 			map_count += 1
