@@ -150,7 +150,9 @@ func patch_level() -> void:
 	if Scenes.get_tree().get_node_count_in_group(&"spikeroof") > 0:
 		return
 	var scene_path: String = Scenes.current_scene.scene_file_path
-	if "save_game_room" in scene_path || "main_menu" in scene_path:
+	if SCENE_PATHS_7.any(func(path: StringName):
+		return path in scene_path
+	):
 		return
 	
 	var spawner: Parallax2D = SPIKEROOF.instantiate()
