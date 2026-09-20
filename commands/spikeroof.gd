@@ -3,7 +3,6 @@ extends Command
 var SPIKEROOF = load("res://stages/extra/hardcore_2/objects/spike_roof.tscn")
 const SCENE_PATHS_1: Array[StringName] = [
 	&"level_1-3",
-	&"/level_5-2",
 	&"level_8-4_boss",
 	&"level_f1-4",
 	&"level_f2-2",
@@ -28,30 +27,20 @@ const SCENE_PATHS_1: Array[StringName] = [
 	&"level_s3-4",
 	&"level_s4-2",
 	&"level_s4-3",
-	&"funny_tanks",
 	&"level_ny_2",
 	&"level_ny_3",
 	&"level_ny_4-2",
 	&"lost_map_1",
-	&"lost_map_3",
-	&"lost_map_5",
 	&"human_lab2-2",
 	&"human_lab2-4",
-	&"human_lab-3",
-	&"hardcore_2-1",
-	&"hardcore_1-1",
-	&"otherworld/level_2",
+	&"otherworld/level_3",
 ]
 const SCENE_PATHS_2: Array[StringName] = [
-	&"level_8-1",
-	&"expert_level_4-3",
+	#&"expert_level_4-3",
 	&"level_1-4",
 	&"level_2-5",
 	&"level_3-4",
-	&"level_4-4",
 	&"level_6-4",
-	&"level_7-4",
-	&"level_f3-4",
 	&"level_f4-2",
 	&"stupidity-3",
 	&"level_13-2",
@@ -60,13 +49,12 @@ const SCENE_PATHS_2: Array[StringName] = [
 	&"level_10-4",
 	&"level_s1-4",
 	&"devastator",
-	&"starman_running",
 	&"lost_map_6",
 	&"human_lab2-5",
 	&"hardcore_2-4",
-	&"hardcore_1-4",
 ]
 const SCENE_PATHS_3: Array[StringName] = [
+	&"level_8-1",
 	&"expert_level_5-2",
 	&"level_s3-3",
 	&"koopa_troopa_liberation",
@@ -91,6 +79,24 @@ const SCENE_PATHS_6: Array[StringName] = [
 	&"otherworld/level_5",
 	&"otherworld/level_4",
 	&"world_9/level_9-2",
+	&"level_2-4",
+	&"level_4-3",
+	&"level_4-4",
+	&"/level_5-2",
+	&"level_7-4",
+	&"level_8-2",
+	&"level_8-4.",
+	&"hardcore_1-1",
+	&"hardcore_1-4",
+	&"hardcore_2-1",
+	&"human_lab-1",
+	&"human_lab-3",
+	&"lost_map_3",
+	&"lost_map_5",
+	&"otherworld/level_2",
+	&"level_f2-3",
+	&"level_f3-4",
+	&"level_f4-1",
 ]
 const SCENE_PATHS_7: Array[StringName] = [
 	&"save_game_room",
@@ -99,6 +105,8 @@ const SCENE_PATHS_7: Array[StringName] = [
 	&"expert_level_8-3",
 	&"level_12-4",
 	&"otherworld/level_7",
+	&"funny_tanks",
+	&"starman_running",
 ]
 const SCENE_PATHS_8: Array[StringName] = [
 	&"/level_8-3",
@@ -206,6 +214,8 @@ func patch_level() -> void:
 		spike_ceiling.activated_area.position.y = -960
 		spike_ceiling.activated_area.size.y = 4000
 		spawner.z_index = 10
+		if "level_8-4." in scene_path:
+			spike_ceiling.activated_area = Rect2(0.0,0.0,5856.0,1440.0)
 		#spawner.scroll_scale.y = 1
 	
 	if SCENE_PATHS_10.any(_is_in_scene_path.bind(scene_path)):
