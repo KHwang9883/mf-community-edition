@@ -2,6 +2,8 @@ extends AnimatedSprite2D
 
 const LoopOffsetBehaviorScript = preload("uid://cdwp13k80fepv")
 
+@export var force_mario: bool = false
+
 var loop_offset_behavior_script: GDScript
 
 func fade_out(duration: float = 0.5) -> void:
@@ -10,7 +12,9 @@ func fade_out(duration: float = 0.5) -> void:
 
 
 func _ready() -> void:
-	var _suit = CharacterManager.get_suit("small", "" if SettingsManager.settings.skin else "Mario")
+	var _suit = CharacterManager.get_suit(
+		"small", "" if SettingsManager.settings.skin && !force_mario else "Mario"
+	)
 	sprite_frames = SkinsManager.apply_player_skin(_suit)
 	loop_offset_behavior_script = ByNodeScript.activate_script(LoopOffsetBehaviorScript, self, {suit = _suit.name})
 	
