@@ -5,6 +5,7 @@ const LAKITU_REK = preload("res://engine/objects/enemies/lakitus/sounds/lakitu_r
 @export_file("*.tscn", "*.scn") var bonus_level_path: String
 
 var hovered: bool
+var entering: bool
 var a: float
 var b: float
 
@@ -32,6 +33,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# 触屏/手柄没有鼠标可悬停点击，EXTRA（m_extra：虚拟 EXTRA 按键注入、
+	# 手柄键 3、键盘空格）按下即可进入。节点只在奖励关卡可用时存在，条件天然满足。
+	if Input.is_action_just_pressed(&"m_extra"):
+		enter_bonus_level()
+		return
 	if !hovered:
 		click_on_me.rotation = lerp_angle(click_on_me.rotation, 0, 30 * delta)
 
@@ -40,6 +46,12 @@ func _physics_process(delta: float) -> void:
 	position.y = init_pos.y + sin(a) * 10
 	b = -sin(a) * 20
 	click_on_me.rotation = lerp_angle(click_on_me.rotation, deg_to_rad(b), 30 * delta)
+
+
+func enter_bonus_level() -> void:
+	if entering: return
+	entering = true
+	Scenes.goto_scene(bonus_level_path)
 
 
 func _on_mouse_entered() -> void:
@@ -55,4 +67,4 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 	if !hovered: return
 
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_pressed():
-		Scenes.goto_scene(bonus_level_path)
+		enter_bonus_level()

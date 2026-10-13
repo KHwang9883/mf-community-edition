@@ -28,7 +28,10 @@ var compat_cache: bool = false
 func _ready() -> void:
 	sign_mini.visible = SecretsManager.has_secret("hint_guy_encountered")
 	mystery_arrow.visible = false
-	mystery_kevin_sign.visible = SecretsManager.has_secret("hint_guy_encountered")
+	# 通关后就应该能看到这块提示牌（以及下面那个可撞的挑战模式积木）。
+	# 原本要求先成功输入过一次 KEVIN，可是积木本就是"打不了 KEVIN 时"的替代方案，
+	# 手柄/触屏玩家因此永远够不到它。
+	mystery_kevin_sign.visible = SecretsManager.is_endgame()
 	visible = false
 	sign_giant.visible = false
 	if active:
@@ -94,7 +97,8 @@ func trigger() -> void:
 
 
 func check_compatibility_activation() -> bool:
-	if !SettingsManager.device_keyboard:
+	# 手柄与触屏都打不出 "kevin"，直接用积木：触屏的 EXTRA/软键盘方案已移除。
+	if !SettingsManager.device_keyboard || MobileCompat.is_touch_device():
 		return true
 	if compat_cache:
 		return false

@@ -33,9 +33,17 @@ func set_hold_up_to_select_level(enabled: bool) -> void:
 func _apply_template() -> void:
 	if !_override_template.is_empty():
 		input_template = _override_template
-	elif SettingsManager.device_keyboard:
+	elif _use_number_keys():
 		input_template = text_keyboard
 	elif hold_up_to_select_level:
 		input_template = text_joypad
 	else:
 		input_template = text_joypad_no_up
+
+
+## 触屏上选关/选世界改用 EXTRA（= Tab），与手柄一致，所以提示走手柄文案。
+## 只有"键盘 + 非触屏"才提示数字键（数字键输入本身仍然保留）。
+func _use_number_keys() -> bool:
+	if MobileCompat.is_touch_device():
+		return false
+	return SettingsManager.device_keyboard

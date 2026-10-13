@@ -9,6 +9,8 @@ signal drag_finished
 @export var font_size := 20
 @export var arrow_direction := Vector2.ZERO
 @export var rounded_square := false
+## Draws a small keyboard glyph instead of a label
+@export var keyboard_icon := false
 
 const COLOR_IDLE_FILL := Color(1.0, 1.0, 1.0, 0.14)
 const COLOR_IDLE_LINE := Color(1.0, 1.0, 1.0, 0.5)
@@ -160,8 +162,37 @@ func _draw() -> void:
 		draw_arc(center, radius - 1.5, 0.0, TAU, 64, line, 3.0, true)
 	if arrow_direction != Vector2.ZERO:
 		_draw_chevron()
+	elif keyboard_icon:
+		_draw_keyboard_icon()
 	elif !label_text.is_empty():
 		_draw_label()
+
+
+## A tiny keyboard: two rows of five keys plus a space bar.
+func _draw_keyboard_icon() -> void:
+	var r := minf(size.x, size.y)
+	var pad := r * 0.22
+	var area := Rect2(Vector2.ONE * pad, Vector2.ONE * (r - pad * 2.0))
+	var gap := r * 0.05
+	var key_w := (area.size.x - gap * 4.0) / 5.0
+	var key_h := (area.size.y - gap * 2.0) / 3.0
+	for row in 2:
+		for col in 5:
+			_draw_key_rect(Rect2(
+				area.position + Vector2(col * (key_w + gap), row * (key_h + gap)),
+				Vector2(key_w, key_h)
+			))
+	var bar_w := key_w * 3.0 + gap * 2.0
+	_draw_key_rect(Rect2(
+		area.position + Vector2((area.size.x - bar_w) * 0.5, 2.0 * (key_h + gap)),
+		Vector2(bar_w, key_h)
+	))
+
+
+func _draw_key_rect(rect: Rect2) -> void:
+	var offset := Vector2.ONE * maxf(1.0, rect.size.y * 0.3)
+	draw_rect(Rect2(rect.position + offset, rect.size), COLOR_SHADOW, true)
+	draw_rect(rect, COLOR_TEXT, true)
 
 
 func _draw_chevron() -> void:

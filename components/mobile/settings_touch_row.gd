@@ -1,121 +1,119 @@
 extends MenuSelection
+## Touch settings entry shown inside the Options "Controls" screen submenu.
 
-const ROW_FONT := preload("res://engine/fonts/font_variations/tweaks_font_var.tres")
-const VALUE_FONT := preload("res://engine/fonts/font_variations/tweaks_font_title.tres")
+const ROW_FONT := preload("res://engine/fonts/font_variations/smb_variation.tres")
+const TEXT_GRADIENT := preload("res://components/mobile/text_gradient.gdshader")
 const TOGGLE_SOUND := preload("res://engine/scenes/main_menu/sounds/change.wav")
+
+## "PRESS ENTER" prompt textures, taken from the same sheet the other menu
+## entries use. Touch input shows it as well so the screens read the same.
+const PRESS_ENTER_TEXTURE := preload("res://engine/scenes/main_menu/textures/press_enter.png")
+const PRESS_REGION := Rect2(0, 0, 96, 30)
+const ENTER_REGION := Rect2(102, 0, 94, 30)
 
 const SIZE_PRESETS: Array[float] = [1.0, 1.25, 1.5, 1.75, 2.0, 2.5]
 const OPACITY_PRESETS: Array[float] = [0.3, 0.45, 0.6, 0.75, 0.9]
 
 const COLOR_NAME := Color(1, 1, 1, 1)
-const COLOR_RESET_NAME := Color(0.792157, 0.792157, 1, 1)
-const COLOR_VALUE := Color(0.79, 1, 0.909, 1)
-const COLOR_OUTLINE := Color(0, 0, 0.329412, 1)
-const COLOR_SHADOW := Color(0, 0, 0, 0.435294)
+const COLOR_OUTLINE := Color(0.156863, 0.156863, 0.156863, 0.784314)
+const FONT_SIZE := 28
+
+## Bevel gradients sampled from the pre-rendered label textures (controls.png /
+## controls_main.png): bright at the top, darker at the bottom.
+const YELLOW_GRADIENT: Array[Color] = [Color(1, 1, 0.353), Color(0.557, 0.498, 0)]
+const BLUE_GRADIENT: Array[Color] = [Color(0.918, 0.918, 1), Color(0.349, 0.349, 0.573)]
+const RED_GRADIENT: Array[Color] = [Color(1, 0.667, 0.667), Color(0.718, 0.251, 0.251)]
+
+## Move-input styles, in the order of TouchControls.MOVE_MODE_*
+const MOVE_MODE_NAMES: Array[String] = ["D-PAD", "STICK", "HYBRID", "SEPARATE"]
 
 @export var kind := "size"
 
+var _name_label: Label
 var _value_label: Label
-var _arrow_l: Label
-var _arrow_r: Label
-var _arrow_base := {}
-var _arrow_tweens := {}
-var _timer := 0.0
+var _press_hint: HBoxContainer
 
 
 func _ready() -> void:
-	var is_reset := kind == "reset"
-	var name_label := _make_text_label(COLOR_RESET_NAME if is_reset else COLOR_NAME)
-	name_label.text = _row_name()
-	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	add_child(name_label)
+	_name_label = _make_label(COLOR_NAME)
+	_name_label.text = _row_name()
+	_name_label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	_apply_gradient(_name_label, _name_gradient())
+	add_child(_name_label)
 
-	var value_box := HBoxContainer.new()
-	value_box.size_flags_horizontal = Control.SIZE_SHRINK_END
-	value_box.add_theme_constant_override(&"separation", 8)
-	add_child(value_box)
+	if kind == "layout":
+		_press_hint = make_press_enter_hint()
+		add_child(_press_hint)
 
-	_arrow_l = _make_arrow(true)
-	value_box.add_child(_arrow_l)
+	_value_label = _make_label(COLOR_NAME)
+	_value_label.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
+	add_child(_value_label)
 
-	_value_label = _make_text_label(COLOR_VALUE)
-	_value_label.add_theme_font_override(&"font", VALUE_FONT)
 	_refresh_label()
-	value_box.add_child(_value_label)
-
-	_arrow_r = _make_arrow(false)
-	value_box.add_child(_arrow_r)
-
-	_sync_arrows()
 	TouchControls.layout_edit_changed.connect(_on_layout_edit_changed)
 
 
-func _process(delta: float) -> void:
-	if !is_instance_valid(_arrow_l) || !is_instance_valid(_arrow_r):
-		return
-	for entry in [[_arrow_l, true], [_arrow_r, false]]:
-		var arrow: Label = entry[0]
-		if !arrow.visible:
-			continue
-		if !_arrow_base.has(arrow):
-			_arrow_base[arrow] = arrow.position
-			continue
-		if !_arrow_tweens.has(arrow):
-			_start_arrow_tween(arrow, entry[1])
+## Builds the right-hand "PRESS ENTER" prompt box shared by the menu entries.
+## Focus is handled by the caller, which mirrors the row name's blink onto it.
+static func make_press_enter_hint() -> HBoxContainer:
+	var box := HBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
+	box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	box.add_child(_make_prompt_rect(PRESS_REGION))
+	box.add_child(_make_prompt_rect(ENTER_REGION))
+	return box
 
 
-func _start_arrow_tween(arrow: Label, left_side: bool) -> void:
-	var base: float = _arrow_base[arrow].x
-	var tw := create_tween().set_loops()
-	tw.tween_property(arrow, "position:x", base - (3.0 if left_side else -3.0), 0.2)
-	tw.tween_callback(func() -> void: arrow.position.x = base)
-	_arrow_tweens[arrow] = tw
+static func _make_prompt_rect(region: Rect2) -> TextureRect:
+	var atlas := AtlasTexture.new()
+	atlas.atlas = PRESS_ENTER_TEXTURE
+	atlas.region = region
+	var rect := TextureRect.new()
+	rect.texture = atlas
+	rect.stretch_mode = TextureRect.STRETCH_KEEP
+	rect.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
+	rect.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	return rect
 
 
-func _invalidate_arrow_base() -> void:
-	for arrow in _arrow_tweens:
-		var tw: Tween = _arrow_tweens[arrow]
-		if is_instance_valid(tw):
-			tw.kill()
-	_arrow_tweens.clear()
-	_arrow_base.clear()
+## Keeps the prompt as visible as the row name, which the menu blinker fades.
+func _process(_delta: float) -> void:
+	if _press_hint:
+		_press_hint.modulate.a = _name_label.modulate.a if focused else 0.0
+
+
+func _make_label(color: Color) -> Label:
+	var label := Label.new()
+	label.uppercase = true
+	label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	label.add_theme_font_override(&"font", ROW_FONT)
+	label.add_theme_font_size_override(&"font_size", FONT_SIZE)
+	label.add_theme_color_override(&"font_color", color)
+	label.add_theme_color_override(&"font_outline_color", COLOR_OUTLINE)
+	label.add_theme_constant_override(&"outline_size", 6)
+	return label
+
+
+func _apply_gradient(label: Label, gradient: Array[Color]) -> void:
+	var material := ShaderMaterial.new()
+	material.shader = TEXT_GRADIENT
+	material.set_shader_parameter(&"gradient_top", gradient[0])
+	material.set_shader_parameter(&"gradient_bottom", gradient[1])
+	label.material = material
+
+
+func _name_gradient() -> Array[Color]:
+	match kind:
+		"opacity", "stick":
+			return BLUE_GRADIENT
+		"reset":
+			return RED_GRADIENT
+	return YELLOW_GRADIENT
 
 
 func _on_layout_edit_changed(_editing: bool) -> void:
 	if kind == "layout":
 		_refresh_label()
-
-
-func _make_text_label(color: Color) -> Label:
-	var label := Label.new()
-	label.uppercase = true
-	label.add_theme_font_override(&"font", ROW_FONT)
-	label.add_theme_font_size_override(&"font_size", 22)
-	label.add_theme_color_override(&"font_color", color)
-	label.add_theme_color_override(&"font_shadow_color", COLOR_SHADOW)
-	label.add_theme_color_override(&"font_outline_color", COLOR_OUTLINE)
-	label.add_theme_constant_override(&"line_spacing", 1)
-	label.add_theme_constant_override(&"shadow_offset_x", 3)
-	label.add_theme_constant_override(&"shadow_offset_y", 3)
-	label.add_theme_constant_override(&"outline_size", 4)
-	return label
-
-
-func _make_arrow(left_side: bool) -> Label:
-	var arrow := Label.new()
-	arrow.name = &"ArrowL" if left_side else &"ArrowR"
-	arrow.text = "<--" if left_side else "-->"
-	arrow.uppercase = true
-	arrow.add_theme_font_override(&"font", VALUE_FONT)
-	arrow.add_theme_font_size_override(&"font_size", 22)
-	arrow.add_theme_color_override(&"font_shadow_color", COLOR_SHADOW)
-	arrow.add_theme_color_override(&"font_outline_color", COLOR_OUTLINE)
-	arrow.add_theme_constant_override(&"line_spacing", 1)
-	arrow.add_theme_constant_override(&"shadow_offset_x", 3)
-	arrow.add_theme_constant_override(&"shadow_offset_y", 3)
-	arrow.add_theme_constant_override(&"outline_size", 4)
-	arrow.visible = false
-	return arrow
 
 
 func _row_name() -> String:
@@ -125,7 +123,7 @@ func _row_name() -> String:
 		"layout":
 			return "TOUCH LAYOUT"
 		"reset":
-			return "RESET TOUCH LAYOUT..."
+			return "RESET TOUCH LAYOUT"
 		"stick":
 			return "MOVE INPUT"
 	return "TOUCH SIZE"
@@ -158,31 +156,15 @@ func _refresh_label() -> void:
 		"opacity":
 			_value_label.text = "%d%%" % roundi(_current_value() * 100)
 		"layout":
-			_value_label.text = ""
+			# The prompt and the editing state share the right-hand slot.
+			var editing := TouchControls.edit_mode
+			_value_label.text = "EDITING" if editing else ""
+			_value_label.visible = editing
+			_press_hint.visible = !editing
 		"reset":
 			_value_label.text = ""
 		"stick":
-			if TouchControls.use_dual_mode():
-				_value_label.text = "DUAL"
-			elif TouchControls.stick_enabled():
-				_value_label.text = "STICK"
-			else:
-				_value_label.text = "D-PAD"
-	_invalidate_arrow_base.call_deferred()
-	_sync_arrows()
-
-
-func _sync_arrows() -> void:
-	if !is_instance_valid(_arrow_l) || !is_instance_valid(_arrow_r):
-		return
-	var show: bool = (
-		focused
-		&& get_parent().focused
-		&& kind != "reset"
-		&& kind != "layout"
-	)
-	_arrow_l.visible = show
-	_arrow_r.visible = show
+			_value_label.text = MOVE_MODE_NAMES[TouchControls.move_mode()]
 
 
 func _play_toggle_sound() -> void:
@@ -196,19 +178,10 @@ func _cycle(direction: int) -> void:
 			TouchControls.set_layout_edit(!TouchControls.edit_mode)
 			_play_toggle_sound()
 		"stick":
-			# Cycle order: D-PAD -> STICK -> DUAL -> D-PAD. Any direction
+			# Cycle order: D-PAD -> STICK -> HYBRID -> FREE. Any direction
 			# follows this loop so the sequence never gets confusing.
-			var mode := 0
-			if TouchControls.use_dual_mode():
-				mode = 2
-			elif TouchControls.stick_enabled():
-				mode = 1
-			mode = wrapi(mode + direction, 0, 3)
-			TouchControls.set_dual_mode(mode == 2)
-			if mode == 1:
-				TouchControls.set_stick_mode(true)
-			elif mode == 0:
-				TouchControls.set_stick_mode(false)
+			var mode := wrapi(TouchControls.move_mode() + direction, 0, MOVE_MODE_NAMES.size())
+			TouchControls.set_move_mode(mode)
 			_play_toggle_sound()
 		_:
 			var presets := _presets()
@@ -229,8 +202,6 @@ func _handle_focused(focus) -> void:
 	super(focus)
 	if focus:
 		_refresh_label()
-	else:
-		_sync_arrows()
 
 
 func _handle_select(mouse_input: bool = false) -> void:
@@ -264,39 +235,19 @@ func _on_reset_confirmed() -> void:
 	_play_toggle_sound()
 
 
-func _physics_process(delta: float) -> void:
-	if kind == "layout" || kind == "reset":
-		var editing := kind == "layout" && TouchControls.edit_mode
-		if focused && get_parent().focused && get_window().has_focus():
-			_timer += delta * 10
-			_value_label.modulate.a = min((cos(_timer) / 2.5) + 0.6, 1.0)
-			var want := "BACK TO FINISH" if editing else "PRESS ENTER"
-			if _value_label.text != want:
-				_value_label.text = want
-		elif editing:
-			if _value_label.text != "BACK TO FINISH":
-				_value_label.text = "BACK TO FINISH"
-			_value_label.modulate.a = 1.0
-		else:
-			_value_label.modulate.a = 1.0
-			if _value_label.text != "":
-				_value_label.text = ""
+func _physics_process(_delta: float) -> void:
 	if !focused || !get_parent().focused:
 		return
 	if !get_window().has_focus():
 		return
-	if kind == "layout":
+	if kind == "layout" || kind == "reset":
 		if Input.is_action_just_pressed(trigger_action) \
 				|| Input.is_action_just_pressed(&"ui_select"):
 			_handle_select(false)
-		if TouchControls.edit_mode && Input.is_action_just_pressed(&"ui_select"):
+		if kind == "layout" && TouchControls.edit_mode \
+				&& Input.is_action_just_pressed(&"ui_select"):
 			TouchControls.reset_layout()
 			_refresh_label()
-		return
-	if kind == "reset":
-		if Input.is_action_just_pressed(trigger_action) \
-				|| Input.is_action_just_pressed(&"ui_select"):
-			_handle_select(false)
 		return
 	if Input.is_action_just_pressed(&"ui_right"):
 		_cycle(1)

@@ -15,6 +15,10 @@ var timer = Timer.new()
 
 func _ready() -> void:
 	velocity = velocity.rotated(deg_to_rad(randi_range(0, 360)))
+	# 触屏没有悬停：星星原本要等光标靠近才开始移动，而手指一碰就已经把它收走了。
+	# 所以在触屏设备上让这类星星一开始就保持运动。
+	if bouncing_ball && MobileCompat.is_touch_device():
+		moving = 1
 
 func activate() -> void:
 	Audio.play_1d_sound(sounds.pick_random())

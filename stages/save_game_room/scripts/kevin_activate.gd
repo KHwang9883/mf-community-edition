@@ -26,6 +26,12 @@ var _held_keys: Dictionary = {}
 func _ready() -> void:
 	node_2d.visible = false
 	node_2d_2.visible = false
+	# 移动端没有 Backspace，取消凯文的唯一方式是再撞一次下面的积木
+	# （kevin_hint_save_room 里 Toggler 的 bumped 回调），提示要跟着改。
+	if MobileCompat.is_touch_device():
+		var cancel_label := node_2d.get_node_or_null(^"Label2") as Label
+		if cancel_label:
+			cancel_label.text = "proceed with caution. hit the block again to cancel"
 
 func _physics_process(_delta: float) -> void:
 	text = ""

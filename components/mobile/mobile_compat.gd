@@ -1,14 +1,37 @@
 extends Node
 
 const DESKTOP_ONLY_SETTINGS_ITEMS: PackedStringArray = [
-	"Controls", "Scale", "Fullscreen", "VSync", "Filter",
+	"Scale", "Fullscreen", "VSync", "Filter",
 ]
 const SKIN_EDITOR_SCRIPT_PATH := "res://stages/main_menu/objects/character_editor/skin_open_editor.gd"
 const SKIN_DIR_SCRIPT_PATH := "res://stages/main_menu/objects/character_editor/skin_open_dir.gd"
 const LIVESPLIT_SCRIPT_PATH := "res://stages/main_menu/objects/tweaks_livesplit_sel.gd"
 const BLINKING_SCRIPT_PATH := "res://engine/scenes/main_menu/scripts/selector_blinking.gd"
 const PAUSE_SETTINGS_PATH := "/root/Pause/Settings/SubViewportContainer/SubViewport/Options"
+const PAUSE_CONTROLS_PATH := "/root/Pause/Controls/SubViewportContainer/SubViewport/Options"
+const CONTROLS_PATH := "Controls/SubViewportContainer/SubViewport/Options"
 const TOUCH_SETTINGS_ROW := preload("res://components/mobile/settings_touch_row.gd")
+const TOUCH_INPUT_DISPLAY := preload("res://components/mobile/touch_input_display.gd")
+const SUBMENU_SELECTION_SCRIPT := preload("res://engine/scenes/main_menu/scripts/controls_submenu_selection.gd")
+const MENU_CONTROLLER_SCRIPT := preload("res://engine/components/ui/generic/menu_items_controller.gd")
+const MENU_TEXT_FONT := preload("res://engine/fonts/font_variations/smb_variation.tres")
+const TEXT_GRADIENT := preload("res://components/mobile/text_gradient.gdshader")
+
+const MENU_TEXT_COLOR := Color(1, 1, 1, 1)
+const MENU_TEXT_OUTLINE := Color(0.156863, 0.156863, 0.156863, 0.784314)
+const MENU_FONT_SIZE := 28
+
+## Bevel gradient sampled from the blue labels in controls_main.png.
+const MENU_BLUE_TOP := Color(0.918, 0.918, 1)
+const MENU_BLUE_BOTTOM := Color(0.349, 0.349, 0.573)
+
+const TOUCH_ROWS := [
+	["TouchSize", "size"],
+	["TouchOpacity", "opacity"],
+	["TouchLayout", "layout"],
+	["TouchStick", "stick"],
+	["TouchReset", "reset"],
+]
 
 var android := false
 
@@ -23,9 +46,15 @@ func _ready() -> void:
 		return
 	_setup_mobile_skins_dir()
 	_neuter_desktop_window_settings()
+	_install_touch_input_display()
 	_setup_gamepad_support()
 	_patch_options_container(get_node_or_null(PAUSE_SETTINGS_PATH))
+	# Deferred so the touch row script can reach the TouchControls autoload,
+	# which is registered after this one.
+	_inject_touch_menu.call_deferred(get_node_or_null(PAUSE_CONTROLS_PATH))
 	Scenes.scene_changed.connect(_on_scene_changed)
+	_ensure_immersive_mode.call_deferred()
+	_watch_console.call_deferred()
 
 
 func _notification(what: int) -> void:
@@ -35,10 +64,30 @@ func _notification(what: int) -> void:
 		_handle_go_back()
 	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		_normalize_joypad_bindings()
+		_ensure_immersive_mode()
+	elif what == NOTIFICATION_APPLICATION_RESUMED \
+			|| what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
+		_ensure_immersive_mode()
 
 
 func is_touch_device() -> bool:
 	return android
+
+
+## 是否运行在真正的 Android 上（MFCE_FORCE_MOBILE 只在桌面上模拟，不可改窗口模式）。
+func _is_android_platform() -> bool:
+	return OS.get_name() == "Android" || OS.has_feature("android")
+
+
+## 部分设备在窗口失去焦点后会重新显示状态栏和导航栏（侧边栏），并一直挡住画面。
+## 该分支的 Android 实现里 window_set_mode(FULLSCREEN) 会直接调用
+## enable_immersive_mode(true)，且不会因为模式未变而提前返回，所以每次重新获得
+## 焦点时再设置一次即可重新隐藏系统栏。
+func _ensure_immersive_mode() -> void:
+	if !_is_android_platform():
+		return
+	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 
 func inject_action(action: StringName, pressed: bool, strength: float = 1.0) -> void:
@@ -116,6 +165,10 @@ func _neuter_desktop_window_settings() -> void:
 func _handle_go_back() -> void:
 	if _close_topmost_popup():
 		return
+	# 正在等待绑定按键时，虚拟按键按设计不响应，返回键是唯一可用的退出方式，
+	# 因此要优先于其它返回行为，等同于桌面上的 ESC（取消本次绑定）。
+	if _cancel_pending_keybind():
+		return
 	if TouchControls.import_block_active():
 		return
 	if TouchControls.edit_mode:
@@ -131,6 +184,70 @@ func _handle_go_back() -> void:
 	else:
 		inject_action(&"ui_cancel", true)
 		inject_action(&"ui_cancel", false)
+
+
+## 触屏已经没有常驻的键盘按钮了，控制台弹出后把焦点交给它自己的输入框，
+## 否则 Android 上不会弹出输入法。顺带补一个补全按钮（见下）。
+func _watch_console() -> void:
+	var console := get_node_or_null(^"/root/Console")
+	if console == null || console.has_meta(&"console_watched"):
+		return
+	console.set_meta(&"console_watched", true)
+	console.visibility_changed.connect(_on_console_visibility_changed)
+	_inject_console_complete_button(console)
+
+
+## 软键盘上没有 Tab，而命令补全只认 Tab（console.gd 里 ui_focus_next →
+## move_suggestion()）。屏幕上的 TAB 按键也不行：控制台是盖在虚拟按键层之上的
+## 窗口，而且它在虚拟按键显隐规则里属于弹窗（打开时按键会隐藏）。所以直接在
+## 它的输入行里加一个"补全"按钮，调用控制台自己的 move_suggestion()。
+func _inject_console_complete_button(console: Node) -> void:
+	var ui := console.get_node_or_null(^"UI")
+	if ui == null:
+		return
+	var button := Button.new()
+	button.name = "Complete"
+	button.text = "TAB"
+	# 不要抢走输入框的焦点，否则输入法会收起来。
+	button.focus_mode = Control.FOCUS_NONE
+	button.anchor_left = 1.0
+	button.anchor_top = 1.0
+	button.anchor_right = 1.0
+	button.anchor_bottom = 1.0
+	button.offset_left = -130.0
+	button.offset_top = -35.0
+	button.offset_right = -70.0
+	button.offset_bottom = -4.0
+	button.pressed.connect(func(): console.call(&"move_suggestion", 1))
+	ui.add_child(button)
+	print("[MobileCompat] Added console Tab/complete button")
+
+
+func _on_console_visibility_changed() -> void:
+	var console := get_node_or_null(^"/root/Console")
+	if console == null || !(console as Window).visible:
+		return
+	var input := console.get_node_or_null(^"UI/CmdInput")
+	if input is LineEdit:
+		(input as LineEdit).grab_focus.call_deferred()
+
+
+## 按键设置里选中某一行后会进入等待按键状态（显示 "..."），此时该页菜单会被
+## 取消焦点，虚拟按键也不参与绑定，触屏玩家没有外接设备就退不出来。
+## 这里找到正在等待的那一行，走它自己的收尾流程（changing = false 并恢复菜单焦点），
+## 效果与桌面按 ESC 相同，但不会把任何按键写进配置。
+func _cancel_pending_keybind() -> bool:
+	var stack: Array[Node] = [get_tree().root]
+	while !stack.is_empty():
+		var node: Node = stack.pop_back()
+		if node.get(&"changing") == true && node.has_method(&"_after_change"):
+			node.set(&"changing", false)
+			node.get_parent().set(&"focused", true)
+			print("[MobileCompat] Cancelled pending key rebind on '%s'" % node.name)
+			return true
+		for child in node.get_children():
+			stack.append(child)
+	return false
 
 
 func _close_topmost_popup() -> bool:
@@ -163,6 +280,27 @@ const STICK_UI_BINDINGS := {
 	&"ui_up": [1, -1.0],
 	&"ui_down": [1, 1.0],
 }
+
+
+## 用主仓库的触屏提示渲染替换 Thunder.input：虚拟按键下显示屏幕按键 / 键盘按键，
+## 接手柄时显示手柄图标，避免出现 "Joy N"。
+func _install_touch_input_display() -> void:
+	Thunder.input = TOUCH_INPUT_DISPLAY.new()
+	print("[MobileCompat] Installed touch input display")
+
+
+## 触屏上没有物理键盘，提示里的 " key" 后缀（JUMP key、Space key）没有意义，
+## 而且会让屏幕按键提示变成 "JUMP key"。这里统一去掉。
+func _disable_keyboard_button_suffix(root: Node) -> void:
+	var stack: Array[Node] = [root]
+	while !stack.is_empty():
+		var node: Node = stack.pop_back()
+		if node is InputRichTextLabel && node.keyboard_as_button:
+			node.keyboard_as_button = false
+			if node.is_node_ready():
+				node.update_text()
+		for child in node.get_children():
+			stack.append(child)
 
 
 func _setup_gamepad_support() -> void:
@@ -225,11 +363,9 @@ func _on_scene_changed(to: Node) -> void:
 	var options := to.get_node_or_null(NodePath("Settings/SubViewportContainer/SubViewport/Options"))
 	if options:
 		_patch_options_container(options)
-	var tweaks_page := to.get_node_or_null(
-		NodePath("Tweaks/SubViewportContainer/SubViewport/Tweaks/Tweaks")
-	)
-	if tweaks_page:
-		_inject_touch_rows(tweaks_page)
+	_inject_touch_menu(to.get_node_or_null(NodePath(CONTROLS_PATH)))
+	_patch_shop_hint_for_touch(to)
+	_disable_keyboard_button_suffix(to)
 	_remove_nodes_with_script(to, SKIN_EDITOR_SCRIPT_PATH)
 	_remove_nodes_with_script(to, SKIN_DIR_SCRIPT_PATH, {"is_docs": false})
 	_remove_nodes_with_script(to, LIVESPLIT_SCRIPT_PATH)
@@ -287,6 +423,7 @@ func _resync_blinkers(container: Node) -> void:
 			continue
 		if node.get(&"menu_items_controller") != container:
 			continue
+		var first_child: bool = node.get(&"modulate_first_child")
 		var items: Array[CanvasItem] = []
 		for child in container.get_children():
 			if child is HSeparator || child is VSeparator:
@@ -295,66 +432,163 @@ func _resync_blinkers(container: Node) -> void:
 				continue
 			if !(child is Control):
 				continue
+			if first_child:
+				if child.get_child_count() > 0 && child.get_child(0) is CanvasItem:
+					items.append(child.get_child(0))
+				continue
 			items.append(child)
 		node.set(&"items", items)
 		print("[MobileCompat] Resynced %d blink item(s) for %s" % [items.size(), container.name])
 
 
-func _inject_touch_rows(page: Node) -> void:
-	if page == null || !page.has_method("_update_selectors") || page.has_node("TouchSize"):
+func _inject_touch_menu(page: Node) -> void:
+	if page == null || !page.has_method("_update_selectors") || page.has_node(NodePath("Touch")):
 		return
-	_show_mobile_header(page)
-	var anchor := page.get_node_or_null(NodePath("TweakLiveSplitSel"))
-	if anchor == null:
-		anchor = page.get_node_or_null(NodePath("Exit2"))
-	for entry in [
-		["TouchSize", "size"],
-		["TouchOpacity", "opacity"],
-		["TouchLayout", "layout"],
-		["TouchStick", "stick"],
-		["TouchReset", "reset"],
-	]:
-		var row := HBoxContainer.new()
-		row.name = entry[0]
-		row.set_script(TOUCH_SETTINGS_ROW)
-		row.kind = entry[1]
-		page.add_child(row)
-		if anchor:
-			page.move_child(row, anchor.get_index())
+	var viewport := page.get_parent()
+	var back := page.get_node_or_null(NodePath("Back"))
+	var main_selector: Node = viewport.get_node_or_null(NodePath("Selector")) if viewport else null
+	# A submenu "Back" row (script that returns to the main Options list) is the
+	# one used by GameplayOptions/MenuOptions, not the top-level Back.
+	var back_template: Node = viewport.get_node_or_null(NodePath("GameplayOptions/Back"))
+	if back == null || main_selector == null || back_template == null:
+		return
+
+	var touch_page := _build_touch_page(page, back_template)
+	viewport.add_child(touch_page)
+
+	var touch_selector: Node = main_selector.duplicate()
+	touch_selector.name = "TouchSelector"
+	touch_selector.visible = false
+	viewport.add_child(touch_selector)
+
+	var touch_blinking := Node.new()
+	touch_blinking.name = "TouchBlinking"
+	touch_blinking.set_script(load(BLINKING_SCRIPT_PATH))
+	touch_blinking.set(&"menu_items_controller_path", NodePath("../TouchOptions"))
+	touch_blinking.set(&"modulate_first_child", true)
+	viewport.add_child(touch_blinking)
+
+	touch_page.selected.connect(touch_selector.handle_selection)
+	touch_page.selected.connect(touch_blinking.handle_selection)
+	var camera := viewport.get_node_or_null(NodePath("Camera2D"))
+	if camera:
+		touch_page.selected.connect(camera.handle_selection)
+
+	var entry := _build_touch_entry()
+	page.add_child(entry)
+	page.move_child(entry, back.get_index())
+
 	page._update_selectors()
 	_resync_blinkers(page)
+	_resync_blinkers(touch_page)
 	_hook_selection_restore(page)
-	_resync_camera_limits(page)
-	print("[MobileCompat] Injected touch settings rows into Tweaks/general page")
+	print("[MobileCompat] Injected touch settings submenu into %s" % viewport.get_parent().name)
 
 
-func _show_mobile_header(page: Node) -> void:
-	var header := page.get_node_or_null(NodePath("MobileHeader"))
-	if header:
-		header.visible = true
-	var header2 := page.get_node_or_null(NodePath("MobileHeader2"))
-	if header2:
-		header2.visible = true
+func _build_touch_page(page: Node, back_template: Node) -> Node:
+	var touch_page := VBoxContainer.new()
+	touch_page.name = "TouchOptions"
+	touch_page.visible = false
+	touch_page.anchor_left = 1.0
+	touch_page.anchor_right = 1.0
+	touch_page.offset_left = -456.0
+	touch_page.offset_top = 16.0
+	touch_page.offset_right = -64.0
+	touch_page.offset_bottom = 464.0
+	touch_page.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	touch_page.set_script(MENU_CONTROLLER_SCRIPT)
+	touch_page.set(&"focused", false)
+	touch_page.set(&"prev_screen_node_path", NodePath("Back"))
+	touch_page.set(&"control_sound", page.get(&"control_sound"))
+
+	for entry in TOUCH_ROWS:
+		var row := HBoxContainer.new()
+		row.name = entry[0]
+		row.custom_minimum_size = Vector2(0, 36)
+		row.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.set_script(TOUCH_SETTINGS_ROW)
+		row.set(&"kind", entry[1])
+		touch_page.add_child(row)
+
+	var separator := HSeparator.new()
+	separator.name = "HSeparator"
+	separator.add_theme_constant_override(&"separation", 6)
+	separator.add_theme_stylebox_override(&"separator", StyleBoxEmpty.new())
+	touch_page.add_child(separator)
+
+	var submenu_back: Node = back_template.duplicate()
+	submenu_back.name = "Back"
+	submenu_back.set(&"focused", false)
+	touch_page.add_child(submenu_back)
+	return touch_page
 
 
-func _resync_camera_limits(page: Node) -> void:
-	var parent := page.get_parent()
-	if parent == null:
+func _build_touch_entry() -> Control:
+	var entry := HBoxContainer.new()
+	entry.name = "Touch"
+	entry.custom_minimum_size = Vector2(0, 36)
+	entry.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	entry.set_script(SUBMENU_SELECTION_SCRIPT)
+	entry.set(&"move_to_path", NodePath("../../TouchOptions"))
+	entry.set(&"menu_selector_path", NodePath("../../TouchSelector"))
+	var label := Label.new()
+	label.name = "Text"
+	label.text = "TOUCH"
+	label.uppercase = true
+	label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	label.add_theme_font_override(&"font", MENU_TEXT_FONT)
+	label.add_theme_font_size_override(&"font_size", MENU_FONT_SIZE)
+	label.add_theme_color_override(&"font_color", MENU_TEXT_COLOR)
+	label.add_theme_color_override(&"font_outline_color", MENU_TEXT_OUTLINE)
+	label.add_theme_constant_override(&"outline_size", 6)
+	var material := ShaderMaterial.new()
+	material.shader = TEXT_GRADIENT
+	material.set_shader_parameter(&"gradient_top", MENU_BLUE_TOP)
+	material.set_shader_parameter(&"gradient_bottom", MENU_BLUE_BOTTOM)
+	label.material = material
+	entry.add_child(label)
+
+	# The "PRESS ENTER" prompt of the sibling entries. The entry script fades it
+	# with the row blink, so touch players get the same hint as everyone else.
+	var value := TOUCH_SETTINGS_ROW.make_press_enter_hint()
+	value.name = "Value"
+	entry.add_child(value)
+	return entry
+
+
+## Expert mode explains the item shop as "hold up + Tab". Touch players open it
+## with the on-screen EXTRA button instead, so those hints are reworded. Only
+## plain-text item shop messages are rewritten here: {a_tab} tokens (including the
+## save room's world/level select hints) already render as EXTRA through
+## touch_input_display.gd.
+func _patch_shop_hint_for_touch(root: Node) -> void:
+	var stack: Array[Node] = [root]
+	while !stack.is_empty():
+		var node: Node = stack.pop_back()
+		for child in node.get_children():
+			stack.append(child)
+		_rewrite_shop_hint(node)
+
+
+func _rewrite_shop_hint(node: Node) -> void:
+	var hint := node as InputRichTextLabel
+	if hint != null:
+		if !hint.input_template.to_lower().contains("item shop") \
+				|| !hint.input_template.contains("{a_tab}"):
+			return
+		hint.input_template = hint.input_template.replace("{a_tab}", "EXTRA")
+		hint.update_text()
+		print("[MobileCompat] Rephrased item shop sign for touch input")
 		return
-	for node in parent.get_children():
-		var script := node.get_script() as Script
-		if !script || !script.resource_path.ends_with("camera_tweaks_menu.gd"):
-			continue
-		if node.get(&"menu_controller") != page || !node.has_method(&"update_limit"):
-			continue
-		_apply_camera_limit_update(node)
-
-
-func _apply_camera_limit_update(camera: Node) -> void:
-	await get_tree().process_frame
-	await get_tree().process_frame
-	if is_instance_valid(camera) && camera.has_method(&"update_limit"):
-		camera.update_limit()
+	var message: Variant = node.get(&"message")
+	if !(message is String) || !str(message).to_lower().contains("item shop"):
+		return
+	var rewritten := (message as String).replace("UP + TAB", "UP + EXTRA")
+	if rewritten == message:
+		return
+	node.set(&"message", rewritten)
+	print("[MobileCompat] Rephrased item shop hint for touch input")
 
 
 func _remove_nodes_with_script(root: Node, script_path: String, prop_filter: Dictionary = {}) -> void:

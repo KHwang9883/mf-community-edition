@@ -10,8 +10,15 @@ extends "res://engine/scenes/save_game_room/scripts/reset.gd"
 @onready var secrets: Label = get_node_or_null(^"VBoxContainer/Secrets")
 @onready var deaths: Label = get_node_or_null(^"VBoxContainer/Deaths")
 
+## 站上管道后整块重置面板淡入：删档提示、选世界（unlock）、选关卡（unlock2）
+## 都在里面。触屏据此把 EXTRA 当作 Tab 来选关/选世界，并显示 F1/DEL 按键。
+func is_level_select_shown() -> bool:
+	return is_inside
+
+
 func _ready() -> void:
 	super()
+	add_to_group(&"level_select_ui")
 	move_down_by_px += 16
 	if _tweak && count_world_start_tweak && unlock2:
 		var msg := 'to select a level, disable the "always load first level" tweak'
