@@ -45,6 +45,8 @@ const FORCE_ACTION_PATHS: Array[String] = [
 const PAUSE_ONLY_PATHS: Array[String] = [
 	"res://stages/extra/click_bonus_game/",
 ]
+## 删档（a_delete）长按只在存档房间的存档管道上有效。
+const SAVE_GAME_ROOM_PATH := "res://stages/save_game_room/save_game_room.tscn"
 const FORCE_UI_PATHS: Array[String] = [
 	"res://stages/mario_forever_flash/flash_title.tscn",
 	"res://stages/extra/squario/squario_title.tscn",
@@ -684,9 +686,10 @@ func _relayout() -> void:
 	pause_btn.font_size = int(pz * 0.34)
 
 	# 上下文按键排在左上角（原键盘按钮的位置），各自带独立偏移，可在布局编辑器里拖动。
+	# 顺序即默认位置：TAB 在左、DEL 在右。
 	var ctx_gap := gap
 	var ctx_x := l
-	for key in ["f1", "del", "tab"]:
+	for key in ["f1", "tab", "del"]:
 		var btn = _context_button(key)
 		_default_positions[btn] = Vector2(ctx_x, t)
 		btn.size = Vector2.ONE * pz
@@ -794,6 +797,12 @@ func _compute_level_select_active() -> bool:
 		if node.has_method(&"is_level_select_shown") && node.is_level_select_shown():
 			return true
 	return false
+
+
+## 当前是否在存档房间：删档长按（a_delete）只有这里的存档管道会响应。
+func _in_save_game_room() -> bool:
+	var cs := Scenes.current_scene
+	return cs != null && cs.scene_file_path == SAVE_GAME_ROOM_PATH
 
 
 func _on_scene_signal(_to: Node = null) -> void:
@@ -977,9 +986,12 @@ func _sync_buttons() -> void:
 
 	# 上下文按键与暂停键同进同出：不做按位置的显隐，否则按键突然出现/消失会在
 	# 玩家正按着别的按键时打断输入。编辑模式下全部显示，方便拖动摆放。
-	for btn in [del_btn, tab_btn]:
-		btn.visible = pause_btn.visible
-		btn.input_locked = edit_mode
+	tab_btn.visible = pause_btn.visible
+	tab_btn.input_locked = edit_mode
+	# DEL 只在存档房间有用（pipe_save / pipe_save_with_selector 的删档长按），
+	# 摆在别的地方只会误导玩家。编辑模式例外，方便预先摆放。
+	del_btn.visible = pause_btn.visible && (edit_mode || _in_save_game_room())
+	del_btn.input_locked = edit_mode
 	# F1 只在 TWEAKS 的 "enable cheat commands (f1 key)" 开启时显示——控制台
 	# 本身也以这个开关为前提（console.gd），没开时按 F1 毫无反应，摆出来只是误导。
 	# 布局编辑模式例外，否则开关没开时永远无法预先摆放它。
