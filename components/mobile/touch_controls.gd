@@ -96,7 +96,11 @@ var _extra_action := StringName()
 var _item_store_available := false
 var stick: VirtualJoystick
 var _dpad_anchor := Vector2.ZERO
-var _stick_prev_ui := [false, false, false, false]
+## 摇杆当前通过注入按下的方向动作，每项是动作名（未按下时为 &""）。必须记住按下
+## 时用的那个名字，不能只存 bool：死亡复活、暂停等时刻会把「当前模式」从游戏
+## (m_*) 翻到 UI (ui_*)，此时若按当前模式去释放，真正被按下的那个动作就永远留在
+## 按下状态，复活后角色会自己朝那个方向走。
+var _stick_active: Array[StringName] = [&"", &"", &"", &""]
 var _stick_edit_finger := -1
 var _stick_edit_mouse := false
 
@@ -416,11 +420,17 @@ func _release_stick() -> void:
 	for a in DUMMY_ACTIONS:
 		if Input.is_action_pressed(a):
 			Input.action_release(a)
-	var real := UI_MOVE_ACTIONS if _current_ui_mode() else GAME_MOVE_ACTIONS
 	for i in 4:
-		if _stick_prev_ui[i]:
-			MobileCompat.inject_action(real[i], false)
-			_stick_prev_ui[i] = false
+		_release_stick_dir(i)
+
+
+## 释放一个方向：按当初真正注入的那个动作名释放（见 [member _stick_active]）。
+func _release_stick_dir(i: int) -> void:
+	var action: StringName = _stick_active[i]
+	if action == &"":
+		return
+	MobileCompat.inject_action(action, false)
+	_stick_active[i] = &""
 
 
 func _stick_analog() -> Vector2:
@@ -460,9 +470,16 @@ func _process_stick_digital() -> void:
 	var want := _digitals_for_octant(_snap_octant(_stick_analog()))
 	var real := UI_MOVE_ACTIONS if _current_ui_mode() else GAME_MOVE_ACTIONS
 	for i in 4:
-		if want[i] != _stick_prev_ui[i]:
-			MobileCompat.inject_action(real[i], want[i])
-			_stick_prev_ui[i] = want[i]
+		# 目标动作按当前模式取，但释放永远针对 [member _stick_active] 里记下的
+		# 那个名字，模式翻转（复活、暂停）时才不会漏掉按下过的动作。
+		var target: StringName = real[i] if want[i] else &""
+		if target == _stick_active[i]:
+			continue
+		if _stick_active[i] != &"":
+			MobileCompat.inject_action(_stick_active[i], false)
+		if target != &"":
+			MobileCompat.inject_action(target, true)
+		_stick_active[i] = target
 
 
 func set_layout_edit(on: bool) -> void:
