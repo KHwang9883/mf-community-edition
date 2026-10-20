@@ -44,14 +44,34 @@ func is_down() -> bool:
 
 
 func set_actions(new_actions: Array) -> void:
-	if is_down():
+	if _actions_equal(new_actions):
+		return
+	var was_down := is_down()
+	if was_down:
 		for action in actions:
 			Input.action_release(action)
 			MobileCompat.inject_action(action, false)
 	actions.clear()
 	for action in new_actions:
 		actions.append(action as StringName)
+	# 按住期间动作表变化（游戏 ↔ UI 模式切换、关卡加载/复活）时必须把新动作重新
+	# 按下：否则这次按压会被释放掉，手指还按着却缓冲不到新场景，复活或加载完成后
+	# 角色不响应（摇杆没这问题，因为它每帧按当前模式重新注入）。
+	# 这里刻意不发 touch_pressed，避免 TAB 之类的按键重复注入一次按键事件。
+	if was_down:
+		for action in actions:
+			Input.action_press(action)
+			MobileCompat.inject_action(action, true)
 	queue_redraw()
+
+
+func _actions_equal(new_actions: Array) -> bool:
+	if new_actions.size() != actions.size():
+		return false
+	for i in actions.size():
+		if actions[i] != StringName(new_actions[i]):
+			return false
+	return true
 
 
 func force_release() -> void:
