@@ -390,6 +390,28 @@ func _patch_options_container(options: Node) -> void:
 		print("[MobileCompat] Stripped %d desktop-only item(s) from %s" % [DESKTOP_ONLY_SETTINGS_ITEMS.size(), options.get_parent().get_parent().get_parent()])
 	_resync_blinkers(options)
 	_hook_selection_restore(options)
+	_lock_settings_camera(options)
+
+
+## 去掉桌面专用项后设置页整页放得下，所以把镜头固定在整页位置，
+## 不再随选中项上下滚动（桌面端列表比一屏长，仍然需要滚动）。
+## 镜头脚本在 engine 子模块里，这里直接调整它的 limit 即可：跟随逻辑仍在，
+## 但竖向已经没有可滚动的余量。
+func _lock_settings_camera(options: Node) -> void:
+	var parent := options.get_parent()
+	if parent == null:
+		return
+	var camera := parent.get_node_or_null(^"Camera2D") as Camera2D
+	if camera == null:
+		return
+	var page := camera.get_viewport_rect().size
+	camera.position_smoothing_enabled = false
+	camera.limit_bottom = camera.limit_top + int(round(page.y))
+	camera.global_position = Vector2(
+		camera.limit_left + page.x * 0.5,
+		camera.limit_top + page.y * 0.5
+	)
+	camera.reset_physics_interpolation()
 
 
 var _restore_prev := {}

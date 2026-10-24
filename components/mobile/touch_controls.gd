@@ -103,6 +103,8 @@ var _dpad_anchor := Vector2.ZERO
 var _stick_active: Array[StringName] = [&"", &"", &"", &""]
 var _stick_edit_finger := -1
 var _stick_edit_mouse := false
+## 是否正在吞掉由触摸模拟出来的鼠标事件（见 _swallow_emulated_mouse）。
+var _mouse_from_touch_captured := false
 
 
 func _ready() -> void:
@@ -124,6 +126,8 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _swallow_emulated_mouse(event):
+		return
 	if edit_mode:
 		_handle_stick_edit_input(event)
 	if _is_on_screen_keyboard(event):
@@ -161,6 +165,44 @@ func _is_on_screen_keyboard(event: InputEvent) -> bool:
 	if key.device == InputEvent.DEVICE_ID_EMULATION:
 		return true
 	return key.keycode == KEY_NONE && key.physical_keycode == KEY_NONE
+
+
+## Godot 会把每次触摸同时模拟成鼠标事件（device 为 DEVICE_ID_EMULATION），而且
+## 模拟鼠标比触摸本身更早派发：虚拟按键只在 GUI 阶段消费触摸，模拟鼠标却已经先
+## 走到 _input 阶段，被菜单（SettingsManager.mouse_pressed / mouse_moved）之类的
+## 鼠标逻辑看到，于是按在按键上的手指会同时点亮下面那一项。
+## 这里在 _input 里提前吞掉从虚拟按键上开始的模拟鼠标事件，被吞掉的只是鼠标副本，
+## 按键自己仍然由随后的触摸事件驱动。根视口的输入按节点树倒序进行，本节点在其它
+## 自动加载之后注册，所以这里的处理先于它们。
+func _swallow_emulated_mouse(event: InputEvent) -> bool:
+	if event.device != InputEvent.DEVICE_ID_EMULATION:
+		return false
+	if event is InputEventMouseButton:
+		if event.button_index != MOUSE_BUTTON_LEFT:
+			return false
+		if !event.is_pressed():
+			if !_mouse_from_touch_captured:
+				return false
+			_mouse_from_touch_captured = false
+		else:
+			_mouse_from_touch_captured = _on_touch_control(event.position)
+			if !_mouse_from_touch_captured:
+				return false
+	elif event is InputEventMouseMotion:
+		if !_mouse_from_touch_captured:
+			return false
+	else:
+		return false
+	get_viewport().set_input_as_handled()
+	return true
+
+
+## 该位置是否落在会接管触摸的虚拟按键上。摇杆由原生类自己处理，不参与这里的判断。
+func _on_touch_control(pos: Vector2) -> bool:
+	for btn in _all_buttons():
+		if btn.visible && btn.get_global_rect().has_point(pos):
+			return true
+	return false
 
 
 ## Repositions the virtual stick while the touch layout editor is open.
