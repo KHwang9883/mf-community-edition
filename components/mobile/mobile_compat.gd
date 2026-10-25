@@ -62,6 +62,11 @@ func _notification(what: int) -> void:
 		return
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
 		_handle_go_back()
+	elif what == NOTIFICATION_APPLICATION_FOCUS_OUT \
+			|| what == NOTIFICATION_APPLICATION_PAUSED:
+		# 切到后台时自动暂停：避免计时与敌人继续运行。只对屏幕上暂停键可见的
+		# 界面生效，已暂停时保持原状。
+		TouchControls.autopause_on_background()
 	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		_normalize_joypad_bindings()
 		_ensure_immersive_mode()

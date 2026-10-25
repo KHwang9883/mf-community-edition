@@ -103,6 +103,8 @@ var _dpad_anchor := Vector2.ZERO
 var _stick_active: Array[StringName] = [&"", &"", &"", &""]
 var _stick_edit_finger := -1
 var _stick_edit_mouse := false
+## 上一次同步时的 UI 暂停态，用于识别菜单开合（见 [_sync_buttons]）。
+var _prev_paused := false
 ## 是否正在吞掉由触摸模拟出来的鼠标事件（见 _swallow_emulated_mouse）。
 var _mouse_from_touch_captured := false
 
@@ -769,6 +771,23 @@ func press_pause(silent: bool = false) -> void:
 	_press_pause(silent)
 
 
+## 切到后台时自动打开暂停菜单（仅移动端调用）。暂停键可见代表当前界面
+## 允许打开暂停菜单，因此直接以它的显隐为准；已经暂停或菜单已打开时不做处理
+## （toggle() 会把"再次按下"当成继续游戏），也不播放暂停音效。
+func autopause_on_background() -> void:
+	if edit_mode || pause_btn == null || !pause_btn.visible:
+		return
+	if get_tree().paused:
+		return
+	var pause_ctrl = Scenes.custom_scenes.get(&"pause")
+	if pause_ctrl == null || pause_ctrl.opened:
+		return
+	var cs := Scenes.current_scene
+	if cs != null && cs.get(&"disable_pause_menu"):
+		return
+	press_pause(true)
+
+
 func _press_pause(silent: bool = false) -> void:
 	var cs := Scenes.current_scene
 	var stage_like := cs != null && (cs is Stage2D || cs is Map2D)
@@ -869,6 +888,12 @@ func _on_scene_signal(_to: Node = null) -> void:
 
 
 func _on_pause_signal() -> void:
+	# 暂停信号是在 get_tree().paused 真正变更之前发出的，等下一帧再清会让 A 键
+	# 的 m_jump 漏进刚恢复的游戏（表现为按 A 关闭菜单后立刻跳一下），所以这里
+	# 立刻释放所有按住的动作。
+	for btn in _all_buttons():
+		btn.force_release()
+	_release_stick()
 	_refresh_state.call_deferred()
 
 
@@ -949,6 +974,20 @@ func _sync_buttons() -> void:
 		&& touch_enabled()
 		&& (_last_device_was_touch || edit_mode)
 	)
+	var paused := (
+		get_tree().paused
+		|| (_pause_open_blocked() && !_in_skin_test_room())
+		|| (_hybrid_scene && _embedded_menu_active())
+	)
+	# 菜单开合时清掉所有按住的动作。A 键在 UI 模式下同时也注入 m_jump（消息块
+	# 只认 m_jump），若不清，菜单用 ui_accept 确认关闭后这个 m_jump 会泄漏进
+	# 游戏，变成一次跳跃。只在 paused 变化时清：加载/复活是场景重载，paused
+	# 不变，按住的方向/跳跃仍会缓冲到下一个场景。
+	if paused != _prev_paused:
+		for btn in _all_buttons():
+			btn.force_release()
+		_release_stick()
+	_prev_paused = paused
 	if _state == ViewState.HIDDEN || _popup_active() || _import_block:
 		for btn in _all_buttons():
 			btn.force_release()
@@ -957,11 +996,6 @@ func _sync_buttons() -> void:
 		stick.visible = false
 		stick.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		return
-	var paused := (
-		get_tree().paused
-		|| (_pause_open_blocked() && !_in_skin_test_room())
-		|| (_hybrid_scene && _embedded_menu_active())
-	)
 	var ui_mode := _state == ViewState.MENU || paused
 	var use_stick := stick_enabled()
 	var dual := use_dual_mode()
