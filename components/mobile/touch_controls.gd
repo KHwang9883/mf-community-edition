@@ -491,10 +491,11 @@ func dpad_free_setting() -> bool:
 
 
 ## 分离方向键样式：四个方向键仍是 d-pad 的外观，但每个都能在布局编辑器里
-## 单独摆放。只在 D-PAD 移动方式下生效；关闭后按键回到默认样式，之前拖动
-## 记忆的偏移仍保留在设置里，再次开启时照旧使用。
+## 单独摆放。d-pad 与 HYBRID 模式共用同一套方向和位置，所以这里不再按移动
+## 方式区分：关掉后按键回到默认样式，之前拖动记忆的偏移仍保留在设置里，再次
+## 开启时照旧使用。
 func dpad_free() -> bool:
-	return !stick_enabled() && dpad_free_setting()
+	return dpad_free_setting()
 
 
 func set_dpad_free(on: bool) -> void:
