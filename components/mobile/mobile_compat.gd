@@ -30,8 +30,19 @@ const TOUCH_ROWS := [
 	["TouchOpacity", "opacity"],
 	["TouchLayout", "layout"],
 	["TouchStick", "stick"],
+	["TouchSeparate", "separate"],
 	["TouchReset", "reset"],
 ]
+
+const POPUP_BASE_SHORT := 480.0
+
+## 手柄左摇杆映射到方向动作（axis, 方向）。
+const STICK_UI_BINDINGS := {
+	&"ui_left": [0, -1.0],
+	&"ui_right": [0, 1.0],
+	&"ui_up": [1, -1.0],
+	&"ui_down": [1, 1.0],
+}
 
 var android := false
 
@@ -64,8 +75,8 @@ func _notification(what: int) -> void:
 		_handle_go_back()
 	elif what == NOTIFICATION_APPLICATION_FOCUS_OUT \
 			|| what == NOTIFICATION_APPLICATION_PAUSED:
-		# 切到后台时自动暂停：避免计时与敌人继续运行。只对屏幕上暂停键可见的
-		# 界面生效，已暂停时保持原状。
+		# 切到后台时自动暂停。是否真的打开暂停菜单由 TouchControls 按当前界面
+		# 判断（intro/设置流程等会跳过）；已经暂停时保持原状。
 		TouchControls.autopause_on_background()
 	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		_normalize_joypad_bindings()
@@ -107,9 +118,6 @@ func remove_user_file(path: String) -> Error:
 	return DirAccess.remove_absolute(path)
 
 
-const POPUP_BASE_SHORT := 480.0
-
-
 func popup_scale() -> float:
 	if !android:
 		return 1.0
@@ -133,26 +141,26 @@ func scale_popup_window(win: Window) -> void:
 		win.size = Vector2i((Vector2(win.size) * s).floor())
 
 
+## 深度遍历 root（含自身）的每个节点。回调返回 true 时提前结束，整体返回值
+## 也随之为 true。所有“整树找点什么”的补丁都走这里，省得各写一份遍历。
+func _for_each_node(root: Node, cb: Callable) -> bool:
+	var stack: Array[Node] = [root]
+	while !stack.is_empty():
+		var node: Node = stack.pop_back()
+		if cb.call(node) == true:
+			return true
+		for child in node.get_children():
+			stack.append(child)
+	return false
+
+
 func collect_windows(root: Node) -> Array[Window]:
 	var out: Array[Window] = []
-	var stack: Array[Node] = [root]
-	while !stack.is_empty():
-		var node: Node = stack.pop_back()
-		for child in node.get_children():
-			stack.append(child)
+	_for_each_node(root, func(node: Node) -> void:
 		if node is Window && node != get_tree().root:
 			out.append(node)
+	)
 	return out
-
-
-func _scan_and_scale_popups(root: Node) -> void:
-	var stack: Array[Node] = [root]
-	while !stack.is_empty():
-		var node: Node = stack.pop_back()
-		for child in node.get_children():
-			stack.append(child)
-		if node is Window:
-			scale_popup_window(node)
 
 
 func _setup_mobile_skins_dir() -> void:
@@ -242,30 +250,21 @@ func _on_console_visibility_changed() -> void:
 ## 这里找到正在等待的那一行，走它自己的收尾流程（changing = false 并恢复菜单焦点），
 ## 效果与桌面按 ESC 相同，但不会把任何按键写进配置。
 func _cancel_pending_keybind() -> bool:
-	var stack: Array[Node] = [get_tree().root]
-	while !stack.is_empty():
-		var node: Node = stack.pop_back()
-		if node.get(&"changing") == true && node.has_method(&"_after_change"):
-			node.set(&"changing", false)
-			node.get_parent().set(&"focused", true)
-			print("[MobileCompat] Cancelled pending key rebind on '%s'" % node.name)
-			return true
-		for child in node.get_children():
-			stack.append(child)
-	return false
+	return _for_each_node(get_tree().root, func(node: Node) -> bool:
+		if node.get(&"changing") != true || !node.has_method(&"_after_change"):
+			return false
+		node.set(&"changing", false)
+		node.get_parent().set(&"focused", true)
+		print("[MobileCompat] Cancelled pending key rebind on '%s'" % node.name)
+		return true
+	)
 
 
 func _close_topmost_popup() -> bool:
 	var candidates: Array[Window] = []
-	var stack: Array[Node] = [get_tree().root, Scenes.current_scene]
-	while !stack.is_empty():
-		var node: Node = stack.pop_back()
-		if node == null:
-			continue
-		for child in node.get_children():
-			stack.append(child)
-		if node is Window && node != get_tree().root && node.visible:
-			candidates.append(node)
+	for win in collect_windows(get_tree().root):
+		if win.visible:
+			candidates.append(win)
 	if candidates.is_empty():
 		return false
 	var target: Window = candidates[0]
@@ -279,14 +278,6 @@ func _close_topmost_popup() -> bool:
 	return true
 
 
-const STICK_UI_BINDINGS := {
-	&"ui_left": [0, -1.0],
-	&"ui_right": [0, 1.0],
-	&"ui_up": [1, -1.0],
-	&"ui_down": [1, 1.0],
-}
-
-
 ## 用主仓库的触屏提示渲染替换 Thunder.input：虚拟按键下显示屏幕按键 / 键盘按键，
 ## 接手柄时显示手柄图标，避免出现 "Joy N"。
 func _install_touch_input_display() -> void:
@@ -296,16 +287,13 @@ func _install_touch_input_display() -> void:
 
 ## 触屏上没有物理键盘，提示里的 " key" 后缀（JUMP key、Space key）没有意义，
 ## 而且会让屏幕按键提示变成 "JUMP key"。这里统一去掉。
-func _disable_keyboard_button_suffix(root: Node) -> void:
-	var stack: Array[Node] = [root]
-	while !stack.is_empty():
-		var node: Node = stack.pop_back()
-		if node is InputRichTextLabel && node.keyboard_as_button:
-			node.keyboard_as_button = false
-			if node.is_node_ready():
-				node.update_text()
-		for child in node.get_children():
-			stack.append(child)
+func _apply_touch_label(node: Node) -> void:
+	var label := node as InputRichTextLabel
+	if label == null || !label.keyboard_as_button:
+		return
+	label.keyboard_as_button = false
+	if label.is_node_ready():
+		label.update_text()
 
 
 func _setup_gamepad_support() -> void:
@@ -369,12 +357,31 @@ func _on_scene_changed(to: Node) -> void:
 	if options:
 		_patch_options_container(options)
 	_inject_touch_menu(to.get_node_or_null(NodePath(CONTROLS_PATH)))
-	_patch_shop_hint_for_touch(to)
-	_disable_keyboard_button_suffix(to)
-	_remove_nodes_with_script(to, SKIN_EDITOR_SCRIPT_PATH)
-	_remove_nodes_with_script(to, SKIN_DIR_SCRIPT_PATH, {"is_docs": false})
-	_remove_nodes_with_script(to, LIVESPLIT_SCRIPT_PATH)
-	_scan_and_scale_popups(to)
+	# 一次遍历完成所有按节点做的补丁。原来是每项各走一遍，换一次场景等于把
+	# 整棵场景树扫七遍；删除操作先收集、遍历结束后再执行，避免边走边改树。
+	var removals: Array = []
+	_for_each_node(to, func(node: Node) -> void:
+		_rewrite_shop_hint(node)
+		_apply_touch_label(node)
+		if node is Window:
+			scale_popup_window(node)
+		_collect_removal(node, removals)
+	)
+	for entry in removals:
+		_remove_node(entry[0], entry[1])
+
+
+## 记录需要在场景补丁阶段移除的节点（桌面专用入口等）。[param out] 每项为
+## [节点, 脚本路径]，供 [_remove_node] 移除并刷新所属菜单。
+func _collect_removal(node: Node, out: Array) -> void:
+	var script := node.get_script() as Script
+	if script == null:
+		return
+	var path := script.resource_path
+	if path == SKIN_EDITOR_SCRIPT_PATH || path == LIVESPLIT_SCRIPT_PATH:
+		out.append([node, path])
+	elif path == SKIN_DIR_SCRIPT_PATH && node.get(&"is_docs") == false:
+		out.append([node, path])
 
 
 func _patch_options_container(options: Node) -> void:
@@ -429,6 +436,8 @@ func _hook_selection_restore(container: Node) -> void:
 	container.selected.connect(
 		_on_container_selected.bind(container)
 	)
+	# 容器随场景释放后清掉记录，否则跨关卡会一直积累失效引用。
+	container.tree_exiting.connect(func(): _restore_prev.erase(container))
 
 
 func _on_container_selected(
@@ -589,15 +598,6 @@ func _build_touch_entry() -> Control:
 ## plain-text item shop messages are rewritten here: {a_tab} tokens (including the
 ## save room's world/level select hints) already render as EXTRA through
 ## touch_input_display.gd.
-func _patch_shop_hint_for_touch(root: Node) -> void:
-	var stack: Array[Node] = [root]
-	while !stack.is_empty():
-		var node: Node = stack.pop_back()
-		for child in node.get_children():
-			stack.append(child)
-		_rewrite_shop_hint(node)
-
-
 func _rewrite_shop_hint(node: Node) -> void:
 	var hint := node as InputRichTextLabel
 	if hint != null:
@@ -618,28 +618,13 @@ func _rewrite_shop_hint(node: Node) -> void:
 	print("[MobileCompat] Rephrased item shop hint for touch input")
 
 
-func _remove_nodes_with_script(root: Node, script_path: String, prop_filter: Dictionary = {}) -> void:
-	var stack: Array[Node] = [root]
-	while !stack.is_empty():
-		var node: Node = stack.pop_back()
-		for child in node.get_children():
-			stack.append(child)
-		var script := node.get_script() as Script
-		if !script || script.resource_path != script_path:
-			continue
-		var matches := true
-		for key in prop_filter:
-			if node.get(key) != prop_filter[key]:
-				matches = false
-				break
-		if !matches:
-			continue
-		var parent := node.get_parent()
-		parent.remove_child(node)
-		node.queue_free()
-		print("[MobileCompat] Removed %s entry (%s)" % [script_path.get_file(), node.name])
-		if parent.has_method("_update_selectors"):
-			parent._update_selectors()
-			if parent.has_method("move_selector"):
-				parent.move_selector(0, true)
-		_resync_blinkers(parent)
+func _remove_node(node: Node, script_path: String) -> void:
+	var parent := node.get_parent()
+	parent.remove_child(node)
+	node.queue_free()
+	print("[MobileCompat] Removed %s entry (%s)" % [script_path.get_file(), node.name])
+	if parent.has_method("_update_selectors"):
+		parent._update_selectors()
+		if parent.has_method("move_selector"):
+			parent.move_selector(0, true)
+	_resync_blinkers(parent)

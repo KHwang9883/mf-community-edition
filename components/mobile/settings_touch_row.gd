@@ -14,6 +14,12 @@ const ENTER_REGION := Rect2(102, 0, 94, 30)
 const SIZE_PRESETS: Array[float] = [1.0, 1.25, 1.5, 1.75, 2.0, 2.5]
 const OPACITY_PRESETS: Array[float] = [0.3, 0.45, 0.6, 0.75, 0.9]
 
+## 通用开关贴图（与 Options 里的 AutoPause / XScroll 等布尔项同一张图）：
+## 上半是 OFF，下半是 ON。
+const ON_OFF_TEXTURE := preload("res://engine/scenes/main_menu/textures/on_off.png")
+const ON_OFF_REGION := Rect2(0, 0, 64, 36)
+const ON_OFF_ROW_HEIGHT := 36.0
+
 const COLOR_NAME := Color(1, 1, 1, 1)
 const COLOR_OUTLINE := Color(0.156863, 0.156863, 0.156863, 0.784314)
 const FONT_SIZE := 28
@@ -25,12 +31,13 @@ const BLUE_GRADIENT: Array[Color] = [Color(0.918, 0.918, 1), Color(0.349, 0.349,
 const RED_GRADIENT: Array[Color] = [Color(1, 0.667, 0.667), Color(0.718, 0.251, 0.251)]
 
 ## Move-input styles, in the order of TouchControls.MOVE_MODE_*
-const MOVE_MODE_NAMES: Array[String] = ["D-PAD", "STICK", "HYBRID", "SEPARATE"]
+const MOVE_MODE_NAMES: Array[String] = ["D-PAD", "STICK", "HYBRID"]
 
 @export var kind := "size"
 
 var _name_label: Label
 var _value_label: Label
+var _on_off_rect: TextureRect
 var _press_hint: HBoxContainer
 
 
@@ -45,9 +52,21 @@ func _ready() -> void:
 		_press_hint = make_press_enter_hint()
 		add_child(_press_hint)
 
-	_value_label = _make_label(COLOR_NAME)
-	_value_label.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
-	add_child(_value_label)
+	if kind == "separate":
+		# 布尔项用 Options 里的通用 ON/OFF 贴图，而不是文字。
+		var atlas := AtlasTexture.new()
+		atlas.atlas = ON_OFF_TEXTURE
+		atlas.region = ON_OFF_REGION
+		_on_off_rect = TextureRect.new()
+		_on_off_rect.texture = atlas
+		_on_off_rect.stretch_mode = TextureRect.STRETCH_KEEP
+		_on_off_rect.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
+		_on_off_rect.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		add_child(_on_off_rect)
+	else:
+		_value_label = _make_label(COLOR_NAME)
+		_value_label.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
+		add_child(_value_label)
 
 	_refresh_label()
 	TouchControls.layout_edit_changed.connect(_on_layout_edit_changed)
@@ -104,7 +123,7 @@ func _apply_gradient(label: Label, gradient: Array[Color]) -> void:
 
 func _name_gradient() -> Array[Color]:
 	match kind:
-		"opacity", "stick":
+		"opacity", "stick", "separate":
 			return BLUE_GRADIENT
 		"reset":
 			return RED_GRADIENT
@@ -126,6 +145,8 @@ func _row_name() -> String:
 			return "RESET TOUCH LAYOUT"
 		"stick":
 			return "MOVE INPUT"
+		"separate":
+			return "SEPARATE D-PAD"
 	return "TOUCH SIZE"
 
 
@@ -165,6 +186,10 @@ func _refresh_label() -> void:
 			_value_label.text = ""
 		"stick":
 			_value_label.text = MOVE_MODE_NAMES[TouchControls.move_mode()]
+		"separate":
+			(_on_off_rect.texture as AtlasTexture).region.position.y = (
+				ON_OFF_ROW_HEIGHT if TouchControls.dpad_free_setting() else 0.0
+			)
 
 
 func _play_toggle_sound() -> void:
@@ -178,11 +203,14 @@ func _cycle(direction: int) -> void:
 			TouchControls.set_layout_edit(!TouchControls.edit_mode)
 			_play_toggle_sound()
 		"stick":
-			# Cycle order: D-PAD -> STICK -> HYBRID -> FREE. Any direction
-			# follows this loop so the sequence never gets confusing.
+			# Cycle order: D-PAD -> STICK -> HYBRID. Any direction follows this
+			# loop so the sequence never gets confusing.
 			var mode := wrapi(TouchControls.move_mode() + direction, 0, MOVE_MODE_NAMES.size())
 			TouchControls.set_move_mode(mode)
 			_play_toggle_sound()
+		"separate":
+			# 只有开/关两档，任何方向都按循环切换处理。
+			_toggle_separate()
 		_:
 			var presets := _presets()
 			var idx := presets.find(_current_value())
@@ -198,6 +226,12 @@ func _cycle(direction: int) -> void:
 	_refresh_label()
 
 
+func _toggle_separate() -> void:
+	TouchControls.set_dpad_free(!TouchControls.dpad_free_setting())
+	_play_toggle_sound()
+	_refresh_label()
+
+
 func _handle_focused(focus) -> void:
 	super(focus)
 	if focus:
@@ -208,6 +242,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	super(mouse_input)
 	if kind == "reset":
 		_confirm_reset()
+	elif kind == "separate":
+		_toggle_separate()
 	else:
 		_cycle(1)
 
@@ -239,6 +275,12 @@ func _physics_process(_delta: float) -> void:
 	if !focused || !get_parent().focused:
 		return
 	if !get_window().has_focus():
+		return
+	if kind == "separate":
+		# 只有左右键切换这个开关，确认键与其它 ON/OFF 设置一样不响应。
+		if Input.is_action_just_pressed(&"ui_right") \
+				|| Input.is_action_just_pressed(&"ui_left"):
+			_toggle_separate()
 		return
 	if kind == "layout" || kind == "reset":
 		if Input.is_action_just_pressed(trigger_action) \

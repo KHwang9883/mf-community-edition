@@ -6,6 +6,20 @@ const DUMMY_ACTIONS: Array[StringName] = [&"vjoy_left", &"vjoy_right", &"vjoy_up
 
 const STICK_DIGITAL_THRESHOLD := 0.25
 
+## 摇杆八方向折算成 [左, 右, 上, 下] 四个数字方向。用常量表避免每个物理帧
+## 重新构造数组。
+const NO_DIGITALS: Array = [false, false, false, false]
+const OCTANT_DIGITALS: Array = [
+	[false, true, false, false],
+	[false, true, false, true],
+	[false, false, false, true],
+	[true, false, false, true],
+	[true, false, false, false],
+	[true, false, true, false],
+	[false, false, true, false],
+	[false, true, true, false],
+]
+
 const OFFSET_KEYS: Array[String] = [
 	"touch_off_dpad", "touch_off_jump", "touch_off_fire", "touch_off_extra", "touch_off_pause",
 	"touch_off_f1", "touch_off_del", "touch_off_tab",
@@ -33,7 +47,6 @@ const DPAD_FREE_SETTING := &"touch_dpad_free"
 const MOVE_MODE_DPAD := 0
 const MOVE_MODE_STICK := 1
 const MOVE_MODE_HYBRID := 2
-const MOVE_MODE_FREE := 3
 
 const ActionButton := preload("res://components/mobile/action_button.gd")
 
@@ -96,6 +109,13 @@ var _extra_action := StringName()
 var _item_store_available := false
 var stick: VirtualJoystick
 var _dpad_anchor := Vector2.ZERO
+var _pause_ctrl: Node = null
+## 按钮集合在 [_build_controls] 里一次建好，之后不再增减；缓存起来避免每帧
+## 输入处理里重复拼数组（[_on_touch_control] 每次鼠标按下都会用到）。
+var _action_buttons_cache: Array = []
+var _all_buttons_cache: Array = []
+## 合并同一帧内多个信号触发的刷新，避免切换场景时把整棵节点树扫好几遍。
+var _refresh_queued := false
 ## 摇杆当前通过注入按下的方向动作，每项是动作名（未按下时为 &""）。必须记住按下
 ## 时用的那个名字，不能只存 bool：死亡复活、暂停等时刻会把「当前模式」从游戏
 ## (m_*) 翻到 UI (ui_*)，此时若按当前模式去释放，真正被按下的那个动作就永远留在
@@ -117,12 +137,14 @@ func _ready() -> void:
 	Scenes.scene_changed.connect(_on_scene_signal)
 	Scenes.scene_reloaded.connect(_on_scene_signal)
 	Scenes.scene_ready.connect(_on_scene_signal)
-	var pause_ctrl := Pause.get_node_or_null(NodePath("Pause"))
-	if pause_ctrl:
-		if pause_ctrl.has_signal(&"paused"):
-			pause_ctrl.connect(&"paused", _on_pause_signal)
-		if pause_ctrl.has_signal(&"unpaused"):
-			pause_ctrl.connect(&"unpaused", _on_pause_signal)
+	_pause_ctrl = Scenes.custom_scenes.get(&"pause")
+	if _pause_ctrl == null:
+		_pause_ctrl = Pause.get_node_or_null(NodePath("Pause"))
+	if _pause_ctrl != null:
+		if _pause_ctrl.has_signal(&"paused"):
+			_pause_ctrl.connect(&"paused", _on_pause_signal)
+		if _pause_ctrl.has_signal(&"unpaused"):
+			_pause_ctrl.connect(&"unpaused", _on_pause_signal)
 	get_window().size_changed.connect(_relayout)
 	_on_scene_signal.call_deferred()
 
@@ -310,8 +332,42 @@ func _chooser_active() -> bool:
 
 
 func _pause_open_blocked() -> bool:
-	var pause_ctrl = Scenes.custom_scenes.get(&"pause")
-	return pause_ctrl != null && pause_ctrl.open_blocked
+	return _pause_ctrl != null && _pause_ctrl.open_blocked
+
+
+func _pause_menu_opened() -> bool:
+	return _pause_ctrl != null && _pause_ctrl.opened
+
+
+## 菜单是否接管了输入：暂停、暂停被阻塞的提示（消息块等）、内嵌菜单。
+func _ui_paused() -> bool:
+	return (
+		get_tree().paused
+		|| (_pause_open_blocked() && !_in_skin_test_room())
+		|| (_hybrid_scene && _embedded_menu_active())
+	)
+
+
+## 屏幕上正在接受输入的菜单控制器（含暂停菜单与它的子菜单）。
+## [param exclude_pause] 为 true 时跳过暂停菜单自己那一棵子树。
+func _focused_menu_controllers(exclude_pause := false) -> Array:
+	var out: Array = []
+	var stack: Array[Node] = [get_tree().root]
+	while !stack.is_empty():
+		var node: Node = stack.pop_back()
+		for child in node.get_children():
+			stack.append(child)
+		if node is MenuItemsController && node.focused && node.is_visible_in_tree() \
+				&& !(exclude_pause && Pause.is_ancestor_of(node)):
+			out.append(node)
+	return out
+
+
+## 屏幕上是否有正在接受输入的菜单。A 在 UI 模式下会同时按下 ui_accept 和
+## m_jump，而 m_jump 只该在没有任何菜单时给消息块之类的提示用；有菜单时只发
+## ui_accept，否则同一个按键会同时被两层菜单收到。
+func _focused_menu_controller() -> bool:
+	return !_focused_menu_controllers().is_empty()
 
 
 func _in_skin_test_room() -> bool:
@@ -344,7 +400,7 @@ func _build_controls() -> void:
 	extra_btn.touch_pressed.connect(_on_extra_pressed)
 	extra_btn.touch_released.connect(_on_extra_released)
 	pause_btn = ActionButton.new([], "| |")
-	pause_btn.touch_pressed.connect(_press_pause)
+	pause_btn.touch_pressed.connect(press_pause)
 
 	# 上下文按键：只在用得到的地方出现（存档房间 / 控制设置界面），可拖动摆放。
 	f1_btn = ActionButton.new([&"a_console"], "F1")
@@ -429,16 +485,29 @@ func use_dual_mode() -> bool:
 	return stick_enabled() && SettingsManager.get_custom_setting(DUAL_SETTING, false)
 
 
-## Free d-pad style: the four direction buttons keep the d-pad look but each one
-## can be positioned independently in the layout editor.
+## 分离方向键的开关（与当前移动方式无关，界面显示与记忆都用这个值）。
+func dpad_free_setting() -> bool:
+	return SettingsManager.get_custom_setting(DPAD_FREE_SETTING, false)
+
+
+## 分离方向键样式：四个方向键仍是 d-pad 的外观，但每个都能在布局编辑器里
+## 单独摆放。只在 D-PAD 移动方式下生效；关闭后按键回到默认样式，之前拖动
+## 记忆的偏移仍保留在设置里，再次开启时照旧使用。
 func dpad_free() -> bool:
-	return !stick_enabled() && SettingsManager.get_custom_setting(DPAD_FREE_SETTING, false)
+	return !stick_enabled() && dpad_free_setting()
+
+
+func set_dpad_free(on: bool) -> void:
+	if dpad_free_setting() == on:
+		return
+	SettingsManager.set_custom_setting(DPAD_FREE_SETTING, on)
+	SettingsManager.save_settings()
+	_refresh_state()
 
 
 func move_mode() -> int:
 	if !stick_enabled():
-		return MOVE_MODE_FREE if SettingsManager.get_custom_setting(DPAD_FREE_SETTING, false) \
-			else MOVE_MODE_DPAD
+		return MOVE_MODE_DPAD
 	return MOVE_MODE_HYBRID if use_dual_mode() else MOVE_MODE_STICK
 
 
@@ -447,17 +516,12 @@ func set_move_mode(mode: int) -> void:
 		STICK_SETTING, mode == MOVE_MODE_STICK || mode == MOVE_MODE_HYBRID
 	)
 	SettingsManager.set_custom_setting(DUAL_SETTING, mode == MOVE_MODE_HYBRID)
-	SettingsManager.set_custom_setting(DPAD_FREE_SETTING, mode == MOVE_MODE_FREE)
 	SettingsManager.save_settings()
 	_refresh_state()
 
 
 func _current_ui_mode() -> bool:
-	return _state == ViewState.MENU || (
-		get_tree().paused
-		|| (_pause_open_blocked() && !_in_skin_test_room())
-		|| (_hybrid_scene && _embedded_menu_active())
-	)
+	return _state == ViewState.MENU || _ui_paused()
 
 
 func _release_stick() -> void:
@@ -493,18 +557,7 @@ func _snap_octant(vec: Vector2) -> int:
 
 
 func _digitals_for_octant(idx: int) -> Array:
-	if idx < 0:
-		return [false, false, false, false]
-	match idx:
-		0: return [false, true, false, false]
-		1: return [false, true, false, true]
-		2: return [false, false, false, true]
-		3: return [true, false, false, true]
-		4: return [true, false, false, false]
-		5: return [true, false, true, false]
-		6: return [false, false, true, false]
-		7: return [false, true, true, false]
-	return [false, false, false, false]
+	return OCTANT_DIGITALS[idx] if idx >= 0 else NO_DIGITALS
 
 
 func _process_stick_digital() -> void:
@@ -550,15 +603,22 @@ func reset_layout() -> void:
 
 
 ## 方向键之外的所有按键：动作键 + 上下文键（F1/DEL/TAB）。
+## 第一次调用（[_build_controls] 结束时）建立缓存，之后直接复用。
 func _action_buttons() -> Array:
-	return [jump_btn, fire_btn, extra_btn, pause_btn, f1_btn, del_btn, tab_btn]
+	if _action_buttons_cache.is_empty():
+		_action_buttons_cache = [
+			jump_btn, fire_btn, extra_btn, pause_btn, f1_btn, del_btn, tab_btn
+		]
+	return _action_buttons_cache
 
 
 func _all_buttons() -> Array:
-	var out := []
-	out.append_array(dpad_buttons)
-	out.append_array(_action_buttons())
-	return out
+	if _all_buttons_cache.is_empty():
+		var out := []
+		out.append_array(dpad_buttons)
+		out.append_array(_action_buttons())
+		_all_buttons_cache = out
+	return _all_buttons_cache
 
 
 # --- offsets ---
@@ -593,18 +653,19 @@ func _on_free_dpad_drag(delta: Vector2, btn) -> void:
 	if !_drag_base.has(key):
 		_drag_base[key] = {pos = btn.position, off = _offsets[key]}
 	btn.position += delta
-	_snap_dpad_to_axes(btn)
+	_snap_to_axes(btn, dpad_buttons)
 	_clamp_node(btn, btn.size.x)
 	_offsets[key] = _drag_base[key].off + (btn.position - _drag_base[key].pos) / _min_dim()
 	_relayout()
 
 
-## Snaps a dragged direction button to the center axes of the other direction
-## buttons. Direction and action buttons deliberately ignore each other, so the
-## two groups can only be aligned within themselves.
-func _snap_dpad_to_axes(btn) -> void:
+## Snaps a dragged button to the center axes of [param others], so their centers
+## can be aligned horizontally or vertically in the layout editor. Direction and
+## action buttons deliberately ignore each other, so the two groups can only be
+## aligned within themselves.
+func _snap_to_axes(btn, others: Array) -> void:
 	var threshold := maxf(12.0, _min_dim() * 0.02)
-	for other in dpad_buttons:
+	for other in others:
 		if other == btn || !is_instance_valid(other):
 			continue
 		var o_center: Vector2 = other.position + other.size * 0.5
@@ -626,27 +687,10 @@ func _on_drag(delta: Vector2, btn, key: String) -> void:
 	if !_drag_base.has(key):
 		_drag_base[key] = {pos = btn.position, off = _offsets[key]}
 	btn.position += delta
-	_snap_to_axes(btn)
+	_snap_to_axes(btn, [jump_btn, fire_btn, extra_btn])
 	_clamp_node(btn, btn.size.x)
 	var md := _min_dim()
 	_offsets[key] = _drag_base[key].off + (btn.position - _drag_base[key].pos) / md
-
-
-## Snaps a dragged action button to the center axes of the other right-side
-## buttons (jump/fire/extra), so their centers can be aligned
-## horizontally or vertically in the layout editor. Direction buttons are not
-## part of this group, so action and direction buttons never snap to each other.
-func _snap_to_axes(btn) -> void:
-	var threshold := maxf(12.0, _min_dim() * 0.02)
-	for other in [jump_btn, fire_btn, extra_btn]:
-		if other == btn || !is_instance_valid(other):
-			continue
-		var o_center: Vector2 = other.position + other.size * 0.5
-		var center: Vector2 = btn.position + btn.size * 0.5
-		if absf(center.x - o_center.x) < threshold:
-			btn.position.x = o_center.x - btn.size.x * 0.5
-		if absf(center.y - o_center.y) < threshold:
-			btn.position.y = o_center.y - btn.size.y * 0.5
 
 
 func _save_offsets() -> void:
@@ -768,40 +812,35 @@ func _relayout() -> void:
 
 
 func press_pause(silent: bool = false) -> void:
-	_press_pause(silent)
-
-
-## 切到后台时自动打开暂停菜单（仅移动端调用）。暂停键可见代表当前界面
-## 允许打开暂停菜单，因此直接以它的显隐为准；已经暂停或菜单已打开时不做处理
-## （toggle() 会把"再次按下"当成继续游戏），也不播放暂停音效。
-func autopause_on_background() -> void:
-	if edit_mode || pause_btn == null || !pause_btn.visible:
-		return
-	if get_tree().paused:
-		return
-	var pause_ctrl = Scenes.custom_scenes.get(&"pause")
-	if pause_ctrl == null || pause_ctrl.opened:
-		return
-	var cs := Scenes.current_scene
-	if cs != null && cs.get(&"disable_pause_menu"):
-		return
-	press_pause(true)
-
-
-func _press_pause(silent: bool = false) -> void:
 	var cs := Scenes.current_scene
 	var stage_like := cs != null && (cs is Stage2D || cs is Map2D)
 	if !stage_like && _state != ViewState.PAUSE_ONLY:
 		return
 	if _hybrid_scene && _embedded_menu_active():
 		return
-	var pause_ctrl = Scenes.custom_scenes.get(&"pause")
-	if pause_ctrl == null || pause_ctrl.open_blocked:
+	if _pause_ctrl == null || _pause_ctrl.open_blocked:
 		return
 	if &"game_over" in Scenes.custom_scenes \
 			&& Scenes.custom_scenes.game_over.opened:
 		return
-	pause_ctrl.toggle(false, silent)
+	_pause_ctrl.toggle(false, silent)
+
+
+## 切到后台时自动打开暂停菜单（仅移动端调用）。任意场景都会触发，但以下情况除外：
+## 布局编辑模式、已经暂停（含打开中的暂停菜单）、启动 splash 以及首次进入主菜单
+## 前的设置界面（都在 intro 场景里），此时打开菜单反而会打断当前流程。
+## 静默打开，不播放暂停音效。
+func autopause_on_background() -> void:
+	if edit_mode:
+		return
+	if get_tree().paused:
+		return
+	var cs := Scenes.current_scene
+	if cs == null || cs.scene_file_path.begins_with(INTRO_PATH_PREFIX):
+		return
+	if _pause_ctrl == null || _pause_ctrl.opened:
+		return
+	_pause_ctrl.toggle(false, true)
 
 
 # --- extra button ---
@@ -884,6 +923,15 @@ func _in_save_game_room() -> bool:
 
 
 func _on_scene_signal(_to: Node = null) -> void:
+	_queue_refresh()
+
+
+## 同一帧里 `scene_changed / scene_reloaded / scene_ready` 可能一起触发，
+## 合并成一次刷新，避免重复做整树扫描和重排。
+func _queue_refresh() -> void:
+	if _refresh_queued:
+		return
+	_refresh_queued = true
 	_refresh_state.call_deferred()
 
 
@@ -891,13 +939,37 @@ func _on_pause_signal() -> void:
 	# 暂停信号是在 get_tree().paused 真正变更之前发出的，等下一帧再清会让 A 键
 	# 的 m_jump 漏进刚恢复的游戏（表现为按 A 关闭菜单后立刻跳一下），所以这里
 	# 立刻释放所有按住的动作。
+	if _pause_ctrl != null && !_pause_ctrl.opened:
+		# 关闭暂停菜单时，触摸 A 注入的确认事件还在输入缓冲里：它可能晚一两帧
+		# 才分发，那时树已经解除暂停，下层菜单（主菜单等）会把同一次按下当成
+		# 一次新的确认，于是同一次按键同时触发两层菜单。先在仍然暂停的时候把
+		# 缓冲冲掉（下层菜单此时不会处理），再收起下层菜单的焦点等残留脉冲过去。
+		Input.flush_buffered_events()
+		_suppress_lower_menu_focus()
 	for btn in _all_buttons():
 		btn.force_release()
 	_release_stick()
-	_refresh_state.call_deferred()
+	_queue_refresh()
+
+
+## 暂时取消暂停菜单之外那些正在接受输入的菜单的焦点，等延迟的确认脉冲过去
+## 后再恢复。释放按住的动作只能清掉按键状态，清不掉“这一帧按下”的脉冲，所以
+## 必须让下层菜单在这两帧里不处理确认。
+func _suppress_lower_menu_focus() -> void:
+	var restore := _focused_menu_controllers(true)
+	if restore.is_empty():
+		return
+	for ctrl in restore:
+		ctrl.focused = false
+	for i in 2:
+		await get_tree().physics_frame
+	for ctrl in restore:
+		if is_instance_valid(ctrl) && ctrl.is_visible_in_tree():
+			ctrl.focused = true
 
 
 func _refresh_state() -> void:
+	_refresh_queued = false
 	_state = _classify_scene()
 	_cache_menu_controllers()
 	_item_store_available = _scan_item_store()
@@ -969,20 +1041,12 @@ func _classify_scene() -> int:
 
 
 func _sync_buttons() -> void:
-	var active := (
-		MobileCompat.is_touch_device()
-		&& touch_enabled()
-		&& (_last_device_was_touch || edit_mode)
-	)
-	var paused := (
-		get_tree().paused
-		|| (_pause_open_blocked() && !_in_skin_test_room())
-		|| (_hybrid_scene && _embedded_menu_active())
-	)
-	# 菜单开合时清掉所有按住的动作。A 键在 UI 模式下同时也注入 m_jump（消息块
-	# 只认 m_jump），若不清，菜单用 ui_accept 确认关闭后这个 m_jump 会泄漏进
-	# 游戏，变成一次跳跃。只在 paused 变化时清：加载/复活是场景重载，paused
-	# 不变，按住的方向/跳跃仍会缓冲到下一个场景。
+	var active := is_virtual_buttons_active()
+	var paused := _ui_paused()
+	# 菜单开合时清掉所有按住的动作。A 键在游戏语境下同时注入 m_jump，菜单确认
+	# 关闭后这个 m_jump 会泄漏进刚恢复的游戏（变成一次跳跃），所以这里清掉。
+	# 只在 paused 变化时清：加载/复活是场景重载，paused 不变，按住的输入仍会
+	# 缓冲到下一个场景。
 	if paused != _prev_paused:
 		for btn in _all_buttons():
 			btn.force_release()
@@ -1035,9 +1099,13 @@ func _sync_buttons() -> void:
 		jump_btn.set_actions([])
 		jump_btn.set_label("JUMP")
 	else:
-		# Jump stays on the button in UI mode too: paused prompts (message blocks
-		# and the like) wait for "m_jump" and ignore "ui_accept".
-		jump_btn.set_actions([&"m_jump", &"ui_accept"])
+		# UI 模式下 A 还要发 m_jump：paused 的提示（消息块等）只认 m_jump，
+		# 不认 ui_accept。但只要屏幕上有菜单在接收输入，A 就只能发 ui_accept，
+		# 否则同一个按键会同时被上下两层菜单收到，两个菜单一起触发。
+		var jump_actions: Array = [&"m_jump", &"ui_accept"]
+		if ui_mode && (_pause_menu_opened() || _focused_menu_controller()):
+			jump_actions = [&"ui_accept"]
+		jump_btn.set_actions(jump_actions)
 		jump_btn.set_label("A" if ui_mode && active else "JUMP")
 	var actions_visible := (
 		active
