@@ -16,6 +16,16 @@ const SUBMENU_SELECTION_SCRIPT := preload("res://engine/scenes/main_menu/scripts
 const MENU_CONTROLLER_SCRIPT := preload("res://engine/components/ui/generic/menu_items_controller.gd")
 const MENU_TEXT_FONT := preload("res://engine/fonts/font_variations/smb_variation.tres")
 const TEXT_GRADIENT := preload("res://components/mobile/text_gradient.gdshader")
+const SPEEDRUN_STATS_SCRIPT := preload("res://components/speedrun_stats.gd")
+const TWEAK_BOOLEAN_SCENE := preload("res://stages/main_menu/objects/tweak_boolean.tscn")
+const SPEEDRUN_TWEAK_ROW_NAME := "HBoxSpeedrunStats"
+const RESET_DATA_SCENE_PATH := "res://stages/main_menu/objects/reset_data.tscn"
+const SPEEDRUN_TWEAK_NAME := &"speedrun_stats"
+const SPEEDRUN_TWEAK_TITLE := "speedrun stats"
+const SPEEDRUN_TWEAK_DESC := (
+	"shows extra position and velocity stats in the top-right corner, "
+	+ "useful for speedruns. can be toggled on and off at any time."
+)
 
 const MENU_TEXT_COLOR := Color(1, 1, 1, 1)
 const MENU_TEXT_OUTLINE := Color(0.156863, 0.156863, 0.156863, 0.784314)
@@ -66,6 +76,7 @@ func _ready() -> void:
 	Scenes.scene_changed.connect(_on_scene_changed)
 	_ensure_immersive_mode.call_deferred()
 	_watch_console.call_deferred()
+	_setup_speedrun_stats.call_deferred()
 
 
 func _notification(what: int) -> void:
@@ -369,6 +380,60 @@ func _on_scene_changed(to: Node) -> void:
 	)
 	for entry in removals:
 		_remove_node(entry[0], entry[1])
+	_inject_speedrun_stats_tweak(to)
+
+
+## 运行时速通统计：挂到 root 上，显示与否由 tweak 控制（游戏原场景不改）。
+func _setup_speedrun_stats() -> void:
+	if get_tree().root.has_node(NodePath("SpeedrunStats")):
+		return
+	var stats := Label.new()
+	stats.name = "SpeedrunStats"
+	stats.set_script(SPEEDRUN_STATS_SCRIPT)
+	get_tree().root.add_child(stats)
+
+
+## 在 Tweaks 首页把速通统计开关插到 RESET DATA 上方，原始 tweaks 场景保持不变。
+func _inject_speedrun_stats_tweak(root: Node) -> void:
+	var page := _find_tweaks_page(root)
+	if page == null || page.has_node(NodePath(SPEEDRUN_TWEAK_ROW_NAME)):
+		return
+	var row: Node = TWEAK_BOOLEAN_SCENE.instantiate()
+	row.name = SPEEDRUN_TWEAK_ROW_NAME
+	row.set(&"tweak_name", SPEEDRUN_TWEAK_NAME)
+	row.set(&"default_value", false)
+	row.set(&"tweak_title_text", SPEEDRUN_TWEAK_TITLE)
+	row.set(&"tweak_description_text", SPEEDRUN_TWEAK_DESC)
+	page.add_child(row)
+	var anchor := _find_child_scene(page, RESET_DATA_SCENE_PATH)
+	if anchor == null:
+		anchor = page.get_node_or_null(NodePath("Exit2"))
+	if anchor != null:
+		page.move_child(row, anchor.get_index())
+	if page.has_method(&"_update_selectors"):
+		page._update_selectors()
+	_resync_blinkers(page)
+	print("[MobileCompat] Injected speedrun stats tweak")
+
+
+## 页面某个直接子节点是否来自指定场景（用于找到 RESET DATA 行）。
+func _find_child_scene(parent: Node, scene_path: String) -> Node:
+	for child in parent.get_children():
+		if child.scene_file_path == scene_path:
+			return child
+	return null
+
+
+func _find_tweaks_page(root: Node) -> Node:
+	var stack: Array[Node] = [root]
+	while !stack.is_empty():
+		var node: Node = stack.pop_back()
+		for child in node.get_children():
+			stack.append(child)
+		if node is MenuItemsController && node.name == "Tweaks" \
+				&& node.has_node(NodePath("Exit2")):
+			return node
+	return null
 
 
 ## 记录需要在场景补丁阶段移除的节点（桌面专用入口等）。[param out] 每项为
