@@ -834,6 +834,10 @@ func press_pause(silent: bool = false) -> void:
 func autopause_on_background() -> void:
 	if edit_mode:
 		return
+	# 有弹窗（Manage Data、文件选择器等）时说明玩家正在处理弹窗，切后台不应再
+	# 叠一层暂停菜单。
+	if _popup_active():
+		return
 	if get_tree().paused:
 		return
 	var cs := Scenes.current_scene

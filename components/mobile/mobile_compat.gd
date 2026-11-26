@@ -55,6 +55,7 @@ const STICK_UI_BINDINGS := {
 }
 
 var android := false
+var _console_paused_before := false
 
 
 func _ready() -> void:
@@ -248,9 +249,16 @@ func _inject_console_complete_button(console: Node) -> void:
 
 
 func _on_console_visibility_changed() -> void:
-	var console := get_node_or_null(^"/root/Console")
-	if console == null || !(console as Window).visible:
+	var console := get_node_or_null(^"/root/Console") as Window
+	if console == null:
 		return
+	if !console.visible:
+		# 控制台关闭时会无条件解除暂停（console.gd）。若打开前游戏本来就处于
+		# 暂停状态（继续界面、暂停菜单等），关闭后要恢复，否则继续界面会失去
+		# 暂停态，虚拟按键切回游戏模式，菜单无法操作。
+		Thunder.set_pause_game.call_deferred(_console_paused_before)
+		return
+	_console_paused_before = get_tree().paused
 	var input := console.get_node_or_null(^"UI/CmdInput")
 	if input is LineEdit:
 		(input as LineEdit).grab_focus.call_deferred()
@@ -393,7 +401,7 @@ func _setup_speedrun_stats() -> void:
 	get_tree().root.add_child(stats)
 
 
-## 在 Tweaks 首页把速通统计开关插到 RESET DATA 上方，原始 tweaks 场景保持不变。
+## 在 Tweaks 首页把速通统计开关插到 MANAGE DATA 上方，原始 tweaks 场景保持不变。
 func _inject_speedrun_stats_tweak(root: Node) -> void:
 	var page := _find_tweaks_page(root)
 	if page == null || page.has_node(NodePath(SPEEDRUN_TWEAK_ROW_NAME)):
@@ -416,7 +424,7 @@ func _inject_speedrun_stats_tweak(root: Node) -> void:
 	print("[MobileCompat] Injected speedrun stats tweak")
 
 
-## 页面某个直接子节点是否来自指定场景（用于找到 RESET DATA 行）。
+## 页面某个直接子节点是否来自指定场景（用于找到 MANAGE DATA 行）。
 func _find_child_scene(parent: Node, scene_path: String) -> Node:
 	for child in parent.get_children():
 		if child.scene_file_path == scene_path:

@@ -31,17 +31,17 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_s651j")
 theme_override_font_sizes/font_size = 22
-text = "reset data..."
+text = "manage data..."
 uppercase = true
 
 [node name="Window" type="Window" parent="." unique_id=1429785923]
 auto_translate_mode = 1
 disable_3d = true
-title = "Reset Data..."
+title = "Manage Data..."
 initial_position = 2
-size = Vector2i(320, 290)
+size = Vector2i(320, 400)
 visible = false
-min_size = Vector2i(300, 290)
+min_size = Vector2i(300, 400)
 
 [node name="Control" type="PanelContainer" parent="Window" unique_id=61185369]
 anchors_preset = 15
@@ -62,6 +62,16 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
+
+[node name="ImportSave" type="Button" parent="Window/Control/VBoxContainer/VBoxContainer" unique_id=1995400317]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Import save data"
+
+[node name="ExportSave" type="Button" parent="Window/Control/VBoxContainer/VBoxContainer" unique_id=1995400318]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Export save data"
 
 [node name="SavePipes" type="Button" parent="Window/Control/VBoxContainer/VBoxContainer" unique_id=245850326]
 layout_mode = 2
@@ -117,6 +127,17 @@ ok_button_text = "Yes"
 dialog_text = "Really %s?"
 cancel_button_text = "No"
 
+[node name="ImportConfirmation" type="ConfirmationDialog" parent="." unique_id=1414497150]
+auto_translate_mode = 1
+disable_3d = true
+initial_position = 2
+size = Vector2i(320, 200)
+wrap_controls = false
+ok_button_text = "Yes"
+dialog_text = "Import save data?"
+dialog_autowrap = true
+cancel_button_text = "No"
+
 [node name="Value" type="Label" parent="." unique_id=526239028]
 layout_mode = 2
 size_flags_horizontal = 10
@@ -136,3 +157,5 @@ uppercase = true
 [connection signal="pressed" from="Window/Control/VBoxContainer/HBoxContainer2/CloseBtn" to="." method="_on_close_btn_pressed"]
 [connection signal="canceled" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_canceled"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
+[connection signal="canceled" from="ImportConfirmation" to="." method="_on_import_confirmation_canceled"]
+[connection signal="confirmed" from="ImportConfirmation" to="." method="_on_import_confirmation_confirmed"]
